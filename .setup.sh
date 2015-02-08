@@ -98,6 +98,8 @@ if [[ -f /usr/bin/xfconf-query ]]; then
     s() {
         xfconf-query -c "$1" -p "$2" -s "$3"
     }
+    s keyboards /Default/KeyRepeat/Delay 200
+    s keyboards /Default/KeyRepeat/Rate 30
     s keyboard-layout /Default/XkbDisable false
     s keyboard-layout /Default/XkbLayout de
     s keyboard-layout /Default/XkbVariant nodeadkeys

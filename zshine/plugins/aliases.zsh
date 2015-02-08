@@ -108,7 +108,6 @@ fi
 [ -n "$commands[ps_mem]" ] && alias ps_mem='sudo ps_mem'
 [ -n "$commands[abs]" ] && alias abs='sudo abs'
 [ -n "$commands[ufw]" ] && alias ufw='sudo ufw'
-[ -n "$commands[docker]" ] && alias docker='sudo docker'
 
 [ -n "$commands[latexmk]" ] && alias ltx="latexmk -cd -f -pdf -pvc -outdir=/tmp/latexmk"
 [ -n "$commands[reflector]" ] && alias mirrorlist_update='sudo reflector --verbose -l 20 --sort rate --country 'Germany' --save /etc/pacman.d/mirrorlist'

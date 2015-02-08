@@ -33,8 +33,6 @@ ZSHINE_BATTERY_COLOR_MED='white'
 ZSHINE_JOBS=1
 ZSHINE_JOBS_COLOR='214'
 
-ZSHINE_SSH_REMINDER=1
-
 ZSHINE_ERROR_COLOR='red'
 
 ZSHINE_SSH_FG='255'
@@ -96,8 +94,10 @@ _prompt_git() {
 
 _prompt_ssh() {
     if [[ $USER == "vagrant" ]]; then
-        prompt_segment $ZSHINE_PATH_COLOR 232 "VAGRANT"
-    elif [[ $ZSHINE_SSH_REMINDER == 1 ]]; then
+        prompt_segment $ZSHINE_PATH_FG 232 "VAGRANT"
+    elif [[ $USER == "docker" ]]; then
+        prompt_segment $ZSHINE_PATH_FG 232 "DOCKER"
+    else
         [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ] && return
         ZSHINE_USER=1
         prompt_segment $ZSHINE_SSH_BG $ZSHINE_SSH_FG "SSH"
