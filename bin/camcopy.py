@@ -1,1 +1,1 @@
-lib/camcopy/camcopy.py
+lib/camcopy.py

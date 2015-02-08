@@ -1,12 +1,12 @@
-#! /bin/bash
-
-# Bash interface to the PushBullet api.
+#!/usr/bin/env bash
 
 # Author: Red5d - https://github.com/Red5d
 
 
 CONFIG=~/.config/pushbullet
 API_URL=https://api.pushbullet.com/api
+
+[[ ! -f "$CONFIG" ]] && echo "$CONFIG not found" && exit 1
 
 source $CONFIG
 

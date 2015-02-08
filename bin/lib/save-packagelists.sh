@@ -1,5 +1,5 @@
 #!/usr/bin/bash
 
 d="$HOME/doc"
-[ ! -d "$d" ] && mkdir "$d"
+mkdir -p "$d"
 pacman -Qqe | sort > "$d/$(hostname)-packages.txt"

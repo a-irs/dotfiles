@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-dir="/run/media/alex/PSP"
-cd $dir && tar cvzf /media/storage/backup/psp/psp_$(date +%Y%m%d-%H%M%S).tar.gz . \
+dir="/run/media/$USER/PSP"
+cd $dir && tar cvzf "$HOME/psp_$(date +%Y%m%d-%H%M%S).tar.gz" . \
 --exclude ISO \
 --exclude roms \
 --exclude Roms \

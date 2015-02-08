@@ -17,7 +17,7 @@ delay=0.3
 mount $SRC
 if [ $? -eq 0 ]; then
         echo -e '\a' > /dev/console
-        /root/bin/camcopy.py $SRC $DEST
+        /root/.bin/camcopy.py $SRC $DEST
         sync
         umount -lf $SRC
         sleep 2s

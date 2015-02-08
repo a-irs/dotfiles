@@ -17,7 +17,7 @@ WAIT=14400
 update
 while [ true ]; do
     if [ -f ~/.pacman-last-update ]; then
-        LASTUPD=$(cat .pacman-last-update)
+        LASTUPD=$(cat ~/.pacman-last-update)
         SECONDS_AGO=$(($(date '+%s')-$LASTUPD))
         echo [last update check was $SECONDS_AGO seconds ago]
         if [[ $WAIT -le $SECONDS_AGO ]]; then

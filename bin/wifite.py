@@ -1,1 +1,0 @@
-lib/wifite.py

@@ -1,1 +1,0 @@
-lib/arch-chroot.sh

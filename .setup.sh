@@ -113,7 +113,6 @@ if [[ -f /usr/bin/xfconf-query ]]; then
     s xfwm4 /general/cycle_draw_frame true
     s xfwm4 /general/mousewheel_rollup false
     s xfwm4 /general/placement_ratio 0
-    s xfwm4 /general/title_alignment "center"
     s xfwm4 /general/workspace_count 1
     print_info "set configs for Xfce"
 fi
