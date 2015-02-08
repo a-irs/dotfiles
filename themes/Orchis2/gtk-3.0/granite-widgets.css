@@ -1,0 +1,84 @@
+/* Copyright 2014 Sam Hewitt.
+*
+* This file is part of the Orchis GTK theme.
+*
+* The Orchis GTK theme is free software: you can redistribute it
+* and/or modify it under the terms of the GNU General Public License as
+* published by the Free Software Foundation, either version 3 of the
+* License, or (at your option) any later version.
+*
+* The Orchis GTK theme is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+* Public License for more details.
+*
+* You should have received a copy of the GNU General Public License along
+* with the Orchis GTK theme. If not, see http://www.gnu.org/licenses/.
+*/
+
+
+/***********
+ * Popover *
+ **********/
+
+GraniteWidgetsPopOver {
+
+    -GraniteWidgetsPopOver-arrow-width: 21;
+    -GraniteWidgetsPopOver-arrow-height: 10;
+    -GraniteWidgetsPopOver-border-radius: 8px;
+    -GraniteWidgetsPopOver-border-width: 1;
+    -GraniteWidgetsPopOver-shadow-size: 12;
+    
+    border: 1px solid transparent;
+    background: @base;
+    margin: 0;
+    
+    box-shadow: inset 0 0 0 1px alpha(#fff, 0.5);
+}
+
+GraniteWidgetsPopOver .frame,
+GraniteWidgetsStaticNotebook .frame {
+    border: none;
+}
+
+.popover_bg {
+    background-color: @base;
+    background-image: none;
+    border: 1px solid @border;
+}
+
+GraniteWidgetsPopOver .sidebar.view,
+GraniteWidgetsPopOver * {
+    background-color: transparent;
+}
+
+GraniteWidgetsPopOver .button {
+    background-image: none;
+    background-color: transparent; 
+}
+
+GraniteWidgetsPopOver .button:active,
+GraniteWidgetsPopOver .button:hover:active {
+    background-image: none;
+    background-color: alpha(#000, 0.05);
+    border-color: @border;
+}
+
+
+/***********
+ * Welcome *
+ **********/
+
+GraniteWidgetsWelcome {
+    background-color: @base;
+}
+
+GraniteWidgetsWelcome GtkLabel {
+    color: @foreground;
+    text-shadow: none;
+}
+
+GraniteWidgetsWelcome .h1,
+GraniteWidgetsWelcome .h3 {
+    color: alpha(@foreground, 0.8);
+}

@@ -1,0 +1,90 @@
+/* Copyright 2014 Sam Hewitt.
+*
+* This file is part of the Orchis GTK theme.
+*
+* The Orchis GTK theme is free software: you can redistribute it
+* and/or modify it under the terms of the GNU General Public License as
+* published by the Free Software Foundation, either version 3 of the
+* License, or (at your option) any later version.
+*
+* The Orchis GTK theme is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+* Public License for more details.
+*
+* You should have received a copy of the GNU General Public License along
+* with the Orchis GTK theme. If not, see http://www.gnu.org/licenses/.
+*/
+
+/**************
+ * GtkInfoBar *
+ **************/
+ 
+GtkInfoBar {
+    border-width: 0;
+    border-style: none;
+    background-image: linear-gradient(to bottom,
+                                  shade(@gradient_b, 0.96),
+                                  shade(@gradient_a, 0.96)
+                                  );
+    
+    color: @foreground;
+    text-shadow: none;
+    border: solid @border;
+    border-bottom-width: 1px;
+}
+
+
+GtkInfoBar GtkLabel {
+    color: @foreground;
+    icon-shadow: 0 1px @text_shadow;
+    text-shadow: 0 1px @text_shadow;
+}
+
+GtkInfoBar .entry,
+GtkInfoBar .menu {
+    color: @foreground;
+}
+
+GtkInfoBar GtkLabel:insensitive {
+    color: @insensitive_text;
+}
+
+GtkInfoBar .button,
+GtkInfoBar .button:focus,
+.dynamic-notebook GtkInfoBar .button {
+
+    text-shadow: none;
+    icon-shadow: none;
+    background-image: linear-gradient(to bottom,
+                                  @button_gradient_a,
+                                  @button_gradient_b
+                                  );
+
+    border-radius: 3px;
+    border: 1px solid @border;
+
+    box-shadow: inset 0 0 0 1px alpha(#fff, 0.05),
+                inset 0 1px 0 0 alpha(#fff, 0.45),
+                inset 0 -1px 0 0 alpha(#fff, 0.15),
+                0 1px 0 0 alpha(#fff, 0.15);
+}
+
+GtkInfoBar .button:active,
+GtkInfoBar .button:hover:active {
+
+    background-image: linear-gradient(to bottom,
+                                  @button_active_gradient_a,
+                                  @button_active_gradient_b
+                                  );
+
+    border-radius: 3px;
+    border: 1px solid @selection;
+}
+
+GtkInfoBar .button:insensitive {
+    background-image: none;
+    background-color: @insensitive_background; 
+
+    border: 1px solid @insensitive_border;
+}

@@ -1,0 +1,63 @@
+/* Copyright 2014 Sam Hewitt.
+*
+* This file is part of the Orchis GTK theme.
+*
+* The Orchis GTK theme is free software: you can redistribute it
+* and/or modify it under the terms of the GNU General Public License as
+* published by the Free Software Foundation, either version 3 of the
+* License, or (at your option) any later version.
+*
+* The Orchis GTK theme is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+* Public License for more details.
+*
+* You should have received a copy of the GNU General Public License along
+* with the Orchis GTK theme. If not, see http://www.gnu.org/licenses/.
+*/
+
+/***********
+ * Dialogs *
+ ***********/
+
+.prompt,
+GtkMessageDialog {
+    -GtkDialog-button-spacing: 0;
+    -GtkDialog-content-area-border: 12px;
+}
+
+GtkMessageDialog .button {
+    padding: 1px;
+}
+
+GtkDialog .titlebar,
+GtkMessageDialog .titlebar {
+    border: none;
+
+    background-image: none;
+    background-color: @background;
+
+    box-shadow: none;
+}
+
+GtkDialog .titlebar:backdrop,
+GtkMessageDialog .titlebar:backdrop {
+    border: none;
+
+    background-image: none;
+    background-color: @backdrop_background;
+
+    box-shadow: none;
+
+    color: shade (@foreground, 1.20);
+}
+
+GtkDialog,
+GtkMessageDialog {
+    box-shadow: none;
+}
+
+GtkDialog .toolbar {
+    background-image: none;
+    background-color: @background;
+}

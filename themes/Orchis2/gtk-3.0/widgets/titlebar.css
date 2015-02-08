@@ -1,0 +1,151 @@
+/* Copyright 2014 Sam Hewitt.
+*
+* This file is part of the Orchis GTK theme.
+*
+* The Orchis GTK theme is free software: you can redistribute it
+* and/or modify it under the terms of the GNU General Public License as
+* published by the Free Software Foundation, either version 3 of the
+* License, or (at your option) any later version.
+*
+* The Orchis GTK theme is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+* Public License for mor
+    border: 1px solid @border;e details.
+*
+* You should have received a copy of the GNU General Public License along
+* with the Orchis GTK theme. If not, see http://www.gnu.org/licenses/.
+*/
+
+/******************
+ * Titlebar (CSD) *
+ ******************/
+
+.titlebar {
+    text-shadow: 0 1px @text_shadow;
+    background-image: linear-gradient(to bottom,
+                                      shade(@background, 1.25),
+                                      @background);
+    border-radius: 7px 7px 0px 0px;
+    border-width: 0px;
+    padding-left: 6px;
+    padding-right: 6px;
+
+    border-color: shade(@titlebar, 0.8);
+    border-style: solid;
+    border-width: 0 0 1px;
+
+    text-shadow: 0 1px @title_shadow;
+    icon-shadow: 0 1px @title_shadow;
+
+    box-shadow: inset 0 1px 0 0 alpha(#fff, 0.2),
+                inset 0 0 0 1px alpha(#fff, 0.08);
+
+}
+
+/* this is the default titlebar that is added by GTK
+ * when client-side decorations are in use and the application
+ * did not set a custom titlebar.
+ */
+
+.titlebar.default-decoration {
+    background-image: linear-gradient(to bottom,
+                                  shade(@background, 1.04),
+                                  @background
+                                  );
+    border-width: 0;
+
+    box-shadow: none;
+}
+
+
+.titlebar .title,
+.titlebar .button.image-button GtkImage {
+    color: @foreground;
+    font: Bold 11;
+    text-shadow: 0 1px @text_shadow;
+    icon-shadow: 0 1px @text_shadow;
+}
+
+.titlebar:backdrop {
+    background-color: @backdrop_background;
+    background-image: none;
+    box-shadow: none;
+    border-width: 0;
+    border-bottom-width: 1px;
+    color: @backdrop_text;
+    icon-shadow: none;
+    text-shadow: none;
+    -gtk-image-effect: dim;
+}
+
+.titlebar .titlebutton {
+    icon-shadow: 0px 1px @text_shadow;
+    color: @foreground;
+    background: none;
+    padding: 4px 8px 4px 8px;
+    border-radius: 4px;
+
+    box-shadow: inset 0 0 0 1px alpha(@base, 0.1),
+                inset 0 1px 0 0 alpha(@base, 0.45),
+                inset 0 -1px 0 0 alpha(@base, 0.15);
+
+    color: @foreground;
+    text-shadow: 0 1px @text_shadow;
+    icon-shadow: 0 1px @icon_shadow;
+}
+
+.titlebar .titlebutton:hover {
+    background-image: linear-gradient(to bottom,
+                                      @button_hover_gradient_a,
+                                      @button_hover_gradient_b);
+}
+
+.titlebar .titlebutton:active {
+    background-image: linear-gradient(to bottom,
+                                      @button_active_gradient_a,
+                                      @button_active_gradient_b
+                                      );
+    color: @selected_foreground;
+    icon-shadow: none;
+}
+
+.titlebar .right .titlebutton:first-child {
+    border-left: 1px solid @menu_separator;
+}
+
+.titlebar .right .titlebutton:last-child {
+
+}
+
+.titlebar .left .titlebutton:last-child {
+    border-right: 1px solid @menu_separator;
+}
+
+.titlebar .left .titlebutton:first-child {
+
+}
+
+.titlebar .titlebutton:backdrop {
+    background-image: none;
+    color: @backdrop_text;
+    border-image: none;
+    icon-shadow: none;
+    box-shadow: none;
+    -gtk-image-effect: dim;
+}
+
+/* Window Frame */
+.window-frame {
+    border-radius: 6px 6px 0 0;
+    box-shadow: 0 0 0 1px @window_border,
+                0 2px 8px 3px @window_shadow;
+
+    /* this is used for the resize cursor area */
+    margin: 10px;
+}
+
+.window-frame:backdrop {
+    box-shadow: 0 0 0 1px @window_backdrop_border,
+                0 2px 5px 1px @window_shadow;
+}

@@ -1,0 +1,202 @@
+/* Copyright 2014 Sam Hewitt.
+*
+* This file is part of the Orchis GTK theme.
+*
+* The Orchis GTK theme is free software: you can redistribute it
+* and/or modify it under the terms of the GNU General Public License as
+* published by the Free Software Foundation, either version 3 of the
+* License, or (at your option) any later version.
+*
+* The Orchis GTK theme is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+* Public License for more details.
+*
+* You should have received a copy of the GNU General Public License along
+* with the Orchis GTK theme. If not, see http://www.gnu.org/licenses/.
+*/
+
+
+/**************************
+ * Selection Mode classes *
+ **************************/
+.selection-mode.header-bar,
+.selection-mode.toolbar {
+    color: @selection_toolbar_foreground;
+    background-image: linear-gradient(to bottom,
+                                      @selection_toolbar_background_a,
+                                      @selection_toolbar_background_b);
+    background-color: transparent;
+
+    border-color: @border;
+    border-style: solid;
+    border-image: none;
+
+    text-shadow: 0 1px @selection_toolbar_shadow;
+}
+
+.selection-mode.header-bar {
+    border-top-color: @selection_toolbar_background_a;
+    border-bottom-color: @selection_toolbar_border;
+
+    box-shadow: inset 0 -1px shade(@selection_toolbar_border, 1.20);
+}
+
+.selection-mode.toolbar {
+    padding: 6px;
+}
+
+.selection-mode.header-bar:backdrop,
+.selection-mode.toolbar:backdrop {
+    background-image: none;
+    background-color: @selection_toolbar_background_backdrop;
+    border-color: @selection_toolbar_background_backdrop;
+    box-shadow: none;
+}
+
+/* regular button */
+.selection-mode.header-bar .button,
+.selection-mode.toolbar .button,
+.selection-mode.toolbar GtkToolButton .button {
+    background-image: linear-gradient(to bottom,
+                                      @selection_toolbar_button_a,
+                                      @selection_toolbar_button_b);
+
+    border-image: none;
+    border-color: @selection_toolbar_button_border;
+    border-width: 1px;
+
+    box-shadow: inset 0 1px alpha(white, 0.1);
+
+    color: @selection_toolbar_button_foreground;
+
+    text-shadow: 0 1px @selection_toolbar_shadow;
+    icon-shadow: 0 1px @selection_toolbar_shadow;
+}
+
+.selection-mode.header-bar .button:hover,
+.selection-mode.toolbar .button:hover,
+.selection-mode.toolbar GtkToolButton .button:hover {
+    background-image: linear-gradient(to bottom,
+                                      shade(@selection_toolbar_button_a, 1.05),
+                                      shade(@selection_toolbar_button_b, 1.02));
+}
+
+.selection-mode.header-bar .button:active,
+.selection-mode.header-bar .button:hover:active,
+.selection-mode.toolbar .button:active,
+.selection-mode.toolbar .button:hover:active,
+.selection-mode.toolbar GtkToolButton .button:active,
+.selection-mode.toolbar GtkToolButton .button:hover:active {
+    background-image: linear-gradient(to bottom,
+                                      shade(@selection_toolbar_button_b, 0.95),
+                                      shade(@selection_toolbar_button_a, 0.88));
+    box-shadow: none;
+}
+
+.selection-mode.header-bar .button:backdrop,
+.selection-mode.toolbar .button:backdrop,
+.selection-mode.toolbar GtkToolButton .button:backdrop {
+    text-shadow: none;
+    icon-shadow: none;
+
+    background-image: none;
+    background-color: transparent;
+    border-color: @selection_toolbar_button_border_backdrop;
+
+    box-shadow: none;
+    color: @selection_toolbar_button_foreground;
+}
+
+.selection-mode.header-bar .button:active,
+.selection-mode.toolbar .button:active,
+.selection-mode.toolbar GtkToolButton .button:active {
+    color: @selection_toolbar_button_foreground;
+}
+
+.selection-mode.header-bar .button,
+.selection-mode.header-bar .button:active,
+.selection-mode.toolbar .button,
+.selection-mode.toolbar .button:active,
+.selection-mode.toolbar GtkToolButton .button,
+.selection-mode.toolbar GtkToolButton .button:active {
+    text-shadow: 0 1px @selection_toolbar_shadow;
+    icon-shadow: 0 1px @selection_toolbar_shadow;
+}
+
+.selection-mode.header-bar .button:backdrop,
+.selection-mode.toolbar .button:backdrop {
+    text-shadow: none;
+    icon-shadow: none;
+}
+
+
+.selection-mode.header-bar .suggested-action.button:backdrop,
+.selection-mode.toolbar .suggested-action.button:backdrop,
+.selection-mode.toolbar GtkToolButton.suggested-action .button:backdrop {
+    text-shadow: none;
+    icon-shadow: none;
+
+    background-image: none; /* remove custom bg, we want colored buttons to look like normal buttons in backdrop*/
+    background-color: @selection_toolbar_suggested_button_b;
+    border-color: @selection_toolbar_suggested_button_border_backdrop;
+
+    box-shadow: none;
+    color: @backdrop_foreground;
+}
+
+/* menu button */
+.selection-mode.header-bar .selection-menu.button,
+.selection-mode.toolbar .selection-menu.button {
+    background-image: none;
+    border-image: none;
+    border-color: transparent;
+    border: 0px;
+    box-shadow: none;
+
+    color: @selection_menu_foreground;
+}
+
+.selection-mode.toolbar .dim-label,
+.selection-mode.toolbar .selection-menu.button .dim-label {
+    color: @selection_menu_foreground;
+}
+
+.selection-mode.header-bar .selection-menu.button:backdrop,
+.selection-mode.toolbar .selection-menu.button:backdrop {
+    background-color: transparent;
+    color: @selection_menu_foreground;
+}
+
+.selection-mode.header-bar .selection-menu.button:hover,
+.selection-mode.toolbar .dim-label:hover,
+.selection-mode.toolbar .selection-menu.button:hover,
+.selection-mode.toolbar .selection-menu.button .dim-label:hover {
+    background-color: transparent;
+    color: @selection_menu_hover;
+}
+
+.selection-mode.header-bar .selection-menu.button:active,
+.selection-mode.toolbar .selection-menu.button:active {
+    background-color: transparent;
+}
+
+.selection-mode.header-bar .selection-menu.button:active,
+.selection-mode.toolbar .selection-menu.button:active {
+    color: @selection_menu_active;
+}
+
+.selection-mode.header-bar .selection-menu.button,
+.selection-mode.toolbar .selection-menu.button {
+    text-shadow: 0 1px @selection_toolbar_shadow;
+}
+
+.selection-mode.header-bar .selection-menu.button:backdrop,
+.selection-mode.toolbar .selection-menu.button:backdrop {
+    text-shadow: none;
+}
+
+.selection-mode.header-bar .selection-menu.button .menuitem,
+.selection-mode.toolbar .selection-menu.button .menuitem {
+    text-shadow: none;
+}

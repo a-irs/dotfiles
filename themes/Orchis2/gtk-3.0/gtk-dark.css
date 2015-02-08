@@ -1,0 +1,57 @@
+/* Copyright 2014 Sam Hewitt.
+*
+* This file is part of the Orchis GTK theme.
+*
+* The Orchis GTK theme is free software: you can redistribute it
+* and/or modify it under the terms of the GNU General Public License as
+* published by the Free Software Foundation, either version 3 of the
+* License, or (at your option) any later version.
+*
+* The Orchis GTK theme is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+* Public License for more details.
+*
+* You should have received a copy of the GNU General Public License along
+* with the Orchis GTK theme. If not, see http://www.gnu.org/licenses/.
+*/
+
+
+/**********
+ * Colors *
+ **********/
+
+/* Base colors */
+@define-color base #555;/* Base color */
+@define-color background #464346;/* Background color */
+@define-color foreground #ddd;/* Foreground color */
+@define-color border alpha(#000, 0.2);/* Borders color */
+@define-color separator @border;/* Separator color */
+@define-color menu_separator alpha(#000, 0.2);/* Separator color */
+@define-color text @foreground;/* Text color */
+@define-color panel #464346;/* Panel color */
+@define-color selection shade(#A348B1, 0.8);/* Selection color */
+@define-color selected_border shade(#A348B1, 0.7);/* Selection Border */
+@define-color gradient_a @background;/* Gradient color A */
+@define-color gradient_b shade(@background, 0.95);/* Gradient color B */
+@define-color view_background #555;/* View background */
+@define-color inactive_frame alpha(#000, 0.2);/* Inactive frame color */
+@define-color panel_text #ddd;/* Panel text color */
+@define-color panel_text_shadow alpha(#000, 0.2);/* Panel text color */
+@define-color text_shadow alpha(#000, 0.4);/* Text shadow */
+@define-color icon_shadow @text_shadow;/* Icon shadow */
+@define-color title shade(@titlebar, 0.6); /* Title */
+@define-color title_shadow alpha(#000, 0.4); /* Title shadow */
+@define-color window_border alpha(#000, 0.7); /* Window border */
+@define-color window_backdrop_border alpha(#000, 0.5); /* Window border (backdrop) */
+
+/***********
+ * Imports *
+ ***********/
+
+/* Import Main CSS */
+@import url("granite-widgets.css");
+@import url("gtk-widgets-assets-dark.css");
+@import url("gtk-widgets-borders-dark.css");
+@import url("gtk-widgets.css");
+@import url("gtk-common.css");

@@ -1,0 +1,587 @@
+/* Copyright 2014 Sam Hewitt.
+*
+* This file is part of the Orchis GTK theme.
+*
+* The Orchis GTK theme is free software: you can redistribute it
+* and/or modify it under the terms of the GNU General Public License as
+* published by the Free Software Foundation, either version 3 of the
+* License, or (at your option) any later version.
+*
+* The Orchis GTK theme is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+* Public License for more details.
+*
+* You should have received a copy of the GNU General Public License along
+* with the Orchis GTK theme. If not, see http://www.gnu.org/licenses/.
+*/
+
+
+/***************
+ * Check Boxes *
+ ***************/
+
+ /* Unchecked */
+.check,
+.check row:selected,
+.check row:selected:focus {
+    background: -gtk-scaled(url("assets/checkbox-unchecked.png"),url("assets/checkbox-unchecked@2.png"));
+    background-image: url("assets/checkbox-unchecked.png");
+}
+
+ /* Unchecked Hover */
+.check:hover,
+.check row:selected:hover,
+.check row:selected:focus:hover {
+    background: -gtk-scaled(url("assets/checkbox-unchecked-hover.png"),url("assets/checkbox-unchecked-hover@2.png"));
+    background-image: url("assets/checkbox-unchecked-hover.png");
+}
+
+/* Unchecked Insensitive */
+.check:insensitive,
+.check row:selected:insensitive,
+.check row:selected:focus:insensitive {
+    background: -gtk-scaled(url("assets/checkbox-unchecked-insensitive.png"),url("assets/checkbox-unchecked-insensitive@2.png"));
+    background-image: url("assets/checkbox-unchecked-insensitive.png");
+}
+
+/* Unchecked Insensitive Unfocused */
+.check:insensitive:backdrop,
+.check row:selected:insensitive:backdrop,
+.check row:selected:focus:insensitive:backdrop {
+    background: -gtk-scaled(url("assets/checkbox-unchecked-insensitive.png"),url("assets/checkbox-unchecked-insensitive@2.png"));
+    background-image: url("assets/checkbox-unchecked-insensitive.png");
+}
+
+/* Unchecked Unfocused */
+.check:backdrop,
+.check row:selected:backdrop,
+.check row:selected:focus:backdrop {
+    background: -gtk-scaled(url("assets/checkbox-unchecked-backdrop.png"),url("assets/checkbox-unchecked-backdrop@2.png"));
+    background-image: url("assets/checkbox-unchecked-backdrop.png");
+}
+
+/* Checked */
+.check:active,
+.check row:selected:active,
+.check row:selected:focus:active {
+    background: -gtk-scaled(url("assets/checkbox-checked.png"),url("assets/checkbox-checked@2.png"));
+    background-image: url("assets/checkbox-checked.png");
+}
+
+ /* Checked Hover */
+.check:active:hover,
+.check row:selected:active:hover,
+.check row:selected:focus:active:hover {
+    background: -gtk-scaled(url("assets/checkbox-checked-hover.png"),url("assets/checkbox-checked-hover@2.png"));
+    background-image: url("assets/checkbox-checked-hover.png");
+}
+
+/* Checked Insensitive */
+.check:active:insensitive,
+.check row:selected:active:insensitive,
+.check row:selected:focus:active:insensitive {
+    background: -gtk-scaled(url("assets/checkbox-checked-insensitive.png"),url("assets/checkbox-checked-insensitive@2.png"));
+    background-image: url("assets/checkbox-checked-insensitive.png");
+}
+
+/* Checked Insensitive Unfocused */
+.check:active:insensitive:backdrop,
+.check row:selected:active:insensitive:backdrop,
+.check row:selected:focus:active:insensitive:backdrop {
+    background: -gtk-scaled(url("assets/checkbox-checked-insensitive.png"),url("assets/checkbox-checked-insensitive@2.png"));
+    background-image: url("assets/checkbox-checked-insensitive.png");
+}
+
+/* Checked Unfocused */
+.check:active:backdrop,
+.check row:selected:active:backdrop,
+.check row:selected:focus:active:backdrop {
+    background: -gtk-scaled(url("assets/checkbox-checked-backdrop.png"),url("assets/checkbox-checked-backdrop@2.png"));
+    background-image: url("assets/checkbox-checked-backdrop.png");
+}
+
+/* Mixed*/
+.check:inconsistent,
+.check row:selected:inconsistent,
+.check row:selected:focus:inconsistent {
+    background: -gtk-scaled(url("assets/checkbox-mixed.png"),url("assets/checkbox-mixed@2.png"));
+    background-image: url("assets/checkbox-mixed.png");
+}
+
+/* Mixed Hover */
+.check:inconsistent:hover,
+.check row:selected:inconsistent:hover,
+.check row:selected:focus:inconsistent:hover {
+    background: -gtk-scaled(url("assets/checkbox-mixed-hover.png"),url("assets/checkbox-mixed-hover@2.png"));
+    background-image: url("assets/checkbox-mixed-hover.png");
+}
+
+/* Mixed Insensitive Unfocused */
+.check:inconsistent:insensitive:backdrop,
+.check row:selected:inconsistent:insensitive:backdrop,
+.check row:selected:focus:inconsistent:insensitive:backdrop {
+    background: -gtk-scaled(url("assets/checkbox-mixed-insensitive.png"),url("assets/checkbox-mixed-insensitive@2.png"));
+    background-image: url("assets/checkbox-mixed-hover.png");
+}
+
+/* Mixed Insensitive */
+.check:inconsistent:insensitive,
+.check row:selected:inconsistent:insensitive,
+.check row:selected:focus:inconsistent:insensitive {
+    background: -gtk-scaled(url("assets/checkbox-mixed-insensitive.png"),url("assets/checkbox-mixed-insensitive@2.png"));
+    background-image: url("assets/checkbox-mixed-insensitive.png");
+}
+
+/* Mixed Unfocused */
+.check:inconsistent:backdrop,
+.check row:selected:inconsistent:backdrop,
+.check row:selected:focus:inconsistent:backdrop {
+    background: -gtk-scaled(url("assets/checkbox-mixed-backdrop.png"),url("assets/checkbox-mixed-backdrop@2.png"));
+    background-image: url("assets/checkbox-mixed-backdrop.png");
+}
+
+/*****************
+ * Radio Buttons *
+ *****************/
+
+ /* Unchecked Insensitive */
+.radio,
+.radio row:selected,
+.radio row:selected:focus {
+    background: -gtk-scaled(url("assets/radio-unchecked.png"),url("assets/radio-unchecked@2.png"));
+    background-image: url("assets/radio-unchecked.png");
+}
+
+/* Unchecked Hover */
+.radio:hover,
+.radio row:selected:hover,
+.radio row:selected:focus:hover {
+    background: -gtk-scaled(url("assets/radio-unchecked-hover.png"),url("assets/radio-unchecked-hover@2.png"));
+    background-image: url("assets/radio-unchecked-hover.png");
+}
+
+/* Unchecked Insensitive */
+.radio:insensitive,
+.radio row:selected:insensitive,
+.radio row:selected:focus:insensitive {
+    background: -gtk-scaled(url("assets/radio-unchecked-insensitive.png"),url("assets/radio-unchecked-insensitive@2.png"));
+    background-image: url("assets/radio-unchecked-insensitive.png");
+}
+
+/* Unchecked Unfocused */
+.radio:backdrop,
+.radio row:selected:backdrop,
+.radio row:selected:focus:backdrop {
+    background: -gtk-scaled(url("assets/radio-unchecked-backdrop.png"),url("assets/radio-unchecked-backdrop@2.png"));
+    background-image: url("assets/radio-unchecked-backdrop.png");
+}
+
+/* Checked */
+.radio:active,
+.radio row:selected:active,
+.radio row:selected:focus:active {
+    background: -gtk-scaled(url("assets/radio-checked.png"),url("assets/radio-checked@2.png"));
+    background-image: url("assets/radio-checked.png");
+}
+
+/* Checked Hover */
+.radio:active:hover,
+.radio row:selected:active:hover,
+.radio row:selected:focus:active:hover {
+    background: -gtk-scaled(url("assets/radio-checked-hover.png"),url("assets/radio-checked-hover@2.png"));
+    background-image: url("assets/radio-checked-hover.png");
+}
+
+/* Checked Insensitive */
+.radio:active:insensitive,
+.radio row:selected:active:insensitive,
+.radio row:selected:focus:active:insensitive {
+    background: -gtk-scaled(url("assets/radio-checked-insensitive.png"),url("assets/radio-checked-insensitive@2.png"));
+    background-image: url("assets/radio-checked-insensitive.png");
+}
+
+/* Checked Unfocused */
+.radio:active:backdrop,
+.radio row:selected:active:backdrop,
+.radio row:selected:focus:active:backdrop {
+    background: -gtk-scaled(url("assets/radio-checked-backdrop.png"),url("assets/radio-checked-backdrop@2.png"));
+    background-image: url("assets/radio-checked-backdrop.png");
+}
+
+/* Mixed*/
+.radio:inconsistent,
+.radio row:selected:inconsistent,
+.radio row:selected:focus:inconsistent {
+    background: -gtk-scaled(url("assets/radio-mixed.png"),url("assets/radio-mixed@2.png"));
+    background-image: url("assets/radio-mixed.png");
+}
+
+/* Mixed Hover */
+.radio:inconsistent:hover,
+.radio row:selected:inconsistent:hover,
+.radio row:selected:focus:inconsistent:hover {
+    background: -gtk-scaled(url("assets/radio-mixed-hover.png"),url("assets/radio-mixed-hover@2.png"));
+    background-image: url("assets/radio-mixed-hover.png");
+}
+
+/* Mixed Insensitive Unfocused */
+.radio:inconsistent:insensitive:backdrop,
+.radio row:selected:inconsistent:insensitive:backdrop,
+.radio row:selected:focus:inconsistent:insensitive:backdrop {
+    background: -gtk-scaled(url("assets/radio-mixed-insensitive.png"),url("assets/radio-mixed-insensitive@2.png"));
+    background-image: url("assets/radio-mixed-insensitive.png");
+}
+
+/* Mixed Insensitive */
+.radio:inconsistent:insensitive,
+.radio row:selected:inconsistent:insensitive,
+.radio row:selected:focus:inconsistent:insensitive {
+    background: -gtk-scaled(url("assets/radio-mixed-insensitive.png"),url("assets/radio-mixed-insensitive@2.png"));
+    background-image: url("assets/radio-mixed-insensitive.png");
+}
+
+/* Mixed Unfocused */
+.radio:inconsistent:backdrop,
+.radio row:selected:inconsistent:backdrop,
+.radio row:selected:focus:inconsistent:backdrop {
+    background: -gtk-scaled(url("assets/radio-mixed-backdrop.png"),url("assets/radio-mixed-backdrop@2.png"));
+    background-image: url("assets/radio-mixed-backdrop.png");
+}
+
+/**************
+ * Menu items *
+ **************/
+
+.menuitem.check:active {
+    background-image: url("assets/menuitem-checkbox-checked.png");
+}
+
+.menuitem.check:active:hover {
+    background-image: url("assets/menuitem-checkbox-checked-hover.png");
+}
+
+.menuitem.check:active:insensitive {
+    background-image: url("assets/menuitem-checkbox-checked-insensitive.png");
+}
+
+.menuitem.check:inconsistent:hover,
+.menuitem.radio:inconsistent:hover {
+    background-image: url("assets/menuitem-checkbox-mixed-hover.png");
+}
+
+.menuitem.check:inconsistent,
+.menuitem.radio:inconsistent {
+    background-image: url("assets/menuitem-checkbox-mixed.png");
+}
+
+.menuitem.check:inconsistent:insensitive,
+.menuitem.radio:inconsistent:insensitive {
+    background-image: url("assets/menuitem-checkbox-mixed-insensitive.png");
+}
+
+.menuitem.radio:active {
+    background-image: url("assets/menuitem-radio-checked.png");
+}
+
+.menuitem.radio:active:hover {
+    background-image: url("assets/menuitem-radio-checked-hover.png");
+}
+
+.menuitem.radio:active:insensitive {
+    background-image: url("assets/menuitem-radio-checked-insensitive.png");
+}
+
+/***************
+ * Resize grip *
+ ***************/
+
+.grip {
+    background-color: transparent;
+    background: url("assets/resize-grip.svg");
+}
+
+/*******************
+ * Pane separators *
+ *******************/
+.pane-separator {
+    background: url("assets/pane-separator-grip.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.pane-separator:hover {
+    background: url("assets/pane-separator-grip-prelight.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.pane-separator.vertical {
+    background: url("assets/pane-separator-grip-vertical.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.pane-separator.vertical:hover {
+    background: url("assets/pane-separator-grip-vertical-prelight.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/*********************
+ * GtkScale's slider *
+ *********************/
+.scale.slider,
+.scale.slider.horizontal {
+    background: -gtk-scaled(url("assets/scale-slider-horz.png"),url("assets/scale-slider-horz@2.png"));
+    background-image: url("assets/scale-slider-horz.png");
+}
+
+.scale.slider:hover,
+.scale.slider.horizontal:hover {
+    background: -gtk-scaled(url("assets/scale-slider-horz-hover.png"),url("assets/scale-slider-horz-hover@2.png"));
+    background-image: url("assets/scale-slider-horz-hover.png");
+}
+
+.scale.slider:active,
+.scale.slider:active:hover,
+.scale.slider.horizontal:active,
+.scale.slider.horizontal:active:hover {
+    background: -gtk-scaled(url("assets/scale-slider-horz-active.png"),url("assets/scale-slider-horz-active@2.png"));
+    background-image: url("assets/scale-slider-horz-active.png");
+}
+
+.scale.slider:backdrop,
+.scale.slider:backdrop:hover,
+.scale.slider.horizontal:backdrop,
+.scale.slider.horizontal:backdrop:hover {
+    background: -gtk-scaled(url("assets/scale-slider-horz-backdrop.png"),url("assets/scale-slider-horz-backdrop@2.png"));
+    background-image: url("assets/scale-slider-horz-backdrop.png");
+}
+
+.scale.slider:insensitive,
+.scale.slider:insensitive:hover,
+.scale.slider.horizontal:insensitive,
+.scale.slider.horizontal:insensitive:hover {
+    background: -gtk-scaled(url("assets/scale-slider-horz-insensitive.png"),url("assets/scale-slider-horz-insensitive@2.png"));
+    background-image: url("assets/scale-slider-horz-insensitive.png");
+}
+
+.scale.slider:insensitive:backdrop,
+.scale.slider:insensitive:backdrop:hover,
+.scale.slider.horizontal:insensitive:backdrop,
+.scale.slider.horizontal:insensitive:backdrop:hover {
+    background: -gtk-scaled(url("assets/scale-slider-horz-backdrop-insensitive.png"),url("assets/scale-slider-horz-backdrop-insensitive@2.png"));
+    background-image: url("assets/scale-slider-horz-backdrop-insensitive.png");
+}
+
+
+.scale.slider.vertical {
+    background: -gtk-scaled(url("assets/scale-slider-vert.png"),url("assets/scale-slider-vert@2.png"));
+    background-image: url("assets/scale-slider-vert.png");
+}
+
+.scale.slider.vertical:hover {
+    background: -gtk-scaled(url("assets/scale-slider-vert-hover.png"),url("assets/scale-slider-vert-hover@2.png"));
+    background-image: url("assets/scale-slider-vert-hover.png");
+}
+
+.scale.slider.vertical:active,
+.scale.slider.vertical:active:hover {
+    background: -gtk-scaled(url("assets/scale-slider-vert-active.png"),url("assets/scale-slider-vert-active@2.png"));
+    background-image: url("assets/scale-slider-vert-active.png");
+}
+
+.scale.slider.vertical:backdrop,
+.scale.slider.vertical:backdrop:hover {
+    background: -gtk-scaled(url("assets/scale-slider-vert-backdrop.png"),url("assets/scale-slider-vert-backdrop@2.png"));
+    background-image: url("assets/scale-slider-vert-backdrop.png");
+}
+
+.scale.slider.vertical:insensitive,
+.scale.slider.vertical:insensitive:hover {
+    background: -gtk-scaled(url("assets/scale-slider-vert-insensitive.png"),url("assets/scale-slider-vert-insensitive@2.png"));
+    background-image: url("assets/scale-slider-vert-insensitive.png");
+}
+
+.scale.slider.vertical:insensitive:backdrop,
+.scale.slider.vertical:insensitive:backdrop:hover {
+    background: -gtk-scaled(url("assets/scale-slider-vert-backdrop-insensitive.png"),url("assets/scale-slider-vert-backdrop-insensitive@2.png"));
+    background-image: url("assets/scale-slider-vert-backdrop-insensitive.png");
+}
+
+.scale.scale-has-marks-above.slider.horizontal {
+    background: -gtk-scaled(url("assets/scale-slider-up.png"),url("assets/scale-slider-up@2.png"));
+    background-image: url("assets/scale-slider-up.png");
+}
+
+.scale.scale-has-marks-above.slider.horizontal:hover {
+    background: -gtk-scaled(url("assets/scale-slider-up-hover.png"),url("assets/scale-slider-up-hover@2.png"));
+    background-image: url("assets/scale-slider-up-hover.png");
+}
+
+.scale.scale-has-marks-above.slider.horizontal:active,
+.scale.scale-has-marks-above.slider.horizontal:active:hover {
+    background: -gtk-scaled(url("assets/scale-slider-up-active.png"),url("assets/scale-slider-up-active@2.png"));
+    background-image: url("assets/scale-slider-up-active.png");
+}
+
+.scale.scale-has-marks-above.slider.horizontal:insensitive,
+.scale.scale-has-marks-above.slider.horizontal:insensitive:hover {
+    background: -gtk-scaled(url("assets/scale-slider-up-insensitive.png"),url("assets/scale-slider-up-insensitive@2.png"));
+    background-image: url("assets/scale-slider-up-insensitive.png");
+}
+
+.scale.scale-has-marks-above.slider.horizontal:backdrop,
+.scale.scale-has-marks-above.slider.horizontal:backdrop:hover {
+    background: -gtk-scaled(url("assets/scale-slider-up-backdrop.png"),url("assets/scale-slider-up-backdrop@2.png"));
+    background-image: url("assets/scale-slider-up-backdrop.png");
+}
+
+.scale.scale-has-marks-above.slider.horizontal:backdrop:insensitive,
+.scale.scale-has-marks-above.slider.horizontal:backdrop:insensitive:hover {
+    background: -gtk-scaled(url("assets/scale-slider-up-backdrop-insensitive.png"),url("assets/scale-slider-up-backdrop-insensitive@2.png"));
+    background-image: url("assets/scale-slider-up-insensitive.png");
+}
+
+.scale.scale-has-marks-above.slider.vertical {
+    background: -gtk-scaled(url("assets/scale-slider-left.png"),url("assets/scale-slider-left@2.png"));
+    background-image: url("assets/scale-slider-left.png");
+}
+
+.scale.scale-has-marks-above.slider.vertical:hover {
+    background: -gtk-scaled(url("assets/scale-slider-left-hover.png"),url("assets/scale-slider-left-hover@2.png"));
+    background-image: url("assets/scale-slider-left-hover.png");
+}
+
+.scale.scale-has-marks-above.slider.vertical:active,
+.scale.scale-has-marks-above.slider.vertical:active:hover {
+    background: -gtk-scaled(url("assets/scale-slider-left-active.png"),url("assets/scale-slider-left-active@2.png"));
+    background-image: url("assets/scale-slider-left-active.png");
+}
+
+.scale.scale-has-marks-above.slider.vertical:insensitive,
+.scale.scale-has-marks-above.slider.vertical:insensitive:hover {
+    background: -gtk-scaled(url("assets/scale-slider-left-insensitive.png"),url("assets/scale-slider-left-insensitive@2.png"));
+    background-image: url("assets/scale-slider-left-insensitive.png");
+}
+
+.scale.scale-has-marks-above.slider.vertical:backdrop,
+.scale.scale-has-marks-above.slider.vertical:backdrop:hover {
+    background: -gtk-scaled(url("assets/scale-slider-left-backdrop.png"),url("assets/scale-slider-left-backdrop@2.png"));
+    background-image: url("assets/scale-slider-left-backdrop.png");
+}
+
+.scale.scale-has-marks-above.slider.vertical:backdrop:insensitive,
+.scale.scale-has-marks-above.slider.vertical:backdrop:insensitive:hover {
+    background: -gtk-scaled(url("assets/scale-slider-left-backdrop-insensitive.png"),url("assets/scale-slider-left-backdrop-insensitive@2.png"));
+    background-image: url("assets/scale-slider-left-backdrop-insensitive.png");
+}
+
+.scale.scale-has-marks-below.slider.horizontal {
+    background: -gtk-scaled(url("assets/scale-slider-down.png"),url("assets/scale-slider-down@2.png"));
+    background-image: url("assets/scale-slider-down.png");
+}
+
+.scale.scale-has-marks-below.slider.horizontal:hover {
+    background: -gtk-scaled(url("assets/scale-slider-down-hover.png"),url("assets/scale-slider-down-hover@2.png"));
+    background-image: url("assets/scale-slider-down-hover.png");
+}
+
+.scale.scale-has-marks-below.slider.horizontal:active,
+.scale.scale-has-marks-below.slider.horizontal:active:hover {
+    background: -gtk-scaled(url("assets/scale-slider-down-active.png"),url("assets/scale-slider-down-active@2.png"));
+    background-image: url("assets/scale-slider-down-active.png");
+}
+
+.scale.scale-has-marks-below.slider.horizontal:insensitive,
+.scale.scale-has-marks-below.slider.horizontal:insensitive:hover {
+    background: -gtk-scaled(url("assets/scale-slider-down-insensitive.png"),url("assets/scale-slider-down-insensitive@2.png"));
+    background-image: url("assets/scale-slider-down-insensitive.png");
+}
+
+.scale.scale-has-marks-below.slider.horizontal:backdrop,
+.scale.scale-has-marks-below.slider.horizontal:backdrop:hover {
+    background: -gtk-scaled(url("assets/scale-slider-down-backdrop.png"),url("assets/scale-slider-down-backdrop@2.png"));
+    background-image: url("assets/scale-slider-down-backdrop.png");
+}
+
+.scale.scale-has-marks-below.slider.horizontal:backdrop:insensitive,
+.scale.scale-has-marks-below.slider.horizontal:backdrop:insensitive:hover {
+    background: -gtk-scaled(url("assets/scale-slider-down-backdrop-insensitive.png"),url("assets/scale-slider-down-backdrop-insensitive@2.png"));
+    background-image: url("assets/scale-slider-down-backdrop-insensitive.png");
+}
+
+.scale.scale-has-marks-below.slider.vertical {
+    background: -gtk-scaled(url("assets/scale-slider-right.png"),url("assets/scale-slider-right@2.png"));
+    background-image: url("assets/scale-slider-right.png");
+}
+
+.scale.scale-has-marks-below.slider.vertical:hover {
+    background: -gtk-scaled(url("assets/scale-slider-right-hover.png"),url("assets/scale-slider-right-hover@2.png"));
+    background-image: url("assets/scale-slider-right-hover.png");
+}
+
+.scale.scale-has-marks-below.slider.vertical:active,
+.scale.scale-has-marks-below.slider.vertical:active:hover {
+    background: -gtk-scaled(url("assets/scale-slider-right-active.png"),url("assets/scale-slider-right-active@2.png"));
+    background-image: url("assets/scale-slider-right-active.png");
+}
+
+.scale.scale-has-marks-below.slider.vertical:insensitive,
+.scale.scale-has-marks-below.slider.vertical:insensitive:hover {
+    background: -gtk-scaled(url("assets/scale-slider-right-insensitive.png"),url("assets/scale-slider-right-insensitive@2.png"));
+    background-image: url("assets/scale-slider-right-insensitive.png");
+}
+
+.scale.scale-has-marks-below.slider.vertical:backdrop,
+.scale.scale-has-marks-below.slider.vertical:backdrop:hover {
+    background: -gtk-scaled(url("assets/scale-slider-right-backdrop.png"),url("assets/scale-slider-right-backdrop@2.png"));
+    background-image: url("assets/scale-slider-right-backdrop.png");
+}
+
+.scale.scale-has-marks-below.slider.vertical:backdrop:insensitive,
+.scale.scale-has-marks-below.slider.vertical:backdrop:insensitive:hover {
+    background: -gtk-scaled(url("assets/scale-slider-right-backdrop-insensitive.png"),url("assets/scale-slider-right-backdrop-insensitive@2.png"));
+    background-image: url("assets/scale-slider-right-backdrop-insensitive.png");
+}
+
+/********************************
+ * Touch text selection handles *
+ ********************************/
+.cursor-handle.bottom {
+    background: -gtk-scaled(url("assets/scale-slider-up-backdrop.png"),url("assets/scale-slider-up-backdrop@2.png"));
+    background-image: url("assets/scale-slider-up-backdrop.png");
+}
+
+.cursor-handle.top {
+    background: -gtk-scaled(url("assets/scale-slider-down-backdrop.png"),url("assets/scale-slider-down-backdrop@2.png"));
+    background-image: url("assets/scale-slider-down-backdrop.png");
+}
+
+/***********
+ * Spinner *
+ ***********/
+
+@keyframes spinner {
+    0% { background-image: url("assets/spinner-01.svg"); }
+    14% { background-image: url("assets/spinner-02.svg"); }
+    28% { background-image: url("assets/spinner-03.svg"); }
+    42% { background-image: url("assets/spinner-04.svg"); }
+    56% { background-image: url("assets/spinner-05.svg"); }
+    70% { background-image: url("assets/spinner-06.svg"); }
+    84% { background-image: url("assets/spinner-07.svg"); }
+    100% { background-image: url("assets/spinner-08.svg"); }
+}
+
+.spinner {
+    background-color: transparent;
+    background-image: url("assets/spinner-01.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.spinner:active {
+    background-image: url("assets/spinner-01.svg");
+    animation: spinner 600ms infinite linear;
+}

@@ -1,0 +1,282 @@
+/* Copyright 2014 Sam Hewitt.
+*
+* This file is part of the Orchis GTK theme.
+*
+* The Orchis GTK theme is free software: you can redistribute it
+* and/or modify it under the terms of the GNU General Public License as
+* published by the Free Software Foundation, either version 3 of the
+* License, or (at your option) any later version.
+*
+* The Orchis GTK theme is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+* Public License for more details.
+*
+* You should have received a copy of the GNU General Public License along
+* with the Orchis GTK theme. If not, see http://www.gnu.org/licenses/.
+*/
+
+/**********************
+ * Common Definitions *
+ **********************/
+
+/* Insensitive colors */
+@define-color insensitive_base shade(@base, 0.95);
+@define-color insensitive_background alpha(@base, 0.0);
+@define-color insensitive_foreground shade(@foreground, 1.05);
+@define-color insensitive_border shade(@border, 1.05);
+@define-color insensitive_separator shade(@separator, 1.05);
+@define-color insensitive_text alpha(@foreground, 0.4);
+@define-color insensitive_selection shade(@selection, 1.05);
+
+/* Unfocused colors */
+@define-color backdrop_base shade(@base, 0.95);
+@define-color backdrop_background shade(@background, 0.99);
+@define-color backdrop_foreground shade(@foreground, 1.2);
+@define-color backdrop_border shade(@border, 1.02);
+@define-color backdrop_separator shade(@separator, 0.99);
+@define-color backdrop_panel shade(@panel, 0.99);
+@define-color backdrop_text shade(@foreground, 1.2);
+@define-color backdrop_selection shade(@selection, 1.3);
+@define-color backdrop_gradient_a shade(@background, 0.99);
+@define-color backdrop_gradient_b shade(@background, 0.99);
+
+/* Unfocused-insensitive colors */
+@define-color backdrop_insensitive_border mix(@backdrop_background, @backdrop_border, 0.5);
+@define-color backdrop_insensitive_foreground mix(@backdrop_background, @backdrop_foreground, 0.5);
+@define-color backdrop_insensitive_background mix(@backdrop_background, @backdrop_base, 0.5);
+@define-color backdrop_insensitive_text alpha(@foreground, 0.4);
+
+/* Unfocused-selected colors */
+@define-color backdrop_selected_background shade(@selection, 1.3);
+@define-color backdrop_selected_foreground @foreground;
+
+/* Hover colors */
+@define-color hover_base shade(@base, 1.02);
+@define-color hover_background rgba(255,255,255,0.2);
+@define-color hover_foreground shade(@foreground, 1.02);
+@define-color hover_border shade(@border, 1.02);
+@define-color hover_text shade(@foreground, 1.02);
+@define-color hover_selection shade(@selection, 1.3);
+
+/* Active colors */
+@define-color active_text shade(@foreground, 1.3);
+
+/* Selected color */
+@define-color selected_background @selection;
+@define-color selected_border shade(@selection, 0.8);
+@define-color selected_foreground white;
+
+/****************
+ * Theme colors *
+  ***************/
+
+@define-color theme_base @base;
+@define-color theme_base_color @base;
+
+@define-color theme_bg_color @background;
+@define-color theme_background @background;
+@define-color bg_color @background;
+@define-color fg_color @foreground;
+@define-color theme_foreground @foreground;
+
+@define-color theme_selected_background @selected_background;
+@define-color selected_bg_color @selected_background;
+@define-color theme_selected_foreground @selected_foreground;
+
+@define-color theme_text @foreground;
+@define-color theme_text_color @foreground;
+
+@define-color panel_bg_color @panel;
+@define-color panel_fg_color @panel_text;
+
+/*****************
+ * Button colors *
+ *****************/
+
+@define-color button_gradient_a shade(@gradient_a, 1.02);
+@define-color button_gradient_b shade(@gradient_b, 1.02);
+
+@define-color button_active_gradient_a shade(@gradient_b, 1.02);
+@define-color button_active_gradient_b shade(@gradient_a, 1.02);
+
+@define-color button_hover_gradient_a shade(@gradient_a, 1.05);
+@define-color button_hover_gradient_b shade(@gradient_b, 1.05);
+
+@define-color button_insensitive_gradient_a @insensitive_background;
+@define-color button_insensitive_gradient_b @insensitive_background;
+
+@define-color button_backdrop_gradient_a @backdrop_background;
+@define-color button_backdrop_gradient_b @backdrop_background;
+
+@define-color button_active_text @active_text;
+@define-color button_active_text_shadow alpha(#000, 0.2);
+
+@define-color button_text_shadow alpha(#000, 0.2);
+
+
+/**************
+ * Scrollbars *
+ **************/
+@define-color scrollbar_slider shade(@foreground,1.2);
+@define-color scrollbar_slider_backdrop shade(@scrollbar_slider,0.95);
+@define-color scrollbar_slider_insensitive shade(@scrollbar_slider,1.05);
+
+@define-color scrollbar_trough shade(@background,0.8);
+@define-color scrollbar_trough_insensitive shade(@insensitive_background,0.95);
+@define-color scrollbar_trough_backdrop shade(@backdrop_background,0.95);
+
+/****************
+ * Progressbars *
+ ****************/
+
+@define-color progressbar_background_a shade(@selected_background, 1.1);
+@define-color progressbar_background_b @selected_background;
+
+@define-color insensitive_progressbar_background_a @insensitive_background;
+@define-color insensitive_progressbar_background_b @insensitive_background;
+
+@define-color backdrop_progressbar_background_a shade(@backdrop_background, 0.85);
+@define-color backdrop_progressbar_background_b shade(@backdrop_background, 0.85);
+
+
+/***********
+ * Troughs *
+ ***********/
+@define-color trough_active @selected_background;
+@define-color trough_background shade(@base,0.95);
+@define-color insensitive_trough_background shade(@insensitive_background, 0.95);
+@define-color backdrop_trough_background shade(@backdrop_background, 0.98);
+
+/*********************
+ * Internal elements *
+ *********************/
+@define-color internal_element shade(@background, 0.8);
+@define-color internal_element_prelight @foreground;
+@define-color internal_element_insensitive mix(@internal_element, @base, 0.7);
+
+@define-color inset_light alpha(white, 0.45);
+@define-color inset_dark alpha(#000, 0.07);
+
+/*****************
+ * Titlebar Colors *
+ *****************/
+@define-color titlebar shade(@background, 0.9);/* Titlebar */
+@define-color titlebar_gradient_a shade(@background, 0.99);/* Titlebar Gradient color A */
+@define-color titlebar_gradient_b shade(@background, 0.8);/* Titlebar Gradient color B */
+
+/*****************
+ * Miscellaneous *
+ *****************/
+@define-color placeholder_text_color shade(@foreground, 2.0);
+@define-color view_symbolic shade(@internal_element, 0.50);
+
+/* GNOME Apps */
+@define-color entry_tag_background #3465a4;
+
+/******************************
+ * Destructive action buttons *
+ ******************************/
+@define-color destructive_action_button_a @error;
+@define-color destructive_action_button_b shade(@error, 0.9);
+@define-color destructive_action_button_border shade(@error, 0.8);
+@define-color destructive_action_button_foreground @base;
+@define-color destructive_action_button_shadow alpha(@foreground, 0.5);
+
+/******************************
+ * Suggested action buttons *
+ ******************************/
+@define-color suggested_action_button_a shade(@selection, 1.1);
+@define-color suggested_action_button_b shade(@suggested_action_button_a, 0.95);
+@define-color suggested_action_button_shadow @panel_text_shadow;
+
+/**************************
+ * Selection Mode classes *
+ **************************/
+@define-color selection_toolbar_background_a shade(@selection, 1.1);
+@define-color selection_toolbar_background_b @selection;
+@define-color selection_toolbar_background_backdrop @selection_toolbar_background_a;
+@define-color selection_toolbar_foreground @base;
+@define-color selection_toolbar_shadow alpha(#000, 0.2);
+@define-color selection_toolbar_border shade(@selection_toolbar_background_b, 0.75);
+
+@define-color selection_toolbar_button_a @suggested_action_button_a;
+@define-color selection_toolbar_button_b @suggested_action_button_b;
+@define-color selection_toolbar_button_foreground @base;
+@define-color selection_toolbar_button_border shade(@selection, 0.8);
+@define-color selection_toolbar_button_border_backdrop alpha(@selection_toolbar_button_border, 0.30);
+@define-color selection_toolbar_button_shadow alpha(white, 0.15);
+
+@define-color selection_toolbar_suggested_button_a @base;
+@define-color selection_toolbar_suggested_button_b @background;
+@define-color selection_toolbar_suggested_button_c #f7f7f7;
+@define-color selection_toolbar_suggested_button_foreground @foreground;
+@define-color selection_toolbar_suggested_button_border @selection_toolbar_button_border;
+@define-color selection_toolbar_suggested_button_border_backdrop @selection_toolbar_button_border_backdrop;
+
+@define-color selection_menu_foreground @selection_toolbar_foreground;
+@define-color selection_menu_hover shade(@selection_menu_foreground, 1.2);
+@define-color selection_menu_active shade(@selection_menu_foreground, 1.1);
+
+/* Hightlight & shadow colors */
+@define-color highlight #fff;
+@define-color shadow #000;
+
+/***********
+ * Popover *
+ ***********/
+@define-color osd_popover_background alpha(@panel, 0.90);
+
+/******************
+ * Infobar colors *
+ ******************/
+
+@define-color infobar_background @selection;
+@define-color infobar_foreground white;
+
+@define-color link #A348B1;
+@define-color question #60ade8;
+@define-color warning #f49f25;
+@define-color error #e50e0e;
+@define-color success #36c1d4;
+@define-color info #f5f697;
+
+/* Info colors */
+@define-color info_foreground #333333;
+@define-color info_text_shadow alpha(white, 0.2);
+@define-color info_background @info;
+@define-color info_border shade(@info_background, 0.9);
+
+/* Warning colors */
+@define-color warning_foreground #333333;
+@define-color warning_text_shadow alpha(white, 0.2);
+@define-color warning_background @warning;
+@define-color warning_border shade(@warning_background, 0.9);
+
+/* Question colors */
+@define-color question_foreground white;
+@define-color question_text_shadow alpha(#000, 0.2);
+@define-color question_background @question;
+@define-color question_border shade(@question_background, 0.9);
+
+/* Error colors */
+@define-color error_foreground white;
+@define-color error_text_shadow alpha(#000, 0.5);
+@define-color error_background @error;
+@define-color error_border shade(@error_background, 0.9);
+
+/**********
+ * Window *
+ **********/
+@define-color window_shadow alpha(#000, 0.4);
+
+/***********
+ * Imports *
+ ***********/
+
+/* Import App-Specific CSS */
+@import url("apps/fallback.css");
+@import url("apps/gnome.css");
+@import url("apps/pantheon.css");
+@import url("apps/unity.css");
+@import url("apps/xfce.css");

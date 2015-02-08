@@ -4,7 +4,7 @@ DARK_THEME='Numix-Dark-GTK2'
 DARK_ICONS='Faba-Mono-Dark'
 DARK_GTK='Numix-Yosemite'
 
-LIGHT_THEME='Greybird'
+LIGHT_THEME='Orchis2'
 LIGHT_ICONS='Faba-Mono-Dark'
 LIGHT_GTK='Numix-Yosemite'
 
@@ -12,14 +12,14 @@ _dark() {
     xfconf-query -c xsettings -p /Net/ThemeName -s "$DARK_THEME"
     xfconf-query -c xsettings -p /Net/IconThemeName -s "$DARK_ICONS"
     xfconf-query -c xfwm4 -p /general/theme -s "$DARK_GTK"
-    xfconf-query -c xsettings -p /Gtk/ButtonImages -s false
+    #xfconf-query -c xsettings -p /Gtk/ButtonImages -s false
 }
 
 _light() {
     xfconf-query -c xsettings -p /Net/ThemeName -s "$LIGHT_THEME"
     xfconf-query -c xsettings -p /Net/IconThemeName -s "$LIGHT_ICONS"
     xfconf-query -c xfwm4 -p /general/theme -s "$LIGHT_GTK"
-    xfconf-query -c xsettings -p /Gtk/ButtonImages -s true
+    #xfconf-query -c xsettings -p /Gtk/ButtonImages -s true
 }
 
 _toggle() {
