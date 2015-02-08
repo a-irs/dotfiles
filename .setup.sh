@@ -80,8 +80,8 @@ else
 fi
 
 git clone --depth=1 https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> /dev/null
-vim +PluginInstall +qall
-print_info "installed vundles"
+#vim +PluginInstall +qall
+#print_info "installed vundles"
 
 touch -a ~/.config/mpd/{database,log,pid,state,sticker.sql}
 print_info "created blank files for MPD"
