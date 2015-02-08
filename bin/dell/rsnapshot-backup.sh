@@ -1,1 +1,0 @@
-../lib/rsnapshot-backup.sh
