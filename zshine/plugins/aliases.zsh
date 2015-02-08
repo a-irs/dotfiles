@@ -63,6 +63,10 @@ s() {
     done
 }
 
+if [[ -d ~/dev/docker/archlinux ]]; then
+    alias dev-attach=~/dev/docker/archlinux/attach.sh
+fi
+
 alias cp='cp -i'
 alias ln='ln -i'
 alias mv='mv -i'
@@ -494,7 +498,7 @@ if [ -n "$commands[netctl]" ]; then
     for c in $sudo_nc_commands; do; alias nc-$c="sudo netctl $c"; done
 fi
 
-if [ -f ~/.bin/pushbullet.sh ]; then
+if [  -n "$commands[pushbullet.sh]" ]; then
     alias pushf='pushbullet.sh push C6503 file'
     alias pusht='pushbullet.sh push C6503 note Text'
     alias pushl='pushbullet.sh push C6503 link Link'
