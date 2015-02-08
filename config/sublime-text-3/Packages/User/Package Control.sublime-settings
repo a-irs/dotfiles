@@ -1,0 +1,25 @@
+{
+	"auto_upgrade": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"All Autocomplete",
+		"BracketHighlighter",
+		"Color Highlighter",
+		"Colorcoder",
+		"Generic Config",
+		"GitGutter-Edge",
+		"GitLink",
+		"Inc-Dec-Value",
+		"iOpener",
+		"LaTeXTools",
+		"Markdown Extended",
+		"MarkdownLight",
+		"Marking Changed Rows",
+		"Package Control",
+		"SublimeGit"
+	],
+	"submit_usage": false
+}

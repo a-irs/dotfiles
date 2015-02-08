@@ -1,0 +1,46 @@
+[global_config]
+  handle_size = 2
+  title_hide_sizetext = True
+  focus = system
+  title_inactive_fg_color = "#ffffff"
+  suppress_multiple_term_dialog = True
+  enabled_plugins = ,
+  geometry_hinting = False
+  title_transmit_bg_color = "#d30102"
+  title_inactive_bg_color = "#2d2d2d"
+[keybindings]
+  split_horiz = <Primary><Alt>h
+  full_screen = None
+  go_prev = None
+  close_term = <Primary><Shift>w
+  split_vert = <Primary><Alt>v
+  go_next = None
+  hide_window = None
+[profiles]
+  [[default]]
+    scrollbar_position = hidden
+    palette = "#3b3b3b:#f14c4c:#a6e966:#fff073:#b9d7f8:#c09abc:#6ad3d4:#e6e6e6:#6d7367:#ef4343:#a7f15e:#fcec67:#aed2fa:#b895b5:#69e0e1:#d4d4d4"
+    font = Input Semi-Condensed 11
+    visible_bell = True
+    background_image = None
+    background_darkness = 0.9
+    urgent_bell = True
+    use_system_font = False
+    cursor_color = "#cacaca"
+    foreground_color = "#ffffff"
+    scroll_on_output = False
+    show_titlebar = False
+    copy_on_selection = True
+    background_color = "#2d2d2d"
+    audible_bell = True
+    scrollback_infinite = True
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+      profile = default
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]

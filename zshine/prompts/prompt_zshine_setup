@@ -1,0 +1,220 @@
+# ± ➤ → ⚡ ● » α λ ϟ ✯ ★ ➜ ↪ ▶ ► ↦ ⇆ φ └ > ★ ❯ ❱ ❩
+
+case $HOST in
+    dell    ) ZSHINE_HOST_COLOR='green' ;;
+    desktop ) ZSHINE_HOST_COLOR='yellow' ;;
+    srv     ) ZSHINE_HOST_COLOR='magenta' ;;
+    erasmus ) ZSHINE_HOST_COLOR='cyan' ;;
+    *)        ZSHINE_HOST_COLOR='white' ;;
+esac
+
+ZSHINE_GIT=1
+ZSHINE_GIT_SIMPLE_DIRTY=0
+ZSHINE_GIT_SHRINK_URL=1
+ZSHINE_GIT_SYMBOL_SIMPLE='●'
+ZSHINE_GIT_SYMBOL_UNTRACKED=''
+ZSHINE_GIT_SYMBOL_ADDED=''
+ZSHINE_GIT_SYMBOL_MODIFIED=''
+ZSHINE_GIT_SYMBOL_RENAMED=''
+ZSHINE_GIT_SYMBOL_DELETED=''
+ZSHINE_GIT_DIRTY_COLOR='red'
+ZSHINE_GIT_URL_COLOR='magenta'
+ZSHINE_GIT_BRANCH_COLOR='cyan'
+ZSHINE_GIT_COMMIT_COLOR='green'
+
+ZSHINE_USER=0
+
+ZSHINE_BATTERY=0
+ZSHINE_BATTERY_COLOR_LOW='yellow'
+ZSHINE_BATTERY_COLOR_CRIT='red'
+ZSHINE_BATTERY_COLOR_HIGH='green'
+ZSHINE_BATTERY_COLOR_MED='white'
+
+ZSHINE_JOBS=1
+ZSHINE_JOBS_COLOR='214'
+
+ZSHINE_SSH_REMINDER=1
+
+ZSHINE_ERROR_COLOR='red'
+
+ZSHINE_SSH_FG='255'
+ZSHINE_SSH_BG='red'
+ZSHINE_USER_FG='blue'
+ZSHINE_USER_BG='237'
+ZSHINE_PATH_FG='yellow'
+ZSHINE_PATH_BG='238'
+ZSHINE_PATH_FG_RO='232'
+ZSHINE_PATH_BG_RO='cyan'
+ZSHINE_GIT_URL_FG='magenta'
+ZSHINE_GIT_URL_BG='237'
+ZSHINE_GIT_COMMIT_FG='green'
+ZSHINE_GIT_COMMIT_BG='238'
+ZSHINE_GIT_BRANCH_FG='cyan'
+ZSHINE_GIT_BRANCH_BG='237'
+ZSHINE_GIT_DIRTY_FG='red'
+ZSHINE_GIT_DIRTY_BG='237'
+ZSHINE_SEGMENT_SYMBOL=''
+
+if [[ "$TERM" == "linux" ]]; then
+    ZSHINE_SEGMENT_SYMBOL=">"
+    ZSHINE_GIT_SYMBOL_MODIFIED='m'
+    ZSHINE_BATTERY=1
+fi
+
+[[ $UID == 0 ]] && ZSHINE_USER=1 && ZSHINE_USER_COLOR='red' && ZSHINE_USER_FG='red'
+
+#######################################
+# powerline functions                 #
+#######################################
+
+ZSHINE_CURRENT_BG='NONE'
+
+prompt_segment() {
+    [ -z $3 ] && return
+    if [[ $ZSHINE_CURRENT_BG != 'NONE' && $1 != $ZSHINE_CURRENT_BG ]]; then
+        echo -n " %B%{%K{$1}%F{$ZSHINE_CURRENT_BG}%}$ZSHINE_SEGMENT_SYMBOL%{%F{$2}%} "
+    else
+        echo -n "%B%{%K{$1}%}%{%F{$2}%} "
+    fi
+    ZSHINE_CURRENT_BG=$1
+    echo -n $3
+}
+
+_prompt_end() {
+    echo -n " %{%k%F{$ZSHINE_CURRENT_BG}%}$ZSHINE_SEGMENT_SYMBOL"
+    echo -n "%{%f%}"
+    ZSHINE_CURRENT_BG=''
+}
+
+#######################################
+# left prompt functions               #
+#######################################
+
+_prompt_git() {
+    [[ $ZSHINE_GIT == 1 ]] && git_prompt_info
+}
+
+_prompt_ssh() {
+    if [[ $USER == "vagrant" ]]; then
+        prompt_segment $ZSHINE_PATH_COLOR 232 "VAGRANT"
+    elif [[ $ZSHINE_SSH_REMINDER == 1 ]]; then
+        [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ] && return
+        ZSHINE_USER=1
+        prompt_segment $ZSHINE_SSH_BG $ZSHINE_SSH_FG "SSH"
+    fi
+}
+
+_prompt_path() {
+    local p="${PWD/#$HOME/~}"
+    [ ! -w . ] && prompt_segment $ZSHINE_PATH_BG_RO $ZSHINE_PATH_FG_RO ro
+    prompt_segment $ZSHINE_PATH_BG $ZSHINE_PATH_FG "${p}"
+}
+
+_prompt_user_host() {
+    if [[ $USER == vagrant ]]; then
+        prompt_segment $ZSHINE_USER_BG $ZSHINE_HOST_COLOR ${HOST/vagrant-/}
+        return
+    fi
+    [[ $ZSHINE_USER == 0 ]] && return
+    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+            ZSHINE_USER=1
+            prompt_segment $ZSHINE_USER_BG "" "%{%F{$ZSHINE_USER_FG}%}%n%{%F{$ZSHINE_HOST_COLOR}%}@%M"
+    else
+        prompt_segment $ZSHINE_USER_BG $ZSHINE_USER_FG "%n"
+    fi
+}
+
+#######################################
+# right prompt functions               #
+#######################################
+
+_rprompt_error() {
+    echo -n "%{%B%F{$ZSHINE_ERROR_COLOR}%}%(?..%? )"
+}
+
+_rprompt_battery() {
+    if [[ $ZSHINE_BATTERY == 1 ]]; then
+        [ -d /sys/class/power_supply/BAT0 ] || return
+        b_status=$(cat /sys/class/power_supply/BAT0/status)
+        b_percent=$(cat /sys/class/power_supply/BAT0/capacity)
+        [[ "$b_percent" -gt 100 ]] && b_percent=100
+
+        if [[ "$b_percent" -le 19 ]]; then
+            c=$ZSHINE_BATTERY_COLOR_CRIT
+        elif [[ "$b_percent" -le 39 ]]; then
+            c=$ZSHINE_BATTERY_COLOR_LOW
+        elif [[ "$b_percent" -le 69 ]]; then
+            c=$ZSHINE_BATTERY_COLOR_MED
+        else
+            c=$ZSHINE_BATTERY_COLOR_HIGH
+        fi
+
+        if [[ "$b_status" == Charging ]] || [[ "$b_status" == Full ]]; then
+            t="$b_percent%%+"
+        else
+            t="$b_percent%%"
+        fi
+
+        echo -n "%{%B%F{$c}%}% ${t} "
+    fi
+}
+
+_rprompt_jobs() {
+    [[ $ZSHINE_JOBS == 1 ]] || return
+    local m_stop="j"
+    local m_run="&"
+    local m_tmux=""
+    local ret
+    local -i detached=0
+    detached+=$(tmux list-sessions 2> /dev/null | grep -cv 'attached')
+    (( detached > 0 )) && ret="${ret}${detached}${m_tmux}"
+    local running=$(( $(jobs -r | wc -l) ))
+    if [[ $running != 0 ]] ; then
+        [[ -n "$ret" ]] && ret="${ret}|"
+        ret="${ret}${running}${m_run}"
+    fi
+    local stopped=$(( $(jobs -s | wc -l) ))
+    if [[ $stopped != 0 ]] ; then
+        [[ -n "$ret" ]] && ret="${ret}|"
+        ret="${ret}${stopped}${m_stop}"
+    fi
+    [[ -n "$ret" ]] && echo -n "%{%B%F{$ZSHINE_JOBS_COLOR}%} ($ret)"
+}
+
+_rprompt_virtualenv() {
+    [ -z "$VIRTUAL_ENV" ] && return
+    echo -n " %{%B%F{$ZSHINE_HOST_COLOR}%}"
+    echo -n "${VIRTUAL_ENV##*/}"
+    echo -n "%{%b%f%k%}"
+}
+
+_rprompt_userhost() {
+    echo -n "%{%B%F{240}%}%n@%M"
+}
+
+#######################################
+# init functions                      #
+#######################################
+
+_build_left() {
+    _prompt_ssh
+    _prompt_user_host
+    _prompt_path
+    _prompt_git
+    _prompt_end
+}
+
+_build_right() {
+    _rprompt_error
+    _rprompt_battery
+    _rprompt_userhost
+    _rprompt_virtualenv
+    _rprompt_jobs
+}
+
+prompt_zshine_setup() {
+    PROMPT=$'\n%{%f%b%k%}$(_build_left) %{%f%k%b%}'
+    RPROMPT=$'%{%f%b%k%}$(_build_right)%{%f%k%b%}'
+}
+
+prompt_zshine_setup "$@"

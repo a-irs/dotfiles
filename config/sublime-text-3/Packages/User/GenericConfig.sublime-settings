@@ -1,0 +1,9 @@
+{
+	"extensions":
+	[
+		".gitignore",
+		".gitmodules",
+		"rc",
+		".muttrc"
+	]
+}

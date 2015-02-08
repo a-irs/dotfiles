@@ -1,0 +1,10 @@
+\pset null '[NULL]'
+\set HISTSIZE 2000
+\x auto
+\encoding unicode
+\set PROMPT1 '%[%033[34;1m%]%M %[%033[33;1m%]%n@%x%[%033[0m%]%[%033[1m%]%/%[%033[0m%] %R%\n❯ '
+\set PROMPT2 '  '
+\set VERBOSITY verbose
+\set HISTCONTROL ignoredups
+\set COMP_KEYWORD_CASE upper
+\set HISTFILE ~/.psql_history- :DBNAME

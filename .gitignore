@@ -1,0 +1,16 @@
+Package Control.cache
+Package Control.last-run
+password.txt
+i_opener_history.sublime-settings
+*/*Colorcode*.tmTheme
+*.merged-ca-bundle
+*.user-ca-bundle
+config/sublime-text-3/Packages/User/Color Highlighter
+vim/bundle
+
+*.py[cod]
+build
+cache
+
+client.key
+GitHub.sublime-settings

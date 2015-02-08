@@ -1,0 +1,9 @@
+[submodule "zshine/plugins/fzf"]
+	path = zshine/plugins/fzf
+	url = https://github.com/junegunn/fzf.git
+[submodule "zshine/plugins/zaw"]
+	path = zshine/plugins/zaw
+	url = https://github.com/zsh-users/zaw.git
+[submodule "zshine/plugins/zsh-syntax-highlighting"]
+	path = zshine/plugins/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git

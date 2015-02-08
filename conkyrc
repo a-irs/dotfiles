@@ -1,0 +1,25 @@
+own_window_type override
+own_window yes
+own_window_transparent yes
+use_xft yes
+xftfont Ubuntu Mono:size=9
+xftalpha 1.0
+update_interval 1.0
+total_run_times 0
+double_buffer yes
+alignment bottom_middle
+gap_x 0
+gap_y 54
+background false
+minimum_size 105
+#maximum_width 300
+
+default_color white
+default_shade_color black
+default_outline_color black
+draw_shades yes
+
+lua_load ~/.conkyrc.lua
+
+TEXT
+${font Ubuntu Mono:bold:size=9}Arch Linux$font ${exec ~/.bin/conky-info.sh kernel} | ${font Ubuntu Mono:bold:size=9}CPU$font ${lua_parse format %3.0f ${cpu cpu0}}% | ${font Ubuntu Mono:bold:size=9}RAM$font ${lua_parse format %3.0f ${memperc}}% | ${font Ubuntu Mono:bold:size=9}root$font ${lua_parse format %2.0f ${fs_used_perc /}}% | ${font Ubuntu Mono:bold:size=9}home$font ${lua_parse format %2.0f ${fs_used_perc /home}}% | ${if_match ${acpitemp} >59}${color #aa1111}$acpitemp °C${else}${color}${font Ubuntu Mono:bold:size=9}Temp$font $acpitemp °C${endif}${color}${if_existing /proc/net/route eth0} | ${font Ubuntu Mono:bold:size=9}RX$font ${lua_parse format %7.1f ${downspeedf eth0}} KB/s | ${font Ubuntu Mono:bold:size=9}TX$font ${lua_parse format %7.1f ${upspeedf eth0}} KB/s${else}${if_up wlan0} | ${font Ubuntu Mono:bold:size=9}SSID$font  ${wireless_essid wlan0} | ${font Ubuntu Mono:bold:size=9}Quality$font ${lua_parse format %3.0f ${wireless_link_qual_perc wlan0}}% | ${font Ubuntu Mono:bold:size=9}Width$font  ${exec ~/.bin/conky-info.sh wifi-width} MHz, C:${lua_parse format %2.0f ${exec iwgetid -c -r}} | ${font Ubuntu Mono:bold:size=9}Rate$font ${lua_parse format %3.0f ${exec ~/.bin/conky-info.sh wifi-bitrate}} Mb/s | ${font Ubuntu Mono:bold:size=9}RX$font ${lua_parse format %6.1f ${downspeedf wlan0}} KB/s | ${font Ubuntu Mono:bold:size=9}TX$font ${lua_parse format %6.1f ${upspeedf wlan0}} KB/s${endif}

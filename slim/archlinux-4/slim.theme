@@ -1,0 +1,44 @@
+# SimplyBlack - an Arch Linux SLiM login theme
+# Author: Thayer Williams <thayer@archlinux.org>
+# Arch Linux is a recognized trademark.
+
+# messages (ie: shutdown, session options, etc)
+msg_color               #FFFFFF
+msg_font                DroidSans:size=9:bold:dpi=96
+msg_x                   50%
+msg_y                   70%
+
+# valid values: stretch, tile
+background_style        tile
+background_color        #ffffff
+
+# input box controls
+input_font          	Ubuntu:size=32:bold:dpi=96
+input_fgcolor           #FFFFFF
+
+# panel location
+input_panel_x           50%
+input_panel_y           25%
+input_name_x            230
+input_name_y            190
+
+# force single input box (gdm style)
+input_pass_x            -1
+input_pass_y            -1
+
+# username / password request (actual text)
+username_font          	DroidSans:size=9:bold:dpi=96
+username_color        	#ffffff
+username_x              126
+username_y              190
+password_x              126
+password_y              190
+username_msg            Username
+password_msg            Passwort
+
+#welcome message
+#welcome_x             	50%
+#welcome_y             	22
+#welcome_font          	DroidSans:size=9:bold:dpi=96
+#welcome_color         	#ffffff
+

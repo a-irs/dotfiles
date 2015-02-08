@@ -1,0 +1,12 @@
+#compdef vpn
+#autoload
+
+_vpn() {
+        if [ -f "/var/run/openvpn-zsh.pid" ]; then
+            compadd "$@" stop
+        else
+            compadd "$@" $(find ~/.openvpn/ -name "*.ovpn" -printf %f" " | sed -e "s|.ovpn||g")
+        fi
+}
+
+_vpn "$@"

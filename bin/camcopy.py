@@ -1,0 +1,1 @@
+lib/camcopy/camcopy.py
