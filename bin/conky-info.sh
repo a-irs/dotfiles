@@ -1,1 +1,0 @@
-lib/conky-info.sh
