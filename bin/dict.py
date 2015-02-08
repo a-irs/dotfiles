@@ -1,1 +1,1 @@
-lib/dict/dict.py
+lib/dict.py
