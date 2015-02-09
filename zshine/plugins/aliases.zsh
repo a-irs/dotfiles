@@ -63,10 +63,6 @@ s() {
     done
 }
 
-if [[ -d ~/dev/docker/archlinux ]]; then
-    alias dev-attach=~/dev/docker/archlinux/attach.sh
-fi
-
 alias cp='cp -i'
 alias ln='ln -i'
 alias mv='mv -i'
