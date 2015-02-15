@@ -6,6 +6,7 @@
 	"installed_packages":
 	[
 		"All Autocomplete",
+		"Anaconda",
 		"BracketHighlighter",
 		"Color Highlighter",
 		"Colorcoder",
@@ -22,7 +23,6 @@
 		"Package Control",
 		"SublimeGit",
 		"SublimeLinter",
-		"SublimeLinter-flake8",
 		"SublimeLinter-shellcheck"
 	],
 	"submit_usage": false

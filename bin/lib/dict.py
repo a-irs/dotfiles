@@ -8,6 +8,7 @@ MAX_RESULTS = 15
 
 
 class Dict:
+
     def __init__(self):
         self.inputLanguage = "de"
         self.outputLanguage = "en"
