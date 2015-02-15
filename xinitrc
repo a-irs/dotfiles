@@ -26,6 +26,7 @@ case $session in
     icewm             ) exec icewm-session;;
     jwm               ) exec jwm;;
     kde               ) exec startkde;;
+    lxqt              ) exec startlxqt;;
     mate              ) exec mate-session;;
     monster|monsterwm ) exec monsterwm;;
     notion            ) exec notion;;

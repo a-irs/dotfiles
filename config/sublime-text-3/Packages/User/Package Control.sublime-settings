@@ -20,7 +20,9 @@
 		"MarkdownLight",
 		"Marking Changed Rows",
 		"Package Control",
-		"SublimeGit"
+		"SublimeGit",
+		"SublimeLinter",
+		"SublimeLinter-shellcheck"
 	],
 	"submit_usage": false
 }

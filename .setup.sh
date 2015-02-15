@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-this_dir=$(dirname $(readlink -f $0))
+this_dir="$(dirname "$(readlink -f "$0")")"
 
 print_error() {
     echo -e "\033[1;31m$*\033[0m"
@@ -13,12 +13,12 @@ print_info() {
 rmlink() {
     dest=~/.$1
     [ -L "$dest" ] && rm -f "$dest"
-    rmdir --ignore-fail-on-non-empty -p $(dirname "$dest") 2> /dev/null
+    rmdir --ignore-fail-on-non-empty -p "$(dirname "$dest")" 2> /dev/null
 }
 
 mklink() {
     dest=~/.$1
-    mkdir -p $(dirname "$dest")
+    mkdir -p "$(dirname "$dest")"
     ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/$1" "$dest" 2> /dev/null
     if [[ $? != 0 ]]; then
         print_error "error creating link to $dest"
@@ -72,19 +72,21 @@ dotfiles_x=(
     Xmodmap
 )
 
-for f in ${dotfiles[@]}; do mklink "$f"; done
+for f in "${dotfiles[@]}"; do mklink "$f"; done
 if [[ -f /usr/bin/X ]]; then
-    for fx in ${dotfiles_x[@]}; do mklink "$fx"; done
+    for fx in "${dotfiles_x[@]}"; do mklink "$fx"; done
 else
-    for fx in ${dotfiles_x[@]}; do rmlink "$fx"; done
+    for fx in "${dotfiles_x[@]}"; do rmlink "$fx"; done
 fi
 
 git clone --depth=1 https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> /dev/null
 #vim +PluginInstall +qall
 #print_info "installed vundles"
 
-touch -a ~/.config/mpd/{database,log,pid,state,sticker.sql}
-print_info "created blank files for MPD"
+if [[ -f /usr/bin/mpd ]]; then
+    touch -a ~/.config/mpd/{database,log,pid,state,sticker.sql}
+    print_info "created blank files for MPD"
+fi
 
 if [ -f /usr/bin/slim ]; then
     [ -d /usr/share/slim ] && sudo cp -R $this_dir/slim/* /usr/share/slim/themes
