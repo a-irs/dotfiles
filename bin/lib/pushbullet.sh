@@ -6,8 +6,6 @@
 CONFIG=~/.config/pushbullet
 API_URL=https://api.pushbullet.com/api
 
-[[ ! -f "$CONFIG" ]] && echo "$CONFIG not found" && exit 1
-
 source $CONFIG
 
 printUsage() {

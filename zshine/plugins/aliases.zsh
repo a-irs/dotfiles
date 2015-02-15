@@ -495,9 +495,9 @@ if [ -n "$commands[netctl]" ]; then
 fi
 
 if [  -n "$commands[pushbullet.sh]" ]; then
-    alias pushf='pushbullet.sh push C6503 file'
-    alias pusht='pushbullet.sh push C6503 note Text'
-    alias pushl='pushbullet.sh push C6503 link Link'
+    alias pushf='pushbullet.sh push "Xperia ZL" file'
+    alias pusht='pushbullet.sh push "Xperia ZL" note Text'
+    alias pushl='pushbullet.sh push "Xperia ZL" link Link'
 fi
 
 nfo() {
