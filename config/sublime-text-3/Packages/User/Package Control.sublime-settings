@@ -22,6 +22,7 @@
 		"Package Control",
 		"SublimeGit",
 		"SublimeLinter",
+		"SublimeLinter-flake8",
 		"SublimeLinter-shellcheck"
 	],
 	"submit_usage": false
