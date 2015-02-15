@@ -16,7 +16,7 @@ for playlist in "$@"; do
     rm -f "$outputdir/playlists/$pl_name.m3u"
 
     for ((song = 1; song <= $songs; song++)); do
-        title="$(awk "NR==$song*2 {print}" "$playlist" | cut -d',' -f2)"
+        title="$(awk "NR==$song*2 {print}" "$playlist" | cut -d',' -f2-)"
         link="$(awk "NR==$song*2+1 {print}" "$playlist")"
 
         dest="$outputdir/$title.mp3"
