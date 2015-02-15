@@ -52,6 +52,7 @@ ZSHINE_GIT_BRANCH_BG='237'
 ZSHINE_GIT_DIRTY_FG='red'
 ZSHINE_GIT_DIRTY_BG='237'
 ZSHINE_SEGMENT_SYMBOL=''
+ZSHINE_SEGMENT_RSYMBOL=''
 
 if [[ "$TERM" == "linux" ]]; then
     ZSHINE_SEGMENT_SYMBOL=">"
@@ -66,6 +67,13 @@ fi
 #######################################
 
 ZSHINE_CURRENT_BG='NONE'
+
+rprompt_segment() {
+    [ -z $3 ] && return
+    echo -n "%{%F{$1}%}$ZSHINE_SEGMENT_RSYMBOL"
+    echo -n "%{%K{$1}%} "
+    echo -n "%{%F{$2}%}$3 "
+}
 
 prompt_segment() {
     [ -z $3 ] && return
@@ -83,6 +91,7 @@ _prompt_end() {
     echo -n "%{%f%}"
     ZSHINE_CURRENT_BG=''
 }
+
 
 #######################################
 # left prompt functions               #
@@ -154,8 +163,7 @@ _rprompt_battery() {
         else
             t="$b_percent%%"
         fi
-
-        echo -n "%{%B%F{$c}%}% ${t} "
+        rprompt_segment 237 "$c" "$t"
     fi
 }
 
@@ -178,18 +186,16 @@ _rprompt_jobs() {
         [[ -n "$ret" ]] && ret="${ret}|"
         ret="${ret}${stopped}${m_stop}"
     fi
-    [[ -n "$ret" ]] && echo -n "%{%B%F{$ZSHINE_JOBS_COLOR}%} ($ret)"
+    [[ -n "$ret" ]] && rprompt_segment 237 "$ZSHINE_JOBS_COLOR" "$ret"
 }
 
 _rprompt_virtualenv() {
     [ -z "$VIRTUAL_ENV" ] && return
-    echo -n " %{%B%F{$ZSHINE_HOST_COLOR}%}"
-    echo -n "${VIRTUAL_ENV##*/}"
-    echo -n "%{%b%f%k%}"
+    rprompt_segment 237 $ZSHINE_HOST_COLOR "${VIRTUAL_ENV##*/}"
 }
 
 _rprompt_userhost() {
-    echo -n "%{%B%F{240}%}%n@%M"
+    rprompt_segment 238 white '%n@%M'
 }
 
 #######################################
@@ -207,14 +213,14 @@ _build_left() {
 _build_right() {
     _rprompt_error
     _rprompt_battery
-    _rprompt_userhost
     _rprompt_virtualenv
+    _rprompt_userhost
     _rprompt_jobs
 }
 
 prompt_zshine_setup() {
     PROMPT=$'\n%{%f%b%k%}$(_build_left) %{%f%k%b%}'
-    RPROMPT=$'%{%f%b%k%}$(_build_right)%{%f%k%b%}'
+    RPROMPT='%{%f%b%k%}$(_build_right)%{%f%k%b%}'
 }
 
 prompt_zshine_setup "$@"
