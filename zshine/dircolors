@@ -80,6 +80,8 @@ EXEC 01 # This is for files with execute permission
 
 ###################### archives
 .tar 32
+.sublime-package 32
+.apk 32
 .tgz 32
 .arc 32
 .arj 32
