@@ -61,6 +61,7 @@ dotfiles_x=(
     config/terminator/config
     config/terminator/config-fullscreen
     config/user-dirs.dirs
+    config/skippy-xd/skippy-xd.rc
     conkyrc
     conkyrc.lua
     fonts
