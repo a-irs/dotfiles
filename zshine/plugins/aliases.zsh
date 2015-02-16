@@ -197,6 +197,7 @@ if [ -n "$commands[git]" ]; then
     alias git='LC_ALL=en_IE.UTF-8 git'
     alias g="git"
     alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white) %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
+    alias glog='git log --color --patch --stat --decorate --date=relative --all --abbrev-commit'
     alias gpull="git -C ~/.dotfiles pull"
     alias gpush="git -C ~/.dotfiles p"
 fi

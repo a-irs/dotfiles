@@ -79,7 +79,7 @@ class Dict:
 if __name__ == "__main__":
 
     if len(sys.argv) < 4:
-        print("USAGE:\n$ dict.py \"input language (e.g. DE for German)\" \"output language e.g. EN for English)\" \"word\"")
+        print("USAGE:\n$ dict.py \"input language (e.g. DE for German)\" \"output language (e.g. EN for English)\" \"word\"")
     else:
         # Concat all arguments into one word (urlencoded space)
         expression = ""

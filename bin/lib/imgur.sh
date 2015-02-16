@@ -3,7 +3,7 @@
 apikey="b3625162d3418ac51a9ee805b1840452"
 
 function usage {
-    echo "Usage: $(basename $0) <filename> [<filename> [...]]" >&2
+    echo "Usage: $(basename "$0") <filename> [<filename> [...]]" >&2
     echo "Upload images to imgur and output their new URLs to stdout. Each one's" >&2
     echo "delete page is output to stderr between the view URLs." >&2
     echo "If xsel or xclip is available, the URLs are put on the X selection for" >&2
@@ -43,7 +43,7 @@ while [ $# -gt 0 ]; do
         echo "Upload failed" >&2
         errors=true
         continue
-    elif [ $(echo $response | grep -c "<error_msg>") -gt 0 ]; then
+    elif [ "$(echo "$response" | grep -c "<error_msg>")" -gt 0 ]; then
         echo "Error message from imgur:" >&2
         echo $response | sed -r 's/.*<error_msg>(.*)<\/error_msg>.*/\1/' >&2
         errors=true
@@ -52,16 +52,21 @@ while [ $# -gt 0 ]; do
 
     url=$(echo $response | sed -r 's/.*<original_image>(.*)<\/original_image>.*/\1/')
     deleteurl=$(echo $response | sed -r 's/.*<delete_page>(.*)<\/delete_page>.*/\1/')
-    echo $url
-    echo "Delete page: $deleteurl" >&2
+    echo "$url"
+    echo "Delete page: $deleteurl"
+
+    echo -n "$(date "+%Y-%m-%d %H:%M:%S")" >> "$HOME/.config/imgur-history"
+    echo -n " | $(readlink -f "$file")" >> "$HOME/.config/imgur-history"
+    echo -n " | $url" >> "$HOME/.config/imgur-history"
+    echo " | $deleteurl" >> "$HOME/.config/imgur-history"
 
     clip="$clip$url
 "
 done
 
-if [ $DISPLAY ]; then
-    { type xsel >/dev/null 2>/dev/null && echo -n $clip | xsel; } \
-        || { type xclip >/dev/null 2>/dev/null && echo -n $clip | xclip; } \
+if [ "$DISPLAY" ]; then
+    { type xsel >/dev/null 2>/dev/null && echo -n "$clip" | xsel -bi; } \
+        || { type xclip >/dev/null 2>/dev/null && echo -n "$clip" | xclip -selection clipboard; } \
         || echo "Haven't copied to the clipboard: no xsel or xclip" >&2
 else
     echo "Haven't copied to the clipboard: no \$DISPLAY" >&2

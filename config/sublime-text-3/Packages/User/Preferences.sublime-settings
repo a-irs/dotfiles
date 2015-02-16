@@ -91,7 +91,7 @@
 		".texpadtmp"
 	],
 	"font_face": "Input",
-	"font_size": 11,
+	"font_size": 9,
 	"gutter": true,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
@@ -100,7 +100,8 @@
 	[
 		"Vintage"
 	],
-	"line_numbers": true,
+	"line_numbers": false,
+	"margin": 0,
 	"new_window_settings":
 	{
 		"menu_visible": false,
