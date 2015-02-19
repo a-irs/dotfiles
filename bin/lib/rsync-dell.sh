@@ -9,6 +9,7 @@ rsync -axH --delete --stats --progress --human-readable --numeric-ids --info=pro
 --exclude 'dev/virtualbox' \
 --exclude 'todo' \
 --exclude 'media' \
+--exclude 'media-gmusic' \
 --exclude 'downloads/*' \
 --exclude 'doc' \
 --exclude '.cache/*' \
