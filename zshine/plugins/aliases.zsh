@@ -84,6 +84,7 @@ alias lt='\ls -F -l -h -t -r --color=auto --group-directories-first'
 [ -n "$commands[g++]" ]  && alias  g++="LC_ALL=C g++"
 [ -n "$commands[acp]" ] && alias cp='acp -g'
 [ -n "$commands[amv]" ] && alias mv='amv -g'
+[ -n "$commands[mpv]" ] && alias mv='mpv --no-audio-feeling'
 
 if [ -n "$commands[tmux]" ]; then
     alias t='tmux'
