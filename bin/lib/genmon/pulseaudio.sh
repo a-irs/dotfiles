@@ -62,7 +62,7 @@ else
     image="$HOME/.bin/lib/genmon/img/speaker_off.png"
 fi
 
-xprop -root | grep PULSE_SERVER &> /dev/null
+xprop -root | grep PULSE_SERVER | grep desktop &> /dev/null
 if [[ $? == 0 ]]; then
     color=orange
     image="$HOME/.bin/lib/genmon/img/speaker_remote.png"
