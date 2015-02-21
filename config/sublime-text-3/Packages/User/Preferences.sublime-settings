@@ -91,7 +91,7 @@
 		".texpadtmp"
 	],
 	"font_face": "Input",
-	"font_size": 9,
+	"font_size": 11,
 	"gutter": true,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
@@ -108,7 +108,7 @@
 		"show_minimap": false,
 		"side_bar_visible": false
 	},
-	"original_color_scheme": "Packages/User/Color Highlighter/themes/Monokai Extended 2.tmTheme",
+	"original_color_scheme": "Packages/User/Monokai Extended 2.tmTheme",
 	"overlay_scroll_bars": "enabled",
 	"remember_open_files": false,
 	"scroll_past_end": true,

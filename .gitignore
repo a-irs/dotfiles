@@ -14,3 +14,4 @@ cache
 
 client.key
 GitHub.sublime-settings
+**/SublimeLinter/*.tmTheme
