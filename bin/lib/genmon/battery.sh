@@ -46,7 +46,7 @@ fi
 
 txt="<span weight='bold' fgcolor='$color'>$percent"
 if [[ "$status" == Charging ]] || [[ "$status" == Full ]]; then
-    txt=$txt"+</span>"
+    txt=$txt"<span weight='bold' fgcolor='LightGreen'> +</span></span>"
 else
     txt=$txt"</span>"
 fi
