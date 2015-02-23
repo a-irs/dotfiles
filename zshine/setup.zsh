@@ -52,6 +52,7 @@ setopt HIST_NO_FUNCTIONS # do not add function declarations to history
 setopt HIST_NO_STORE # do not add 'history' command to history
 setopt HIST_REDUCE_BLANKS # strip spaces etc. when adding to history
 setopt HIST_VERIFY # safe history expansion
+setopt EXTENDED_HISTORY # add time stamps to history
 setopt SHARE_HISTORY # immediately add command to history and share with other shells
 setopt NOTIFY
 setopt HASH_CMDS

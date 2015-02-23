@@ -52,10 +52,6 @@ dotfiles=(
 
 dotfiles_x=(
     compton.conf
-    config/awesome/rc.lua
-    config/awesome/lain
-    config/awesome/theme.lua
-    config/awesome/theme
     config/fontconfig/fonts.conf
     config/sublime-text-3/Packages/User
     config/terminator/config

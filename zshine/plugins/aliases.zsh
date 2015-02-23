@@ -15,6 +15,32 @@ bottomblur() {
     rm -rf "$d"
 }
 
+if [[ -d /home/.snapshots ]]; then
+    restore() {
+        [ -z "$1" ] && echo "usage: restore <files|directories>" && return 1
+        echo ""
+        if [ -n "$commands[snapper]" ]; then
+            LC_ALL=C snapper -c home list | awk '{print $3 " | " $6 " " $7 " " $8 " " $9 " " $10}' | tail -n +4
+        else
+            command ls --color -lgGh /home/.snapshots | tail -n +2 | cut -d " " -f 4-
+        fi
+        echo ""
+        read "gen?${BOLD_BLUE}Choose generation: ${RESET}"
+        echo ""
+        [ -z "$gen" ] && return 1
+        for el in "$@"; do
+            el=$(readlink -f "$el")
+            src="/home/.snapshots/$gen/snapshot/${el/\/home\//}"
+            [ ! -e "$src" ] && echo "'$src' does not exist" && continue
+            if [ -d "$el" ]; then
+                cp -i -a "$src"/. "$el"
+            else
+                cp -i -a "$src" "$el"
+            fi
+        done
+    }
+fi
+
 __pan() {
     [[ ! -d "$1" ]] && echo "no directory selected" && return 1
     [[ $2 == pdf ]] && params="--number-sections -Vlang=ngerman -V geometry:\"top=3cm, bottom=3.5cm, left=2.5cm, right=2.5cm\" --standalone --smart --toc"
@@ -112,7 +138,6 @@ fi
 
 [ -n "$commands[latexmk]" ] && alias ltx="latexmk -cd -f -pdf -pvc -outdir=/tmp/latexmk"
 [ -n "$commands[reflector]" ] && alias mirrorlist_update='sudo reflector --verbose -l 20 --sort rate --country 'Germany' --save /etc/pacman.d/mirrorlist'
-[ -n "$commands[xdg-open]" ] && o() { xdg-open "$1" > /dev/null 2>&1 }
 [ -n "$commands[impressive]" ] && alias show='impressive -t FadeOutFadeIn --fade --transtime 300 --mousedelay 500 --nologo --nowheel --noclicks'
 [ -n "$commands[youtube-dl]" ] && alias yt-audio='youtube-dl -f bestaudio -x -o "%(title)s.%(ext)s"'
 [ -n "$commands[colorsvn]" ] && alias svn='colorsvn'
@@ -121,6 +146,18 @@ fi
 [ -n "$commands[docker]" ] && alias d='docker'
 [ -n "$commands[scrot]" ] && alias shoot="sleep 1 && scrot '%Y-%m-%d_%H-%M-%S.png' -e 'mv \$f ~/media/screenshots/'"
 [ -n "$commands[ncmpc]" ] && alias ncmpc='LC_ALL=en_IE.UTF-8 ncmpc'
+
+if [ -n "$commands[xdg-open]" ]; then
+    o() {
+        if [ -f "$1" ]; then
+            xdg-open "$1" &> /dev/null
+        elif [ -z "$1" ]; then
+            xdg-open . &> /dev/null
+        else
+            echo "'$1' could not be read"
+        fi
+    }
+fi
 
 if [ -n "$commands[encfs]" ]; then
     enc-mount() {
@@ -148,6 +185,44 @@ alias rd='rmdir -p'
 alias f='noglob find . -name'
 alias fd='noglob find . -type d -name'
 alias ff='noglob find . -type f -name'
+
+smart_cd() {
+    if [[ -f $1 ]] ; then
+        [[ ! -e ${1:h} ]] && return 1
+        print correcting ${1} to ${1:h}
+        builtin cd ${1:h}
+    else
+        builtin cd ${1}
+    fi
+}
+
+cd() {
+    setopt localoptions
+    setopt extendedglob
+    local approx1 ; approx1=()
+    local approx2 ; approx2=()
+    if (( ${#*} == 0 )) || [[ ${1} = [+-]* ]] ; then
+        builtin cd "$@"
+    elif (( ${#*} == 1 )) ; then
+        approx1=( (#a1)${1}(N) )
+        approx2=( (#a2)${1}(N) )
+        if [[ -e ${1} ]] ; then
+            smart_cd ${1}
+        elif [[ ${#approx1} -eq 1 ]] ; then
+            print correcting ${1} to ${approx1[1]}
+            smart_cd ${approx1[1]}
+        elif [[ ${#approx2} -eq 1 ]] ; then
+            print correcting ${1} to ${approx2[1]}
+            smart_cd ${approx2[1]}
+        else
+            print couldn\'t correct ${1}
+        fi
+    elif (( ${#*} == 2 )) ; then
+        builtin cd $1 $2
+    else
+        print cd: too many arguments
+    fi
+}
 
 alias ..='cd ..'
 alias ...='cd ../..'
