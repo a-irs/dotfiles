@@ -289,6 +289,19 @@ if [ -n "$commands[pacman]" ]; then
     aur() {
         [ -d /var/aur ] && sudo git -C /var/aur pull || sudo git -C /var clone git://pkgbuild.com/aur-mirror.git aur
     }
+    toggle-testing() {
+    grep '^\[testing\]' /etc/pacman.conf &> /dev/null
+    if [[ $? == 0 ]]; then
+        sudo perl -0777 -pi -e 's/\[testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/\#\[testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
+        sudo perl -0777 -pi -e 's/\[community-testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/\#\[community-testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
+        echo -e "\n${YELLOW}! disabled testing repos${RESET}\n"
+    else
+        sudo perl -0777 -pi -e 's/\#\[testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/\[testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
+        sudo perl -0777 -pi -e 's/\#\[community-testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/\[community-testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
+        echo -e "\n${RED}! enabled testing repos${RESET}\n"
+    fi
+    sudo pacman -Sy
+}
     alias psyu='sudo pacman -Syu'
     alias psyyu='sudo pacman -Syyu'
     alias pi='sudo pacman -S'
