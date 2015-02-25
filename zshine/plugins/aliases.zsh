@@ -65,8 +65,8 @@ __pan() {
     done
 }
 if [[ -n "$commands[pandoc]" && -n "$commands[inotifywait]" ]]; then
-    pan-pdf() { __pan "$1" pdf };
-    pan-html() { __pan "$1" html };
+    pan-pdf() { __pan "$1" pdf; }
+    pan-html() { __pan "$1" html; }
 fi
 
 s() {
@@ -314,6 +314,7 @@ if [ -n "$commands[pacman]" ]; then
     alias pqo='pacman -Qo'
     alias pql='pacman -Qlq'
     alias psc='sudo pacman -Sc'
+    alias psl='pkgfile -l'
     alias pu='sudo pacman -U'
     alias pacorph='sudo pacman -Rns $(pacman -Qtdq)'
     alias pacdiff='sudo pacdiff'
