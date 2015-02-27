@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # ± ➤ → ⚡ ● » α λ ϟ ✯ ★ ➜ ↪ ▶ ► ↦ ⇆ φ └ > ★ ❯ ❱ ❩
 
 case $HOST in
@@ -69,14 +71,14 @@ fi
 ZSHINE_CURRENT_BG='NONE'
 
 rprompt_segment() {
-    [ -z $3 ] && return
+    [ -z "$3" ] && return
     echo -n "%{%F{$1}%}$ZSHINE_SEGMENT_RSYMBOL"
     echo -n "%{%K{$1}%} "
     echo -n "%{%F{$2}%}$3 "
 }
 
 prompt_segment() {
-    [ -z $3 ] && return
+    [ -z "$3" ] && return
     if [[ $ZSHINE_CURRENT_BG != 'NONE' && $1 != $ZSHINE_CURRENT_BG ]]; then
         echo -n " %B%{%K{$1}%F{$ZSHINE_CURRENT_BG}%}$ZSHINE_SEGMENT_SYMBOL%{%F{$2}%} "
     else
@@ -121,7 +123,7 @@ _prompt_path() {
 
 _prompt_user_host() {
     if [[ $USER == vagrant ]]; then
-        prompt_segment $ZSHINE_USER_BG $ZSHINE_HOST_COLOR ${HOST/vagrant-/}
+        prompt_segment $ZSHINE_USER_BG $ZSHINE_HOST_COLOR "${HOST/vagrant-/}"
         return
     fi
     [[ $ZSHINE_USER == 0 ]] && return

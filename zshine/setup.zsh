@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 ZSHINE_DIR=~/.zshine
 
 # no duplicate entries for path arrays

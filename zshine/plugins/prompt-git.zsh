@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 is_git() {
     export IS_GIT=0
     [[ "$PWD" == /var/aur* ]] && return 1
@@ -42,14 +44,18 @@ git_prompt_info() {
         fi
     fi
    [[ "${url}" == / ]] && url="N/A"
-    prompt_segment $ZSHINE_GIT_URL_BG $ZSHINE_GIT_URL_FG "${url}"
-    prompt_segment $ZSHINE_GIT_COMMIT_BG $ZSHINE_GIT_COMMIT_FG "${commit}"
-    [[ "$branch" = '' ]] || prompt_segment $ZSHINE_GIT_BRANCH_BG $ZSHINE_GIT_BRANCH_FG "${branch}"
-    prompt_segment $ZSHINE_GIT_DIRTY_BG $ZSHINE_GIT_DIRTY_FG "$(git_remote_state)$(git_dirty)"
+    prompt_segment "$ZSHINE_GIT_URL_BG" "$ZSHINE_GIT_URL_FG" "${url}"
+    prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_COMMIT_FG" "${commit}"
+    [[ "$branch" = '' ]] || prompt_segment "$ZSHINE_GIT_BRANCH_BG" "$ZSHINE_GIT_BRANCH_FG" "${branch}"
+    prompt_segment "$ZSHINE_GIT_DIRTY_BG" "$ZSHINE_GIT_DIRTY_FG" "$(git_remote_state)$(git_dirty)"
 }
 
 git_dirty() {
-    [[ $ZSHINE_GIT_SIMPLE_DIRTY == 1 ]] && _git_dirty_simple || _git_dirty_advanced
+    if [[ $ZSHINE_GIT_SIMPLE_DIRTY == 1 ]]; then
+        _git_dirty_simple
+    else
+        _git_dirty_advanced
+    fi
 }
 
 git_remote_state() {
