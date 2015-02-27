@@ -1,0 +1,98 @@
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+
+@-moz-document url(chrome://browser/content/browser.xul) {
+    /* HIGHLIGHT PENDING, UNREAD, CHANGED TABS */
+    .tabbrowser-tab[pending] .tab-content > * { opacity: .5 !important; }
+    .tabbrowser-tab[unread]  .tab-content > * { opacity: .5 !important; }
+    .tabbrowser-tab[titlechanged] .tab-content {
+        background-image: -moz-linear-gradient(transparent 70%, rgba(255, 255, 255, 0.5)), -moz-linear-gradient(rgba(200,0,0,0.05),rgba(255,0,0,0.15) 100%) !important;
+        background-clip: border-box !important;
+    }
+
+    /* SEMI-TRANSPARENT BOOKMARKS */
+    .bookmark-item {
+        /* greyscale */
+        /* filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 3.5+ */
+        opacity: 0.7;
+        border-color: transparent !important; }
+    .bookmark-item:hover:not(:active):not([open]) {
+        filter: none;
+        opacity: 1;
+        box-shadow: none !important;
+        background: transparent !important; }
+
+    /* HIDE ADDRESS BAR PLUGIN ICON */
+    #notification-popup-box { display: none }
+    #notification-popup-box:not([hidden]) + #identity-box { -moz-padding-start: 4px }
+
+    /* HIDE ADDRESS BAR DROP MARKER */
+    .urlbar-history-dropmarker { display: none }
+    #star-button {
+        padding-right: 5px;
+        opacity: 0.65; }
+
+    /* HIDE SSL NAME */
+    #identity-icon-labels { display: none }
+
+    /* CHANGE ADRESS BAR HEIGHT */
+    #nav-bar { min-height: 32px }
+
+    /* CHANGE TABBAR BACKGROUND */
+    #tabbrowser-tabs { background-color: #2D2D2D !important; }
+    .tab-background { background-color: #C7C7C7 !important; }
+
+    /* AUTO-HIDE BOOKMARKS TOOLBAR */
+    toolbarbutton.bookmark-item {
+      -moz-appearance: none !important;
+      padding: 2px 6px 2px 4px !important;
+      margin:0 0 3px 0 !important;
+      border-radius: 2px !important;
+    }
+    #personal-bookmarks toolbarbutton.bookmark-item:first-child {
+      margin-left:5px !important;
+    }
+    #personal-bookmarks toolbarbutton:last-child {
+    }
+    toolbarbutton.bookmark-item:hover {
+      box-shadow: 0px 0px 8px rgba(0,0,0,0.10) !important;
+      box-shadow: inset 0px 0px 5px rgba(255,255,255,0.40) !important;
+      border-top-color: rgba(255,255,255,0.75) !important;
+      border-left-color: rgba(255,255,255,0.75) !important;
+      border-bottom-color: rgba(0,0,0,0.25) !important;
+      border-right-color: rgba(0,0,0,0.25) !important;
+      background-color: transparent !important;
+    }
+    toolbarbutton.bookmark-item:hover:active:not([disabled="true"]),
+    toolbarbutton.bookmark-item[open="true"] {
+      box-shadow: inset 0px 0px 15px rgba(0,0,0,0.10) !important;
+      border-top-color: rgba(0,0,0,0.25) !important;
+      border-left-color: rgba(0,0,0,0.25) !important;
+      border-bottom-color: rgba(255,255,255,0.75) !important;
+      border-right-color: rgba(255,255,255,0.75) !important;
+      background-color: transparent !important;
+    }
+    #sidebar-splitter {
+      -moz-border-end: 1px solid rgba(0,0,0,0.3) !important;
+    }
+    #navigator-toolbox > #PersonalToolbar {
+      z-index:10000;
+      position: fixed;
+      visibility: hidden;
+      opacity: 0;
+      margin-top: 0px;
+      padding-top: 2px !important;
+      width: 100%;
+      border-bottom:1px solid rgba(0,0,0,0.3) !important;
+      box-shadow: 0px 5px 5px rgba(0,0,0,0.10) !important;
+      -moz-transition-property: visibility, opacity, margin;
+      -moz-transition-duration: 0.2s;
+      -moz-transition-delay: 0.1s;
+      -moz-transition-timing-function: ease-in-out;
+    }
+    #navigator-toolbox:hover > #PersonalToolbar {
+      visibility: visible;
+      opacity: 1;
+      margin-top: 0px;
+      -moz-transition-delay: 0s;
+    }
+}
