@@ -76,7 +76,11 @@ s() {
         if [ -d "$f" ] || [ ! -f "$f" ]; then
             continue
         fi
-        echo -e "\n${BOLD_YELLOW}$f${RESET}\n"
+
+        LENGTH=${#f}
+        FILL="\${(l.$((COLUMNS/2-LENGTH/2-2))..=.)}"
+        printf "\n${BOLD_YELLOW}${(e)FILL} $f ${(e)FILL}${RESET}\n\n"
+
         mime=$(file --mime-encoding -b "$f")
         if [[ $mime == "binary" ]]; then
             if [[ -s "$f" ]]; then
@@ -85,7 +89,12 @@ s() {
                 echo -e "${MAGENTA}EMPTY FILE${RESET}" && continue
             fi
         fi
-        [ -r "$f" ] && cat -s "$f" || sudo cat -s "$f"
+
+        if [ -r "$f" ]; then
+            source-highlight --failsafe --infer-lang -f esc --style-file=esc.style -i "$f"
+        else
+            sudo source-highlight --failsafe --infer-lang -f esc --style-file=esc.style -i "$f"
+        fi
     done
 }
 
