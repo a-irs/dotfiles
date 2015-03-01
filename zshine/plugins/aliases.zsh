@@ -76,7 +76,16 @@ s() {
         if [ -d "$f" ] || [ ! -f "$f" ]; then
             continue
         fi
-        echo -e "\n${BOLD_YELLOW}$f${RESET}\n"
+
+        if [[ ${#files} > 1 ]]; then
+            LENGTH=${#f}
+            FILL="\${(l.$((COLUMNS/2-LENGTH/2-2))..=.)}"
+            s="${(e)FILL} $f ${(e)FILL}"
+            [[ "${#s}" == $((COLUMNS-1)) ]] && s+="="
+            [[ "${#s}" == $((COLUMNS-2)) ]] && s+="=="
+            printf "\n${BOLD_YELLOW}${s}${RESET}\n\n"
+        fi
+
         mime=$(file --mime-encoding -b "$f")
         if [[ $mime == "binary" ]]; then
             if [[ -s "$f" ]]; then
@@ -85,7 +94,12 @@ s() {
                 echo -e "${MAGENTA}EMPTY FILE${RESET}" && continue
             fi
         fi
-        [ -r "$f" ] && cat -s "$f" || sudo cat -s "$f"
+
+        if [ -r "$f" ]; then
+            source-highlight -t 4 --failsafe --infer-lang -f esc --style-file=esc.style -i "$f"
+        else
+            sudo source-highlight -t 4 --failsafe --infer-lang -f esc --style-file=esc.style -i "$f"
+        fi
     done
 }
 

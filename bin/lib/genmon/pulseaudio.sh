@@ -48,7 +48,7 @@ round() {
     fi
 }
 
-ponymix is-muted
+ponymix is-muted 2> /dev/null
 if [[ $? == 1 ]]; then
     if [[ "$MONOCHROME" != 1 ]]; then
         color="#B895B5"
@@ -62,13 +62,13 @@ else
     image="$HOME/.bin/lib/genmon/img/speaker_off.png"
 fi
 
-xprop -root | grep PULSE_SERVER | grep -v $HOST &> /dev/null
+xprop -root | grep PULSE_SERVER | grep -v "$(hostname)" | grep -v localhost &> /dev/null
 if [[ $? == 0 ]]; then
     color=orange
     image="$HOME/.bin/lib/genmon/img/speaker_remote.png"
 fi
 
-txt=$(round "$(ponymix get-volume)")
+txt=$(round "$(ponymix get-volume 2> /dev/null)")
 [[ $ICONS == 1 ]] && echo -n "<img>$image</img>"
 echo "<txt><span weight='bold' fgcolor='$color'>$txt</span></txt>
       <click>ponymix toggle</click>"
