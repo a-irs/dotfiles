@@ -34,5 +34,5 @@ case $session in
     unity             ) exec unity;;
     xfce|xfce4        ) exec startxfce4;;
     xmonad            ) exec xmonad;;
-    *) exec $1;;
+    *) exec "$1";;
 esac

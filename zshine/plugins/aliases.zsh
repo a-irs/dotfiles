@@ -156,7 +156,8 @@ fi
 [ -n "$commands[youtube-dl]" ] && alias yt-audio='youtube-dl -f bestaudio -x -o "%(title)s.%(ext)s"'
 [ -n "$commands[colorsvn]" ] && alias svn='colorsvn'
 [ -n "$commands[pydf]" ] && alias df='pydf'
-[ -n "$commands[journalctl]" ] && alias j='journalctl'
+[ -n "$commands[journalctl]" ] && alias j='sudo journalctl'
+[ -n "$commands[journalctl]" ] && alias journalctl='sudo journalctl'
 [ -n "$commands[docker]" ] && alias d='docker'
 [ -n "$commands[scrot]" ] && alias shoot="sleep 1 && scrot '%Y-%m-%d_%H-%M-%S.png' -e 'mv \$f ~/media/screenshots/'"
 [ -n "$commands[ncmpc]" ] && alias ncmpc='LC_ALL=en_IE.UTF-8 ncmpc'
@@ -587,6 +588,13 @@ if [ -n "$commands[systemctl]" ]; then
         link load cancel set-environment unset-environment)
     for c in $user_commands; do; alias sc-$c="systemctl $c"; done
     for c in $sudo_commands; do; alias sc-$c="sudo systemctl $c"; done
+fi
+
+if [ -n "$commands[machinectl]" ]; then
+    user_commands=(list status show)
+    sudo_commands=(login reboot poweroff kill terminate)
+    for c in $user_commands; do; alias mc-$c="machinectl $c"; done
+    for c in $sudo_commands; do; alias mc-$c="sudo machinectl $c"; done
 fi
 
 if [ -n "$commands[netctl]" ]; then

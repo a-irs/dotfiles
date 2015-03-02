@@ -6,6 +6,7 @@ ZSHINE_DIR=~/.zshine
 typeset -gU cdpath fpath mailpath path
 [ -d "$HOME/.bin" ] && path=("$HOME/.bin" $path)
 [ -d "$HOME/.bin/$HOST" ] && path=("$HOME/.bin/$HOST" $path)
+[ -d "$HOME/.gem/ruby/2.2.0/bin" ] && path=("$HOME/.gem/ruby/2.2.0/bin" $path)
 fpath+=($ZSHINE_DIR/completion $ZSHINE_DIR/prompts)
 
 # load prompt
@@ -55,7 +56,7 @@ setopt HIST_NO_STORE # do not add 'history' command to history
 setopt HIST_REDUCE_BLANKS # strip spaces etc. when adding to history
 setopt HIST_VERIFY # safe history expansion
 setopt EXTENDED_HISTORY # add time stamps to history
-setopt SHARE_HISTORY # immediately add command to history and share with other shells
+setopt SHARE_HISTORY # immediately add to history and share with other shells
 setopt NOTIFY
 setopt HASH_CMDS
 setopt HASH_LIST_ALL
@@ -83,7 +84,7 @@ ZSHINE_PLUGINS=(
   less-syntax-highlighting # syntax highlighting for "less" command
   auto256 # auto set 256 TERM
   history-substring-search # arrow key up/down history search
-#  command-not-found # show packages that need to be installed for unknown commands
+#  command-not-found # show needed packages for unknown commands
   bd # move back in current directory tree (breadcrumb-style)
   fzf # CTRL+T for fuzzy-search of files
   rationalise-dot # type cd ...... to change directory fast
@@ -96,22 +97,22 @@ ZSHINE_PLUGINS=(
 )
 for z in $ZSHINE_PLUGINS; do source "$ZSHINE_DIR/plugins/$z.zsh"; done
 
-RESET=$(tput sgr0)
-BLACK=$(tput setaf 0)
-RED=$(tput setaf 1)
-GREEN=$(tput setaf 2)
-YELLOW=$(tput setaf 3)
-BLUE=$(tput setaf 4)
-MAGENTA=$(tput setaf 5)
-CYAN=$(tput setaf 6)
-WHITE=$(tput setaf 7)
-GREY=$(tput setaf 8)
-BOLD_BLACK=$(tput bold; tput setaf 0)
-BOLD_RED=$(tput bold; tput setaf 1)
-BOLD_GREEN=$(tput bold; tput setaf 2)
-BOLD_YELLOW=$(tput bold; tput setaf 3)
-BOLD_BLUE=$(tput bold; tput setaf 4)
-BOLD_MAGENTA=$(tput bold; tput setaf 5)
-BOLD_CYAN=$(tput bold; tput setaf 6)
-BOLD_WHITE=$(tput bold; tput setaf 7)
-BOLD_GREY=$(tput bold; tput setaf 8)
+export RESET=$(tput sgr0)
+export BLACK=$(tput setaf 0)
+export RED=$(tput setaf 1)
+export GREEN=$(tput setaf 2)
+export YELLOW=$(tput setaf 3)
+export BLUE=$(tput setaf 4)
+export MAGENTA=$(tput setaf 5)
+export CYAN=$(tput setaf 6)
+export WHITE=$(tput setaf 7)
+export GREY=$(tput setaf 8)
+export BOLD_BLACK=$(tput bold; tput setaf 0)
+export BOLD_RED=$(tput bold; tput setaf 1)
+export BOLD_GREEN=$(tput bold; tput setaf 2)
+export BOLD_YELLOW=$(tput bold; tput setaf 3)
+export BOLD_BLUE=$(tput bold; tput setaf 4)
+export BOLD_MAGENTA=$(tput bold; tput setaf 5)
+export BOLD_CYAN=$(tput bold; tput setaf 6)
+export BOLD_WHITE=$(tput bold; tput setaf 7)
+export BOLD_GREY=$(tput bold; tput setaf 8)
