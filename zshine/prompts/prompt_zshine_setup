@@ -24,6 +24,7 @@ ZSHINE_GIT_URL_COLOR='magenta'
 ZSHINE_GIT_BRANCH_COLOR='cyan'
 ZSHINE_GIT_COMMIT_COLOR='green'
 
+ZSHINE_DATE=0
 ZSHINE_USER=0
 
 ZSHINE_BATTERY=0
@@ -57,9 +58,11 @@ ZSHINE_SEGMENT_SYMBOL=''
 ZSHINE_SEGMENT_RSYMBOL=''
 
 if [[ "$TERM" == "linux" ]]; then
-    ZSHINE_SEGMENT_SYMBOL=">"
+    ZSHINE_SEGMENT_SYMBOL='>'
+    ZSHINE_SEGMENT_RSYMBOL='<'
     ZSHINE_GIT_SYMBOL_MODIFIED='m'
     ZSHINE_BATTERY=1
+    ZSHINE_DATE=1
 fi
 
 [[ $UID == 0 ]] && ZSHINE_USER=1 && ZSHINE_USER_COLOR='red' && ZSHINE_USER_FG='red'
@@ -200,6 +203,11 @@ _rprompt_userhost() {
     rprompt_segment 238 white '%n@%M'
 }
 
+_rprompt_date() {
+    [[ "$ZSHINE_DATE" == 0 ]] && return
+    rprompt_segment 238 white '%D{%H:%M}'
+}
+
 #######################################
 # init functions                      #
 #######################################
@@ -214,6 +222,7 @@ _build_left() {
 
 _build_right() {
     _rprompt_error
+    _rprompt_date
     _rprompt_battery
     _rprompt_virtualenv
     #_rprompt_userhost

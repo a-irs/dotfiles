@@ -1,5 +1,5 @@
-if [[ "$TERM" == "linux" ]]; then
-    echo -en "\e]P02D2D2D" #black
+if [[ "$TERM" == linux ]]; then
+#   echo -en "\e]P02D2D2D" #black
     echo -en "\e]P8555753" #darkgrey
     echo -en "\e]P1EF2929" #darkred
     echo -en "\e]P9EF2929" #red
@@ -15,5 +15,5 @@ if [[ "$TERM" == "linux" ]]; then
     echo -en "\e]PE34E2E2" #cyan
     echo -en "\e]P7eeeeee" #lightgrey
     echo -en "\e]PFFEFEFE" #white
-#   clear
+    clear
 fi
