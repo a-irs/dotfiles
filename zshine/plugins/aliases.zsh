@@ -126,6 +126,19 @@ alias lt='\ls -F -l -h -t -r --color=auto --group-directories-first'
 [ -n "$commands[amv]" ] && alias mv='amv -g'
 [ -n "$commands[mpv]" ] && alias mpv='mpv --no-audio-display'
 
+if [ -n "$commands[vlock]" ]; then
+    vlock(){
+        local current_tty="tty${XDG_VTNR}"
+        local active_ttys=$(w --no-header --no-current --short | grep -v "$current_tty" | grep -v "pts/" | awk '{print $2}')
+        if [[ -n "$active_ttys" ]]; then
+            echo -e "${RED}WARNING:${RESET} other TTY(s) still active!\n"
+            echo "$active_ttys"
+        else
+            command vlock
+        fi
+    }
+fi
+
 if [ -n "$commands[tmux]" ]; then
     alias t='tmux'
     alias ta='tmux attach -t'
