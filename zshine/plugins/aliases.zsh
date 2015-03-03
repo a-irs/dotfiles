@@ -128,8 +128,8 @@ alias lt='\ls -F -l -h -t -r --color=auto --group-directories-first'
 
 if [ -n "$commands[vlock]" ]; then
     vlock(){
-        local current_tty="tty${XDG_VTNR}"
-        local active_ttys=$(w --no-header --no-current --short | grep -v "$current_tty" | grep -v "pts/" | awk '{print $2}')
+        [[ $TTY == /dev/pts/* ]] && echo "not a TTY" && return 1
+        local active_ttys=$(w --no-header --no-current --short | grep -v "tty${XDG_VTNR}" | grep -v "pts/" | awk '{print $2}')
         if [[ -n "$active_ttys" ]]; then
             echo -e "${RED}WARNING:${RESET} other TTY(s) still active!\n"
             echo "$active_ttys"
