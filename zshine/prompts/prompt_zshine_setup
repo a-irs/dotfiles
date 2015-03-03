@@ -56,13 +56,15 @@ ZSHINE_GIT_DIRTY_FG='red'
 ZSHINE_GIT_DIRTY_BG='237'
 ZSHINE_SEGMENT_SYMBOL=''
 ZSHINE_SEGMENT_RSYMBOL=''
+ZSHINE_SEGMENT_RSEPARATOR=' '
 
 if [[ "$TERM" == "linux" ]]; then
     ZSHINE_SEGMENT_SYMBOL='>'
-    ZSHINE_SEGMENT_RSYMBOL='<'
+    ZSHINE_SEGMENT_RSYMBOL=' '
     ZSHINE_GIT_SYMBOL_MODIFIED='m'
     ZSHINE_BATTERY=1
     ZSHINE_DATE=1
+    ZSHINE_SEGMENT_RSEPARATOR=''
 fi
 
 [[ $UID == 0 ]] && ZSHINE_USER=1 && ZSHINE_USER_COLOR='red' && ZSHINE_USER_FG='red'
@@ -76,8 +78,8 @@ ZSHINE_CURRENT_BG='NONE'
 rprompt_segment() {
     [ -z "$3" ] && return
     echo -n "%{%F{$1}%}$ZSHINE_SEGMENT_RSYMBOL"
-    echo -n "%{%K{$1}%} "
-    echo -n "%{%F{$2}%}$3 "
+    echo -n "%{%K{$1}%}$ZSHINE_SEGMENT_RSEPARATOR"
+    echo -n "%{%F{$2}%}$3$ZSHINE_SEGMENT_RSEPARATOR"
 }
 
 prompt_segment() {
@@ -222,8 +224,8 @@ _build_left() {
 
 _build_right() {
     _rprompt_error
-    _rprompt_date
     _rprompt_battery
+    _rprompt_date
     _rprompt_virtualenv
     #_rprompt_userhost
     _rprompt_jobs

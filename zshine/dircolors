@@ -122,6 +122,8 @@ EXEC 01 # This is for files with execute permission
 .7z 32
 .rz 32
 .cab 32
+.iso 32
+.img 32
 ###################### media
 .jpg 35
 .JPG 35
