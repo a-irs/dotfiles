@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-celsius=$( echo $(( $(cat /sys/class/thermal/thermal_zone0/temp)/1000 )) )
+celsius=$(($(cat /sys/class/thermal/thermal_zone0/temp)/1000))
 
 if [[ "$celsius" -le 49 ]]; then
     color="lightblue"

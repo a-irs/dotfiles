@@ -10,14 +10,14 @@ elif [[ $status == "Startvorgang läuft ..." ]]; then
     s=" ..."
 elif [[ $status == *"Indexerstellung"* ]]; then
     s=" ..."
-elif [[ $status == *"snychronisiert"* ]]; then
-    s=" synchronisiere"
+elif [[ $status == *"synchronisiert"* ]]; then
+    s=" sync"
 elif [[ $status == *"Synchronisation"* ]]; then
-    s=" synchronisiere"
+    s=" sync"
 elif [[ $status == "Dateiliste wird heruntergeladen ..." ]]; then
-    s=" synchronisiere"
+    s=" sync"
 elif [[ $status == "Aktualisiert" ]]; then
-    s=" aktualisiert"
+    s=" done"
 else
     s=$status
 fi
