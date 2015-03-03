@@ -1,6 +1,10 @@
 {
 	"animation_enabled": true,
 	"auto_complete_delay": 0,
+	"binary_file_patterns":
+	[
+		"node_modules/*"
+	],
 	"bold_folder_labels": true,
 	"close_windows_when_empty": true,
 	"color_scheme": "Packages/Colorcoder/Monokai Extended 2 (Colorcoded).tmTheme",
@@ -18,7 +22,6 @@
 	"enable_tab_scrolling": false,
 	"enable_telemetry": "disabled",
 	"ensure_newline_at_eof_on_save": true,
-	"binary_file_patterns": ["node_modules/*"],
 	"file_exclude_patterns":
 	[
 		"*.ind",
