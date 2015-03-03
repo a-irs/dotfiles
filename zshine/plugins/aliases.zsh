@@ -309,13 +309,15 @@ if [ -n "$commands[pacman]" ]; then
     if [[ $? == 0 ]]; then
         sudo perl -0777 -pi -e 's/\[testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/\#\[testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
         sudo perl -0777 -pi -e 's/\[community-testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/\#\[community-testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
-        echo -e "\n${YELLOW}! disabled testing repos${RESET}\n"
+        echo -e "\n${YELLOW}! disabled testing repos${RESET}"
     else
         sudo perl -0777 -pi -e 's/\#\[testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/\[testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
         sudo perl -0777 -pi -e 's/\#\[community-testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/\[community-testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
         echo -e "\n${RED}! enabled testing repos${RESET}\n"
+        sudo pacman -Sy
+        echo ""
+        LC_ALL=C pacman -Sl testing | cut -d " " -f 2- | grep "\[installed" | awk 'function r(s){return "\033[1;31m" s "\033[0m"}function y(s){return "\033[1;33m" s "\033[0m"}{gsub("]","",$4); printf("%-35s %s -> %s\n", y($1), $4, r($2))}'
     fi
-    sudo pacman -Sy
 }
     alias psyu='sudo pacman -Syu'
     alias psyyu='sudo pacman -Syyu'
