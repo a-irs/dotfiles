@@ -147,13 +147,8 @@ if [ -n "$commands[tmux]" ]; then
     alias tl='tmux list-sessions'
 fi
 
-take() { mkdir -p $1 && cd $1 }
+take() { mkdir -p "$1" && cd "$1"; }
 
-if [ -n "$commands[wget]" ]; then
-    alias wget='wget --continue --progress=bar --timestamping'
-    alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test100.zip'
-fi
-[ -n "$commands[curl]" ] && alias curl='curl --continue-at - --location --progress-bar --remote-name --remote-time'
 [ -n "$commands[tree]" ] && alias tree="tree -F --dirsfirst --noreport"
 [ -n "$commands[sudo]" ] && alias sudo='sudo '
 [ -n "$commands[mc]" ] && alias mc='mc --nocolor'
@@ -164,7 +159,7 @@ fi
 [ -n "$commands[ufw]" ] && alias ufw='sudo ufw'
 
 [ -n "$commands[latexmk]" ] && alias ltx="latexmk -cd -f -pdf -pvc -outdir=/tmp/latexmk"
-[ -n "$commands[reflector]" ] && alias mirrorlist_update='sudo reflector --verbose -l 20 --sort rate --country 'Germany' --save /etc/pacman.d/mirrorlist'
+[ -n "$commands[reflector]" ] && alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose && sudo pacman -Syy"
 [ -n "$commands[impressive]" ] && alias show='impressive -t FadeOutFadeIn --fade --transtime 300 --mousedelay 500 --nologo --nowheel --noclicks'
 [ -n "$commands[youtube-dl]" ] && alias yt-audio='youtube-dl -f bestaudio -x -o "%(title)s.%(ext)s"'
 [ -n "$commands[colorsvn]" ] && alias svn='colorsvn'
@@ -251,30 +246,30 @@ if [ -n "$commands[subl3]" ]; then
     alias e='subl3'
     alias sudoe='EDITOR="subl3 -w" sudoedit'
 else
-    alias e="$EDITOR"
+    alias e="\$EDITOR"
     alias sudoe="sudoedit"
 fi
 
-highlight()       { grep --color -E "$1|$" }
-highlight_files() { grep --color -E "$1|$" "${@:2}" }
+highlight()       { grep --color -E "$1|$"; }
+highlight_files() { grep --color -E "$1|$" "${@:2}"; }
 
 dict() {
-    dict.py de en $@
+    dict.py de en "$@"
     echo
-    dict.py en de $@
+    dict.py en de "$@"
 }
 
 if [ -n "$commands[openvpn]" ]; then
     vpn() {
         for f in $HOME/.openvpn/**/$1.ovpn; do
-            d=$(echo $f | rev | cut -d "/" -f 2- | rev)
+            d=$(echo "$f" | rev | cut -d "/" -f 2- | rev)
             vpncolor.py sudo openvpn --cd "$d" --config "$f"
         done
     }
 fi
 
 if [ -n "$commands[git]" ]; then
-    alias git='LC_ALL=en_IE.UTF-8 git'
+    alias git="LC_ALL=en_IE.UTF-8 git"
     alias g="git"
     alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white) %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
     alias glog='git log --color --patch --stat --decorate --date=relative --all --abbrev-commit'
@@ -291,23 +286,27 @@ psg() {
 
 if [ -n "$commands[pacman]" ]; then
     aur() {
-        [ -d /var/aur ] && sudo git -C /var/aur pull || sudo git -C /var clone git://pkgbuild.com/aur-mirror.git aur
+        if [ -d /var/aur ]; then
+            sudo git -C /var/aur pull
+        else
+            sudo git clone git://pkgbuild.com/aur-mirror.git /var/aur
+        fi
     }
     toggle-testing() {
-    grep '^\[testing\]' /etc/pacman.conf &> /dev/null
-    if [[ $? == 0 ]]; then
-        sudo perl -0777 -pi -e 's/\[testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/\#\[testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
-        sudo perl -0777 -pi -e 's/\[community-testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/\#\[community-testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
-        echo -e "\n${YELLOW}! disabled testing repos${RESET}"
-    else
-        sudo perl -0777 -pi -e 's/\#\[testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/\[testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
-        sudo perl -0777 -pi -e 's/\#\[community-testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/\[community-testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
-        echo -e "\n${RED}! enabled testing repos${RESET}\n"
-        sudo pacman -Sy
-        echo ""
-        LC_ALL=C pacman -Sl testing | cut -d " " -f 2- | grep "\[installed" | awk 'function r(s){return "\033[1;31m" s "\033[0m"}function y(s){return "\033[1;33m" s "\033[0m"}{gsub("]","",$4); printf("%-35s %s -> %s\n", y($1), $4, r($2))}'
-    fi
-}
+        grep '^\[testing\]' /etc/pacman.conf &> /dev/null
+        if [[ $? == 0 ]]; then
+            sudo perl -0777 -pi -e 's/\[testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/\#\[testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
+            sudo perl -0777 -pi -e 's/\[community-testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/\#\[community-testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
+            echo -e "\n${YELLOW}! disabled testing repos${RESET}"
+        else
+            sudo perl -0777 -pi -e 's/\#\[testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/\[testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
+            sudo perl -0777 -pi -e 's/\#\[community-testing\]\n\#Include = \/etc\/pacman.d\/mirrorlist/\[community-testing\]\nInclude = \/etc\/pacman.d\/mirrorlist/igs' /etc/pacman.conf
+            echo -e "\n${RED}! enabled testing repos${RESET}\n"
+            sudo pacman -Sy
+            echo ""
+            LC_ALL=C pacman -Sl testing | cut -d " " -f 2- | grep "\[installed" | awk 'function r(s){return "\033[1;31m" s "\033[0m"}function y(s){return "\033[1;33m" s "\033[0m"}{gsub("]","",$4); printf("%-35s %s -> %s\n", y($1), $4, r($2))}'
+        fi
+    }
     alias psyu='sudo pacman -Syu'
     alias psyyu='sudo pacman -Syyu'
     alias pi='sudo pacman -S'
@@ -354,7 +353,7 @@ _fonttest() {
         echo -n "$family | "
         fc-match "$family"
     done
-    unset -v $family
+    unset -v "$family"
 }
 alias fonttest="_fonttest | column -t -s '|' | column -t -s ':'"
 
@@ -394,7 +393,7 @@ cmp-diff() {
 
 if [ -f "$HOME/.config/user-dirs.dirs" ]; then
     new() {
-        if [ -z $1 ] || [ -z $2 ]; then
+        if [ -z "$1" ] || [ -z "$2" ]; then
             echo "usage: new <Filetype> <Name>"
             return
         fi
