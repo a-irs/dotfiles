@@ -2,7 +2,6 @@
 
 PROGRAM="psh"
 DIR="$HOME/doc/$PROGRAM-store"
-OPENSSL_OPTIONS="-aes-256-cbc -base64"
 
 set -e
 
@@ -35,7 +34,7 @@ cmd_new() {
     local tmp_file="$(mktemp -u "$SECURE_TMPDIR/XXXXX")-${1/ /_}.txt"
     $EDITOR "$tmp_file"
     if [ -f "$tmp_file" ]; then
-        openssl enc -e "$OPENSSL_OPTIONS" -in "$tmp_file" -out "$DIR/$1"
+        openssl enc -e -aes-256-cbc -base64 -in "$tmp_file" -out "$DIR/$1"
     else
         printlne "creation of '$1' aborted"
     fi
@@ -46,7 +45,7 @@ cmd_show() {
     read -s -p "password: " PASS
     echo ""
     echo ""
-    echo "$PASS" | openssl enc -d -pass stdin "$OPENSSL_OPTIONS" -in "$DIR/$1" 2> /dev/null || printlne "wrong password for store '$1'"
+    echo "$PASS" | openssl enc -d -pass stdin -aes-256-cbc -base64 -in "$DIR/$1" 2> /dev/null || printlne "wrong password for store '$1'"
 }
 
 cmd_edit() {
@@ -54,10 +53,10 @@ cmd_edit() {
     read -s -p "password: " PASS
     tmpdir
     local tmp_file="$(mktemp -u "$SECURE_TMPDIR/XXXXX")-${1/ /_}.txt"
-    echo "$PASS" | openssl enc -d -pass stdin "$OPENSSL_OPTIONS" -in "$DIR/$1" -out "$tmp_file" &> /dev/null
+    echo "$PASS" | openssl enc -d -pass stdin -aes-256-cbc -base64 -in "$DIR/$1" -out "$tmp_file" &> /dev/null
     if [[ ${PIPESTATUS[1]} -eq 0 ]]; then
         $EDITOR "$tmp_file"
-        echo "$PASS" | openssl enc -e -pass stdin "$OPENSSL_OPTIONS" -in "$tmp_file" -out "$DIR/$1"
+        echo "$PASS" | openssl enc -e -pass stdin -aes-256-cbc -base64 -in "$tmp_file" -out "$DIR/$1"
     else
         printlne "wrong password for store '$1'"
     fi

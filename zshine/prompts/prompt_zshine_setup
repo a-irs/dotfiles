@@ -145,7 +145,7 @@ _prompt_user_host() {
 #######################################
 
 _rprompt_error() {
-    echo -n "%{%B%F{$ZSHINE_ERROR_COLOR}%}%(?..{%?} )"
+    echo -n "%{%B%F{$ZSHINE_ERROR_COLOR}%}%(?..%? )"
 }
 
 _rprompt_battery() {

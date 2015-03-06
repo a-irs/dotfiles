@@ -1,12 +1,21 @@
+#!/usr/bin/env zsh
+
 noglobs=(find ftp locate rake rsync scp sftp wcalc)
 for c in $noglobs; do
     [ -n "$commands[$c]" ] && alias $c="noglob $c"
 done
 
+each-file() {
+    for f in *(.); do
+        echo -e "\n${BOLD_YELLOW}$* ${f}${RESET}\n"
+        "$@" "$f"
+    done
+}
+
 bottomblur() {
     d="/tmp/blur"
     mkdir -p $d && \
-    convert $1 -resize 1280x800\! "$d/out.png" && \
+    convert "$1" -resize 1280x800\! "$d/out.png" && \
     convert "$d/out.png" -flip "$d/flip.png" && \
     convert "$d/flip.png" -blur 12x8 "$d/blur.png" && \
     convert "$d/flip.png" -gamma 0 -fill white -draw "rectangle 0,-22 1280,22" "$d/mask.png" && \
