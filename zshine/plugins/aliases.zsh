@@ -5,6 +5,57 @@ for c in $noglobs; do
     [ -n "$commands[$c]" ] && alias $c="noglob $c"
 done
 
+dl() {
+
+    case "$1" in
+        (*T|*t|*Tb|*TB|*tb|*tB) UNIT1=TB ;;
+        (*G|*g|*Gb|*GB|*gb|*gB) UNIT1=GB ;;
+        (*M|*m|*Mb|*MB|*mb|*mB) UNIT1=MB ;;
+        (*K|*k|*Kb|*KB|*kb|*kB) UNIT1=KB ;;
+        (*) echo "unknown" && return 1;;
+    esac
+    VAL1=${1//,/\.}
+    VAL1=${VAL1//[^0-9|\.]}
+
+    case "$2" in
+        (*T|*t|*Tb|*TB|*tb|*tB) UNIT2=TB ;;
+        (*G|*g|*Gb|*GB|*gb|*gB) UNIT2=GB ;;
+        (*M|*m|*Mb|*MB|*mb|*mB) UNIT2=MB ;;
+        (*K|*k|*Kb|*KB|*kb|*kB) UNIT2=KB ;;
+        (*) echo "unknown" && return 1;;
+    esac
+    VAL2=${2//,/\.}
+    VAL2=${VAL2//[^0-9|\.]}
+
+    case "$UNIT1" in
+        KB) VAL1B=$((VAL1*1024)) ;;
+        MB) VAL1B=$((VAL1*1024*1024)) ;;
+        GB) VAL1B=$((VAL1*1024*1024*1024)) ;;
+        TB) VAL1B=$((VAL1*1024*1024*1024*1024)) ;;
+    esac
+
+    case "$UNIT2" in
+        KB) VAL2B=$((VAL2*1024)) ;;
+        MB) VAL2B=$((VAL2*1024*1024)) ;;
+        GB) VAL2B=$((VAL2*1024*1024*1024)) ;;
+        TB) VAL2B=$((VAL2*1024*1024*1024*1024)) ;;
+    esac
+
+    echo -ne "\nDownloading ${BOLD_GREEN}$VAL2 $UNIT2${RESET} at ${BOLD_GREEN}$VAL1 $UNIT1/s${RESET} takes ${BLUE}"
+
+    TIME=$((VAL2B/VAL1B))
+    DAYS=$(( TIME / 60 / 60 / 24 ))
+    HOURS=$(( TIME / 60 / 60 % 24 ))
+    MINUTES=$(( TIME / 60 % 60 ))
+    SECONDS=$(( TIME % 60 ))
+    (( DAYS > 0 )) && echo -n "${DAYS}d and "
+    (( HOURS > 0 )) && echo -n "${HOURS}h "
+    (( MINUTES > 0 )) && echo -n "${MINUTES}m "
+    (( SECONDS > 0 )) && echo -n "${SECONDS}s"
+    (( SECONDS == 0 )) && echo -n "less than 1s."
+    echo "${RESET}"
+}
+
 each-file() {
     for f in *(.); do
         echo -e "\n${BOLD_YELLOW}$* ${f}${RESET}\n"
