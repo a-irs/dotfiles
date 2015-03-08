@@ -9,7 +9,7 @@ fi
 
 xset r rate 200 30
 
-session=${1:-xfce}
+session=${1:-xfce4}
 case $session in
     awesome           ) exec awesome;;
     bspwm             ) exec bspwm;;

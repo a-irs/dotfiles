@@ -107,18 +107,15 @@ if [[ -f /usr/bin/xfconf-query ]]; then
     s keyboard-layout /Default/XkbDisable false
     s keyboard-layout /Default/XkbLayout de
     s keyboard-layout /Default/XkbVariant nodeadkeys
-    s xfce4-desktop /desktop-icons/file-icons/show-filesystem false
-    s xfce4-desktop /desktop-icons/file-icons/show-home false
-    s xfce4-desktop /desktop-icons/file-icons/show-removable false
-    s xfce4-desktop /desktop-icons/file-icons/show-trash false
-    s xfce4-desktop /desktop-icons/style 2
-    s xfce4-notifyd /expire-timeout 3
+    #s xfce4-desktop /desktop-icons/file-icons/show-filesystem false
+    #s xfce4-desktop /desktop-icons/file-icons/show-home false
+    #s xfce4-desktop /desktop-icons/file-icons/show-removable false
+    #s xfce4-desktop /desktop-icons/file-icons/show-trash false
+    #s xfce4-desktop /desktop-icons/style 2
+    #s xfce4-notifyd /expire-timeout 3
     s xfce4-session /general/SaveOnExit false
-    s xfwm4 /general/borderless_maximize true
     s xfwm4 /general/button_layout "CHM|"
-    s xfwm4 /general/cycle_draw_frame true
     s xfwm4 /general/mousewheel_rollup false
-    s xfwm4 /general/placement_ratio 0
     s xfwm4 /general/workspace_count 1
     print_info "set configs for Xfce"
 fi

@@ -5,6 +5,13 @@ for c in $noglobs; do
     [ -n "$commands[$c]" ] && alias $c="noglob $c"
 done
 
+getabs() {
+    [[ -z "$1" ]] && return 1
+    mkdir -p ~/dev/arch && cd ~/dev/arch && \
+    pbget --aur "$1" && cd "$1" && \
+    makepkg -od --skipinteg
+}
+
 dl() {
 
     case "$1" in
@@ -146,7 +153,7 @@ s() {
             printf "\n${BOLD_YELLOW}${s}${RESET}\n\n"
         fi
 
-        mime=$(file --mime-encoding -b "$f")
+        mime=$(file --mime-encoding -b -- "$f")
         if [[ $mime == "binary" ]]; then
             if [[ -s "$f" ]]; then
                 echo -e "${RED}BINARY FILE${RESET}" && continue
@@ -246,7 +253,7 @@ if [ -n "$commands[encfs]" ]; then
     enc-mount() {
         mkdir ~/encrypt && \
         encfs ~/.encrypt ~/encrypt && \
-        xdg-open ~/encrypt && \
+        xdg-open ~/encrypt &> /dev/null && \
         find ~/.thumbnails > ~/.encrypt-thumbs-before
     }
     enc-umount() {
