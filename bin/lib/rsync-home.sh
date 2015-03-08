@@ -21,6 +21,7 @@ rsync -axH --delete --delete-excluded --stats --progress --human-readable --nume
 --exclude '.cache/*' \
 --exclude '.dropbox*' \
 --exclude '.kodi/userdata/Thumbnails/*' \
+--exclude '.kodi/userdata/Database/Textures*.db' \
 --exclude '.local/share/gvfs-metadata/*' \
 --exclude '.local/share/Trash' \
 --exclude '.local/share/Steam' \
