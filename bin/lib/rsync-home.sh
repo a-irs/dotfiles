@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source="$HOME/"
+set -e
+
 destination="root@srv:/media/data/backups/host/$HOSTNAME"
 
 rsync -axH --delete --delete-excluded --stats --progress --human-readable --numeric-ids --info=progress2 \
@@ -31,4 +32,12 @@ rsync -axH --delete --delete-excluded --stats --progress --human-readable --nume
 --exclude '.zcompdump' \
 --exclude '.config/chrom*/Safe Browsing*' \
 --exclude '.config/mpd/log' \
-"$source" "$destination"
+"$HOME" "$destination/home"
+
+sudo rsync -axH --delete --delete-excluded --stats --progress --human-readable --numeric-ids --info=progress2 \
+--exclude 'udev/hwdb.bin' \
+/etc "$destination"
+
+sudo rsync -axH --delete --delete-excluded --stats --progress --human-readable --numeric-ids --info=progress2 \
+--exclude '.cache/*' \
+/root "$destination"
