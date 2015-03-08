@@ -1,1 +1,1 @@
-lib/dolphin-wrapper.sh
+../lib/dolphin-wrapper.sh

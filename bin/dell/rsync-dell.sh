@@ -1,1 +1,0 @@
-../lib/rsync-dell.sh

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-source="$HOME"
-destination="root@srv:/media/data/backups/host/dell/home"
+source="$HOME/"
+destination="root@srv:/media/data/backups/host/$HOSTNAME"
 
 rsync -axH --delete --delete-excluded --stats --progress --human-readable --numeric-ids --info=progress2 \
 --exclude 'dev/android' \
@@ -23,6 +23,7 @@ rsync -axH --delete --delete-excluded --stats --progress --human-readable --nume
 --exclude '.kodi/userdata/Thumbnails/*' \
 --exclude '.local/share/gvfs-metadata/*' \
 --exclude '.local/share/Trash' \
+--exclude '.local/share/Steam' \
 --exclude '.thumbnails/*' \
 --exclude '.config/freshwrapper-data/Shockwave Flash/WritableRoot' \
 --exclude '.zsh_recent-dirs' \
