@@ -4,6 +4,8 @@ set -e
 
 destination="root@srv:/media/data/backups/host/$HOSTNAME"
 
+pacman -Qqe | sort > /tmp/packages.txt && scp /tmp/packages.txt "$destination" && rm -f /tmp/packages.txt
+
 rsync -axH --delete --delete-excluded --stats --progress --human-readable --numeric-ids --info=progress2 \
 --exclude 'dev/android' \
 --exclude 'dev/venvs' \
@@ -21,6 +23,7 @@ rsync -axH --delete --delete-excluded --stats --progress --human-readable --nume
 --exclude '**/Backup' \
 --exclude '.cache/*' \
 --exclude '.dropbox*' \
+--exclude '.kodi/addons/packages/*' \
 --exclude '.kodi/userdata/Thumbnails/*' \
 --exclude '.kodi/userdata/Database/Textures*.db' \
 --exclude '.local/share/gvfs-metadata/*' \
