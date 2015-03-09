@@ -35,10 +35,16 @@ rsync -axH --delete --delete-excluded --stats --progress --human-readable --nume
 --exclude '.zcompdump' \
 --exclude '.config/chrom*/Safe Browsing*' \
 --exclude '.config/mpd/log' \
+--exclude '.xfce4-session.verbose-log*' \
 "$HOME" "$destination/home"
 
 sudo rsync -axH --delete --delete-excluded --stats --progress --human-readable --numeric-ids --info=progress2 \
 --exclude 'udev/hwdb.bin' \
+--exclude 'ld.so.cache' \
+--exclude '*.pacnew' \
+--exclude '*.pacorig' \
+--exclude '*.pacsave' \
+--exclude '*~' \
 /etc "$destination"
 
 sudo rsync -axH --delete --delete-excluded --stats --progress --human-readable --numeric-ids --info=progress2 \
