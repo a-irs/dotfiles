@@ -17,6 +17,7 @@ rsync -axH --delete --delete-excluded --stats --progress --human-readable --nume
 --exclude 'doc' \
 --exclude '.mozilla/firefox/*/storage/temporary' \
 --exclude '.mozilla/firefox/*/sessionstore-backups' \
+--exclude '**/compile-cache' \
 --exclude '**/Cache' \
 --exclude '**/cache' \
 --exclude '**/backup' \
