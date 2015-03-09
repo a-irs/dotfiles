@@ -1,1 +1,0 @@
-../lib/autostart-dell.sh
