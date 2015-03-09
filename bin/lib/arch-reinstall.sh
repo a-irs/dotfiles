@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 error() {
     echo -e "\033[31;1m>>> $1\033[0m"
     exit 1
@@ -22,12 +24,14 @@ echo -e "\n\033[31;1m>>> INSTALLATION WILL BE UNATTENDED. TYPE \"YES\" TO CONTIN
 read YES
 [[ "$YES" != "YES" ]] && exit 1
 
+echo ""
 sudo pacman -S --needed --noconfirm $pac_pkgs
 
-if [ ! $(which yaourt) ]; then
-    $(which curl) || sudo pacman -S --needed --noconfirm --asdeps curl
-    curl "https://aur.archlinux.org/packages/pa/package-query/PKGBUILD" > PKGBUILD && makepkg --needed --asdeps -cirs
-    curl "https://aur.archlinux.org/packages/ya/yaourt/PKGBUILD" > PKGBUILD && makepkg --needed --asdeps -cirs
-    rm PKGBUILD package-query-*.tar.* yaourt-*.tar.*
+if [ ! $(which yaourt 2> /dev/null) ]; then
+    cd $(mktemp -d)
+    curl "https://aur.archlinux.org/packages/pa/package-query/PKGBUILD" > PKGBUILD && makepkg --needed --asdeps -cirs --noconfirm
+    curl "https://aur.archlinux.org/packages/ya/yaourt/PKGBUILD" > PKGBUILD && makepkg --needed -cirs --noconfirm
 fi
 yaourt -S --needed --noconfirm $aur_pkgs
+
+echo -e "\n\033[32;1m>>> DONE\033[0m\n"
