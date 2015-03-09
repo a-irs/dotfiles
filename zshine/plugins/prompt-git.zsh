@@ -4,6 +4,7 @@ is_git() {
     export IS_GIT=0
     [[ "$PWD" == /var/aur* ]] && return 1
     [[ "$PWD" == ~/net/* ]] && return 1
+    [[ "$PWD" == /run/user/*/gvfs/* ]] && return 1
     [ -d .git ] && IS_GIT=1 && return 0
     git rev-parse --git-dir > /dev/null 2>&1 && IS_GIT=1 && return 0
 }
