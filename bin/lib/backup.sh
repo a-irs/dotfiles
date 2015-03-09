@@ -36,6 +36,7 @@ rsync -axH --delete --delete-excluded --stats --progress --human-readable --nume
 --exclude '.config/chrom*/Safe Browsing*' \
 --exclude '.config/mpd/log' \
 --exclude '.xfce4-session.verbose-log*' \
+--exclude '.git-credentials' \
 "$HOME" "$destination/home"
 
 sudo rsync -axH --delete --delete-excluded --stats --progress --human-readable --numeric-ids --info=progress2 \
@@ -49,4 +50,5 @@ sudo rsync -axH --delete --delete-excluded --stats --progress --human-readable -
 
 sudo rsync -axH --delete --delete-excluded --stats --progress --human-readable --numeric-ids --info=progress2 \
 --exclude '.cache/*' \
+--exclude '.git-credentials' \
 /root "$destination"
