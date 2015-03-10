@@ -46,6 +46,7 @@ dotfiles=(
     tmux.conf
     vim
     vimrc
+    zprofile
     zshine
     zshrc
 )
@@ -95,24 +96,18 @@ if [[ -d ~/.mozilla/firefox ]]; then
     profile=$(find ~/.mozilla/firefox -mindepth 1 -maxdepth 1 -type d | head -n 1)
     mkdir -p "$profile/chrome"
     ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/userChrome.css" "$profile/chrome/userChrome.css" 2> /dev/null
-    echo "installed firefox userChrome"
+    print_info "installed firefox userChrome"
 fi
 
 if [[ -f /usr/bin/xfconf-query ]]; then
     s() {
-        xfconf-query -c "$1" -p "$2" -s "$3"
+        xfconf-query -c "$1" -p "$2" -s "$3" 2> /dev/null
     }
     s keyboards /Default/KeyRepeat/Delay 200
     s keyboards /Default/KeyRepeat/Rate 30
     s keyboard-layout /Default/XkbDisable false
     s keyboard-layout /Default/XkbLayout de
     s keyboard-layout /Default/XkbVariant nodeadkeys
-    #s xfce4-desktop /desktop-icons/file-icons/show-filesystem false
-    #s xfce4-desktop /desktop-icons/file-icons/show-home false
-    #s xfce4-desktop /desktop-icons/file-icons/show-removable false
-    #s xfce4-desktop /desktop-icons/file-icons/show-trash false
-    #s xfce4-desktop /desktop-icons/style 2
-    #s xfce4-notifyd /expire-timeout 3
     s xfce4-session /general/SaveOnExit false
     s xfwm4 /general/button_layout "CHM|"
     s xfwm4 /general/mousewheel_rollup false
