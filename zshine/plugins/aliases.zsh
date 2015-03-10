@@ -189,8 +189,6 @@ alias lt='\ls -F -l -h -t -r --color=auto --group-directories-first'
 [ -n "$commands[make]" ] && alias make="LC_ALL=C make"
 [ -n "$commands[gcc]" ]  && alias  gcc="LC_ALL=C gcc"
 [ -n "$commands[g++]" ]  && alias  g++="LC_ALL=C g++"
-[ -n "$commands[acp]" ] && alias cp='acp -g'
-[ -n "$commands[amv]" ] && alias mv='amv -g'
 [ -n "$commands[mpv]" ] && alias mpv='mpv --no-audio-display'
 
 if [ -n "$commands[vlock]" ]; then
