@@ -1,0 +1,38 @@
+**/dev/android
+**/dev/venvs
+**/dev/virtualbox
+**/todo
+**/media
+**/media-gmusic
+**/downloads/*
+**/doc
+**/.mozilla/firefox/*/storage/temporary
+**/.mozilla/firefox/*/sessionstore-backups
+**/compile-cache
+**/Package Control.cache
+**/Cache
+**/cache
+**/backup
+**/Backup
+**/.cache/*
+**/.dropbox*
+**/.kodi/addons/packages/*
+**/.kodi/userdata/Thumbnails/*
+**/.kodi/userdata/Database/Textures*.db
+**/.local/share/gvfs-metadata/*
+**/.local/share/Trash
+**/.local/share/Steam
+**/.thumbnails/*
+**/.config/freshwrapper-data/Shockwave Flash/WritableRoot
+**/.zsh_recent-dirs
+**/.zcompdump
+**/.config/chrom*/Safe Browsing*
+**/.config/mpd/log
+**/.xfce4-session.verbose-log*
+**/.git-credentials
+**/udev/hwdb.bin
+**/ld.so.cache
+**/*.pacnew
+**/*.pacorig
+**/*.pacsave
+**/*~

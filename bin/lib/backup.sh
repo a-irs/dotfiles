@@ -2,58 +2,31 @@
 
 set -e
 
-destination="root@srv:/media/data/backups/host/$HOSTNAME"
+read -r -s -p "Passphrase: " PASSPHRASE
+export PASSPHRASE
 
-pacman -Qqe | sort > /tmp/packages.txt && scp /tmp/packages.txt "$destination" && rm -f /tmp/packages.txt
+destination="scp://root@srv//media/data/backups/duplicity/$HOSTNAME"
+destination_ssh="root@srv:/media/data/backups/duplicity/$HOSTNAME"
+archive_dir="/var/tmp/duplicity"
 
-rsync -axH --delete --delete-excluded --stats --progress --human-readable --numeric-ids --info=progress2 \
---rsync-path="sudo rsync" \
---exclude 'dev/android' \
---exclude 'dev/venvs' \
---exclude 'dev/virtualbox' \
---exclude 'todo' \
---exclude 'media' \
---exclude 'media-gmusic' \
---exclude 'downloads/*' \
---exclude 'doc' \
---exclude '.mozilla/firefox/*/storage/temporary' \
---exclude '.mozilla/firefox/*/sessionstore-backups' \
---exclude '**/compile-cache' \
---exclude '**/Package Control.cache' \
---exclude '**/Cache' \
---exclude '**/cache' \
---exclude '**/backup' \
---exclude '**/Backup' \
---exclude '.cache/*' \
---exclude '.dropbox*' \
---exclude '.kodi/addons/packages/*' \
---exclude '.kodi/userdata/Thumbnails/*' \
---exclude '.kodi/userdata/Database/Textures*.db' \
---exclude '.local/share/gvfs-metadata/*' \
---exclude '.local/share/Trash' \
---exclude '.local/share/Steam' \
---exclude '.thumbnails/*' \
---exclude '.config/freshwrapper-data/Shockwave Flash/WritableRoot' \
---exclude '.zsh_recent-dirs' \
---exclude '.zcompdump' \
---exclude '.config/chrom*/Safe Browsing*' \
---exclude '.config/mpd/log' \
---exclude '.xfce4-session.verbose-log*' \
---exclude '.git-credentials' \
-"$HOME" "$destination/home"
+header() {
+    echo -e "\n$(tput setaf "${1}";tput bold)${2}$(tput init)\n"
+}
 
-sudo rsync -axH --delete --delete-excluded --stats --progress --human-readable --numeric-ids --info=progress2 \
---rsync-path="sudo rsync" \
---exclude 'udev/hwdb.bin' \
---exclude 'ld.so.cache' \
---exclude '*.pacnew' \
---exclude '*.pacorig' \
---exclude '*.pacsave' \
---exclude '*~' \
-/etc "$destination"
+backup() {
+    src=$1
+    dst=$2
+    header 4 "backing up $src to $dst"
+    if [[ "$3" == sudo ]]; then
+        sudo -E duplicity --archive-dir="$archive_dir" --exclude-globbing-filelist="$(dirname "$(readlink -f "$0")")/backup.exclude" "$src" "$dst"
+    else
+        duplicity --archive-dir="$archive_dir" --exclude-globbing-filelist="$(dirname "$(readlink -f "$0")")/backup.exclude" "$src" "$dst"
+    fi
+}
 
-sudo rsync -axH --delete --delete-excluded --stats --progress --human-readable --numeric-ids --info=progress2 \
---rsync-path="sudo rsync" \
---exclude '.cache/*' \
---exclude '.git-credentials' \
-/root "$destination"
+header 4 "sending package list to $destination_ssh/packages.txt"
+pacman -Qqe | sort > /tmp/packages.txt && scp /tmp/packages.txt "$destination_ssh/packages.txt" && rm -f /tmp/packages.txt
+
+backup "$HOME" "$destination/home"
+backup "/etc" "$destination/etc" sudo
+backup "/root" "$destination/root" sudo
