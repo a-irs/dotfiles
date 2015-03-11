@@ -25,5 +25,5 @@ backup /etc "$destination/etc"
 backup /root "$destination/root"
 [[ -f /usr/bin/crond ]] && backup /var/spool/cron "$destination/cron"
 
-header 3 "sending package list to $destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt"
-pacman -Qqe | sort > /tmp/packages.txt && scp /tmp/packages.txt "$destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt" && rm -f /tmp/packages.txt
+header 5 "sending package list to $destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt"
+pacman -Qe | sort > /tmp/packages.txt && scp /tmp/packages.txt "$destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt" && rm -f /tmp/packages.txt
