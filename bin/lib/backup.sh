@@ -16,15 +16,23 @@ header() {
 backup() {
     src=$1
     dst=$2
+    extra_options=$3
     header 4 "backing up $src to $dst"
-    echo sudo -E duplicity --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-globbing-filelist="$(dirname "$(readlink -f "$0")")/backup.exclude" "$3" "$src" "$dst"
+    if [[ -n "$extra_options" ]]; then
+        eval $(echo sudo -E duplicity --archive-dir="$archive_dir" --exclude-other-filesystems $(echo $extra_options) "$src" "$dst")
+    else
+        sudo -E duplicity --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-globbing-filelist="$(dirname "$(readlink -f "$0")")/backup.exclude" "$src" "$dst"
+    fi
 }
 
 backup /home "$destination/home"
 backup /etc "$destination/etc"
 backup /root "$destination/root"
-[[ $HOSTNAME == srv ]] && backup /srv "$destination/srv" "--include /srv/smb --include /srv/http --include /srv/docker/sabnzbd/state/sabnzbd.ini --exclude '**'"
-[[ -f /usr/bin/crond ]] && backup /var/spool/cron "$destination/cron"
+
+if [[ $HOSTNAME == srv ]]; then
+    backup /srv "$destination/srv" "--include /srv/smb --include /srv/http --include /srv/docker/sabnzbd/state/sabnzbd.ini --exclude '**'"
+    backup /var/spool/cron "$destination/cron"
+fi
 
 header 5 "sending package list to $destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt"
 pacman -Qe | sort > /tmp/packages.txt && scp /tmp/packages.txt "$destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt" && rm -f /tmp/packages.txt
