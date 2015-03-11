@@ -17,16 +17,13 @@ backup() {
     src=$1
     dst=$2
     header 4 "backing up $src to $dst"
-    if [[ "$3" == sudo && $UID != 0 ]]; then
-        sudo -E duplicity --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-globbing-filelist="$(dirname "$(readlink -f "$0")")/backup.exclude" "$src" "$dst"
-    else
-        duplicity --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-globbing-filelist="$(dirname "$(readlink -f "$0")")/backup.exclude" "$src" "$dst"
-    fi
+    sudo -E duplicity --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-globbing-filelist="$(dirname "$(readlink -f "$0")")/backup.exclude" "$src" "$dst"
 }
 
-header 4 "sending package list to $destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt"
-pacman -Qqe | sort > /tmp/packages.txt && scp /tmp/packages.txt "$destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt" && rm -f /tmp/packages.txt
+backup /home "$destination/home"
+backup /etc "$destination/etc"
+backup /root "$destination/root"
+[[ -f /usr/bin/crond ]] && backup /var/spool/cron "$destination/cron"
 
-[[ $HOME != /root ]] && backup "$HOME" "$destination/home"
-backup "/etc" "$destination/etc" sudo
-backup "/root" "$destination/root" sudo
+header 3 "sending package list to $destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt"
+pacman -Qqe | sort > /tmp/packages.txt && scp /tmp/packages.txt "$destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt" && rm -f /tmp/packages.txt
