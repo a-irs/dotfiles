@@ -25,7 +25,7 @@ backup() {
 }
 
 header 4 "sending package list to $destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt"
-pacman -Qqe | sort > /tmp/packages.txt && scp /tmp/packages.txt "$destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt" && rm -f /tmp/packages.txt
+pacman -Qe | sort > /tmp/packages.txt && scp /tmp/packages.txt "$destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt" && rm -f /tmp/packages.txt
 
 [[ $HOME != /root ]] && backup "$HOME" "$destination/home"
 backup "/etc" "$destination/etc" sudo
