@@ -18,9 +18,9 @@ backup() {
     dst=$2
     header 4 "backing up $src to $dst"
     if [[ "$3" == sudo ]]; then
-        sudo -E duplicity --archive-dir="$archive_dir" --exclude-globbing-filelist="$(dirname "$(readlink -f "$0")")/backup.exclude" "$src" "$dst"
+        sudo -E duplicity --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-globbing-filelist="$(dirname "$(readlink -f "$0")")/backup.exclude" "$src" "$dst"
     else
-        duplicity --archive-dir="$archive_dir" --exclude-globbing-filelist="$(dirname "$(readlink -f "$0")")/backup.exclude" "$src" "$dst"
+        duplicity --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-globbing-filelist="$(dirname "$(readlink -f "$0")")/backup.exclude" "$src" "$dst"
     fi
 }
 
