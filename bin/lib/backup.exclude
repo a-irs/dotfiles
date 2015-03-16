@@ -5,7 +5,7 @@
 **/dev/virtualbox
 **/todo
 **/media
-**/media-gmusic
+**/gmusic
 **/downloads/*
 **/doc
 **/.mozilla/firefox/*/storage/temporary
