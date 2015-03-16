@@ -117,6 +117,7 @@
 	"remember_open_files": false,
 	"scroll_past_end": true,
 	"scroll_speed": 0,
+	"show_encoding": true,
 	"show_panel_on_build": true,
 	"show_tab_close_buttons": false,
 	"spell_check": false,
