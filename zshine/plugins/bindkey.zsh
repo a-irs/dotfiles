@@ -21,6 +21,6 @@ bindkey "^P" copy-prev-shell-word
 bindkey '^F' edit-command-line
 bindkey -M menuselect '\e^M' accept-and-menu-complete # select multiple entries in TAB-completion with ESC+Return
 
-foreground-vim() { fg %vim; }
-zle -N foreground-vim
-bindkey '^Z' foreground-vim
+fg-toggle() { fg; }
+zle -N fg-toggle
+bindkey '^Z' fg-toggle

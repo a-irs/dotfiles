@@ -80,14 +80,11 @@ ZSHINE_PLUGINS=(
   ls-colors # colors for "ls" command
   virtualenvwrapper # wrapper for python-virtualenv
   syntax-highlighting # provides a syntax highlighted prompt
-  host-specific # sets some machine-specific details
   less-syntax-highlighting # syntax highlighting for "less" command
-  auto256 # auto set 256 TERM
   history-substring-search # arrow key up/down history search
 #  command-not-found # show needed packages for unknown commands
   bd # move back in current directory tree (breadcrumb-style)
   fzf # CTRL+T for fuzzy-search of files
-  rationalise-dot # type cd ...... to change directory fast
   auto-ls # launch "ls" when entering directory
   prompt-git # provides functions for a git-prompt
   completion # tweaks for TAB-completion
@@ -96,6 +93,15 @@ ZSHINE_PLUGINS=(
 #  notify # notify-send after long command has been completed
 )
 for z in $ZSHINE_PLUGINS; do source "$ZSHINE_DIR/plugins/$z.zsh"; done
+
+if [[ $TERM != *"-256color" ]]; then
+    for terminfos in "${HOME}/.terminfo" "/etc/terminfo" "/lib/terminfo" "/usr/share/terminfo"; do
+        if [[ -e "$terminfos"/$TERM[1]/${TERM}-256color || -e "$terminfos"/${TERM}-256color ]]; then
+            export TERM="${TERM}-256color"
+            break
+        fi
+    done
+fi
 
 export RESET=$(tput sgr0)
 export BLACK=$(tput setaf 0)
