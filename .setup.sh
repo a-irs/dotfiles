@@ -29,7 +29,9 @@ mklink() {
 
 dotfiles=(
     bin
+    config/cower/config
     config/htop/htoprc
+    config/meat/config
     config/mpd/mpd.conf
     config/ranger/rc.conf
     config/ranger/scope.sh
