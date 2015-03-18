@@ -1,7 +1,6 @@
 **/.dotfiles
 **/.snapshots
 **/dev/android
-**/dev/venvs
 **/dev/virtualbox
 **/todo
 **/media

@@ -205,6 +205,7 @@ EXEC 01 # This is for files with execute permission
 *README.txt      33
 *readme.txt      33
 .md              33
+.m3u             33
 *README.markdown 33
 .ini             33
 .yml             33
