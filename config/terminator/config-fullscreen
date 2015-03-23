@@ -35,7 +35,7 @@
   [[default]]
     scrollbar_position = hidden
     word_chars = "-A-Za-z0-9,./?%&#:_~"
-    palette = "#3b3b3b:#f14c4c:#a6e966:#fff073:#b9d7f8:#c09abc:#6ad3d4:#e6e6e6:#6d7367:#ef4343:#a7f15e:#fcec67:#aed2fa:#b895b5:#69e0e1:#d4d4d4"
+    palette = "#3b3b3b:#f14c4c:#adfa61:#fff073:#b9d7f8:#c7a0c3:#6ad3d4:#e6e6e6:#6d7367:#ef4343:#adfa61:#fcec67:#aed2fa:#c7a0c3:#69e0e1:#d4d4d4"
     font = Input Semi-Condensed 11
     visible_bell = True
     background_image = None
