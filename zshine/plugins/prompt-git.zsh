@@ -74,13 +74,13 @@ git_remote_state() {
             behind_num=$(echo "$remote_state" | grep -oh "behind [0-9]*" | grep -oh "[0-9]*$")
             out="-$behind_num"
         fi
-        echo -n "%{%B%F{$ZSHINE_GIT_DIRTY_COLOR}%}$out"
+        echo -n "%{%B%F{$ZSHINE_GIT_DIRTY_FG}%}$out"
     fi
 }
 
 _git_dirty_simple() {
     if [[ -n $(git status --ignore-submodules --porcelain 2> /dev/null) ]]; then
-        echo -n "%{%B%F{$ZSHINE_GIT_DIRTY_COLOR}%}$ZSHINE_GIT_SYMBOL_SIMPLE"
+        echo -n "%{%B%F{$ZSHINE_GIT_DIRTY_FG}%}$ZSHINE_GIT_SYMBOL_SIMPLE"
     fi
 }
 
@@ -119,5 +119,5 @@ _git_dirty_advanced() {
         STATUS="$ZSHINE_GIT_SYMBOL_DELETED$STATUS"
     fi
 
-    [[ -n $STATUS ]] && echo -n "%{%F{$ZSHINE_GIT_DIRTY_COLOR}%}$STATUS%{%f%}"
+    [[ -n $STATUS ]] && echo -n "%{%F{$ZSHINE_GIT_DIRTY_FG}%}$STATUS%{%f%}"
 }
