@@ -1,10 +1,4 @@
 #!/usr/bin/env sh
-#| File    : ~/.config/ranger/scope.sh
-#| Charset : UTF-8
-#| Author  : Fabien Cazenave
-#| Source  : https://github.com/fabi1cazenave/dotFiles
-#|
-
 # ranger supports enhanced previews.  If the option "use_preview_script" is set
 # to True and this file exists, this script will be called and its output is
 # displayed in ranger.  ANSI color codes are supported.
@@ -77,8 +71,9 @@ case "$mimetype" in
     text/* | */xml)
         try source-highlight -t 4 --failsafe --infer-lang -f esc --style-file=esc.style -i "$path" && { dump | trim; exit 5; } || exit 2;;
     image/*)
-        exiftool "$path" && exit 5;;
+        img2txt --gamma=0.6 --width="$width" "$path" && exit 4 || exit 1;;
     video/* | audio/*)
+        exiftool "$path" && exit 5
         try mediainfo "$path" && { dump | trim | sed 's/ \{16\}:/:/;';  exit 5; } || exit 1;;
 esac
 

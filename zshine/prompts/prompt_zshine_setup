@@ -116,6 +116,10 @@ _prompt_ssh() {
     fi
 }
 
+_prompt_ranger() {
+    [[ -n "$RANGER_LEVEL" ]] && prompt_segment white 16 "RANGER"
+}
+
 _prompt_path() {
     local p="${PWD/#$HOME/~}"
     local left="${p%/*}"
@@ -224,6 +228,7 @@ _build_left() {
     _prompt_user_host
     _prompt_path
     _prompt_git
+    _prompt_ranger
     _prompt_end
 }
 

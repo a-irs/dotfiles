@@ -5,6 +5,15 @@ for c in $noglobs; do
     [ -n "$commands[$c]" ] && alias $c="noglob $c"
 done
 
+ranger() {
+    [[ -n "$RANGER_LEVEL" ]] && exit
+    tmp='/tmp/chosendir'
+    command ranger --choosedir="$tmp" "${@:-$PWD}"
+    [[ -f "$tmp" && $(cat -- "$tmp") != "$PWD" ]] && cd -- "$(cat -- "$tmp")"
+    rm -f -- "$tmp"
+}
+alias ra='ranger'
+
 getabs() {
     [[ -z "$1" ]] && return 1
     mkdir -p ~/dev/arch && cd ~/dev/arch && \
@@ -223,6 +232,7 @@ take() { mkdir -p "$1" && cd "$1"; }
 [ -n "$commands[abs]" ] && alias abs='sudo abs'
 [ -n "$commands[ufw]" ] && alias ufw='sudo ufw'
 
+[ -n "$commands[aunpack]" ] && alias x='aunpack'
 [ -n "$commands[latexmk]" ] && alias ltx="latexmk -cd -f -pdf -pvc -outdir=/tmp/latexmk"
 [ -n "$commands[reflector]" ] && alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose && sudo pacman -Syy"
 [ -n "$commands[impressive]" ] && alias show='impressive -t FadeOutFadeIn --fade --transtime 300 --mousedelay 500 --nologo --nowheel --noclicks'
@@ -471,48 +481,6 @@ if [ -f "$HOME/.config/user-dirs.dirs" ]; then
         xdg-open "$newfile"
     }
 fi
-
-extract() {
-    local file_name
-    local extract_dir
-
-    while (( $# > 0 )); do
-        if [[ ! -r "$1" ]]; then
-            echo "extract: '$1' does not exist" 1>&2
-            shift
-            continue
-        fi
-
-        file_name="${1:t}"
-        extract_dir="${file_name//.${file_name##*.}/}"
-        case "$1" in
-          (*.tar.gz|*.tgz) tar xvzf "$1" ;;
-          (*.tar.bz2|*.tbz|*.tbz2) tar xvjf "$1" ;;
-          (*.tar.xz|*.txz) tar --xz --help &> /dev/null && tar --xz -xvf "$1" || xzcat "$1" | tar xvf - ;;
-          (*.tar.zma|*.tlz) tar --lzma --help &> /dev/null && tar --lzma -xvf "$1" || lzcat "$1" | tar xvf - ;;
-          (*.tar) tar xvf "$1" ;;
-          (*.gz) gunzip "$1" ;;
-          (*.bz2) bunzip2 "$1" ;;
-          (*.xz) unxz "$1" ;;
-          (*.lzma) unlzma "$1" ;;
-          (*.Z) uncompress "$1" ;;
-          (*.zip|*.war|*.jar|*.apk) unzip "$1" -d $extract_dir ;;
-          (*.rar) unrar x -ad "$1" ;;
-          (*.7z) 7za x "$1" ;;
-          (*.deb)
-            mkdir -p "$extract_dir/control" && mkdir -p "$extract_dir/data"
-            cd "$extract_dir"; ar vx "../${1}" > /dev/null
-            cd control; tar xzvf ../control.tar.gz
-            cd ../data; tar xzvf ../data.tar.gz
-            cd ..; rm *.tar.gz debian-binary
-            cd .. ;;
-          (*) echo "extract: '$1' cannot be extracted" 1>&2 ;;
-        esac
-
-        shift
-        done
-}
-alias x=extract
 
 xr() {
     # composition sometimes breaks xr somehow, kill it
