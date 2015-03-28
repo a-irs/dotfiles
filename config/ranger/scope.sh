@@ -48,6 +48,8 @@ case "$extension" in
         try acat       "$path" && { dump | trim; exit 3; }
         try bsdtar -lf "$path" && { dump | trim; exit 0; }
         exit 1;;
+    iso)
+        try iso-info --no-header -fi "$path" && { dump | trim; exit 0; } || exit 1 ;;
     rar)
         try unrar -p- lt "$path" && { dump | trim; exit 0; } || exit 1;;
     pdf)

@@ -1,5 +1,5 @@
 if [[ "$TERM" == linux ]]; then
-#   echo -en "\e]P02D2D2D" #black
+    echo -en "\e]P02A1D41" #background
     echo -en "\e]P8555753" #darkgrey
     echo -en "\e]P1EF2929" #darkred
     echo -en "\e]P9EF2929" #red

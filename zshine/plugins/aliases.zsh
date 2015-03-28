@@ -278,7 +278,7 @@ if [ -n "$commands[adb]" ]; then
     alias adb-ssh='ssh root@localhost -p 2222'
 fi
 
-alias rd='rmdir -p'
+alias rd='rmdir'
 
 alias f='noglob find . -name'
 alias fd='noglob find . -type d -name'
@@ -412,6 +412,7 @@ if [ -n "$commands[pacman]" ]; then
         alias aura='sudo aura'
     fi
     if [ -n "$commands[yaourt]" ]; then
+        alias yaourt='LC_ALL=en_IE.UTF-8 yaourt'
         alias y='yaourt'
         alias ys='yaourt -S'
         alias ysua='yaourt -Syua'
