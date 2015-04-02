@@ -101,6 +101,12 @@ if [[ -d ~/.mozilla/firefox ]]; then
     print_info "installed firefox userChrome"
 fi
 
+if [[ -f /usr/lib/xorg/modules/drivers/radeon_drv.so ]]; then
+    rm -f ~/.compton.conf
+    ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/compton-radeon.conf" ~/.compton.conf 2> /dev/null
+    print_info "activated compton.conf for Radeon"
+fi
+
 if [[ -f /usr/bin/xfconf-query ]]; then
     s() {
         xfconf-query -c "$1" -p "$2" -s "$3" 2> /dev/null
