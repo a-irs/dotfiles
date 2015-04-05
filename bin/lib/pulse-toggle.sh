@@ -12,4 +12,8 @@ if [[ $? == 0 ]]; then
 else
     pax11publish -e -S "$remote"
     echo "now using: $remote at $(ponymix get-volume 2> /dev/null)%"
+    ponymix unmute > /dev/null
 fi
+
+echo ""
+ponymix

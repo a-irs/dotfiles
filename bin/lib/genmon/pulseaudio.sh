@@ -48,8 +48,7 @@ round() {
     fi
 }
 
-ponymix is-muted 2> /dev/null
-if [[ $? == 1 ]]; then
+if ! ponymix is-muted 2> /dev/null; then
     if [[ "$MONOCHROME" != 1 ]]; then
         color="#B895B5"
         image="$HOME/.bin/lib/genmon/img/speaker_on.png"
@@ -57,15 +56,15 @@ if [[ $? == 1 ]]; then
         color="white"
         image="$HOME/.bin/lib/genmon/img/monochrome/speaker_on.png"
     fi
+
+    xprop -root | grep PULSE_SERVER | grep -v "$HOSTNAME" | grep -v localhost &> /dev/null
+    if [[ $? == 0 ]]; then
+        color=orange
+        image="$HOME/.bin/lib/genmon/img/speaker_remote.png"
+    fi
 else
     color="Grey"
     image="$HOME/.bin/lib/genmon/img/speaker_off.png"
-fi
-
-xprop -root | grep PULSE_SERVER | grep -v "$(hostname)" | grep -v localhost &> /dev/null
-if [[ $? == 0 ]]; then
-    color=orange
-    image="$HOME/.bin/lib/genmon/img/speaker_remote.png"
 fi
 
 txt=$(round "$(ponymix get-volume 2> /dev/null)")
