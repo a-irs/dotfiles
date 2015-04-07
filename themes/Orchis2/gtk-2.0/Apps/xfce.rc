@@ -2,17 +2,17 @@ style "theme-panel" = "dark"
 {
 	xthickness	= 1
 	ythickness	= 1
-	
+
 	bg[NORMAL]	= @panel_bg_color
 	bg[ACTIVE]	= @panel_bg_color
 	bg[PRELIGHT]	= shade (0.85, @selected_bg_color)
 	bg[SELECTED]	= shade (0.65, @selected_bg_color)
-	
+
 	fg[NORMAL]	= shade (0.9, @base_color)
 	fg[PRELIGHT]	= @base_color
 	fg[ACTIVE]	= shade (0.9, @base_color)
 	fg[SELECTED]	= shade (0.9, @base_color)
-	
+
 	text[NORMAL]	= shade (0.9, @base_color)
 	text[PRELIGHT]	= @base_color
 	text[ACTIVE]	= shade (0.9, @base_color)
@@ -54,7 +54,7 @@ style "theme-panel-text"
 	fg[NORMAL]	= @base_color
 	fg[PRELIGHT]	= "#ffffff"
 	fg[ACTIVE]	= @base_color
-	
+
 	text[NORMAL]	= @base_color
 	text[PRELIGHT]	= "#ffffff"
 	text[ACTIVE]	= @base_color
@@ -100,11 +100,11 @@ style "window-buttons" = "theme-panel"
 	bg[ACTIVE]	= shade (0.65, @selected_bg_color)
 	bg[PRELIGHT]	= shade (0.85, @selected_bg_color)
 	bg[SELECTED]	= shade (0.85, @selected_bg_color)
-	
+
 	fg[NORMAL]	= shade (0.7, @base_color)
 	fg[ACTIVE]	= @base_color
 	fg[PRELIGHT]	= @base_color
-	
+
 	engine "murrine" {
 		contrast = 0.0
 		gradient_shades	= { 1.0, 0.9, 0.8, 0.7 }
@@ -130,7 +130,7 @@ class "PanelToplevel*"			style "theme-panel"
 widget_class "*PanelToplevel*"		style "theme-panel"
 widget_class "*notif*"			style "theme-panel"
 widget_class "*Notif*"			style "theme-panel"
-widget_class "*Tray*"			style "theme-panel" 
+widget_class "*Tray*"			style "theme-panel"
 widget_class "*tray*"			style "theme-panel"
 widget_class "*computertemp*"		style "theme-panel"
 widget_class "*Applet*Tomboy*"		style "theme-panel"
@@ -147,9 +147,9 @@ widget "*WnckPager*"			style "workspace-switcher"
 widget "*XfdesktopIconView*"	style "xfdesktop-icon-view"
 
 # Fix gtk-entries in the panel
-class "GtkEntry"			    style "combo"
-class "*SexyIconEntry*"			style:highest "combo"	# fixes dict-plugin
-widget "*xfce4-verve-plugin*GtkEntry"	style:highest "combo"	# fixes verve-plugin
+class "GtkEntry"			    style "combobox_entry"
+class "*SexyIconEntry*"			style:highest "combobox_entry"	# fixes dict-plugin
+widget "*xfce4-verve-plugin*GtkEntry"	style:highest "combobox_entry"	# fixes verve-plugin
 
 # Make sure panel text color doesn't change
 widget_class "*Panel*MenuBar*"		style "theme-main-menu-text"
