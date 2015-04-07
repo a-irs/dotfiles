@@ -30,6 +30,7 @@ bd () {
 _bd () {
   # Get parents (in reverse order)
   local num=${#${(ps:/:)${PWD}}}
+  [[ "$num" == 1 ]] || num=$((num-1))
   local i
   for i in {$((num+1))..2}
   do
