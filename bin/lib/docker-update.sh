@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 which docker &> /dev/null
 [[ $? -ne 0 ]] && echo "install docker first" && exit 1
 [ -z $1 ] && echo "usage: $0 <container-name>" && exit 1
