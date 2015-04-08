@@ -17,7 +17,7 @@ rsync_launch() {
 	echo
 	echo '########################################'
 	echo
-	rsync -av --delete --stats --log-file="$3/$2.log" --backup-dir="$3/__archive/$2" "$1/$2" "$3"
+	rsync -av -h --delete --stats --log-file="$3/$2.log" --backup-dir="$3/__archive/$2" "$1/$2" "$3"
 }
 
 control_c() {
@@ -38,6 +38,7 @@ if [ "$?" -eq 0 ]; then
 	rsync_launch "$SRC" music "$DEST"
 	rsync_launch "$SRC" books "$DEST"
 	rsync_launch "$SRC" virtualbox "$DEST"
+	rsync_launch "$SRC" backups "$DEST"
 	rsync_launch "$SRC" games "$DEST"
 	sync
 	umount -lf "$DEST"
