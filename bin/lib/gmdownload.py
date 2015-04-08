@@ -12,6 +12,8 @@ import shutil
 import codecs
 import sys
 import re
+import time
+import locale
 from colorama import init, Fore, Style
 from ConfigParser import SafeConfigParser
 from requests.packages import urllib3
@@ -214,7 +216,7 @@ def get_thumbsup():
     remove_playlist('ThumbsUp')
     songs = mobileclient.get_thumbs_up_songs()
     for i, s in enumerate(songs):
-        print("    " + str(i + 1).zfill(len(str(len(songs)))) + "/" + str(len(songs)) + " ", end='')
+        print(str(i + 1).zfill(len(str(len(songs)))) + "/" + str(len(songs)) + " ", end='')
         get_song(s['storeId'])
         build_playlist(s['storeId'], 'ThumbsUp')
     print('')
@@ -243,24 +245,29 @@ def opt_download():
     all_playlists = mobileclient.get_all_user_playlist_contents()
     total_count = len(all_playlists)
 
-    print(str(1).zfill(len(str(total_count))) + "/" + str(total_count + 1) + ": " + Fore.MAGENTA + Style.BRIGHT + "ThumbsUp" + "\n")
+    print(str(1).zfill(len(str(total_count))) + "/" + str(total_count + 1) + " " + Fore.MAGENTA + Style.BRIGHT + "ThumbsUp" + "\n")
     get_thumbsup()
 
     for i, p in enumerate(reversed(all_playlists)):
-        print(str(i + 2).zfill(len(str(total_count))) + "/" + str(total_count + 1) + ": " + Fore.MAGENTA + Style.BRIGHT + p['name'] + "\n")
+
+        last_modified = time.strftime('%a, %d.%m.%Y %H:%M', time.localtime(float(p['lastModifiedTimestamp'])/1000000))
+        print(str(i + 2).zfill(len(str(total_count))) + "/" + str(total_count + 1) + " " + Fore.MAGENTA + Style.BRIGHT + p['name'], end='')
+        print(" (" + last_modified + ")\n")
 
         remove_playlist(p['name'])
 
         # save the songs and build a m3u for each playlist
         all_tracks = p['tracks']
         for i, t in enumerate(all_tracks):
-            print("    " + str(i + 1).zfill(len(str(len(all_tracks)))) + "/" + str(len(all_tracks)) + " ", end='')
+            print(str(i + 1).zfill(len(str(len(all_tracks)))) + "/" + str(len(all_tracks)) + " ", end='')
             get_song(t['trackId'])
             build_playlist(t['trackId'], p['name'])
         print('')
 
 
 def main():
+    locale.setlocale(locale.LC_TIME, "de_DE.utf-8")
+
     # init colorama for terminal colors
     init(autoreset=True)
 

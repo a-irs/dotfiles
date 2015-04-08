@@ -5,14 +5,14 @@ source "$HOME/.bin/lib/genmon/settings.cfg"
 status=$(cat /sys/class/power_supply/BAT0/status)
 percent=$(cat /sys/class/power_supply/BAT0/capacity)
 
-if [ -z $percent ]; then
+if [ -z "$percent" ]; then
     image="$HOME/.bin/lib/genmon/img/battery_crit.png"
     color="Red"
     echo "<txt><span weight='bold' fgcolor='$color'>N/A</span></txt>"
     exit
 fi
 
-[[ "$percent" -gt 100 ]] && echo "" && exit
+[[ "$percent" -ge 100 ]] && echo "" && exit
 
 if [[ "$percent" -le 19 ]]; then
         image="$HOME/.bin/lib/genmon/img/battery_crit.png"
