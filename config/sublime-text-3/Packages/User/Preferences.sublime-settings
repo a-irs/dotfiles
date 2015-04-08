@@ -1,6 +1,6 @@
 {
-    "atomic_save": false,
 	"animation_enabled": true,
+	"atomic_save": false,
 	"auto_complete_delay": 0,
 	"binary_file_patterns":
 	[
@@ -8,7 +8,7 @@
 	],
 	"bold_folder_labels": true,
 	"close_windows_when_empty": true,
-	"color_scheme": "Packages/Colorcoder/Monokai Extended 2 (Colorcoded).tmTheme",
+	"color_scheme": "Packages/Colorcoder/Monokai Extended 2 (Colorcoded) (Colorcoded).tmTheme",
 	"distraction_free":
 	{
 		"menu_visible": false,
@@ -103,7 +103,8 @@
 	"hot_exit": true,
 	"ignored_packages":
 	[
-		"Vintage"
+		"Vintage",
+		"Colorcoder"
 	],
 	"line_numbers": false,
 	"margin": 0,
@@ -113,7 +114,7 @@
 		"show_minimap": false,
 		"side_bar_visible": false
 	},
-	"original_color_scheme": "Packages/User/Monokai Extended 2.tmTheme",
+	"original_color_scheme": "Packages/User/Color Highlighter/themes/Monokai Extended 2 (Colorcoded).tmTheme",
 	"overlay_scroll_bars": "enabled",
 	"remember_open_files": false,
 	"scroll_past_end": true,
