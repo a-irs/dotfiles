@@ -2,8 +2,12 @@
 
 set -e
 
-read -r -s -p "Passphrase: " PASSPHRASE
-export PASSPHRASE
+if [[ -f /duplicity-passphrase ]]; then
+    export PASSPHRASE=$(cat /duplicity-passphrase)
+else
+    read -r -s -p "Passphrase: " PASSPHRASE
+    export PASSPHRASE
+fi
 
 destination="scp://root@srv//media/data/backups/duplicity/$HOSTNAME"
 destination_ssh="root@srv:/media/data/backups/duplicity/$HOSTNAME"
@@ -33,6 +37,8 @@ if [[ $HOSTNAME == srv ]]; then
     backup /srv "$destination/srv" "--include /srv/smb --include /srv/http --include /srv/docker/sabnzbd/state/sabnzbd.ini --exclude '**'"
     backup /var/spool/cron "$destination/cron"
 fi
+unset PASSPHRASE
 
 header 5 "sending package list to $destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt"
 pacman -Qe | sort > /tmp/packages.txt && scp /tmp/packages.txt "$destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt" && rm -f /tmp/packages.txt
+
