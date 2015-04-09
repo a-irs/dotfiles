@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-OUTPUT="DVI-0"
+OUTPUT="DVI-1"
 MODE_NATIVE="1920x1200"
 MODE_COUCH="1280x800"
 
