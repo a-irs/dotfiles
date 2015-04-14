@@ -16,8 +16,7 @@ devs=$(cat /proc/net/route)
 
 if [[ $devs == *$'\nwlan'* ]] || [[ $devs == *$'\nwlp'* ]]; then
     ssid=$(iwgetid --raw)
-    [[ -z "$ssid" ]] && break
-    txt+=("<span weight='bold' fgcolor='$color'>$ssid</span>")
+    [[ -n "$ssid" ]] && txt+=("<span weight='bold' fgcolor='$color'>$ssid</span>")
 fi
 
 if [[ $devs == *$'\neth'* ]] || [[ $devs == *$'\nenp'* ]]; then
@@ -38,23 +37,24 @@ fi
 
 if [[ $devs == *$'\ntun'* ]] || [[ $devs == *$'\ntap'* ]]; then
     pid=$(pidof -s openvpn)
-    [[ -z "$pid" ]] && break
-    vpn_profile=$(cat /proc/$pid/cmdline)
-    vpn_profile="${vpn_profile##*/}"
-    vpn_profile="${vpn_profile%.ovpn}"
-    txt+=("<span weight='bold' fgcolor='$vpn_color'>$vpn_profile</span>")
+    if [[ -n "$pid" ]]; then
+        vpn_profile=$(cat "/proc/$pid/cmdline")
+        vpn_profile="${vpn_profile##*/}"
+        vpn_profile="${vpn_profile%.ovpn}"
+        txt+=("<span weight='bold' fgcolor='$vpn_color'>$vpn_profile</span>")
+    fi
 fi
 
 total="${#txt[@]}"
 count=1
-printf "<txt>"
+echo -n "<txt>"
 if [[ $total == 0 ]]; then
     echo -n "<span weight='bold' fgcolor='grey'>n/a</span>"
     image="$HOME/.bin/lib/genmon/img/wifi_off.png"
 else
-    for item in "${txt[@]}"; do 
-        printf "$item"
-        [[ $count == $total ]] || printf " + "
+    for item in "${txt[@]}"; do
+        echo -n "$item"
+        [[ "$count" == "$total" ]] || echo -n " + "
         count=$((count+1))
     done
 fi

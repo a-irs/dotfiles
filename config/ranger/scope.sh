@@ -53,13 +53,10 @@ case "$extension" in
     rar)
         try unrar -p- lt "$path" && { dump | trim; exit 0; } || exit 1;;
     pdf)
-        # success && exit 0;;
         try pdftotext -l 10 -nopgbrk -q "$path" - && \
             { dump | trim | fmt -s -w "$width"; exit 0; } || exit 1;;
-    # BitTorrent Files
     torrent)
         try transmission-show "$path" && { dump | trim; exit 5; } || exit 1;;
-    # HTML Pages:
     json)
         try cjson "$path" && { dump | trim; exit 0; } || exit 1;;
     htm|html|xhtml)
@@ -82,4 +79,3 @@ esac
 # Display general information for other files:
 file -Lb "$path" | sed 's/,\s*/\n/g' && exit 5
 exit 1
-

@@ -68,7 +68,6 @@ setopt PUSHD_IGNORE_DUPS
 setopt INTERACTIVECOMMENTS
 setopt GLOBDOTS
 setopt MULTIOS
-setopt AUTOCD
 unsetopt CORRECTALL
 unsetopt CORRECT
 
