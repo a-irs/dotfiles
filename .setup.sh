@@ -94,13 +94,6 @@ if [ -f /usr/bin/slim ]; then
     print_info "installed themes and /usr/local/bin/xflock4 for SLIM"
 fi
 
-if [[ -d ~/.mozilla/firefox ]]; then
-    profile=$(find ~/.mozilla/firefox -mindepth 1 -maxdepth 1 -type d | head -n 1)
-    mkdir -p "$profile/chrome"
-    ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/userChrome.css" "$profile/chrome/userChrome.css" 2> /dev/null
-    print_info "installed firefox userChrome"
-fi
-
 if [[ -f /usr/lib/xorg/modules/drivers/radeon_drv.so ]]; then
     rm -f ~/.compton.conf
     ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/compton-radeon.conf" ~/.compton.conf 2> /dev/null
@@ -121,4 +114,25 @@ if [[ -f /usr/bin/xfconf-query ]]; then
     s xfwm4 /general/mousewheel_rollup false
     s xfwm4 /general/workspace_count 1
     print_info "set configs for Xfce"
+fi
+
+
+
+if pidof firefox > /dev/null; then
+    echo "Firefox running, exit first!"
+    read
+fi
+
+if [[ -d ~/.mozilla/firefox ]]; then
+    profile=$(find ~/.mozilla/firefox -mindepth 1 -maxdepth 1 -type d | head -n 1)
+    mkdir -p "$profile/chrome"
+    ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/userChrome.css" "$profile/chrome/userChrome.css" 2> /dev/null
+    print_info "installed firefox userChrome"
+
+    echo 'user_pref("media.peerconnection.enabled", false);' >> "$profile/prefs.js"
+    echo 'user_pref("media.peerconnection.turn.disable", true);' >> "$profile/prefs.js"
+    echo 'user_pref("media.peerconnection.use_document_iceservers", false);' >> "$profile/prefs.js"
+    echo 'user_pref("media.peerconnection.video.enabled", false);' >> "$profile/prefs.js"
+    echo 'user_pref("media.peerconnection.identity.timeout", 1);' >> "$profile/prefs.js"
+    print_info "added prefs to prefs.js"
 fi

@@ -67,7 +67,7 @@ case "$extension" in
 esac
 
 case "$mimetype" in
-    text/* | */xml)
+    text/* | */xml | application/postscript)
         try source-highlight -t 4 --failsafe --infer-lang -f esc --style-file=esc.style -i "$path" && { dump | trim; exit 5; } || exit 2;;
     image/*)
         img2txt --gamma=0.6 --width="$width" "$path" && exit 4 || exit 1;;
