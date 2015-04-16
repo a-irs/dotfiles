@@ -117,22 +117,30 @@ if [[ -f /usr/bin/xfconf-query ]]; then
 fi
 
 
+if [[ -f /usr/bin/terminator ]]; then
+    mklink "local/share/applications/terminator-full.desktop"
+else
+    rmlink "local/share/applications/terminator-full.desktop"
+fi
+
 
 if pidof firefox > /dev/null; then
     echo "Firefox running, exit first!"
     read
 fi
 
-if [[ -d ~/.mozilla/firefox ]]; then
-    profile=$(find ~/.mozilla/firefox -mindepth 1 -maxdepth 1 -type d | head -n 1)
-    mkdir -p "$profile/chrome"
-    ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/userChrome.css" "$profile/chrome/userChrome.css" 2> /dev/null
-    print_info "installed firefox userChrome"
+if ! pidof firefox > /dev/null; then
+    if [[ -d ~/.mozilla/firefox ]]; then
+        profile=$(find ~/.mozilla/firefox -mindepth 1 -maxdepth 1 -type d | head -n 1)
+        mkdir -p "$profile/chrome"
+        ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/userChrome.css" "$profile/chrome/userChrome.css" 2> /dev/null
+        print_info "installed firefox userChrome"
 
-    echo 'user_pref("media.peerconnection.enabled", false);' >> "$profile/prefs.js"
-    echo 'user_pref("media.peerconnection.turn.disable", true);' >> "$profile/prefs.js"
-    echo 'user_pref("media.peerconnection.use_document_iceservers", false);' >> "$profile/prefs.js"
-    echo 'user_pref("media.peerconnection.video.enabled", false);' >> "$profile/prefs.js"
-    echo 'user_pref("media.peerconnection.identity.timeout", 1);' >> "$profile/prefs.js"
-    print_info "added prefs to prefs.js"
+        echo 'user_pref("media.peerconnection.enabled", false);' >> "$profile/prefs.js"
+        echo 'user_pref("media.peerconnection.turn.disable", true);' >> "$profile/prefs.js"
+        echo 'user_pref("media.peerconnection.use_document_iceservers", false);' >> "$profile/prefs.js"
+        echo 'user_pref("media.peerconnection.video.enabled", false);' >> "$profile/prefs.js"
+        echo 'user_pref("media.peerconnection.identity.timeout", 1);' >> "$profile/prefs.js"
+        print_info "added prefs to prefs.js"
+    fi
 fi
