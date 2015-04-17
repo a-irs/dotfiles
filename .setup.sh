@@ -56,6 +56,7 @@ dotfiles=(
 dotfiles_x=(
     compton.conf
     config/fontconfig/fonts.conf
+    config/mpv/input.conf
     config/sublime-text-3/Packages/User
     config/terminator/config
     config/terminator/config-fullscreen
