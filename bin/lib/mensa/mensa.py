@@ -194,7 +194,7 @@ class Table(object):
         return ([group, name, price])
 
     def add_to_table(self, date):
-        cache = Model.cache_csv(date.isocalendar()[1])
+        cache = Model.cache_csv(date.isocalendar()[1]-1)
         if cache == None:
             ERR.append('Der Speiseplan vom ' + date.strftime(Dates.FORMAT) + ' konnte nicht abgerufen werden.')
             return False
