@@ -2,7 +2,7 @@
 
 noglobs=(find ftp locate rake rsync scp sftp wcalc)
 for c in $noglobs; do
-    [ -n "$commands[$c]" ] && alias $c="noglob $c"
+    [[ -n "$commands[$c]" ]] && alias $c="noglob $c"
 done
 
 ranger() {
@@ -231,6 +231,7 @@ take() { mkdir -p "$1" && cd "$1"; }
 [ -n "$commands[ps_mem]" ] && alias ps_mem='sudo ps_mem'
 [ -n "$commands[abs]" ] && alias abs='sudo abs'
 [ -n "$commands[ufw]" ] && alias ufw='sudo ufw'
+[ -n "$commands[lvm]" ] && alias lvm='sudo lvm'
 
 [ -n "$commands[aunpack]" ] && alias x='aunpack'
 [ -n "$commands[latexmk]" ] && alias ltx="latexmk -cd -f -pdf -pvc -outdir=/tmp/latexmk"
