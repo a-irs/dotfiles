@@ -38,9 +38,10 @@ _create() {
     }
     trap cleanup INT
     sudo mkdir -p "$dir"
-    sudo pacstrap -c -d "$dir" bash coreutils diffutils file filesystem findutils gawk grep inetutils iproute2 iputils less man-db man-pages nano pacman procps-ng psmisc sed which net-tools shadow dhcpcd gcc-libs glibc gettext gzip bzip2 netctl systemd-sysvcompat zsh git
+    sudo pacstrap -c -d "$dir" bash coreutils diffutils file filesystem findutils gawk grep inetutils iproute2 iputils less man-db man-pages nano pacman procps-ng psmisc sed which net-tools shadow dhcpcd gcc-libs glibc gettext gzip bzip2 netctl systemd-sysvcompat zsh git usbutils pciutils
     sudo rm -f "$dir/etc/securetty"
-    sudo chmod a+x "$dir"
+    sudo chmod +xr "$BASEDIR"
+    sudo chmod +xr "$dir"
 }
 
 _start() {
@@ -49,7 +50,7 @@ _start() {
     dir=$BASEDIR/$name
     [[ ! -d "$dir" ]] && die "'$dir' does not exist"
 
-    sudo systemctl start "systemd-nspawn@$name.service"
+    sudo systemd-nspawn --boot --machine="$name"
 }
 
 _stop() {
