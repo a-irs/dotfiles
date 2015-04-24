@@ -193,7 +193,7 @@ alias lt='\ls -F -l -h -t -r --color=auto --group-directories-first'
 [ -n "$commands[dmesg]" ] && alias dmesg='dmesg -T --color=auto'
 [ -n "$commands[watch]" ] && alias ddstatus='sudo watch --interval=1 "pkill -USR1 dd"'
 [ -n "$commands[less]" ] && alias less='less -FXR'
-[ -n "$commands[lsblk]" ] && alias lsblk='lsblk -o NAME,FSTYPE,SIZE,LABEL,MOUNTPOINT,UUID -p'
+[ -n "$commands[lsblk]" ] && alias lsblk='lsblk -o NAME,LABEL,TYPE,FSTYPE,SIZE,MOUNTPOINT,UUID -p'
 [ -n "$commands[grep]" ] && alias grep='grep --color=auto'
 [ -n "$commands[make]" ] && alias make="LC_ALL=C make"
 [ -n "$commands[gcc]" ]  && alias  gcc="LC_ALL=C gcc"

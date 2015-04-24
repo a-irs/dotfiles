@@ -4,6 +4,7 @@ is_git() {
     export IS_GIT=0
     [[ "$PWD" == /var/aur* ]] && return 1
     [[ "$PWD" == ~/net/* ]] && return 1
+    [[ "$PWD" == /media/* ]] && return 1
     [[ "$PWD" == /run/user/*/gvfs/* ]] && return 1
     [ -d .git ] && IS_GIT=1 && return 0
     git rev-parse --git-dir > /dev/null 2>&1 && IS_GIT=1 && return 0
@@ -18,9 +19,10 @@ git_prompt_info() {
     [[ "$?" -eq 0 ]] && commit="$tag"
     url=$(command git ls-remote --get-url 2> /dev/null)
     if [[ $ZSHINE_GIT_SHRINK_URL == 1 ]]; then
-        if [[ $url == http*//*github.com* ]]; then
+        if [[ "$url" == http*://*github.com* || "$url" == git://*github.com* ]]; then
             # https://github.com/user/repo.git -> user/repo
-            if [[ $url == */ ]]; then
+            #   git://github.com/user/repo.git -> user/repo
+            if [[ "$url" == */ ]]; then
                 url1=${url%?}
                 url1=${url1##*/}
             else
@@ -34,7 +36,7 @@ git_prompt_info() {
             url2=${url2#*/}
             url2=${url2//\//}
             url="$url2/$url1"
-        elif [[ $url == *github.com:* ]]; then
+        elif [[ "$url" == *github.com:* ]]; then
             # git@github.com:user/repo.git -> user/repo
             url1=${url##*/}
             url2=${url//$url1/}
