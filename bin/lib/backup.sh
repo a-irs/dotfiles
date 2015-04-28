@@ -2,11 +2,13 @@
 
 set -e
 
-if [[ -f /duplicity-passphrase ]]; then
-    export PASSPHRASE=$(cat /duplicity-passphrase)
-else
-    read -r -s -p "Passphrase: " PASSPHRASE
-    export PASSPHRASE
+if [[ -z "$PASSPHRASE" ]]; then
+    if [[ -f /duplicity-passphrase ]]; then
+        export PASSPHRASE=$(cat /duplicity-passphrase)
+    else
+       read -r -s -p "Passphrase: " PASSPHRASE
+       export PASSPHRASE
+    fi
 fi
 
 destination="scp://root@srv//media/data/backups/duplicity/$HOSTNAME"

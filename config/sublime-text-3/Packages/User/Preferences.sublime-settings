@@ -103,8 +103,8 @@
 	"hot_exit": true,
 	"ignored_packages":
 	[
-		"Vintage",
-		"Colorcoder"
+		"Colorcoder",
+		"Vintage"
 	],
 	"line_numbers": false,
 	"margin": 0,
