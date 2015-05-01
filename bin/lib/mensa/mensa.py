@@ -194,7 +194,7 @@ class Table(object):
         return ([group, name, price])
 
     def add_to_table(self, date):
-        cache = Model.cache_csv(date.isocalendar()[1]-1)
+        cache = Model.cache_csv(date.year, date.isocalendar()[1]-1)
         if cache == None:
             ERR.append('Der Speiseplan vom ' + date.strftime(Dates.FORMAT) + ' konnte nicht abgerufen werden.')
             return False
@@ -229,10 +229,10 @@ class Model(object):
     url = 'http://www.stwno.de/infomax/daten-extern/csv/UNI-P'
 
     @staticmethod
-    def cache_csv(week_number):
+    def cache_csv(year, week_number):
         cache_dir = os.path.dirname(os.path.realpath(__file__)) + os.sep + 'cache'
         os.makedirs(cache_dir, exist_ok=True)
-        cachefile = cache_dir + os.sep + str(week_number) + '.csv'
+        cachefile = cache_dir + os.sep + str(year) + '-' + str(week_number) + '.csv'
 
         if os.path.isfile(cachefile):
             return cachefile
