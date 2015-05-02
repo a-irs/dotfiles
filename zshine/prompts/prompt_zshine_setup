@@ -108,6 +108,8 @@ _prompt_git() {
 _prompt_ssh() {
     if [[ $USERNAME == "vagrant" ]]; then
         prompt_segment $ZSHINE_PATH_FG 232 "VAGRANT"
+    elif pgrep x2goagent -x > /dev/null; then
+        prompt_segment $ZSHINE_SSH_FG $ZSHINE_SSH_BG "X2GO"
     elif [[ $USERNAME == "docker" ]]; then
         prompt_segment $ZSHINE_PATH_FG 232 "DOCKER"
     else
