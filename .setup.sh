@@ -33,6 +33,7 @@ dotfiles=(
     config/htop/htoprc
     config/meat/config
     config/mpd/mpd.conf
+    config/ncmpcpp/config
     config/ranger/rc.conf
     config/ranger/scope.sh
     gitconfig

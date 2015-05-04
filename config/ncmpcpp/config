@@ -1,0 +1,40 @@
+ncmpcpp_directory = ~/.config/ncmpcpp
+lyrics_directory = ~/.config/ncmpcpp/lyrics
+mpd_music_dir = ~/gmusic
+playlist_disable_highlight_delay = 0
+
+playlist_display_mode = classic
+song_list_format = $b{$5%a$9 $2-$9 }{$4%t$9}|{$4%f$9}$R{$1%40b$9} {$3%5l$9}
+now_playing_prefix = $2 $9
+now_playing_suffix = $2 $9
+#song_columns_list_format = (40)[blue]{t|f:Title} (30)[magenta]{a} (30)[yellow]{b} (7f)[green]{l}
+
+playlist_show_mpd_host = yes
+
+playlist_shorten_total_times = yes
+
+autocenter_mode = yes
+centered_cursor = yes
+progressbar_look = =>
+
+titles_visibility = no
+
+cyclic_scrolling = yes
+display_volume_level = no
+
+mouse_support = no
+empty_tag_marker = <none>
+
+header_window_color = yellow
+volume_color = yellow
+state_line_color = default
+state_flags_color = default
+main_window_color = white
+color1 = white
+color2 = green
+main_window_highlight_color = yellow
+progressbar_color = black
+progressbar_elapsed_color = yellow
+statusbar_color = white
+
+screen_switcher_mode = playlist, playlist_editor
