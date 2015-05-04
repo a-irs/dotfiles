@@ -1,3 +1,4 @@
+volume_change_step = 1
 ncmpcpp_directory = ~/.config/ncmpcpp
 lyrics_directory = ~/.config/ncmpcpp/lyrics
 mpd_music_dir = ~/gmusic
@@ -20,7 +21,7 @@ progressbar_look = =>
 titles_visibility = no
 
 cyclic_scrolling = yes
-display_volume_level = no
+#display_volume_level = no
 
 mouse_support = no
 empty_tag_marker = <none>
