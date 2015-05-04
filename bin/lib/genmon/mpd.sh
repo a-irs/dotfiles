@@ -12,10 +12,10 @@ artist=${full%%;;*}
 title=${full##*;;}
 title=$(echo "$title" | head -n 1)
 
-color="#B895B5"
-color2="#9A7797"
+color="white"
+color2="#bbb"
 [[ $MONOCHROME == 1 ]] && color="#bbb" && color2="#888"
 
 txt1="<span weight=\"bold\" fgcolor=\"$color\">$title</span>"
-txt2="<span weight=\"bold\" fgcolor=\"$color2\">($artist)</span>"
-echo "<txt>$txt1 $txt2</txt>"
+txt2="<span weight=\"bold\" fgcolor=\"$color2\">$artist -</span>"
+echo "<txt> $txt2 $txt1 </txt>"

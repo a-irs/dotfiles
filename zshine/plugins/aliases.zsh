@@ -119,8 +119,10 @@ fi
 
 __pan() {
     [[ ! -d "$1" ]] && echo "no directory selected" && return 1
-    [[ $2 == pdf ]] && params="--number-sections -Vlang=ngerman -V geometry:\"top=3cm, bottom=3.5cm, left=2.5cm, right=2.5cm\" --standalone --smart --toc"
-    [[ $2 == html ]] && params="--number-sections --standalone --self-contained --smart --toc -t html5"
+    ending=$2
+    [[ $ending == pdf ]] && params="--number-sections -Vlang=ngerman -V geometry:\"top=3cm, bottom=3.5cm, left=2.5cm, right=2.5cm\" --standalone --smart --toc"
+    [[ $ending == html ]] && params="--number-sections --standalone --self-contained --smart --toc -t html5"
+    [[ $ending == beamer ]] && params="-t beamer" && ending=pdf
     echodir=$(readlink -f "$1")
     echodir=${echodir/$HOME/\~}
     printf "recursively monitoring directory %s\n" "$echodir"
@@ -128,13 +130,13 @@ __pan() {
     do
         [[ ! -f "$f" ]] && continue
         case "$f" in
-            *.md) printf "$GREY$(date +%H:%M:%S) |$RESET converting $YELLOW$f$RESET to $GREEN${f%.*}.${2}$RESET ... " ;
+            *.md) printf "$GREY$(date +%H:%M:%S) |$RESET converting $YELLOW$f$RESET to $GREEN${f%.*}.${ending}$RESET ... " ;
                   secondline=$(head -2 "$f" | tail -1)
                   if [[ "$secondline" =~ "<!--" ]]; then
                       params=${secondline/<\!-- /}
                       params=${params/ -->/}
                   fi ;
-                  eval $(echo pandoc $params -o "${f%.*}.${2}" "$f") \
+                  eval $(echo pandoc $params -o "${f%.*}.${ending}" "$f") \
                   && printf "done\n" \
                   || printf "${RED}error${RESET}\n" ;;
         esac
@@ -143,6 +145,7 @@ __pan() {
 if [[ -n "$commands[pandoc]" && -n "$commands[inotifywait]" ]]; then
     pan-pdf() { __pan "$1" pdf; }
     pan-html() { __pan "$1" html; }
+    pan-beamer() { __pan "$1" beamer; }
 fi
 
 s() {
