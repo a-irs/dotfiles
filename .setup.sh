@@ -84,7 +84,7 @@ git clone --depth=1 https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundl
 #print_info "installed vundles"
 
 if [[ -f /usr/bin/mpd ]]; then
-    touch -a ~/.config/mpd/{database,log,pid,state,sticker.sql}
+    touch -a ~/.config/mpd/{database,pid,state,sticker.sql}
     print_info "created blank files for MPD"
 fi
 

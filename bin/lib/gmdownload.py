@@ -160,7 +160,7 @@ def build_playlist(trackId, playlist_name):
     with codecs.open(filename, 'a', 'utf-8') as f:
         # append the path of the trackId to m3u
         if trackId in CACHE:
-            f.write(CACHE[trackId] + '\n')
+            f.write(CACHE[trackId].replace(main_dir + '/mp3/', '') + '\n')
 
 
 def init_cache():
