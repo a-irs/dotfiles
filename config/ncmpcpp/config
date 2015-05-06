@@ -5,9 +5,12 @@ mpd_music_dir = ~/gmusic
 playlist_disable_highlight_delay = 3
 
 playlist_display_mode = classic
-song_list_format = $b{$5%a$9 $2-$9 }{$4%t$9}|{$4%f$9}$R{$1%40b$9} {$3%5l$9}
-now_playing_prefix = $2 $9
+song_list_format = $b {$5%a$9} {$4%t$9}|{$4%f$9} $R{$1%40b$9} {$3%5l$9}
+now_playing_prefix = $2$9
 #song_columns_list_format = (40)[blue]{t|f:Title} (30)[magenta]{a} (30)[yellow]{b} (7f)[green]{l}
+
+alternative_header_first_line_format = $b{$5%a$9 }{$4%t$9}|{$4%f$9}
+alternative_header_second_line_format = $b{$1%b$9}
 
 playlist_show_mpd_host = yes
 
@@ -25,8 +28,8 @@ cyclic_scrolling = yes
 mouse_support = no
 empty_tag_marker = <none>
 
-header_window_color = yellow
-volume_color = yellow
+header_window_color = green
+volume_color = white
 state_line_color = default
 state_flags_color = default
 main_window_color = white
@@ -34,7 +37,10 @@ color1 = white
 color2 = green
 main_window_highlight_color = yellow
 progressbar_color = black
-progressbar_elapsed_color = yellow
+progressbar_elapsed_color = green
 statusbar_color = white
 
 screen_switcher_mode = playlist, playlist_editor
+
+user_interface = alternative
+header_visibility = no
