@@ -5,9 +5,9 @@ mpd_music_dir = ~/gmusic
 playlist_disable_highlight_delay = 3
 
 playlist_display_mode = classic
-song_list_format = $b {$5%a$9} {$4%t$9}|{$4%f$9} $R{$1%40b$9} {$3%5l$9}
+song_list_format = $b {$5%a$9} {$4%t$9}|{$4%f$9} $R{$3%5l$9}
 now_playing_prefix = $2$9
-#song_columns_list_format = (40)[blue]{t|f:Title} (30)[magenta]{a} (30)[yellow]{b} (7f)[green]{l}
+song_columns_list_format = (30)[blue]{a} (50)[yellow]{t|f:Title} (4f)[green]{l}
 
 alternative_header_first_line_format = $b{$5%a$9 }{$4%t$9}|{$4%f$9}
 alternative_header_second_line_format = $b{$1%b$9}
@@ -23,7 +23,6 @@ progressbar_look = =>
 titles_visibility = no
 
 cyclic_scrolling = yes
-#display_volume_level = no
 
 mouse_support = no
 empty_tag_marker = <none>
