@@ -1,3 +1,4 @@
+**/.texlive
 **/boot/intel-ucode.img
 **/boot/vmlinuz-linux
 **/.dotfiles
@@ -9,8 +10,10 @@
 **/gmusic
 **/downloads/*
 **/doc
-**/.mozilla/firefox/*/storage/temporary
 **/.mozilla/firefox/*/sessionstore-backups
+**/.mozilla/firefox/*/webappsstore.sqlite*
+**/.mozilla/firefox/*/storage
+**/.mozilla/firefox/*/extension-data/ublock.sqlite
 **/compile-cache
 **/Package Control.cache
 **/Cache
