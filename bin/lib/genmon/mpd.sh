@@ -20,4 +20,4 @@ color2="#bbb"
 
 txt1="<span weight=\"bold\" fgcolor=\"$color\">$title</span>"
 txt2="<span weight=\"bold\" fgcolor=\"$color2\">$artist -</span>"
-echo "<txt> $txt2 $txt1 </txt>"
+echo "<txt>   $txt2 $txt1   </txt>"

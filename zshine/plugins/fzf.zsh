@@ -1,7 +1,7 @@
 alias fzf="ruby $ZSHINE_DIR/plugins/fzf/fzf --extended-exact --no-256"
 
 __fsel() {
-    command find -L . \
+    command find . \
     \( -fstype 'dev' -o -fstype 'proc' \) -prune \
     -o -type f -print \
     -o -type d -print \
@@ -23,7 +23,7 @@ bindkey '^T' fzf-file-widget
 fzf-cd-widget() {
     old_chpwd=$(which chpwd 2> /dev/null)
     unfunction chpwd
-    cd "${$(command find -L . \
+    cd "${$(command find . \
         \( -fstype 'dev' -o -fstype 'proc' \) -prune \
         -o -type d -print 2> /dev/null | sed 1d | cut -b3- | fzf +m):-.}"
     eval "$old_chpwd"
