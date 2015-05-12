@@ -400,7 +400,7 @@ if [ -n "$commands[pacman]" ]; then
     alias psc='sudo pacman -Sc'
     alias psl='pkgfile -l'
     alias pu='sudo pacman -U'
-    alias pacorph='sudo pacman -Rns $(pacman -Qtdq)'
+    alias pacorph='sudo pacman -Rns $(pacman -Qttdq)'
     alias pacdiff='sudo pacdiff'
     alias pacdep='sudo pacman -D --asdeps'
     alias pacexp='sudo pacman -D --asexplicit'
@@ -428,14 +428,12 @@ elif [ -n "$commands[apt-get]" ]; then
     alias aptsearch="apt-cache search"
 fi
 
-_fonttest() {
+fonttest() {
     for family in "serif" "sans" "sans-serif" "monospace" "Arial" "Helvetica" "Verdana" "Times New Roman" "Courier New"; do
         echo -n "$family | "
         fc-match "$family"
-    done
-    unset -v "$family"
+    done | column -t -s '|' | column -t -s ':'
 }
-alias fonttest="_fonttest | column -t -s '|' | column -t -s ':'"
 
 if [ -n "$commands[grc]" ]; then
     for c in diff ping netstat traceroute dig ps mount ifconfig mtr ; do
