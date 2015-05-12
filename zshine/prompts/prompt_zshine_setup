@@ -124,18 +124,8 @@ _prompt_ranger() {
 }
 
 _prompt_path() {
-    local p="${PWD/#$HOME/~}"
-    local left="${p%/*}"
-    local right="${p##*/}"
-    local sep="/"
-    if [[ $PWD == "$HOME" ]]; then
-        left=''
-        right='~'
-        sep=''
-    fi
-
     [ ! -w . ] && prompt_segment $ZSHINE_PATH_BG_RO $ZSHINE_PATH_FG_RO ro
-    prompt_segment $ZSHINE_PATH_BG $ZSHINE_PATH_FG "%{%F{240}%}${left}$sep%{%F{$ZSHINE_PATH_FG}%}${right}"
+    prompt_segment $ZSHINE_PATH_BG $ZSHINE_PATH_FG "${PWD/#$HOME/~}"
 }
 
 _prompt_user_host() {
