@@ -71,6 +71,15 @@ setopt MULTIOS
 unsetopt CORRECTALL
 unsetopt CORRECT
 
+if [[ $TERM != *"-256color" ]]; then
+    for terminfos in "${HOME}/.terminfo" "/etc/terminfo" "/lib/terminfo" "/usr/share/terminfo"; do
+        if [[ -e "$terminfos"/$TERM[1]/${TERM}-256color || -e "$terminfos"/${TERM}-256color ]]; then
+            export TERM="${TERM}-256color"
+            break
+        fi
+    done
+fi
+
 ZSHINE_PLUGINS=(
   term-title # sets terminal/tab title
   aliases # provides some aliases and functions for daily work
@@ -89,18 +98,10 @@ ZSHINE_PLUGINS=(
   completion # tweaks for TAB-completion
   bindkey # bind keys for delete, history-search etc.
   zaw # better CTRL+R history search
+  tmux # autostart tmux
 #  notify # notify-send after long command has been completed
 )
 for z in $ZSHINE_PLUGINS; do source "$ZSHINE_DIR/plugins/$z.zsh"; done
-
-if [[ $TERM != *"-256color" ]]; then
-    for terminfos in "${HOME}/.terminfo" "/etc/terminfo" "/lib/terminfo" "/usr/share/terminfo"; do
-        if [[ -e "$terminfos"/$TERM[1]/${TERM}-256color || -e "$terminfos"/${TERM}-256color ]]; then
-            export TERM="${TERM}-256color"
-            break
-        fi
-    done
-fi
 
 export RESET=$(tput sgr0)
 export BLACK=$(tput setaf 0)
