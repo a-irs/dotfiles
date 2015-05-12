@@ -8,6 +8,8 @@ echo "$status" | grep "paused" &> /dev/null && echo '' && exit
 echo "$status" | grep "volume: n/a" &> /dev/null && echo '' && exit
 
 full=$(mpc current -f "%artist%;;%title%" 2> /dev/null)
+full=${full//&/&amp;}
+
 artist=${full%%;;*}
 title=${full##*;;}
 title=$(echo "$title" | head -n 1)
