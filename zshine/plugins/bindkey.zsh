@@ -18,7 +18,7 @@ bindkey '^[[1;5D' backward-word                     # [Ctrl-LeftArrow] - move ba
 bindkey "${terminfo[kcbt]}" reverse-menu-complete   # [Shift-Tab] - move through the completion menu backwards
 bindkey "^Y" _expand_alias
 bindkey "^P" copy-prev-shell-word
-bindkey '^F' edit-command-line
+bindkey '^H' edit-command-line
 bindkey -M menuselect '\e^M' accept-and-menu-complete # select multiple entries in TAB-completion with ESC+Return
 
 fg-toggle() { fg; }
