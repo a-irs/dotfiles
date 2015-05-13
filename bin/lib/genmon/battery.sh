@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+[[ ! -d /sys/class/power_supply/BAT0 ]] && exit
+
 source "$HOME/.bin/lib/genmon/settings.cfg"
 
 status=$(< /sys/class/power_supply/BAT0/status)

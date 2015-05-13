@@ -14,7 +14,7 @@ else
     vpn_color_tmux="yellow"
 fi
 
-devs=$(cat /proc/net/route)
+devs=$(< /proc/net/route)
 
 if [[ $devs == *$'\nwlan'* ]] || [[ $devs == *$'\nwlp'* ]]; then
     ssid=$(iwgetid --raw)
