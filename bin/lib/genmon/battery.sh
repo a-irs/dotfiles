@@ -2,8 +2,8 @@
 
 source "$HOME/.bin/lib/genmon/settings.cfg"
 
-status=$(cat /sys/class/power_supply/BAT0/status)
-percent=$(cat /sys/class/power_supply/BAT0/capacity)
+status=$(< /sys/class/power_supply/BAT0/status)
+percent=$(< /sys/class/power_supply/BAT0/capacity)
 
 if [ -z "$percent" ]; then
     image="$HOME/.bin/lib/genmon/img/battery_crit.png"
@@ -48,20 +48,23 @@ else
     fi
 fi
 
-if [[ $TMUX ]]; then
-    txt="#[fg=$color_tmux]$percent%#[default]"
-else
-    txt="<span weight='bold' fgcolor='$color'>$percent"
-fi
-
 if [[ "$status" == Charging ]] || [[ "$status" == Full ]]; then
     if [[ $TMUX ]]; then
-        txt="#[fg=yellow]⚡#[default] $txt"
+        txt="#[bg=colour237,fg=colour220]#[bg=colour220,fg=colour235] ⚡ #[default]"
+        charging=1
     else
-        txt=$txt"<span weight='bold' fgcolor='LightGreen'> +</span></span>"
+        txt="<span weight='bold' fgcolor='LightGreen'> +</span>"
+    fi
+fi
+
+if [[ $TMUX ]]; then
+    if [[ $charging == 1 ]]; then
+        txt=$txt"#[bg=colour220,fg=$color_tmux]#[bg=$color_tmux,fg=colour235] $percent% #[default]"
+    else
+        txt=$txt"#[bg=colour237,fg=$color_tmux]#[bg=$color_tmux,fg=colour235] $percent% #[default]"
     fi
 else
-    [[ ! $TMUX ]] && txt=$txt"</span>"
+    txt="<span weight='bold' fgcolor='$color'>$percent"$txt"</span>"
 fi
 
 click="sh -c 'xset dpms force off && slimlock'"

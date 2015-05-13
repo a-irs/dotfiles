@@ -20,7 +20,7 @@ if [[ $devs == *$'\nwlan'* ]] || [[ $devs == *$'\nwlp'* ]]; then
     ssid=$(iwgetid --raw)
     [[ -z "$ssid" ]] && return
     if [[ $TMUX ]]; then
-        txt+=("#[fg=$color_tmux]$ssid#[default]")
+        txt+=("#[bg=$color_tmux,fg=colour235] $ssid #[default]")
     else
         txt+=("<span weight='bold' fgcolor='$color'>$ssid</span>")
     fi
@@ -32,7 +32,7 @@ if [[ $devs == *$'\neth'* ]] || [[ $devs == *$'\nenp'* ]]; then
     speed="${speed// /}"
     speed="${speed//[^0-9]/}"
     if [[ $TMUX ]]; then
-        txt+=("#[fg=$color_tmux]$speed#[default]")
+        txt+=("#[bg=$color_tmux,fg=colour235] $speed #[default]")
     else
         txt+=("<span weight='bold' fgcolor='$color'>$speed</span>")
     fi
@@ -40,7 +40,7 @@ fi
 
 if [[ $devs == *$'\nusb'* ]]; then
     if [[ $TMUX ]]; then
-        txt+=("USB")
+        txt+=("#[bg=$color_tmux,fg=colour235] USB #[default]")
     else
         txt+=("<span weight='bold' fgcolor='$color'>USB</span>")
     fi
@@ -48,7 +48,7 @@ fi
 
 if [ -f /tmp/sshuttle.pid ]; then
     if [[ $TMUX ]]; then
-        txt+=("#[fg=$vpn_color_tmux]sshuttle#[default]")
+        txt+=("#[bg=$vpn_color_tmux,fg=colour235] sshuttle #[default]")
     else
         txt+=("<span weight='bold' fgcolor='$vpn_color'>sshuttle</span>")
     fi
@@ -61,7 +61,7 @@ if [[ $devs == *$'\ntun'* ]] || [[ $devs == *$'\ntap'* ]]; then
         vpn_profile="${vpn_profile##*/}"
         vpn_profile="${vpn_profile%.ovpn}"
         if [[ $TMUX ]]; then
-            txt+=("#[fg=$vpn_color_tmux]$vpn_profile#[default]")
+            txt+=("#[bg=$vpn_color_tmux,fg=colour235] $vpn_profile #[default]")
         else
             txt+=("<span weight='bold' fgcolor='$vpn_color'>$vpn_profile</span>")
        fi
@@ -73,7 +73,7 @@ count=1
 [[ ! $TMUX ]] && echo -n "<txt>"
 if [[ $total == 0 ]]; then
     if [[ $TMUX ]]; then
-        echo -n "#[fg=black]n/a#[default]"
+        echo -n "#[bg=black,fg=white]n/a#[default]"
     else
         echo -n "<span weight='bold' fgcolor='grey'>n/a</span>"
         image="$HOME/.bin/lib/genmon/img/wifi_off.png"
@@ -81,6 +81,7 @@ if [[ $total == 0 ]]; then
 else
     for item in "${txt[@]}"; do
         echo -n "$item"
+        [[ $TMUX ]] && continue
         [[ "$count" == "$total" ]] || echo -n " + "
         count=$((count+1))
     done
