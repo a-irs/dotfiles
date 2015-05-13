@@ -9,7 +9,7 @@ die() {
 }
 
 yellow() {
-    echo -e "\n$(tput setaf 3)$1$(tput init)\n"
+    echo -e "\n$(tput setaf 3)$1$(tput init;tput sgr0)\n"
 }
 
 _remove() {

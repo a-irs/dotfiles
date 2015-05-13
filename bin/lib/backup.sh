@@ -17,7 +17,7 @@ archive_dir="/var/tmp/duplicity"
 excludes="$(dirname "$(readlink -f "$0")")/backup.exclude"
 
 header() {
-    echo -e "\n$(tput setaf "${1}";tput bold)${2}$(tput init)\n"
+    echo -e "\n$(tput setaf "${1}";tput bold)${2}$(tput init;tput sgr0)\n"
 }
 
 header 4 "backing up '/home' to '$destination/home'"
