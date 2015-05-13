@@ -8,15 +8,22 @@ if [[ $MONOCHROME == 1 ]]; then
     vpn_color="#bbbbbb"
 else
     color="LightBlue"
+    color_tmux="blue"
     image="$HOME/.bin/lib/genmon/img/wifi.png"
     vpn_color="gold"
+    vpn_color_tmux="yellow"
 fi
 
 devs=$(cat /proc/net/route)
 
 if [[ $devs == *$'\nwlan'* ]] || [[ $devs == *$'\nwlp'* ]]; then
     ssid=$(iwgetid --raw)
-    [[ -n "$ssid" ]] && txt+=("<span weight='bold' fgcolor='$color'>$ssid</span>")
+    [[ -z "$ssid" ]] && return
+    if [[ $TMUX ]]; then
+        txt+=("#[fg=$color_tmux]$ssid#[default]")
+    else
+        txt+=("<span weight='bold' fgcolor='$color'>$ssid</span>")
+    fi
 fi
 
 if [[ $devs == *$'\neth'* ]] || [[ $devs == *$'\nenp'* ]]; then
@@ -24,15 +31,27 @@ if [[ $devs == *$'\neth'* ]] || [[ $devs == *$'\nenp'* ]]; then
     speed="${speed##*:}"
     speed="${speed// /}"
     speed="${speed//[^0-9]/}"
-    txt+=("<span weight='bold' fgcolor='$color'>$speed</span>")
+    if [[ $TMUX ]]; then
+        txt+=("#[fg=$color_tmux]$speed#[default]")
+    else
+        txt+=("<span weight='bold' fgcolor='$color'>$speed</span>")
+    fi
 fi
 
 if [[ $devs == *$'\nusb'* ]]; then
-    txt+=("<span weight='bold' fgcolor='$color'>USB</span>")
+    if [[ $TMUX ]]; then
+        txt+=("USB")
+    else
+        txt+=("<span weight='bold' fgcolor='$color'>USB</span>")
+    fi
 fi
 
 if [ -f /tmp/sshuttle.pid ]; then
-    txt+=("<span weight='bold' fgcolor='$vpn_color'>sshuttle</span>")
+    if [[ $TMUX ]]; then
+        txt+=("#[fg=$vpn_color_tmux]sshuttle#[default]")
+    else
+        txt+=("<span weight='bold' fgcolor='$vpn_color'>sshuttle</span>")
+    fi
 fi
 
 if [[ $devs == *$'\ntun'* ]] || [[ $devs == *$'\ntap'* ]]; then
@@ -41,16 +60,24 @@ if [[ $devs == *$'\ntun'* ]] || [[ $devs == *$'\ntap'* ]]; then
         vpn_profile=$(cat "/proc/$pid/cmdline")
         vpn_profile="${vpn_profile##*/}"
         vpn_profile="${vpn_profile%.ovpn}"
-        txt+=("<span weight='bold' fgcolor='$vpn_color'>$vpn_profile</span>")
+        if [[ $TMUX ]]; then
+            txt+=("#[fg=$vpn_color_tmux]$vpn_profile#[default]")
+        else
+            txt+=("<span weight='bold' fgcolor='$vpn_color'>$vpn_profile</span>")
+       fi
     fi
 fi
 
 total="${#txt[@]}"
 count=1
-echo -n "<txt>"
+[[ ! $TMUX ]] && echo -n "<txt>"
 if [[ $total == 0 ]]; then
-    echo -n "<span weight='bold' fgcolor='grey'>n/a</span>"
-    image="$HOME/.bin/lib/genmon/img/wifi_off.png"
+    if [[ $TMUX ]]; then
+        echo -n "#[fg=black]n/a#[default]"
+    else
+        echo -n "<span weight='bold' fgcolor='grey'>n/a</span>"
+        image="$HOME/.bin/lib/genmon/img/wifi_off.png"
+    fi
 else
     for item in "${txt[@]}"; do
         echo -n "$item"
@@ -58,7 +85,7 @@ else
         count=$((count+1))
     done
 fi
-echo "</txt>"
-echo "<click>terminator -m -e 'ip addr;read'</click>"
+[[ ! $TMUX ]] && echo "</txt>"
+[[ ! $TMUX ]] && echo "<click>terminator -m -e 'ip addr;read'</click>"
 
-[[ $ICONS == 1 ]] && echo "<img>$image</img>"
+[[ $ICONS == 1 && ! $TMUX ]] && echo "<img>$image</img>"

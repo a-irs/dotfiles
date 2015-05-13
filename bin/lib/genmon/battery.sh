@@ -17,10 +17,12 @@ fi
 if [[ "$percent" -le 19 ]]; then
         image="$HOME/.bin/lib/genmon/img/battery_crit.png"
         color="#DB3131"
+        color_tmux="red"
 elif [[ "$percent" -le 39 ]]; then
     if [ $MONOCHROME -ne 1 ]; then
         image="$HOME/.bin/lib/genmon/img/battery_low.png"
         color="Yellow"
+        color_tmux="yellow"
     else
         image="$HOME/.bin/lib/genmon/img/monochrome/battery_low.png"
         color="#aaaaaa"
@@ -29,6 +31,7 @@ elif [[ "$percent" -le 69 ]]; then
     if [ $MONOCHROME -ne 1 ]; then
         image="$HOME/.bin/lib/genmon/img/battery_normal.png"
         color="White"
+        color_tmux="white"
     else
         image="$HOME/.bin/lib/genmon/img/monochrome/battery_normal.png"
         color="#cccccc"
@@ -38,20 +41,33 @@ else
     if [ $MONOCHROME -ne 1 ]; then
         image="$HOME/.bin/lib/genmon/img/battery_high.png"
         color="LightGreen"
+        color_tmux="green"
     else
         image="$HOME/.bin/lib/genmon/img/monochrome/battery_high.png"
         color="#ffffff"
     fi
 fi
 
-txt="<span weight='bold' fgcolor='$color'>$percent"
-if [[ "$status" == Charging ]] || [[ "$status" == Full ]]; then
-    txt=$txt"<span weight='bold' fgcolor='LightGreen'> +</span></span>"
+if [[ $TMUX ]]; then
+    txt="#[fg=$color_tmux]$percent#[default]"
 else
-    txt=$txt"</span>"
+    txt="<span weight='bold' fgcolor='$color'>$percent"
+fi
+
+if [[ "$status" == Charging ]] || [[ "$status" == Full ]]; then
+    if [[ $TMUX ]]; then
+        txt=$txt" #[fg=green]+#[default]"
+    else
+        txt=$txt"<span weight='bold' fgcolor='LightGreen'> +</span></span>"
+    fi
+else
+    [[ ! $TMUX ]] && txt=$txt"</span>"
 fi
 
 click="sh -c 'xset dpms force off && slimlock'"
-[[ $ICONS == 1 ]] && echo -n "<img>$image</img>"
-echo "<txt>$txt</txt>\
-      <click>$click</click>"
+[[ $ICONS == 1 && ! $TMUX ]] && echo -n "<img>$image</img>"
+if [[ $TMUX ]]; then
+    echo -n "$txt"
+else
+    echo -n "<txt>$txt</txt><click>$click</click>"
+fi
