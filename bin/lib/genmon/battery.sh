@@ -49,14 +49,14 @@ else
 fi
 
 if [[ $TMUX ]]; then
-    txt="#[fg=$color_tmux]$percent#[default]"
+    txt="#[fg=$color_tmux]$percent%#[default]"
 else
     txt="<span weight='bold' fgcolor='$color'>$percent"
 fi
 
 if [[ "$status" == Charging ]] || [[ "$status" == Full ]]; then
     if [[ $TMUX ]]; then
-        txt=$txt" #[fg=green]+#[default]"
+        txt="#[fg=yellow]⚡#[default] $txt"
     else
         txt=$txt"<span weight='bold' fgcolor='LightGreen'> +</span></span>"
     fi

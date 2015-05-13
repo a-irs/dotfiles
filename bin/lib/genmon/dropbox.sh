@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-status=$(dropbox status)
+status=$(dropbox-cli status)
 
 if [[ $status == "Dropbox isn't running!" ]]; then
     s=""
