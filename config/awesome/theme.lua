@@ -37,9 +37,6 @@ theme.menu_bg_focus                 = "#050505dd"
 theme.taglist_squares_sel           = theme.confdir .. "/square_a.png"
 theme.taglist_squares_unsel         = theme.confdir .. "/square_b.png"
 
-theme.tasklist_disable_icon         = true
-theme.tasklist_floating             = ""
-theme.tasklist_maximized_horizontal = ""
-theme.tasklist_maximized_vertical   = ""
+theme.useless_gap_width = 10
 
 return theme

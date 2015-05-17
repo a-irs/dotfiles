@@ -98,7 +98,7 @@ ZSHINE_PLUGINS=(
   bindkey # bind keys for delete, history-search etc.
   fzf # CTRL+T for fuzzy-search of files
   zaw # better CTRL+R history search
-  tmux # autostart tmux
+  # tmux # autostart tmux
 #  notify # notify-send after long command has been completed
 )
 for z in $ZSHINE_PLUGINS; do source "$ZSHINE_DIR/plugins/$z.zsh"; done

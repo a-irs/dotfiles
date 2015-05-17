@@ -2,6 +2,7 @@ local gears     = require("gears")
 local awful     = require("awful")
 awful.rules     = require("awful.rules")
                   require("awful.autofocus")
+local tyrannical = require("tyrannical")
 local wibox     = require("wibox")
 local beautiful = require("beautiful")
 local naughty   = require("naughty")
@@ -36,11 +37,9 @@ function run_once(cmd)
   end
   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
-run_once("terminator --config /home/alex/.config/terminator/config-fullscreen -H -f")
 run_once("kupfer --no-splash")
-run_once("thunar --daemon")
 run_once("compton -b")
-run_once("redshift -l 48.7:13.0 -t 5800:3200 -m vidmode -r")
+run_once(os.getenv("HOME") .. "/.bin/redshift.sh")
 -- }}
 
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme.lua")
@@ -54,18 +53,14 @@ alt = "Mod1"
 
 local layouts =
 {
---    awful.layout.suit.floating,
     awful.layout.suit.tile,
+--    lain.layout.uselesstile,
     awful.layout.suit.tile.left,
+  --  lain.layout.uselesstile.left,
     awful.layout.suit.tile.bottom,
+    --lain.layout.uselesstile.bottom,
     awful.layout.suit.tile.top,
---    awful.layout.suit.fair,
---    awful.layout.suit.fair.horizontal,
---    awful.layout.suit.spiral,
---    awful.layout.suit.spiral.dwindle,
---    awful.layout.suit.max,
---    awful.layout.suit.max.fullscreen,
---    awful.layout.suit.magnifier
+    --lain.layout.uselesstile.top,
 }
 -- }}}
 
@@ -77,10 +72,91 @@ if beautiful.wallpaper then
 end
 -- }}}
 
-tags = {}
-for s = 1, screen.count() do
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5 }, s, layouts[1])
-end
+
+-- {{{ Tags
+
+tyrannical.tags = {
+    {
+        name        = "www",
+        init        = true,
+        exclusive   = true,
+        -- icon        = "/home/alex/.icons/menu.png",
+        layout      = lain.layout.uselessfair,
+        exec_once   = { "firefox" },
+        class       = { "firefox", "chromium" }
+    },
+    {
+        name        = "zsh",
+        init        = true,
+        exclusive   = true,
+        layout      = lain.layout.uselessfair.horizontal,
+        exec_once   = { "terminator" },
+        class       = { "urxvt", "terminator" }
+    },
+    {
+        name        = "dev",
+        init        = true,
+        exclusive   = true,
+        layout      = lain.layout.uselessfair.horizontal,
+        exec_once   = { "subl3" },
+        class       = { "subl3" }
+    },
+    {
+        name        = "file",
+        init        = true,
+        exclusive   = true,
+        layout      = lain.layout.uselessfair,
+        exec_once   = { "thunar" },
+        class       = { "thunar", "engrampa" }
+    },
+    {
+        name        = "doc",
+        init        = false,
+        exclusive   = true,
+        layout      = lain.layout.uselessfair.horizontal,
+        class       = { "evince" }
+    },
+    {
+        name        = "img",
+        init        = false,
+        exclusive   = true,
+        layout      = awful.layout.suit.max.fullscreen,
+        class       = { "gpicview" }
+    },
+}
+
+-- Ignore the tag "exclusive" property for the following clients (matched by classes)
+tyrannical.properties.intrusive = {
+    "kupfer.py",
+    "ksnapshot"     , "pinentry"       , "gtksu"     , "kcalc"        , "xcalc"               ,
+    "feh"           , "Gradient editor", "About KDE" , "Paste Special", "Background color"    ,
+    "kcolorchooser" , "plasmoidviewer" , "Xephyr"    , "kruler"       , "plasmaengineexplorer",
+}
+
+-- Ignore the tiled layout for the matching clients
+tyrannical.properties.floating = {
+    "MPlayer"      , "pinentry"        , "ksnapshot"  , "pinentry"     , "gtksu"          ,
+    "xine"         , "feh"             , "kmix"       , "kcalc"        , "xcalc"          ,
+    "yakuake"      , "Select Color$"   , "kruler"     , "kcolorchooser", "Paste Special"  ,
+    "New Form"     , "Insert Picture"  , "kcharselect", "mythfrontend" , "plasmoidviewer",
+}
+
+-- Make the matching clients (by classes) on top of the default layout
+tyrannical.properties.ontop = {
+    "Xephyr"       , "ksnapshot"       , "kruler"
+}
+
+-- Force the matching clients (by classes) to be centered on the screen on init
+tyrannical.properties.centered = {
+    "kcalc"
+}
+
+tyrannical.settings.block_children_focus_stealing = true --Block popups ()
+tyrannical.settings.group_children = true --Force popups/dialogs to have the same tags as the parent client
+
+-- }}}
+
+
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
@@ -162,21 +238,24 @@ root.buttons(awful.util.table.join(
 -- {{{ Key bindings
 
 globalkeys = awful.util.table.join(
-    awful.key({ win }, "Left", function ()  lain.util.tag_view_nonempty(-1) end),
-    awful.key({ win }, "Right", function () lain.util.tag_view_nonempty(1) end),
+    awful.key({ win }, "Left",   awful.tag.viewprev       ),
+    awful.key({ win }, "Right",  awful.tag.viewnext       ),
     awful.key({ win,           }, "Escape", awful.tag.history.restore),
+
+    awful.key({ win, }, "+", function () lain.util.useless_gaps_resize(5) end),
+    awful.key({ win, }, "-", function () lain.util.useless_gaps_resize(-5) end),
 
     -- {{ Alt-Tab
     awful.key({ alt,           }, "Tab",
     function ()
-        awful.client.focus.byidx(-1)
+        awful.client.focus.byidx(1)
         if client.focus then
             client.focus:raise()
         end
     end),
     awful.key({ alt, "Shift"   }, "Tab",
     function ()
-        awful.client.focus.byidx(1)
+        awful.client.focus.byidx(-1)
         if client.focus then
             client.focus:raise()
         end
@@ -190,9 +269,6 @@ globalkeys = awful.util.table.join(
 
     -- Standard programs
     awful.key({ alt }, "Return", function () awful.util.spawn(terminal) end),
-    awful.key({ alt }, "f",  function () awful.util.spawn("thunar") end),
-    awful.key({ alt }, "s",  function () awful.util.spawn("subl3") end),
-    awful.key({ alt }, "c",  function () awful.util.spawn("firefox") end),
 
     -- restart, quit
     awful.key({ win, "Shift"   }, "r", awesome.restart),
@@ -208,20 +284,9 @@ globalkeys = awful.util.table.join(
 )
 
 clientkeys = awful.util.table.join(
+    awful.key({ win, }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ win, "Control" }, "space",  awful.client.floating.toggle                     ),
-    awful.key({ win, "Shift"   }, "c",      function (c) c:kill()                         end),
-    awful.key({ win,           }, "t",      function (c) c.ontop = not c.ontop            end),
-    awful.key({ win,           }, "n",
-        function (c)
-            -- The client currently has the input focus, so it cannot be
-            -- minimized, since minimized clients can't have the focus.
-            c.minimized = true
-        end),
-    awful.key({ win,           }, "m",
-        function (c)
-            c.maximized_horizontal = not c.maximized_horizontal
-            c.maximized_vertical   = not c.maximized_vertical
-        end)
+    awful.key({ win, "Shift"   }, "c",      function (c) c:kill()                         end)
 )
 
 -- Bind all key numbers to tags.
@@ -277,9 +342,7 @@ root.keys(globalkeys)
 -- }}}
 
 -- {{{ Rules
--- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
-    -- All clients will match this rule.
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
@@ -325,3 +388,4 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+-- }}}
