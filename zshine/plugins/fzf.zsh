@@ -17,7 +17,7 @@ fzf-file-widget() {
     zle redisplay
 }
 zle     -N   fzf-file-widget
-bindkey '^F' fzf-file-widget
+bindkey '^T' fzf-file-widget
 
 # CTRL-G - cd into the selected directory
 fzf-cd-widget() {

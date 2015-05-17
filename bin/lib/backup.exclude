@@ -30,6 +30,7 @@
 **/.local/share/Trash
 **/.local/share/Steam
 **/.thumbnails/*
+**/.config/VirtualBox/*.iso
 **/.config/freshwrapper-data/Shockwave Flash/WritableRoot
 **/.zsh_recent-dirs
 **/.zcompdump
