@@ -108,7 +108,12 @@ def get_all_access_song(id):
         print(Fore.YELLOW + pretty_song(CACHE[id]))
         return False, None
 
-    info = mobileclient.get_track_info(store_track_id=id)
+    try:
+        info = mobileclient.get_track_info(store_track_id=id)
+    except exceptions.CallFailure:
+        print(Fore.RED + "ERROR: " + id)
+        return False, None
+
     if 'album' in info and 'trackNumber' in info:
         filename = main_dir + "/mp3/" + info['artist'].replace('/', '-') + "/" + info['album'].replace('/', '-') + "/" + '{:02d}'.format(info['trackNumber']) + ". " + info['title'].replace('/', '-') + ".mp3"
     else:

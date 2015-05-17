@@ -13,7 +13,7 @@ display_bitrate = yes
 song_columns_list_format = "(2)[blue]{} (30)[blue]{a} (50)[yellow]{t|f:Title} (20)[black]{b} (4f)[green]{l}"
 titles_visibility = no
 
-user_interface = classic
+user_interface = alternative
 song_status_format = "$b{$5%a$9} {$4%t$9}|{$4%f$9}"
 alternative_header_first_line_format = $b{$5%a$9 }{$4%t$9}|{$4%f$9}
 alternative_header_second_line_format = $b{$1%b$9}
