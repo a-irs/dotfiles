@@ -34,8 +34,8 @@ theme.menu_fg_focus                 = "#ff8c00"
 theme.menu_bg_normal                = "#050505dd"
 theme.menu_bg_focus                 = "#050505dd"
 
-theme.taglist_squares_sel           = theme.confdir .. "/square_a.png"
-theme.taglist_squares_unsel         = theme.confdir .. "/square_b.png"
+theme.taglist_squares_sel           = theme.confdir .. "/blank.png"
+theme.taglist_squares_unsel         = theme.confdir .. "/blank.png"
 
 theme.useless_gap_width = 10
 

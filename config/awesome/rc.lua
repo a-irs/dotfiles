@@ -240,34 +240,35 @@ root.buttons(awful.util.table.join(
 -- {{{ Key bindings
 
 globalkeys = awful.util.table.join(
-    awful.key({ win }, "Left",   awful.tag.viewprev       ),
-    awful.key({ win }, "Right",  awful.tag.viewnext       ),
-    awful.key({ win,           }, "Escape", awful.tag.history.restore),
+    awful.key({ win }, "Down",
+        function()
+            awful.client.focus.bydirection("down")
+            if client.focus then client.focus:raise() end
+        end),
+    awful.key({ win }, "Up",
+        function()
+            awful.client.focus.bydirection("up")
+            if client.focus then client.focus:raise() end
+        end),
+    awful.key({ win }, "Left",
+        function()
+            awful.client.focus.bydirection("left")
+            if client.focus then client.focus:raise() end
+        end),
+    awful.key({ win }, "Right",
+        function()
+            awful.client.focus.bydirection("right")
+            if client.focus then client.focus:raise() end
+        end),
 
-    awful.key({ win, }, "+", function () lain.util.useless_gaps_resize(5) end),
-    awful.key({ win, }, "-", function () lain.util.useless_gaps_resize(-5) end),
+    awful.key({ win,           }, "Tab", awful.tag.history.restore),
 
-    -- {{ Alt-Tab
-    awful.key({ alt,           }, "Tab",
-    function ()
-        awful.client.focus.byidx(1)
-        if client.focus then
-            client.focus:raise()
-        end
-    end),
-    awful.key({ alt, "Shift"   }, "Tab",
-    function ()
-        awful.client.focus.byidx(-1)
-        if client.focus then
-            client.focus:raise()
-        end
-    end),
-    -- }}
+    awful.key({ win, }, "+", function () lain.util.useless_gaps_resize(-5) end),
+    awful.key({ win, }, "-", function () lain.util.useless_gaps_resize(5) end),
 
-    -- Layout manipulation
-    awful.key({ win, "Shift"   }, "Left", function () awful.client.swap.byidx(  1)    end),
-    awful.key({ win, "Shift"   }, "Right", function () awful.client.swap.byidx( -1)    end),
-    awful.key({ win,           }, "u", awful.client.urgent.jumpto),
+    -- Alt-Tab
+    awful.key({ alt,           }, "Tab", awful.tag.viewnext),
+    awful.key({ alt, "Shift"   }, "Tab", awful.tag.viewprev),
 
     -- Standard programs
     awful.key({ alt }, "Return", function () awful.util.spawn(terminal) end),
@@ -275,23 +276,22 @@ globalkeys = awful.util.table.join(
     awful.key({ alt }, "c", function () awful.util.spawn("firefox") end),
     awful.key({ alt }, "s", function () awful.util.spawn("subl3") end),
 
-    -- restart, quit
     awful.key({ win, "Shift"   }, "r", awesome.restart),
-    awful.key({ win, "Shift"   }, "q", awesome.quit),
 
     awful.key({ win, "Control"          }, "Right",     function () awful.tag.incmwfact( 0.01)    end),
     awful.key({ win, "Control"          }, "Left",     function () awful.tag.incmwfact(-0.01)    end),
     awful.key({ win,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ win, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
+    awful.key({ win,           }, "u", awful.client.urgent.jumpto),
+    awful.key({ win, "Shift"   }, "Left", function () awful.client.swap.byidx(  1)    end),
+    awful.key({ win, "Shift"   }, "Right", function () awful.client.swap.byidx( -1)    end),
 
-    -- Prompt
     awful.key({ win },            "r",     function () mypromptbox[mouse.screen]:run() end)
 )
 
 clientkeys = awful.util.table.join(
     awful.key({ win, }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
-    awful.key({ win, "Control" }, "space",  awful.client.floating.toggle                     ),
-    awful.key({ win, "Shift"   }, "c",      function (c) c:kill()                         end)
+    awful.key({ alt  }, "F4",      function (c) c:kill()                         end)
 )
 
 -- Bind all key numbers to tags.
@@ -326,7 +326,7 @@ for i = 1, 9 do
                      end
                   end),
         -- Toggle tag.
-        awful.key({ win, "Control", "Shift" }, "#" .. i + 9,
+        awful.key({ win, alt }, "#" .. i + 9,
                   function ()
                       if client.focus then
                           local tag = awful.tag.gettags(client.focus.screen)[i]
@@ -355,15 +355,6 @@ awful.rules.rules = {
                      raise = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
-    { rule = { class = "mpv" },
-      properties = { floating = true } },
-    { rule = { class = "pinentry" },
-      properties = { floating = true } },
-    { rule = { class = "gimp" },
-      properties = { floating = true } },
-    -- Set Firefox to always map on tags number 2 of screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { tag = tags[1][2] } },
 }
 -- }}}
 
