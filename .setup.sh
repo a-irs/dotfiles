@@ -56,6 +56,9 @@ dotfiles=(
 
 dotfiles_x=(
     compton.conf
+    config/awesome/rc.lua
+    config/awesome/theme.lua
+    config/awesome/theme
     config/fontconfig/fonts.conf
     config/gtk-3.0/settings.ini
     config/mpv/input.conf
