@@ -168,27 +168,9 @@ tyrannical.settings.group_children = true --Force popups/dialogs to have the sam
 
 
 
--- {{{ Menu
--- Create a laucher widget and a main menu
-myawesomemenu = {
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", awesome.quit }
-}
-
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
-                                  }
-                        })
-
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
-
-
 -- {{{ Wibox
 markup      = lain.util.markup
 
--- Create a textclock widget
 mytextclock = awful.widget.textclock(markup("#ffffff", "%a, %d.%m.") .. markup.bold(markup("#ffffff", " %H:%M  ")), 1)
 
 -- Create a wibox for each screen and add it
@@ -200,28 +182,22 @@ mytaglist.buttons = awful.util.table.join(
                     awful.button({ }, 3, awful.tag.viewtoggle)
                     )
 
-
 for s = 1, screen.count() do
-    -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt()
-
-    -- Create a taglist widget
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
-
-    -- Create the wibox
     mywibox[s] = awful.wibox({ position = "top", screen = s, height = 20 })
 
-    -- Widgets that are aligned to the left
+    -- left
     local left_layout = wibox.layout.fixed.horizontal()
-    left_layout:add(mylauncher)
     left_layout:add(mytaglist[s])
     left_layout:add(mypromptbox[s])
 
-    -- Widgets that are aligned to the right
+    -- right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextclock)
 
+    -- build status bar
     local layout = wibox.layout.align.horizontal()
     layout:set_left(left_layout)
     layout:set_right(right_layout)
@@ -238,7 +214,6 @@ root.buttons(awful.util.table.join(
 -- }}}
 
 -- {{{ Key bindings
-
 globalkeys = awful.util.table.join(
     awful.key({ win }, "Down",
         function()
