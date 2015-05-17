@@ -113,7 +113,7 @@ tyrannical.tags = {
         class       = { "subl3" }
     },
     {
-        name        = "file",
+        name        = "files",
         init        = true,
         exclusive   = true,
         layout      = lain.layout.uselessfair,
