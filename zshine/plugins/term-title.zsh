@@ -24,7 +24,7 @@ function title {
   fi
 }
 
-ZSH_THEME_TERM_TAB_TITLE_IDLE="%30<..<%~%<<" #15 char left truncated PWD
+ZSH_THEME_TERM_TAB_TITLE_IDLE="%30<…<%~%<<" #30 char left truncated PWD
 ZSH_THEME_TERM_TITLE_IDLE="%n@%m: %~"
 
 # Runs before showing the prompt
@@ -41,15 +41,7 @@ function omz_termsupport_preexec {
   if [[ $DISABLE_AUTO_TITLE == true ]]; then
     return
   fi
-
-  emulate -L zsh
-  setopt extended_glob
-
-  # cmd name only, or if this is sudo or ssh, the next cmd
-  local CMD=${1[(wr)^(*=*|sudo|ssh|rake|-*)]:gs/%/%%}
-  local LINE="${2:gs/%/%%}"
-
-  title '$CMD' '%100>...>$LINE%<<'
+  title "%30>…>$@%<<"
 }
 
 precmd_functions+=(omz_termsupport_precmd)
