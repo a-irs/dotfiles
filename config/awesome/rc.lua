@@ -11,7 +11,7 @@ local lain      = require("lain")
 
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
+                     title = "Errors during startup!",
                      text = awesome.startup_errors })
 end
 
@@ -22,7 +22,7 @@ do
         in_error = true
 
         naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
+                         title = "An error happened!",
                          text = err })
         in_error = false
     end)
@@ -53,13 +53,15 @@ alt = "Mod1"
 
 local layouts =
 {
-    awful.layout.suit.tile,
+--    awful.layout.suit.tile,
+    lain.layout.uselessfair.horizontal,
+    lain.layout.uselessfair,
 --    lain.layout.uselesstile,
-    awful.layout.suit.tile.left,
+--    awful.layout.suit.tile.left,
   --  lain.layout.uselesstile.left,
-    awful.layout.suit.tile.bottom,
+  --  awful.layout.suit.tile.bottom,
     --lain.layout.uselesstile.bottom,
-    awful.layout.suit.tile.top,
+   -- awful.layout.suit.tile.top,
     --lain.layout.uselesstile.top,
 }
 -- }}}
@@ -74,6 +76,15 @@ end
 
 
 -- {{{ Tags
+--[[
+tags = {
+   names = { "www", "zsh", "dev", "file" },
+   layout = { layouts[1], layouts[1], layouts[1], layouts[1] }
+}
+for s = 1, screen.count() do
+   tags[s] = awful.tag(tags.names, s, tags.layout)
+end
+--]]
 
 tyrannical.tags = {
     {
@@ -153,7 +164,6 @@ tyrannical.properties.centered = {
 
 tyrannical.settings.block_children_focus_stealing = true --Block popups ()
 tyrannical.settings.group_children = true --Force popups/dialogs to have the same tags as the parent client
-
 -- }}}
 
 
@@ -161,7 +171,6 @@ tyrannical.settings.group_children = true --Force popups/dialogs to have the sam
 -- {{{ Menu
 -- Create a laucher widget and a main menu
 myawesomemenu = {
-   { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
    { "quit", awesome.quit }
@@ -176,9 +185,7 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
 
 
-
 -- {{{ Wibox
-
 markup      = lain.util.markup
 
 -- Create a textclock widget
@@ -190,11 +197,7 @@ mypromptbox = {}
 mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
                     awful.button({ }, 1, awful.tag.viewonly),
-                    awful.button({ win }, 1, awful.client.movetotag),
-                    awful.button({ }, 3, awful.tag.viewtoggle),
-                    awful.button({ win }, 3, awful.client.toggletag),
-                    awful.button({ }, 4, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end),
-                    awful.button({ }, 5, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end)
+                    awful.button({ }, 3, awful.tag.viewtoggle)
                     )
 
 
@@ -229,7 +232,6 @@ end
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
@@ -269,6 +271,9 @@ globalkeys = awful.util.table.join(
 
     -- Standard programs
     awful.key({ alt }, "Return", function () awful.util.spawn(terminal) end),
+    awful.key({ alt }, "f", function () awful.util.spawn("thunar") end),
+    awful.key({ alt }, "c", function () awful.util.spawn("firefox") end),
+    awful.key({ alt }, "s", function () awful.util.spawn("subl3") end),
 
     -- restart, quit
     awful.key({ win, "Shift"   }, "r", awesome.restart),
