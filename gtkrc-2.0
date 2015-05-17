@@ -16,3 +16,7 @@ widget_class "*Panel*" style "panel-color"
 class "*Panel*" style "panel-color"
 class "*Tray*" style "panel-color"
 class "*tray*" style "panel-color"
+
+gtk-theme-name = "Orchis2"
+gtk-font-name = "Roboto Medium 9"
+gtk-icon-theme-name = "Faba-Mono-Dark"

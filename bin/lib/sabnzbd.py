@@ -7,16 +7,17 @@ import json
 SERVER = 'srv:8080'
 API_KEY = '24eb3337bf38c3a052ae9ce8a5983370'
 
+
 def print_info(js):
     if not js['jobs']:
         print('No downloads active.')
     else:
         print_jobs(js['jobs'])
         mbleft = pretty_size(js['mbleft'], "GB")
-        timeleft = js['timeleft']
         speed = pretty_size(js['kbpersec'], "MB/s")
         print("\n%s left" % mbleft)
         print("%s" % speed)
+
 
 def print_jobs(js):
     for job in js:
@@ -24,6 +25,7 @@ def print_jobs(js):
         sizeleft = pretty_size(job['mbleft'], "GB")
         filename = job['filename'].split("/")[0]
         print('\033[0;32mdone in', timeleft + '\033[0m', "|", '\033[0;33m' + sizeleft + '\033[0m', "|", filename)
+
 
 def print_history(js):
     for job in js['history']['slots']:
@@ -36,8 +38,10 @@ def print_history(js):
         size = '\033[0;33m(' + job['size'] + ')\033[0m'
         print(status + " " + name + " " + size)
 
+
 def pretty_size(b, suffix):
     return "{:.2f}".format(b / 1024) + " " + suffix
+
 
 def main():
     if len(sys.argv) == 1:
