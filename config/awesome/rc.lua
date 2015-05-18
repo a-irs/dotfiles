@@ -1,13 +1,14 @@
-local gears     = require("gears")
-local awful     = require("awful")
-awful.rules     = require("awful.rules")
-                  require("awful.autofocus")
+local gears      = require("gears")
+local awful      = require("awful")
+awful.rules      = require("awful.rules")
+                   require("awful.autofocus")
 local tyrannical = require("tyrannical")
-local wibox     = require("wibox")
-local beautiful = require("beautiful")
-local naughty   = require("naughty")
-local lain      = require("lain")
-local vicious   = require("vicious")
+local wibox      = require("wibox")
+local beautiful  = require("beautiful")
+local naughty    = require("naughty")
+local lain       = require("lain")
+local vicious    = require("vicious")
+local volume     = require("volume")
 
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -37,6 +38,9 @@ function run_once(cmd)
   end
   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
+run_once("start-pulseaudio-x11")
+run_once("mpd")
+run_once("thunar --daemon")
 run_once("kupfer --no-splash")
 run_once("compton -b")
 run_once(os.getenv("HOME") .. "/.bin/redshift.sh")
@@ -90,16 +94,15 @@ tyrannical.tags = {
     {
         name        = "www",
         init        = true,
-        exclusive   = true,
+        exclusive   = false,
         -- icon        = "/home/alex/.icons/menu.png",
         layout      = lain.layout.uselessfair,
-        exec_once   = { "firefox" },
         class       = { "firefox", "chromium" }
     },
     {
         name        = "zsh",
         init        = true,
-        exclusive   = true,
+        exclusive   = false,
         layout      = lain.layout.uselessfair.horizontal,
         exec_once   = { "terminator" },
         class       = { "urxvt", "terminator" }
@@ -107,29 +110,27 @@ tyrannical.tags = {
     {
         name        = "dev",
         init        = true,
-        exclusive   = true,
+        exclusive   = false,
         layout      = lain.layout.uselessfair.horizontal,
-        exec_once   = { "subl3" },
         class       = { "subl3", "atom" }
     },
     {
         name        = "files",
         init        = true,
-        exclusive   = true,
+        exclusive   = false,
         layout      = lain.layout.uselessfair,
-        exec_once   = { "thunar" },
         class       = { "thunar", "engrampa" }
     },
     {
         name        = "doc",
         init        = false,
-        exclusive   = true,
+        exclusive   = false,
         layout      = lain.layout.uselessfair.horizontal,
         class       = { "evince" }
     },
     {   name        = "img",
         init        = false,
-        exclusive   = true,
+        exclusive   = false,
         layout      = awful.layout.suit.max.fullscreen,
         class       = { "gpicview" }
     },
@@ -161,15 +162,35 @@ tyrannical.settings.group_children = true --Force popups/dialogs to have the sam
 -- }}}
 
 
+
+
 -- {{{ Wibox
 markup      = lain.util.markup
 
--- Initialize widget
+-- date, time
 datewidget = wibox.widget.textbox()
--- Register widget
-vicious.register(datewidget, vicious.widgets.date, "%b %d, %R", 60)
+vicious.register(datewidget, vicious.widgets.date, markup("#ffffff", "%a, %d.%m.") .. " " .. markup.bold(markup("#ffffff", "%H:%M")), 1)
 
-mytextclock = awful.widget.textclock(markup("#ffffff", "%a, %d.%m.") .. markup.bold(markup("#ffffff", " %H:%M  ")), 1)
+-- battery
+batwidget = wibox.widget.textbox()
+vicious.register(batwidget, vicious.widgets.bat, markup.bold(markup("LightGreen", '$2% $3')), 5, "BAT0")
+
+-- audio
+
+-- wifi
+netwidget = wibox.widget.textbox()
+vicious.register(netwidget, vicious.widgets.wifi, markup.bold(markup("LightBlue", '${ssid}')), 5, "wlan0")
+
+-- mpd
+mpdwidget = lain.widgets.mpd({
+    settings = function ()
+        mpd_notification_preset = {
+            timeout = 5,
+            text = string.format("%s\n%s", markup.bold(mpd_now.artist), mpd_now.title)
+        }
+    end
+})
+
 
 mywibox = {}
 mypromptbox = {}
@@ -192,7 +213,9 @@ for s = 1, screen.count() do
     -- right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    right_layout:add(mytextclock)
+    right_layout:add(netwidget)
+    right_layout:add(batwidget)
+    right_layout:add(datewidget)
 
     -- build status bar
     local layout = wibox.layout.align.horizontal()
@@ -214,22 +237,22 @@ root.buttons(awful.util.table.join(
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
-    awful.key({ win }, "Down",
+    awful.key({ alt }, "Down",
         function()
             awful.client.focus.bydirection("down")
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ win }, "Up",
+    awful.key({ alt }, "Up",
         function()
             awful.client.focus.bydirection("up")
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ win }, "Left",
+    awful.key({ alt }, "Left",
         function()
             awful.client.focus.bydirection("left")
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ win }, "Right",
+    awful.key({ alt }, "Right",
         function()
             awful.client.focus.bydirection("right")
             if client.focus then client.focus:raise() end
@@ -240,14 +263,14 @@ globalkeys = awful.util.table.join(
     awful.key({ win, }, "+", function () lain.util.useless_gaps_resize(-5) end),
     awful.key({ win, }, "-", function () lain.util.useless_gaps_resize(5) end),
 
-    -- Alt-Tab
-    awful.key({ alt,           }, "Tab", awful.tag.viewnext),
-    awful.key({ alt, "Shift"   }, "Tab", awful.tag.viewprev),
+    awful.key({ win }, "Right", awful.tag.viewnext),
+    awful.key({ win }, "Left", awful.tag.viewprev),
 
     -- Standard programs
     awful.key({ alt }, "Return", function () awful.util.spawn(terminal) end),
-    awful.key({ alt }, "f", function () awful.util.spawn("thunar") end),
+    awful.key({ alt }, "f", function () awful.util.spawn("Thunar") end),
     awful.key({ alt }, "c", function () awful.util.spawn("firefox") end),
+    awful.key({ win }, "l", function () awful.util.spawn("xflock4") end),
     awful.key({ alt }, "s", function () awful.util.spawn("subl3") end),
 
     awful.key({ win, "Shift"   }, "r", awesome.restart),
@@ -257,10 +280,14 @@ globalkeys = awful.util.table.join(
     awful.key({ win,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ win, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
     awful.key({ win,           }, "u", awful.client.urgent.jumpto),
-    awful.key({ win, "Shift"   }, "Left", function () awful.client.swap.byidx(  1)    end),
+    awful.key({ win, "Shift"   }, "Left",  function () awful.client.swap.byidx(  1)    end),
     awful.key({ win, "Shift"   }, "Right", function () awful.client.swap.byidx( -1)    end),
 
-    awful.key({ win },            "r",     function () mypromptbox[mouse.screen]:run() end),
+    awful.key({ win },            "r",    function () mypromptbox[mouse.screen]:run() end),
+
+    awful.key({}, "XF86AudioRaiseVolume", function () volume.increase() end),
+    awful.key({}, "XF86AudioLowerVolume", function () volume.decrease() end),
+    awful.key({}, "XF86AudioMute",        function () volume.toggle() end),
 
     awful.key({  }, "F12",
           function ()
@@ -277,8 +304,8 @@ globalkeys = awful.util.table.join(
 )
 
 clientkeys = awful.util.table.join(
-    awful.key({ win, }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
-    awful.key({ alt  }, "F4",      function (c) c:kill()                         end)
+    awful.key({ win, }, "f",  function (c) c.fullscreen = not c.fullscreen  end),
+    awful.key({ alt  }, "F4", function (c) c:kill()                         end)
 )
 
 -- Bind all key numbers to tags.

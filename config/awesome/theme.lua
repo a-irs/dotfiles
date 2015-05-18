@@ -1,7 +1,16 @@
 theme                               = {}
 
-theme.confdir                       = os.getenv("HOME") .. "/.config/awesome/theme"
+theme.conf_dir                      = os.getenv("HOME") .. "/.config/awesome/theme"
+theme.holo_dir                      = os.getenv("HOME") .. "/.config/awesome/theme/holo"
 theme.wallpaper                     = os.getenv("HOME") .. "/.wallpaper"
+
+theme.mpd                           = theme.holo_dir .. "/mpd.png"
+theme.mpd_on                        = theme.holo_dir .. "/mpd_on.png"
+theme.prev                          = theme.holo_dir .. "/prev.png"
+theme.nex                           = theme.holo_dir .. "/next.png"
+theme.stop                          = theme.holo_dir .. "/stop.png"
+theme.pause                         = theme.holo_dir .. "/pause.png"
+theme.play                          = theme.holo_dir .. "/play.png"
 
 theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "Ubuntu Bold 8"
@@ -34,8 +43,8 @@ theme.menu_fg_focus                 = "#ff8c00"
 theme.menu_bg_normal                = "#050505dd"
 theme.menu_bg_focus                 = "#050505dd"
 
-theme.taglist_squares_sel           = theme.confdir .. "/blank.png"
-theme.taglist_squares_unsel         = theme.confdir .. "/blank.png"
+theme.taglist_squares_sel           = theme.conf_dir .. "/blank.png"
+theme.taglist_squares_unsel         = theme.conf_dir .. "/blank.png"
 
 theme.useless_gap_width = 10
 
