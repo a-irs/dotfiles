@@ -29,27 +29,12 @@ do
     end)
 end
 
--- {{{ Autostart applications
--- disable startup-notification (loading cursor)
-local oldspawn = awful.util.spawn
-awful.util.spawn = function (s)
-  oldspawn(s, false)
-end
-
-function run_once(cmd)
-  findme = cmd
-  firstspace = cmd:find(" ")
-  if firstspace then
-     findme = cmd:sub(0, firstspace-1)
-  end
-  awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
-end
-run_once("start-pulseaudio-x11")
-run_once("mpd")
-run_once("thunar --daemon")
-run_once("kupfer --no-splash")
-run_once("compton -b")
-run_once(os.getenv("HOME") .. "/.bin/redshift.sh")
+-- {{ Autostart
+awful.util.spawn("start-pulseaudio-x11", false)
+awful.util.spawn("mpd", false)
+awful.util.spawn("kupfer --no-splash", false)
+awful.util.spawn("compton -b", false)
+awful.util.spawn(os.getenv("HOME") .. "/.bin/redshift.sh", false)
 -- }}
 
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme.lua")
@@ -114,6 +99,7 @@ tyrannical.tags = {
         init        = true,
         exclusive   = false,
         layout      = lain.layout.uselessfair,
+        exec_once   = { "thunar" },
         class       = { "thunar", "engrampa" }
     },
     {
@@ -190,7 +176,7 @@ globalkeys = awful.util.table.join(
 
     -- Standard programs
     awful.key({ alt }, "Return", function () awful.util.spawn(terminal) end),
-    awful.key({ alt }, "f", function () awful.util.spawn("Thunar") end),
+    awful.key({ alt }, "f", function () awful.util.spawn("thunar") end),
     awful.key({ alt }, "c", function () awful.util.spawn("firefox") end),
     awful.key({ win }, "l", function () awful.util.spawn("xflock4") end),
     awful.key({ alt }, "s", function () awful.util.spawn("subl3") end),
