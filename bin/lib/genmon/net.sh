@@ -85,7 +85,7 @@ if [[ $total == 0 ]]; then
     if [[ $TMUX ]]; then
         echo -n "#[bg=black,fg=white]n/a#[default]"
     elif [[ $1 == awesome ]]; then
-        echo -n "<b>n/a</b>"
+        echo -n "<b>n/a</b>   "
     else
         echo -n "<span weight='bold' fgcolor='grey'>n/a</span>"
         image="$HOME/.bin/lib/genmon/img/wifi_off.png"

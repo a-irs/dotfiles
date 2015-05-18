@@ -2,73 +2,32 @@ local awful = require 'awful'
 local wibox = require 'wibox'
 local lain  = require 'lain'
 
+
 markup = lain.util.markup
 
--- date, time
-function genmon_date()
-  local command = os.getenv("HOME") .. "/.bin/lib/genmon/clock.sh awesome"
-  local fh = assert(io.popen(command, "r"))
-  local text = fh:read("*l")
-  fh:close()
-  return text
+function get_genmon(script)
+    local command = os.getenv("HOME") .. "/.bin/lib/genmon/" .. script .. " awesome"
+    local fh = assert(io.popen(command, "r"))
+    local text = fh:read("*l")
+    fh:close()
+    return text
 end
-datewidget = wibox.widget.textbox()
-datewidget:set_markup(genmon_date())
-datewidgettimer = timer({ timeout = 2 })
-datewidgettimer:connect_signal("timeout",
-  function() datewidget:set_markup(genmon_date()) end
-)
-datewidgettimer:start()
 
--- battery
-function genmon_battery()
-  local command = os.getenv("HOME") .. "/.bin/lib/genmon/battery.sh awesome"
-  local fh = assert(io.popen(command, "r"))
-  local text = fh:read("*l")
-  fh:close()
-  return text
+function make_widget(script, timeout)
+    local new_widget = wibox.widget.textbox()
+    new_widget:set_markup(get_genmon(script))
+    local new_widget_timer = timer({ timeout = timeout })
+    new_widget_timer:connect_signal("timeout",
+        function() new_widget:set_markup(get_genmon(script)) end
+    )
+    new_widget_timer:start()
+    return new_widget
 end
-batterywidget = wibox.widget.textbox()
-batterywidget:set_markup(genmon_battery())
-batterywidgettimer = timer({ timeout = 5 })
-batterywidgettimer:connect_signal("timeout",
-  function() batterywidget:set_markup(genmon_battery()) end
-)
-batterywidgettimer:start()
 
--- audio
-function genmon_audio()
-  local command = os.getenv("HOME") .. "/.bin/lib/genmon/pulseaudio.sh awesome"
-  local fh = assert(io.popen(command, "r"))
-  local text = fh:read("*l")
-  fh:close()
-  return text
-end
-audiowidget = wibox.widget.textbox()
-audiowidget:set_markup(genmon_audio())
-audiowidgettimer = timer({ timeout = 1 })
-audiowidgettimer:connect_signal("timeout",
-  function() audiowidget:set_markup(genmon_audio()) end
-)
-audiowidgettimer:start()
-
--- net
-netwidget = wibox.widget.textbox()
-function genmon_net()
-  local command = os.getenv("HOME") .. "/.bin/lib/genmon/net.sh awesome"
-  local fh = assert(io.popen(command, "r"))
-  local text = fh:read("*l")
-  fh:close()
-  return text
-end
-netwidget = wibox.widget.textbox()
-netwidget:set_markup(genmon_net())
-netwidgettimer = timer({ timeout = 5 })
-netwidgettimer:connect_signal("timeout",
-  function() netwidget:set_markup(genmon_net()) end
-)
-netwidgettimer:start()
-
+datewidget    = make_widget("clock.sh", 2)
+batterywidget = make_widget("battery.sh", 5)
+soundwidget   = make_widget("pulseaudio.sh", 1)
+netwidget     = make_widget("net.sh", 5)
 
 -- mpd
 mpdwidget = lain.widgets.mpd({
@@ -79,7 +38,6 @@ mpdwidget = lain.widgets.mpd({
         }
     end
 })
-
 
 
 mywibox = {}
@@ -98,19 +56,19 @@ for s = 1, screen.count() do
     -- left
     local left_layout = wibox.layout.fixed.horizontal()
     left_layout:add(mytaglist[s])
-    left_layout:add(mypromptbox[s])
 
     -- right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(netwidget)
-    right_layout:add(audiowidget)
+    right_layout:add(soundwidget)
     right_layout:add(batterywidget)
     right_layout:add(datewidget)
 
     -- build status bar
     local layout = wibox.layout.align.horizontal()
     layout:set_left(left_layout)
+    layout:set_middle(mypromptbox[s])
     layout:set_right(right_layout)
 
     mywibox[s]:set_widget(layout)
