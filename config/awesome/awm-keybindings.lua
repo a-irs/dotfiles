@@ -6,6 +6,9 @@ win = "Mod4"
 alt = "Mod1"
 
 globalkeys = awful.util.table.join(
+
+    -- focus windows
+
     awful.key({ alt }, "Down",
         function()
             awful.client.focus.bydirection("down")
@@ -27,54 +30,62 @@ globalkeys = awful.util.table.join(
             if client.focus then client.focus:raise() end
         end),
 
+    -- switch tags
+
     awful.key({ win,           }, "Tab", awful.tag.history.restore),
-
-    awful.key({ win, }, "+", function () lain.util.useless_gaps_resize(-5) end),
-    awful.key({ win, }, "-", function () lain.util.useless_gaps_resize(5) end),
-
     awful.key({ win }, "Right", awful.tag.viewnext),
     awful.key({ win }, "Left", awful.tag.viewprev),
-
-    -- Standard programs
-    awful.key({ alt }, "Return", function () awful.util.spawn(terminal) end),
-    awful.key({ alt }, "f", function () awful.util.spawn("thunar") end),
-    awful.key({ alt }, "c", function () awful.util.spawn("firefox") end),
-    awful.key({ win }, "l", function () awful.util.spawn("xflock4") end),
-    awful.key({ alt }, "s", function () awful.util.spawn("subl3") end),
-
-    awful.key({ win, "Shift"   }, "r", awesome.restart),
-
-    awful.key({ win, "Control"          }, "Right",     function () awful.tag.incmwfact( 0.01)    end),
-    awful.key({ win, "Control"          }, "Left",     function () awful.tag.incmwfact(-0.01)    end),
-    awful.key({ win,           }, "space", function () awful.layout.inc(layouts,  1) end),
-    awful.key({ win, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
     awful.key({ win,           }, "u", awful.client.urgent.jumpto),
-    awful.key({ win, "Shift"   }, "Left",  function () awful.client.swap.byidx(  1)    end),
-    awful.key({ win, "Shift"   }, "Right", function () awful.client.swap.byidx( -1)    end),
+    awful.key({  }, "F12",
+      function ()
+          local screen = mouse.screen
+          local tag = awful.tag.gettags(screen)[2]
+          if tag then
+            if tag.selected then
+              awful.tag.history.restore()
+            else
+              awful.tag.viewonly(tag)
+            end
+          end
+      end),
 
-    awful.key({ win },            "r",    function () mypromptbox[mouse.screen]:run() end),
+    -- modify windows
+
+    awful.key({ win }, "+",                function () lain.util.useless_gaps_resize(-5) end),
+    awful.key({ win }, "-",                function () lain.util.useless_gaps_resize( 5) end),
+
+    awful.key({ win, "Control" }, "Right", function () awful.tag.incmwfact( 0.01) end),
+    awful.key({ win, "Control" }, "Left",  function () awful.tag.incmwfact(-0.01) end),
+
+    awful.key({ win, "Shift"   }, "Left",  function () awful.client.swap.byidx( 1) end),
+    awful.key({ win, "Shift"   }, "Right", function () awful.client.swap.byidx(-1) end),
+
+    awful.key({ win            }, "space", function () awful.layout.inc(layouts, 1) end),
+    awful.key({ win, "Shift"   }, "space", function () awful.layout.inc(layouts,-1) end),
+
+    -- launch programs
+
+    awful.key({ win }, "r",      function () mypromptbox[mouse.screen]:run() end),
+    awful.key({ alt }, "Return", function () awful.util.spawn(user_terminal) end),
+    awful.key({ alt }, "f",      function () awful.util.spawn("thunar") end),
+    awful.key({ alt }, "c",      function () awful.util.spawn("firefox") end),
+    awful.key({ win }, "l",      function () awful.util.spawn("xflock4") end),
+    awful.key({ alt }, "s",      function () awful.util.spawn("subl3") end),
+
+    -- media keys
 
     awful.key({}, "XF86AudioRaiseVolume", function () volume.increase() end),
     awful.key({}, "XF86AudioLowerVolume", function () volume.decrease() end),
     awful.key({}, "XF86AudioMute",        function () volume.toggle() end),
 
-    awful.key({  }, "F12",
-          function ()
-              local screen = mouse.screen
-              local tag = awful.tag.gettags(screen)[2]
-              if tag then
-                if tag.selected then
-                  awful.tag.history.restore()
-                else
-                  awful.tag.viewonly(tag)
-                end
-              end
-          end)
+    -- restart awesome wm
+
+    awful.key({ win, "Shift" }, "r", awesome.restart)
 )
 
 clientkeys = awful.util.table.join(
-    awful.key({ win, }, "f",  function (c) c.fullscreen = not c.fullscreen  end),
-    awful.key({ alt  }, "F4", function (c) c:kill()                         end)
+    awful.key({ win }, "f",  function (c) c.fullscreen = not c.fullscreen end),
+    awful.key({ alt }, "F4", function (c) c:kill() end)
 )
 
 -- Bind all key numbers to tags.
@@ -121,10 +132,8 @@ for i = 1, 9 do
 end
 
 clientbuttons = awful.util.table.join(
-    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
+    awful.button({ },     1, function(c) client.focus = c; c:raise() end),
     awful.button({ win }, 1, awful.mouse.client.move),
     awful.button({ win }, 3, awful.mouse.client.resize))
 
--- Set keys
 root.keys(globalkeys)
--- }}}
