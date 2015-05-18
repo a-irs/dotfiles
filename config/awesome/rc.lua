@@ -1,10 +1,8 @@
--- config
-user_terminal = "terminator"
-user_browser  = "firefox"
-user_editor   = "subl3"
+user_terminal    = "terminator"
+user_browser     = "firefox"
+user_editor      = "subl3"
 user_filemanager = "thunar"
 
--- load
 require 'awm-error-handling'
 require 'awm-autostart'
 require 'awm-beautiful'
