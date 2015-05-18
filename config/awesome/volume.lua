@@ -24,18 +24,14 @@ end
 
 function volume.toggle()
   execute 'ponymix toggle &>/dev/null'
-
-  return volume.ismute()
 end
 
 function volume.increase()
   local volume = slurpcommand 'ponymix increase 1'
-  return tonumber(volume)
 end
 
 function volume.decrease()
   local volume = slurpcommand 'ponymix decrease 1'
-  return tonumber(volume)
 end
 
 return volume
