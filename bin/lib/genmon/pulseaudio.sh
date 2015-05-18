@@ -57,7 +57,7 @@ if ! ponymix is-muted 2> /dev/null; then
         image="$HOME/.bin/lib/genmon/img/monochrome/speaker_on.png"
     fi
 
-    xprop -root | grep PULSE_SERVER | grep -v "$HOSTNAME" | grep -v localhost &> /dev/null
+    xprop -root | grep PULSE_SERVER | grep -v "$HOSTNAME" | grep -v localhost | grep -v "unix:/run" &> /dev/null
     if [[ $? == 0 ]]; then
         color=orange
         image="$HOME/.bin/lib/genmon/img/speaker_remote.png"
@@ -68,6 +68,11 @@ else
 fi
 
 txt=$(round "$(ponymix get-volume 2> /dev/null)")
-[[ $ICONS == 1 ]] && echo -n "<img>$image</img>"
-echo "<txt><span weight='bold' fgcolor='$color'>$txt</span></txt>
-      <click>ponymix toggle</click>"
+
+if [[ $1 == awesome ]]; then
+    echo "<span foreground='$color'><b>$txt</b></span> :: "
+else
+    [[ $ICONS == 1 ]] && echo -n "<img>$image</img>"
+    echo "<txt><span weight='bold' fgcolor='$color'>$txt</span></txt>
+          <click>ponymix toggle</click>"
+fi

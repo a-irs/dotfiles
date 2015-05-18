@@ -51,9 +51,11 @@ else
 fi
 
 if [[ "$status" == Charging ]] || [[ "$status" == Full ]]; then
+    charging=1
     if [[ $TMUX ]]; then
         txt="#[bg=colour237,fg=colour220]#[bg=colour220,fg=colour235] ⚡ #[default]"
-        charging=1
+    elif [[ $1 == awesome ]]; then
+            txt="<span foreground='LightGreen'>+</span> "
     else
         txt="<span weight='bold' fgcolor='LightGreen'> +</span>"
     fi
@@ -65,14 +67,16 @@ if [[ $TMUX ]]; then
     else
         txt=$txt"#[bg=colour237,fg=$color_tmux]#[bg=$color_tmux,fg=colour235] $percent% #[default]"
     fi
+elif [[ $1 == awesome ]]; then
+    txt=$txt"<span foreground='$color'>$percent%</span>"
 else
     txt="<span weight='bold' fgcolor='$color'>$percent"$txt"</span>"
 fi
 
 click="sh -c 'xset dpms force off && slimlock'"
-[[ $ICONS == 1 && ! $TMUX ]] && echo -n "<img>$image</img>"
-if [[ $TMUX ]]; then
-    echo -n "$txt"
+if [[ -n $TMUX ]] || [[ $1 == awesome ]]; then
+    echo -n "<b>$txt</b> :: "
 else
+    [[ $ICONS == 1 ]] && echo -n "<img>$image</img>"
     echo -n "<txt>$txt</txt><click>$click</click>"
 fi

@@ -30,6 +30,12 @@ do
 end
 
 -- {{{ Autostart applications
+-- disable startup-notification (loading cursor)
+local oldspawn = awful.util.spawn
+awful.util.spawn = function (s)
+  oldspawn(s, false)
+end
+
 function run_once(cmd)
   findme = cmd
   firstspace = cmd:find(" ")
@@ -80,16 +86,6 @@ end
 
 
 -- {{{ Tags
---[[
-tags = {
-   names = { "www", "zsh", "dev", "file" },
-   layout = { layouts[1], layouts[1], layouts[1], layouts[1] }
-}
-for s = 1, screen.count() do
-   tags[s] = awful.tag(tags.names, s, tags.layout)
-end
---]]
-
 tyrannical.tags = {
     {
         name        = "www",
@@ -163,23 +159,74 @@ tyrannical.settings.group_children = true --Force popups/dialogs to have the sam
 
 
 
-
 -- {{{ Wibox
 markup      = lain.util.markup
 
 -- date, time
+function genmon_date()
+  local command = os.getenv("HOME") .. "/.bin/lib/genmon/clock.sh awesome"
+  local fh = assert(io.popen(command, "r"))
+  local text = fh:read("*l")
+  fh:close()
+  return text
+end
 datewidget = wibox.widget.textbox()
-vicious.register(datewidget, vicious.widgets.date, markup("#ffffff", "%a, %d.%m.") .. " " .. markup.bold(markup("#ffffff", "%H:%M")), 1)
+datewidget:set_markup(genmon_date())
+datewidgettimer = timer({ timeout = 2 })
+datewidgettimer:connect_signal("timeout",
+  function() datewidget:set_markup(genmon_date()) end
+)
+datewidgettimer:start()
 
 -- battery
-batwidget = wibox.widget.textbox()
-vicious.register(batwidget, vicious.widgets.bat, markup.bold(markup("LightGreen", '$2% $3')), 5, "BAT0")
+function genmon_battery()
+  local command = os.getenv("HOME") .. "/.bin/lib/genmon/battery.sh awesome"
+  local fh = assert(io.popen(command, "r"))
+  local text = fh:read("*l")
+  fh:close()
+  return text
+end
+batterywidget = wibox.widget.textbox()
+batterywidget:set_markup(genmon_battery())
+batterywidgettimer = timer({ timeout = 2 })
+batterywidgettimer:connect_signal("timeout",
+  function() batterywidget:set_markup(genmon_battery()) end
+)
+batterywidgettimer:start()
 
 -- audio
+function genmon_pulseaudio()
+  local command = os.getenv("HOME") .. "/.bin/lib/genmon/pulseaudio.sh awesome"
+  local fh = assert(io.popen(command, "r"))
+  local text = fh:read("*l")
+  fh:close()
+  return text
+end
+pulseaudiowidget = wibox.widget.textbox()
+pulseaudiowidget:set_markup(genmon_pulseaudio())
+pulseaudiowidgettimer = timer({ timeout = 2 })
+pulseaudiowidgettimer:connect_signal("timeout",
+  function() pulseaudiowidget:set_markup(genmon_pulseaudio()) end
+)
+pulseaudiowidgettimer:start()
 
--- wifi
+-- net
 netwidget = wibox.widget.textbox()
-vicious.register(netwidget, vicious.widgets.wifi, markup.bold(markup("LightBlue", '${ssid}')), 5, "wlan0")
+function genmon_net()
+  local command = os.getenv("HOME") .. "/.bin/lib/genmon/net.sh awesome"
+  local fh = assert(io.popen(command, "r"))
+  local text = fh:read("*l")
+  fh:close()
+  return text
+end
+netwidget = wibox.widget.textbox()
+netwidget:set_markup(genmon_net())
+netwidgettimer = timer({ timeout = 2 })
+netwidgettimer:connect_signal("timeout",
+  function() netwidget:set_markup(genmon_net()) end
+)
+netwidgettimer:start()
+
 
 -- mpd
 mpdwidget = lain.widgets.mpd({
@@ -190,6 +237,7 @@ mpdwidget = lain.widgets.mpd({
         }
     end
 })
+
 
 
 mywibox = {}
@@ -214,7 +262,8 @@ for s = 1, screen.count() do
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(netwidget)
-    right_layout:add(batwidget)
+    right_layout:add(pulseaudiowidget)
+    right_layout:add(batterywidget)
     right_layout:add(datewidget)
 
     -- build status bar

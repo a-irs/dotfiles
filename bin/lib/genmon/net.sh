@@ -21,6 +21,8 @@ if [[ $devs == *$'\nwlan'* ]] || [[ $devs == *$'\nwlp'* ]]; then
     [[ -z "$ssid" ]] && return
     if [[ $TMUX ]]; then
         txt+=("#[bg=$color_tmux,fg=colour235] $ssid #[default]")
+    elif [[ $1 == awesome ]]; then
+        txt+=("<span foreground='$color'>$ssid</span>")
     else
         txt+=("<span weight='bold' fgcolor='$color'>$ssid</span>")
     fi
@@ -33,6 +35,8 @@ if [[ $devs == *$'\neth'* ]] || [[ $devs == *$'\nenp'* ]]; then
     speed="${speed//[^0-9]/}"
     if [[ $TMUX ]]; then
         txt+=("#[bg=$color_tmux,fg=colour235] $speed #[default]")
+    elif [[ $1 == awesome ]]; then
+        txt+=("<span foreground='$color'>$speed</span>")
     else
         txt+=("<span weight='bold' fgcolor='$color'>$speed</span>")
     fi
@@ -41,6 +45,8 @@ fi
 if [[ $devs == *$'\nusb'* ]]; then
     if [[ $TMUX ]]; then
         txt+=("#[bg=$color_tmux,fg=colour235] USB #[default]")
+    elif [[ $1 == awesome ]]; then
+        txt+=("<span foreground='$color'>USB</span>")
     else
         txt+=("<span weight='bold' fgcolor='$color'>USB</span>")
     fi
@@ -49,6 +55,8 @@ fi
 if [ -f /tmp/sshuttle.pid ]; then
     if [[ $TMUX ]]; then
         txt+=("#[bg=$vpn_color_tmux,fg=colour235] sshuttle #[default]")
+    elif [[ $1 == awesome ]]; then
+        txt+=("<span foreground='$vpn_color'>sshuttle</span>")
     else
         txt+=("<span weight='bold' fgcolor='$vpn_color'>sshuttle</span>")
     fi
@@ -62,6 +70,8 @@ if [[ $devs == *$'\ntun'* ]] || [[ $devs == *$'\ntap'* ]]; then
         vpn_profile="${vpn_profile%.ovpn}"
         if [[ $TMUX ]]; then
             txt+=("#[bg=$vpn_color_tmux,fg=colour235] $vpn_profile #[default]")
+        elif [[ $1 == awesome ]]; then
+            txt+=("<span foreground='$vpn_color'>$vpn_profile</span>")
         else
             txt+=("<span weight='bold' fgcolor='$vpn_color'>$vpn_profile</span>")
        fi
@@ -70,23 +80,28 @@ fi
 
 total="${#txt[@]}"
 count=1
-[[ ! $TMUX ]] && echo -n "<txt>"
+[[ $TMUX || $1 == awesome ]] || echo -n "<txt>"
 if [[ $total == 0 ]]; then
     if [[ $TMUX ]]; then
         echo -n "#[bg=black,fg=white]n/a#[default]"
+    elif [[ $1 == awesome ]]; then
+        echo -n "<b>n/a</b>"
     else
         echo -n "<span weight='bold' fgcolor='grey'>n/a</span>"
         image="$HOME/.bin/lib/genmon/img/wifi_off.png"
     fi
 else
+    [[ $1 == awesome ]] && echo -n "<b>"
     for item in "${txt[@]}"; do
         echo -n "$item"
         [[ $TMUX ]] && continue
         [[ "$count" == "$total" ]] || echo -n " + "
         count=$((count+1))
     done
+    [[ $1 == awesome ]] && echo -n "</b> :: "
 fi
-[[ ! $TMUX ]] && echo "</txt>"
-[[ ! $TMUX ]] && echo "<click>terminator -m -e 'ip addr;read'</click>"
+[[ $TMUX || $1 == awesome ]] || echo "</txt><click>terminator -m -e 'ip addr;read'</click>"
 
-[[ $ICONS == 1 && ! $TMUX ]] && echo "<img>$image</img>"
+if [[ ! $TMUX && $1 != awesome ]]; then
+    [[ $ICONS == 1 ]] && echo "<img>$image</img>"
+fi
