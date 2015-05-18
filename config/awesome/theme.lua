@@ -1,7 +1,18 @@
 theme                               = {}
 
 theme.conf_dir                      = os.getenv("HOME") .. "/.config/awesome/theme"
+theme.genmon_icon_dir               = os.getenv("HOME") .. "/.bin/lib/genmon/img"
 theme.wallpaper                     = os.getenv("HOME") .. "/.wallpaper"
+
+theme.widget_wifi_on                = theme.genmon_icon_dir .. "/wifi.png"
+theme.widget_wifi_off               = theme.genmon_icon_dir .. "/wifi_off.png"
+theme.widget_audio_on               = theme.genmon_icon_dir .. "/speaker_on.png"
+theme.widget_audio_off              = theme.genmon_icon_dir .. "/speaker_off.png"
+theme.widget_battery_crit           = theme.genmon_icon_dir .. "/battery_crit.png"
+theme.widget_battery_high           = theme.genmon_icon_dir .. "/battery_high.png"
+theme.widget_battery_low            = theme.genmon_icon_dir .. "/battery_low.png"
+theme.widget_battery_normal         = theme.genmon_icon_dir .. "/battery_normal.png"
+theme.widget_date                   = theme.genmon_icon_dir .. "/clock.png"
 
 theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "Ubuntu Bold 8"

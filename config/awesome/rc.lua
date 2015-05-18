@@ -188,27 +188,27 @@ function genmon_battery()
 end
 batterywidget = wibox.widget.textbox()
 batterywidget:set_markup(genmon_battery())
-batterywidgettimer = timer({ timeout = 2 })
+batterywidgettimer = timer({ timeout = 5 })
 batterywidgettimer:connect_signal("timeout",
   function() batterywidget:set_markup(genmon_battery()) end
 )
 batterywidgettimer:start()
 
 -- audio
-function genmon_pulseaudio()
+function genmon_audio()
   local command = os.getenv("HOME") .. "/.bin/lib/genmon/pulseaudio.sh awesome"
   local fh = assert(io.popen(command, "r"))
   local text = fh:read("*l")
   fh:close()
   return text
 end
-pulseaudiowidget = wibox.widget.textbox()
-pulseaudiowidget:set_markup(genmon_pulseaudio())
-pulseaudiowidgettimer = timer({ timeout = 2 })
-pulseaudiowidgettimer:connect_signal("timeout",
-  function() pulseaudiowidget:set_markup(genmon_pulseaudio()) end
+audiowidget = wibox.widget.textbox()
+audiowidget:set_markup(genmon_audio())
+audiowidgettimer = timer({ timeout = 1 })
+audiowidgettimer:connect_signal("timeout",
+  function() audiowidget:set_markup(genmon_audio()) end
 )
-pulseaudiowidgettimer:start()
+audiowidgettimer:start()
 
 -- net
 netwidget = wibox.widget.textbox()
@@ -221,7 +221,7 @@ function genmon_net()
 end
 netwidget = wibox.widget.textbox()
 netwidget:set_markup(genmon_net())
-netwidgettimer = timer({ timeout = 2 })
+netwidgettimer = timer({ timeout = 5 })
 netwidgettimer:connect_signal("timeout",
   function() netwidget:set_markup(genmon_net()) end
 )
@@ -251,7 +251,7 @@ mytaglist.buttons = awful.util.table.join(
 for s = 1, screen.count() do
     mypromptbox[s] = awful.widget.prompt()
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
-    mywibox[s] = awful.wibox({ position = "top", screen = s })
+    mywibox[s] = awful.wibox({ position = "top", screen = s, height=20 })
 
     -- left
     local left_layout = wibox.layout.fixed.horizontal()
@@ -262,7 +262,7 @@ for s = 1, screen.count() do
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(netwidget)
-    right_layout:add(pulseaudiowidget)
+    right_layout:add(audiowidget)
     right_layout:add(batterywidget)
     right_layout:add(datewidget)
 

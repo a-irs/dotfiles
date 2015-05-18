@@ -75,7 +75,7 @@ fi
 
 click="sh -c 'xset dpms force off && slimlock'"
 if [[ -n $TMUX ]] || [[ $1 == awesome ]]; then
-    echo -n "<b>$txt</b> :: "
+    echo -n "<b>$txt</b>   "
 else
     [[ $ICONS == 1 ]] && echo -n "<img>$image</img>"
     echo -n "<txt>$txt</txt><click>$click</click>"

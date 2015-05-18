@@ -98,7 +98,7 @@ else
         [[ "$count" == "$total" ]] || echo -n " + "
         count=$((count+1))
     done
-    [[ $1 == awesome ]] && echo -n "</b> :: "
+    [[ $1 == awesome ]] && echo -n "</b>   "
 fi
 [[ $TMUX || $1 == awesome ]] || echo "</txt><click>terminator -m -e 'ip addr;read'</click>"
 

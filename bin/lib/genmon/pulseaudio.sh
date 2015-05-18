@@ -70,7 +70,7 @@ fi
 txt=$(round "$(ponymix get-volume 2> /dev/null)")
 
 if [[ $1 == awesome ]]; then
-    echo "<span foreground='$color'><b>$txt</b></span> :: "
+    echo "<span foreground='$color'><b>$txt</b></span>   "
 else
     [[ $ICONS == 1 ]] && echo -n "<img>$image</img>"
     echo "<txt><span weight='bold' fgcolor='$color'>$txt</span></txt>
