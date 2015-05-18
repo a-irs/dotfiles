@@ -7,7 +7,7 @@ local wibox     = require("wibox")
 local beautiful = require("beautiful")
 local naughty   = require("naughty")
 local lain      = require("lain")
-
+local vicious   = require("vicious")
 
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -53,16 +53,16 @@ alt = "Mod1"
 
 local layouts =
 {
---    awful.layout.suit.tile,
     lain.layout.uselessfair.horizontal,
     lain.layout.uselessfair,
+--    awful.layout.suit.tile,
 --    lain.layout.uselesstile,
 --    awful.layout.suit.tile.left,
-  --  lain.layout.uselesstile.left,
-  --  awful.layout.suit.tile.bottom,
-    --lain.layout.uselesstile.bottom,
-   -- awful.layout.suit.tile.top,
-    --lain.layout.uselesstile.top,
+--    lain.layout.uselesstile.left,
+--    awful.layout.suit.tile.bottom,
+--    lain.layout.uselesstile.bottom,
+--    awful.layout.suit.tile.top,
+--    lain.layout.uselesstile.top,
 }
 -- }}}
 
@@ -110,7 +110,7 @@ tyrannical.tags = {
         exclusive   = true,
         layout      = lain.layout.uselessfair.horizontal,
         exec_once   = { "subl3" },
-        class       = { "subl3" }
+        class       = { "subl3", "atom" }
     },
     {
         name        = "files",
@@ -127,15 +127,13 @@ tyrannical.tags = {
         layout      = lain.layout.uselessfair.horizontal,
         class       = { "evince" }
     },
-    {
-        name        = "img",
+    {   name        = "img",
         init        = false,
         exclusive   = true,
         layout      = awful.layout.suit.max.fullscreen,
         class       = { "gpicview" }
     },
 }
-
 -- Ignore the tag "exclusive" property for the following clients (matched by classes)
 tyrannical.properties.intrusive = {
     "kupfer.py",
@@ -143,7 +141,6 @@ tyrannical.properties.intrusive = {
     "feh"           , "Gradient editor", "About KDE" , "Paste Special", "Background color"    ,
     "kcolorchooser" , "plasmoidviewer" , "Xephyr"    , "kruler"       , "plasmaengineexplorer",
 }
-
 -- Ignore the tiled layout for the matching clients
 tyrannical.properties.floating = {
     "MPlayer"      , "pinentry"        , "ksnapshot"  , "pinentry"     , "gtksu"          ,
@@ -151,29 +148,29 @@ tyrannical.properties.floating = {
     "yakuake"      , "Select Color$"   , "kruler"     , "kcolorchooser", "Paste Special"  ,
     "New Form"     , "Insert Picture"  , "kcharselect", "mythfrontend" , "plasmoidviewer",
 }
-
 -- Make the matching clients (by classes) on top of the default layout
 tyrannical.properties.ontop = {
     "Xephyr"       , "ksnapshot"       , "kruler"
 }
-
 -- Force the matching clients (by classes) to be centered on the screen on init
 tyrannical.properties.centered = {
     "kcalc"
 }
-
 tyrannical.settings.block_children_focus_stealing = true --Block popups ()
 tyrannical.settings.group_children = true --Force popups/dialogs to have the same tags as the parent client
 -- }}}
 
 
-
 -- {{{ Wibox
 markup      = lain.util.markup
 
+-- Initialize widget
+datewidget = wibox.widget.textbox()
+-- Register widget
+vicious.register(datewidget, vicious.widgets.date, "%b %d, %R", 60)
+
 mytextclock = awful.widget.textclock(markup("#ffffff", "%a, %d.%m.") .. markup.bold(markup("#ffffff", " %H:%M  ")), 1)
 
--- Create a wibox for each screen and add it
 mywibox = {}
 mypromptbox = {}
 mytaglist = {}
@@ -185,7 +182,7 @@ mytaglist.buttons = awful.util.table.join(
 for s = 1, screen.count() do
     mypromptbox[s] = awful.widget.prompt()
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
-    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 20 })
+    mywibox[s] = awful.wibox({ position = "top", screen = s })
 
     -- left
     local left_layout = wibox.layout.fixed.horizontal()
@@ -206,12 +203,14 @@ for s = 1, screen.count() do
 end
 -- }}}
 
+
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
 -- }}}
+
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
@@ -261,7 +260,20 @@ globalkeys = awful.util.table.join(
     awful.key({ win, "Shift"   }, "Left", function () awful.client.swap.byidx(  1)    end),
     awful.key({ win, "Shift"   }, "Right", function () awful.client.swap.byidx( -1)    end),
 
-    awful.key({ win },            "r",     function () mypromptbox[mouse.screen]:run() end)
+    awful.key({ win },            "r",     function () mypromptbox[mouse.screen]:run() end),
+
+    awful.key({  }, "F12",
+          function ()
+              local screen = mouse.screen
+              local tag = awful.tag.gettags(screen)[2]
+              if tag then
+                if tag.selected then
+                  awful.tag.history.restore()
+                else
+                  awful.tag.viewonly(tag)
+                end
+              end
+          end)
 )
 
 clientkeys = awful.util.table.join(
@@ -321,6 +333,7 @@ clientbuttons = awful.util.table.join(
 root.keys(globalkeys)
 -- }}}
 
+
 -- {{{ Rules
 awful.rules.rules = {
     { rule = { },
@@ -332,6 +345,7 @@ awful.rules.rules = {
                      buttons = clientbuttons } },
 }
 -- }}}
+
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
