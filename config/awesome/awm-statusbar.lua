@@ -16,7 +16,7 @@ local function bat_notification()
   local bat_capacity = tonumber(f_capacity:read("*all"))
   local bat_status = trim(f_status:read("*all"))
   if (bat_capacity <= 20 and bat_status == "Discharging") then
-      naughty.notify({ text = "<b>Critical battery!</b>", fg = "#ca0000", bg = "#eeeeee"
+      naughty.notify({ text = markup.bold("Critical battery!"), fg = "#ca0000", bg = "#eeeeee"
     })
   end
 end
