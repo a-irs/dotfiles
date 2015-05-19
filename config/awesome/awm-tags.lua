@@ -58,11 +58,11 @@ tyrannical.properties.intrusive = {
 }
 -- Ignore the tiled layout for the matching clients
 tyrannical.properties.floating = {
-    "mpv", "pinentry",
+    "mpv", "pinentry", "plugin-container",
 }
 -- Make the matching clients (by classes) on top of the default layout
 tyrannical.properties.ontop = {
-    "mpv", "pinentry"
+    "mpv", "pinentry", "plugin-container",
 }
 -- Force the matching clients (by classes) to be centered on the screen on init
 tyrannical.properties.centered = {

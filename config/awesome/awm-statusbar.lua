@@ -1,6 +1,7 @@
 local awful = require 'awful'
 local wibox = require 'wibox'
 local lain  = require 'lain'
+local naughty    = require 'naughty'
 
 
 markup = lain.util.markup
@@ -30,12 +31,30 @@ soundwidget   = make_widget("pulseaudio.sh", 1)
 netwidget     = make_widget("net.sh", 5)
 dropboxwidget = make_widget("dropbox.sh", 5)
 
+-- battery critical notification
+local function trim(s)
+  return s:find'^%s*$' and '' or s:match'^%s*(.*%S)'
+end
+local function bat_notification()
+  local f_capacity = assert(io.open("/sys/class/power_supply/BAT0/capacity", "r"))
+  local f_status = assert(io.open("/sys/class/power_supply/BAT0/status", "r"))
+  local bat_capacity = tonumber(f_capacity:read("*all"))
+  local bat_status = trim(f_status:read("*all"))
+  if (bat_capacity <= 20 and bat_status == "Discharging") then
+      naughty.notify({ text = "<b>Critical battery!</b>", fg = "#ca0000", bg = "#eeeeee"
+    })
+  end
+end
+battimer = timer({timeout = 120})
+battimer:connect_signal("timeout", bat_notification)
+battimer:start()
+
 mywibox = {}
 mypromptbox = {}
 mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
-                    awful.button({ }, 1, awful.tag.viewonly),
-                    awful.button({ }, 3, awful.tag.viewtoggle)
+                        awful.button({ }, 1, awful.tag.viewonly),
+                        awful.button({ }, 3, awful.tag.viewtoggle)
                     )
 mytasklist = {}
 

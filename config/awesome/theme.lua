@@ -16,7 +16,7 @@ theme.widget_date                   = theme.genmon_icon_dir .. "/clock.png"
 
 theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "Terminus 8"
-theme.bg_normal                     = "#323232"
+theme.bg_normal                     = "#323232 00"
 theme.bg_focus                      = theme.bg_normal
 theme.bg_urgent                     = "#aa0000"
 theme.bg_systray                    = theme.bg_normal

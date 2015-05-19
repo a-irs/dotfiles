@@ -1,7 +1,10 @@
-local volume = require 'volume'
-local awful  = require 'awful'
-local lain  = require 'lain'
+local volume     = require 'volume'
+local awful      = require 'awful'
+local lain       = require 'lain'
+local naughty    = require 'naughty'
+local revelation = require 'revelation'
 
+revelation.init({tag_name = ''})
 
 win = "Mod4"
 alt = "Mod1"
@@ -94,19 +97,32 @@ globalkeys = awful.util.table.join(
 
     -- media keys
 
-    awful.key({}, "XF86AudioRaiseVolume", function () volume.increase() end),
-    awful.key({}, "XF86AudioLowerVolume", function () volume.decrease() end),
-    awful.key({}, "XF86AudioMute",        function () volume.toggle() end),
+    awful.key({}, "XF86AudioRaiseVolume", function()
+      volume.increase()
+    end),
+    awful.key({}, "XF86AudioLowerVolume", function()
+      volume.decrease()
+    end),
+    awful.key({}, "XF86AudioMute",        function()
+      ismute = volume.toggle()
+    end),
 
     -- restart awesome wm
+    awful.key({ win, "Shift" }, "r", awesome.restart),
 
-    awful.key({ win, "Shift" }, "r", awesome.restart)
+    -- toggle status bar
+    awful.key({ win }, "b", function ()
+       mywibox[mouse.screen].visible = not mywibox[mouse.screen].visible
+    end),
+
+    -- expose
+    awful.key({ win }, "e", revelation)
 )
 
 clientkeys = awful.util.table.join(
-    awful.key({ win }, "f",  function (c) c.fullscreen = not c.fullscreen end),
-    awful.key({ alt }, "F4", function (c) c:kill() end),
-    awful.key({ win }, "w", function (c) c:kill() end)
+    awful.key({ win }, "f",  function(c) c.fullscreen = not c.fullscreen end),
+    awful.key({ alt }, "F4", function(c) c:kill() end),
+    awful.key({ win }, "w",  function(c) c:kill() end)
 )
 
 -- Bind all key numbers to tags.
