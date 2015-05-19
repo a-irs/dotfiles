@@ -3,6 +3,8 @@ user_browser     = "firefox"
 user_editor      = "subl3"
 user_filemanager = "thunar"
 
+hostname = io.popen("uname -n"):read()
+
 require 'awm-error-handling'
 require 'awm-autostart'
 require 'awm-beautiful'

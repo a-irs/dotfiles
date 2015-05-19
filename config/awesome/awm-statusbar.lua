@@ -1,10 +1,28 @@
-local awful = require 'awful'
-local wibox = require 'wibox'
-local lain  = require 'lain'
-local naughty    = require 'naughty'
+local awful   = require 'awful'
+local wibox   = require 'wibox'
+local lain    = require 'lain'
+local naughty = require 'naughty'
 
 
 markup = lain.util.markup
+
+-- battery critical notification
+local function trim(s)
+  return s:find'^%s*$' and '' or s:match'^%s*(.*%S)'
+end
+local function bat_notification()
+  local f_capacity = assert(io.open("/sys/class/power_supply/BAT0/capacity", "r"))
+  local f_status = assert(io.open("/sys/class/power_supply/BAT0/status", "r"))
+  local bat_capacity = tonumber(f_capacity:read("*all"))
+  local bat_status = trim(f_status:read("*all"))
+  if (bat_capacity <= 20 and bat_status == "Discharging") then
+      naughty.notify({ text = "<b>Critical battery!</b>", fg = "#ca0000", bg = "#eeeeee"
+    })
+  end
+end
+battimer = timer({timeout = 120})
+battimer:connect_signal("timeout", bat_notification)
+battimer:start()
 
 function get_genmon(script)
     local command = os.getenv("HOME") .. "/.bin/lib/genmon/" .. script .. " awesome"
@@ -25,29 +43,13 @@ function make_widget(script, timeout)
     return new_widget
 end
 
-datewidget    = make_widget("clock.sh", 2)
-batterywidget = make_widget("battery.sh", 5)
+if hostname == dell then
+    batterywidget = make_widget("battery.sh", 5)
+    dropboxwidget = make_widget("dropbox.sh", 5)
+end
 soundwidget   = make_widget("pulseaudio.sh", 1)
 netwidget     = make_widget("net.sh", 5)
-dropboxwidget = make_widget("dropbox.sh", 5)
-
--- battery critical notification
-local function trim(s)
-  return s:find'^%s*$' and '' or s:match'^%s*(.*%S)'
-end
-local function bat_notification()
-  local f_capacity = assert(io.open("/sys/class/power_supply/BAT0/capacity", "r"))
-  local f_status = assert(io.open("/sys/class/power_supply/BAT0/status", "r"))
-  local bat_capacity = tonumber(f_capacity:read("*all"))
-  local bat_status = trim(f_status:read("*all"))
-  if (bat_capacity <= 20 and bat_status == "Discharging") then
-      naughty.notify({ text = "<b>Critical battery!</b>", fg = "#ca0000", bg = "#eeeeee"
-    })
-  end
-end
-battimer = timer({timeout = 120})
-battimer:connect_signal("timeout", bat_notification)
-battimer:start()
+datewidget    = make_widget("clock.sh", 2)
 
 mywibox = {}
 mypromptbox = {}
@@ -76,10 +78,12 @@ for s = 1, screen.count() do
 
     local layout3 = wibox.layout.fixed.horizontal()
     -- if s == 1 then layout3:add(wibox.widget.systray()) end
-    layout3:add(dropboxwidget)
+    if hostname == dell then
+        layout3:add(dropboxwidget)
+        layout3:add(batterywidget)
+    end
     layout3:add(netwidget)
     layout3:add(soundwidget)
-    layout3:add(batterywidget)
     layout3:add(datewidget)
 
     -- build status bar
