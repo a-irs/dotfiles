@@ -2,6 +2,10 @@ local awful      = require 'awful'
 local tyrannical = require 'tyrannical'
 local lain       = require 'lain'
 
+
+tyrannical.settings.block_children_focus_stealing = true
+tyrannical.settings.group_children = true
+
 tyrannical.tags = {
     {
         name        = "www",
@@ -69,5 +73,3 @@ tyrannical.properties.ontop = {
 tyrannical.properties.centered = {
     "kcalc"
 }
-tyrannical.settings.block_children_focus_stealing = true --Block popups ()
-tyrannical.settings.group_children = true --Force popups/dialogs to have the same tags as the parent client

@@ -56,6 +56,7 @@ dotfiles=(
 
 dotfiles_x=(
     compton.conf
+    config/redshift.conf
     config/awesome
     config/fontconfig/fonts.conf
     config/gtk-3.0/settings.ini

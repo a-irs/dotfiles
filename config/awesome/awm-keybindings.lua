@@ -1,5 +1,6 @@
 local volume = require 'volume'
 local awful  = require 'awful'
+local lain  = require 'lain'
 
 
 win = "Mod4"
@@ -32,11 +33,12 @@ globalkeys = awful.util.table.join(
 
     -- switch tags
 
-    awful.key({ win,           }, "Tab", awful.tag.history.restore),
+    awful.key({ win }, "Tab",   awful.tag.history.restore),
     awful.key({ win }, "Right", awful.tag.viewnext),
-    awful.key({ win }, "Left", awful.tag.viewprev),
-    awful.key({ win,           }, "u", awful.client.urgent.jumpto),
-    awful.key({  }, "F12",
+    awful.key({ win }, "Left",  awful.tag.viewprev),
+    awful.key({ win }, "u",     awful.client.urgent.jumpto),
+
+    awful.key({     }, "F12",
       function ()
           local screen = mouse.screen
           local tag = awful.tag.gettags(screen)[2]
@@ -57,8 +59,26 @@ globalkeys = awful.util.table.join(
     awful.key({ win, "Control" }, "Right", function () awful.tag.incmwfact( 0.01) end),
     awful.key({ win, "Control" }, "Left",  function () awful.tag.incmwfact(-0.01) end),
 
-    awful.key({ win, "Shift"   }, "Left",  function () awful.client.swap.byidx( 1) end),
-    awful.key({ win, "Shift"   }, "Right", function () awful.client.swap.byidx(-1) end),
+    awful.key({ win, "Shift"   }, "Left",
+      function()
+        awful.client.swap.bydirection("left")
+        if client.focus then client.focus:raise() end
+      end),
+    awful.key({ win, "Shift"   }, "Right",
+      function()
+        awful.client.swap.bydirection("right")
+        if client.focus then client.focus:raise() end
+      end),
+    awful.key({ win, "Shift"   }, "Up",
+      function()
+        awful.client.swap.bydirection("up")
+        if client.focus then client.focus:raise() end
+      end),
+    awful.key({ win, "Shift"   }, "Down",
+      function()
+        awful.client.swap.bydirection("down")
+        if client.focus then client.focus:raise() end
+      end),
 
     awful.key({ win            }, "space", function () awful.layout.inc(layouts, 1) end),
     awful.key({ win, "Shift"   }, "space", function () awful.layout.inc(layouts,-1) end),
