@@ -20,7 +20,7 @@ tyrannical.tags = {
         exclusive   = false,
         layout      = lain.layout.uselessfair.horizontal,
         mwfact      = 0.6,
-        exec_once   = { user_terminal },
+       -- exec_once   = { user_terminal },
         class       = { user_terminal, "urxvt", "terminator" }
     },
     {
@@ -35,7 +35,7 @@ tyrannical.tags = {
         init        = true,
         exclusive   = false,
         layout      = lain.layout.uselessfair,
-        exec_once   = { user_filemanager },
+       -- exec_once   = { user_filemanager },
         class       = { user_filemanager, "thunar", "engrampa" }
     },
     {
