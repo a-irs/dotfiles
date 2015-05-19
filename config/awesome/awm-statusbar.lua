@@ -49,7 +49,7 @@ for s = 1, screen.count() do
 
     local layout1 = wibox.layout.fixed.horizontal()
     layout1:add(mypromptbox[s])
-    layout1:add(mytasklist[s])
+    --layout1:add(mytasklist[s])
 
     local layout2 = wibox.layout.fixed.horizontal()
     layout2:add(mytaglist[s])
@@ -62,6 +62,7 @@ for s = 1, screen.count() do
     layout3:add(datewidget)
 
     -- build status bar
+
     local align_left = wibox.layout.align.horizontal()
     align_left:set_left(layout1)
 
