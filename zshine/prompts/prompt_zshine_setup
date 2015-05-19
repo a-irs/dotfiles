@@ -235,7 +235,7 @@ _build_right() {
 }
 
 prompt_zshine_setup() {
-    PROMPT=$'\n%{%f%b%k%}$(_build_left) %{%f%k%b%}'
+    PROMPT=$'\n%{%f%b%k%}$(_build_left) %{%f%k%b%}\n❯ '
     RPROMPT='%{%f%b%k%}$(_build_right)%{%f%k%b%}'
 }
 

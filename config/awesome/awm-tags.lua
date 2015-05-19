@@ -53,7 +53,7 @@ tyrannical.tags = {
 }
 -- Ignore the tag "exclusive" property for the following clients (matched by classes)
 tyrannical.properties.intrusive = {
-    "kupfer.py",
+    "kupfer.py", "gcolor2",
     "ksnapshot"     , "pinentry"       , "gtksu"     , "kcalc"        , "xcalc"               ,
     "feh"           , "Gradient editor", "About KDE" , "Paste Special", "Background color"    ,
     "kcolorchooser" , "plasmoidviewer" , "Xephyr"    , "kruler"       , "plasmaengineexplorer",
@@ -71,5 +71,5 @@ tyrannical.properties.ontop = {
 }
 -- Force the matching clients (by classes) to be centered on the screen on init
 tyrannical.properties.centered = {
-    "kcalc"
+    "gcolor2", "kcalc"
 }
