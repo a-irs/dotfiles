@@ -15,7 +15,7 @@ theme.widget_battery_normal         = theme.genmon_icon_dir .. "/battery_normal.
 theme.widget_date                   = theme.genmon_icon_dir .. "/clock.png"
 
 theme.font                          = "Ubuntu 8"
-theme.taglist_font                  = "Ubuntu 6"
+theme.taglist_font                  = "Ubuntu 7"
 theme.bg_normal                     = "#32323200"
 theme.bg_focus                      = theme.bg_normal
 theme.bg_urgent                     = "#aa0000"

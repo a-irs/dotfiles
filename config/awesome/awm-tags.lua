@@ -8,14 +8,14 @@ tyrannical.settings.group_children = true
 
 tyrannical.tags = {
     {
-        name        = "●",
+        name        = "www",
         init        = true,
         exclusive   = false,
         layout      = lain.layout.uselessfair,
         class       = { user_browser, "firefox", "chromium" }
     },
     {
-        name        = "●",
+        name        = "zsh",
         init        = true,
         exclusive   = false,
         layout      = lain.layout.uselessfair.horizontal,
@@ -24,14 +24,14 @@ tyrannical.tags = {
         class       = { user_terminal, "urxvt", "terminator" }
     },
     {
-        name        = "●",
+        name        = "dev",
         init        = true,
         exclusive   = false,
         layout      = lain.layout.uselessfair.horizontal,
         class       = { user_editor, "subl3", "atom" }
     },
     {
-        name        = "●",
+        name        = "files",
         init        = true,
         exclusive   = false,
         layout      = lain.layout.uselessfair,
@@ -39,17 +39,17 @@ tyrannical.tags = {
         class       = { user_filemanager, "thunar", "engrampa" }
     },
     {
-        name        = "●",
+        name        = "doc",
         init        = false,
         exclusive   = false,
         layout      = lain.layout.uselessfair.horizontal,
         class       = { "evince" }
     },
-    {   name        = "●",
+    {   name        = "media",
         init        = false,
         exclusive   = false,
         layout      = awful.layout.suit.max.fullscreen,
-        class       = { "gpicview", "kodi" }
+        class       = { "gpicview", "kodi", "gimp" }
     },
 }
 -- Ignore the tag "exclusive" property for the following clients (matched by classes)

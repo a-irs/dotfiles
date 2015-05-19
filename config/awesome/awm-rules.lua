@@ -14,8 +14,28 @@ rules.rules = {
                      buttons = clientbuttons } },
 }
 
+dynamic_tagging = function()
+    for s = 1, screen.count() do
+        -- set name of tag without clients
+        local atags = awful.tag.gettags(s)
+        for i, t in ipairs(atags) do
+            t.name = "○"
+        end
+
+        -- set name of tag with clients
+        local clist = client.get(s)
+        for i, c in ipairs(clist) do
+            local ctags = c:tags()
+            for i, t in ipairs(ctags) do
+                t.name = "●"
+            end
+        end
+    end
+end
+
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c, startup)
+    dynamic_tagging()
     -- Enable sloppy focus
     c:connect_signal("mouse::enter", function(c)
         if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
@@ -30,6 +50,11 @@ client.connect_signal("manage", function (c, startup)
             awful.placement.no_offscreen(c)
         end
     end
+end)
+
+-- signal function to execute when a client disappears
+client.connect_signal("unmanage", function (c, startup)
+    dynamic_tagging()
 end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)

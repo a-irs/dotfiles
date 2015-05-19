@@ -45,9 +45,7 @@ function make_widget(script, timeout)
     return new_widget
 end
 
-if hostname == "dell" then
-    batterywidget = make_widget("battery.sh", 5)
-end
+if hostname == "dell" then batterywidget = make_widget("battery.sh", 5) end
 dropboxwidget = make_widget("dropbox.sh", 5)
 soundwidget   = make_widget("pulseaudio.sh", 1)
 netwidget     = make_widget("net.sh", 5)
@@ -80,12 +78,10 @@ for s = 1, screen.count() do
 
     local layout3 = wibox.layout.fixed.horizontal()
     -- if s == 1 then layout3:add(wibox.widget.systray()) end
-    if hostname == "dell" then
-        layout3:add(batterywidget)
-    end
     layout3:add(dropboxwidget)
     layout3:add(netwidget)
     layout3:add(soundwidget)
+    if hostname == "dell" then layout3:add(batterywidget) end
     layout3:add(datewidget)
 
     -- build status bar
