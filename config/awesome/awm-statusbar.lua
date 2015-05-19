@@ -20,9 +20,11 @@ local function bat_notification()
     })
   end
 end
-battimer = timer({timeout = 120})
-battimer:connect_signal("timeout", bat_notification)
-battimer:start()
+if hostname == "dell" then
+    battimer = timer({timeout = 120})
+    battimer:connect_signal("timeout", bat_notification)
+    battimer:start()
+end
 
 function get_genmon(script)
     local command = os.getenv("HOME") .. "/.bin/lib/genmon/" .. script .. " awesome"
@@ -43,10 +45,10 @@ function make_widget(script, timeout)
     return new_widget
 end
 
-if hostname == dell then
+if hostname == "dell" then
     batterywidget = make_widget("battery.sh", 5)
-    dropboxwidget = make_widget("dropbox.sh", 5)
 end
+dropboxwidget = make_widget("dropbox.sh", 5)
 soundwidget   = make_widget("pulseaudio.sh", 1)
 netwidget     = make_widget("net.sh", 5)
 datewidget    = make_widget("clock.sh", 2)
@@ -78,10 +80,10 @@ for s = 1, screen.count() do
 
     local layout3 = wibox.layout.fixed.horizontal()
     -- if s == 1 then layout3:add(wibox.widget.systray()) end
-    if hostname == dell then
-        layout3:add(dropboxwidget)
+    if hostname == "dell" then
         layout3:add(batterywidget)
     end
+    layout3:add(dropboxwidget)
     layout3:add(netwidget)
     layout3:add(soundwidget)
     layout3:add(datewidget)
