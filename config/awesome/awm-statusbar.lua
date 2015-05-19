@@ -55,21 +55,34 @@ for s = 1, screen.count() do
 
     -- left
     local left_layout = wibox.layout.fixed.horizontal()
-    left_layout:add(mytaglist[s])
+    left_layout:add(mypromptbox[s])
+
+    -- middle
+    local middle_layout = wibox.layout.fixed.horizontal()
+    middle_layout:add(mytaglist[s])
 
     -- right
     local right_layout = wibox.layout.fixed.horizontal()
-    if s == 1 then right_layout:add(wibox.widget.systray()) end
+    -- if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(netwidget)
     right_layout:add(soundwidget)
     right_layout:add(batterywidget)
     right_layout:add(datewidget)
 
     -- build status bar
-    local layout = wibox.layout.align.horizontal()
-    layout:set_left(left_layout)
-    layout:set_middle(mypromptbox[s])
-    layout:set_right(right_layout)
+    local align_left = wibox.layout.align.horizontal()
+    align_left:set_left(left_layout)
+
+    local align_middle = wibox.layout.align.horizontal()
+    align_middle:set_middle(middle_layout)
+
+    local align_right = wibox.layout.align.horizontal()
+    align_right:set_right(right_layout)
+
+    local layout = wibox.layout.flex.horizontal()
+    layout:add(align_left)
+    layout:add(align_middle)
+    layout:add(align_right)
 
     mywibox[s]:set_widget(layout)
 end
