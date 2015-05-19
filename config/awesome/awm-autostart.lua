@@ -3,6 +3,7 @@ local programs = {
    'mpd',
    'kupfer --no-splash',
    'compton -b',
+   'dropbox-cli start',
    os.getenv("HOME") .. '/.bin/redshift.sh',
 }
 

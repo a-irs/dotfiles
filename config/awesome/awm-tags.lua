@@ -19,6 +19,7 @@ tyrannical.tags = {
         init        = true,
         exclusive   = false,
         layout      = lain.layout.uselessfair.horizontal,
+        mwfact      = 0.6,
         exec_once   = { user_terminal },
         class       = { user_terminal, "urxvt", "terminator" }
     },

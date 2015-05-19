@@ -28,6 +28,7 @@ datewidget    = make_widget("clock.sh", 2)
 batterywidget = make_widget("battery.sh", 5)
 soundwidget   = make_widget("pulseaudio.sh", 1)
 netwidget     = make_widget("net.sh", 5)
+dropboxwidget = make_widget("dropbox.sh", 5)
 
 mywibox = {}
 mypromptbox = {}
@@ -55,7 +56,8 @@ for s = 1, screen.count() do
     layout2:add(mytaglist[s])
 
     local layout3 = wibox.layout.fixed.horizontal()
-    if s == 1 then layout3:add(wibox.widget.systray()) end
+    -- if s == 1 then layout3:add(wibox.widget.systray()) end
+    layout3:add(dropboxwidget)
     layout3:add(netwidget)
     layout3:add(soundwidget)
     layout3:add(batterywidget)

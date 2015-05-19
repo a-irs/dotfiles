@@ -27,6 +27,7 @@
 		"Package Control",
 		"SublimeGit",
 		"SublimeLinter",
+		"SublimeLinter-lua",
 		"SublimeLinter-shellcheck"
 	],
 	"submit_usage": false

@@ -5,21 +5,28 @@ status=$(dropbox-cli status)
 if [[ $status == "Dropbox isn't running!" ]]; then
     s=""
 elif [[ $status == "Verbindung wird hergestellt ..." ]]; then
-    s=" ..."
+    s="…"
 elif [[ $status == "Startvorgang läuft ..." ]]; then
-    s=" ..."
+    s="…"
 elif [[ $status == *"Indexerstellung"* ]]; then
-    s=" ..."
+    s="…"
 elif [[ $status == *"synchronisiert"* ]]; then
-    s=" sync"
+    s="○"
 elif [[ $status == *"Synchronisation"* ]]; then
-    s=" sync"
+    s="○"
 elif [[ $status == "Dateiliste wird heruntergeladen ..." ]]; then
-    s=" sync"
+    s="○"
 elif [[ $status == "Aktualisiert" ]]; then
-    s=" done"
+    s="●"
 else
-    s=$status
+    s="○"
 fi
 
-echo "<img>$HOME/.bin/lib/genmon/img/dropbox.png</img><txt><span weight=\"normal\" fgcolor=\"White\">$s</span></txt><tool>$status</tool>"
+if [[ $1 == awesome ]]; then
+    color=LightGrey
+    [[ $s == "○" ]] && color=red
+    [[ $s == "…" ]] && color=red
+    echo -n "<span font='Terminus 7' foreground='$color'>$s</span>   "
+else
+    echo "<img>$HOME/.bin/lib/genmon/img/dropbox.png</img><txt><span weight=\"normal\" fgcolor=\"White\">$s</span></txt><tool>$status</tool>"
+fi

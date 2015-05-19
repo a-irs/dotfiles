@@ -1,5 +1,6 @@
 local lain = require 'lain'
 local awful  = require 'awful'
+require 'layout-browse'
 
 layouts =
 {
@@ -10,6 +11,7 @@ layouts =
     -- lain.layout.centerwork,
     lain.layout.uselessfair.horizontal,
     lain.layout.uselessfair,
+    layouts.browse,
     -- lain.layout.uselesspiral,
     -- lain.layout.uselesstile,
     -- lain.layout.uselesstile.left,
