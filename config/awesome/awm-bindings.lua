@@ -3,6 +3,7 @@ local awful      = require 'awful'
 local lain       = require 'lain'
 local naughty    = require 'naughty'
 local revelation = require 'revelation'
+local beautiful  = require 'beautiful'
 
 revelation.init({tag_name = ''})
 
@@ -56,11 +57,17 @@ globalkeys = awful.util.table.join(
 
     -- modify windows
 
-    awful.key({ win }, "+",                function () lain.util.useless_gaps_resize(-5) end),
-    awful.key({ win }, "-",                function () lain.util.useless_gaps_resize( 5) end),
+    awful.key({ win }, "+", function()
+      if beautiful.useless_gap_width <= 4 then
+        lain.util.useless_gaps_resize(-beautiful.useless_gap_width)
+      elseif beautiful.useless_gap_width ~= 0 then
+        lain.util.useless_gaps_resize(-5)
+      end
+    end),
+    awful.key({ win }, "-", function() lain.util.useless_gaps_resize(5) end),
 
-    awful.key({ win, "Control" }, "Right", function () awful.tag.incmwfact( 0.01) end),
-    awful.key({ win, "Control" }, "Left",  function () awful.tag.incmwfact(-0.01) end),
+    awful.key({ win, "Control" }, "Right", function() awful.tag.incmwfact( 0.01) end),
+    awful.key({ win, "Control" }, "Left",  function() awful.tag.incmwfact(-0.01) end),
 
     awful.key({ win, "Shift"   }, "Left",
       function()
@@ -175,7 +182,15 @@ clientbuttons = awful.util.table.join(
 
 root.buttons(awful.util.table.join(
     awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
+    awful.button({ }, 5, awful.tag.viewprev),
+    awful.button({ win }, 4, function()
+      if beautiful.useless_gap_width <= 4 then
+        lain.util.useless_gaps_resize(-beautiful.useless_gap_width)
+      elseif beautiful.useless_gap_width ~= 0 then
+        lain.util.useless_gaps_resize(-5)
+      end
+    end),
+    awful.button({ win }, 5, function() lain.util.useless_gaps_resize(5) end)
 ))
 
 root.keys(globalkeys)
