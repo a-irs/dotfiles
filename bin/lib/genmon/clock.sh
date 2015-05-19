@@ -16,7 +16,7 @@ else
 fi
 
 if [[ $1 == awesome ]]; then
-    echo -n "$txt1 $txt2   "
+    echo -n "$txt1 $txt2  "
 else
     [[ $ICONS == 1 ]] && echo -n "<img>$image</img>"
     echo -n "<txt>$txt1 $txt2 </txt><click>gsimplecal</click>"
