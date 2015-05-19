@@ -29,17 +29,6 @@ batterywidget = make_widget("battery.sh", 5)
 soundwidget   = make_widget("pulseaudio.sh", 1)
 netwidget     = make_widget("net.sh", 5)
 
--- mpd
-mpdwidget = lain.widgets.mpd({
-    settings = function ()
-        mpd_notification_preset = {
-            timeout = 5,
-            text = string.format("%s\n%s", markup.bold(mpd_now.artist), mpd_now.title)
-        }
-    end
-})
-
-
 mywibox = {}
 mypromptbox = {}
 mytaglist = {}
@@ -56,16 +45,15 @@ for s = 1, screen.count() do
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.focused, false,
              { fg_focus = theme.tasklist_fg, bg_focus = theme.tasklist_bg, font = theme.tasklist_font })
 
-    -- left
+    -- layouts
+
     local layout1 = wibox.layout.fixed.horizontal()
     layout1:add(mypromptbox[s])
     layout1:add(mytasklist[s])
 
-    -- middle
     local layout2 = wibox.layout.fixed.horizontal()
     layout2:add(mytaglist[s])
 
-    -- right
     local layout3 = wibox.layout.fixed.horizontal()
     if s == 1 then layout3:add(wibox.widget.systray()) end
     layout3:add(netwidget)
