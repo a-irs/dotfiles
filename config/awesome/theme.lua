@@ -21,7 +21,7 @@ theme.bg_focus                      = theme.bg_normal
 theme.bg_urgent                     = "#aa0000"
 theme.bg_systray                    = theme.bg_normal
 theme.fg_normal                     = "#aaaaaa"
-theme.fg_focus                      = "#ff8c00"
+theme.fg_focus                      = "#add8e6"
 theme.fg_urgent                     = "#af1d18"
 theme.fg_minimize                   = "#ffffff"
 theme.fg_black                      = "#424242"
@@ -38,7 +38,7 @@ theme.border_normal                 = "#1c2022"
 theme.border_focus                  = "#606060"
 theme.border_marked                 = "#3ca4d8"
 
-theme.tasklist_fg                   = "#cfcfcf"
+theme.tasklist_fg                   = "#8fbac8"
 theme.tasklist_bg                   = theme.bg_normal
 theme.tasklist_font                 = 'Ubuntu Bold 8'
 
