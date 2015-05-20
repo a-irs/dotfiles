@@ -1,6 +1,5 @@
 theme                               = {}
 
-theme.conf_dir                      = os.getenv("HOME") .. "/.config/awesome/theme"
 theme.genmon_icon_dir               = os.getenv("HOME") .. "/.bin/lib/genmon/img"
 theme.wallpaper                     = os.getenv("HOME") .. "/.wallpaper"
 
@@ -37,15 +36,6 @@ theme.border_width                  = "1"
 theme.border_normal                 = "#1c2022"
 theme.border_focus                  = "#606060"
 theme.border_marked                 = "#3ca4d8"
-
-theme.tasklist_fg                   = "#8fbac8"
-theme.tasklist_bg                   = theme.bg_normal
-theme.tasklist_font                 = 'Ubuntu Bold 8'
-
-theme.taglist_squares_sel           = theme.conf_dir .. "/blank.png"
-theme.taglist_squares_unsel         = theme.conf_dir .. "/blank.png"
-
-theme.tasklist_disable_icon         = true
 
 theme.useless_gap_width             = 25
 
