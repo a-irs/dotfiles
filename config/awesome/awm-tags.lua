@@ -8,30 +8,30 @@ tyrannical.settings.group_children = true
 
 tyrannical.tags = {
     {
-        name        = "www",
+        name        = "○",
         init        = true,
         exclusive   = true,
         layout      = lain.layout.uselessfair,
         class       = { user_browser, "firefox", "chromium" }
     },
     {
-        name        = "zsh",
+        name        = "○",
         init        = true,
         exclusive   = true,
         layout      = lain.layout.uselessfair.horizontal,
         mwfact      = 0.6,
-       -- exec_once   = { user_terminal },
+        exec_once   = { user_terminal },
         class       = { user_terminal, "urxvt", "terminator" }
     },
     {
-        name        = "dev",
+        name        = "○",
         init        = true,
         exclusive   = true,
         layout      = lain.layout.uselessfair.horizontal,
         class       = { user_editor, "subl3", "atom" }
     },
     {
-        name        = "files",
+        name        = "○",
         init        = true,
         exclusive   = true,
         layout      = lain.layout.uselessfair,
@@ -39,19 +39,19 @@ tyrannical.tags = {
         class       = { user_filemanager, "thunar", "engrampa" }
     },
     {
-        name        = "doc",
+        name        = "○",
         init        = false,
         exclusive   = true,
         layout      = lain.layout.uselessfair.horizontal,
         class       = { "evince" }
     },
-    {   name        = "media",
+    {   name        = "○",
         init        = false,
         exclusive   = true,
         layout      = awful.layout.suit.max.fullscreen,
         class       = { "gpicview", "kodi", "gimp" }
     },
-    {   name        = "fallback",
+    {   name        = "○",
         init        = true,
         fallback    = true,
         layout      = lain.layout.uselessfair,
