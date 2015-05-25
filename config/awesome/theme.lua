@@ -1,7 +1,6 @@
 theme                               = {}
 
 theme.genmon_icon_dir               = os.getenv("HOME") .. "/.bin/lib/genmon/img"
-theme.wallpaper                     = os.getenv("HOME") .. "/.wallpaper"
 
 theme.widget_wifi_on                = theme.genmon_icon_dir .. "/wifi.png"
 theme.widget_wifi_off               = theme.genmon_icon_dir .. "/wifi_off.png"

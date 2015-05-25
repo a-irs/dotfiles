@@ -1,11 +1,12 @@
 local programs = {
+   'nitrogen --restore',
+   os.getenv("HOME") .. '/.bin/redshift.sh',
    'start-pulseaudio-x11',
-   'mpd',
    'kupfer --no-splash',
+   'ponymix set-volume 15',
    'compton -b',
    'dropbox-cli start',
-   os.getenv("HOME") .. '/.bin/redshift.sh',
-   'ponymix set-volume 15',
+   'mpd',
 }
 for _, cmd in ipairs(programs) do
     os.execute(cmd .. ' &')

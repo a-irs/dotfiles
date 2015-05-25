@@ -11,6 +11,8 @@ rules.rules = {
                      focus = awful.client.focus.filter,
                      raise = true,
                      keys = clientkeys,
+                     maximized_vertical   = false,
+                     maximized_horizontal = false,
                      buttons = clientbuttons } },
 }
 
