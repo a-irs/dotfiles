@@ -21,20 +21,20 @@ header() {
 }
 
 header 4 "backing up '/home' to '$destination/home'"
-sudo -E duplicity --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-globbing-filelist="$excludes" "/home" "$destination/home"
+sudo -E duplicity --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-filelist="$excludes" "/home" "$destination/home"
 
 header 4 "backing up '/etc' to '$destination/etc'"
-sudo -E duplicity --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-globbing-filelist="$excludes" "/etc" "$destination/etc"
+sudo -E duplicity --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-filelist="$excludes" "/etc" "$destination/etc"
 
 header 4 "backing up '/root' to '$destination/root'"
-sudo -E duplicity --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-globbing-filelist="$excludes" "/root" "$destination/root"
+sudo -E duplicity --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-filelist="$excludes" "/root" "$destination/root"
 
 if [[ $HOSTNAME == srv ]]; then
     header 4 "backing up '/srv to '$destination/srv'"
     sudo -E duplicity --archive-dir="$archive_dir" --include /srv/smb --include /srv/http --include /srv/docker/sabnzbd/state/sabnzbd.ini --exclude '**' "/srv" "$destination/srv"
 
     header 4 "backing up '/var/spool/cron' to '$destination/cron'"
-    sudo -E duplicity --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-globbing-filelist="$excludes" "/var/spool/cron" "$destination/cron"
+    sudo -E duplicity --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-filelist="$excludes" "/var/spool/cron" "$destination/cron"
 fi
 
 unset PASSPHRASE

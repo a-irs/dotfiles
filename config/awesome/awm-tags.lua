@@ -11,14 +11,14 @@ tyrannical.tags = {
         name        = "○",
         init        = true,
         exclusive   = true,
-        layout      = lain.layout.uselessfair,
+        layout      = awful.layout.suit.tile,
         class       = { user_browser, "firefox", "chromium" }
     },
     {
         name        = "○",
         init        = true,
         exclusive   = true,
-        layout      = lain.layout.uselessfair.horizontal,
+        layout      = awful.layout.suit.tile.bottom,
         mwfact      = 0.6,
         exec_once   = { user_terminal },
         class       = { user_terminal, "urxvt", "terminator" }
@@ -27,14 +27,14 @@ tyrannical.tags = {
         name        = "○",
         init        = true,
         exclusive   = true,
-        layout      = lain.layout.uselessfair.horizontal,
+        layout      = awful.layout.suit.tile.bottom,
         class       = { user_editor, "subl3", "atom" }
     },
     {
         name        = "○",
         init        = true,
         exclusive   = true,
-        layout      = lain.layout.uselessfair,
+        layout      = awful.layout.suit.tile,
        -- exec_once   = { user_filemanager },
         class       = { user_filemanager, "thunar", "engrampa" }
     },
@@ -42,19 +42,13 @@ tyrannical.tags = {
         name        = "○",
         init        = false,
         exclusive   = true,
-        layout      = lain.layout.uselessfair.horizontal,
-        class       = { "evince" }
-    },
-    {   name        = "○",
-        init        = false,
-        exclusive   = true,
-        layout      = awful.layout.suit.max.fullscreen,
-        class       = { "gpicview", "kodi", "gimp" }
+        layout      = awful.layout.suit.tile,
+        class       = { "kodi", "gimp" }
     },
     {   name        = "○",
         init        = true,
         fallback    = true,
-        layout      = lain.layout.uselessfair,
+        layout      = awful.layout.suit.tile,
     },
 }
 -- Ignore the tag "exclusive" property for the following clients (matched by classes)

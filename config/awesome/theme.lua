@@ -1,20 +1,9 @@
 theme                               = {}
 
-theme.genmon_icon_dir               = os.getenv("HOME") .. "/.bin/lib/genmon/img"
-
-theme.widget_wifi_on                = theme.genmon_icon_dir .. "/wifi.png"
-theme.widget_wifi_off               = theme.genmon_icon_dir .. "/wifi_off.png"
-theme.widget_audio_on               = theme.genmon_icon_dir .. "/speaker_on.png"
-theme.widget_audio_off              = theme.genmon_icon_dir .. "/speaker_off.png"
-theme.widget_battery_crit           = theme.genmon_icon_dir .. "/battery_crit.png"
-theme.widget_battery_high           = theme.genmon_icon_dir .. "/battery_high.png"
-theme.widget_battery_low            = theme.genmon_icon_dir .. "/battery_low.png"
-theme.widget_battery_normal         = theme.genmon_icon_dir .. "/battery_normal.png"
-theme.widget_date                   = theme.genmon_icon_dir .. "/clock.png"
-
 theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "Ubuntu 7"
-theme.bg_normal                     = "#32323200"
+
+theme.bg_normal                     = "#313131"
 theme.bg_focus                      = theme.bg_normal
 theme.bg_urgent                     = "#aa0000"
 theme.bg_systray                    = theme.bg_normal
@@ -31,6 +20,7 @@ theme.fg_magenta                    = "#94738c"
 theme.fg_cyan                       = "#778baf"
 theme.fg_white                      = "#aaaaaa"
 theme.fg_blu                        = "#8ebdde"
+
 theme.border_width                  = 0
 theme.border_normal                 = "#1c2022"
 theme.border_focus                  = "#606060"
