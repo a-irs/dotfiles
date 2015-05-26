@@ -106,6 +106,8 @@ globalkeys = awful.util.table.join(
     awful.key({ win }, "l",      function () awful.util.spawn("xflock4") end),
     awful.key({ alt }, "s",      function () awful.util.spawn("subl3") end),
 
+    awful.key({ "Ctrl", "Shift" }, "dead_circumflex", function () awful.util.spawn(os.getenv("HOME") .. "/.bin/desktop/toggle-res.sh") end),
+
     -- media keys
 
     awful.key({}, "XF86AudioRaiseVolume", function()
