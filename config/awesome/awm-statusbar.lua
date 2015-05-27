@@ -89,14 +89,10 @@ speedwidget   = lain.widgets.net({
     settings = function()
         down_speed = math.floor(tonumber(net_now.received))
         up_speed   = math.floor(tonumber(net_now.sent))
-        if down_speed >= 5 or up_speed >= 5 then
-            widget:set_markup(markup.bold(
-                markup(theme.widget_speed_down, " ↓ " .. down_speed)
-                .. " " ..
-                markup(theme.widget_speed_up, " ↑ " .. up_speed .. "   ")))
-        else
-            widget:set_markup("")
-        end
+        widget:set_markup(markup.bold(
+            markup(theme.widget_speed_down, " ↓ " .. down_speed)
+            .. " " ..
+            markup(theme.widget_speed_up, " ↑ " .. up_speed .. "   ")))
     end
 })
 
