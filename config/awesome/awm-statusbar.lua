@@ -71,7 +71,7 @@ mytaglist.buttons = awful.util.table.join(
 for s = 1, screen.count() do
     mypromptbox[s] = awful.widget.prompt()
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
-    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 24 })
+    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 21 })
 
     -- layouts
 
