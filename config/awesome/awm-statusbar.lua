@@ -2,6 +2,8 @@ local awful   = require 'awful'
 local wibox   = require 'wibox'
 local lain    = require 'lain'
 local naughty = require 'naughty'
+local alsa    = require 'alsa'
+local volume  = require 'volume'
 
 
 markup = lain.util.markup
@@ -46,9 +48,25 @@ function make_widget(script, timeout)
 end
 
 if hostname == "dell" then batterywidget = make_widget("battery.sh", 5) end
-dropboxwidget = make_widget("dropbox.sh", 5)
-soundwidget   = make_widget("pulseaudio.sh", 1)
 netwidget     = make_widget("net.sh", 5)
+dropboxwidget = make_widget("dropbox.sh", 5)
+
+volumewidget = alsa({
+    timeout = 5,
+    settings = function()
+        if volume_now.status == "off" then
+            widget:set_markup(markup.bold(markup("Grey",    volume_now.level .. "   ")))
+        else
+            widget:set_markup(markup.bold(markup("#B895B5", volume_now.level .. "   ")))
+        end
+    end
+})
+volumewidget.widget:buttons(awful.util.table.join(
+       awful.button({ }, 4, function() volume.increase() end), -- wheel up
+       awful.button({ }, 5, function() volume.decrease() end), -- wheel down
+       awful.button({ }, 1, function() volume.toggle()   end), -- left click
+       awful.button({ }, 3, function() volume.toggle()   end)  -- right click
+))
 
 datewidget = lain.widgets.abase({
     timeout  = 2,
@@ -56,8 +74,7 @@ datewidget = lain.widgets.abase({
     settings = function()
         local t_output = ""
         local o_it = string.gmatch(output, "%S+")
-        for i = 1, 2 do t_output = t_output .. " " .. o_it(i) end
-        widget:set_markup(markup("#fff", t_output) .. " " .. markup.bold(markup("#fff", o_it(1))) .. "  ")
+        widget:set_markup(markup("#fff", o_it(1) .. " " .. o_it(1)) .. " " .. markup.bold(markup("#fff", o_it(1))) .. "  ")
     end
 })
 lain.widgets.calendar:attach(datewidget, { font_size = 8, font = "Input" })
@@ -103,7 +120,7 @@ for s = 1, screen.count() do
     layout3:add(speedwidget)
     layout3:add(dropboxwidget)
     layout3:add(netwidget)
-    layout3:add(soundwidget)
+    layout3:add(volumewidget)
     if hostname == "dell" then layout3:add(batterywidget) end
     layout3:add(datewidget)
 

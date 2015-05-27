@@ -23,15 +23,18 @@ function volume.ismute()
 end
 
 function volume.toggle()
-  execute 'ponymix toggle &>/dev/null'
+  execute 'amixer set Master toggle'
+  volumewidget.update()
 end
 
 function volume.increase()
-  local volume = slurpcommand 'ponymix increase 1'
+  local volume = slurpcommand 'amixer set Master 1%+'
+  volumewidget.update()
 end
 
 function volume.decrease()
-  local volume = slurpcommand 'ponymix decrease 1'
+  local volume = slurpcommand 'amixer set Master 1%-'
+  volumewidget.update()
 end
 
 return volume
