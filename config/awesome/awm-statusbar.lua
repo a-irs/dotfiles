@@ -49,7 +49,19 @@ if hostname == "dell" then batterywidget = make_widget("battery.sh", 5) end
 dropboxwidget = make_widget("dropbox.sh", 5)
 soundwidget   = make_widget("pulseaudio.sh", 1)
 netwidget     = make_widget("net.sh", 5)
-datewidget    = make_widget("clock.sh", 2)
+
+datewidget = lain.widgets.abase({
+    timeout  = 2,
+    cmd      = "date +'%a, %d.%m. %H:%M'",
+    settings = function()
+        local t_output = ""
+        local o_it = string.gmatch(output, "%S+")
+        for i = 1, 2 do t_output = t_output .. " " .. o_it(i) end
+        widget:set_markup(markup("#fff", t_output) .. " " .. markup.bold(markup("#fff", o_it(1))) .. "  ")
+    end
+})
+lain.widgets.calendar:attach(datewidget, { font_size = 8, font = "Input" })
+
 speedwidget   = lain.widgets.net({
     settings = function()
         down_speed = math.floor(tonumber(net_now.received))
