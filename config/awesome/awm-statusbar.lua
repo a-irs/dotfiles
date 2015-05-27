@@ -52,11 +52,16 @@ netwidget     = make_widget("net.sh", 5)
 datewidget    = make_widget("clock.sh", 2)
 speedwidget   = lain.widgets.net({
     settings = function()
-        widget:set_markup(markup.bold(
-            markup("#F8B83E", " " .. net_now.received)
-            .. " " ..
-            markup("#F8743E", " " .. net_now.sent .. "   ")
-        ))
+        down_speed = math.floor(tonumber(net_now.received))
+        up_speed   = math.floor(tonumber(net_now.sent))
+        if down_speed >= 5 or up_speed >= 5 then
+            widget:set_markup(markup.bold(
+                markup(theme.speed_widget_down, " ↓ " .. down_speed)
+                .. " " ..
+                markup(theme.speed_widget_up, " ↑ " .. up_speed .. "   ")))
+        else
+            widget:set_markup("")
+        end
     end
 })
 
