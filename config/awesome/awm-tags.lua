@@ -4,14 +4,15 @@ local lain       = require 'lain'
 
 
 tyrannical.settings.block_children_focus_stealing = true
-tyrannical.settings.group_children = true
+tyrannical.settings.group_children                = true
+tyrannical.settings.default_layout                = awful.layout.suit.tile
+tyrannical.settings.mwfact                        = 0.5
 
 tyrannical.tags = {
     {
         name        = "○",
         init        = true,
         exclusive   = true,
-        layout      = awful.layout.suit.tile,
         class       = { user_browser, "firefox", "chromium" }
     },
     {
@@ -19,7 +20,6 @@ tyrannical.tags = {
         init        = true,
         exclusive   = true,
         layout      = awful.layout.suit.tile.bottom,
-        mwfact      = 0.6,
         exec_once   = { user_terminal },
         class       = { user_terminal, "urxvt", "terminator" }
     },
@@ -34,7 +34,6 @@ tyrannical.tags = {
         name        = "○",
         init        = true,
         exclusive   = true,
-        layout      = awful.layout.suit.tile,
        -- exec_once   = { user_filemanager },
         class       = { user_filemanager, "thunar", "engrampa" }
     },
@@ -42,13 +41,11 @@ tyrannical.tags = {
         name        = "○",
         init        = false,
         exclusive   = true,
-        layout      = awful.layout.suit.tile,
         class       = { "kodi", "gimp" }
     },
     {   name        = "○",
         init        = true,
         fallback    = true,
-        layout      = awful.layout.suit.tile,
     },
 }
 -- Ignore the tag "exclusive" property for the following clients (matched by classes)

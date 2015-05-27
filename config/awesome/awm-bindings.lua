@@ -139,11 +139,10 @@ clientkeys = awful.util.table.join(
     awful.key({ win }, "q",  function(c) c:kill() end)
 )
 
--- Bind all key numbers to tags.
 for i = 1, 9 do
     globalkeys = awful.util.table.join(globalkeys,
-        -- View tag only.
-        awful.key({ win }, "#" .. i + 9,
+        -- view tag only
+        awful.key({ }, "F" .. i,
                   function ()
                         local screen = mouse.screen
                         local tag = awful.tag.gettags(screen)[i]
@@ -151,8 +150,8 @@ for i = 1, 9 do
                            awful.tag.viewonly(tag)
                         end
                   end),
-        -- Toggle tag.
-        awful.key({ win, "Control" }, "#" .. i + 9,
+        -- toggle tag
+        awful.key({ "Control" }, "F" .. i,
                   function ()
                       local screen = mouse.screen
                       local tag = awful.tag.gettags(screen)[i]
@@ -160,8 +159,8 @@ for i = 1, 9 do
                          awful.tag.viewtoggle(tag)
                       end
                   end),
-        -- Move client to tag.
-        awful.key({ win, "Shift" }, "#" .. i + 9,
+        -- move client to tag
+        awful.key({ "Shift" }, "F" .. i,
                   function ()
                       if client.focus then
                           local tag = awful.tag.gettags(client.focus.screen)[i]
@@ -169,17 +168,8 @@ for i = 1, 9 do
                               awful.client.movetotag(tag)
                           end
                      end
-                  end),
-        -- Toggle tag.
-        awful.key({ win, alt }, "#" .. i + 9,
-                  function ()
-                      if client.focus then
-                          local tag = awful.tag.gettags(client.focus.screen)[i]
-                          if tag then
-                              awful.client.toggletag(tag)
-                          end
-                      end
-                  end))
+                  end)
+        )
 end
 
 clientbuttons = awful.util.table.join(
