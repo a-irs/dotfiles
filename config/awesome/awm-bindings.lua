@@ -94,8 +94,44 @@ globalkeys = awful.util.table.join(
         if client.focus then client.focus:raise() end
       end),
 
-    awful.key({ win            }, "space", function () awful.layout.inc(layouts, 1) end),
-    awful.key({ win, "Shift"   }, "space", function () awful.layout.inc(layouts,-1) end),
+    -- switch layouts
+
+    awful.key({ win            }, "space", function()
+      -- check if current layout is useless or not and shift matching layout table
+      local curlayout = awful.layout.get()
+      for _, item in pairs(layouts_useless) do
+        if item == curlayout then
+          awful.layout.inc(layouts_useless, 1)
+          return
+        end
+      end
+      awful.layout.inc(layouts, 1)
+    end),
+
+    awful.key({ win, "Shift"   }, "space", function()
+      -- check if current layout is useless or not and shift matching layout table
+      local curlayout = awful.layout.get()
+      for _, item in pairs(layouts_useless) do
+        if item == curlayout then
+          awful.layout.inc(layouts_useless, -1)
+          return
+        end
+      end
+      awful.layout.inc(layouts, -1)
+    end),
+
+    awful.key({ win }, "t", function()
+      local curlayout = awful.layout.get()
+      if curlayout == lain.layout.uselessfair then
+        awful.layout.set(awful.layout.suit.tile)
+      elseif curlayout == lain.layout.uselessfair.horizontal then
+        awful.layout.set(awful.layout.suit.tile.bottom)
+      elseif curlayout == awful.layout.suit.tile.bottom then
+        awful.layout.set(lain.layout.uselessfair.horizontal)
+      else
+        awful.layout.set(lain.layout.uselessfair)
+      end
+    end),
 
     -- launch programs
 
