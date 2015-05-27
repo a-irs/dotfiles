@@ -12,5 +12,7 @@ local programs = {
    hostname == "desktop" and os.getenv("HOME") .. '/.bin/wait-for-srv.sh gvfs-mount sftp://root@srv',
 }
 for _, cmd in ipairs(programs) do
-    os.execute(cmd .. ' &')
+    if cmd then
+        os.execute(cmd .. ' &')
+    end
 end
