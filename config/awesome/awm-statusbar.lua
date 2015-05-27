@@ -50,6 +50,13 @@ dropboxwidget = make_widget("dropbox.sh", 5)
 soundwidget   = make_widget("pulseaudio.sh", 1)
 netwidget     = make_widget("net.sh", 5)
 datewidget    = make_widget("clock.sh", 2)
+speedwidget   = lain.widgets.net({
+    settings = function()
+        widget:set_markup(markup.bold(markup("#7AC82E", " " .. net_now.received)
+                          .. " " ..
+                          markup("#46A8C3", " " .. net_now.sent .. " ")))
+    end
+})
 
 mywibox = {}
 mypromptbox = {}
@@ -75,6 +82,7 @@ for s = 1, screen.count() do
     local layout3 = wibox.layout.fixed.horizontal()
     -- if s == 1 then layout3:add(wibox.widget.systray()) end
     layout3:add(dropboxwidget)
+    layout3:add(speedwidget)
     layout3:add(netwidget)
     layout3:add(soundwidget)
     if hostname == "dell" then layout3:add(batterywidget) end
