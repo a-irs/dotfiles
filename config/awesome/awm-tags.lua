@@ -58,7 +58,7 @@ tyrannical.properties.floating = {
 }
 -- Make the matching clients (by classes) on top of the default layout
 tyrannical.properties.ontop = {
-    "mpv", "pinentry", "plugin-container",
+    "mpv", "pinentry", "plugin-container", "gcolor2"
 }
 -- Force the matching clients (by classes) to be centered on the screen on init
 tyrannical.properties.centered = {

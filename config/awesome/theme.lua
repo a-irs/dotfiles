@@ -21,7 +21,7 @@ theme.useless_gap_width             = 20
 theme.widget_date_fg                = "#fff"
 theme.widget_alsa_fg                = "#B895B5"
 theme.widget_alsa_mute_fg           = "grey"
-theme.widget_yawn_fg                = "#fff"
+theme.widget_yawn_fg                = "#ababab"
 theme.widget_speed_down             = "#F8B83E"
 theme.widget_speed_up               = "#F8743E"
 

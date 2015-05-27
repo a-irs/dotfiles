@@ -68,9 +68,11 @@ volumewidget.widget:buttons(awful.util.table.join(
        awful.button({ }, 3, function() volume.toggle()   end)  -- right click
 ))
 
-yawn = lain.widgets.yawn(684294, { settings = function()
-    yawn_notification_preset = { font = "Input 8", bg=theme.bg_normal, fg=theme.fg_normal }
-    end })
+yawn = lain.widgets.yawn(684294)
+yawn.attach(yawn.widget, 684294, { settings = function()
+    yawn_notification_preset = { font = "Input 8", bg = theme.bg_normal, fg = theme.fg_normal }
+    widget:set_markup(markup(theme.widget_yawn_fg, units .. "°C " .. forecast .. "   "))
+end })
 
 datewidget = lain.widgets.abase({
     timeout  = 2,
@@ -123,11 +125,11 @@ for s = 1, screen.count() do
     -- if s == 1 then layout3:add(wibox.widget.systray()) end
     layout3:add(speedwidget)
     layout3:add(dropboxwidget)
+    layout3:add(yawn.widget)
     layout3:add(netwidget)
     layout3:add(volumewidget)
     if hostname == "dell" then layout3:add(batterywidget) end
     layout3:add(datewidget)
-    layout3:add(yawn.icon)
 
     -- build status bar
 
