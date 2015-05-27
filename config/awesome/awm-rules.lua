@@ -35,7 +35,7 @@ dynamic_tagging = function()
     end
 end
 
--- Signal function to execute when a new client appears.
+-- client appears
 client.connect_signal("manage", function (c, startup)
     dynamic_tagging()
 
@@ -55,9 +55,19 @@ client.connect_signal("manage", function (c, startup)
     end
 end)
 
-client.connect_signal("unmanage", function (c, startup) dynamic_tagging() end)
+-- client exits
+client.connect_signal("unmanage", function(c, startup)
+  dynamic_tagging()
+
+  -- return to last tag when last window is closed
+  curtag = awful.tag.selected()
+  for _, c in pairs(curtag:clients()) do
+    return
+  end
+  awful.tag.history.restore()
+end)
+
 client.connect_signal("tagged",   function (c, startup) dynamic_tagging() end)
 client.connect_signal("untagged", function (c, startup) dynamic_tagging() end)
-
 client.connect_signal("focus",    function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus",  function(c) c.border_color = beautiful.border_normal end)
