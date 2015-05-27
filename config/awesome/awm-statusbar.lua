@@ -55,9 +55,9 @@ volumewidget = alsa({
     timeout = 5,
     settings = function()
         if volume_now.status == "off" then
-            widget:set_markup(markup.bold(markup("Grey",    volume_now.level .. "   ")))
+            widget:set_markup(markup.bold(markup(theme.widget_alsa_mute_fg,    volume_now.level .. "   ")))
         else
-            widget:set_markup(markup.bold(markup("#B895B5", volume_now.level .. "   ")))
+            widget:set_markup(markup.bold(markup(theme.widget_alsa_fg, volume_now.level .. "   ")))
         end
     end
 })
@@ -68,13 +68,17 @@ volumewidget.widget:buttons(awful.util.table.join(
        awful.button({ }, 3, function() volume.toggle()   end)  -- right click
 ))
 
+yawn = lain.widgets.yawn(684294, { settings = function()
+    yawn_notification_preset = { font = "Input 8", bg=theme.bg_normal, fg=theme.fg_normal }
+    end })
+
 datewidget = lain.widgets.abase({
     timeout  = 2,
     cmd      = "date +'%a, %d.%m. %H:%M'",
     settings = function()
         local t_output = ""
         local o_it = string.gmatch(output, "%S+")
-        widget:set_markup(markup("#fff", o_it(1) .. " " .. o_it(1)) .. " " .. markup.bold(markup("#fff", o_it(1))) .. "  ")
+        widget:set_markup(markup(theme.widget_date_fg, o_it(1) .. " " .. o_it(1)) .. " " .. markup.bold(markup(theme.widget_date_fg, o_it(1))) .. "  ")
     end
 })
 lain.widgets.calendar:attach(datewidget, { font_size = 8, font = "Input" })
@@ -85,9 +89,9 @@ speedwidget   = lain.widgets.net({
         up_speed   = math.floor(tonumber(net_now.sent))
         if down_speed >= 5 or up_speed >= 5 then
             widget:set_markup(markup.bold(
-                markup(theme.speed_widget_down, " ↓ " .. down_speed)
+                markup(theme.widget_speed_down, " ↓ " .. down_speed)
                 .. " " ..
-                markup(theme.speed_widget_up, " ↑ " .. up_speed .. "   ")))
+                markup(theme.widget_speed_up, " ↑ " .. up_speed .. "   ")))
         else
             widget:set_markup("")
         end
@@ -123,6 +127,7 @@ for s = 1, screen.count() do
     layout3:add(volumewidget)
     if hostname == "dell" then layout3:add(batterywidget) end
     layout3:add(datewidget)
+    layout3:add(yawn.icon)
 
     -- build status bar
 
