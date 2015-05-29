@@ -80,6 +80,7 @@ datewidget = lain.widgets.base({
 lain.widgets.calendar:attach(datewidget, { font_size = 8, font = "Input" })
 
 speedwidget   = lain.widgets.net({
+    notify = "off",
     settings = function()
         down_speed = math.floor(tonumber(net_now.received))
         up_speed   = math.floor(tonumber(net_now.sent))
