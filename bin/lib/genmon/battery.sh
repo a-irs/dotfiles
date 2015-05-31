@@ -68,7 +68,7 @@ if [[ $TMUX ]]; then
         txt=$txt"#[bg=colour237,fg=$color_tmux]#[bg=$color_tmux,fg=colour235] $percent% #[default]"
     fi
 elif [[ $1 == awesome ]]; then
-    txt=$txt"<span foreground='$color'>$percent%</span>"
+    txt=$txt"<span foreground='$color'>$percent</span>"
 else
     txt="<span weight='bold' fgcolor='$color'>$percent"$txt"</span>"
 fi
