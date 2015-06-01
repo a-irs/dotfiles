@@ -8,7 +8,7 @@
 	],
 	"bold_folder_labels": true,
 	"close_windows_when_empty": true,
-	"color_scheme": "Packages/User/Monokai Extended 2.tmTheme",
+	"color_scheme": "Packages/Colorcoder/Monokai Extended 2 (Colorcoded).tmTheme",
 	"distraction_free":
 	{
 		"menu_visible": false,
@@ -103,7 +103,6 @@
 	"hot_exit": true,
 	"ignored_packages":
 	[
-		"Colorcoder",
 		"Vintage"
 	],
 	"line_numbers": false,
@@ -114,6 +113,7 @@
 		"show_minimap": false,
 		"side_bar_visible": false
 	},
+	"original_color_scheme": "Packages/User/Color Highlighter/themes/Monokai Extended 2.tmTheme",
 	"overlay_scroll_bars": "enabled",
 	"remember_open_files": false,
 	"scroll_past_end": true,
