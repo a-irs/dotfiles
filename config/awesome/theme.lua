@@ -16,7 +16,7 @@ theme.border_normal                 = "#1c2022"
 theme.border_focus                  = "#606060"
 theme.border_marked                 = "#3ca4d8"
 
-theme.useless_gap_width             = 20
+theme.useless_gap_width             = 15
 
 theme.widget_date_fg                = "#fff"
 theme.widget_alsa_fg                = "#B895B5"

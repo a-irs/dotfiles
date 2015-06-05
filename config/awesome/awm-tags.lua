@@ -35,7 +35,7 @@ tyrannical.tags = {
         init        = true,
         exclusive   = true,
        -- exec_once   = { user_filemanager },
-        class       = { user_filemanager, "thunar", "engrampa" }
+        class       = { user_filemanager, "thunar", "engrampa", "gpicview" }
     },
     {
         name        = "○",

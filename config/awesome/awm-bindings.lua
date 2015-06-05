@@ -166,7 +166,14 @@ globalkeys = awful.util.table.join(
     end),
 
     -- expose
-    awful.key({ win }, "e", revelation)
+    awful.key({ win }, "e", revelation),
+
+    awful.key({ win }, "z",
+              function()
+                  local screen = mouse.screen
+                  local tags = awful.tag.gettags(screen)
+                  awful.tag.viewmore(tags, screen)
+              end)
 )
 
 clientkeys = awful.util.table.join(
