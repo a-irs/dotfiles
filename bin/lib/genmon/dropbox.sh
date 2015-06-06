@@ -23,6 +23,7 @@ else
 fi
 
 if [[ $1 == awesome ]]; then
+    [[ $s == "●" ]] && echo -n " " && exit
     color=LightGrey
     [[ $s == "○" ]] && color=red
     [[ $s == "…" ]] && color=red
