@@ -28,6 +28,9 @@ function toggle_useless()
     for _, tag in ipairs(tags) do
         awful.layout.set(newlayout, tag)
     end
+
+    local text = "Layout: " .. awful.layout.getname()
+    naughty.notify({ text = text })
 end
 
 function switch_layout(incr)
@@ -38,6 +41,9 @@ function switch_layout(incr)
     else
         awful.layout.inc(layouts, incr)
     end
+
+    local text = "Layout: " .. awful.layout.getname()
+    naughty.notify({ text = text })
 end
 
 
@@ -127,9 +133,7 @@ globalkeys = awful.util.table.join(
     -- switch layouts
 
     awful.key({ win            }, "space", function() switch_layout( 1) end),
-
     awful.key({ win, "Shift"   }, "space", function() switch_layout(-1) end),
-
     awful.key({ win }, "u", toggle_useless),
 
     -- launch programs
@@ -152,23 +156,51 @@ globalkeys = awful.util.table.join(
     awful.key({}, "XF86AudioMute",        volume.toggle),
 
     -- restart awesome wm
+
     awful.key({ win, "Shift" }, "r", awesome.restart),
     awful.key({ win, "Ctrl"  }, "r", awesome.restart),
 
     -- toggle status bar
+
     awful.key({ win }, "b", function()
         mywibox[mouse.screen].visible = not mywibox[mouse.screen].visible
     end),
 
     -- expose
+
     awful.key({ win }, "e", revelation),
+
+    -- show all tags at once
 
     awful.key({ win }, "z",
               function()
                   local screen = mouse.screen
                   local tags = awful.tag.gettags(screen)
                   awful.tag.viewmore(tags, screen)
-              end)
+              end),
+
+    -- change master/column count
+
+    awful.key({ win }, ".", function()
+        awful.tag.incnmaster(1)
+        local text = "Number of master windows: " .. awful.tag.getnmaster()
+        naughty.notify({ text = text })
+    end),
+    awful.key({ win }, ",", function()
+        awful.tag.incnmaster(-1)
+        local text = "Number of master windows: " .. awful.tag.getnmaster()
+        naughty.notify({ text = text })
+    end),
+    awful.key({ win, alt }, ".", function()
+        awful.tag.incncol(1)
+        local text = "Number of columns: " .. awful.tag.getncol()
+        naughty.notify({ text = text })
+    end),
+    awful.key({ win, alt }, ",", function()
+        awful.tag.incncol(-1)
+        local text = "Number of columns: " .. awful.tag.getncol()
+        naughty.notify({ text = text })
+    end)
 )
 
 clientkeys = awful.util.table.join(
