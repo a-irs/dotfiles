@@ -1,3 +1,9 @@
+local naughty    = require 'naughty'
+
+function dbg(text)
+    naughty.notify({ text = text, timeout = 0 })
+end
+
 user_terminal    = "terminator"
 user_browser     = "firefox"
 user_editor      = "subl3"
