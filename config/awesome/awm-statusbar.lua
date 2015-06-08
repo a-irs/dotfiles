@@ -114,8 +114,8 @@ for s = 1, screen.count() do
 
     local layout3 = wibox.layout.fixed.horizontal()
     -- if s == 1 then layout3:add(wibox.widget.systray()) end
-    layout3:add(speedwidget)
     layout3:add(dropboxwidget)
+    layout3:add(speedwidget)
     layout3:add(netwidget)
     layout3:add(volumewidget)
     if hostname == "dell" then layout3:add(batterywidget) end
