@@ -243,15 +243,14 @@ def opt_upload():
 
 
 def opt_download():
-    mobileclient.login(email, password)
-    musicmanager.login(OAUTH_FILE)
+    assert mobileclient.login(email, password)
+    assert musicmanager.login(OAUTH_FILE)
 
     # reverse (as the most recently modified playlists appear at the end normally)
     all_playlists = mobileclient.get_all_user_playlist_contents()
     total_count = len(all_playlists)
 
     print(str(1).zfill(len(str(total_count))) + "/" + str(total_count + 1) + " " + Fore.MAGENTA + Style.BRIGHT + "ThumbsUp" + "\n")
-    get_thumbsup()
 
     for i, p in enumerate(reversed(all_playlists)):
 

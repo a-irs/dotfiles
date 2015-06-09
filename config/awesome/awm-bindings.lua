@@ -30,7 +30,7 @@ function toggle_useless()
     end
 
     local text = "Layout: " .. awful.layout.getname()
-    naughty.notify({ text = text })
+    naughty.notify({ text = text, timeout = 1 })
 end
 
 function switch_layout(incr)
@@ -43,7 +43,7 @@ function switch_layout(incr)
     end
 
     local text = "Layout: " .. awful.layout.getname()
-    naughty.notify({ text = text })
+    naughty.notify({ text = text, timeout = 1 })
 end
 
 
@@ -184,22 +184,22 @@ globalkeys = awful.util.table.join(
     awful.key({ win }, ".", function()
         awful.tag.incnmaster(1)
         local text = "Number of master windows: " .. awful.tag.getnmaster()
-        naughty.notify({ text = text })
+        naughty.notify({ text = text, timeout = 1 })
     end),
     awful.key({ win }, ",", function()
         awful.tag.incnmaster(-1)
         local text = "Number of master windows: " .. awful.tag.getnmaster()
-        naughty.notify({ text = text })
+        naughty.notify({ text = text, timeout = 1 })
     end),
     awful.key({ win, alt }, ".", function()
         awful.tag.incncol(1)
         local text = "Number of columns: " .. awful.tag.getncol()
-        naughty.notify({ text = text })
+        naughty.notify({ text = text, timeout = 1 })
     end),
     awful.key({ win, alt }, ",", function()
         awful.tag.incncol(-1)
         local text = "Number of columns: " .. awful.tag.getncol()
-        naughty.notify({ text = text })
+        naughty.notify({ text = text, timeout = 1 })
     end)
 )
 
