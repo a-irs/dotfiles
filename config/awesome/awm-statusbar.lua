@@ -77,7 +77,7 @@ datewidget = lain.widgets.base({
         widget:set_markup(markup(theme.widget_date_fg, o_it(1) .. " " .. o_it(1)) .. " " .. markup.bold(markup(theme.widget_date_fg, o_it(1))) .. "  ")
     end
 })
-lain.widgets.calendar:attach(datewidget, { font_size = 8, font = "Input" })
+lain.widgets.calendar:attach(datewidget, { font_size = 8, font = theme.widget_date_calendar_font })
 
 speedwidget   = lain.widgets.net({
     notify = "off",
@@ -102,7 +102,7 @@ mytaglist.buttons = awful.util.table.join(
 for s = 1, screen.count() do
     mypromptbox[s] = awful.widget.prompt()
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
-    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 21 })
+    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 22 })
 
     -- layouts
 

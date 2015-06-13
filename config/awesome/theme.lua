@@ -19,6 +19,7 @@ theme.border_marked                 = "#3ca4d8"
 theme.useless_gap_width             = 15
 
 theme.widget_date_fg                = "#fff"
+theme.widget_date_calendar_font     = "Input"
 theme.widget_alsa_fg                = "#B895B5"
 theme.widget_alsa_mute_fg           = "grey"
 theme.widget_yawn_fg                = "#ababab"
