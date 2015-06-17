@@ -48,14 +48,14 @@ function make_widget(script, timeout)
 end
 
 if hostname == "dell" then batterywidget = make_widget("battery.sh", 5) end
-netwidget     = make_widget("net.sh", 5)
+if hostname == "dell" then netwidget     = make_widget("net.sh", 5) end
 dropboxwidget = make_widget("dropbox.sh", 5)
 
 volumewidget = alsa({
     timeout = 5,
     settings = function()
         if volume_now.status == "off" then
-            widget:set_markup(markup.bold(markup(theme.widget_alsa_mute_fg,    volume_now.level .. "   ")))
+            widget:set_markup(markup.bold(markup(theme.widget_alsa_mute_fg, volume_now.level .. "   ")))
         else
             widget:set_markup(markup.bold(markup(theme.widget_alsa_fg, volume_now.level .. "   ")))
         end
@@ -116,9 +116,9 @@ for s = 1, screen.count() do
     -- if s == 1 then layout3:add(wibox.widget.systray()) end
     layout3:add(dropboxwidget)
     layout3:add(speedwidget)
-    layout3:add(netwidget)
+    if netwidget then layout3:add(netwidget) end
     layout3:add(volumewidget)
-    if hostname == "dell" then layout3:add(batterywidget) end
+    if batterywidget then layout3:add(batterywidget) end
     layout3:add(datewidget)
 
     -- build status bar
