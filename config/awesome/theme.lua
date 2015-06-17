@@ -2,6 +2,7 @@ theme                               = {}
 
 theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "Ubuntu 7"
+theme.statusbar_height              = 22
 
 theme.bg_normal                     = "#313131"
 theme.bg_focus                      = theme.bg_normal
@@ -25,5 +26,10 @@ theme.widget_alsa_mute_fg           = "grey"
 theme.widget_yawn_fg                = "#ababab"
 theme.widget_speed_down             = "#F8B83E"
 theme.widget_speed_up               = "#F8743E"
+
+if hostname == "desktop" then
+    theme.useless_gap_width         = 25
+end
+
 
 return theme

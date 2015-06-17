@@ -33,6 +33,8 @@ function toggle_useless()
     naughty.notify({ text = text, timeout = 1 })
 end
 
+if hostname == "desktop" then toggle_useless() end
+
 function switch_layout(incr)
     -- check if current layout is useless or not and shift matching layout table
     local curlayout = awful.layout.getname()
