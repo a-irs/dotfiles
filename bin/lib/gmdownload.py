@@ -173,14 +173,14 @@ def init_cache():
     with codecs.open(CACHE_FILE, "r", 'utf-8') as c:
         for line in c:
             if line.strip() != "":
-                cache[line.split('|')[0]] = line.split('|')[1].strip()
+                cache[line.split('|||')[0]] = line.split('|||')[1].strip()
     return cache
 
 
 def writeback_cache():
     with codecs.open('/tmp/new_cache', 'w', 'utf-8') as new_cache:
         for hash, path in CACHE.iteritems():
-            new_cache.write(hash + "|" + path + '\n')
+            new_cache.write(hash + "|||" + path + '\n')
     shutil.move("/tmp/new_cache", CACHE_FILE)
 
 

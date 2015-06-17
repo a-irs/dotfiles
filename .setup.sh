@@ -91,14 +91,6 @@ if [[ -f /usr/bin/mpd ]]; then
     print_info "set up files for MPD"
 fi
 
-if [ -f /usr/bin/slim ]; then
-    [ -d /usr/share/slim ] && sudo cp -R "$this_dir/slim/"* /usr/share/slim/themes
-    echo "#!/bin/sh" | sudo tee "/usr/local/bin/xflock4" > /dev/null
-    echo "! pgrep slimlock && slimlock ; xset r rate 200 30" | sudo tee -a "/usr/local/bin/xflock4" > /dev/null
-    sudo chmod +x "/usr/local/bin/xflock4"
-    print_info "installed themes and /usr/local/bin/xflock4 for SLIM"
-fi
-
 if [[ -f /usr/lib/xorg/modules/drivers/radeon_drv.so ]]; then
     rm -f ~/.compton.conf
     ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/compton-radeon.conf" ~/.compton.conf 2> /dev/null
