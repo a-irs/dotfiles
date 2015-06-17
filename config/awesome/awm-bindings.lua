@@ -155,6 +155,8 @@ globalkeys = awful.util.table.join(
     awful.key({}, "XF86AudioLowerVolume", volume.decrease),
     awful.key({}, "XF86AudioMute",        volume.toggle),
 
+    awful.key({}, "XF86PowerOff", function() awful.util.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh suspend") end),
+
     -- restart awesome wm
 
     awful.key({ win, "Shift" }, "r", awesome.restart),
