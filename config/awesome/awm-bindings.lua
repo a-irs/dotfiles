@@ -178,6 +178,10 @@ globalkeys = awful.util.table.join(
 
     awful.key({ win }, "e", revelation),
 
+    -- screenshot
+
+    awful.key({ }, "Print", function() awful.util.spawn("scrot " .. os.getenv("HOME") .. "/%Y-%m-%d_%H-%M-%S.png") end),
+
     -- show all tags at once
 
     awful.key({ win }, "z",
