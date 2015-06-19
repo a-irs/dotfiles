@@ -11,7 +11,7 @@ theme.bg_focus                      = theme.bg_normal
 theme.bg_urgent                     = "#aa0000"
 theme.bg_systray                    = theme.bg_normal
 theme.fg_normal                     = "#aaaaaa"
-theme.fg_focus                      = "#ffffff"
+theme.fg_focus                      = "#eeeeee"
 theme.fg_urgent                     = "#af1d18"
 
 theme.border_width                  = 0
@@ -31,7 +31,7 @@ theme.widget_speed_up               = "#F8743E"
 -- TITLEBAR
 
 theme.titlebar_height = 18
-theme.titlebar_font   = "Roboto Medium 8"
+theme.titlebar_font   = "Roboto Bold 8"
 
 theme.titlebar_close_button_focus              = theme.basedir .. "/titlebar/close.xpm"
 theme.titlebar_close_button_normal             = theme.basedir .. "/titlebar/unfocused_inactive.xpm"
