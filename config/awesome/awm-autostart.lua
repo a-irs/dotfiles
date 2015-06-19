@@ -4,6 +4,7 @@ local programs = {
    'kupfer --no-splash',
    'killall compton && compton -b',
    'dropbox-cli start',
+   'pgrep -x thunar || thunar --daemon',
    'mpd',
    'bash -c "pgrep -x lxpolkit || lxpolkit"',
    'bash -c "pgrep -x redshift || redshift"',
