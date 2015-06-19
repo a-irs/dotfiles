@@ -2,7 +2,7 @@ local programs = {
    'nitrogen --restore',
    'start-pulseaudio-x11',
    'kupfer --no-splash',
-   'compton -b',
+   'killall compton && compton -b',
    'dropbox-cli start',
    'mpd',
    'bash -c "pgrep -x lxpolkit || lxpolkit"',

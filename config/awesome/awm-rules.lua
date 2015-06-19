@@ -60,7 +60,7 @@ client.connect_signal("manage", function (c, startup)
 
     -- titlebar
 
-    if theme.titlebar_enabled and (c.type == "normal" or c.type == "dialog") then
+    if c.type == "normal" or c.type == "dialog" then
         local buttons = awful.util.table.join(
                 awful.button({ }, 1, function()
                     client.focus = c
@@ -76,8 +76,8 @@ client.connect_signal("manage", function (c, startup)
 
         local button_layout = wibox.layout.fixed.horizontal()
         button_layout:add(awful.titlebar.widget.closebutton(c))
-        button_layout:add(awful.titlebar.widget.stickybutton(c))
         button_layout:add(awful.titlebar.widget.floatingbutton(c))
+        button_layout:add(awful.titlebar.widget.stickybutton(c))
         button_layout:add(awful.titlebar.widget.ontopbutton(c))
 
         local middle_layout = wibox.layout.flex.horizontal()
@@ -93,6 +93,9 @@ client.connect_signal("manage", function (c, startup)
 
         awful.titlebar(c, { size = theme.titlebar_height }):set_widget(layout)
     end
+
+    -- hide titlebar by default on laptop
+    if hostname ~= "desktop" then awful.titlebar.hide(c) end
 end)
 
 -- client exits
