@@ -20,6 +20,8 @@ theme.border_focus                  = theme.bg_focus
 
 theme.useless_gap_width             = 15
 
+-- WIDGETS
+
 theme.widget_date_fg                = "#fff"
 theme.widget_date_calendar_font     = "Input"
 theme.widget_alsa_fg                = "#B895B5"
@@ -30,8 +32,9 @@ theme.widget_speed_up               = "#F8743E"
 
 -- TITLEBAR
 
-theme.titlebar_height = 18
-theme.titlebar_font   = "Roboto Bold 8"
+theme.titlebar_enabled = true
+theme.titlebar_height  = 18
+theme.titlebar_font    = "Roboto Bold 8"
 
 theme.titlebar_close_button_focus              = theme.basedir .. "/titlebar/close.xpm"
 theme.titlebar_close_button_normal             = theme.basedir .. "/titlebar/unfocused_inactive.xpm"
