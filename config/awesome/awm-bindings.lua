@@ -257,6 +257,7 @@ end
 clientbuttons = awful.util.table.join(
     awful.button({ },     1, function(c) client.focus = c; c:raise() end),
     awful.button({ win }, 1, awful.mouse.client.move),
+    awful.button({ win, alt }, 1, awful.mouse.client.dragtotag.border),
     awful.button({ win }, 3, awful.mouse.client.resize))
 
 root.buttons(awful.util.table.join(
