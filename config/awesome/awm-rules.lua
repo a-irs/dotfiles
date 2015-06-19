@@ -2,6 +2,7 @@ local awful     = require 'awful'
 local rules     = require 'awful.rules'
                   require 'awful.autofocus'
 local beautiful = require 'beautiful'
+local wibox     = require 'wibox'
 
 
 rules.rules = {
@@ -52,6 +53,42 @@ client.connect_signal("manage", function (c, startup)
             awful.placement.no_overlap(c)
             awful.placement.no_offscreen(c)
         end
+    end
+
+    -- titlebar
+
+    if c.type == "normal" or c.type == "dialog" then
+        local buttons = awful.util.table.join(
+                awful.button({ }, 1, function()
+                    client.focus = c
+                    c:raise()
+                    awful.mouse.client.move(c)
+                end),
+                awful.button({ }, 3, function()
+                    client.focus = c
+                    c:raise()
+                    awful.mouse.client.resize(c)
+                end)
+        )
+
+        local right_layout = wibox.layout.fixed.horizontal()
+        right_layout:add(awful.titlebar.widget.ontopbutton(c))
+        right_layout:add(awful.titlebar.widget.stickybutton(c))
+        right_layout:add(awful.titlebar.widget.floatingbutton(c))
+        right_layout:add(awful.titlebar.widget.closebutton(c))
+
+        local middle_layout = wibox.layout.flex.horizontal()
+        local title = awful.titlebar.widget.titlewidget(c)
+        title:set_align("center")
+        title:set_font(theme.titlebar_font)
+        middle_layout:add(title)
+        middle_layout:buttons(buttons)
+
+        local layout = wibox.layout.align.horizontal()
+        layout:set_right(right_layout)
+        layout:set_middle(middle_layout)
+
+        awful.titlebar(c, { size = theme.titlebar_height }):set_widget(layout)
     end
 end)
 

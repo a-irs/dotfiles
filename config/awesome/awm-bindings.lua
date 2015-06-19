@@ -219,7 +219,8 @@ clientkeys = awful.util.table.join(
     awful.key({ win }, "f",  function(c) c.fullscreen = not c.fullscreen end),
     awful.key({ alt }, "F4", function(c) c:kill() end),
     awful.key({ win }, "w",  function(c) c:kill() end),
-    awful.key({ win }, "q",  function(c) c:kill() end)
+    awful.key({ win }, "q",  function(c) c:kill() end),
+    awful.key({ win }, "m",  awful.titlebar.toggle)
 )
 
 for i = 1, 9 do
