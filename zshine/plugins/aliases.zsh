@@ -352,8 +352,8 @@ if [ -n "$commands[git]" ]; then
     alias g="git"
     alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white) %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
     alias glog='git log --color --patch --stat --decorate --date=relative --all --abbrev-commit'
-    alias gpull="git -C ~/.dotfiles pull"
-    alias gpush="git -C ~/.dotfiles p"
+    alias gpull="cd ~/.dotfiles && git pull"
+    alias gpush="cd ~/.dotfiles && git p"
 fi
 
 psg() {
