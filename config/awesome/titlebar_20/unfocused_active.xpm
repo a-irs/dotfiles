@@ -1,6 +1,6 @@
 /* XPM */
 static char * unfocused_active_xpm[] = {
-"20 20 20 1",
+"17 20 20 1",
 " 	c None",
 "+	c #4C4C4C",
 "@	c #727272",

@@ -1,6 +1,6 @@
 /* XPM */
 static char * sticky_active_xpm[] = {
-"20 20 27 1",
+"17 20 27 1",
 " 	c None",
 "+	c #6C5826",
 "@	c #BE8F1D",
