@@ -1,6 +1,5 @@
 local awful = require 'awful'
 local lain  = require 'lain'
-require 'layout-browse'
 
 layouts = {
     -- lain.layout.termfair,
@@ -30,5 +29,4 @@ layouts_useless = {
     -- lain.layout.uselesstile.left,
     -- lain.layout.uselesstile.bottom,
     -- lain.layout.uselesstile.top,
-    -- layouts.browse,
 }
