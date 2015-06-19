@@ -38,6 +38,9 @@ end
 
 -- client appears
 client.connect_signal("manage", function (c, startup)
+    -- floating clients don't overlap, cover the titlebar or get placed offscreen
+    awful.placement.no_overlap(c)
+    awful.placement.no_offscreen(c)
     dynamic_tagging()
 
     -- sloppy focus
