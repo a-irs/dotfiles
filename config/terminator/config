@@ -1,16 +1,13 @@
 [global_config]
-  hide_on_lose_focus = False
   handle_size = 1
   title_hide_sizetext = True
   always_split_with_profile = True
   focus = system
   title_inactive_fg_color = "#ffffff"
-  always_on_top = False
   suppress_multiple_term_dialog = True
   enabled_plugins = ,
   geometry_hinting = False
   title_transmit_bg_color = "#d30102"
-  hide_from_taskbar = False
   inactive_color_offset = 0.58
   title_inactive_bg_color = "#2d2d2d"
 [keybindings]
@@ -96,7 +93,7 @@
     scroll_on_output = False
     show_titlebar = False
     copy_on_selection = True
-    background_color = "#2a1d41"
+    background_color = "#252634"
     audible_bell = True
     scrollback_infinite = True
   [[Earthsong]]

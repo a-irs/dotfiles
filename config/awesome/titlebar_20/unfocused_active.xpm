@@ -2,7 +2,7 @@
 static char * unfocused_active_xpm[] = {
 "20 20 20 1",
 " 	c None",
-".	c #2D2D2D",
+".	c None",
 "+	c #4C4C4C",
 "@	c #727272",
 "#	c #828282",

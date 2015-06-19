@@ -1,4 +1,5 @@
 {
+	"always_show_minimap_viewport": true,
 	"animation_enabled": true,
 	"atomic_save": false,
 	"auto_complete_delay": 0,
@@ -6,9 +7,9 @@
 	[
 		"node_modules/*"
 	],
-	"bold_folder_labels": true,
+	"bold_folder_labels": false,
 	"close_windows_when_empty": true,
-	"color_scheme": "Packages/Colorcoder/Monokai Extended 2 (Colorcoded).tmTheme",
+	"color_scheme": "Packages/Colorcoder/Hero Dark Eighties (Colorcoded).tmTheme",
 	"distraction_free":
 	{
 		"menu_visible": false,
@@ -98,6 +99,7 @@
 	"font_face": "Input",
 	"font_size": 11,
 	"gutter": true,
+	"hero_folder_icons": false,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"hot_exit": true,
@@ -107,13 +109,15 @@
 	],
 	"line_numbers": false,
 	"margin": 0,
+	"material_theme_disable_fileicons": false,
+	"material_theme_small_tab": true,
 	"new_window_settings":
 	{
 		"menu_visible": false,
 		"show_minimap": false,
 		"side_bar_visible": false
 	},
-	"original_color_scheme": "Packages/User/Monokai Extended 2.tmTheme",
+	"original_color_scheme": "Packages/Theme - Hero/Hero Dark Eighties.tmTheme",
 	"overlay_scroll_bars": "enabled",
 	"remember_open_files": false,
 	"scroll_past_end": true,
@@ -123,7 +127,7 @@
 	"show_tab_close_buttons": false,
 	"spell_check": false,
 	"tab_size": 4,
-	"theme": "Darko.sublime-theme",
+	"theme": "Hero Dark.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"update_check": false

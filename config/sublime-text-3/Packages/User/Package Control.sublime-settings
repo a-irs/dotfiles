@@ -22,12 +22,14 @@
 		"Markdown Extended",
 		"MarkdownLight",
 		"Marking Changed Rows",
-		"Material Color Scheme",
+		"Material Theme",
 		"Package Control",
 		"SublimeGit",
 		"SublimeLinter",
 		"SublimeLinter-lua",
-		"SublimeLinter-shellcheck"
+		"SublimeLinter-shellcheck",
+		"Theme - Hero",
+		"Themr"
 	],
 	"submit_usage": false
 }

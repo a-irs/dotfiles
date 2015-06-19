@@ -2,7 +2,7 @@
 static char * floating_active_xpm[] = {
 "18 18 46 1",
 " 	c None",
-".	c #2D2D2D",
+".	c None",
 "+	c #31674D",
 "@	c #34A167",
 "#	c #36BC73",

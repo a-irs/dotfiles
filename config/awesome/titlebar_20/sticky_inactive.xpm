@@ -2,7 +2,7 @@
 static char * sticky_inactive_xpm[] = {
 "20 20 21 1",
 " 	c None",
-".	c #2D2D2D",
+".	c None",
 "+	c #6C5826",
 "@	c #BE8F1D",
 "#	c #E2A81A",
