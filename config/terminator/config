@@ -93,7 +93,7 @@
     scroll_on_output = False
     show_titlebar = False
     copy_on_selection = True
-    background_color = "#222a34"
+    background_color = "#2C3643"
     audible_bell = True
     scrollback_infinite = True
   [[Earthsong]]
