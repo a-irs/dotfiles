@@ -22,6 +22,8 @@ minimap-git-diff@4.1.3
 minimap-highlight-selected@4.3.0
 minimap-selection@4.2.0
 pen-paper-coffee-syntax@0.9.1
+pigments@0.8.0
 set-syntax@0.3.0
+tree-view-git-modified@0.5.10
 tree-view-git-status@0.1.1
 

@@ -8,7 +8,7 @@ theme.statusbar_height              = 20
 
 theme.tasklist_disable_icon         = true
 
-theme.bg_normal                     = "#252634"
+theme.bg_normal                     = "#222a34"
 theme.bg_focus                      = theme.bg_normal
 theme.bg_urgent                     = "#aa0000"
 theme.bg_systray                    = theme.bg_normal

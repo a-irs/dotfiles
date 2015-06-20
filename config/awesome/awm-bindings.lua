@@ -140,7 +140,7 @@ globalkeys = awful.util.table.join(
 
     -- launch programs
 
-    awful.key({ win }, "r",      function () awful.util.spawn("rofi -show run -bg '#252634' -bc '#252634' -fg '#ddd' -hlbg '#666' -hlfg '#fff' -font 'Input 11' -width 30 -padding 10 -terminal " .. user_terminal) end),
+    awful.key({ win }, "r",      function () awful.util.spawn("rofi -show run -bg '#222a34' -bc '#222a34' -fg '#ddd' -hlbg '#666' -hlfg '#fff' -font 'Input 11' -width 30 -padding 10 -terminal " .. user_terminal) end),
     awful.key({ alt }, "Return", function () awful.util.spawn(user_terminal) end),
     awful.key({ alt }, "f",      function () awful.util.spawn("thunar") end),
     awful.key({ alt }, "c",      function () awful.util.spawn("firefox") end),
