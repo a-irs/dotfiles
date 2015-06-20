@@ -34,6 +34,7 @@
       selection: true
       "highlight-selected": true
       "find-and-replace": true
+      linter: true
   tabs:
     usePreviewTabs: true
     enableVcsColoring: true
@@ -56,3 +57,9 @@
     ignoreWhitespaceOnCurrentLine: false
   "trailing-spaces":
     enableForCursorLines: true
+  "linter-shellcheck": {}
+  linter:
+    subtleLinterErrors: [
+      "shellcheck"
+    ]
+  "linter-flake8": {}

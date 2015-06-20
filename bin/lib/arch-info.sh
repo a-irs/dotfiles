@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-REPOS=( "$HOME/.dotfiles" "/etc" )
+REPOS=( "$HOME/.dotfiles" )
 
 show_header() {
     echo -e "\n\033[1;33m$*\033[0m\n"
@@ -26,9 +26,9 @@ get_update_list() {
 
 get_single_repo() {
     repo_path=$1
-    repo_status=$(LC_ALL=en_IE.UTF-8 git -c color.status=always -C $repo_path status -s --ignore-submodules)
+    repo_status=$(LC_ALL=en_IE.UTF-8 git -c color.status=always -C "$repo_path" status -s --ignore-submodules)
     num=$(get_count "$repo_status")
-    if [[ $num > 0 ]]; then
+    if [[ $num -gt 0 ]]; then
         [[ $num == 1 ]] && s="change" || s="changes"
         show_header "$num $s for ${repo_path/$HOME/\~}:"
         echo "$repo_status"
