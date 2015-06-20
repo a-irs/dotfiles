@@ -55,6 +55,11 @@ dotfiles=(
 )
 
 dotfiles_x=(
+    atom/config.cson
+    atom/init.coffee
+    atom/keymap.cson
+    atom/snippets.cson
+    atom/styles.less
     compton.conf
     config/redshift.conf
     config/awesome
@@ -120,6 +125,9 @@ else
     rmlink "local/share/applications/terminator-full.desktop"
 fi
 
+if [[ -f /usr/bin/apm ]]; then
+    apm install --packages-file "$this_dir/atom/PACKAGES.txt"
+fi
 
 if pidof firefox > /dev/null; then
     echo "Firefox running, exit first!"

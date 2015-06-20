@@ -1,0 +1,53 @@
+"*":
+  "exception-reporting":
+    userId: "d89cda2e-8f5b-b720-9730-4901ce063ea9"
+  welcome:
+    showOnStartup: false
+  core:
+    themes: [
+      "one-dark-ui"
+      "chester-atom-syntax"
+    ]
+    autoHideMenuBar: true
+  editor:
+    invisibles: {}
+    fontFamily: "Input"
+    tabLength: 4
+    fontSize: 15
+    confirmCheckoutHeadRevision: false
+    scrollPastEnd: true
+  "git-diff": {}
+  "one-dark-ui":
+    layoutMode: "Compact"
+  "isotope-ui":
+    fontWeight: "Regular"
+    minimalMode: true
+    fontFamily: "System Default"
+    matchEditorFont: true
+  minimap:
+    plugins:
+      "git-diff": true
+      selection: true
+      "highlight-selected": true
+      "find-and-replace": true
+  "file-icons":
+    onChanges: true
+    coloured: false
+  tabs:
+    usePreviewTabs: true
+    enableVcsColoring: true
+  "autocomplete-plus": {}
+  "autocomplete-python":
+    addBracketAfterFunction: true
+  "base16-syntax":
+    scheme: "Codeschool"
+  "atom-terminal":
+    app: "/usr/bin/terminator"
+  autosave: {}
+  Termrk:
+    fontFamily: "Input"
+    startingDir: "cwd"
+  "terminal-status": {}
+  "merge-conflicts":
+    gitPath: "/usr/bin/git"
+  "markdown-preview": {}
