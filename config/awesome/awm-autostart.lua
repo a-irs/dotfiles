@@ -11,6 +11,7 @@ local programs = {
    'bash -c "pgrep -x redshift || redshift"',
    'mkdir -p ' .. os.getenv("HOME") .. '.thumbnails',
    'ln -sf ' .. os.getenv("HOME") .. '/.thumbnails ' .. os.getenv("HOME") .. '/.cache/thumbnails',
+   'ln -sf ' .. os.getenv("HOME") .. '/.rofi-2.runcache ' .. os.getenv("HOME") .. '/.cache/rofi-2.runcache',
    'xset -dpms ; xset s off',
    hostname == "desktop" and 'bash -c "pgrep x2godesktopshar || x2godesktopsharing"',
    hostname == "desktop" and 'bash -c "pgrep synergyc || synergyc -d WARNING dell"',
