@@ -3,6 +3,7 @@
 import sys
 import subprocess
 
+
 class Color(object):
     RESET = '\033[' + str(0) + 'm'
     BOLD = '\033[' + str(1) + 'm'
@@ -23,6 +24,7 @@ class Color(object):
     BOLD_RED = BOLD + RED
     BOLD_WHITE = BOLD + WHITE
     BOLD_BLACK = BOLD + BLACK
+
 
 def parse(line):
     l = bytes.decode(line).strip(' \t\n\r').split()
@@ -52,8 +54,8 @@ def parse(line):
 
     rest = highlight(rest, "ERROR", Color.BOLD_RED, True, True)
 
-
     print(datetime + " " + rest)
+
 
 def highlight(line, to_colorize, color, color_whole=False, case_insensitive=False):
     idx = -1
