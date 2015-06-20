@@ -82,7 +82,7 @@
     scrollbar_position = hidden
     word_chars = "-A-Za-z0-9,./?%&#:_~"
     palette = "#3b3b3b:#fa5641:#b7ff71:#fff073:#b9d7f8:#d1a8cd:#43dddd:#e0e0e0:#6d7367:#fa5641:#b7ff71:#fcec67:#aed2fa:#d1a8cd:#43dddd:#e0e0e0"
-    font = Input Semi-Condensed 11
+    font = Input Semi-Condensed 9
     visible_bell = True
     background_image = None
     background_darkness = 0.9
