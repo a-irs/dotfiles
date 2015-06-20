@@ -2,8 +2,8 @@ theme                               = {}
 
 theme.basedir                       = os.getenv("HOME") .. "/.config/awesome"
 
-theme.font                          = "Roboto 8"
-theme.taglist_font                  = "Roboto 7"
+theme.font                          = "Ubuntu 8"
+theme.taglist_font                  = "Ubuntu 7"
 theme.statusbar_height              = 24
 
 theme.tasklist_disable_icon         = true
