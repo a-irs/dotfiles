@@ -302,6 +302,16 @@ cd() {
     fi
 }
 
+if [[ -d ~/.dotfiles ]]; then
+    dot() {
+        if [[ "$PWD" == ~/.dotfiles ]]; then
+            cdr
+        else
+            cd ~/.dotfiles
+        fi
+}
+fi
+
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
