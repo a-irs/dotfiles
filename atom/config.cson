@@ -9,6 +9,9 @@
       "chester-atom-syntax"
     ]
     autoHideMenuBar: true
+    disabledPackages: [
+      "wrap-guide"
+    ]
   editor:
     invisibles: {}
     fontFamily: "Input"
