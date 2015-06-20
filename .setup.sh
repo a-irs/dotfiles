@@ -29,9 +29,7 @@ mklink() {
 
 dotfiles=(
     bin
-    config/cower/config
     config/htop/htoprc
-    config/meat/config
     config/mpd/mpd.conf
     config/ncmpcpp/config
     config/ranger/rc.conf
