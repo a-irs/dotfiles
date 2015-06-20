@@ -18,7 +18,7 @@
     tabLength: 4
     confirmCheckoutHeadRevision: false
     scrollPastEnd: true
-    fontSize: 13
+    fontSize: 12
     lineHeight: 1.4
   "git-diff": {}
   "one-dark-ui":
