@@ -24,10 +24,10 @@ theme.useless_gap_width             = 15
 
 -- WIDGETS
 
-theme.widget_date_fg                = "#fff"
 theme.widget_date_calendar_font     = "Input"
+theme.widget_date_fg                = "#ffffff"
 theme.widget_alsa_fg                = "#B895B5"
-theme.widget_alsa_mute_fg           = "grey"
+theme.widget_alsa_mute_fg           = "#666666"
 theme.widget_yawn_fg                = "#ababab"
 theme.widget_speed_down             = "#F8B83E"
 theme.widget_speed_up               = "#F8743E"
