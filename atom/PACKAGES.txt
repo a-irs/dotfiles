@@ -1,9 +1,13 @@
+Zen@0.14.0
 atom-terminal@0.8.0
 autocomplete-paths@1.0.2
-autocomplete-python@0.4.2
+autocomplete-python@0.4.3
 chester-atom-syntax@0.1.1
 color-picker@2.0.6
 dracula-theme@0.7.6
+git-control@0.3.0
+git-plus@5.1.2
+gutter-shadow@0.5.0
 highlight-selected@0.10.1
 isotope-light-ui@2.1.0
 isotope-ui@2.4.0
@@ -19,4 +23,5 @@ minimap-highlight-selected@4.3.0
 minimap-selection@4.2.0
 pen-paper-coffee-syntax@0.9.1
 set-syntax@0.3.0
+tree-view-git-status@0.1.1
 

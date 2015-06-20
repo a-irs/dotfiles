@@ -10,13 +10,15 @@
     ]
     autoHideMenuBar: true
   editor:
-    invisibles: {}
+    invisibles:
+      {}
     fontFamily: "Input"
     tabLength: 4
     fontSize: 15
     confirmCheckoutHeadRevision: false
     scrollPastEnd: true
-  "git-diff": {}
+  "git-diff":
+    {}
   "one-dark-ui":
     layoutMode: "Compact"
   "isotope-ui":
@@ -30,24 +32,24 @@
       selection: true
       "highlight-selected": true
       "find-and-replace": true
-  "file-icons":
-    onChanges: true
-    coloured: false
   tabs:
     usePreviewTabs: true
     enableVcsColoring: true
-  "autocomplete-plus": {}
+  "autocomplete-plus":
+    {}
   "autocomplete-python":
     addBracketAfterFunction: true
-  "base16-syntax":
-    scheme: "Codeschool"
   "atom-terminal":
     app: "/usr/bin/terminator"
-  autosave: {}
-  Termrk:
-    fontFamily: "Input"
-    startingDir: "cwd"
-  "terminal-status": {}
   "merge-conflicts":
     gitPath: "/usr/bin/git"
-  "markdown-preview": {}
+  "markdown-preview":
+    {}
+  "status-bar":
+    {}
+  "tree-view-git-status":
+    {}
+  "git-plus":
+    {}
+  Zen:
+    {}

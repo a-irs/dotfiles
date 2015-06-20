@@ -26,3 +26,12 @@
 
 '.platform-linux':
   'ctrl--': 'tree-view:toggle'
+
+'.platform-linux atom-workspace':
+  'f11': 'zen:toggle'
+
+'.platform-linux atom-workspace atom-text-editor:not(.mini)':
+  'f11': 'zen:toggle'
+
+'body':
+  'F11': 'zen:toggle'
