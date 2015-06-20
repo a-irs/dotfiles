@@ -30,21 +30,8 @@ tyrannical.tags = {
         layout      = awful.layout.suit.tile.bottom,
         class       = { user_editor, "subl3", "atom" }
     },
-    {
-        name        = "○",
-        init        = true,
-        exclusive   = true,
-       -- exec_once   = { user_filemanager },
-        class       = { user_filemanager, "thunar", "engrampa", "gpicview" }
-    },
-    {
-        name        = "○",
-        init        = false,
-        exclusive   = true,
-        class       = { "kodi", "gimp" }
-    },
     {   name        = "○",
-        init        = true,
+        init        = false,
         fallback    = true,
     },
 }
