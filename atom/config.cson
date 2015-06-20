@@ -44,6 +44,7 @@
   "status-bar": {}
   "tree-view-git-status": {}
   "git-plus": {}
-  Zen: {}
+  Zen:
+    softWrap: true
   pigments:
     markerType: "square-dot"
