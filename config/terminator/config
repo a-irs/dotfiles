@@ -81,7 +81,7 @@
   [[default]]
     scrollbar_position = hidden
     word_chars = "-A-Za-z0-9,./?%&#:_~"
-    palette = "#3b3b3b:#f14c4c:#b7ff71:#fff073:#b9d7f8:#c7a0c3:#43dddd:#e0e0e0:#6d7367:#ef4343:#b7ff71:#fcec67:#aed2fa:#c7a0c3:#43dddd:#e0e0e0"
+    palette = "#3b3b3b:#f2533f:#b7ff71:#fff073:#b9d7f8:#d1a8cd:#43dddd:#e0e0e0:#6d7367:#f2533f:#b7ff71:#fcec67:#aed2fa:#d1a8cd:#43dddd:#e0e0e0"
     font = Input Semi-Condensed 11
     visible_bell = True
     background_image = None
@@ -93,7 +93,7 @@
     scroll_on_output = False
     show_titlebar = False
     copy_on_selection = True
-    background_color = "#2C3643"
+    background_color = "#2c3643"
     audible_bell = True
     scrollback_infinite = True
   [[Earthsong]]
