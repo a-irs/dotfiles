@@ -4,7 +4,7 @@ theme.basedir                       = os.getenv("HOME") .. "/.config/awesome"
 
 theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "Ubuntu 7"
-theme.statusbar_height              = 20
+theme.statusbar_height              = 24
 
 theme.tasklist_disable_icon         = true
 
@@ -34,7 +34,7 @@ theme.widget_speed_up               = "#F8743E"
 
 -- TITLEBAR
 
-theme.titlebar_height  = 20
+theme.titlebar_height  = 24
 theme.titlebar_font    = "Roboto Bold 8"
 
 theme.titlebar_close_button_focus              = theme.basedir .. "/titlebar/close.xpm"
@@ -55,7 +55,7 @@ theme.titlebar_floating_button_normal_active   = theme.basedir .. "/titlebar/unf
 -- HOST-SPECIFIC SETTINGS
 
 if hostname == "desktop" then
-    theme.useless_gap_width         = 25
+    theme.useless_gap_width         = 24
 end
 
 return theme
