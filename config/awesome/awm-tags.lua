@@ -5,7 +5,6 @@ local lain       = require 'lain'
 
 tyrannical.settings.block_children_focus_stealing = true
 tyrannical.settings.group_children                = true
-tyrannical.settings.default_layout                = awful.layout.suit.tile
 tyrannical.settings.mwfact                        = 0.5
 
 tyrannical.tags = {
@@ -13,13 +12,13 @@ tyrannical.tags = {
         name        = "○",
         init        = true,
         exclusive   = true,
+        mwfact      = 0.68,
         class       = { user_browser, "firefox", "chromium" }
     },
     {
         name        = "○",
         init        = true,
         exclusive   = true,
-        layout      = awful.layout.suit.tile.bottom,
         exec_once   = { user_terminal },
         class       = { user_terminal, "urxvt", "terminator", "termite" }
     },
@@ -27,7 +26,6 @@ tyrannical.tags = {
         name        = "○",
         init        = true,
         exclusive   = true,
-        layout      = awful.layout.suit.tile.bottom,
         class       = { user_editor, "subl3", "atom" }
     },
     {   name        = "○",
@@ -54,4 +52,8 @@ tyrannical.properties.centered = {
 
 tyrannical.properties.sticky = {
     "gcolor2", "gcolor3", "Colorgrab",
+}
+
+tyrannical.properties.master = {
+    "firefox",
 }

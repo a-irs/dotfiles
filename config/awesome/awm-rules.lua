@@ -14,7 +14,8 @@ rules.rules = {
                      keys = clientkeys,
                      maximized_vertical   = false,
                      maximized_horizontal = false,
-                     buttons = clientbuttons } },
+                     buttons = clientbuttons },
+      callback = awful.client.setslave },
 }
 
 dynamic_tagging = function()

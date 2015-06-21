@@ -10,8 +10,8 @@ layouts = {
     -- awful.layout.suit.floating,
     -- awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
-    awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
+    -- awful.layout.suit.fair,
+    -- awful.layout.suit.fair.horizontal,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
@@ -22,11 +22,11 @@ layouts = {
 }
 
 layouts_useless = {
-    lain.layout.uselessfair.horizontal,
-    lain.layout.uselessfair,
+    -- lain.layout.uselessfair.horizontal,
+    -- lain.layout.uselessfair,
     -- lain.layout.uselesspiral,
-    -- lain.layout.uselesstile,
-    -- lain.layout.uselesstile.left,
-    -- lain.layout.uselesstile.bottom,
-    -- lain.layout.uselesstile.top,
+    lain.layout.uselesstile,
+    lain.layout.uselesstile.left,
+    lain.layout.uselesstile.bottom,
+    lain.layout.uselesstile.top,
 }

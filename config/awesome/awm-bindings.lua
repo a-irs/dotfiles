@@ -14,14 +14,10 @@ function toggle_useless()
     local curlayout = awful.layout.get()
     local newlayout
 
-    if curlayout == lain.layout.uselessfair then
+    if curlayout == lain.layout.uselesstile then
         newlayout = awful.layout.suit.tile
-    elseif curlayout == lain.layout.uselessfair.horizontal then
-        newlayout = awful.layout.suit.tile.bottom
-    elseif curlayout == awful.layout.suit.tile.bottom then
-        newlayout = lain.layout.uselessfair.horizontal
     else
-        newlayout = lain.layout.uselessfair
+        newlayout = lain.layout.uselesstile
     end
 
     local tags = awful.tag.gettags(mouse.screen)
