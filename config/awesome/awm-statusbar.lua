@@ -92,6 +92,7 @@ speedwidget   = lain.widgets.net({
 })
 
 mywibox = {}
+mylayoutbox = {}
 mypromptbox = {}
 mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
@@ -103,10 +104,17 @@ for s = 1, screen.count() do
     mypromptbox[s] = awful.widget.prompt()
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
     mywibox[s] = awful.wibox({ position = "top", screen = s, height = theme.statusbar_height })
+    mylayoutbox[s] = awful.widget.layoutbox(s)
+    mylayoutbox[s]:buttons(awful.util.table.join(
+                       awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
+                       awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
+                       awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
+                       awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
 
     -- layouts
 
     local layout1 = wibox.layout.fixed.horizontal()
+    layout1:add(mylayoutbox[s])
     layout1:add(mypromptbox[s])
 
     local layout2 = wibox.layout.fixed.horizontal()

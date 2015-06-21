@@ -32,6 +32,14 @@ theme.widget_yawn_fg                = "#ababab"
 theme.widget_speed_down             = "#F8B83E"
 theme.widget_speed_up               = "#F8743E"
 
+-- LAYOUT ICONS
+
+theme.layout_uselesstile            = theme.basedir .. "/layout-icons/tile.png"
+theme.layout_uselesstileleft        = theme.basedir .. "/layout-icons/tileleft.png"
+theme.layout_uselesstilebottom      = theme.basedir .. "/layout-icons/tilebottom.png"
+theme.layout_uselesstiletop         = theme.basedir .. "/layout-icons/tiletop.png"
+theme.layout_uselesspiral           = theme.basedir .. "/layout-icons/spiral.png"
+
 -- TITLEBAR
 
 theme.titlebar_height  = 24
