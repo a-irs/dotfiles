@@ -45,7 +45,7 @@
   "autocomplete-python":
     addBracketAfterFunction: true
   "atom-terminal":
-    app: "/usr/bin/termite"
+    app: "/usr/bin/terminator"
   "merge-conflicts":
     gitPath: "/usr/bin/git"
   "markdown-preview":
