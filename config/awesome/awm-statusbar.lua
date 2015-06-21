@@ -19,12 +19,14 @@ local function bat_notification()
   local bat_capacity = tonumber(f_capacity:read("*all"))
   local bat_status = trim(f_status:read("*all"))
   if (bat_capacity <= 20 and bat_status == "Discharging") then
-      naughty.notify({ text = markup.bold("Critical battery!"), fg = "#ca0000", bg = "#eeeeee"
-    })
+      naughty.notify({
+          preset = naughty.config.presets.critical,
+          text = markup.bold("Critical battery!")
+      })
   end
 end
 if hostname == "dell" then
-    battimer = timer({timeout = 120})
+    battimer = timer({ timeout = 120 })
     battimer:connect_signal("timeout", bat_notification)
     battimer:start()
 end

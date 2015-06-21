@@ -12,6 +12,7 @@ user_filemanager = "thunar"
 
 hostname = io.popen("uname -n"):read()
 
+require 'awm-notify-settings'
 require 'awm-error-handling'
 require 'awm-autostart'
 require 'awm-beautiful'
@@ -20,6 +21,5 @@ require 'awm-tags'
 require 'awm-bindings'
 require 'awm-statusbar'
 require 'awm-rules'
-require 'awm-notify-settings'
 
 awful.tag.viewonly(awful.tag.gettags(mouse.screen)[2])
