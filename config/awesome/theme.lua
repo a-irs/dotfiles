@@ -2,11 +2,9 @@ theme                               = {}
 
 theme.basedir                       = os.getenv("HOME") .. "/.config/awesome"
 
-theme.font                          = "Ubuntu 8"
-theme.taglist_font                  = "Ubuntu 7"
 theme.statusbar_height              = 24
 
-theme.tasklist_disable_icon         = true
+-- FG, BG COLORS
 
 theme.bg_normal                     = "#2c3643"
 theme.bg_focus                      = theme.bg_normal
@@ -24,9 +22,11 @@ theme.useless_gap_width             = 0
 
 -- WIDGETS
 
-theme.widget_mpd_fg                 = "#bbbbbb"
+theme.font                          = "Ubuntu 8"
+theme.taglist_font                  = "Ubuntu 7"
+theme.widget_mpd_fg                 = "#cfcfcf"
 theme.widget_date_calendar_font     = "Input"
-theme.widget_date_fg                = "#bbbbbb"
+theme.widget_date_fg                = "#cfcfcf"
 theme.widget_alsa_fg                = "#c69dc2"
 theme.widget_alsa_mute_fg           = "#666666"
 theme.widget_yawn_fg                = "#ababab"
@@ -66,5 +66,6 @@ theme.titlebar_floating_button_normal_active   = theme.basedir .. "/titlebar/unf
 if hostname == "desktop" then
     theme.useless_gap_width         = 24
 end
+
 
 return theme
