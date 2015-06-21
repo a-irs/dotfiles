@@ -14,47 +14,51 @@ tyrannical.tags = {
         init        = true,
         exclusive   = true,
         mwfact      = 0.68,
-        class       = { user_browser, "firefox", "chromium" }
+        nmaster     = 2,
+        class       = { "Firefox", "Chromium" }
     },
     {
         name        = "○",
         init        = true,
         exclusive   = true,
+        nmaster     = 2,
         exec_once   = { user_terminal },
-        class       = { user_terminal, "urxvt", "terminator", "termite" }
+        class       = { "Urxvt", "Terminator", "Termite" }
     },
     {
         name        = "○",
         init        = true,
         exclusive   = true,
-        class       = { user_editor, "subl3", "atom" }
+        nmaster     = 2,
+        class       = { "Subl3", "Atom" }
     },
     {   name        = "○",
-        init        = false,
+        init        = true,
+        nmaster     = 2,
         fallback    = true,
     },
 }
 -- Ignore the tag "exclusive" property for the following clients (matched by classes)
 tyrannical.properties.intrusive = {
-    "kupfer.py", "gtksu", "pinentry", "gcolor2", "gcolor3", "Colorgrab",
+    "Kupfer.py", "Gtksu", "Pinentry", "Gcolor2", "Gcolor3", "Colorgrab",
 }
 -- Ignore the tiled layout for the matching clients
 tyrannical.properties.floating = {
-    "pinentry", "plugin-container", "gcolor3", "Colorgrab",
+    "Pinentry", "Plugin-container", "Gcolor3", "Colorgrab",
 }
 -- Make the matching clients (by classes) on top of the default layout
 tyrannical.properties.ontop = {
-    "pinentry", "plugin-container", "gcolor2", "gcolor3", "Colorgrab",
+    "Pinentry", "Plugin-container", "Gcolor2", "Gcolor3", "Colorgrab",
 }
 -- Force the matching clients (by classes) to be centered on the screen on init
 tyrannical.properties.centered = {
-    "gcolor2", "gcolor3", "Colorgrab",
+    "Gcolor2", "Gcolor3", "Colorgrab",
 }
 
 tyrannical.properties.sticky = {
-    "gcolor2", "gcolor3", "Colorgrab",
+    "Gcolor2", "Gcolor3", "Colorgrab",
 }
 
 tyrannical.properties.master = {
-    "firefox", "atom",
+    "Firefox", "Atom",
 }
