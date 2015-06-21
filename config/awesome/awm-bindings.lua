@@ -200,30 +200,30 @@ for i = 1, 9 do
     globalkeys = awful.util.table.join(globalkeys,
         -- view tag
         awful.key({ win }, "#" .. i + 9,
-                  function ()
-                        local tag = awful.tag.gettags(mouse.screen)[i]
-                        if tag then
-                            awful.tag.viewonly(tag)
-                        end
-                  end),
+            function()
+                local tag = awful.tag.gettags(mouse.screen)[i]
+                if tag then
+                    awful.tag.viewonly(tag)
+                end
+            end),
         -- toggle tag
-        awful.key({ win, "Control" }, "#" .. i + 9,
-                  function ()
-                      local tag = awful.tag.gettags(mouse.screen)[i]
-                      if tag then
-                          awful.tag.viewtoggle(tag)
-                      end
-                  end),
+        awful.key({ win, alt }, "#" .. i + 9,
+            function()
+                local tag = awful.tag.gettags(mouse.screen)[i]
+                if tag then
+                    awful.tag.viewtoggle(tag)
+                end
+            end),
         -- move client to tag
         awful.key({ win, "Shift" }, "#" .. i + 9,
-                  function ()
-                      if client.focus then
-                          local tag = awful.tag.gettags(client.focus.screen)[i]
-                          if tag then
-                              awful.client.movetotag(tag)
-                          end
-                     end
-                  end)
+            function()
+                if client.focus then
+                    local tag = awful.tag.gettags(client.focus.screen)[i]
+                    if tag then
+                        awful.client.movetotag(tag)
+                    end
+                end
+            end)
         )
 end
 

@@ -26,6 +26,7 @@
 
 '.platform-linux':
   'ctrl--': 'tree-view:toggle'
+  'ctrl-.': 'editor:toggle-soft-wrap'
 
 '.platform-linux atom-workspace':
   'f11': 'zen:toggle'

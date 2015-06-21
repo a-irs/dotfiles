@@ -8,10 +8,11 @@
       "one-dark-ui"
       "chester-atom-syntax"
     ]
-    autoHideMenuBar: true
     disabledPackages: [
       "wrap-guide"
+      "keybinding-resolver"
     ]
+    autoHideMenuBar: true
   editor:
     invisibles: {}
     fontFamily: "Input"
