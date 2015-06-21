@@ -8,7 +8,7 @@ theme.statusbar_height              = 24
 
 theme.tasklist_disable_icon         = true
 
-theme.bg_normal                     = "#2C3643"
+theme.bg_normal                     = "#2c3643"
 theme.bg_focus                      = theme.bg_normal
 theme.bg_urgent                     = "#aa0000"
 theme.bg_systray                    = theme.bg_normal
@@ -25,12 +25,12 @@ theme.useless_gap_width             = 0
 -- WIDGETS
 
 theme.widget_date_calendar_font     = "Input"
-theme.widget_date_fg                = "#ffffff"
-theme.widget_alsa_fg                = "#B895B5"
+theme.widget_date_fg                = "#c6c6c6"
+theme.widget_alsa_fg                = "#c69dc2"
 theme.widget_alsa_mute_fg           = "#666666"
 theme.widget_yawn_fg                = "#ababab"
-theme.widget_speed_down             = "#F8B83E"
-theme.widget_speed_up               = "#F8743E"
+theme.widget_speed_down             = "#ffc350"
+theme.widget_speed_up               = "#ff8a5a"
 
 -- LAYOUT ICONS
 
