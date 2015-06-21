@@ -96,7 +96,7 @@ mpdwidget = wibox.widget.textbox()
 vicious.register(mpdwidget, vicious.widgets.mpd,
     function(mpdwidget, args)
         if args["{state}"] == "Stop" or args["{state}"] == "Pause" then
-            return ""
+            return "          "
         else
             return markup(theme.widget_mpd_fg, markup.bold(args["{Artist}"]) .. ' - ' .. args["{Title}"])
         end
