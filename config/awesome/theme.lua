@@ -35,11 +35,11 @@ theme.widget_speed_up               = "#ff8a5a"
 
 -- LAYOUT ICONS
 
-theme.layout_uselesstile            = theme.basedir .. "/layout-icons/tile.png"
-theme.layout_uselesstileleft        = theme.basedir .. "/layout-icons/tileleft.png"
-theme.layout_uselesstilebottom      = theme.basedir .. "/layout-icons/tilebottom.png"
-theme.layout_uselesstiletop         = theme.basedir .. "/layout-icons/tiletop.png"
-theme.layout_uselesspiral           = theme.basedir .. "/layout-icons/spiral.png"
+theme.layout_uselesstile            = theme.basedir .. "/layout-icons/tile.xpm"
+theme.layout_uselesstileleft        = theme.basedir .. "/layout-icons/tileleft.xpm"
+theme.layout_uselesstilebottom      = theme.basedir .. "/layout-icons/tilebottom.xpm"
+theme.layout_uselesstiletop         = theme.basedir .. "/layout-icons/tiletop.xpm"
+theme.layout_uselesspiral           = theme.basedir .. "/layout-icons/spiral.xpm"
 
 -- TITLEBAR
 
