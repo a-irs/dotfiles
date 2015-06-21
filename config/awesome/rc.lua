@@ -21,5 +21,3 @@ require 'awm-tags'
 require 'awm-bindings'
 require 'awm-statusbar'
 require 'awm-rules'
-
-awful.tag.viewonly(awful.tag.gettags(mouse.screen)[2])
