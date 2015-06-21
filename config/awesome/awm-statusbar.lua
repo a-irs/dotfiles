@@ -101,6 +101,9 @@ vicious.register(mpdwidget, vicious.widgets.mpd,
             return markup.bold(args["{Artist}"]) .. ' - ' .. args["{Title}"]
         end
     end, 2)
+mpdwidget:buttons(awful.util.table.join(
+                      awful.button({ }, 1, function() awful.util.spawn(user_terminal .. " -x ncmpcpp") end)
+))
 
 mywibox = {}
 mylayoutbox = {}
