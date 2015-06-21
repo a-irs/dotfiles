@@ -11,9 +11,10 @@ MODE2="1024x640"
 modeline=$(cvt 1024 640 | grep Modeline)
 modeline=${modeline/Modeline/}
 modeline=${modeline/_60.00/}
+modeline=${modeline//\"/}
 mode=$(echo "$modeline" | cut -d" " -f 2)
-xrandr --newmode $modeline
-xrandr --addmode "$OUTPUT" "$mode"
+echo xrandr --newmode "$modeline"
+echo xrandr --addmode "$OUTPUT" "$mode"
 
 CURRENT=$(DISPLAY=:0 xrandr -q | awk -F'current' -F',' 'NR==1 {gsub("( |current)","");print $2}')
 
