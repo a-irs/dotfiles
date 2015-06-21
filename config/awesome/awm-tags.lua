@@ -14,6 +14,7 @@ tyrannical.tags = {
         init        = true,
         exclusive   = true,
         mwfact      = 0.68,
+        no_autofocus = true,
         nmaster     = 1,
         class       = { "Firefox", "Chromium" }
     },
@@ -21,6 +22,7 @@ tyrannical.tags = {
         name        = "○",
         init        = true,
         exclusive   = true,
+        no_autofocus = true,
         nmaster     = 1,
         exec_once   = { user_terminal },
         class       = { "Urxvt", "Terminator", "Termite" }
@@ -29,12 +31,14 @@ tyrannical.tags = {
         name        = "○",
         init        = true,
         exclusive   = true,
+        no_autofocus = true,
         nmaster     = 1,
         class       = { "Subl3", "Atom" }
     },
     {   name        = "○",
         init        = true,
         nmaster     = 1,
+        no_autofocus = true,
         fallback    = true,
     },
 }

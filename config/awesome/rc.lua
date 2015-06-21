@@ -1,4 +1,5 @@
-local naughty    = require 'naughty'
+local naughty = require 'naughty'
+local awful   = require 'awful'
 
 function dbg(text)
     naughty.notify({ text = text, timeout = 0 })
@@ -20,3 +21,5 @@ require 'awm-bindings'
 require 'awm-statusbar'
 require 'awm-rules'
 require 'awm-notify-settings'
+
+awful.tag.viewonly(awful.tag.gettags(mouse.screen)[2])
