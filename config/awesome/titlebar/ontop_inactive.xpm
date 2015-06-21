@@ -2,7 +2,7 @@
 static char * ontop_inactive_xpm[] = {
 "29 32 2 1",
 " 	c None",
-".	c #6D6D6D",
+".	c #868686",
 "                             ",
 "                             ",
 "                             ",
