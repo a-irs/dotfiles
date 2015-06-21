@@ -14,14 +14,14 @@ tyrannical.tags = {
         init        = true,
         exclusive   = true,
         mwfact      = 0.68,
-        nmaster     = 2,
+        nmaster     = 1,
         class       = { "Firefox", "Chromium" }
     },
     {
         name        = "○",
         init        = true,
         exclusive   = true,
-        nmaster     = 2,
+        nmaster     = 1,
         exec_once   = { user_terminal },
         class       = { "Urxvt", "Terminator", "Termite" }
     },
@@ -29,12 +29,12 @@ tyrannical.tags = {
         name        = "○",
         init        = true,
         exclusive   = true,
-        nmaster     = 2,
+        nmaster     = 1,
         class       = { "Subl3", "Atom" }
     },
     {   name        = "○",
         init        = true,
-        nmaster     = 2,
+        nmaster     = 1,
         fallback    = true,
     },
 }

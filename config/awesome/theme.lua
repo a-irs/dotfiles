@@ -20,7 +20,7 @@ theme.border_width                  = 0
 theme.border_normal                 = theme.bg_normal
 theme.border_focus                  = theme.bg_focus
 
-theme.useless_gap_width             = 15
+theme.useless_gap_width             = 0
 
 -- WIDGETS
 
