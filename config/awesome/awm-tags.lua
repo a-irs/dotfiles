@@ -21,7 +21,7 @@ tyrannical.tags = {
         exclusive   = true,
         layout      = awful.layout.suit.tile.bottom,
         exec_once   = { user_terminal },
-        class       = { user_terminal, "urxvt", "terminator" }
+        class       = { user_terminal, "urxvt", "terminator", "termite" }
     },
     {
         name        = "○",

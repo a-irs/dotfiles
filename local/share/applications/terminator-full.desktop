@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Terminator (F12-Fullscreen)
-Exec=terminator --config /home/alex/.config/terminator/config-fullscreen -H -f
-Icon=terminator
-Type=Application
-Categories=GNOME;GTK;Utility;TerminalEmulator;System;
-StartupNotify=true
-Path=
-Terminal=false

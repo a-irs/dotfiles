@@ -1,0 +1,67 @@
+[options]
+scroll_on_output = false
+scroll_on_keystroke = true
+audible_bell = false
+mouse_autohide = true
+allow_bold = true
+dynamic_title = true
+urgent_on_bell = true
+clickable_url = true
+font = Input 9
+scrollback_lines = 10000
+search_wrap = true
+#icon_name = terminal
+#geometry = 640x480
+
+# "system", "on" or "off"
+cursor_blink = system
+
+# "block", "underline" or "ibeam"
+cursor_shape = block
+
+# $BROWSER is used by default
+#browser = firefox
+
+# emit escape sequences for other keys modified by Control
+#modify_other_keys = false
+
+[colors]
+cursor = #ffffff
+foreground = #fafafa
+foreground_bold = #ffffff
+background = #2c3643
+
+# 20% background transparency (requires a compositor)
+#background = rgba(63, 63, 63, 0.8)
+
+# if unset, will reverse foreground and background
+#highlight = #2f2f2f
+
+# colors from color0 to color254 can be set
+color0 = #3b3b3b
+color1 = #fa5641
+color2 = #b7ff71
+color3 = #fff073
+color4 = #b9d7f8
+color5 = #d1a8cd
+color6 = #43dddd
+color7 = #e0e0e0
+color8 = #6d7367
+color9 = #fa5641
+color10 = #b7ff71
+color11 = #fcec67
+color12 = #aed2fa
+color13 = #d1a8cd
+color14 = #43dddd
+color15 = #e0e0e0
+
+[hints]
+#font = Monospace 12
+#foreground = #dcdccc
+#background = #3f3f3f
+#active_foreground = #e68080
+#active_background = #3f3f3f
+#padding = 2
+#border = #3f3f3f
+#border_width = 0.5
+#roundness = 2.0

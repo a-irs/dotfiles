@@ -4,7 +4,7 @@ function dbg(text)
     naughty.notify({ text = text, timeout = 0 })
 end
 
-user_terminal    = "terminator"
+user_terminal    = "termite"
 user_browser     = "firefox"
 user_editor      = "subl3"
 user_filemanager = "thunar"

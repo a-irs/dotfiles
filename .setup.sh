@@ -66,7 +66,7 @@ dotfiles_x=(
     config/mpv/input.conf
     config/sublime-text-3/Packages/User
     config/terminator/config
-    config/terminator/config-fullscreen
+    config/termite/config
     config/user-dirs.dirs
     config/skippy-xd/skippy-xd.rc
     fonts
@@ -114,13 +114,6 @@ if [[ -f /usr/bin/xfconf-query ]]; then
     s xfwm4 /general/mousewheel_rollup false
     s xfwm4 /general/workspace_count 1
     print_info "set configs for Xfce"
-fi
-
-
-if [[ -f /usr/bin/terminator ]]; then
-    mklink "local/share/applications/terminator-full.desktop"
-else
-    rmlink "local/share/applications/terminator-full.desktop"
 fi
 
 if [[ -f /usr/bin/apm ]]; then
