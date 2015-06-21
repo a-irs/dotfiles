@@ -149,9 +149,24 @@ globalkeys = awful.util.table.join(
     awful.key({ win }, "z",
               function()
                   local screen = mouse.screen
-                  local tags = awful.tag.gettags(screen)
-                  awful.tag.viewmore(tags, screen)
-                  -- TODO: toggle: if all tags are selecte → awful.tag.history.restore()
+                  local all_tags = awful.tag.gettags(screen)
+                  local selected_tags = awful.tag.selectedlist(screen)
+
+                  local all_tags_count = 0
+                  for _ in pairs(all_tags) do
+                      all_tags_count = all_tags_count + 1
+                  end
+
+                  local selected_tags_count = 0
+                  for _ in pairs(selected_tags) do
+                      selected_tags_count = selected_tags_count + 1
+                  end
+
+                  if all_tags_count == selected_tags_count then
+                      awful.tag.history.restore()
+                  else
+                      awful.tag.viewmore(all_tags, screen)
+                  end
               end),
 
     -- change master/column count
