@@ -75,19 +75,29 @@ client.connect_signal("manage", function (c, startup)
 
         -- set widgets for left, middle, right
 
+        local layout1_1 = wibox.layout.fixed.horizontal()
+        layout1_1:add(awful.titlebar.widget.closebutton(c))
+        layout1_1:add(awful.titlebar.widget.floatingbutton(c))
+        layout1_1:add(awful.titlebar.widget.stickybutton(c))
+        layout1_1:add(awful.titlebar.widget.ontopbutton(c))
+
+        -- needed to allow mouse clicks on the blank space between buttons and window title
+        local layout1_2 = wibox.layout.flex.horizontal()
+        layout1_2:buttons(buttons)
+
         local layout1 = wibox.layout.fixed.horizontal()
-        layout1:add(awful.titlebar.widget.closebutton(c))
-        layout1:add(awful.titlebar.widget.floatingbutton(c))
-        layout1:add(awful.titlebar.widget.stickybutton(c))
-        layout1:add(awful.titlebar.widget.ontopbutton(c))
+        layout1:add(layout1_1)
+        layout1:add(layout1_2)
 
         local layout2 = wibox.layout.flex.horizontal()
         local title = awful.titlebar.widget.titlewidget(c)
         title:set_align("center")
         title:set_font(theme.titlebar_font)
         layout2:add(title)
+        layout2:buttons(buttons)
 
         local layout3 = wibox.layout.flex.horizontal()
+        layout3:buttons(buttons)
 
         -- build title bar
 
@@ -104,7 +114,6 @@ client.connect_signal("manage", function (c, startup)
         layout:add(align_left)
         layout:add(align_middle)
         layout:add(align_right)
-        layout:buttons(buttons)
 
         awful.titlebar(c, { size = theme.titlebar_height }):set_widget(layout)
     end

@@ -151,6 +151,7 @@ globalkeys = awful.util.table.join(
                   local screen = mouse.screen
                   local tags = awful.tag.gettags(screen)
                   awful.tag.viewmore(tags, screen)
+                  -- TODO: toggle: if all tags are selecte → awful.tag.history.restore()
               end),
 
     -- change master/column count
