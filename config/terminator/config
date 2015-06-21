@@ -89,7 +89,7 @@
     urgent_bell = True
     use_system_font = False
     cursor_color = "#ffffff"
-    foreground_color = "#fafafa"
+    foreground_color = "#fdfdfd"
     scroll_on_output = False
     show_titlebar = False
     copy_on_selection = True
