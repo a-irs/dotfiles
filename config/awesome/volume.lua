@@ -13,15 +13,6 @@ local function slurpcommand(cmd)
   return contents
 end
 
-function volume.get()
-  local volume = slurpcommand 'ponymix get-volume'
-  return tonumber(volume)
-end
-
-function volume.ismute()
-  return execute('ponymix is-muted') == 0
-end
-
 function volume.toggle()
   execute 'amixer set Master toggle'
   volumewidget.update()

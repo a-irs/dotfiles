@@ -4,6 +4,7 @@ local lain    = require 'lain'
 local naughty = require 'naughty'
 local alsa    = require 'alsa'
 local volume  = require 'volume'
+local vicious = require 'vicious'
 
 
 markup = lain.util.markup
@@ -91,6 +92,16 @@ speedwidget   = lain.widgets.net({
     end
 })
 
+mpdwidget = wibox.widget.textbox()
+vicious.register(mpdwidget, vicious.widgets.mpd,
+    function(mpdwidget, args)
+        if args["{state}"] == "Stop" or args["{state}"] == "Pause" then
+            return ""
+        else
+            return markup.bold(args["{Artist}"]) .. ' - ' .. args["{Title}"]
+        end
+    end, 2)
+
 mywibox = {}
 mylayoutbox = {}
 mypromptbox = {}
@@ -115,6 +126,7 @@ for s = 1, screen.count() do
 
     local layout1 = wibox.layout.fixed.horizontal()
     layout1:add(mylayoutbox[s])
+    layout1:add(mpdwidget)
     layout1:add(mypromptbox[s])
 
     local layout2 = wibox.layout.fixed.horizontal()
