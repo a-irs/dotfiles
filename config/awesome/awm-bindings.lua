@@ -10,16 +10,6 @@ revelation.init({tag_name = ''})
 win = "Mod4"
 alt = "Mod1"
 
-function toggle_useless()
-    if beautiful.useless_gap_width ~= 0 then
-        beautiful.useless_gap_width = 0
-    else
-        beautiful.useless_gap_width = theme.useless_gap_width
-    end
-    awful.layout.arrange(mouse.screen)
-end
-
-
 globalkeys = awful.util.table.join(
 
     -- focus windows
@@ -107,7 +97,6 @@ globalkeys = awful.util.table.join(
 
     awful.key({ win            }, "space", function() awful.layout.inc(layouts,  1) end),
     awful.key({ win, "Shift"   }, "space", function() awful.layout.inc(layouts, -1) end),
-    awful.key({ win }, "u", toggle_useless),
 
     -- launch programs
 
