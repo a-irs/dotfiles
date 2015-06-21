@@ -14,16 +14,14 @@
     ]
     autoHideMenuBar: true
   editor:
-    invisibles:
-      {}
+    invisibles: {}
     fontFamily: "Input"
     tabLength: 4
     confirmCheckoutHeadRevision: false
     scrollPastEnd: true
     lineHeight: 1.4
     fontSize: 12
-  "git-diff":
-    {}
+  "git-diff": {}
   "one-dark-ui":
     layoutMode: "Compact"
   "isotope-ui":
@@ -41,22 +39,17 @@
   tabs:
     usePreviewTabs: true
     enableVcsColoring: true
-  "autocomplete-plus":
-    {}
+  "autocomplete-plus": {}
   "autocomplete-python":
     addBracketAfterFunction: true
   "atom-terminal":
     app: "/usr/bin/terminator"
   "merge-conflicts":
     gitPath: "/usr/bin/git"
-  "markdown-preview":
-    {}
-  "status-bar":
-    {}
-  "tree-view-git-status":
-    {}
-  "git-plus":
-    {}
+  "markdown-preview": {}
+  "status-bar": {}
+  "tree-view-git-status": {}
+  "git-plus": {}
   Zen:
     softWrap: true
   pigments:
@@ -65,11 +58,9 @@
     ignoreWhitespaceOnCurrentLine: false
   "trailing-spaces":
     enableForCursorLines: true
-  "linter-shellcheck":
-    {}
+  "linter-shellcheck": {}
   linter:
     subtleLinterErrors: [
       "shellcheck"
     ]
-  "linter-flake8":
-    {}
+  "linter-flake8": {}

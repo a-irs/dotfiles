@@ -39,10 +39,6 @@ end
 
 -- client appears
 client.connect_signal("manage", function (c, startup)
-    -- floating clients don't overlap, cover the titlebar or get placed offscreen
-    awful.placement.no_overlap(c)
-    awful.placement.no_offscreen(c)
-    dynamic_tagging()
 
     -- sloppy focus
     c:connect_signal("mouse::enter", function(c)
@@ -51,12 +47,15 @@ client.connect_signal("manage", function (c, startup)
         end
     end)
 
+    -- floating clients don't overlap, cover the titlebar or get placed offscreen
     if not startup then
         if not c.size_hints.user_position and not c.size_hints.program_position then
             awful.placement.no_overlap(c)
             awful.placement.no_offscreen(c)
         end
     end
+
+    dynamic_tagging()
 
     -- titlebar
 
@@ -74,22 +73,38 @@ client.connect_signal("manage", function (c, startup)
                 end)
         )
 
-        local button_layout = wibox.layout.fixed.horizontal()
-        button_layout:add(awful.titlebar.widget.closebutton(c))
-        button_layout:add(awful.titlebar.widget.floatingbutton(c))
-        button_layout:add(awful.titlebar.widget.stickybutton(c))
-        button_layout:add(awful.titlebar.widget.ontopbutton(c))
+        -- set widgets for left, middle, right
 
-        local middle_layout = wibox.layout.flex.horizontal()
+        local layout1 = wibox.layout.fixed.horizontal()
+        layout1:add(awful.titlebar.widget.closebutton(c))
+        layout1:add(awful.titlebar.widget.floatingbutton(c))
+        layout1:add(awful.titlebar.widget.stickybutton(c))
+        layout1:add(awful.titlebar.widget.ontopbutton(c))
+
+        local layout2 = wibox.layout.flex.horizontal()
         local title = awful.titlebar.widget.titlewidget(c)
         title:set_align("center")
         title:set_font(theme.titlebar_font)
-        middle_layout:add(title)
-        middle_layout:buttons(buttons)
+        layout2:add(title)
 
-        local layout = wibox.layout.align.horizontal()
-        layout:set_left(button_layout)
-        layout:set_middle(middle_layout)
+        local layout3 = wibox.layout.flex.horizontal()
+
+        -- build title bar
+
+        local align_left = wibox.layout.align.horizontal()
+        align_left:set_left(layout1)
+
+        local align_middle = wibox.layout.align.horizontal()
+        align_middle:set_middle(layout2)
+
+        local align_right = wibox.layout.align.horizontal()
+        align_right:set_right(layout3)
+
+        local layout = wibox.layout.flex.horizontal()
+        layout:add(align_left)
+        layout:add(align_middle)
+        layout:add(align_right)
+        layout:buttons(buttons)
 
         awful.titlebar(c, { size = theme.titlebar_height }):set_widget(layout)
     end
