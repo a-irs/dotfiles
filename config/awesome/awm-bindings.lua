@@ -11,37 +11,12 @@ win = "Mod4"
 alt = "Mod1"
 
 function toggle_useless()
-    local curlayout = awful.layout.get()
-    local newlayout
-
-    if curlayout == lain.layout.uselesstile then
-        newlayout = awful.layout.suit.tile
+    if beautiful.useless_gap_width ~= 0 then
+        beautiful.useless_gap_width = 0
     else
-        newlayout = lain.layout.uselesstile
+        beautiful.useless_gap_width = theme.useless_gap_width
     end
-
-    local tags = awful.tag.gettags(mouse.screen)
-    for _, tag in ipairs(tags) do
-        awful.layout.set(newlayout, tag)
-    end
-
-    local text = "Layout: " .. awful.layout.getname()
-    naughty.notify({ text = text, timeout = 1 })
-end
-
-if hostname == "desktop" then toggle_useless() end
-
-function switch_layout(incr)
-    -- check if current layout is useless or not and shift matching layout table
-    local curlayout = awful.layout.getname()
-    if string.find(curlayout, "useless") then
-        awful.layout.inc(layouts_useless, incr)
-    else
-        awful.layout.inc(layouts, incr)
-    end
-
-    local text = "Layout: " .. awful.layout.getname()
-    naughty.notify({ text = text, timeout = 1 })
+    awful.layout.arrange(mouse.screen)
 end
 
 
@@ -130,8 +105,8 @@ globalkeys = awful.util.table.join(
 
     -- switch layouts
 
-    awful.key({ win            }, "space", function() switch_layout( 1) end),
-    awful.key({ win, "Shift"   }, "space", function() switch_layout(-1) end),
+    awful.key({ win            }, "space", function() awful.layout.inc(layouts,  1) end),
+    awful.key({ win, "Shift"   }, "space", function() awful.layout.inc(layouts, -1) end),
     awful.key({ win }, "u", toggle_useless),
 
     -- launch programs
@@ -253,10 +228,10 @@ for i = 1, 9 do
 end
 
 clientbuttons = awful.util.table.join(
-    awful.button({ },     1, function(c) client.focus = c; c:raise() end),
-    awful.button({ win }, 1, awful.mouse.client.move),
+    awful.button({ },     1,      function(c) client.focus = c; c:raise() end),
+    awful.button({ win }, 1,      awful.mouse.client.move),
     awful.button({ win, alt }, 1, awful.mouse.client.dragtotag.border),
-    awful.button({ win }, 3, awful.mouse.client.resize))
+    awful.button({ win }, 3,      awful.mouse.client.resize))
 
 root.buttons(awful.util.table.join(
     awful.button({ }, 4, awful.tag.viewnext),
