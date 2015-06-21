@@ -98,7 +98,7 @@ vicious.register(mpdwidget, vicious.widgets.mpd,
         if args["{state}"] == "Stop" or args["{state}"] == "Pause" then
             return ""
         else
-            return markup.bold(args["{Artist}"]) .. ' - ' .. args["{Title}"]
+            return markup(theme.widget_mpd_fg, markup.bold(args["{Artist}"]) .. ' - ' .. args["{Title}"])
         end
     end, 2)
 mpdwidget:buttons(awful.util.table.join(

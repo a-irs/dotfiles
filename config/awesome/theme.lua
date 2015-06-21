@@ -24,8 +24,9 @@ theme.useless_gap_width             = 0
 
 -- WIDGETS
 
+theme.widget_mpd_fg                 = "#bbbbbb"
 theme.widget_date_calendar_font     = "Input"
-theme.widget_date_fg                = "#c6c6c6"
+theme.widget_date_fg                = "#bbbbbb"
 theme.widget_alsa_fg                = "#c69dc2"
 theme.widget_alsa_mute_fg           = "#666666"
 theme.widget_yawn_fg                = "#ababab"
