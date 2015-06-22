@@ -50,9 +50,20 @@ function make_widget(script, timeout)
     return new_widget
 end
 
+
+-- BATTERY
+
 if hostname == "dell" then batterywidget = make_widget("battery.sh", 5) end
-if hostname == "dell" then netwidget     = make_widget("net.sh", 5) end
+
+-- NETWORK
+
+if hostname == "dell" then netwidget = make_widget("net.sh", 5) end
+
+-- DROPBOX
+
 dropboxwidget = make_widget("dropbox.sh", 5)
+
+-- VOLUME
 
 volumewidget = alsa({
     timeout = 5,
@@ -71,6 +82,8 @@ volumewidget.widget:buttons(awful.util.table.join(
        awful.button({ }, 3, function() volume.toggle()   end)  -- right click
 ))
 
+-- DATE, TIME
+
 datewidget = lain.widgets.base({
     timeout  = 2,
     cmd      = "date +'%a, %d.%m. %H:%M'",
@@ -86,17 +99,7 @@ lain.widgets.calendar:attach(datewidget, { font_size = theme.widget_calendar_fon
                                            bg = theme.widget_calendar_bg,
 })
 
-speedwidget   = lain.widgets.net({
-    notify = "off",
-    settings = function()
-        down_speed = math.floor(tonumber(net_now.received))
-        up_speed   = math.floor(tonumber(net_now.sent))
-        widget:set_markup(markup.bold(
-            markup(theme.widget_speed_down, " ↓ " .. down_speed)
-            .. " " ..
-            markup(theme.widget_speed_up, " ↑ " .. up_speed .. "   ")))
-    end
-})
+-- MPD
 
 mpdwidget = wibox.widget.textbox()
 vicious.register(mpdwidget, vicious.widgets.mpd,
@@ -111,6 +114,67 @@ mpdwidget:buttons(awful.util.table.join(
                       awful.button({ }, 1, function() awful.util.spawn(user_terminal .. " -x ncmpcpp") end)
 ))
 
+-- CPU
+
+cpuwidget = lain.widgets.cpu({
+    timeout = 2,
+    settings = function()
+        widget:set_markup(markup("#ff6997", "CPU: " .. markup.bold(markup.bold(cpu_now.usage .. "%   "))))
+    end
+})
+
+--- CPU FREQ
+
+cpufreq1widget = wibox.widget.textbox()
+vicious.register(cpufreq1widget, vicious.widgets.cpufreq, markup("#9f96ff", "CPU0: " .. markup.bold("$1 MHz  ")), 2, "cpu0")
+cpufreq2widget = wibox.widget.textbox()
+vicious.register(cpufreq2widget, vicious.widgets.cpufreq, markup("#9f96ff", "CPU1: " .. markup.bold("$1 MHz  ")), 2, "cpu1")
+
+-- MEM
+
+memwidget = wibox.widget.textbox()
+vicious.register(memwidget, vicious.widgets.mem, markup("#71ee5c", "RAM: " .. markup.bold("$1%  ")), 13)
+
+-- LOAD
+
+loadwidget = lain.widgets.sysload({
+    timeout = 2,
+    settings  = function()
+        widget:set_markup(markup("#80d9d8", "Load: " .. markup.bold(load_1 .. " " .. load_5 .. " " .. load_15 .. "   ")))
+    end
+})
+
+-- DISK I/O
+
+iowidget = wibox.widget.textbox()
+vicious.register(iowidget, vicious.widgets.dio,
+       markup(theme.widget_speed_down, "read: " .. markup.bold("${sda read_kb} KB/s "))
+    .. markup(theme.widget_speed_up, " write: " .. markup.bold("${sda write_kb} KB/s  ")), 2)
+
+-- NETWORK SPEED
+
+speedwidget = lain.widgets.net({
+    notify = "off",
+    settings = function()
+        down_speed = math.floor(tonumber(net_now.received))
+        up_speed   = math.floor(tonumber(net_now.sent))
+        widget:set_markup(
+            markup(theme.widget_speed_down, " ↓ DL: " .. markup.bold(down_speed))
+            .. " " ..
+            markup(theme.widget_speed_up, " ↑ UL: " .. markup.bold(up_speed) .. "   "))
+    end
+})
+
+-- CPU GRAPH
+
+cpugraphwidget = awful.widget.graph()
+cpugraphwidget:set_width(80)
+cpugraphwidget:set_background_color("#494B4F")
+cpugraphwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0, "#FF5656"}, {0.5, "#88A175"},
+                    {1, "#AECF96" }}})
+vicious.register(cpugraphwidget, vicious.widgets.cpu, "$1")
+
+
 mywibox = {}
 mylayoutbox = {}
 mypromptbox = {}
@@ -120,16 +184,57 @@ mytaglist.buttons = awful.util.table.join(
                         awful.button({ }, 3, awful.tag.viewtoggle)
                     )
 
+-- SYSTEM WIBOX
+
+systembox = {}
+local systembox_position = "bottom"
+if theme.statusbar_position == "bottom" then systembox_position = "top" end
+systembox[1] = awful.wibox.new({ position = systembox_position, screen = s, height = theme.statusbar_height })
+
+local systembox_layout_1 = wibox.layout.fixed.horizontal()
+systembox_layout_1:add(speedwidget)
+systembox_layout_1:add(iowidget)
+systembox_layout_1:add(memwidget)
+
+local systembox_layout_2 = wibox.layout.fixed.horizontal()
+systembox_layout_2:add(loadwidget)
+systembox_layout_2:add(cpufreq1widget)
+systembox_layout_2:add(cpufreq2widget)
+systembox_layout_2:add(cpuwidget)
+systembox_layout_2:add(cpugraphwidget)
+
+local systembox_align_left = wibox.layout.align.horizontal()
+systembox_align_left:set_left(systembox_layout_1)
+local systembox_align_right = wibox.layout.align.horizontal()
+systembox_align_right:set_right(systembox_layout_2)
+
+local systembox_layout_full = wibox.layout.flex.horizontal()
+systembox_layout_full:add(systembox_align_left)
+systembox_layout_full:add(systembox_align_right)
+systembox[1]:set_widget(systembox_layout_full)
+systembox[1].visible = false
+
+local function systembox_hide()
+    systembox[1].visible = false
+end
+local function systembox_show()
+    systembox[1].visible = true
+end
+
+
 for s = 1, screen.count() do
     mypromptbox[s] = awful.widget.prompt()
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
-    mywibox[s] = awful.wibox({ position = "top", screen = s, height = theme.statusbar_height })
+    mywibox[s] = awful.wibox({ position = theme.statusbar_position, screen = s, height = theme.statusbar_height })
     mylayoutbox[s] = awful.widget.layoutbox(s)
     mylayoutbox[s]:buttons(awful.util.table.join(
                        awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
                        awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
                        awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
                        awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
+    mylayoutbox[s]:connect_signal("mouse::enter", systembox_show)
+    mylayoutbox[s]:connect_signal("mouse::leave", systembox_hide)
+
 
     -- layouts
 
@@ -144,7 +249,6 @@ for s = 1, screen.count() do
     local layout3 = wibox.layout.fixed.horizontal()
     -- if s == 1 then layout3:add(wibox.widget.systray()) end
     layout3:add(dropboxwidget)
-    layout3:add(speedwidget)
     if netwidget then layout3:add(netwidget) end
     layout3:add(volumewidget)
     if batterywidget then layout3:add(batterywidget) end

@@ -3,6 +3,7 @@ theme                               = {}
 theme.basedir                       = os.getenv("HOME") .. "/.config/awesome"
 
 theme.statusbar_height              = 24
+theme.statusbar_position            = "top"
 
 -- FG, BG COLORS
 
