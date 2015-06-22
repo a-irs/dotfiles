@@ -1,10 +1,6 @@
 local naughty = require 'naughty'
 local awful   = require 'awful'
 
-function dbg(text)
-    naughty.notify({ text = text, timeout = 0 })
-end
-
 user_terminal    = "terminator"
 user_browser     = "firefox"
 user_editor      = "subl3"
@@ -14,6 +10,17 @@ hostname = io.popen("uname -n"):read()
 
 require 'awm-beautiful'
 require 'awm-notify-settings'
+
+function dbg(text)
+    naughty.notify({ text = text, timeout = 0 })
+end
+
+function dbg_crit(text)
+    naughty.notify({ preset = naughty.config.presets.critical, text = text, timeout = 0 })
+end
+
+dbg("NOOOO")
+
 require 'awm-error-handling'
 require 'awm-autostart'
 require 'awm-layouts'
