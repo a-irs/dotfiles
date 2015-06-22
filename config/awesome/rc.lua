@@ -19,8 +19,6 @@ function dbg_crit(text)
     naughty.notify({ preset = naughty.config.presets.critical, text = text, timeout = 0 })
 end
 
-dbg("NOOOO")
-
 require 'awm-error-handling'
 require 'awm-autostart'
 require 'awm-layouts'
