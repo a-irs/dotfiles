@@ -12,10 +12,10 @@ user_filemanager = "thunar"
 
 hostname = io.popen("uname -n"):read()
 
+require 'awm-beautiful'
 require 'awm-notify-settings'
 require 'awm-error-handling'
 require 'awm-autostart'
-require 'awm-beautiful'
 require 'awm-layouts'
 require 'awm-tags'
 require 'awm-bindings'

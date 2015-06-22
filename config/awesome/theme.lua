@@ -20,6 +20,24 @@ theme.border_focus                  = theme.bg_focus
 
 theme.useless_gap_width             = 0
 
+-- NOTIFICATIONS (NAUGHTY)
+
+theme.naughty_font                  = "Roboto Medium 8"
+theme.naughty_padding               = 12
+theme.naughty_spacing               = 12
+theme.naughty_border_width          = 6
+theme.naughty_timeout               = 4
+theme.naughty_position              = "top_right"
+
+theme.naughty_defaults_fg           = '#aaaaaa'
+theme.naughty_defaults_bg           = '#222a34'
+theme.naughty_defaults_border_color = theme.naughty_defaults_bg
+
+theme.naughty_critical_fg           = '#ffffff'
+theme.naughty_critical_bg           = '#fa5641'
+theme.naughty_critical_border_color = theme.naughty_critical_bg
+
+
 -- WIDGETS
 
 theme.font                          = "Ubuntu 8"
