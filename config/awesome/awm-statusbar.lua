@@ -119,28 +119,28 @@ mpdwidget:buttons(awful.util.table.join(
 cpuwidget = lain.widgets.cpu({
     timeout = 2,
     settings = function()
-        widget:set_markup(markup("#ff6997", "CPU: " .. markup.bold(markup.bold(cpu_now.usage .. "%   "))))
+        widget:set_markup(markup(theme.widget_cpu_fg, "CPU: " .. markup.bold(markup.bold(cpu_now.usage .. "%     "))))
     end
 })
 
 --- CPU FREQ
 
 cpufreq1widget = wibox.widget.textbox()
-vicious.register(cpufreq1widget, vicious.widgets.cpufreq, markup("#9f96ff", "CPU0: " .. markup.bold("$1 MHz  ")), 2, "cpu0")
+vicious.register(cpufreq1widget, vicious.widgets.cpufreq, markup(theme.widget_cpu_freq_fg, "CPU0: " .. markup.bold("$1 MHz   ")), 2, "cpu0")
 cpufreq2widget = wibox.widget.textbox()
-vicious.register(cpufreq2widget, vicious.widgets.cpufreq, markup("#9f96ff", "CPU1: " .. markup.bold("$1 MHz  ")), 2, "cpu1")
+vicious.register(cpufreq2widget, vicious.widgets.cpufreq, markup(theme.widget_cpu_freq_fg, "CPU1: " .. markup.bold("$1 MHz     ")), 2, "cpu1")
 
 -- MEM
 
 memwidget = wibox.widget.textbox()
-vicious.register(memwidget, vicious.widgets.mem, markup("#71ee5c", "RAM: " .. markup.bold("$1%  ")), 13)
+vicious.register(memwidget, vicious.widgets.mem, markup(theme.widget_mem_fg, "RAM: " .. markup.bold("$1%     ")), 5)
 
 -- LOAD
 
 loadwidget = lain.widgets.sysload({
     timeout = 2,
     settings  = function()
-        widget:set_markup(markup("#80d9d8", "Load: " .. markup.bold(load_1 .. " " .. load_5 .. " " .. load_15 .. "   ")))
+        widget:set_markup(markup(theme.widget_load_fg, "Load: " .. markup.bold(load_1 .. " " .. load_5 .. " " .. load_15 .. "     ")))
     end
 })
 
@@ -148,8 +148,8 @@ loadwidget = lain.widgets.sysload({
 
 iowidget = wibox.widget.textbox()
 vicious.register(iowidget, vicious.widgets.dio,
-       markup(theme.widget_speed_down, "read: " .. markup.bold("${sda read_kb} KB/s "))
-    .. markup(theme.widget_speed_up, " write: " .. markup.bold("${sda write_kb} KB/s  ")), 2)
+       markup(theme.widget_disk_read_fg, "read: " .. markup.bold("${sda read_kb} KB/s "))
+    .. markup(theme.widget_disk_write_fg, " write: " .. markup.bold("${sda write_kb} KB/s    ")), 2)
 
 -- NETWORK SPEED
 
@@ -161,7 +161,7 @@ speedwidget = lain.widgets.net({
         widget:set_markup(
             markup(theme.widget_speed_down, " ↓ DL: " .. markup.bold(down_speed))
             .. " " ..
-            markup(theme.widget_speed_up, " ↑ UL: " .. markup.bold(up_speed) .. "   "))
+            markup(theme.widget_speed_up, " ↑ UL: " .. markup.bold(up_speed) .. "     "))
     end
 })
 
@@ -169,9 +169,8 @@ speedwidget = lain.widgets.net({
 
 cpugraphwidget = awful.widget.graph()
 cpugraphwidget:set_width(80)
-cpugraphwidget:set_background_color("#494B4F")
-cpugraphwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0, "#FF5656"}, {0.5, "#88A175"},
-                    {1, "#AECF96" }}})
+cpugraphwidget:set_background_color(theme.widget_cpu_graph_bg)
+cpugraphwidget:set_color(theme.widget_cpu_graph_fg)
 vicious.register(cpugraphwidget, vicious.widgets.cpu, "$1")
 
 
@@ -189,7 +188,7 @@ mytaglist.buttons = awful.util.table.join(
 systembox = {}
 local systembox_position = "bottom"
 if theme.statusbar_position == "bottom" then systembox_position = "top" end
-systembox[1] = awful.wibox.new({ position = systembox_position, screen = s, height = theme.statusbar_height })
+systembox[1] = awful.wibox({ position = systembox_position, screen = s, height = theme.statusbar_height })
 
 local systembox_layout_1 = wibox.layout.fixed.horizontal()
 systembox_layout_1:add(speedwidget)

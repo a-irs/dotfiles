@@ -43,6 +43,7 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 
 theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "Ubuntu 7"
+
 theme.widget_mpd_fg                 = "#cfcfcf"
 theme.widget_calendar_font          = "Input"
 theme.widget_calendar_font_size     = "8"
@@ -52,8 +53,17 @@ theme.widget_date_fg                = "#cfcfcf"
 theme.widget_alsa_fg                = "#c69dc2"
 theme.widget_alsa_mute_fg           = "#666666"
 theme.widget_yawn_fg                = "#ababab"
-theme.widget_speed_down             = "#ffc350"
-theme.widget_speed_up               = "#ff8a5a"
+theme.widget_speed_down             = "#ff8a5a"
+theme.widget_speed_up               = theme.widget_speed_down
+theme.widget_cpu_fg                 = "#ff6997"
+theme.widget_cpu_graph_fg           = theme.widget_cpu_fg
+theme.widget_cpu_graph_bg           = "#3d4b5c"
+theme.widget_cpu_freq_fg            = "#9f96ff"
+theme.widget_mem_fg                 = "#71ee5c"
+theme.widget_load_fg                = "#80d9d8"
+theme.widget_disk_read_fg           = "#ffc350"
+theme.widget_disk_write_fg          = theme.widget_disk_read_fg
+
 
 -- LAYOUT ICONS
 

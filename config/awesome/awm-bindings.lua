@@ -130,10 +130,14 @@ globalkeys = awful.util.table.join(
     awful.key({ win, "Shift" }, "r", awesome.restart),
     awful.key({ win, "Ctrl"  }, "r", awesome.restart),
 
-    -- toggle status bar
+    -- toggle status bars
 
     awful.key({ win }, "b", function()
         mywibox[mouse.screen].visible = not mywibox[mouse.screen].visible
+    end),
+
+    awful.key({ win }, "n", function()
+        systembox[mouse.screen].visible = not systembox[mouse.screen].visible
     end),
 
     -- expose
