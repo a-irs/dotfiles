@@ -111,7 +111,7 @@ vicious.register(mpdwidget, vicious.widgets.mpd,
         end
     end, 2)
 mpdwidget:buttons(awful.util.table.join(
-                      awful.button({ }, 1, function() awful.util.spawn(user_terminal .. " -x ncmpcpp") end)
+                      awful.button({ }, 1, function() awful.util.spawn("ario") end)
 ))
 
 -- CPU

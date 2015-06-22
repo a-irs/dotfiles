@@ -35,6 +35,14 @@ tyrannical.tags = {
         nmaster     = 1,
         class       = { "Subl3", "Atom" }
     },
+    {
+        name         = "○",
+        init         = false,
+        exclusive    = true,
+        no_autofocus = true,
+        nmaster      = 1,
+        class        = { "VirtualBox" }
+    },
     {   name        = "○",
         init        = true,
         nmaster     = 1,
