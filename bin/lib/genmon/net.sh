@@ -91,12 +91,14 @@ if [[ $total == 0 ]]; then
         image="$HOME/.bin/lib/genmon/img/wifi_off.png"
     fi
 else
+    [[ $1 == awesome ]] && echo -n "  "
     for item in "${txt[@]}"; do
         echo -n "$item"
         [[ $TMUX ]] && continue
         [[ "$count" == "$total" ]] || echo -n " + "
         count=$((count+1))
     done
+    [[ $1 == awesome ]] && echo -n "   "
 fi
 [[ $TMUX || $1 == awesome ]] || echo "</txt><click>terminator -m -e 'ip addr;read'</click>"
 

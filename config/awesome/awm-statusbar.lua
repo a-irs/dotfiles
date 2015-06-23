@@ -57,7 +57,7 @@ if hostname == "dell" then batterywidget = make_widget("battery.sh", 5) end
 
 -- NETWORK
 
-if hostname == "dell" then netwidget = make_widget("net.sh", 5) end
+netwidget = make_widget("net.sh", 5)
 
 -- DROPBOX
 
@@ -191,10 +191,10 @@ if theme.statusbar_position == "bottom" then systembox_position = "top" end
 systembox[1] = awful.wibox({ position = systembox_position, screen = s, height = theme.statusbar_height })
 
 local systembox_layout_1 = wibox.layout.fixed.horizontal()
+systembox_layout_1:add(netwidget)
 systembox_layout_1:add(speedwidget)
 systembox_layout_1:add(iowidget)
 systembox_layout_1:add(memwidget)
-if netwidget then systembox_layout_1:add(netwidget) end
 
 local systembox_layout_2 = wibox.layout.fixed.horizontal()
 systembox_layout_2:add(loadwidget)
