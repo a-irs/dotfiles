@@ -22,7 +22,7 @@ if [[ $devs == *$'\nwlan'* ]] || [[ $devs == *$'\nwlp'* ]]; then
     if [[ $TMUX ]]; then
         txt+=("#[bg=$color_tmux,fg=colour235] $ssid #[default]")
     elif [[ $1 == awesome ]]; then
-        txt+=("<span foreground='$color'>$ssid</span>")
+        txt+=("<span foreground='$color'>SSID: <b>$ssid</b></span>")
     else
         txt+=("<span weight='bold' fgcolor='$color'>$ssid</span>")
     fi
@@ -36,7 +36,7 @@ if [[ $devs == *$'\neth'* ]] || [[ $devs == *$'\nenp'* ]]; then
     if [[ $TMUX ]]; then
         txt+=("#[bg=$color_tmux,fg=colour235] $speed #[default]")
     elif [[ $1 == awesome ]]; then
-        txt+=("<span foreground='$color'>$speed</span>")
+        txt+=("<span foreground='$color'>Speed: <b>$speed</b></span>")
     else
         txt+=("<span weight='bold' fgcolor='$color'>$speed</span>")
     fi
@@ -46,7 +46,7 @@ if [[ $devs == *$'\nusb'* ]]; then
     if [[ $TMUX ]]; then
         txt+=("#[bg=$color_tmux,fg=colour235] USB #[default]")
     elif [[ $1 == awesome ]]; then
-        txt+=("<span foreground='$color'>USB</span>")
+        txt+=("<span foreground='$color'><b>USB</b></span>")
     else
         txt+=("<span weight='bold' fgcolor='$color'>USB</span>")
     fi
@@ -56,7 +56,7 @@ if [ -f /tmp/sshuttle.pid ]; then
     if [[ $TMUX ]]; then
         txt+=("#[bg=$vpn_color_tmux,fg=colour235] sshuttle #[default]")
     elif [[ $1 == awesome ]]; then
-        txt+=("<span foreground='$vpn_color'>sshuttle</span>")
+        txt+=("<span foreground='$vpn_color'><b>sshuttle</b></span>")
     else
         txt+=("<span weight='bold' fgcolor='$vpn_color'>sshuttle</span>")
     fi
@@ -71,7 +71,7 @@ if [[ $devs == *$'\ntun'* ]] || [[ $devs == *$'\ntap'* ]]; then
         if [[ $TMUX ]]; then
             txt+=("#[bg=$vpn_color_tmux,fg=colour235] $vpn_profile #[default]")
         elif [[ $1 == awesome ]]; then
-            txt+=("<span foreground='$vpn_color'>$vpn_profile</span>")
+            txt+=("<span foreground='$vpn_color'><b>$vpn_profile</b></span>")
         else
             txt+=("<span weight='bold' fgcolor='$vpn_color'>$vpn_profile</span>")
        fi
@@ -91,14 +91,12 @@ if [[ $total == 0 ]]; then
         image="$HOME/.bin/lib/genmon/img/wifi_off.png"
     fi
 else
-    [[ $1 == awesome ]] && echo -n "<b>"
     for item in "${txt[@]}"; do
         echo -n "$item"
         [[ $TMUX ]] && continue
         [[ "$count" == "$total" ]] || echo -n " + "
         count=$((count+1))
     done
-    [[ $1 == awesome ]] && echo -n "</b>   "
 fi
 [[ $TMUX || $1 == awesome ]] || echo "</txt><click>terminator -m -e 'ip addr;read'</click>"
 

@@ -71,7 +71,7 @@ volumewidget = alsa({
         if volume_now.status == "off" then
             widget:set_markup(markup.bold(markup(theme.widget_alsa_mute_fg, volume_now.level .. "   ")))
         else
-            widget:set_markup(markup.bold(markup(theme.widget_alsa_fg, volume_now.level .. "   ")))
+            widget:set_markup(markup.bold(markup(theme.widget_alsa_fg, "♫ " .. volume_now.level .. "   ")))
         end
     end
 })
@@ -194,6 +194,7 @@ local systembox_layout_1 = wibox.layout.fixed.horizontal()
 systembox_layout_1:add(speedwidget)
 systembox_layout_1:add(iowidget)
 systembox_layout_1:add(memwidget)
+if netwidget then systembox_layout_1:add(netwidget) end
 
 local systembox_layout_2 = wibox.layout.fixed.horizontal()
 systembox_layout_2:add(loadwidget)
@@ -248,7 +249,6 @@ for s = 1, screen.count() do
 
     local layout3 = wibox.layout.fixed.horizontal()
     layout3:add(dropboxwidget)
-    if netwidget then layout3:add(netwidget) end
     layout3:add(volumewidget)
     if batterywidget then layout3:add(batterywidget) end
     layout3:add(datewidget)
