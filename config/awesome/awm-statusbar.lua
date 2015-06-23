@@ -148,8 +148,8 @@ loadwidget = lain.widgets.sysload({
 
 iowidget = wibox.widget.textbox()
 vicious.register(iowidget, vicious.widgets.dio,
-       markup(theme.widget_disk_read_fg, "read: " .. markup.bold("${sda read_kb} KB/s "))
-    .. markup(theme.widget_disk_write_fg, " write: " .. markup.bold("${sda write_kb} KB/s    ")), 2)
+       markup(theme.widget_disk_read_fg, "read: " .. markup.bold("${sda read_mb} MB/s "))
+    .. markup(theme.widget_disk_write_fg, " write: " .. markup.bold("${sda write_mb} MB/s    ")), 2)
 
 -- NETWORK SPEED
 
@@ -201,6 +201,7 @@ systembox_layout_2:add(cpufreq1widget)
 systembox_layout_2:add(cpufreq2widget)
 systembox_layout_2:add(cpuwidget)
 systembox_layout_2:add(cpugraphwidget)
+systembox_layout_2:add(wibox.widget.systray())
 
 local systembox_align_left = wibox.layout.align.horizontal()
 systembox_align_left:set_left(systembox_layout_1)
@@ -246,7 +247,6 @@ for s = 1, screen.count() do
     layout2:add(mytaglist[s])
 
     local layout3 = wibox.layout.fixed.horizontal()
-    -- if s == 1 then layout3:add(wibox.widget.systray()) end
     layout3:add(dropboxwidget)
     if netwidget then layout3:add(netwidget) end
     layout3:add(volumewidget)
