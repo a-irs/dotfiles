@@ -6,6 +6,9 @@ local lain       = require 'lain'
 tyrannical.settings.block_children_focus_stealing = true
 tyrannical.settings.group_children                = true
 tyrannical.settings.mwfact                        = 0.5
+if hostname == "desktop" then
+    tyrannical.settings.mwfact                        = 0.68
+end
 tyrannical.settings.default_layout                = lain.layout.uselesstile
 
 tyrannical.tags = {
@@ -13,7 +16,6 @@ tyrannical.tags = {
         name        = "○",
         init        = true,
         exclusive   = true,
-        mwfact      = 0.68,
         no_autofocus = true,
         nmaster     = 1,
         class       = { "Firefox", "Chromium" }
