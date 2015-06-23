@@ -243,8 +243,6 @@ clientbuttons = awful.util.table.join(
     awful.button({ win }, 3,      awful.mouse.client.resize))
 
 root.buttons(awful.util.table.join(
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev),
     awful.button({ win }, 4, function()
       if beautiful.useless_gap_width <= 4 then
         lain.util.useless_gaps_resize(-beautiful.useless_gap_width)

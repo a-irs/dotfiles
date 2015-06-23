@@ -308,6 +308,7 @@ if [[ -d ~/.dotfiles ]]; then
             cdr
         else
             cd ~/.dotfiles
+            git s
         fi
 }
 fi
