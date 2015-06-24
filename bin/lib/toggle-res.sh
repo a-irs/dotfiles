@@ -13,8 +13,8 @@ modeline=${modeline/Modeline/}
 modeline=${modeline/_60.00/}
 modeline=${modeline//\"/}
 mode=$(echo "$modeline" | cut -d" " -f 2)
-echo xrandr --newmode "$modeline"
-echo xrandr --addmode "$OUTPUT" "$mode"
+xrandr --newmode $modeline
+xrandr --addmode "$OUTPUT" "$mode"
 
 CURRENT=$(DISPLAY=:0 xrandr -q | awk -F'current' -F',' 'NR==1 {gsub("( |current)","");print $2}')
 
