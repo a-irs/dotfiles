@@ -6,7 +6,7 @@ local lain       = require 'lain'
 tyrannical.settings.block_children_focus_stealing = true
 tyrannical.settings.group_children                = true
 tyrannical.settings.mwfact                        = 0.5
-if hostname == "desktop" then
+if not compact_display then
     tyrannical.settings.mwfact                        = 0.68
 end
 tyrannical.settings.default_layout                = lain.layout.uselesstile

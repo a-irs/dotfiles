@@ -95,7 +95,7 @@ theme.titlebar_floating_button_normal_active   = theme.basedir .. "/titlebar/unf
 
 -- HOST-SPECIFIC SETTINGS
 
-if hostname == "desktop" then
+if not compact_display then
     theme.useless_gap_width         = 24
 end
 

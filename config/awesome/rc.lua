@@ -7,6 +7,8 @@ user_editor      = "subl3"
 user_filemanager = "thunar"
 
 hostname = io.popen("uname -n"):read()
+local vertical_resolution = tonumber(io.popen("xrandr | grep \\* | awk '{print $1}' | cut -dx -f 2"):read())
+compact_display = vertical_resolution < 1000
 
 require 'awm-beautiful'
 require 'awm-notify-settings'

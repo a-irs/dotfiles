@@ -118,8 +118,7 @@ client.connect_signal("manage", function (c, startup)
         awful.titlebar(c, { size = theme.titlebar_height }):set_widget(layout)
     end
 
-    -- hide titlebar by default on laptop
-    if hostname ~= "desktop" then awful.titlebar.hide(c) end
+    if compact_display then awful.titlebar.hide(c) end
 end)
 
 -- client exits
