@@ -1,9 +1,0 @@
-{
-	"disabled_for":
-	[
-		"md"
-	],
-	"lightness": 0.8,
-	"saturation": 0.5,
-	"use_fast_highlighting_but_undo_typing_letterwise": false
-}

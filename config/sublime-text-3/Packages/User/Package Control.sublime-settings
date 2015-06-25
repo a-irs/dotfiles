@@ -6,19 +6,10 @@
 	"installed_packages":
 	[
 		"All Autocomplete",
-		"Anaconda",
-		"BracketHighlighter",
-		"Colorcoder",
-		"Dockerfile Syntax Highlighting",
 		"Dotfiles Syntax Highlighting",
-		"Future Funk - Color Scheme",
 		"Generic Config",
 		"GitGutter-Edge",
-		"GitLink",
-		"Handlebars",
 		"Inc-Dec-Value",
-		"iOpener",
-		"LaTeXTools",
 		"Markdown Extended",
 		"MarkdownLight",
 		"Marking Changed Rows",
@@ -27,8 +18,7 @@
 		"SublimeLinter",
 		"SublimeLinter-lua",
 		"SublimeLinter-shellcheck",
-		"Theme - Hero",
-		"Themr"
+		"Theme - Hero"
 	],
 	"submit_usage": false
 }
