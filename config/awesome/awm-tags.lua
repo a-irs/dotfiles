@@ -85,3 +85,7 @@ tyrannical.properties.sticky = {
 tyrannical.properties.master = {
     "Firefox", "Atom",
 }
+
+tyrannical.properties.fullscreen = {
+    "Kodi",
+}
