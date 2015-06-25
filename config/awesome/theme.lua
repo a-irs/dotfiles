@@ -75,8 +75,13 @@ theme.layout_uselesspiral           = theme.basedir .. "/layout-icons/spiral.xpm
 
 -- TITLEBAR
 
-theme.titlebar_height  = 24
-theme.titlebar_font    = "Roboto Bold 8"
+theme.titlebar_height                          = 24
+theme.titlebar_font                            = "Roboto Bold 8"
+
+theme.titlebar_fg_normal                       = theme.fg_normal
+theme.titlebar_fg_focus                        = theme.fg_focus
+theme.titlebar_bg_normal                       = theme.bg_normal
+theme.titlebar_bg_focus                        = theme.bg_focus
 
 theme.titlebar_close_button_focus              = theme.basedir .. "/titlebar/close.xpm"
 theme.titlebar_close_button_normal             = theme.basedir .. "/titlebar/unfocused_inactive.xpm"
