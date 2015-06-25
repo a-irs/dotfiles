@@ -10,7 +10,6 @@ theme.statusbar_position            = "top"
 theme.bg_normal                     = "#2c3643"
 theme.bg_focus                      = theme.bg_normal
 theme.bg_urgent                     = "#aa0000"
-theme.bg_systray                    = theme.bg_normal
 theme.fg_normal                     = "#aaaaaa"
 theme.fg_focus                      = "#eeeeee"
 theme.fg_urgent                     = "#af1d18"
@@ -44,6 +43,7 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "Ubuntu 7"
 
+theme.bg_systray                    = theme.bg_normal
 theme.widget_mpd_fg                 = "#cfcfcf"
 theme.widget_calendar_font          = "Input"
 theme.widget_calendar_font_size     = "8"
