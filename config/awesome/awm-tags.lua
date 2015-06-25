@@ -46,7 +46,6 @@ tyrannical.tags = {
         name         = "○",
         init         = false,
         exclusive    = true,
-        no_autofocus = true,
         nmaster      = default_nmaster,
         class        = { "VirtualBox" }
     },
@@ -55,6 +54,11 @@ tyrannical.tags = {
         nmaster      = default_nmaster,
         no_autofocus = true,
         fallback     = true,
+    },
+    {   name         = "kodi",
+        init         = false,
+        layout       = awful.layout.suit.max.fullscreen,
+        class        = { "Kodi" }
     },
 }
 -- Ignore the tag "exclusive" property for the following clients (matched by classes)
