@@ -6,50 +6,55 @@ local lain       = require 'lain'
 tyrannical.settings.block_children_focus_stealing = true
 tyrannical.settings.group_children                = true
 tyrannical.settings.mwfact                        = 0.5
-if not compact_display then
-    tyrannical.settings.mwfact                        = 0.68
-end
 tyrannical.settings.default_layout                = lain.layout.uselesstile
+default_nmaster                                   = 1
+
+if not compact_display then
+    tyrannical.settings.mwfact                    = 0.68
+    default_nmaster                               = 2
+end
+
 
 tyrannical.tags = {
     {
-        name        = "○",
-        init        = true,
-        exclusive   = true,
+        name         = "○",
+        init         = true,
+        exclusive    = true,
         no_autofocus = true,
-        nmaster     = 1,
-        class       = { "Firefox", "Chromium" }
+        nmaster      = default_nmaster,
+        class        = { "Firefox", "Chromium" }
     },
     {
-        name        = "○",
-        init        = true,
-        exclusive   = true,
+        name         = "○",
+        init         = true,
+        exclusive    = true,
         no_autofocus = true,
-        nmaster     = 1,
-        exec_once   = { user_terminal },
-        class       = { "Urxvt", "Terminator", "Termite" }
+        nmaster      = default_nmaster,
+        layout       = lain.layout.uselesstile.top,
+        exec_once    = { user_terminal },
+        class        = { "Urxvt", "Terminator", "Termite" }
     },
     {
-        name        = "○",
-        init        = true,
-        exclusive   = true,
+        name         = "○",
+        init         = true,
+        exclusive    = true,
         no_autofocus = true,
-        nmaster     = 1,
-        class       = { "Subl3", "Atom" }
+        nmaster      = default_nmaster,
+        class        = { "Subl3", "Atom" }
     },
     {
         name         = "○",
         init         = false,
         exclusive    = true,
         no_autofocus = true,
-        nmaster      = 1,
+        nmaster      = default_nmaster,
         class        = { "VirtualBox" }
     },
-    {   name        = "○",
-        init        = true,
-        nmaster     = 1,
+    {   name         = "○",
+        init         = true,
+        nmaster      = default_nmaster,
         no_autofocus = true,
-        fallback    = true,
+        fallback     = true,
     },
 }
 -- Ignore the tag "exclusive" property for the following clients (matched by classes)
