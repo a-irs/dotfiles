@@ -24,11 +24,6 @@
   "git-diff": {}
   "one-dark-ui":
     layoutMode: "Compact"
-  "isotope-ui":
-    fontWeight: "Regular"
-    minimalMode: true
-    fontFamily: "System Default"
-    matchEditorFont: true
   minimap:
     plugins:
       "git-diff": true
@@ -37,8 +32,9 @@
       "find-and-replace": true
       linter: true
   tabs:
-    usePreviewTabs: true
+    showIcons: false
     enableVcsColoring: true
+    usePreviewTabs: true
   "autocomplete-plus": {}
   "autocomplete-python":
     addBracketAfterFunction: true
