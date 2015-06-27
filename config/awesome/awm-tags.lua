@@ -63,23 +63,23 @@ tyrannical.tags = {
 }
 -- Ignore the tag "exclusive" property for the following clients (matched by classes)
 tyrannical.properties.intrusive = {
-    "Kupfer.py", "Gtksu", "Pinentry", "Gcolor2", "Gcolor3", "Colorgrab",
+    "Kupfer.py", "Gtksu", "Pinentry", "Gcolor2", "Gcolor3", "Colorgrab", "Xfce4-appfinder",
 }
 -- Ignore the tiled layout for the matching clients
 tyrannical.properties.floating = {
-    "Pinentry", "Plugin-container", "Gcolor3", "Colorgrab",
+    "Pinentry", "Plugin-container", "Gcolor3", "Colorgrab", "Xfce4-appfinder",
 }
 -- Make the matching clients (by classes) on top of the default layout
 tyrannical.properties.ontop = {
-    "Pinentry", "Plugin-container", "Gcolor2", "Gcolor3", "Colorgrab",
+    "Pinentry", "Plugin-container", "Gcolor2", "Gcolor3", "Colorgrab", "Xfce4-appfinder",
 }
 -- Force the matching clients (by classes) to be centered on the screen on init
 tyrannical.properties.centered = {
-    "Gcolor2", "Gcolor3", "Colorgrab",
+    "Gcolor2", "Gcolor3", "Colorgrab", "Xfce4-appfinder",
 }
 
 tyrannical.properties.sticky = {
-    "Gcolor2", "Gcolor3", "Colorgrab",
+    "Gcolor2", "Gcolor3", "Colorgrab", "Xfce4-appfinder",
 }
 
 tyrannical.properties.master = {
