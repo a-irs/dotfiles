@@ -4,13 +4,10 @@ autocomplete-paths
 autocomplete-python
 chester-atom-syntax
 color-picker
-dracula-theme
 git-control
 git-plus
 gutter-shadow
 highlight-selected
-isotope-light-ui
-isotope-ui
 language-docker
 language-generic-config
 language-lua
