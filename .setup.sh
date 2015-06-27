@@ -117,7 +117,7 @@ if [[ -f /usr/bin/xfconf-query ]]; then
 fi
 
 if [[ -f /usr/bin/apm ]]; then
-    new_packages=$(comm -23 <(cat "$this_dir/atom/PACKAGES.txt" | sort) <(apm ls -b -i | sort))
+    new_packages=$(comm -23 <(cat "$this_dir/atom/PACKAGES.txt" | sort) <(apm ls -b -i | cut -d@ -f 1 | sort))
     [[ -n "$new_packages" ]] && apm install $new_packages
 fi
 
