@@ -18,7 +18,7 @@ theme.border_width                  = 0
 theme.border_normal                 = theme.bg_normal
 theme.border_focus                  = theme.bg_focus
 
-theme.useless_gap_width_normal      = 24
+theme.useless_gap_width_normal      = vertical_resolution/50
 theme.useless_gap_width_compact     = 0
 
 -- NOTIFICATIONS (NAUGHTY)
