@@ -9,7 +9,7 @@ local programs = {
    'mpd',
    'bash -c "pgrep -x lxpolkit || lxpolkit"',
    'bash -c "pgrep -x redshift || redshift"',
-   'mkdir -p ' .. os.getenv("HOME") .. '.thumbnails',
+   'mkdir -p ' .. os.getenv("HOME") .. '/.thumbnails',
    'ln -sf ' .. os.getenv("HOME") .. '/.thumbnails ' .. os.getenv("HOME") .. '/.cache/thumbnails',
    'ln -sf ' .. os.getenv("HOME") .. '/.rofi-2.runcache ' .. os.getenv("HOME") .. '/.cache/rofi-2.runcache',
    'xset -dpms ; xset s off',

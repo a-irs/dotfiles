@@ -20,7 +20,6 @@ tyrannical.tags = {
         name         = "○",
         init         = true,
         exclusive    = true,
-        no_autofocus = true,
         nmaster      = default_nmaster,
         class        = { "Firefox", "Chromium" }
     },
@@ -28,7 +27,6 @@ tyrannical.tags = {
         name         = "○",
         init         = true,
         exclusive    = true,
-        no_autofocus = true,
         nmaster      = default_nmaster,
         layout       = lain.layout.uselesstile.top,
         exec_once    = { user_terminal },
@@ -38,7 +36,6 @@ tyrannical.tags = {
         name         = "○",
         init         = true,
         exclusive    = true,
-        no_autofocus = true,
         nmaster      = default_nmaster,
         class        = { "Subl3", "Atom" }
     },
@@ -52,7 +49,6 @@ tyrannical.tags = {
     {   name         = "○",
         init         = true,
         nmaster      = default_nmaster,
-        no_autofocus = true,
         fallback     = true,
     },
     {   name         = "kodi",
