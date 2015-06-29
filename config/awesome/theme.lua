@@ -18,7 +18,8 @@ theme.border_width                  = 0
 theme.border_normal                 = theme.bg_normal
 theme.border_focus                  = theme.bg_focus
 
-theme.useless_gap_width             = 0
+theme.useless_gap_width_normal      = 24
+theme.useless_gap_width_compact     = 0
 
 -- NOTIFICATIONS (NAUGHTY)
 
@@ -100,8 +101,10 @@ theme.titlebar_floating_button_normal_active   = theme.basedir .. "/titlebar/unf
 
 -- HOST-SPECIFIC SETTINGS
 
-if not compact_display then
-    theme.useless_gap_width         = 24
+if compact_display then
+    theme.useless_gap_width = theme.useless_gap_width_compact
+else
+    theme.useless_gap_width = theme.useless_gap_width_normal
 end
 
 
