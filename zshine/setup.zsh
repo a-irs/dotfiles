@@ -31,7 +31,7 @@ autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ':chpwd:*' recent-dirs-file ~/.zsh_recent-dirs +
 
-zstyle ":completion:*:commands" rehash 1 # always rehash on completion
+zstyle ':completion:*' rehash true # always rehash on completion
 
 export GREP_COLOR='1;32'
 export EDITOR="nano"

@@ -126,9 +126,9 @@ cpuwidget = lain.widgets.cpu({
 --- CPU FREQ
 
 cpufreq1widget = wibox.widget.textbox()
-vicious.register(cpufreq1widget, vicious.widgets.cpufreq, markup(theme.widget_cpu_freq_fg, "CPU0: " .. markup.bold("$1 MHz   ")), 2, "cpu0")
+vicious.register(cpufreq1widget, vicious.widgets.cpufreq, markup(theme.widget_cpu_freq_fg, "CPU0: " .. markup.bold("$2 Ghz   ")), 2, "cpu0")
 cpufreq2widget = wibox.widget.textbox()
-vicious.register(cpufreq2widget, vicious.widgets.cpufreq, markup(theme.widget_cpu_freq_fg, "CPU1: " .. markup.bold("$1 MHz     ")), 2, "cpu1")
+vicious.register(cpufreq2widget, vicious.widgets.cpufreq, markup(theme.widget_cpu_freq_fg, "CPU1: " .. markup.bold("$2 GHz     ")), 2, "cpu1")
 
 -- MEM
 

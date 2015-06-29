@@ -35,6 +35,25 @@ globalkeys = awful.util.table.join(
             if client.focus then client.focus:raise() end
         end),
 
+    -- toggle "compact display mode"
+
+    awful.key({ win          }, "u", function()
+        if compact_display then
+            compact_display = false
+            beautiful.useless_gap_width = theme.useless_gap_width_normal
+            for _, c in ipairs(client.get()) do
+                awful.titlebar.show(c)
+            end
+        else
+            compact_display = true
+            beautiful.useless_gap_width = theme.useless_gap_width_compact
+            for _, c in ipairs(client.get()) do
+                awful.titlebar.hide(c)
+            end
+        end
+        awful.layout.arrange(mouse.screen)
+    end),
+
     -- switch tags
 
     awful.key({ win          }, "Right", awful.tag.viewnext),
