@@ -148,6 +148,16 @@ if [[ -n "$commands[pandoc]" && -n "$commands[inotifywait]" ]]; then
     pan-beamer() { __pan "$1" beamer; }
 fi
 
+if [[ -n "$commands[gcalcli]" ]]; then
+    __gcal() {
+        width=$((COLUMNS/7-2))
+        gcalcli --military --monday -w "$width" $*
+    }
+    alias gweek='__gcal calw'
+    alias gmonth='__gcal calm'
+    alias gagenda='__gcal agenda'
+fi
+
 s() {
     typeset -U files
     [[ -n $* ]] && files=($*) || files=(*(.))

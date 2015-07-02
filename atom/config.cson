@@ -5,12 +5,13 @@
     showOnStartup: false
   core:
     themes: [
-      "one-dark-ui"
-      "chester-atom-syntax"
+      "one-light-ui"
+      "pen-paper-coffee-syntax"
     ]
     disabledPackages: [
       "wrap-guide"
       "keybinding-resolver"
+      "spell-check"
     ]
     autoHideMenuBar: true
   editor:
@@ -20,7 +21,8 @@
     confirmCheckoutHeadRevision: false
     scrollPastEnd: true
     lineHeight: 1.4
-    fontSize: 12
+    fontSize: 15
+    softWrap: true
   "git-diff": {}
   "one-dark-ui":
     layoutMode: "Compact"
@@ -48,6 +50,8 @@
   "git-plus": {}
   Zen:
     softWrap: true
+    fullscreen: false
+    tabs: "multiple"
   pigments:
     markerType: "square-dot"
   whitespace:
@@ -60,3 +64,8 @@
       "shellcheck"
     ]
   "linter-flake8": {}
+  "spell-check": {}
+  "css-comb": {}
+  "linter-csslint": {}
+  "atom-beautify":
+    _analyticsUserId: "1d05e731-31ce-48da-bb24-aa8843cf1971"
