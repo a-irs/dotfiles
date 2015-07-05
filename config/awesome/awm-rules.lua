@@ -32,7 +32,7 @@ dynamic_tagging = function()
 end
 
 -- client appears
-client.connect_signal("manage", function (c, startup)
+client.connect_signal("manage", function(c)
 
     -- sloppy focus
     c:connect_signal("mouse::enter", function(c)
@@ -42,7 +42,8 @@ client.connect_signal("manage", function (c, startup)
     end)
 
     -- floating clients don't overlap, cover the titlebar or get placed offscreen
-    if not startup then
+    if not awesome.startup then
+        awful.client.setslave(c)
         if not c.size_hints.user_position and not c.size_hints.program_position then
             awful.placement.no_overlap(c)
             awful.placement.no_offscreen(c)
