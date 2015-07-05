@@ -6,7 +6,7 @@ vertical_resolution = tonumber(io.popen("xrandr | grep \\* | awk '{print $1}' | 
 compact_display = vertical_resolution < 1000
 
 function is_empty(tag)
-    return #tag:clients() == 0 and not tag.selected
+    return #tag:clients() == 0
 end
 
 user_terminal    = "terminator"
