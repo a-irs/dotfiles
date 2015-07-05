@@ -52,6 +52,13 @@ tyrannical.tags = {
         nmaster      = default_nmaster,
         class        = { "Ario" }
     },
+    {
+        name         = "○",
+        init         = false,
+        exclusive    = true,
+        nmaster      = default_nmaster,
+        class        = { "Gimp-2.8", "Pinta" }
+    },
     {   name         = "○",
         init         = true,
         nmaster      = default_nmaster,
