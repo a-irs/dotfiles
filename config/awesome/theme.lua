@@ -18,8 +18,8 @@ theme.border_width                  = 0
 theme.border_normal                 = theme.bg_normal
 theme.border_focus                  = theme.bg_focus
 
-theme.useless_gap_width_normal      = vertical_resolution/50
-theme.useless_gap_width_compact     = 0
+theme.useless_gap_normal            = vertical_resolution/50
+theme.useless_gap_compact           = 0
 
 -- NOTIFICATIONS (NAUGHTY)
 
@@ -68,11 +68,11 @@ theme.widget_disk_write_fg          = theme.widget_disk_read_fg
 
 -- LAYOUT ICONS
 
-theme.layout_uselesstile            = theme.basedir .. "/layout-icons/tile.xpm"
-theme.layout_uselesstileleft        = theme.basedir .. "/layout-icons/tileleft.xpm"
-theme.layout_uselesstilebottom      = theme.basedir .. "/layout-icons/tilebottom.xpm"
-theme.layout_uselesstiletop         = theme.basedir .. "/layout-icons/tiletop.xpm"
-theme.layout_uselesspiral           = theme.basedir .. "/layout-icons/spiral.xpm"
+theme.layout_tile                   = theme.basedir .. "/layout-icons/tile.xpm"
+theme.layout_tileleft               = theme.basedir .. "/layout-icons/tileleft.xpm"
+theme.layout_tilebottom             = theme.basedir .. "/layout-icons/tilebottom.xpm"
+theme.layout_tiletop                = theme.basedir .. "/layout-icons/tiletop.xpm"
+theme.layout_spiral                 = theme.basedir .. "/layout-icons/spiral.xpm"
 
 -- TITLEBAR
 
@@ -102,9 +102,9 @@ theme.titlebar_floating_button_normal_active   = theme.basedir .. "/titlebar/unf
 -- HOST-SPECIFIC SETTINGS
 
 if compact_display then
-    theme.useless_gap_width = theme.useless_gap_width_compact
+    theme.useless_gap = theme.useless_gap_compact
 else
-    theme.useless_gap_width = theme.useless_gap_width_normal
+    theme.useless_gap = theme.useless_gap_normal
 end
 
 

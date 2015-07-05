@@ -6,7 +6,7 @@ local lain       = require 'lain'
 tyrannical.settings.block_children_focus_stealing = true
 tyrannical.settings.group_children                = true
 tyrannical.settings.mwfact                        = 0.5
-tyrannical.settings.default_layout                = lain.layout.uselesstile
+tyrannical.settings.default_layout                = layouts[1]
 default_nmaster                                   = 1
 
 if not compact_display then
@@ -28,7 +28,6 @@ tyrannical.tags = {
         init         = true,
         exclusive    = true,
         nmaster      = default_nmaster,
-        layout       = lain.layout.uselesstile.top,
         exec_once    = { user_terminal },
         class        = { "Urxvt", "Terminator", "Termite" }
     },

@@ -40,13 +40,13 @@ globalkeys = awful.util.table.join(
     awful.key({ win          }, "u", function()
         if compact_display then
             compact_display = false
-            beautiful.useless_gap_width = theme.useless_gap_width_normal
+            beautiful.useless_gap = theme.useless_gap_normal
             for _, c in ipairs(client.get()) do
                 awful.titlebar.show(c)
             end
         else
             compact_display = true
-            beautiful.useless_gap_width = theme.useless_gap_width_compact
+            beautiful.useless_gap = theme.useless_gap_compact
             for _, c in ipairs(client.get()) do
                 awful.titlebar.hide(c)
             end
@@ -80,13 +80,17 @@ globalkeys = awful.util.table.join(
     -- modify windows
 
     awful.key({ win }, "+", function()
-        if beautiful.useless_gap_width <= 4 then
-            lain.util.useless_gaps_resize(-beautiful.useless_gap_width)
-        elseif beautiful.useless_gap_width ~= 0 then
-            lain.util.useless_gaps_resize(-5)
+        if beautiful.useless_gap <= 4 then
+            beautiful.useless_gap = 0
+        elseif beautiful.useless_gap ~= 0 then
+            beautiful.useless_gap = beautiful.useless_gap - 5
         end
+        awful.layout.arrange(mouse.screen)
     end),
-    awful.key({ win }, "-", function() lain.util.useless_gaps_resize(5) end),
+    awful.key({ win }, "-", function()
+        beautiful.useless_gap = beautiful.useless_gap + 5
+        awful.layout.arrange(mouse.screen)
+    end),
 
     awful.key({ win, "Control" }, "Right", function() awful.tag.incmwfact( 0.01) end),
     awful.key({ win, "Control" }, "Left",  function() awful.tag.incmwfact(-0.01) end),
