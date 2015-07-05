@@ -20,17 +20,11 @@ rules.rules = {
 
 dynamic_tagging = function()
     for s = 1, screen.count() do
-        -- set name of tag without clients
-        local atags = awful.tag.gettags(s)
-        for i, t in ipairs(atags) do
-            t.name = "○"
-        end
-
-        -- set name of tag with clients
-        local clist = client.get(s)
-        for i, c in ipairs(clist) do
-            local ctags = c:tags()
-            for i, t in ipairs(ctags) do
+        local all_tags = awful.tag.gettags(s)
+        for _, t in ipairs(all_tags) do
+            if is_empty(t) then
+                t.name = "○"
+            else
                 t.name = "●"
             end
         end
@@ -133,7 +127,7 @@ client.connect_signal("unmanage", function(c, startup)
   awful.tag.history.restore()
 end)
 
-client.connect_signal("tagged",   function (c, startup) dynamic_tagging() end)
-client.connect_signal("untagged", function (c, startup) dynamic_tagging() end)
+client.connect_signal("tagged",   function(c, startup) dynamic_tagging() end)
+client.connect_signal("untagged", function(c, startup) dynamic_tagging() end)
 client.connect_signal("focus",    function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus",  function(c) c.border_color = beautiful.border_normal end)
