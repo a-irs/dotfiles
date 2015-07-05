@@ -91,7 +91,6 @@ client.connect_signal("manage", function (c, startup)
 
         local layout2 = wibox.layout.flex.horizontal()
         local title = awful.titlebar.widget.titlewidget(c)
-        title:set_align("center")
         title:set_font(theme.titlebar_font)
         layout2:add(title)
         layout2:buttons(buttons)
@@ -105,6 +104,7 @@ client.connect_signal("manage", function (c, startup)
         align_left:set_left(layout1)
 
         local align_middle = wibox.layout.align.horizontal()
+        align_middle:set_expand("none")
         align_middle:set_middle(layout2)
 
         local align_right = wibox.layout.align.horizontal()

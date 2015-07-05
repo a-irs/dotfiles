@@ -259,6 +259,7 @@ for s = 1, screen.count() do
     align_left:set_left(layout1)
 
     local align_middle = wibox.layout.align.horizontal()
+    align_middle:set_expand("none")
     align_middle:set_middle(layout2)
 
     local align_right = wibox.layout.align.horizontal()
