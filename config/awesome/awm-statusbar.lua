@@ -104,10 +104,10 @@ lain.widgets.calendar:attach(datewidget, { font_size = theme.widget_calendar_fon
 mpdwidget = wibox.widget.textbox()
 vicious.register(mpdwidget, vicious.widgets.mpd,
     function(mpdwidget, args)
-        if args["{state}"] == "Stop" or args["{state}"] == "Pause" then
-            return "          "
-        else
+        if args["{state}"] == "Play" then
             return markup(theme.widget_mpd_fg, markup.bold(args["{Artist}"]) .. ' - ' .. args["{Title}"])
+        else
+            return "          "
         end
     end, 2)
 mpdwidget:buttons(awful.util.table.join(

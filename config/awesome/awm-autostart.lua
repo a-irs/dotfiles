@@ -6,7 +6,6 @@ local programs = {
    'killall compton ; compton -b',
    'dropbox-cli start',
    'pgrep -x thunar || thunar --daemon',
-   'mpd',
    'bash -c "pgrep -x lxpolkit || lxpolkit"',
    'bash -c "pgrep -x redshift || redshift"',
    'mkdir -p ' .. os.getenv("HOME") .. '/.thumbnails',
