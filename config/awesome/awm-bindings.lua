@@ -83,12 +83,12 @@ globalkeys = awful.util.table.join(
         if beautiful.useless_gap <= 4 then
             beautiful.useless_gap = 0
         elseif beautiful.useless_gap ~= 0 then
-            beautiful.useless_gap = beautiful.useless_gap - 5
+            beautiful.useless_gap = beautiful.useless_gap - 4
         end
         awful.layout.arrange(mouse.screen)
     end),
     awful.key({ win }, "-", function()
-        beautiful.useless_gap = beautiful.useless_gap + 5
+        beautiful.useless_gap = beautiful.useless_gap + 4
         awful.layout.arrange(mouse.screen)
     end),
 
@@ -266,15 +266,7 @@ clientbuttons = awful.util.table.join(
     awful.button({ win }, 3,      awful.mouse.client.resize))
 
 root.buttons(awful.util.table.join(
-    awful.button({     }, 3,      function() awful.util.spawn("xfce4-appfinder --disable-server") end),
-    awful.button({ win }, 4, function()
-      if beautiful.useless_gap_width <= 4 then
-        lain.util.useless_gaps_resize(-beautiful.useless_gap_width)
-      elseif beautiful.useless_gap_width ~= 0 then
-        lain.util.useless_gaps_resize(-5)
-      end
-    end),
-    awful.button({ win }, 5, function() lain.util.useless_gaps_resize(5) end)
+    awful.button({     }, 3,      function() awful.util.spawn("xfce4-appfinder --disable-server") end)
 ))
 
 root.keys(globalkeys)
