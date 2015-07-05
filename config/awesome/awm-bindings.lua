@@ -142,9 +142,9 @@ globalkeys = awful.util.table.join(
     awful.key({}, "XF86AudioLowerVolume", volume.decrease),
     awful.key({}, "XF86AudioMute",        volume.toggle),
 
-    awful.key({}, "XF86AudioPlay", function() io.popen("mpc toggle") end),
-    awful.key({}, "XF86AudioPrev", function() io.popen("mpc prev") end),
-    awful.key({}, "XF86AudioNext", function() io.popen("mpc next") end),
+    awful.key({}, "XF86AudioPlay", function() io.popen("mpc -q toggle") end),
+    awful.key({}, "XF86AudioPrev", function() io.popen("mpc -q prev") end),
+    awful.key({}, "XF86AudioNext", function() io.popen("mpc -q next") end),
 
     awful.key({}, "XF86PowerOff", function() awful.util.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh suspend") end),
 
