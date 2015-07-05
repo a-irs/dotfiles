@@ -45,6 +45,13 @@ tyrannical.tags = {
         nmaster      = default_nmaster,
         class        = { "VirtualBox" }
     },
+    {
+        name         = "○",
+        init         = false,
+        exclusive    = true,
+        nmaster      = default_nmaster,
+        class        = { "Ario" }
+    },
     {   name         = "○",
         init         = true,
         nmaster      = default_nmaster,
