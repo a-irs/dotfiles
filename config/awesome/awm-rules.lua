@@ -50,8 +50,6 @@ client.connect_signal("manage", function(c)
         end
     end
 
-    dynamic_tagging()
-
     -- titlebar
 
     if c.type == "normal" or c.type == "dialog" then
@@ -114,11 +112,12 @@ client.connect_signal("manage", function(c)
     end
 
     if compact_display then awful.titlebar.hide(c) end
+
+    dynamic_tagging()
 end)
 
 -- client exits
-client.connect_signal("unmanage", function(c, startup)
-  dynamic_tagging()
+client.connect_signal("unmanage", function(c)
 
   -- return to last tag when last window is closed
   curtag = awful.tag.selected()
@@ -126,9 +125,9 @@ client.connect_signal("unmanage", function(c, startup)
     return
   end
   awful.tag.history.restore()
+  
+  dynamic_tagging()
 end)
 
-client.connect_signal("tagged",   function(c, startup) dynamic_tagging() end)
-client.connect_signal("untagged", function(c, startup) dynamic_tagging() end)
-client.connect_signal("focus",    function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus",  function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("tagged",   function(c) dynamic_tagging() end)
+client.connect_signal("untagged", function(c) dynamic_tagging() end)
