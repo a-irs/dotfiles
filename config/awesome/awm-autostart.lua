@@ -12,6 +12,7 @@ local programs = {
    'ln -sf ' .. os.getenv("HOME") .. '/.thumbnails ' .. os.getenv("HOME") .. '/.cache/thumbnails',
    'ln -sf ' .. os.getenv("HOME") .. '/.rofi-2.runcache ' .. os.getenv("HOME") .. '/.cache/rofi-2.runcache',
    'xset -dpms ; xset s off',
+   hostname == "desktop" and 'mpd',
    hostname == "desktop" and 'bash -c "pgrep x2godesktopshar || x2godesktopsharing"',
    hostname == "desktop" and 'bash -c "pgrep synergyc || synergyc -d WARNING dell"',
    hostname == "desktop" and os.getenv("HOME") .. '/.bin/wait-for-srv.sh gvfs-mount smb://srv/data',
