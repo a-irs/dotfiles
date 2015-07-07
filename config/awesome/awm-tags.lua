@@ -14,23 +14,37 @@ if not compact_display then
     default_nmaster                               = 2
 end
 
-local fa_globe = " " .. string.char(239, 130, 172) ..     "  www  "
-local fa_terminal = string.char(239, 132, 160) ..  "  term  "
-local fa_file_text = string.char(239, 133, 156) .. "  dev  "
-local fa_cloud = string.char(239, 131, 130) ..     "  "
-local fa_asterisk = string.char(239, 129, 169) ..  "  "
-local fa_music = string.char(239, 128, 129) ..     "  "
+function make_name(icon, name)
+    str = " "
+    if icon == "globe" then
+        str = str .. string.char(239, 130, 172)
+    elseif icon == "terminal" then
+        str = str .. string.char(239, 132, 160)
+    elseif icon == "file_text" then
+        str = str .. string.char(239, 133, 156)
+    elseif icon == "cloud" then
+        str = str .. string.char(239, 131, 130)
+    elseif icon == "asterisk" then
+        str = str .. string.char(239, 129, 169)
+    elseif icon == "music" then
+        str = str .. string.char(239, 128, 129)
+    end
+    if name then
+        str = str .. "  " .. name
+    end
+    return str .. " "
+end
 
 tyrannical.tags = {
     {
-        name         = fa_globe,
+        name         = make_name("globe", "www"),
         init         = true,
         exclusive    = true,
         nmaster      = default_nmaster,
         class        = { "Firefox", "Chromium" }
     },
     {
-        name         = fa_terminal,
+        name         = make_name("terminal", "zsh"),
         init         = true,
         exclusive    = true,
         nmaster      = default_nmaster,
@@ -38,7 +52,7 @@ tyrannical.tags = {
         class        = { "Urxvt", "Terminator", "Termite" }
     },
     {
-        name         = fa_file_text,
+        name         = make_name("file_text", "dev"),
         init         = true,
         exclusive    = true,
         nmaster      = default_nmaster,
@@ -52,7 +66,7 @@ tyrannical.tags = {
         class        = { "VirtualBox" }
     },
     {
-        name         = fa_music,
+        name         = make_name("music", "music"),
         init         = false,
         exclusive    = true,
         nmaster      = default_nmaster,
@@ -66,7 +80,7 @@ tyrannical.tags = {
         class        = { "Gimp-2.8", "Pinta" }
     },
     {
-        name         = fa_asterisk,
+        name         = make_name("asterisk", "apps"),
         init         = true,
         nmaster      = default_nmaster,
         fallback     = true,

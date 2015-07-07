@@ -8,10 +8,10 @@ theme.statusbar_position            = "top"
 -- FG, BG COLORS
 
 theme.bg_normal                     = "#2c3643"
-theme.bg_focus                      = theme.bg_normal
+theme.bg_focus                      = "#3c4b5d"
 theme.bg_urgent                     = "#aa0000"
 theme.fg_normal                     = "#aaaaaa"
-theme.fg_focus                      = "#eeeeee"
+theme.fg_focus                      = "#ffffff"
 theme.fg_urgent                     = "#af1d18"
 
 theme.border_width                  = 0
@@ -50,7 +50,7 @@ theme.widget_calendar_font          = "Input"
 theme.widget_calendar_font_size     = "8"
 theme.widget_calendar_fg            = theme.fg_normal
 theme.widget_calendar_bg            = "#222a34"
-theme.widget_date_fg                = "#cfcfcf"
+theme.widget_date_fg                = "#dfdfdf"
 theme.widget_alsa_fg                = "#96b7e2"
 theme.widget_alsa_mute_fg           = "#666666"
 theme.widget_yawn_fg                = "#ababab"

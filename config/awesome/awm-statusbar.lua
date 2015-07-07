@@ -101,16 +101,20 @@ lain.widgets.calendar:attach(datewidget, { font_size = theme.widget_calendar_fon
 
 -- MPD
 
-mpdwidget = wibox.widget.textbox()
-vicious.register(mpdwidget, vicious.widgets.mpd,
-    function(mpdwidget, args)
+mpdwidget_text = wibox.widget.textbox()
+mpdwidget = wibox.widget.background()
+mpdwidget:set_widget(mpdwidget_text)
+mpdwidget:set_bg(theme.bg_focus)
+
+vicious.register(mpdwidget_text, vicious.widgets.mpd,
+    function(mpdwidget_text, args)
         if args["{state}"] == "Play" then
-            return markup(theme.widget_mpd_fg, markup.bold(args["{Artist}"]) .. ' - ' .. args["{Title}"])
+            return "  " .. markup(theme.widget_mpd_fg, markup.bold(args["{Artist}"]) .. ' - ' .. args["{Title}"]) .. "  "
         else
-            return "          "
+            return ""
         end
     end, 2)
-mpdwidget:buttons(awful.util.table.join(
+mpdwidget_text:buttons(awful.util.table.join(
                       awful.button({ }, 1, function() awful.util.spawn("ario") end)
 ))
 
@@ -242,7 +246,6 @@ for s = 1, screen.count() do
     local layout1 = wibox.layout.fixed.horizontal()
     layout1:add(mytaglist[s])
     layout1:add(mypromptbox[s])
-    layout1:add(mpdwidget)
 
     local layout2 = wibox.layout.fixed.horizontal()
 
@@ -251,7 +254,8 @@ for s = 1, screen.count() do
     layout3:add(volumewidget)
     if batterywidget then layout3:add(batterywidget) end
     layout3:add(datewidget)
-    layout3:add(mylayoutbox[s])
+    -- layout3:add(mylayoutbox[s])
+    layout3:add(mpdwidget)
 
     -- build status bar
 
