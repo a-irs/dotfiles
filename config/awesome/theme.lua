@@ -7,7 +7,6 @@ theme.statusbar_position            = "top"
 
 -- FG, BG COLORS
 
-theme.show_tag_names                = false
 theme.bg_normal                     = "#2c3643"
 theme.bg_focus                      = "#3c4b5d"
 theme.bg_urgent                     = "#aa0000"
@@ -44,6 +43,7 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 
 theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "FontAwesome Bold 8"
+theme.show_tag_names                = false
 
 theme.bg_systray                    = theme.bg_normal
 theme.widget_mpd_fg                 = "#cfcfcf"

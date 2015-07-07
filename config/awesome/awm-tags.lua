@@ -28,6 +28,8 @@ function make_name(icon, name)
         str = str .. string.char(239, 129, 169)
     elseif icon == "music" then
         str = str .. string.char(239, 128, 129)
+    elseif icon == "picture" then
+        str = str .. string.char(239, 128, 190)
     end
     if name and theme.show_tag_names then
         str = str .. "  " .. name
@@ -73,7 +75,7 @@ tyrannical.tags = {
         class        = { "Ario" }
     },
     {
-        name         = "○",
+        name         = make_name("picture", "img"),
         init         = false,
         exclusive    = true,
         nmaster      = default_nmaster,
