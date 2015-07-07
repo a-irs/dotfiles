@@ -14,17 +14,23 @@ if not compact_display then
     default_nmaster                               = 2
 end
 
+local fa_globe = " " .. string.char(239, 130, 172) ..     "  www  "
+local fa_terminal = string.char(239, 132, 160) ..  "  term  "
+local fa_file_text = string.char(239, 133, 156) .. "  dev  "
+local fa_cloud = string.char(239, 131, 130) ..     "  "
+local fa_asterisk = string.char(239, 129, 169) ..  "  "
+local fa_music = string.char(239, 128, 129) ..     "  "
 
 tyrannical.tags = {
     {
-        name         = "○",
+        name         = fa_globe,
         init         = true,
         exclusive    = true,
         nmaster      = default_nmaster,
         class        = { "Firefox", "Chromium" }
     },
     {
-        name         = "○",
+        name         = fa_terminal,
         init         = true,
         exclusive    = true,
         nmaster      = default_nmaster,
@@ -32,7 +38,7 @@ tyrannical.tags = {
         class        = { "Urxvt", "Terminator", "Termite" }
     },
     {
-        name         = "○",
+        name         = fa_file_text,
         init         = true,
         exclusive    = true,
         nmaster      = default_nmaster,
@@ -46,7 +52,7 @@ tyrannical.tags = {
         class        = { "VirtualBox" }
     },
     {
-        name         = "○",
+        name         = fa_music,
         init         = false,
         exclusive    = true,
         nmaster      = default_nmaster,
@@ -59,12 +65,14 @@ tyrannical.tags = {
         nmaster      = default_nmaster,
         class        = { "Gimp-2.8", "Pinta" }
     },
-    {   name         = "○",
+    {
+        name         = fa_asterisk,
         init         = true,
         nmaster      = default_nmaster,
         fallback     = true,
     },
-    {   name         = "kodi",
+    {
+        name         = "kodi",
         init         = false,
         layout       = awful.layout.suit.max.fullscreen,
         class        = { "Kodi" }

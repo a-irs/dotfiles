@@ -113,7 +113,7 @@ client.connect_signal("manage", function(c)
 
     if compact_display then awful.titlebar.hide(c) end
 
-    dynamic_tagging()
+    --dynamic_tagging()
 end)
 
 -- client exits
@@ -125,9 +125,9 @@ client.connect_signal("unmanage", function(c)
     return
   end
   awful.tag.history.restore()
-  
-  dynamic_tagging()
+
+  --dynamic_tagging()
 end)
 
-client.connect_signal("tagged",   function(c) dynamic_tagging() end)
-client.connect_signal("untagged", function(c) dynamic_tagging() end)
+--client.connect_signal("tagged",   function(c) dynamic_tagging() end)
+--client.connect_signal("untagged", function(c) dynamic_tagging() end)

@@ -42,7 +42,7 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 -- WIDGETS
 
 theme.font                          = "Ubuntu 8"
-theme.taglist_font                  = "Ubuntu 7"
+theme.taglist_font                  = "FontAwesome Bold 8"
 
 theme.bg_systray                    = theme.bg_normal
 theme.widget_mpd_fg                 = "#cfcfcf"

@@ -90,7 +90,7 @@ datewidget = lain.widgets.base({
     settings = function()
         local t_output = ""
         local o_it = string.gmatch(output, "%S+")
-        widget:set_markup(markup(theme.widget_date_fg, o_it(1) .. " " .. o_it(1)) .. " " .. markup.bold(markup(theme.widget_date_fg, o_it(1))) .. "  ")
+        widget:set_markup(markup(theme.widget_date_fg, o_it(1) .. " " .. o_it(1)) .. " " .. markup.bold(markup(theme.widget_date_fg, o_it(1))) .. " ")
     end
 })
 lain.widgets.calendar:attach(datewidget, { font_size = theme.widget_calendar_font_size,
@@ -240,18 +240,18 @@ for s = 1, screen.count() do
     -- layouts
 
     local layout1 = wibox.layout.fixed.horizontal()
-    layout1:add(mylayoutbox[s])
-    layout1:add(mpdwidget)
+    layout1:add(mytaglist[s])
     layout1:add(mypromptbox[s])
+    layout1:add(mpdwidget)
 
     local layout2 = wibox.layout.fixed.horizontal()
-    layout2:add(mytaglist[s])
 
     local layout3 = wibox.layout.fixed.horizontal()
     layout3:add(dropboxwidget)
     layout3:add(volumewidget)
     if batterywidget then layout3:add(batterywidget) end
     layout3:add(datewidget)
+    layout3:add(mylayoutbox[s])
 
     -- build status bar
 
