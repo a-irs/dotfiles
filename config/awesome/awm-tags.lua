@@ -29,7 +29,7 @@ function make_name(icon, name)
     elseif icon == "music" then
         str = str .. string.char(239, 128, 129)
     end
-    if name then
+    if name and theme.show_tag_names then
         str = str .. "  " .. name
     end
     return str .. " "
