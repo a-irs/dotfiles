@@ -130,7 +130,7 @@ globalkeys = awful.util.table.join(
     awful.key({ alt }, "c",      function () awful.util.spawn("firefox") end),
     awful.key({ win }, "l",      function () awful.util.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh") end),
     awful.key({ alt }, "p",      function () awful.util.spawn(os.getenv("HOME") .. "/.bin/pick-color.sh") end),
-    awful.key({ alt }, "s",      function () awful.util.spawn("atom") end),
+    awful.key({ alt }, "s",      function () awful.util.spawn("subl3") end),
 
     awful.key({ "Ctrl", "Shift" }, "dead_circumflex", function()
         awful.util.spawn(os.getenv("HOME") .. "/.bin/desktop/toggle-res.sh")

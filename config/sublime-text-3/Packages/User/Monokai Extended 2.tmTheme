@@ -103,7 +103,7 @@
 				<key>activeGuide</key>
 				<string>#7fb11b</string>
 				<key>background</key>
-				<string>#2D2D2D</string>
+				<string>#2c3643</string>
 				<key>bracketContentsForeground</key>
 				<string>#f8f8f2a5</string>
 				<key>bracketContentsOptions</key>
@@ -123,7 +123,7 @@
 				<key>invisibles</key>
 				<string>#3b3a32</string>
 				<key>lineHighlight</key>
-				<string>#3B3B3B</string>
+				<string>#3c4b5d</string>
 				<key>selection</key>
 				<string>#444444</string>
 				<key>selectionBorder</key>

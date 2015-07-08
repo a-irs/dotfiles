@@ -18,7 +18,8 @@
 		"SublimeLinter",
 		"SublimeLinter-lua",
 		"SublimeLinter-shellcheck",
-		"Theme - Hero"
+		"Theme - Hero",
+		"Theme - Spacegray"
 	],
 	"submit_usage": false
 }

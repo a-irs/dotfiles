@@ -9,7 +9,7 @@
 	],
 	"bold_folder_labels": false,
 	"close_windows_when_empty": true,
-	"color_scheme": "Packages/Theme - Hero/Hero Dark Eighties.tmTheme",
+	"color_scheme": "Packages/User/Monokai Extended 2.tmTheme",
 	"distraction_free":
 	{
 		"menu_visible": false,
@@ -124,9 +124,10 @@
 	"show_encoding": true,
 	"show_panel_on_build": true,
 	"show_tab_close_buttons": false,
+	"spacegray_sidebar_tree_large": true,
 	"spell_check": false,
 	"tab_size": 4,
-	"theme": "Hero Dark.sublime-theme",
+	"theme": "Spacegray.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"update_check": false
