@@ -43,10 +43,12 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 
 theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "FontAwesome Bold 8"
-theme.show_tag_names                = false
+theme.show_tag_names                = true
 
 theme.bg_systray                    = theme.bg_normal
 theme.widget_mpd_fg                 = "#cfcfcf"
+theme.widget_mpd_bg                 = theme.bg_normal
+theme.widget_mpd_font               = "Roboto 8"
 theme.widget_calendar_font          = "Input"
 theme.widget_calendar_font_size     = "8"
 theme.widget_calendar_fg            = theme.fg_normal

@@ -15,7 +15,7 @@ if not compact_display then
 end
 
 function make_name(icon, name)
-    str = " "
+    str = "  "
     if icon == "globe" then
         str = str .. string.char(239, 130, 172)
     elseif icon == "terminal" then
@@ -34,7 +34,7 @@ function make_name(icon, name)
     if name and theme.show_tag_names then
         str = str .. "  " .. name
     end
-    return str .. " "
+    return str .. "  "
 end
 
 tyrannical.tags = {
