@@ -8,4 +8,5 @@
 #fi
 
 xset r rate 200 30
+xrdb -merge ~/.Xresources
 exec dbus-launch --sh-syntax --exit-with-session awesome

@@ -66,21 +66,11 @@ client.connect_signal("manage", function(c)
                 end)
         )
 
-        -- set widgets for left, middle, right
-
-        local layout1_1 = wibox.layout.fixed.horizontal()
-        layout1_1:add(awful.titlebar.widget.closebutton(c))
-        layout1_1:add(awful.titlebar.widget.floatingbutton(c))
-        layout1_1:add(awful.titlebar.widget.stickybutton(c))
-        layout1_1:add(awful.titlebar.widget.ontopbutton(c))
-
-        -- needed to allow mouse clicks on the blank space between buttons and window title
-        local layout1_2 = wibox.layout.flex.horizontal()
-        layout1_2:buttons(buttons)
-
         local layout1 = wibox.layout.fixed.horizontal()
-        layout1:add(layout1_1)
-        layout1:add(layout1_2)
+        layout1:add(awful.titlebar.widget.closebutton(c))
+        layout1:add(awful.titlebar.widget.floatingbutton(c))
+        layout1:add(awful.titlebar.widget.stickybutton(c))
+        layout1:add(awful.titlebar.widget.ontopbutton(c))
 
         local layout2 = wibox.layout.flex.horizontal()
         local title = awful.titlebar.widget.titlewidget(c)
@@ -88,25 +78,10 @@ client.connect_signal("manage", function(c)
         layout2:add(title)
         layout2:buttons(buttons)
 
-        local layout3 = wibox.layout.flex.horizontal()
-        layout3:buttons(buttons)
-
-        -- build title bar
-
-        local align_left = wibox.layout.align.horizontal()
-        align_left:set_left(layout1)
-
-        local align_middle = wibox.layout.align.horizontal()
-        align_middle:set_expand("none")
-        align_middle:set_middle(layout2)
-
-        local align_right = wibox.layout.align.horizontal()
-        align_right:set_right(layout3)
-
-        local layout = wibox.layout.flex.horizontal()
-        layout:add(align_left)
-        layout:add(align_middle)
-        layout:add(align_right)
+        local layout = wibox.layout.align.horizontal()
+        layout:set_expand("none")
+        layout:set_left(layout1)
+        layout:set_middle(layout2)
 
         awful.titlebar(c, { size = theme.titlebar_height }):set_widget(layout)
     end

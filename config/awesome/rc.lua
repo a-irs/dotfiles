@@ -1,6 +1,8 @@
 local naughty = require 'naughty'
 local awful   = require 'awful'
 
+os.execute('xrdb -merge ' .. os.getenv("HOME") .. '/.Xresources')
+
 hostname = io.popen("uname -n"):read()
 vertical_resolution = tonumber(io.popen("xrandr | grep \\* | awk '{print $1}' | cut -dx -f 2"):read())
 compact_display = vertical_resolution < 1000

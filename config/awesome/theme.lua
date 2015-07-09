@@ -1,8 +1,12 @@
+local dpi = require("beautiful").xresources.apply_dpi
+
+-- TODO: maybe use layout-icons from default-theme
+
 theme                               = {}
 
 theme.basedir                       = os.getenv("HOME") .. "/.config/awesome"
 
-theme.statusbar_height              = 24
+theme.statusbar_height              = dpi(24)
 theme.statusbar_position            = "top"
 
 -- FG, BG COLORS
@@ -14,19 +18,19 @@ theme.fg_normal                     = "#aaaaaa"
 theme.fg_focus                      = "#ffffff"
 theme.fg_urgent                     = "#af1d18"
 
-theme.border_width                  = 0
+theme.border_width                  = dpi(0)
 theme.border_normal                 = theme.bg_normal
 theme.border_focus                  = theme.bg_focus
 
-theme.useless_gap_normal            = vertical_resolution/100
+theme.useless_gap_normal            = dpi(vertical_resolution/100)
 theme.useless_gap_compact           = 0
 
 -- NOTIFICATIONS (NAUGHTY)
 
 theme.naughty_font                  = "Roboto Medium 8"
-theme.naughty_padding               = 12
-theme.naughty_spacing               = 12
-theme.naughty_border_width          = 6
+theme.naughty_padding               = dpi(12)
+theme.naughty_spacing               = dpi(12)
+theme.naughty_border_width          = dpi(6)
 theme.naughty_timeout               = 4
 theme.naughty_position              = "top_right"
 
@@ -45,14 +49,13 @@ theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "FontAwesome Bold 8"
 theme.show_tag_names                = true
 theme.taglist_squares_unsel         = theme.basedir .. "/indicator.png"
-theme.taglist_squares_resize        = false
 
 theme.bg_systray                    = theme.bg_normal
 theme.widget_mpd_fg                 = "#cfcfcf"
 theme.widget_mpd_bg                 = theme.bg_normal
 theme.widget_mpd_font               = "Roboto 8"
 theme.widget_calendar_font          = "Input"
-theme.widget_calendar_font_size     = "8"
+theme.widget_calendar_font_size     = dpi(8)
 theme.widget_calendar_fg            = theme.fg_normal
 theme.widget_calendar_bg            = "#222a34"
 theme.widget_date_fg                = "#dfdfdf"
@@ -81,7 +84,7 @@ theme.layout_spiral                 = theme.basedir .. "/layout-icons/spiral.xpm
 
 -- TITLEBAR
 
-theme.titlebar_height                          = 24
+theme.titlebar_height                          = dpi(24)
 theme.titlebar_font                            = "Roboto Bold 8"
 
 theme.titlebar_fg_normal                       = theme.fg_normal
@@ -111,6 +114,5 @@ if compact_display then
 else
     theme.useless_gap = theme.useless_gap_normal
 end
-
 
 return theme

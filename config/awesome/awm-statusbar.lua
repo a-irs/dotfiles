@@ -260,20 +260,11 @@ for s = 1, screen.count() do
 
     -- build status bar
 
-    local align_left = wibox.layout.align.horizontal()
-    align_left:set_left(layout1)
-
-    local align_middle = wibox.layout.align.horizontal()
-    align_middle:set_expand("none")
-    align_middle:set_middle(layout2)
-
-    local align_right = wibox.layout.align.horizontal()
-    align_right:set_right(layout3)
-
-    local layout = wibox.layout.flex.horizontal()
-    layout:add(align_left)
-    layout:add(align_middle)
-    layout:add(align_right)
+    local layout = wibox.layout.align.horizontal()
+    layout:set_expand("none")
+    layout:set_left(layout1)
+    layout:set_middle(layout2)
+    layout:set_right(layout3)
 
     mywibox[s]:set_widget(layout)
 end
