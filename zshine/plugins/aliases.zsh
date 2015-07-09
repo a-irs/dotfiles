@@ -366,10 +366,33 @@ dict() {
 
 if [ -n "$commands[openvpn]" ]; then
     vpn() {
+        if [[ -f /tmp/openvpn.pid ]]; then
+            echo -e "VPN with PID $(</tmp/openvpn.pid) already active:\n"
+            ps -o cmd "$(</tmp/openvpn.pid)" | tail -n 1
+            return 1
+        fi
         for f in $HOME/.openvpn/**/$1.ovpn; do
             d=$(echo "$f" | rev | cut -d "/" -f 2- | rev)
-            vpncolor.py sudo openvpn --cd "$d" --config "$f"
+            #vpncolor.py sudo openvpn --cd "$d" --config "$f"
+            sudo openvpn --daemon --cd "$d" --writepid /tmp/openvpn.pid --config "$f"
         done
+    }
+
+    vpn-log() {
+        if [[ -f /tmp/openvpn.pid ]]; then
+            journalctl -f _PID="$(</tmp/openvpn.pid)"
+        else
+            echo "No VPN active."
+        fi
+    }
+
+    vpn-stop() {
+        if [[ -f /tmp/openvpn.pid ]]; then
+            sudo kill "$(</tmp/openvpn.pid)"
+            sudo rm -f /tmp/openvpn.pid
+        else
+            echo "No VPN active."
+        fi
     }
 fi
 
