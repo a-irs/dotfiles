@@ -44,6 +44,8 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "FontAwesome Bold 8"
 theme.show_tag_names                = true
+theme.taglist_squares_unsel         = theme.basedir .. "/indicator.png"
+theme.taglist_squares_resize        = false
 
 theme.bg_systray                    = theme.bg_normal
 theme.widget_mpd_fg                 = "#cfcfcf"

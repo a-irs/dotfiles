@@ -18,10 +18,16 @@ function make_name(icon, name)
     str = "  "
     if icon == "globe" then
         str = str .. string.char(239, 130, 172)
+    elseif icon == "desktop" then
+        str = str .. string.char(239, 132, 136)
     elseif icon == "terminal" then
         str = str .. string.char(239, 132, 160)
-    elseif icon == "file_text" then
+    elseif icon == "file" then
+        str = str .. string.char(239, 128, 150)
+    elseif icon == "file-text" then
         str = str .. string.char(239, 133, 156)
+    elseif icon == "list-alt" then
+        str = str .. string.char(239, 128, 162)
     elseif icon == "cloud" then
         str = str .. string.char(239, 131, 130)
     elseif icon == "asterisk" then
@@ -30,6 +36,8 @@ function make_name(icon, name)
         str = str .. string.char(239, 128, 129)
     elseif icon == "picture" then
         str = str .. string.char(239, 128, 190)
+    elseif icon == "video" then
+        str = str .. string.char(239, 133, 170)
     end
     if name and theme.show_tag_names then
         str = str .. "  " .. name
@@ -54,18 +62,18 @@ tyrannical.tags = {
         class        = { "Urxvt", "Terminator", "Termite" }
     },
     {
-        name         = make_name("file_text", "dev"),
+        name         = make_name("list-alt", "dev"),
         init         = true,
         exclusive    = true,
         nmaster      = default_nmaster,
         class        = { "Subl3", "Atom" }
     },
     {
-        name         = "○",
+        name         = make_name("desktop", "virtual"),
         init         = false,
         exclusive    = true,
         nmaster      = default_nmaster,
-        class        = { "VirtualBox" }
+        class        = { "VirtualBox", "Qemu" }
     },
     {
         name         = make_name("music", "music"),
@@ -79,7 +87,14 @@ tyrannical.tags = {
         init         = false,
         exclusive    = true,
         nmaster      = default_nmaster,
-        class        = { "Gimp-2.8", "Pinta" }
+        class        = { "Gimp", "Gimp-2.8", "Pinta" }
+    },
+    {
+        name         = make_name("video", "video"),
+        init         = false,
+        exclusive    = true,
+        nmaster      = default_nmaster,
+        class        = { "Mpv", "Vlc" }
     },
     {
         name         = make_name("asterisk", "apps"),
