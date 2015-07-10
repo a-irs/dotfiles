@@ -17,21 +17,24 @@ function toggleFirefox() {
     line=$(grep -n "layout.css.devPixelsPerPx" "$profile/prefs.js" | cut -f1 -d:)
     value=$(grep "layout.css.devPixelsPerPx" "$profile/prefs.js" | rev | cut -d' ' -f 1 | cut -d \" -f 2 | rev)
 
+    hi=1.75
+    no=-1
+
     if [[ $1 == normal ]]; then
-        sed -i "$line s|\"2\"|\"-1\"|" "$profile/prefs.js"
+        sed --follow-symlinks -i "$line s|\"$hi\"|\"$no\"|" "$profile/prefs.js"
         echo "Firefox: normal"
         already_set=true
     elif [[ $1 == hidpi ]]; then
-        sed -i "$line s|\"-1\"|\"2\"|" "$profile/prefs.js"
+        sed --follow-symlinks -i "$line s|\"$no\"|\"$hi\"|" "$profile/prefs.js"
         echo "Firefox: HiDPI"
         already_set=true
     fi
 
-    if [[ $value == "-1" ]]; then
-        sed -i "$line s|\"-1\"|\"2\"|" "$profile/prefs.js"
+    if [[ $value == "$no" ]]; then
+        sed --follow-symlinks -i "$line s|\"$no\"|\"$hi\"|" "$profile/prefs.js"
         echo "Firefox: normal → HiDPI"
-    elif [[ $value == "2" ]]; then
-        sed -i "$line s|\"2\"|\"-1\"|" "$profile/prefs.js"
+    elif [[ $value == "$hi" ]]; then
+        sed --follow-symlinks -i "$line s|\"$hi\"|\"$no\"|" "$profile/prefs.js"
         echo "Firefox: HiDPI → normal"
     fi
 
@@ -52,21 +55,24 @@ function toggleSublime() {
     f=~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
     value=$(grep dpi_scale "$f" | cut -d " " -f 2 | tr -d ",")
 
+    hi=1.75
+    no=1.0
+
     if [[ $1 == normal ]]; then
-        sed -i "s/\"dpi_scale\": 2.0/\"dpi_scale\": 1.0/" "$f"
+        sed --follow-symlinks -i "s/\"dpi_scale\": $hi/\"dpi_scale\": $no/" "$f"
         echo "subl: normal"
         already_set=true
     elif [[ $1 == hidpi ]]; then
-        sed -i "s/\"dpi_scale\": 1.0/\"dpi_scale\": 2.0/" "$f"
+        sed --follow-symlinks -i "s/\"dpi_scale\": $no/\"dpi_scale\": $hi/" "$f"
         echo "subl: HiDPI"
         already_set=true
     fi
 
-    if [[ $already_set == false && $value == "1.0" ]]; then
-        sed -i "s/\"dpi_scale\": 1.0/\"dpi_scale\": 2.0/" "$f"
+    if [[ $already_set == false && $value == "$no" ]]; then
+        sed --follow-symlinks -i "s/\"dpi_scale\": $no/\"dpi_scale\": $hi/" "$f"
         echo "subl: normal → HiDPI"
-    elif [[ $already_set == false && $value == "2.0" ]]; then
-        sed -i "s/\"dpi_scale\": 2.0/\"dpi_scale\": 1.0/" "$f"
+    elif [[ $already_set == false && $value == "$hi" ]]; then
+        sed --follow-symlinks -i "s/\"dpi_scale\": $hi/\"dpi_scale\": $no/" "$f"
         echo "subl: HiDPI → normal"
     fi
 
@@ -79,21 +85,24 @@ function toggleXresources() {
     f=~/.Xresources
     value=$(grep Xft.dpi "$f" | rev | cut -d ":" -f 1 | tr -d '[[:space:]]' | rev)
 
+    hi=168
+    no=96
+
     if [[ $1 == normal ]]; then
-        sed -i "s|Xft.dpi: 192|Xft.dpi: 96|" "$f"
+        sed --follow-symlinks -i "s|Xft.dpi: $hi|Xft.dpi: $no|" "$f"
         echo "Xresources: normal"
         already_set=true
     elif [[ $1 == hidpi ]]; then
-        sed -i "s|Xft.dpi: 96|Xft.dpi: 192|" "$f"
+        sed --follow-symlinks -i "s|Xft.dpi: $no|Xft.dpi: $hi|" "$f"
         echo "Xresources: HiDPI"
         already_set=true
     fi
 
-     if [[ $already_set == false && $value == "192" ]]; then
-        sed -i "s|Xft.dpi: 192|Xft.dpi: 96|" "$f"
+     if [[ $already_set == false && $value == "$hi" ]]; then
+        sed --follow-symlinks -i "s|Xft.dpi: $hi|Xft.dpi: $no|" "$f"
         echo "Xresources: HiDPI → normal"
-    elif [[ $already_set == false && $value == "96" ]]; then
-        sed -i "s|Xft.dpi: 96|Xft.dpi: 192|" "$f"
+    elif [[ $already_set == false && $value == "$no" ]]; then
+        sed --follow-symlinks -i "s|Xft.dpi: $no|Xft.dpi: $hi|" "$f"
         echo "Xresources: normal → HiDPI"
     fi
 
