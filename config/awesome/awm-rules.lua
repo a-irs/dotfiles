@@ -18,19 +18,6 @@ rules.rules = {
       callback = awful.client.setslave },
 }
 
-dynamic_tagging = function()
-    for s = 1, screen.count() do
-        local all_tags = awful.tag.gettags(s)
-        for _, t in ipairs(all_tags) do
-            if is_empty(t) then
-                t.name = "○"
-            else
-                t.name = "●"
-            end
-        end
-    end
-end
-
 -- client appears
 client.connect_signal("manage", function(c)
 
@@ -40,15 +27,6 @@ client.connect_signal("manage", function(c)
             client.focus = c
         end
     end)
-
-    -- floating clients don't overlap, cover the titlebar or get placed offscreen
-    if not awesome.startup then
-        awful.client.setslave(c)
-        if not c.size_hints.user_position and not c.size_hints.program_position then
-            awful.placement.no_overlap(c)
-            awful.placement.no_offscreen(c)
-        end
-    end
 
     -- titlebar
 
@@ -88,21 +66,14 @@ client.connect_signal("manage", function(c)
 
     if compact_display then awful.titlebar.hide(c) end
 
-    --dynamic_tagging()
 end)
 
 -- client exits
 client.connect_signal("unmanage", function(c)
 
   -- return to last tag when last window is closed
-  curtag = awful.tag.selected()
-  for _, c in pairs(curtag:clients()) do
-    return
+  if is_empty(awful.tag.selected()) then
+      awful.tag.history.restore()
   end
-  awful.tag.history.restore()
 
-  --dynamic_tagging()
 end)
-
---client.connect_signal("tagged",   function(c) dynamic_tagging() end)
---client.connect_signal("untagged", function(c) dynamic_tagging() end)
