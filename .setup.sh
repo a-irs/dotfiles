@@ -76,6 +76,7 @@ dotfiles_x=(
     themes
     xinitrc
     Xmodmap
+    Xresources
 )
 
 for f in "${dotfiles[@]}"; do mklink "$f"; done
