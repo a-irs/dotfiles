@@ -1,6 +1,11 @@
 local dpi = require("beautiful").xresources.apply_dpi
+local xresources = require("beautiful").xresources
 
 -- TODO: maybe use layout-icons from default-theme
+
+if xresources.get_dpi() >= 168 then
+    highdpi = true
+end
 
 theme                               = {}
 
@@ -22,8 +27,14 @@ theme.border_width                  = dpi(0)
 theme.border_normal                 = theme.bg_normal
 theme.border_focus                  = theme.bg_focus
 
-theme.useless_gap_normal            = dpi(vertical_resolution/100)
+theme.useless_gap_normal            = vertical_resolution/100
 theme.useless_gap_compact           = 0
+
+if compact_display then
+    theme.useless_gap = theme.useless_gap_compact
+else
+    theme.useless_gap = theme.useless_gap_normal
+end
 
 -- NOTIFICATIONS (NAUGHTY)
 
@@ -48,14 +59,18 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "FontAwesome Bold 8"
 theme.show_tag_names                = true
-theme.taglist_squares_unsel         = theme.basedir .. "/indicator.png"
+if highdpi then
+    theme.taglist_squares_unsel         = theme.basedir .. "/indicator175.png"
+else
+    theme.taglist_squares_unsel         = theme.basedir .. "/indicator.png"
+end
 
 theme.bg_systray                    = theme.bg_normal
 theme.widget_mpd_fg                 = "#cfcfcf"
 theme.widget_mpd_bg                 = theme.bg_normal
 theme.widget_mpd_font               = "Roboto 8"
 theme.widget_calendar_font          = "Input"
-theme.widget_calendar_font_size     = dpi(8)
+theme.widget_calendar_font_size     = 8
 theme.widget_calendar_fg            = theme.fg_normal
 theme.widget_calendar_bg            = "#222a34"
 theme.widget_date_fg                = "#dfdfdf"
@@ -76,11 +91,16 @@ theme.widget_disk_write_fg          = theme.widget_disk_read_fg
 
 -- LAYOUT ICONS
 
-theme.layout_tile                   = theme.basedir .. "/layout-icons/tile.xpm"
-theme.layout_tileleft               = theme.basedir .. "/layout-icons/tileleft.xpm"
-theme.layout_tilebottom             = theme.basedir .. "/layout-icons/tilebottom.xpm"
-theme.layout_tiletop                = theme.basedir .. "/layout-icons/tiletop.xpm"
-theme.layout_spiral                 = theme.basedir .. "/layout-icons/spiral.xpm"
+if highdpi then
+    layout_folder = theme.basedir .. "/layout175"
+else
+    layout_folder = theme.basedir .. "/layout"
+end
+theme.layout_tile                   = layout_folder .. "/tile.xpm"
+theme.layout_tileleft               = layout_folder .. "/tileleft.xpm"
+theme.layout_tilebottom             = layout_folder .. "/tilebottom.xpm"
+theme.layout_tiletop                = layout_folder .. "/tiletop.xpm"
+theme.layout_spiral                 = layout_folder .. "/spiral.xpm"
 
 -- TITLEBAR
 
@@ -92,27 +112,24 @@ theme.titlebar_fg_focus                        = theme.fg_focus
 theme.titlebar_bg_normal                       = theme.bg_normal
 theme.titlebar_bg_focus                        = theme.bg_normal
 
-theme.titlebar_close_button_focus              = theme.basedir .. "/titlebar/close.xpm"
-theme.titlebar_close_button_normal             = theme.basedir .. "/titlebar/unfocused_inactive.xpm"
-theme.titlebar_ontop_button_focus_inactive     = theme.basedir .. "/titlebar/ontop_inactive.xpm"
-theme.titlebar_ontop_button_focus_active       = theme.basedir .. "/titlebar/ontop_active.xpm"
-theme.titlebar_ontop_button_normal_inactive    = theme.basedir .. "/titlebar/ontop_inactive.xpm"
-theme.titlebar_ontop_button_normal_active      = theme.basedir .. "/titlebar/ontop_unfocused.xpm"
-theme.titlebar_sticky_button_focus_inactive    = theme.basedir .. "/titlebar/sticky_inactive.xpm"
-theme.titlebar_sticky_button_focus_active      = theme.basedir .. "/titlebar/sticky_active.xpm"
-theme.titlebar_sticky_button_normal_inactive   = theme.basedir .. "/titlebar/unfocused_inactive.xpm"
-theme.titlebar_sticky_button_normal_active     = theme.basedir .. "/titlebar/unfocused_active.xpm"
-theme.titlebar_floating_button_focus_inactive  = theme.basedir .. "/titlebar/floating_inactive.xpm"
-theme.titlebar_floating_button_focus_active    = theme.basedir .. "/titlebar/floating_active.xpm"
-theme.titlebar_floating_button_normal_inactive = theme.basedir .. "/titlebar/unfocused_inactive.xpm"
-theme.titlebar_floating_button_normal_active   = theme.basedir .. "/titlebar/unfocused_active.xpm"
-
--- HOST-SPECIFIC SETTINGS
-
-if compact_display then
-    theme.useless_gap = theme.useless_gap_compact
+if highdpi then
+    titlebar_folder = theme.basedir .. "/titlebar175"
 else
-    theme.useless_gap = theme.useless_gap_normal
+    titlebar_folder = theme.basedir .. "/titlebar"
 end
+theme.titlebar_close_button_focus              = titlebar_folder .. "/close.xpm"
+theme.titlebar_close_button_normal             = titlebar_folder .. "/unfocused_inactive.xpm"
+theme.titlebar_ontop_button_focus_inactive     = titlebar_folder .. "/ontop_inactive.xpm"
+theme.titlebar_ontop_button_focus_active       = titlebar_folder .. "/ontop_active.xpm"
+theme.titlebar_ontop_button_normal_inactive    = titlebar_folder .. "/ontop_inactive.xpm"
+theme.titlebar_ontop_button_normal_active      = titlebar_folder .. "/ontop_unfocused.xpm"
+theme.titlebar_sticky_button_focus_inactive    = titlebar_folder .. "/sticky_inactive.xpm"
+theme.titlebar_sticky_button_focus_active      = titlebar_folder .. "/sticky_active.xpm"
+theme.titlebar_sticky_button_normal_inactive   = titlebar_folder .. "/unfocused_inactive.xpm"
+theme.titlebar_sticky_button_normal_active     = titlebar_folder .. "/unfocused_active.xpm"
+theme.titlebar_floating_button_focus_inactive  = titlebar_folder .. "/floating_inactive.xpm"
+theme.titlebar_floating_button_focus_active    = titlebar_folder .. "/floating_active.xpm"
+theme.titlebar_floating_button_normal_inactive = titlebar_folder .. "/unfocused_inactive.xpm"
+theme.titlebar_floating_button_normal_active   = titlebar_folder .. "/unfocused_active.xpm"
 
 return theme

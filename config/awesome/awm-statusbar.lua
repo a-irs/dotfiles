@@ -97,6 +97,7 @@ lain.widgets.calendar:attach(datewidget, { font_size = theme.widget_calendar_fon
                                            font = theme.widget_calendar_font,
                                            fg = theme.widget_calendar_fg,
                                            bg = theme.widget_calendar_bg,
+                                           icons = "",
 })
 
 -- MPD
