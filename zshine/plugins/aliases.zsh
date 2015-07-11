@@ -535,10 +535,6 @@ if [ -f "$HOME/.config/user-dirs.dirs" ]; then
 fi
 
 xr() {
-    # composition sometimes breaks xr somehow, kill it
-    #killall compton 2> /dev/null
-    xfconf-query -c xfwm4 -p /general/use_compositing -s false
-
     # get settings from xrandr
     xrandr=$(LC_ALL=C xrandr)
     local -i x_default=$(echo ${xrandr} | grep "\*" | column -t | cut -d " " -f 1 | cut -d "x" -f 1)
@@ -551,7 +547,7 @@ xr() {
         echo "usage: xr <width>"
         echo "setting default display size"
         xrandr --output ${output} --mode ${x_default}x${y_default} --panning ${x_default}x${y_default} --scale 1x1
-        xfconf-query -c xfwm4 -p /general/use_compositing -s true
+        return
     fi
 
     # set safe constraints for the display
@@ -573,10 +569,6 @@ xr() {
     echo "size: ${x}x${y}"
     echo "scale: ${scale}"
     xrandr --output ${output} --mode ${x_default}x${y_default} --panning ${x}x${y} --scale ${scale}x${scale}
-
-    # restart composition
-    #compton -b
-    xfconf-query -c xfwm4 -p /general/use_compositing -s true
 }
 
 rollback() {

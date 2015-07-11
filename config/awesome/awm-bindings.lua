@@ -79,7 +79,7 @@ globalkeys = awful.util.table.join(
 
     -- modify windows
 
-    awful.key({ win }, "+", function()
+    awful.key({ win }, "#35", function() -- plus +
         if beautiful.useless_gap <= 4 then
             beautiful.useless_gap = 0
         elseif beautiful.useless_gap ~= 0 then
@@ -87,7 +87,7 @@ globalkeys = awful.util.table.join(
         end
         awful.layout.arrange(mouse.screen)
     end),
-    awful.key({ win }, "-", function()
+    awful.key({ win }, "#61", function() -- minus -
         beautiful.useless_gap = beautiful.useless_gap + 4
         awful.layout.arrange(mouse.screen)
     end),
