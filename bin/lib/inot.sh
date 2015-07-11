@@ -26,6 +26,7 @@ make() {
     fi
 }
 
+echo ""
 make "$cmd" "$file"
 while true; do
     inotifywait -mrq -e create -e move -e modify --format %w%f "$file" | while read f
