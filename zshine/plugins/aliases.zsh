@@ -213,6 +213,8 @@ alias lt='\ls -F -l -h -t -r --color=auto --group-directories-first'
 [ -n "$commands[g++]" ]  && alias  g++="LC_ALL=C g++"
 [ -n "$commands[mpv]" ] && alias mpv='mpv --no-audio-display'
 
+[[ "$commands[redshift]" ]] && alias toggle-redshift='pkill -USR1 redshift'
+
 if [ -n "$commands[vlock]" ]; then
     vlock(){
         [[ $TTY == /dev/pts/* ]] && echo "not a TTY" && return 1
