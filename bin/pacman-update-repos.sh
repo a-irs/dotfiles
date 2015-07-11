@@ -1,1 +1,0 @@
-lib/pacman-update-repos.sh
