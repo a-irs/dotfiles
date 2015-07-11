@@ -103,7 +103,7 @@ tyrannical.tags = {
         fallback     = true,
     },
     {
-        name         = "kodi",
+        name         = make_name("video", "kodi"),
         init         = false,
         layout       = awful.layout.suit.max.fullscreen,
         class        = { "Kodi" }
