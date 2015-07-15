@@ -1,5 +1,4 @@
 {
-	"dpi_scale": 1.0,
 	"always_show_minimap_viewport": true,
 	"animation_enabled": true,
 	"atomic_save": false,
@@ -20,6 +19,7 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"dpi_scale": 1.0,
 	"draw_white_space": "none",
 	"elementary_folder_icons": false,
 	"enable_tab_scrolling": false,
