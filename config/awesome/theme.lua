@@ -101,6 +101,9 @@ theme.layout_tileleft               = layout_folder .. "/tileleft.xpm"
 theme.layout_tilebottom             = layout_folder .. "/tilebottom.xpm"
 theme.layout_tiletop                = layout_folder .. "/tiletop.xpm"
 theme.layout_spiral                 = layout_folder .. "/spiral.xpm"
+theme.layout_floating               = layout_folder .. "/floating.xpm"
+theme.layout_fairv                  = layout_folder .. "/fairv.xpm"
+theme.layout_fairh                  = layout_folder .. "/fairh.xpm"
 
 -- TITLEBAR
 
