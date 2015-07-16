@@ -93,7 +93,7 @@ tyrannical.tags = {
         name         = make_name("video", "video"),
         init         = false,
         exclusive    = true,
-        nmaster      = default_nmaster,
+        nmaster      = 2,
         class        = { "Mpv", "Vlc" }
     },
     {
