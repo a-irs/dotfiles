@@ -1,11 +1,13 @@
 local naughty = require 'naughty'
 local awful   = require 'awful'
+local get_dpi = require('beautiful').xresources.get_dpi
 
 os.execute('xrdb -merge ' .. os.getenv("HOME") .. '/.Xresources')
 
 hostname = io.popen("uname -n"):read()
-vertical_resolution = tonumber(io.popen("xrandr | grep \\* | awk '{print $1}' | cut -dx -f 2"):read())
-compact_display = vertical_resolution < 1000
+local v = tonumber(io.popen("xrandr | grep \\* | awk '{print $1}' | cut -dx -f 2"):read())
+vres = v * 96 / get_dpi()
+compact_display = vres < 1000
 
 function is_empty(tag)
     return #tag:clients() == 0
