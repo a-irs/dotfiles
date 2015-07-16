@@ -51,7 +51,7 @@ tyrannical.tags = {
         init         = true,
         exclusive    = true,
         nmaster      = default_nmaster,
-        class        = { "Firefox", "Chromium" }
+        class        = { "Firefox" }
     },
     {
         name         = make_name("terminal", "zsh"),
@@ -80,7 +80,7 @@ tyrannical.tags = {
         init         = false,
         exclusive    = true,
         nmaster      = default_nmaster,
-        class        = { "Ario" }
+        class        = { "Ario", "Chromium" }
     },
     {
         name         = make_name("picture", "img"),
