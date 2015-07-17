@@ -60,9 +60,9 @@ theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "FontAwesome Bold 8"
 theme.show_tag_names                = true
 if highdpi then
-    theme.taglist_squares_unsel         = theme.basedir .. "/indicator175.png"
+    theme.taglist_squares_unsel         = theme.basedir .. "/indicator175.xpm"
 else
-    theme.taglist_squares_unsel         = theme.basedir .. "/indicator.png"
+    theme.taglist_squares_unsel         = theme.basedir .. "/indicator.xpm"
 end
 
 theme.bg_systray                    = theme.bg_normal
