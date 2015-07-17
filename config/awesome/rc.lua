@@ -4,6 +4,8 @@ local xresources = require('beautiful').xresources
 
 os.execute('xrdb -merge ' .. os.getenv("HOME") .. '/.Xresources')
 
+enable_tyrannical = false
+
 user_terminal   = "terminator"
 hostname        = io.popen("uname -n"):read()
 
