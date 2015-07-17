@@ -1,16 +1,7 @@
-local dpi = require("beautiful").xresources.apply_dpi
-local xresources = require("beautiful").xresources
-
--- TODO: maybe use layout-icons from default-theme
-
-if xresources.get_dpi() >= 168 then
-    highdpi = true
-end
-
 theme                               = {}
 
 theme.basedir                       = os.getenv("HOME") .. "/.config/awesome"
-if highdpi then
+if high_dpi then
     xpm_folder                      = theme.basedir .. "/xpm_175"
 else
     xpm_folder                      = theme.basedir .. "/xpm_100"

@@ -1,22 +1,23 @@
-local naughty = require 'naughty'
-local awful   = require 'awful'
-local get_dpi = require('beautiful').xresources.get_dpi
+local naughty    = require 'naughty'
+local awful      = require 'awful'
+local xresources = require('beautiful').xresources
 
 os.execute('xrdb -merge ' .. os.getenv("HOME") .. '/.Xresources')
 
-hostname = io.popen("uname -n"):read()
-local v = tonumber(io.popen("xrandr | grep \\* | awk '{print $1}' | cut -dx -f 2"):read())
-vres = v * 96 / get_dpi()
+user_terminal   = "terminator"
+hostname        = io.popen("uname -n"):read()
+
+vres            = tonumber(io.popen("xrandr | grep \\* | awk '{print $1}' | cut -dx -f 2"):read()) * 96 / xresources.get_dpi()
 compact_display = vres < 1000
+high_dpi        = xresources.get_dpi() >= 168
+
+function dpi(value)
+    return math.ceil(xresources.apply_dpi(value))
+end
 
 function is_empty(tag)
     return #tag:clients() == 0
 end
-
-user_terminal    = "terminator"
-user_browser     = "firefox"
-user_editor      = "subl3"
-user_filemanager = "thunar"
 
 require 'awm-beautiful'
 require 'awm-notify-settings'
