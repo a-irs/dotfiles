@@ -10,6 +10,11 @@ end
 theme                               = {}
 
 theme.basedir                       = os.getenv("HOME") .. "/.config/awesome"
+if highdpi then
+    xpm_folder                      = theme.basedir .. "/xpm_175"
+else
+    xpm_folder                      = theme.basedir .. "/xpm_100"
+end
 
 theme.statusbar_height              = dpi(24)
 theme.statusbar_position            = "top"
@@ -59,11 +64,7 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "FontAwesome Bold 8"
 theme.show_tag_names                = true
-if highdpi then
-    theme.taglist_squares_unsel         = theme.basedir .. "/indicator175.xpm"
-else
-    theme.taglist_squares_unsel         = theme.basedir .. "/indicator.xpm"
-end
+theme.taglist_squares_unsel         = xpm_folder .. "/indicator.xpm"
 
 theme.bg_systray                    = theme.bg_normal
 theme.widget_mpd_fg                 = "#cfcfcf"
@@ -91,19 +92,14 @@ theme.widget_disk_write_fg          = theme.widget_disk_read_fg
 
 -- LAYOUT ICONS
 
-if highdpi then
-    layout_folder = theme.basedir .. "/layout175"
-else
-    layout_folder = theme.basedir .. "/layout"
-end
-theme.layout_tile                   = layout_folder .. "/tile.xpm"
-theme.layout_tileleft               = layout_folder .. "/tileleft.xpm"
-theme.layout_tilebottom             = layout_folder .. "/tilebottom.xpm"
-theme.layout_tiletop                = layout_folder .. "/tiletop.xpm"
-theme.layout_spiral                 = layout_folder .. "/spiral.xpm"
-theme.layout_floating               = layout_folder .. "/floating.xpm"
-theme.layout_fairv                  = layout_folder .. "/fairv.xpm"
-theme.layout_fairh                  = layout_folder .. "/fairh.xpm"
+theme.layout_tile                   = xpm_folder .. "/layout/tile.xpm"
+theme.layout_tileleft               = xpm_folder .. "/layout/tileleft.xpm"
+theme.layout_tilebottom             = xpm_folder .. "/layout/tilebottom.xpm"
+theme.layout_tiletop                = xpm_folder .. "/layout/tiletop.xpm"
+theme.layout_spiral                 = xpm_folder .. "/layout/spiral.xpm"
+theme.layout_floating               = xpm_folder .. "/layout/floating.xpm"
+theme.layout_fairv                  = xpm_folder .. "/layout/fairv.xpm"
+theme.layout_fairh                  = xpm_folder .. "/layout/fairh.xpm"
 
 -- TITLEBAR
 
@@ -115,24 +111,19 @@ theme.titlebar_fg_focus                        = theme.fg_focus
 theme.titlebar_bg_normal                       = theme.bg_normal
 theme.titlebar_bg_focus                        = theme.bg_normal
 
-if highdpi then
-    titlebar_folder = theme.basedir .. "/titlebar175"
-else
-    titlebar_folder = theme.basedir .. "/titlebar"
-end
-theme.titlebar_close_button_focus              = titlebar_folder .. "/close.xpm"
-theme.titlebar_close_button_normal             = titlebar_folder .. "/unfocused_inactive.xpm"
-theme.titlebar_ontop_button_focus_inactive     = titlebar_folder .. "/ontop_inactive.xpm"
-theme.titlebar_ontop_button_focus_active       = titlebar_folder .. "/ontop_active.xpm"
-theme.titlebar_ontop_button_normal_inactive    = titlebar_folder .. "/ontop_inactive.xpm"
-theme.titlebar_ontop_button_normal_active      = titlebar_folder .. "/ontop_unfocused.xpm"
-theme.titlebar_sticky_button_focus_inactive    = titlebar_folder .. "/sticky_inactive.xpm"
-theme.titlebar_sticky_button_focus_active      = titlebar_folder .. "/sticky_active.xpm"
-theme.titlebar_sticky_button_normal_inactive   = titlebar_folder .. "/unfocused_inactive.xpm"
-theme.titlebar_sticky_button_normal_active     = titlebar_folder .. "/unfocused_active.xpm"
-theme.titlebar_floating_button_focus_inactive  = titlebar_folder .. "/floating_inactive.xpm"
-theme.titlebar_floating_button_focus_active    = titlebar_folder .. "/floating_active.xpm"
-theme.titlebar_floating_button_normal_inactive = titlebar_folder .. "/unfocused_inactive.xpm"
-theme.titlebar_floating_button_normal_active   = titlebar_folder .. "/unfocused_active.xpm"
+theme.titlebar_close_button_focus              = xpm_folder .. "/titlebar/close.xpm"
+theme.titlebar_close_button_normal             = xpm_folder .. "/titlebar/unfocused_inactive.xpm"
+theme.titlebar_ontop_button_focus_inactive     = xpm_folder .. "/titlebar/ontop_inactive.xpm"
+theme.titlebar_ontop_button_focus_active       = xpm_folder .. "/titlebar/ontop_active.xpm"
+theme.titlebar_ontop_button_normal_inactive    = xpm_folder .. "/titlebar/ontop_inactive.xpm"
+theme.titlebar_ontop_button_normal_active      = xpm_folder .. "/titlebar/ontop_unfocused.xpm"
+theme.titlebar_sticky_button_focus_inactive    = xpm_folder .. "/titlebar/sticky_inactive.xpm"
+theme.titlebar_sticky_button_focus_active      = xpm_folder .. "/titlebar/sticky_active.xpm"
+theme.titlebar_sticky_button_normal_inactive   = xpm_folder .. "/titlebar/unfocused_inactive.xpm"
+theme.titlebar_sticky_button_normal_active     = xpm_folder .. "/titlebar/unfocused_active.xpm"
+theme.titlebar_floating_button_focus_inactive  = xpm_folder .. "/titlebar/floating_inactive.xpm"
+theme.titlebar_floating_button_focus_active    = xpm_folder .. "/titlebar/floating_active.xpm"
+theme.titlebar_floating_button_normal_inactive = xpm_folder .. "/titlebar/unfocused_inactive.xpm"
+theme.titlebar_floating_button_normal_active   = xpm_folder .. "/titlebar/unfocused_active.xpm"
 
 return theme
