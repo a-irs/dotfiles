@@ -29,7 +29,7 @@ end
 
 local programs = {
     'nitrogen --restore',
-    'parcellite --daemon --no-icon',
+    'parcellite --no-icon',
     'start-pulseaudio-x11',
     'kupfer --no-splash',
     'killall compton ; compton -b',

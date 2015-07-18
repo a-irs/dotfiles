@@ -69,6 +69,7 @@ dotfiles_x=(
     config/termite/config
     config/user-dirs.dirs
     config/skippy-xd/skippy-xd.rc
+    config/zathura/zathurarc
     fonts
     gtkrc-2.0
     icons
