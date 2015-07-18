@@ -15,7 +15,7 @@ local needed = {
     "redshift",
     hostname == "desktop" and "mpd",
     hostname == "desktop" and "x2godesktopsharing",
-    hostname == "desktop" and "syncergyc",
+    hostname == "desktop" and "synergyc",
 }
 
 for _, cmd in ipairs(needed) do
