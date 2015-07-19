@@ -39,7 +39,7 @@ if not enable_tyrannical then
 
     tags = {}
     for s = 1, screen.count() do
-        tags[s] = awful.tag({ 1, 2, 3, 4, 5 }, s, layouts[1])
+        tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
     end
 
 else
