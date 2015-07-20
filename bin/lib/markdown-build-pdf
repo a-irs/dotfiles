@@ -8,6 +8,7 @@ out=$(basename "$1")
 out=${out//.md/}
 
 pandoc --latex-engine=xelatex \
+-V geometry:margin=2cm \
 --to=latex \
 --number-sections \
 --standalone --smart \

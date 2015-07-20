@@ -265,13 +265,13 @@ if [ -n "$commands[xdg-open]" ]; then
     os() {
         [[ -z "$1" || ! -e "$1" ]] && return 1
         mimeopen --ask-default "$1"
-        \cp -f ~/.local/share/applications/defaults.list ~/.local/share/applications/mimeapps.list
+        command cp -f ~/.local/share/applications/defaults.list ~/.local/share/applications/mimeapps.list
     }
     o() {
         if [ -r "$1" ]; then
-            xdg-open "$1" &> /dev/null
+            nohup xdg-open "$1" > /dev/null 2>&1 &
         elif [ -z "$1" ]; then
-            xdg-open . &> /dev/null
+            nohup xdg-open . > /dev/null 2>&1 &
         else
             echo "'$1' could not be read"
         fi
