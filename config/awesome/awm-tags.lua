@@ -4,7 +4,7 @@ local lain       = require 'lain'
 
 
 function make_name(icon, name)
-    str = "  "
+    str = " "
     if icon == "globe" then
         str = str .. string.char(239, 130, 172)
     elseif icon == "desktop" then
@@ -35,7 +35,7 @@ function make_name(icon, name)
             str = str .. "  " .. name
         end
     end
-    return str .. "  "
+    return str .. " "
 end
 
 
