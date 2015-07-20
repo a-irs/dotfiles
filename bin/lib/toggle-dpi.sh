@@ -2,6 +2,45 @@
 
 set -e
 
+function toggleChromium() {
+    already_set=false
+
+    set +e
+    was_running=false
+    if pgrep -x chromium > /dev/null; then
+        was_running=true
+        killall chromium
+    fi
+    set -e
+
+    line=$(grep -n "force-device-scale-factor" ~/.local/share/applications/chromium.desktop | cut -f1 -d:)
+    value=$(grep "force-device-scale-factor" ~/.local/share/applications/chromium.desktop | rev | cut -d"=" -f 1 | rev | cut -d " " -f 1 | tr -d "[[:space:]]")
+
+
+    no=1
+
+    if [[ $1 == normal ]]; then
+        sed --follow-symlinks -i "$line s|$hi|$no|" ~/.local/share/applications/chromium.desktop
+        echo "Chromium: normal"
+        already_set=true
+    elif [[ $1 == hidpi ]]; then
+        sed --follow-symlinks -i "$line s|$no|$hi|" ~/.local/share/applications/chromium.desktop
+        echo "Chromium: HiDPI"
+        already_set=true
+    fi
+
+    if [[ $value == "$no" && already_set == false ]]; then
+        sed --follow-symlinks -i "$line s|$no|$hi|" ~/.local/share/applications/chromium.desktop
+        echo "Chromium: normal → HiDPI"
+    elif [[ $value == "$hi" && already_set == false ]]; then
+        sed --follow-symlinks -i "$line s|$hi|$no|" ~/.local/share/applications/chromium.desktop
+        echo "Chromium: HiDPI → normal"
+    fi
+
+    #[[ $was_running == true ]] && chromium&
+
+}
+
 function toggleFirefox() {
     already_set=false
 
@@ -30,10 +69,10 @@ function toggleFirefox() {
         already_set=true
     fi
 
-    if [[ $value == "$no" ]]; then
+    if [[ $value == "$no" && already_set == false ]]; then
         sed --follow-symlinks -i "$line s|\"$no\"|\"$hi\"|" "$profile/prefs.js"
         echo "Firefox: normal → HiDPI"
-    elif [[ $value == "$hi" ]]; then
+    elif [[ $value == "$hi" && already_set == false ]]; then
         sed --follow-symlinks -i "$line s|\"$hi\"|\"$no\"|" "$profile/prefs.js"
         echo "Firefox: HiDPI → normal"
     fi
@@ -110,5 +149,6 @@ function toggleXresources() {
 }
 
 toggleFirefox "$1"
+toggleChromium "$1"
 toggleSublime "$1"
 toggleXresources "$1"
