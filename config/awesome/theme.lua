@@ -56,7 +56,6 @@ theme.font                          = "Ubuntu 8"
 theme.taglist_font                  = "Ubuntu Bold 8"
 theme.show_tag_names                = true
 theme.taglist_squares_unsel         = xpm_folder .. "/indicator.xpm"
-theme.taglist_squares_unsel         = nil
 
 theme.bg_systray                    = theme.bg_normal
 theme.widget_mpd_fg                 = "#cfcfcf"

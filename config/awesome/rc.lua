@@ -1,4 +1,3 @@
-require('eminent')
 local naughty    = require 'naughty'
 local awful      = require 'awful'
 local xresources = require('beautiful').xresources

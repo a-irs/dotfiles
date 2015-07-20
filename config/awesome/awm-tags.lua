@@ -1,5 +1,4 @@
 local awful      = require 'awful'
-local tyrannical = require 'tyrannical'
 local lain       = require 'lain'
 
 
@@ -47,15 +46,13 @@ if not enable_tyrannical then
             make_name(nil, 2),
             make_name(nil, 3),
             make_name(nil, 4),
-            make_name(nil, 5),
-            make_name(nil, 6),
-            make_name(nil, 7),
-            make_name(nil, 8),
-            make_name(nil, 9)
+            make_name(nil, 5)
             }, s, layouts[1])
     end
 
 else
+
+    local tyrannical = require 'tyrannical'
 
     tyrannical.settings.block_children_focus_stealing = true
     tyrannical.settings.group_children                = true
