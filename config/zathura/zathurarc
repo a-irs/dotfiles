@@ -12,6 +12,8 @@ set adjust-open width
 
 map              f toggle_fullscreen
 map [fullscreen] f toggle_fullscreen
+map              <C-w> quit
+map [fullscreen] <C-w> quit
 map              w adjust_window width
 map [fullscreen] w adjust_window width
 map              e adjust_window best-fit
