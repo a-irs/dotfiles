@@ -17,6 +17,7 @@ ZSH_HIGHLIGHT_STYLES[globbing_pathseparator]='fg=cyan'
 ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=green,bold'
 ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=green,bold'
 
+ZSH_HIGHLIGHT_STYLES[assign]='fg=green'
 ZSH_HIGHLIGHT_STYLES[alias]='fg=magenta,bold'
 ZSH_HIGHLIGHT_STYLES[function]='fg=yellow,bold'
 ZSH_HIGHLIGHT_STYLES[globbing]='fg=yellow,bold'
@@ -24,7 +25,7 @@ ZSH_HIGHLIGHT_STYLES[builtin]='fg=cyan,bold'
 ZSH_HIGHLIGHT_STYLES[command]='fg=green,bold'
 ZSH_HIGHLIGHT_STYLES[precommand]='fg=white,bold'
 
-ZSH_HIGHLIGHT_STYLES[unknown-token]='underline,bold'
+ZSH_HIGHLIGHT_STYLES[unknown-token]=none
 ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='bold'
 ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='bold'
 
