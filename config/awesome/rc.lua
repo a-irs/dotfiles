@@ -7,7 +7,7 @@ os.execute('xrdb -merge ' .. os.getenv("HOME") .. '/.Xresources')
 
 enable_tyrannical = false
 
-user_terminal   = "terminator"
+user_terminal   = "termite"
 hostname        = io.popen("uname -n"):read()
 
 vres            = tonumber(io.popen("xrandr | grep \\* | awk '{print $1}' | cut -dx -f 2"):read()) * 96 / xresources.get_dpi()

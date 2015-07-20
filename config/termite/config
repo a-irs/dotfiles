@@ -2,7 +2,7 @@
 scroll_on_output = false
 scroll_on_keystroke = true
 audible_bell = false
-mouse_autohide = true
+mouse_autohide = false
 allow_bold = true
 dynamic_title = true
 urgent_on_bell = true
@@ -20,7 +20,10 @@ cursor_blink = system
 cursor_shape = block
 
 # $BROWSER is used by default
-#browser = firefox
+browser = firefox
+
+# set size hints for the window
+size_hints = false
 
 # emit escape sequences for other keys modified by Control
 #modify_other_keys = false
