@@ -7,7 +7,7 @@ is_git() {
     [[ "$PWD" == /media/* ]] && return 1
     [[ "$PWD" == /run/user/*/gvfs/* ]] && return 1
     [ -d .git ] && IS_GIT=1 && return 0
-    git rev-parse --git-dir > /dev/null 2>&1 && IS_GIT=1 && return 0
+    git rev-parse --is-inside-work-tree > /dev/null 2>&1 && IS_GIT=1 && return 0
 }
 
 git_prompt_info() {
