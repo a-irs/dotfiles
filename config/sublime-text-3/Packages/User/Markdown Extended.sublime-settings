@@ -1,5 +1,5 @@
 {
-    "color_scheme": "Packages/MarkdownLight/MarkdownLight.tmTheme",
+    // "color_scheme": "Packages/MarkdownLight/MarkdownLight.tmTheme",
     "draw_centered": true,
     "draw_indent_guides": false,
     "extensions": [
