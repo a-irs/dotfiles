@@ -43,7 +43,7 @@ local programs = {
     'xset -dpms ; xset s off',
     hostname == "desktop" and 'pgrep -x mpd || mpd',
     hostname == "desktop" and 'bash -c "pgrep x2godesktopshar || x2godesktopsharing"',
-    hostname == "desktop" and 'bash -c "pgrep synergyc || synergyc -d WARNING dell"',
+    hostname == "desktop" and 'bash -c "pgrep synergyc || synergyc -d ERROR dell"',
     hostname == "desktop" and os.getenv("HOME") .. '/.bin/wait-for-srv.sh gvfs-mount smb://srv/data',
     hostname == "desktop" and os.getenv("HOME") .. '/.bin/wait-for-srv.sh gvfs-mount sftp://root@srv',
 }
