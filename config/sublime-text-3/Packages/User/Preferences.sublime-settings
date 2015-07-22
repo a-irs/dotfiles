@@ -98,7 +98,7 @@
 		".texpadtmp"
 	],
 	"font_face": "Input",
-	"font_size": 9,
+	"font_size": 11,
 	"gutter": true,
 	"hero_folder_icons": false,
 	"highlight_line": true,
