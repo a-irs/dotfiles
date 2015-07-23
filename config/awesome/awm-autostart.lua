@@ -13,7 +13,7 @@ local needed = {
     "thunar",
     "lxpolkit",
     "redshift",
-    hostname == "desktop" and "mpd",
+--    hostname == "desktop" and "mpd",
     hostname == "desktop" and "x2godesktopsharing",
     hostname == "desktop" and "synergyc",
     hostname == "desktop" and "numlockx",
@@ -43,11 +43,11 @@ local programs = {
     'ln -sf ' .. os.getenv("HOME") .. '/.rofi-2.runcache ' .. os.getenv("HOME") .. '/.cache/rofi-2.runcache',
     'xset -dpms ; xset s off',
     hostname == "desktop" and 'numlockx',
-    hostname == "desktop" and 'pgrep -x mpd || mpd',
+--    hostname == "desktop" and 'pgrep -x mpd || mpd',
     hostname == "desktop" and 'bash -c "pgrep x2godesktopshar || x2godesktopsharing"',
     hostname == "desktop" and 'bash -c "pgrep synergyc || synergyc -d ERROR dell"',
-    hostname == "desktop" and os.getenv("HOME") .. '/.bin/wait-for-srv.sh gvfs-mount smb://srv/data',
-    hostname == "desktop" and os.getenv("HOME") .. '/.bin/wait-for-srv.sh gvfs-mount sftp://root@srv',
+--    hostname == "desktop" and os.getenv("HOME") .. '/.bin/wait-for-srv.sh gvfs-mount smb://srv/data',
+--    hostname == "desktop" and os.getenv("HOME") .. '/.bin/wait-for-srv.sh gvfs-mount sftp://root@srv',
 }
 for _, cmd in ipairs(programs) do
     if cmd then
