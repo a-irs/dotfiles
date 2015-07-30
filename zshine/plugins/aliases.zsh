@@ -158,6 +158,12 @@ if [[ -n "$commands[gcalcli]" ]]; then
     alias gagenda='__gcal agenda'
 fi
 
+if [[ -n "$commands[pdfgrep]" ]]; then
+    pdf() {
+        pdfgrep -i "$1" -- *.pdf
+    }
+fi
+
 s() {
     typeset -U files
     [[ -n $* ]] && files=($*) || files=(*(.))
@@ -368,23 +374,30 @@ dict() {
 
 if [ -n "$commands[openvpn]" ]; then
     vpn() {
+        set +e
         if [[ -f /tmp/openvpn.pid ]]; then
-            echo -e "VPN with PID $(</tmp/openvpn.pid) already active:\n"
-            ps -o cmd "$(</tmp/openvpn.pid)" | tail -n 1
-            return 1
+            ps "$(</tmp/openvpn.pid)" &> /dev/null
+            if (( $? != 0 )); then
+                sudo rm -f /tmp/openvpn.pid
+            else
+                echo -e "${BOLD_RED}VPN with PID $(</tmp/openvpn.pid) already active:${RESET}\n"
+                ps -o cmd "$(</tmp/openvpn.pid)" | tail -n 1
+                return 1
+            fi
         fi
         for f in $HOME/.openvpn/**/$1.ovpn; do
             d=$(echo "$f" | rev | cut -d "/" -f 2- | rev)
             #vpncolor.py sudo openvpn --cd "$d" --config "$f"
-            sudo openvpn --daemon --cd "$d" --writepid /tmp/openvpn.pid --config "$f"
+            sudo openvpn --daemon --writepid /tmp/openvpn.pid --cd "$d" --config "$f"
         done
+        set -e
     }
 
     vpn-log() {
         if [[ -f /tmp/openvpn.pid ]]; then
-            journalctl -f _PID="$(</tmp/openvpn.pid)"
+            journalctl -n 20 -f _PID="$(</tmp/openvpn.pid)"
         else
-            echo "No VPN active."
+            echo "${BOLD_RED}No VPN active.${RESET}"
         fi
     }
 
@@ -393,7 +406,7 @@ if [ -n "$commands[openvpn]" ]; then
             sudo kill "$(</tmp/openvpn.pid)"
             sudo rm -f /tmp/openvpn.pid
         else
-            echo "No VPN active."
+            echo "${BOLD_RED}No VPN active.${RESET}"
         fi
     }
 fi
@@ -548,29 +561,29 @@ xr() {
     if [ -z "$1" ]; then
         echo "usage: xr <width>"
         echo "setting default display size"
-        xrandr --output ${output} --mode ${x_default}x${y_default} --panning ${x_default}x${y_default} --scale 1x1
+        xrandr --output "${output}" --mode "${x_default}x${y_default}" --panning "${x_default}x${y_default}" --scale 1x1
         return
     fi
 
     # set safe constraints for the display
-    safe_bottom=$(($x_default/2))
-    safe_top=$(($x_default*3))
+    safe_bottom=$((x_default/2))
+    safe_top=$((x_default*3))
     if [ "$1" -lt $safe_bottom -o "$1" -gt $safe_top ]; then
         echo "$1 is not in safe display range between $safe_bottom and $safe_top"
         return
     fi
 
     # calculate new sizes
-    local ratio=$(LC_ALL=C printf "%.2f" $(($x_default.0/$y_default)))
+    local ratio=$(LC_ALL=C printf "%.2f" $(($x_default.0/y_default)))
     local -i x="$1"
-    local -i y=$(($x/$ratio))
-    local scale=$((${x}.0/$x_default))
+    local -i y=$((x/ratio))
+    local scale=$((${x}.0/x_default))
 
     # change panning
     echo "output: ${output}"
     echo "size: ${x}x${y}"
     echo "scale: ${scale}"
-    xrandr --output ${output} --mode ${x_default}x${y_default} --panning ${x}x${y} --scale ${scale}x${scale}
+    xrandr --output "${output}" --mode "${x_default}x${y_default}" --panning "${x}x${y}" --scale "${scale}x${scale}"
 }
 
 rollback() {
@@ -580,7 +593,7 @@ rollback() {
     if [[ "$1" == "list" ]]; then
         url="${base}/${2:0:1}/${2}/"
         avail=$(\curl -ss -l "$url" --user anonymous:anonymous | grep -e $arch -e any.pkg)
-        echo $avail
+        echo "$avail"
     else
         pkgname=$(echo "$1" | rev | cut -d "-" -f 4- | rev)
         url="${base}/${pkgname:0:1}/${pkgname}"
@@ -591,16 +604,16 @@ rollback() {
 russian-roulette() {
     echo -n "spinning "
     s=$(($RANDOM.0/100000))
-    num=$(($RANDOM/3000))
+    num=$((RANDOM/3000))
 
     [ $num -le 4 ] && num=5
-    for (( c=0; c<=$num; c++ ))
+    for (( c = 0; c <= num; c++ ))
     do
         echo -n "."
         sleep $s
     done
 
-    if [ $(($RANDOM%6)) -eq 0 ]; then
+    if [ $((RANDOM%6)) -eq 0 ]; then
         echo '\033[1;31m BOOM'
     else
         echo '\033[2m click'
