@@ -91,6 +91,11 @@ git clone --depth=1 https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundl
 #vim +PluginInstall +qall
 #print_info "installed vundles"
 
+if [[ -f /usr/bin/kupfer ]]; then
+    mkdir -p ~/.local/share/kupfer/plugins
+    cp -f "$this_dir/kupfer-recdirs.py" ~/.local/share/kupfer/plugins/recdirs.py
+fi
+
 if [[ -f /usr/bin/mpd ]]; then
     touch -a ~/.config/mpd/{database.gz,state.txt,sticker.sqlite}
     print_info "set up files for MPD"
