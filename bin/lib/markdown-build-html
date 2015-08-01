@@ -11,6 +11,6 @@ css=~/.bin/lib/markdown-build.css
 pandoc -V lang=de \
 --mathjax='http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' \
 --to=html5 \
---number-sections \
+--toc \
 --standalone --smart --css "$css" \
 -o ~/"${out}.html" "$1"
