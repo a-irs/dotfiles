@@ -188,46 +188,14 @@ mytaglist.buttons = awful.util.table.join(
                         awful.button({ }, 1, awful.tag.viewonly),
                         awful.button({ }, 3, awful.tag.viewtoggle)
                     )
-
--- SYSTEM WIBOX
-
 systembox = {}
-local systembox_position = "bottom"
-if theme.statusbar_position == "bottom" then systembox_position = "top" end
-systembox[1] = awful.wibox({ position = systembox_position, screen = s, height = theme.statusbar_height })
 
-local systembox_layout_1 = wibox.layout.fixed.horizontal()
-systembox_layout_1:add(netwidget)
-systembox_layout_1:add(speedwidget)
-systembox_layout_1:add(iowidget)
-systembox_layout_1:add(memwidget)
-
-local systembox_layout_2 = wibox.layout.fixed.horizontal()
-systembox_layout_2:add(loadwidget)
-systembox_layout_2:add(cpufreq1widget)
-systembox_layout_2:add(cpufreq2widget)
-systembox_layout_2:add(cpuwidget)
-systembox_layout_2:add(cpugraphwidget)
-systembox_layout_2:add(wibox.widget.systray())
-
-local systembox_align_left = wibox.layout.align.horizontal()
-systembox_align_left:set_left(systembox_layout_1)
-local systembox_align_right = wibox.layout.align.horizontal()
-systembox_align_right:set_right(systembox_layout_2)
-
-local systembox_layout_full = wibox.layout.flex.horizontal()
-systembox_layout_full:add(systembox_align_left)
-systembox_layout_full:add(systembox_align_right)
-systembox[1]:set_widget(systembox_layout_full)
-systembox[1].visible = false
-
-local function systembox_hide()
-    systembox[1].visible = false
+local function systembox_hide(screen)
+    systembox[screen].visible = false
 end
-local function systembox_show()
-    systembox[1].visible = true
+local function systembox_show(screen)
+    systembox[screen].visible = true
 end
-
 
 for s = 1, screen.count() do
     mypromptbox[s] = awful.widget.prompt()
@@ -235,12 +203,12 @@ for s = 1, screen.count() do
     mywibox[s] = awful.wibox({ position = theme.statusbar_position, screen = s, height = theme.statusbar_height })
     mylayoutbox[s] = awful.widget.layoutbox(s)
     mylayoutbox[s]:buttons(awful.util.table.join(
-                       awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
-                       awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
-                       awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
-                       awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
-    mylayoutbox[s]:connect_signal("mouse::enter", systembox_show)
-    mylayoutbox[s]:connect_signal("mouse::leave", systembox_hide)
+                       awful.button({ }, 1, function() awful.layout.inc(layouts,  1) end),
+                       awful.button({ }, 3, function() awful.layout.inc(layouts, -1) end),
+                       awful.button({ }, 4, function() awful.layout.inc(layouts,  1) end),
+                       awful.button({ }, 5, function() awful.layout.inc(layouts, -1) end)))
+    mylayoutbox[s]:connect_signal("mouse::enter", function() systembox_show(mouse.screen) end)
+    mylayoutbox[s]:connect_signal("mouse::leave", function() systembox_hide(mouse.screen) end)
 
 
     -- layouts
@@ -268,4 +236,35 @@ for s = 1, screen.count() do
     layout:set_right(layout3)
 
     mywibox[s]:set_widget(layout)
+
+    -- SYSTEM BOX
+
+    local systembox_position = "bottom"
+    if theme.statusbar_position == "bottom" then systembox_position = "top" end
+    systembox[s] = awful.wibox({ position = systembox_position, screen = s, height = theme.statusbar_height })
+
+    local systembox_layout_1 = wibox.layout.fixed.horizontal()
+    systembox_layout_1:add(netwidget)
+    systembox_layout_1:add(speedwidget)
+    systembox_layout_1:add(iowidget)
+    systembox_layout_1:add(memwidget)
+
+    local systembox_layout_2 = wibox.layout.fixed.horizontal()
+    systembox_layout_2:add(loadwidget)
+    systembox_layout_2:add(cpufreq1widget)
+    systembox_layout_2:add(cpufreq2widget)
+    systembox_layout_2:add(cpuwidget)
+    systembox_layout_2:add(cpugraphwidget)
+    systembox_layout_2:add(wibox.widget.systray())
+
+    local systembox_align_left = wibox.layout.align.horizontal()
+    systembox_align_left:set_left(systembox_layout_1)
+    local systembox_align_right = wibox.layout.align.horizontal()
+    systembox_align_right:set_right(systembox_layout_2)
+
+    local systembox_layout_full = wibox.layout.flex.horizontal()
+    systembox_layout_full:add(systembox_align_left)
+    systembox_layout_full:add(systembox_align_right)
+    systembox[s]:set_widget(systembox_layout_full)
+    systembox[s].visible = false
 end

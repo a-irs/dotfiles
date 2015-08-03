@@ -123,8 +123,8 @@ globalkeys = awful.util.table.join(
 
     -- launch programs
 
-    awful.key({ win }, "r",      function () awful.util.spawn("rofi -show run    -padding 600 -opacity 90 -width 100 -bw 0 -bg '" .. theme.bg_normal .. "' -bc '" .. theme.bg_normal .. "' -fg '#ddd' -hlbg '#666' -hlfg '#fff' -font 'Input 11' -width 30 -padding 10 -terminal " .. user_terminal) end),
-    awful.key({ win, alt }, "r", function () awful.util.spawn("rofi -show window -padding 600 -opacity 90 -width 100 -bw 0 -bg '" .. theme.bg_normal .. "' -bc '" .. theme.bg_normal .. "' -fg '#ddd' -hlbg '#666' -hlfg '#fff' -font 'Input 11' -width 30 -padding 10 -terminal " .. user_terminal) end),
+    awful.key({ win }, "r",      function () awful.util.spawn("rofi -show run    -padding " .. vres/2 .. " -opacity 90 -width 100 -bw 0 -bg '" .. theme.bg_normal .. "' -bc '" .. theme.bg_normal .. "' -fg '#ddd' -hlbg '#666' -hlfg '#fff' -font 'Input 11' -width 30 -padding 10 -terminal " .. user_terminal) end),
+    awful.key({ win, alt }, "r", function () awful.util.spawn("rofi -show window -padding " .. vres/2 .. " -opacity 90 -width 100 -bw 0 -bg '" .. theme.bg_normal .. "' -bc '" .. theme.bg_normal .. "' -fg '#ddd' -hlbg '#666' -hlfg '#fff' -font 'Input 11' -width 30 -padding 10 -terminal " .. user_terminal) end),
     awful.key({ alt }, "Return", function () awful.util.spawn(user_terminal) end),
     awful.key({ alt }, "f",      function () awful.util.spawn("thunar") end),
     awful.key({ alt }, "c",      function () awful.util.spawn("firefox") end),

@@ -5,6 +5,10 @@ for c in $noglobs; do
     [[ -n "$commands[$c]" ]] && alias $c="noglob $c"
 done
 
+search() {
+    nohup recoll -q "$@" > /dev/null 2>&1 &
+}
+
 ranger() {
     [[ -n "$RANGER_LEVEL" ]] && exit
     tmp='/tmp/chosendir'
