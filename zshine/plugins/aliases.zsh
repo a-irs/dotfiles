@@ -248,6 +248,8 @@ fi
 
 take() { mkdir -p "$1" && cd "$1"; }
 
+alias capture-keys="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'"
+
 [ -n "$commands[tree]" ] && alias tree="tree -F --dirsfirst --noreport"
 [ -n "$commands[sudo]" ] && alias sudo='sudo '
 [ -n "$commands[mc]" ] && alias mc='mc --nocolor'
