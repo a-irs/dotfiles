@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-limit=80
+limit=90
 
 while true; do
     current_pids=$(ps -Aa -o pid,pcpu | awk --assign maxcpu="$limit" '$2>maxcpu {print $1}')

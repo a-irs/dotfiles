@@ -555,7 +555,7 @@ if [ -f "$HOME/.config/user-dirs.dirs" ]; then
     }
 fi
 
-xr() {
+xr-scale() {
     # get settings from xrandr
     xrandr=$(LC_ALL=C xrandr)
     local -i x_default=$(echo ${xrandr} | grep "\*" | column -t | cut -d " " -f 1 | cut -d "x" -f 1)

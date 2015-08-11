@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+
+internal_out=LVDS1
+external_out=VGA1
+
+usage_error() {
+    printf "\n%s\n" "$(tput setaf 1)usage: rand <output> on|off|add|rm [<resolution>]$(tput sgr0)"
+    exit 2
+}
+
+fail() {
+    printf "%s\n" "$(tput setaf 1)$1$(tput sgr0)"
+    exit 1
+}
+
+success() {
+    printf "%s\n" "$(tput setaf 2)$1$(tput sgr0)"
+}
+
+parse() {
+    [[ ! $1 || ! $2 ]] && ( xrandr; usage_error)
+    output=$1
+    action=$2
+    [[ $output == int* ]] && output=$internal_out
+    [[ $output == ext* ]] && output=$external_out
+
+    if [[ $action == off || $action == on ]]; then
+        action_on_off "$output" "$action"
+    elif [[ $action == add ]]; then
+        [[ $3 ]] || usage_error
+        action_add "$output" "$3"
+    elif [[ $action == rm || $action == del ]]; then
+        [[ $3 ]] || usage_error
+        action_rm "$output" "$3"
+    else
+        usage_error
+    fi
+}
+
+action_on_off() {
+    output=$1
+    action=$2
+    [[ $action == on  ]] && echo xrandr --output "$output" --auto
+    [[ $action == off ]] && echo xrandr --output "$output" --off
+}
+
+action_add() {
+    output=$1
+    res=$2
+    local x_res=${res//x*}
+    local y_res=${res//*x}
+    modeline=$(cvt "$x_res" "$y_res" | grep Modeline | cut -d' ' -f 3-) || fail "invalid resolution '$res'"
+    modeline="$(echo -e "${modeline}" | sed -e 's/^[[:space:]]*//')"
+    xrandr --newmode $res $modeline 2> /dev/null || fail "resolution '$res' already exists on '$output'"
+    xrandr --addmode "$output" "$res" 2> /dev/null
+    if [[ $? -eq 0 ]]; then
+        success "added resolution '$res' to '$output'"
+    else
+        xrandr --rmmode "$res"
+        fail "unable to add resolution '$res' to '$output'"
+    fi
+}
+
+action_rm() {
+    output=$1
+    res=$2
+    xrandr --delmode "$output" "$res"
+    xrandr --rmmode "$res"
+    success "deleted resolution '$res' from '$output'"
+}
+
+parse "$@"
