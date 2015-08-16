@@ -9,7 +9,7 @@ while true; do
             for last_pid in $last_pids; do
                 if [[ "$current_pid" == "$last_pid" ]]; then
                     cmd_name=$(ps -o comm -q "$current_pid" | tail -n 1)
-                    notify-send -t 0 -u critical "High CPU" "$cmd_name ($current_pid)"
+                    [[ $cmd_name == firefox ]] || notify-send -t 0 -u critical "High CPU" "$cmd_name ($current_pid)"
                 fi
             done
         done
