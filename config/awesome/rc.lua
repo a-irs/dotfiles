@@ -14,7 +14,7 @@ compact_display = vres < 1000
 high_dpi        = xresources.get_dpi() >= 168
 
 function dpi(value)
-    return math.ceil(xresources.apply_dpi(value))
+    return math.floor(xresources.apply_dpi(value) + 0.5)
 end
 
 function is_empty(tag)
