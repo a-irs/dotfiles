@@ -41,8 +41,8 @@ export WINEARCH=win32
 export TZ='Europe/Berlin'
 export REPORTTIME=5
 
-export HISTSIZE=50000
-export SAVEHIST=50000
+export HISTSIZE=100000
+export SAVEHIST=100000
 export HISTFILE=~/.zsh_history
 
 setopt NOTIFY # Report status of background jobs immediately.
