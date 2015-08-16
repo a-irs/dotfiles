@@ -1,3 +1,6 @@
+**/.git
+**/.svn
+**/.cache.json
 **/.texlive
 **/boot/intel-ucode.img
 **/boot/vmlinuz-linux
