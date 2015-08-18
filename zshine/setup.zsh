@@ -84,7 +84,6 @@ fi
 ZSHINE_PLUGINS=(
   term-title # sets terminal/tab title
   aliases # provides some aliases and functions for daily work
-  dircolors # set directory/filetype colors
   ls-colors # colors for "ls" command
   virtualenvwrapper # wrapper for python-virtualenv
   syntax-highlighting # provides a syntax highlighted prompt

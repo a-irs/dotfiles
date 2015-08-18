@@ -1,4 +1,4 @@
-source $ZSHINE_DIR/plugins/zaw/zaw.zsh
+source "$ZSHINE_DIR/plugins/zaw/zaw.zsh"
 
 bindkey '^R' zaw-history
 bindkey -M filterselect '^R' down-line-or-history

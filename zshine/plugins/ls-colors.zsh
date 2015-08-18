@@ -1,3 +1,5 @@
+[[ -f "$ZSHINE_DIR/dircolors" ]] && eval $(dircolors -b "$ZSHINE_DIR/dircolors")
+
 autoload colors; colors;
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
 

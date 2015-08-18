@@ -1,4 +1,4 @@
-source $ZSHINE_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source "$ZSHINE_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 

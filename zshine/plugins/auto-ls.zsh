@@ -1,4 +1,6 @@
+#!/usr/bin/env zsh
+
 chpwd() {
-    \ls -F --color=auto --group-directories-first
+    command ls -F --color=auto --group-directories-first
 }
 [[ "$TERM" != linux ]] && chpwd

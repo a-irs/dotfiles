@@ -2,7 +2,7 @@
 
 noglobs=(find ftp locate rake rsync scp sftp wcalc)
 for c in $noglobs; do
-    [[ -n "$commands[$c]" ]] && alias $c="noglob $c"
+    [[ "$commands[$c]" ]] && alias $c="noglob $c"
 done
 
 search() {
@@ -10,20 +10,13 @@ search() {
 }
 
 ranger() {
-    [[ -n "$RANGER_LEVEL" ]] && exit
+    [[ "$RANGER_LEVEL" ]] && exit
     tmp='/tmp/chosendir'
     command ranger --choosedir="$tmp" "${@:-$PWD}"
     [[ -f "$tmp" && $(cat -- "$tmp") != "$PWD" ]] && cd -- "$(cat -- "$tmp")"
     rm -f -- "$tmp"
 }
 alias ra='ranger'
-
-getabs() {
-    [[ -z "$1" ]] && return 1
-    mkdir -p ~/dev/arch && cd ~/dev/arch && \
-    pbget --aur "$1" && cd "$1" && \
-    makepkg -od --skipinteg
-}
 
 dl() {
 
@@ -34,7 +27,7 @@ dl() {
         (*K|*k|*Kb|*KB|*kb|*kB) UNIT1=KB ;;
         (*) echo "unknown" && return 1;;
     esac
-    VAL1=${1//,/\.}
+    local VAL1=${1//,/\.}
     VAL1=${VAL1//[^0-9|\.]}
 
     case "$2" in
@@ -44,7 +37,7 @@ dl() {
         (*K|*k|*Kb|*KB|*kb|*kB) UNIT2=KB ;;
         (*) echo "unknown" && return 1;;
     esac
-    VAL2=${2//,/\.}
+    local VAL2=${2//,/\.}
     VAL2=${VAL2//[^0-9|\.]}
 
     case "$UNIT1" in
@@ -63,11 +56,11 @@ dl() {
 
     echo -ne "\nDownloading ${BOLD_GREEN}$VAL2 $UNIT2${RESET} at ${BOLD_GREEN}$VAL1 $UNIT1/s${RESET} takes ${BLUE}"
 
-    TIME=$((VAL2B/VAL1B))
-    DAYS=$(( TIME / 60 / 60 / 24 ))
-    HOURS=$(( TIME / 60 / 60 % 24 ))
-    MINUTES=$(( TIME / 60 % 60 ))
-    SECONDS=$(( TIME % 60 ))
+    local TIME=$((VAL2B/VAL1B))
+    local DAYS=$(( TIME / 60 / 60 / 24 ))
+    local HOURS=$(( TIME / 60 / 60 % 24 ))
+    local MINUTES=$(( TIME / 60 % 60 ))
+    local SECONDS=$(( TIME % 60 ))
     (( DAYS > 0 )) && echo -n "${DAYS}d and "
     (( HOURS > 0 )) && echo -n "${HOURS}h "
     (( MINUTES > 0 )) && echo -n "${MINUTES}m "
@@ -84,7 +77,7 @@ each-file() {
 }
 
 bottomblur() {
-    d="/tmp/blur"
+    local d="/tmp/blur"
     mkdir -p $d && \
     convert "$1" -resize 1280x800\! "$d/out.png" && \
     convert "$d/out.png" -flip "$d/flip.png" && \
@@ -99,7 +92,7 @@ if [[ -d /home/.snapshots ]]; then
     restore() {
         [ -z "$1" ] && echo "usage: restore <files|directories>" && return 1
         echo ""
-        if [ -n "$commands[snapper]" ]; then
+        if [ "$commands[snapper]" ]; then
             LC_ALL=C snapper -c home list | awk '{print $3 " | " $6 " " $7 " " $8 " " $9 " " $10}' | tail -n +4
         else
             command ls --color -lgGh /home/.snapshots | tail -n +2 | cut -d " " -f 4-
@@ -146,13 +139,13 @@ __pan() {
         esac
     done
 }
-if [[ -n "$commands[pandoc]" && -n "$commands[inotifywait]" ]]; then
+if [[ "$commands[pandoc]" && -n "$commands[inotifywait]" ]]; then
     pan-pdf() { __pan "$1" pdf; }
     pan-html() { __pan "$1" html; }
     pan-beamer() { __pan "$1" beamer; }
 fi
 
-if [[ -n "$commands[gcalcli]" ]]; then
+if [[ "$commands[gcalcli]" ]]; then
     __gcal() {
         width=$((COLUMNS/7-2))
         gcalcli --military --monday -w "$width" $*
@@ -162,7 +155,7 @@ if [[ -n "$commands[gcalcli]" ]]; then
     alias gagenda='__gcal agenda'
 fi
 
-if [[ -n "$commands[pdfgrep]" ]]; then
+if [[ "$commands[pdfgrep]" ]]; then
     pdf() {
         pdfgrep -i "$1" -- *.pdf
     }
@@ -170,19 +163,19 @@ fi
 
 s() {
     typeset -U files
-    [[ -n $* ]] && files=($*) || files=(*(.))
+    [[ "$@" ]] && files=("$@") || files=(*(.))
     for f in $files; do
-        if [ -d "$f" ] || [ ! -f "$f" ]; then
+        if [[ -d "$f" ]] || [[ ! -f "$f" ]]; then
             continue
         fi
 
-        if [[ ${#files} > 1 ]]; then
+        if (( #files > 1 )); then
             LENGTH=${#f}
             FILL="\${(l.$((COLUMNS/2-LENGTH/2-2))..=.)}"
             s="${(e)FILL} $f ${(e)FILL}"
             [[ "${#s}" == $((COLUMNS-1)) ]] && s+="="
             [[ "${#s}" == $((COLUMNS-2)) ]] && s+="=="
-            printf "\n${BOLD_YELLOW}${s}${RESET}\n\n"
+            printf "\n%s\n\n" "${BOLD_YELLOW}${s}${RESET}"
         fi
 
         mime=$(file --mime-encoding -b -- "$f")
@@ -194,7 +187,7 @@ s() {
             fi
         fi
 
-        if [ -r "$f" ]; then
+        if [[ -r "$f" ]]; then
             source-highlight -t 4 --failsafe --infer-lang -f esc --style-file=esc.style -i "$f"
         else
             sudo source-highlight -t 4 --failsafe --infer-lang -f esc --style-file=esc.style -i "$f"
@@ -212,24 +205,24 @@ alias ls='\ls -F -l -h       --color=auto --group-directories-first'
 alias la='\ls -F -l -h -A    --color=auto --group-directories-first'
 alias l.='\ls -F    -h -d .* --color=auto --group-directories-first'
 alias lt='\ls -F -l -h -t -r --color=auto --group-directories-first'
-[ -n "$commands[python]" ] && alias http-share='python -m http.server 10000'
-[ -n "$commands[dmesg]" ] && alias dmesg='dmesg -T --color=auto'
-[ -n "$commands[watch]" ] && alias ddstatus='sudo watch --interval=1 "pkill -USR1 dd"'
-[ -n "$commands[less]" ] && alias less='less -FXR'
-[ -n "$commands[lsblk]" ] && alias lsblk='lsblk -o NAME,LABEL,TYPE,FSTYPE,SIZE,MOUNTPOINT,UUID -p'
-[ -n "$commands[grep]" ] && alias grep='grep --color=auto'
-[ -n "$commands[make]" ] && alias make="LC_ALL=C make"
-[ -n "$commands[gcc]" ]  && alias  gcc="LC_ALL=C gcc"
-[ -n "$commands[g++]" ]  && alias  g++="LC_ALL=C g++"
-[ -n "$commands[mpv]" ] && alias mpv='mpv --no-audio-display'
+[ "$commands[python]" ] && alias http-share='python -m http.server 10000'
+[ "$commands[dmesg]" ] && alias dmesg='dmesg -T --color=auto'
+[ "$commands[watch]" ] && alias ddstatus='sudo watch --interval=1 "pkill -USR1 dd"'
+[ "$commands[less]" ] && alias less='less -FXR'
+[ "$commands[lsblk]" ] && alias lsblk='lsblk -o NAME,LABEL,TYPE,FSTYPE,SIZE,MOUNTPOINT,UUID -p'
+[ "$commands[grep]" ] && alias grep='grep --color=auto'
+[ "$commands[make]" ] && alias make="LC_ALL=C make"
+[ "$commands[gcc]" ]  && alias  gcc="LC_ALL=C gcc"
+[ "$commands[g++]" ]  && alias  g++="LC_ALL=C g++"
+[ "$commands[mpv]" ] && alias mpv='mpv --no-audio-display'
 
 [[ "$commands[redshift]" ]] && alias toggle-redshift='pkill -USR1 redshift'
 
-if [ -n "$commands[vlock]" ]; then
+if [ "$commands[vlock]" ]; then
     vlock(){
         [[ $TTY == /dev/pts/* ]] && echo "not a TTY" && return 1
         local active_ttys=$(w --no-header --no-current --short | grep -v "tty${XDG_VTNR}" | grep -v "pts/" | awk '{print $2}')
-        if [[ -n "$active_ttys" ]]; then
+        if [[ "$active_ttys" ]]; then
             echo -e "${RED}WARNING:${RESET} other TTY(s) still active!\n"
             echo "$active_ttys"
         else
@@ -238,7 +231,7 @@ if [ -n "$commands[vlock]" ]; then
     }
 fi
 
-if [ -n "$commands[tmux]" ]; then
+if [ "$commands[tmux]" ]; then
     alias t='tmux'
     alias ta='tmux attach -t'
     alias tn='tmux new-session -s'
@@ -250,30 +243,30 @@ take() { mkdir -p "$1" && cd "$1"; }
 
 alias capture-keys="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'"
 
-[ -n "$commands[tree]" ] && alias tree="tree -F --dirsfirst --noreport"
-[ -n "$commands[sudo]" ] && alias sudo='sudo '
-[ -n "$commands[mc]" ] && alias mc='mc --nocolor'
-[ -n "$commands[iotop]" ] && alias iotop='sudo iotop -o'
-[ -n "$commands[updatedb]" ] && alias updatedb='sudo updatedb'
-[ -n "$commands[ps_mem]" ] && alias ps_mem='sudo ps_mem'
-[ -n "$commands[abs]" ] && alias abs='sudo abs'
-[ -n "$commands[ufw]" ] && alias ufw='sudo ufw'
-[ -n "$commands[lvm]" ] && alias lvm='sudo lvm'
+[ "$commands[tree]" ] && alias tree="tree -F --dirsfirst --noreport"
+[ "$commands[sudo]" ] && alias sudo='sudo '
+[ "$commands[mc]" ] && alias mc='mc --nocolor'
+[ "$commands[iotop]" ] && alias iotop='sudo iotop -o'
+[ "$commands[updatedb]" ] && alias updatedb='sudo updatedb'
+[ "$commands[ps_mem]" ] && alias ps_mem='sudo ps_mem'
+[ "$commands[abs]" ] && alias abs='sudo abs'
+[ "$commands[ufw]" ] && alias ufw='sudo ufw'
+[ "$commands[lvm]" ] && alias lvm='sudo lvm'
 
-[ -n "$commands[aunpack]" ] && alias x='aunpack'
-[ -n "$commands[latexmk]" ] && alias ltx="latexmk -cd -f -pdf -pvc -outdir=/tmp/latexmk"
-[ -n "$commands[reflector]" ] && alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose && sudo pacman -Syy"
-[ -n "$commands[impressive]" ] && alias show='impressive -t FadeOutFadeIn --fade --transtime 300 --mousedelay 500 --nologo --nowheel --noclicks'
-[ -n "$commands[youtube-dl]" ] && alias yt-audio='youtube-dl -f bestaudio -x -o "%(title)s.%(ext)s"'
-[ -n "$commands[colorsvn]" ] && alias svn='colorsvn'
-[ -n "$commands[pydf]" ] && alias df='pydf'
-[ -n "$commands[journalctl]" ] && alias j='sudo journalctl'
-[ -n "$commands[journalctl]" ] && alias journalctl='sudo journalctl'
-[ -n "$commands[docker]" ] && alias d='docker'
-[ -n "$commands[scrot]" ] && alias shoot="sleep 1 && scrot '%Y-%m-%d_%H-%M-%S.png' -e 'mv \$f ~/media/screenshots/'"
-[ -n "$commands[ncmpc]" ] && alias ncmpc='LC_ALL=en_IE.UTF-8 ncmpc'
+[ "$commands[aunpack]" ] && alias x='aunpack'
+[ "$commands[latexmk]" ] && alias ltx="latexmk -cd -f -pdf -pvc -outdir=/tmp/latexmk"
+[ "$commands[reflector]" ] && alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose && sudo pacman -Syy"
+[ "$commands[impressive]" ] && alias show='impressive -t FadeOutFadeIn --fade --transtime 300 --mousedelay 500 --nologo --nowheel --noclicks'
+[ "$commands[youtube-dl]" ] && alias yt-audio='youtube-dl -f bestaudio -x -o "%(title)s.%(ext)s"'
+[ "$commands[colorsvn]" ] && alias svn='colorsvn'
+[ "$commands[pydf]" ] && alias df='pydf'
+[ "$commands[journalctl]" ] && alias j='sudo journalctl'
+[ "$commands[journalctl]" ] && alias journalctl='sudo journalctl'
+[ "$commands[docker]" ] && alias d='docker'
+[ "$commands[scrot]" ] && alias shoot="sleep 1 && scrot '%Y-%m-%d_%H-%M-%S.png' -e 'mv \$f ~/media/screenshots/'"
+[ "$commands[ncmpc]" ] && alias ncmpc='LC_ALL=en_IE.UTF-8 ncmpc'
 
-if [ -n "$commands[xdg-open]" ]; then
+if [ "$commands[xdg-open]" ]; then
     os() {
         [[ -z "$1" || ! -e "$1" ]] && return 1
         mimeopen --ask-default "$1"
@@ -290,7 +283,7 @@ if [ -n "$commands[xdg-open]" ]; then
     }
 fi
 
-if [ -n "$commands[encfs]" ]; then
+if [ "$commands[encfs]" ]; then
     enc-mount() {
         mkdir ~/encrypt && \
         encfs ~/.encrypt ~/encrypt && \
@@ -306,7 +299,7 @@ if [ -n "$commands[encfs]" ]; then
     }
 fi
 
-if [ -n "$commands[adb]" ]; then
+if [ "$commands[adb]" ]; then
     alias adb-forward='adb forward tcp:2222 tcp:22'
     alias adb-ssh='ssh root@localhost -p 2222'
 fi
@@ -351,17 +344,8 @@ alias .......='cd ../../../../../..'
 alias ........='cd ../../../../../../..'
 alias .........='cd ../../../../../../../..'
 alias cd..='cd ..'
-alias 1='cd -'
-alias 2='cd -2'
-alias 3='cd -3'
-alias 4='cd -4'
-alias 5='cd -5'
-alias 6='cd -6'
-alias 7='cd -7'
-alias 8='cd -8'
-alias 9='cd -9'
 
-if [ -n "$commands[subl3]" ]; then
+if [ "$commands[subl3]" ]; then
     alias e='subl3'
     alias sudoe='EDITOR="subl3 -w" sudoedit'
 else
@@ -378,7 +362,7 @@ dict() {
     dict.py en de "$@"
 }
 
-if [ -n "$commands[openvpn]" ]; then
+if [ "$commands[openvpn]" ]; then
     vpn() {
         set +e
         if [[ -f /tmp/openvpn.pid ]]; then
@@ -417,7 +401,7 @@ if [ -n "$commands[openvpn]" ]; then
     }
 fi
 
-if [ -n "$commands[git]" ]; then
+if [ "$commands[git]" ]; then
     alias git="LC_ALL=en_IE.UTF-8 git"
     alias g="git"
     alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white) %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
@@ -433,14 +417,7 @@ psg() {
     ps aux | grep -i \[${INP:0:1}\]${INP:1:${#INP}-1}
 }
 
-if [ -n "$commands[pacman]" ]; then
-    aur() {
-        if [ -d /var/aur ]; then
-            sudo git -C /var/aur pull
-        else
-            sudo git clone git://pkgbuild.com/aur-mirror.git /var/aur
-        fi
-    }
+if [ "$commands[pacman]" ]; then
     toggle-testing() {
         grep '^\[testing\]' /etc/pacman.conf &> /dev/null
         if [[ $? == 0 ]]; then
@@ -474,24 +451,24 @@ if [ -n "$commands[pacman]" ]; then
     alias pacdiff='sudo pacdiff'
     alias pacdep='sudo pacman -D --asdeps'
     alias pacexp='sudo pacman -D --asexplicit'
-    if [ -n "$commands[pacaur]" ]; then
+    if [ "$commands[pacaur]" ]; then
         alias aurupg='pacaur -Syu'
         alias aursearch='pacaur -Ss'
         alias aurin='pacaur -S'
     fi
-    if [ -n "$commands[aura]" ]; then
+    if [ "$commands[aura]" ]; then
         alias ai='sudo aura -Aakx'
         alias ayu='sudo aura -Akuax'
         alias as='sudo aura -Asx'
         alias aura='sudo aura'
     fi
-    if [ -n "$commands[yaourt]" ]; then
+    if [ "$commands[yaourt]" ]; then
         alias yaourt='LC_ALL=en_IE.UTF-8 yaourt'
         alias y='yaourt'
         alias ys='yaourt -S'
         alias ysua='yaourt -Syua'
     fi
-elif [ -n "$commands[apt-get]" ]; then
+elif [ "$commands[apt-get]" ]; then
     alias aptupg="apt-get update && apt-get -V upgrade && apt-get -V dist-upgrade"
     alias aptin="apt-get -V install"
     alias aptrem="apt-get -V purge"
@@ -505,13 +482,13 @@ fonttest() {
     done | column -t -s '|' | column -t -s ':'
 }
 
-if [ -n "$commands[grc]" ]; then
+if [ "$commands[grc]" ]; then
     for c in diff ping netstat traceroute dig ps mount ifconfig mtr ; do
-        [ -n "$commands[$c]" ] && alias ${c}="grc -es --colour=auto ${c}"
+        [ "$commands[$c]" ] && alias ${c}="grc -es --colour=auto ${c}"
     done
 fi
 
-if [ -n "$commands[man]" ]; then
+if [ "$commands[man]" ]; then
     man() {
         env LESS_TERMCAP_mb=$'\E[01;31m' \
         LESS_TERMCAP_md=$'\E[1;94m' \
@@ -598,12 +575,12 @@ rollback() {
 
     if [[ "$1" == "list" ]]; then
         url="${base}/${2:0:1}/${2}/"
-        avail=$(\curl -ss -l "$url" --user anonymous:anonymous | grep -e $arch -e any.pkg)
+        avail=$(command curl -ss -l "$url" --user anonymous:anonymous | grep -e $arch -e any.pkg)
         echo "$avail"
     else
         pkgname=$(echo "$1" | rev | cut -d "-" -f 4- | rev)
         url="${base}/${pkgname:0:1}/${pkgname}"
-        \curl -o "/tmp/$1" --progress-bar "$url/$1" --user anonymous:anonymous && sudo pacman -U "/tmp/$1" && rm "/tmp/$1"
+        command curl -o "/tmp/$1" --progress-bar "$url/$1" --user anonymous:anonymous && sudo pacman -U "/tmp/$1" && rm "/tmp/$1"
     fi
 }
 
@@ -666,7 +643,7 @@ colortest() {
     echo -e "\e[1;37mGrey Bold\e[0m"
 }
 
-if [ -n "$commands[systemctl]" ]; then
+if [ "$commands[systemctl]" ]; then
     user_commands=(
         list-units is-active status show help list-unit-files
         is-enabled list-jobs show-environment)
@@ -678,14 +655,14 @@ if [ -n "$commands[systemctl]" ]; then
     for c in $sudo_commands; do; alias sc-$c="sudo systemctl $c"; done
 fi
 
-if [ -n "$commands[machinectl]" ]; then
+if [ "$commands[machinectl]" ]; then
     user_commands=(list status show)
     sudo_commands=(login reboot poweroff kill terminate)
     for c in $user_commands; do; alias mc-$c="machinectl $c"; done
     for c in $sudo_commands; do; alias mc-$c="sudo machinectl $c"; done
 fi
 
-if [ -n "$commands[netctl]" ]; then
+if [ "$commands[netctl]" ]; then
     user_nc_commands=(
         list status is-enabled)
     sudo_nc_commands=(
@@ -702,5 +679,5 @@ if [  -n "$commands[pushbullet.sh]" ]; then
 fi
 
 nfo() {
-    iconv -f cp437 -t utf8 "$1" | less -Q
+    iconv -f cp437 -t utf8 "$@" | less -Q
 }

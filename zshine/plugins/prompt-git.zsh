@@ -19,7 +19,7 @@ git_prompt_info() {
     [[ "$?" -eq 0 ]] && commit="$tag"
     url=$(command git ls-remote --get-url 2> /dev/null)
     if [[ $ZSHINE_GIT_SHRINK_URL == 1 ]]; then
-        if [[ "$url" == http*://*github.com* || "$url" == git://*github.com* ]]; then
+        if [[ "$url" == *://*github.com/*/*.git ]]; then
             # https://github.com/user/repo.git -> user/repo
             #   git://github.com/user/repo.git -> user/repo
             if [[ "$url" == */ ]]; then
@@ -36,7 +36,7 @@ git_prompt_info() {
             url2=${url2#*/}
             url2=${url2//\//}
             url="$url2/$url1"
-        elif [[ "$url" == *github.com:* ]]; then
+        elif [[ "$url" == git@github.com:*/*.git ]]; then
             # git@github.com:user/repo.git -> user/repo
             url1=${url##*/}
             url2=${url//$url1/}
