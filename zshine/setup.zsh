@@ -37,7 +37,6 @@ zstyle ':completion:*' rehash true # always rehash on completion
 export GREP_COLOR='1;32'
 export EDITOR="nano"
 export PAGER="less"
-export WINEARCH=win32
 export TZ='Europe/Berlin'
 export REPORTTIME=5
 
