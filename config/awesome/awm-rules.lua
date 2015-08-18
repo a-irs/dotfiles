@@ -72,8 +72,11 @@ end)
 -- client exits
 client.connect_signal("unmanage", function(c)
 
-  -- return to last tag when last window is closed
+  -- return to last tag and reset settings when last window is closed
   if is_empty(awful.tag.selected()) then
+      awful.tag.setmwfact(0.5)
+      awful.tag.setnmaster(1)
+      awful.tag.setncol(1)
       awful.tag.history.restore()
   end
 
