@@ -12,9 +12,11 @@ language-docker
 language-generic-config
 language-lua
 linter
+linter-csslint
 linter-flake8
 linter-lua
 linter-shellcheck
+markdown-scroll-sync
 merge-conflicts
 minimap
 minimap-find-and-replace
