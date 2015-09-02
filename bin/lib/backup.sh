@@ -2,6 +2,46 @@
 
 set -e
 
+destination="scp://root@srv//media/data/backups/duplicity/$HOSTNAME"
+destination_ssh="root@srv:/media/data/backups/duplicity/$HOSTNAME"
+
+header() {
+    echo -e "\n$(tput setaf "${1}";tput bold)${2}$(tput init;tput sgr0)\n"
+}
+date="$(date "+%Y-%m-%d_%H-%M")"
+
+# (UNENCRYPTED) backup package list
+
+header 5 "sending package list to '$destination_ssh/${date}_packages.txt'"
+pacman -Qe | sort > /tmp/packages.txt
+scp /tmp/packages.txt "$destination_ssh/${date}_packages.txt" > /dev/null
+rm -f /tmp/packages.txt
+
+
+# (UNENCRYPTED) backup partition table and LUKS header
+
+header 5 "sending storage info to '$destination_ssh'"
+device=/dev/sda
+LC_ALL=C sudo sfdisk ${device} -d > /tmp/disk-sfdisk-sda.txt
+scp /tmp/disk-sfdisk-sda.txt "$destination_ssh/${date}_disk-sfdisk-sda.txt"
+LC_ALL=C sudo fdisk -l ${device}  > /tmp/disk-fdisk-sda.txt
+scp /tmp/disk-fdisk-sda.txt "$destination_ssh/${date}_disk-fdisk-sda.txt"
+
+if [[ $HOSTNAME == dell ]]; then
+    LC_ALL=C sudo cryptsetup luksDump ${device}5 > /tmp/disk-luks-sda5.txt
+    scp /tmp/disk-luks-sda5.txt "$destination_ssh/${date}_disk-luks-sda5.txt"
+
+    sudo rm -f /tmp/disk-luks-header-sda5.img
+    sudo cryptsetup luksHeaderBackup ${device}5 --header-backup-file /tmp/disk-luks-header-sda5.img
+    sudo chmod +r /tmp/disk-luks-header-sda5.img
+    scp /tmp/disk-luks-header-sda5.img "$destination_ssh/${date}_disk-luks-header-sda5.img"
+fi
+
+sudo rm -f /tmp/disk-fdisk-sda.txt /tmp/disk-disk-sda.txt /tmp/disk-luks-sda5.txt /tmp/disk-luks-header-sda5.img
+
+
+# encrypted duplicity backup
+
 if [[ -z "$PASSPHRASE" ]]; then
     if [[ -f /duplicity-passphrase ]]; then
         export PASSPHRASE=$(cat /duplicity-passphrase)
@@ -11,14 +51,8 @@ if [[ -z "$PASSPHRASE" ]]; then
     fi
 fi
 
-destination="scp://root@srv//media/data/backups/duplicity/$HOSTNAME"
-destination_ssh="root@srv:/media/data/backups/duplicity/$HOSTNAME"
 archive_dir="/var/tmp/duplicity"
 excludes="$(dirname "$(readlink -f "$0")")/backup.exclude"
-
-header() {
-    echo -e "\n$(tput setaf "${1}";tput bold)${2}$(tput init;tput sgr0)\n"
-}
 
 if [[ "$1" == clean ]]; then
     header 3 "cleaning $destination/home"
@@ -75,8 +109,3 @@ if [[ $HOSTNAME == srv ]]; then
 fi
 
 unset PASSPHRASE
-
-header 5 "sending package list to '$destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt'"
-pacman -Qe | sort > /tmp/packages.txt
-scp /tmp/packages.txt "$destination_ssh/$(date "+%Y-%m-%d_%H-%M")_packages.txt" > /dev/null
-rm -f /tmp/packages.txt

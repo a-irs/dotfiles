@@ -1,3 +1,9 @@
+**/.atom/packages
+**/.atom/.apm
+**/.atom/compile-cache
+**/.config/ario/covers
+**/.config/Atom/Cache
+**/.config/freshwrapper-data
 **/.git
 **/.svn
 **/.cache.json
@@ -17,7 +23,6 @@
 **/.mozilla/firefox/*/webappsstore.sqlite*
 **/.mozilla/firefox/*/storage
 **/.mozilla/firefox/*/extension-data/ublock.sqlite
-**/compile-cache
 **/Package Control.cache
 **/Cache
 **/cache
@@ -33,7 +38,7 @@
 **/.local/share/Trash
 **/.local/share/Steam
 **/.thumbnails/*
-**/.config/VirtualBox/*.iso
+/home/alex/.config/VirtualBox/*.iso
 **/.config/freshwrapper-data/Shockwave Flash/WritableRoot
 **/.zsh_recent-dirs
 **/.zcompdump
