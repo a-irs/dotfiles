@@ -32,6 +32,7 @@ dotfiles=(
     config/htop/htoprc
     config/mpd/mpd.conf
     config/ncmpcpp/config
+    config/pacaur/config
     config/ranger/rc.conf
     config/ranger/scope.sh
     gitconfig

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+builddir="/var/cache/pacaur"       # build directory
+editor="${EDITOR:-nano}"               # PKGBUILD editor
+editpkgbuild=false                     # edit PKGBUILD script
+editinstall=false                      # edit install script
+#fallback=true                         # pacman fallback to the AUR
+#clean=true                            # clean up after package install
+cleandevel=false                       # clean up devel package
+#sortbyvotes=true                      # sort search results by votes
+#sudoloop=false                        # prevent sudo timeout
