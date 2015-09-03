@@ -12,8 +12,8 @@ theme.statusbar_position            = "top"
 
 -- FG, BG COLORS
 
-theme.bg_normal                     = "#2c3643"
-theme.bg_focus                      = "#3c4b5d"
+theme.bg_normal                     = "#2c3643f3"
+theme.bg_focus                      = "#3c4b5df3"
 theme.bg_urgent                     = "#aa0000"
 theme.fg_normal                     = "#aaaaaa"
 theme.fg_focus                      = "#ffffff"
