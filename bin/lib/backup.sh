@@ -14,7 +14,7 @@ date="$(date "+%Y-%m-%d_%H-%M")"
 
 header 5 "sending package list to '$destination_ssh/${date}_packages.txt'"
 pacman -Qe | sort > /tmp/packages.txt
-scp /tmp/packages.txt "$destination_ssh/${date}_packages.txt" > /dev/null
+scp /tmp/packages.txt "$destination_ssh/${date}_packages.txt"
 rm -f /tmp/packages.txt
 
 

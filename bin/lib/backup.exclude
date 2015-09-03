@@ -38,7 +38,7 @@
 **/.local/share/Trash
 **/.local/share/Steam
 **/.thumbnails/*
-/home/alex/.config/VirtualBox/*.iso
+**/.config/VirtualBox/*.iso
 **/.config/freshwrapper-data/Shockwave Flash/WritableRoot
 **/.zsh_recent-dirs
 **/.zcompdump
