@@ -9,13 +9,13 @@ rules.rules = {
     { rule = { class = "mpv" }, properties = { size_hints_honor = false } },
     { rule = { },
       properties = { border_width = beautiful.border_width,
-                     border_color = beautiful.border_normal,
-                     focus = awful.client.focus.filter,
-                     raise = true,
-                     keys = clientkeys,
-                     maximized_vertical   = false,
-                     maximized_horizontal = false,
-                     buttons = clientbuttons },
+                    border_color = beautiful.border_normal,
+                    focus = awful.client.focus.filter,
+                    raise = true,
+                    keys = clientkeys,
+                    maximized_vertical   = false,
+                    maximized_horizontal = false,
+                    buttons = clientbuttons },
       callback = awful.client.setslave },
 }
 
@@ -84,3 +84,20 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+-- set focus to client under mouse cursor when switching tags
+tag.connect_signal("property::selected", function(t)
+    local selected = tostring(t.selected) == "false"
+    if selected then
+        local focus_timer = timer({ timeout = 0.05 })
+        focus_timer:connect_signal("timeout", function()
+            local c = awful.mouse.client_under_pointer()
+            if not (c == nil) then
+                client.focus = c
+                c:raise()
+            end
+            focus_timer:stop()
+        end)
+        focus_timer:start()
+    end
+end)
