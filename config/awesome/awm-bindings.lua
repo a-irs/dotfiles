@@ -80,15 +80,15 @@ globalkeys = awful.util.table.join(
     -- modify windows
 
     awful.key({ win }, "#35", function() -- plus +
-        if beautiful.useless_gap <= 4 then
+        if beautiful.useless_gap <= 1 then
             beautiful.useless_gap = 0
         elseif beautiful.useless_gap ~= 0 then
-            beautiful.useless_gap = beautiful.useless_gap - 4
+            beautiful.useless_gap = beautiful.useless_gap - 1
         end
         awful.layout.arrange(mouse.screen)
     end),
     awful.key({ win }, "#61", function() -- minus -
-        beautiful.useless_gap = beautiful.useless_gap + 4
+        beautiful.useless_gap = beautiful.useless_gap + 1
         awful.layout.arrange(mouse.screen)
     end),
 

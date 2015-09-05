@@ -12,8 +12,8 @@ theme.statusbar_position            = "top"
 
 -- FG, BG COLORS
 
-theme.bg_normal                     = "#2c3643f3"
-theme.bg_focus                      = "#3c4b5df3"
+theme.bg_normal                     = "#2c3643"
+theme.bg_focus                      = "#3c4b5d"
 theme.bg_urgent                     = "#aa0000"
 theme.fg_normal                     = "#aaaaaa"
 theme.fg_focus                      = "#ffffff"
@@ -24,7 +24,7 @@ theme.border_normal                 = theme.bg_normal
 theme.border_focus                  = theme.bg_focus
 
 theme.useless_gap_normal            = dpi(vres/150)
-theme.useless_gap_compact           = 0
+theme.useless_gap_compact           = dpi(4)
 
 if compact_display then
     theme.useless_gap = theme.useless_gap_compact
@@ -34,7 +34,7 @@ end
 
 -- NOTIFICATIONS (NAUGHTY)
 
-theme.naughty_font                  = "Roboto Medium 8"
+theme.naughty_font                  = "Fira Sans Medium 8"
 theme.naughty_padding               = dpi(12)
 theme.naughty_spacing               = dpi(12)
 theme.naughty_border_width          = dpi(6)
@@ -52,15 +52,15 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 
 -- WIDGETS
 
-theme.font                          = "Ubuntu 8"
-theme.taglist_font                  = "Roboto Medium 10"
+theme.font                          = "Fira Sans 8"
+theme.taglist_font                  = "Fira Sans Medium 10"
 theme.show_tag_names                = true
 --theme.taglist_squares_unsel         = xpm_folder .. "/indicator.xpm"
 
 theme.bg_systray                    = theme.bg_normal
 theme.widget_mpd_fg                 = "#cfcfcf"
 theme.widget_mpd_bg                 = theme.bg_normal
-theme.widget_mpd_font               = "Roboto 8"
+theme.widget_mpd_font               = "Fira Sans 8"
 theme.widget_calendar_font          = "Input"
 theme.widget_calendar_font_size     = 8
 theme.widget_calendar_fg            = theme.fg_normal
@@ -95,7 +95,7 @@ theme.layout_fairh                  = xpm_folder .. "/layout/fairh.xpm"
 -- TITLEBAR
 
 theme.titlebar_height                          = dpi(24)
-theme.titlebar_font                            = "Roboto Bold 8"
+theme.titlebar_font                            = "Fira Sans Medium 8"
 
 theme.titlebar_fg_normal                       = theme.fg_normal
 theme.titlebar_fg_focus                        = theme.fg_focus

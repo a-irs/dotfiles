@@ -181,7 +181,7 @@ vicious.register(cpugraphwidget, vicious.widgets.cpu, "$1")
 
 
 mywibox = {}
-mylayoutbox = {}
+-- mylayoutbox = {}
 mypromptbox = {}
 mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
@@ -201,6 +201,7 @@ for s = 1, screen.count() do
     mypromptbox[s] = awful.widget.prompt()
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
     mywibox[s] = awful.wibox({ position = theme.statusbar_position, screen = s, height = theme.statusbar_height })
+    --[[
     mylayoutbox[s] = awful.widget.layoutbox(s)
     mylayoutbox[s]:buttons(awful.util.table.join(
                        awful.button({ }, 1, function() awful.layout.inc(layouts,  1) end),
@@ -209,13 +210,13 @@ for s = 1, screen.count() do
                        awful.button({ }, 5, function() awful.layout.inc(layouts, -1) end)))
     mylayoutbox[s]:connect_signal("mouse::enter", function() systembox_show(mouse.screen) end)
     mylayoutbox[s]:connect_signal("mouse::leave", function() systembox_hide(mouse.screen) end)
-
+    ]]--
 
     -- layouts
 
     local layout1 = wibox.layout.fixed.horizontal()
     layout1:add(mypromptbox[s])
-    layout1:add(mylayoutbox[s])
+    -- layout1:add(mylayoutbox[s])
     layout1:add(mpdwidget)
 
     local layout2 = wibox.layout.fixed.horizontal()
