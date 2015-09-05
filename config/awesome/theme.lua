@@ -53,9 +53,9 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 -- WIDGETS
 
 theme.font                          = "Ubuntu 8"
-theme.taglist_font                  = "Ubuntu Bold 8"
+theme.taglist_font                  = "Roboto Medium 10"
 theme.show_tag_names                = true
-theme.taglist_squares_unsel         = xpm_folder .. "/indicator.xpm"
+--theme.taglist_squares_unsel         = xpm_folder .. "/indicator.xpm"
 
 theme.bg_systray                    = theme.bg_normal
 theme.widget_mpd_fg                 = "#cfcfcf"

@@ -19,6 +19,19 @@ rules.rules = {
       callback = awful.client.setslave },
 }
 
+function dynamic_tagging()
+    for s = 1, screen.count() do
+        local all_tags = awful.tag.gettags(s)
+        for _, t in ipairs(all_tags) do
+            if is_empty(t) then
+                t.name = "○"
+            else
+                t.name = "●"
+            end
+        end
+    end
+end
+
 -- client appears
 client.connect_signal("manage", function(c)
 
@@ -67,19 +80,21 @@ client.connect_signal("manage", function(c)
 
     if compact_display then awful.titlebar.hide(c) end
 
+    dynamic_tagging()
 end)
 
 -- client exits
 client.connect_signal("unmanage", function(c)
 
   -- return to last tag and reset settings when last window is closed
-  if is_empty(awful.tag.selected()) then
-      awful.tag.setmwfact(0.5)
-      awful.tag.setnmaster(1)
-      awful.tag.setncol(1)
-      awful.tag.history.restore()
-  end
+    if is_empty(awful.tag.selected()) then
+        awful.tag.setmwfact(0.5)
+        awful.tag.setnmaster(1)
+        awful.tag.setncol(1)
+        awful.tag.history.restore()
+    end
 
+    dynamic_tagging()
 end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
