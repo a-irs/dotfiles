@@ -69,24 +69,24 @@ fi
 
 header 4 "backing up '/home' to '$destination/home'"
 sudo -E duplicity --full-if-older-than 1M --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-filelist="$excludes" "/home" "$destination/home"
-sudo -E duplicity --archive-dir="$archive_dir" remove-older-than 3M --force "$destination/home"
+sudo -E duplicity --archive-dir="$archive_dir" remove-older-than 1M --force "$destination/home"
 
 header 4 "backing up '/etc' to '$destination/etc'"
 sudo -E duplicity --full-if-older-than 1M --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-filelist="$excludes" "/etc" "$destination/etc"
-sudo -E duplicity --archive-dir="$archive_dir" remove-older-than 3M --force "$destination/etc"
+sudo -E duplicity --archive-dir="$archive_dir" remove-older-than 1M --force "$destination/etc"
 
 header 4 "backing up '/root' to '$destination/root'"
 sudo -E duplicity --full-if-older-than 1M --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-filelist="$excludes" "/root" "$destination/root"
-sudo -E duplicity --archive-dir="$archive_dir" remove-older-than 3M --force "$destination/root"
+sudo -E duplicity --archive-dir="$archive_dir" remove-older-than 1M --force "$destination/root"
 
 if [[ $HOSTNAME == srv ]]; then
     header 4 "backing up '/srv to '$destination/srv'"
     sudo -E duplicity --full-if-older-than 1M --archive-dir="$archive_dir" --include /srv/smb --include /srv/http --include /srv/docker/sabnzbd/state/sabnzbd.ini --exclude '**' "/srv" "$destination/srv"
-    sudo -E duplicity --archive-dir="$archive_dir" remove-older-than 3M --force "$destination/srv"
+    sudo -E duplicity --archive-dir="$archive_dir" remove-older-than 1M --force "$destination/srv"
 
     header 4 "backing up '/var/spool/cron' to '$destination/cron'"
     sudo -E duplicity --full-if-older-than 1M --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-filelist="$excludes" "/var/spool/cron" "$destination/cron"
-    sudo -E duplicity --archive-dir="$archive_dir" remove-older-than 3M --force "$destination/cron"
+    sudo -E duplicity --archive-dir="$archive_dir" remove-older-than 1M --force "$destination/cron"
 fi
 
 unset PASSPHRASE
