@@ -32,8 +32,8 @@ size_hints = false
 cursor = #ffffff
 foreground = #fafafa
 foreground_bold = #ffffff
-#background = #2c3643
-background = rgba(44, 54, 67, 0.95)
+background = #2c3643
+#background = rgba(44, 54, 67, 0.95)
 
 # if unset, will reverse foreground and background
 #highlight = #2f2f2f
