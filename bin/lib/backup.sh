@@ -54,19 +54,6 @@ fi
 archive_dir="/var/tmp/duplicity"
 excludes="$(dirname "$(readlink -f "$0")")/backup.exclude"
 
-header 2 "cleaning $destination/home"
-sudo -E duplicity --archive-dir="$archive_dir" remove-all-but-n-full 1 --force "$destination/home"
-header 2 "cleaning $destination/etc"
-sudo -E duplicity --archive-dir="$archive_dir" remove-all-but-n-full 1 --force "$destination/etc"
-header 2 "cleaning $destination/root"
-sudo -E duplicity --archive-dir="$archive_dir" remove-all-but-n-full 1 --force "$destination/root"
-if [[ $HOSTNAME == srv ]]; then
-    header 2 "cleaning $destination/srv"
-    sudo -E duplicity --archive-dir="$archive_dir" remove-all-but-n-full 1 --force "$destination/srv"
-    header 2 "cleaning $destination/cron"
-    sudo -E duplicity --archive-dir="$archive_dir" remove-all-but-n-full 1 --force "$destination/cron"
-fi
-
 header 4 "backing up '/home' to '$destination/home'"
 sudo -E duplicity --full-if-older-than 1M --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-filelist="$excludes" "/home" "$destination/home"
 sudo -E duplicity --archive-dir="$archive_dir" remove-older-than 1M --force "$destination/home"
@@ -87,6 +74,19 @@ if [[ $HOSTNAME == srv ]]; then
     header 4 "backing up '/var/spool/cron' to '$destination/cron'"
     sudo -E duplicity --full-if-older-than 1M --archive-dir="$archive_dir" --exclude-other-filesystems --exclude-filelist="$excludes" "/var/spool/cron" "$destination/cron"
     sudo -E duplicity --archive-dir="$archive_dir" remove-older-than 1M --force "$destination/cron"
+fi
+
+header 2 "cleaning $destination/home"
+sudo -E duplicity --archive-dir="$archive_dir" remove-all-but-n-full 1 --force "$destination/home"
+header 2 "cleaning $destination/etc"
+sudo -E duplicity --archive-dir="$archive_dir" remove-all-but-n-full 1 --force "$destination/etc"
+header 2 "cleaning $destination/root"
+sudo -E duplicity --archive-dir="$archive_dir" remove-all-but-n-full 1 --force "$destination/root"
+if [[ $HOSTNAME == srv ]]; then
+    header 2 "cleaning $destination/srv"
+    sudo -E duplicity --archive-dir="$archive_dir" remove-all-but-n-full 1 --force "$destination/srv"
+    header 2 "cleaning $destination/cron"
+    sudo -E duplicity --archive-dir="$archive_dir" remove-all-but-n-full 1 --force "$destination/cron"
 fi
 
 unset PASSPHRASE
