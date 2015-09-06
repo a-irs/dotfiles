@@ -109,3 +109,16 @@ if [[ $HOSTNAME == srv ]]; then
 fi
 
 unset PASSPHRASE
+
+
+# delete files older than 30 days
+
+ssh root@srv bash -c "'
+limit=$(date -d "1 month ago" +%Y%m%d)
+for f in /media/data/backups/duplicity/$HOSTNAME/????-??-??_*; do
+    d=\$(basename "\$f")
+    d=\${d%%_*}
+    d=\${d//-/}
+    [[ \${d} -lt \${limit} ]] && rm -f "\$f"
+done
+'"
