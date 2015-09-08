@@ -39,20 +39,36 @@ background = #2c3643
 #highlight = #2f2f2f
 
 # colors from color0 to color254 can be set
+
+# black
 color0  = #3b3b3b
 color8  = #6d7367
+
+# red
 color1  = #fa5641
 color9  = #fa5641
-color2  = #b7ff71
-color10 = #b7ff71
-color3  = #fff073
-color11 = #fcec67
-color4  = #b9d7f8
-color12 = #aed2fa
-color5  = #d1a8cd
-color13 = #d1a8cd
-color6  = #43dddd
-color14 = #43dddd
+
+# green
+color2  = #9ccc65
+color10 = #9ccc65
+
+# yellow
+color3  = #ffee58
+color11 = #ffee58
+
+# blue
+color4  = #c5cae9
+color12 = #c5cae9
+
+# magenta
+color5  = #ce93d8
+color13 = #ce93d8
+
+# cyan
+color6  = #80deea
+color14 = #80deea
+
+# white
 color7  = #e0e0e0
 color15 = #e0e0e0
 
