@@ -287,7 +287,6 @@ if [ "$commands[encfs]" ]; then
     enc-mount() {
         mkdir ~/encrypt && \
         encfs ~/.encrypt ~/encrypt && \
-        xdg-open ~/encrypt &> /dev/null && \
         find ~/.thumbnails > ~/.encrypt-thumbs-before
     }
     enc-umount() {
