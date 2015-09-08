@@ -146,6 +146,7 @@ if ! pidof firefox > /dev/null; then
         echo 'user_pref("media.peerconnection.use_document_iceservers", false);' >> "$profile/prefs.js"
         echo 'user_pref("media.peerconnection.video.enabled", false);' >> "$profile/prefs.js"
         echo 'user_pref("media.peerconnection.identity.timeout", 1);' >> "$profile/prefs.js"
+        echo "user_pref(\"browser.newtab.url\", \"file://${this_dir}/newtab.html\");"  >> "$profile/prefs.js"
         print_info "added prefs to prefs.js"
     fi
 fi
