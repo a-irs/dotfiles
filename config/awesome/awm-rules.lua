@@ -32,6 +32,8 @@ function dynamic_tagging()
     end
 end
 
+dynamic_tagging()
+
 -- client appears
 client.connect_signal("manage", function(c)
 
@@ -99,6 +101,9 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+client.connect_signal("tagged",   dynamic_tagging)
+client.connect_signal("untagged", dynamic_tagging)
 
 -- set focus to client under mouse cursor when switching tags
 tag.connect_signal("property::selected", function(t)
