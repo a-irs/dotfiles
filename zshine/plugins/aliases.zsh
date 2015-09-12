@@ -287,14 +287,16 @@ if [ "$commands[encfs]" ]; then
     enc-mount() {
         mkdir ~/encrypt && \
         encfs ~/.encrypt ~/encrypt && \
-        find ~/.thumbnails > ~/.encrypt-thumbs-before
+        find ~/.thumbnails > ~/.encrypt-thumbs-before && \
+        cd ~/encrypt
     }
     enc-umount() {
+        [[ "$PWD" == $HOME/encrypt* ]] && cd
         fusermount -u ~/encrypt
         rmdir ~/encrypt
         find ~/.thumbnails > ~/.encrypt-thumbs-after
-        diff ~/.encrypt-thumbs-* | awk '{print $NF}' | tail -n +2 | xargs rm 2> /dev/null
-        rm ~/.encrypt-thumbs-* 2> /dev/null
+        diff ~/.encrypt-thumbs-* 2> /dev/null | awk '{print $NF}' | tail -n +2 | xargs rm -f
+        rm -f ~/.encrypt-thumbs-* 2> /dev/null
     }
 fi
 
