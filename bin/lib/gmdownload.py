@@ -33,6 +33,8 @@ password = config.get('config', 'password')
 uploader_id = config.get('config', 'uploader_id')
 main_dir = os.path.expanduser(config.get('config', 'directory'))
 pl_dir = os.path.expanduser(config.get('config', 'playlist_directory'))
+pl_dir_mpd = os.path.expanduser(config.get('config', 'playlist_directory_mpd'))
+pl_dir_mopidy = os.path.expanduser(config.get('config', 'playlist_directory_mopidy'))
 
 CACHE = None
 
@@ -161,22 +163,45 @@ def remove_playlist(playlist_name):
     if os.path.isfile(filename):
         os.remove(filename)
 
+    filename = pl_dir_mpd + "/" + playlist_name.replace('/', '-') + ".m3u"
+    if os.path.isfile(filename):
+        os.remove(filename)
 
-def init_playlist(playlist_name):
-    filename = pl_dir + "/" + playlist_name.replace('/', '-') + ".m3u"
+    filename = pl_dir_mopidy + "/" + playlist_name.replace('/', '-') + ".m3u"
+    if os.path.isfile(filename):
+        os.remove(filename)
+
+
+def init_mopidy_playlist(playlist_name):
+    if not os.path.exists(pl_dir_mopidy):
+        os.makedirs(pl_dir_mopidy)
+    filename = pl_dir_mopidy + "/" + playlist_name.replace('/', '-') + ".m3u"
     with codecs.open(filename, 'w', 'utf-8') as f:
         f.write('#EXTM3U\n')
 
 
-def build_playlist(trackId, playlist_name):
-    filename = pl_dir + "/" + playlist_name.replace('/', '-') + ".m3u"
+def append_playlist(trackId, playlist_name, playlist_type='absolute'):
+    d = pl_dir
+    if playlist_type == 'mpd':
+        d = pl_dir_mpd
+    elif playlist_type == 'mopidy':
+        d = pl_dir_mopidy
+
+    if not os.path.exists(d):
+        os.makedirs(d)
+
+    filename = d + "/" + playlist_name.replace('/', '-') + ".m3u"
     with codecs.open(filename, 'a', 'utf-8') as f:
         # append the path of the trackId to m3u
         if trackId in CACHE:
-            uri = 'local:track:' + quote(CACHE[trackId].encode('utf-8').replace(main_dir + '/', ''))
-            print(uri)
-            f.write("#EXTINF:-1," + pretty_song(CACHE[trackId]) + '\n')
-            f.write(uri + '\n')
+            if playlist_type == 'mopidy':
+                uri = 'local:track:' + quote(CACHE[trackId].encode('utf-8').replace(main_dir + '/', ''))
+                f.write("#EXTINF:-1," + pretty_song(CACHE[trackId]) + '\n')
+                f.write(uri + '\n')
+            elif playlist_type == 'mpd':
+                f.write(CACHE[trackId].replace(main_dir + '/', '') + '\n')
+            else:
+                f.write(CACHE[trackId] + '\n')
 
 
 def init_cache():
@@ -231,11 +256,13 @@ def check_cache():
 def get_thumbsup():
     remove_playlist('ThumbsUp')
     songs = mobileclient.get_thumbs_up_songs()
-    init_playlist('ThumbsUp')
+    init_mopidy_playlist('ThumbsUp')
     for i, s in enumerate(songs):
         print(str(i + 1).zfill(len(str(len(songs)))) + "/" + str(len(songs)) + " ", end='')
         get_song(s['storeId'])
-        build_playlist(s['storeId'], 'ThumbsUp')
+        append_playlist(s['storeId'], 'ThumbsUp')
+        append_playlist(s['storeId'], 'ThumbsUp', 'mpd')
+        append_playlist(s['storeId'], 'ThumbsUp', 'mopidy')
     print('')
 
 
@@ -274,11 +301,13 @@ def opt_download():
 
         # save the songs and build a m3u for each playlist
         all_tracks = p['tracks']
-        init_playlist(p['name'])
+        init_mopidy_playlist(p['name'])
         for i, t in enumerate(all_tracks):
             print(str(i + 1).zfill(len(str(len(all_tracks)))) + "/" + str(len(all_tracks)) + " ", end='')
             get_song(t['trackId'])
-            build_playlist(t['trackId'], p['name'])
+            append_playlist(t['trackId'], p['name'])
+            append_playlist(t['trackId'], p['name'], 'mpd')
+            append_playlist(t['trackId'], p['name'], 'mopidy')
         print('')
 
 
