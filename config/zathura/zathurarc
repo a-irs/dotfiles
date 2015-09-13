@@ -1,9 +1,9 @@
 set font "Input normal 8"
 set guioptions vhs
 set statusbar-basename true
-set statusbar-bg "#2C3643"
+set statusbar-bg "#2c3643"
 set statusbar-fg "#ffffff"
-set inputbar-bg "#2C3643"
+set inputbar-bg "#2c3643"
 set inputbar-fg "#ffffff"
 set page-padding 5
 set smooth-scroll true
