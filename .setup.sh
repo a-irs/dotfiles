@@ -31,6 +31,7 @@ dotfiles=(
     bin
     config/htop/htoprc
     config/mpd/mpd.conf
+    config/mopidy/mopidy.conf
     config/ncmpcpp/config
     config/pacaur/config
     config/ranger/rc.conf
