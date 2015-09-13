@@ -18,6 +18,7 @@ from colorama import init, Fore, Style
 from ConfigParser import SafeConfigParser
 from requests.packages import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+from urllib import quote
 
 CONFIG_FILE = os.path.expanduser("~/.config/gmdownload.config")
 CACHE_FILE = os.path.expanduser("~/.config/gmdownload.cache")
@@ -161,12 +162,21 @@ def remove_playlist(playlist_name):
         os.remove(filename)
 
 
+def init_playlist(playlist_name):
+    filename = pl_dir + "/" + playlist_name.replace('/', '-') + ".m3u"
+    with codecs.open(filename, 'w', 'utf-8') as f:
+        f.write('#EXTM3U\n')
+
+
 def build_playlist(trackId, playlist_name):
     filename = pl_dir + "/" + playlist_name.replace('/', '-') + ".m3u"
     with codecs.open(filename, 'a', 'utf-8') as f:
         # append the path of the trackId to m3u
         if trackId in CACHE:
-            f.write(CACHE[trackId].replace(main_dir + '/', '../' + 'gmusic/') + '\n')
+            uri = 'local:track:' + quote(CACHE[trackId].encode('utf-8').replace(main_dir + '/', ''))
+            print(uri)
+            f.write("#EXTINF:-1," + pretty_song(CACHE[trackId]) + '\n')
+            f.write(uri + '\n')
 
 
 def init_cache():
@@ -221,6 +231,7 @@ def check_cache():
 def get_thumbsup():
     remove_playlist('ThumbsUp')
     songs = mobileclient.get_thumbs_up_songs()
+    init_playlist('ThumbsUp')
     for i, s in enumerate(songs):
         print(str(i + 1).zfill(len(str(len(songs)))) + "/" + str(len(songs)) + " ", end='')
         get_song(s['storeId'])
@@ -263,6 +274,7 @@ def opt_download():
 
         # save the songs and build a m3u for each playlist
         all_tracks = p['tracks']
+        init_playlist(p['name'])
         for i, t in enumerate(all_tracks):
             print(str(i + 1).zfill(len(str(len(all_tracks)))) + "/" + str(len(all_tracks)) + " ", end='')
             get_song(t['trackId'])

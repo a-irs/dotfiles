@@ -4,8 +4,8 @@ set -e
 setopt extended_glob
 
 cd ~/music/playlists
-sort -fu -- *.m3u\
-~_all.m3u\
+cat -- *.m3u\
+~_ALL.m3u\
 ~*0s\ Rap.m3u\
 ~African.m3u\
 ~Atari.m3u\
