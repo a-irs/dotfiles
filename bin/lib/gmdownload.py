@@ -31,6 +31,7 @@ email = config.get('config', 'email')
 password = config.get('config', 'password')
 uploader_id = config.get('config', 'uploader_id')
 main_dir = os.path.expanduser(config.get('config', 'directory'))
+pl_dir = os.path.expanduser(config.get('config', 'playlist_directory'))
 
 CACHE = None
 
@@ -39,7 +40,7 @@ musicmanager = Musicmanager(debug_logging=False)
 
 
 def pretty_song(path):
-    path = path.replace(main_dir + "/mp3/", '')
+    path = path.replace(main_dir + "/", '')
     artist = path.split('/')[0]
 
     title = os.path.splitext(path.split('/')[-1])[0]
@@ -63,9 +64,9 @@ def get_own_song(id):
     e = eyed3.load("/tmp/" + tmp_file)
 
     if e.tag.album and e.tag.track_num != (None, None):
-        filename = main_dir + "/mp3/" + e.tag.artist.replace('/', '-') + "/" + e.tag.album.replace('/', '-') + "/" + '{:02d}'.format(e.tag.track_num[0]) + ". " + e.tag.title.replace('/', '-') + ".mp3"
+        filename = main_dir + "/" + e.tag.artist.replace('/', '-') + "/" + e.tag.album.replace('/', '-') + "/" + '{:02d}'.format(e.tag.track_num[0]) + ". " + e.tag.title.replace('/', '-') + ".mp3"
     else:
-        filename = main_dir + "/mp3/" + e.tag.artist.replace('/', '-') + "/" + e.tag.title.replace('/', '-') + ".mp3"
+        filename = main_dir + "/" + e.tag.artist.replace('/', '-') + "/" + e.tag.title.replace('/', '-') + ".mp3"
 
     if not os.path.exists(os.path.dirname(filename)):
         os.makedirs(os.path.dirname(filename))
@@ -115,9 +116,9 @@ def get_all_access_song(id):
         return False, None
 
     if 'album' in info and 'trackNumber' in info:
-        filename = main_dir + "/mp3/" + info['artist'].replace('/', '-') + "/" + info['album'].replace('/', '-') + "/" + '{:02d}'.format(info['trackNumber']) + ". " + info['title'].replace('/', '-') + ".mp3"
+        filename = main_dir + "/" + info['artist'].replace('/', '-') + "/" + info['album'].replace('/', '-') + "/" + '{:02d}'.format(info['trackNumber']) + ". " + info['title'].replace('/', '-') + ".mp3"
     else:
-        filename = main_dir + "/mp3/" + info['artist'].replace('/', '-') + "/" + info['title'].replace('/', '-') + ".mp3"
+        filename = main_dir + "/" + info['artist'].replace('/', '-') + "/" + info['title'].replace('/', '-') + ".mp3"
 
     if not os.path.exists(os.path.dirname(filename)):
         os.makedirs(os.path.dirname(filename))
@@ -155,17 +156,17 @@ def get_song(id):
 
 
 def remove_playlist(playlist_name):
-    filename = main_dir + "/playlist/" + playlist_name.replace('/', '-') + ".m3u"
+    filename = pl_dir + "/" + playlist_name.replace('/', '-') + ".m3u"
     if os.path.isfile(filename):
         os.remove(filename)
 
 
 def build_playlist(trackId, playlist_name):
-    filename = main_dir + "/playlist/" + playlist_name.replace('/', '-') + ".m3u"
+    filename = pl_dir + "/" + playlist_name.replace('/', '-') + ".m3u"
     with codecs.open(filename, 'a', 'utf-8') as f:
         # append the path of the trackId to m3u
         if trackId in CACHE:
-            f.write(CACHE[trackId].replace(main_dir + '/mp3/', '') + '\n')
+            f.write(CACHE[trackId].replace(main_dir + '/', '../' + 'gmusic/') + '\n')
 
 
 def init_cache():
@@ -198,7 +199,7 @@ def check_cache():
 
     # create list of mp3s
     mp3s = []
-    for root, dirs, fs in os.walk(main_dir + "/mp3"):
+    for root, dirs, fs in os.walk(main_dir):
         for file in fs:
             if file.endswith(".mp3"):
                 mp3s.append(os.path.join(root, file))

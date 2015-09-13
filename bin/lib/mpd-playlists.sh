@@ -28,7 +28,9 @@ sort -fu -- *.m3u\
 ~The\ Bees\ Made*.m3u\
 ~Todo.m3u\
 ~Unsortiert*.m3u\
+~Brain*.m3u\
+~Chinoi*.m3u\
 > ~/music/playlists/000_ALL.m3u
 
-find ~/music/albums | grep -E ".mp3$" | sort -fu \
-> ~/music/playlists/000_ALBUMS.m3u
+#find ~/music/albums | grep -E ".mp3$" | sort -fu \
+#> ~/music/playlists/000_ALBUMS.m3u
