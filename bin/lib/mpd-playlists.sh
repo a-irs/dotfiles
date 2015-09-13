@@ -4,8 +4,8 @@ set -e
 setopt extended_glob
 
 cd ~/music/playlists
-cat -- *.m3u\
-~_ALL.m3u\
+sort -fu -- *.m3u\
+~*_ALL.m3u\
 ~*0s\ Rap.m3u\
 ~African.m3u\
 ~Atari.m3u\
@@ -33,8 +33,8 @@ cat -- *.m3u\
 > ~/music/playlists/000_ALL.m3u
 
 cd ~/music/playlists_mpd
-cat -- *.m3u\
-~_ALL.m3u\
+sort -fu -- *.m3u\
+~*_ALL.m3u\
 ~*0s\ Rap.m3u\
 ~African.m3u\
 ~Atari.m3u\
@@ -62,8 +62,8 @@ cat -- *.m3u\
 > ~/music/playlists_mpd/000_ALL.m3u
 
 cd ~/music/playlists_mopidy
-cat -- *.m3u\
-~_ALL.m3u\
+grep -v --no-filename '#EXTM3U' -- *.m3u\
+~*_ALL.m3u\
 ~*0s\ Rap.m3u\
 ~African.m3u\
 ~Atari.m3u\
@@ -89,6 +89,7 @@ cat -- *.m3u\
 ~Brain*.m3u\
 ~Chinoi*.m3u\
 > ~/music/playlists_mopidy/000_ALL.m3u
+sed -i '1s/^/#EXTM3U\n/' ~/music/playlists_mopidy/000_ALL.m3u
 
 #find ~/music/albums | grep -E ".mp3$" | sort -fu \
 #> ~/music/playlists/000_ALBUMS.m3u
