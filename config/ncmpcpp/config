@@ -1,7 +1,7 @@
 volume_change_step = 1
 ncmpcpp_directory = ~/.config/ncmpcpp
 lyrics_directory = ~/.config/ncmpcpp/lyrics
-mpd_music_dir = ~/gmusic
+mpd_music_dir = ~/music
 playlist_disable_highlight_delay = 3
 
 playlist_display_mode = classic
