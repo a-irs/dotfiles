@@ -199,7 +199,7 @@ def append_playlist(trackId, playlist_name, playlist_type='absolute'):
                 f.write("#EXTINF:-1," + pretty_song(CACHE[trackId]) + '\n')
                 f.write(uri + '\n')
             elif playlist_type == 'mpd':
-                f.write(CACHE[trackId].replace(main_dir + '/', '') + '\n')
+                f.write(CACHE[trackId].replace(main_dir + '/', 'gmusic/') + '\n')
             else:
                 f.write(CACHE[trackId] + '\n')
 
