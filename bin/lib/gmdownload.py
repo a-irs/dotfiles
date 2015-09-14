@@ -220,15 +220,6 @@ def writeback_cache():
     shutil.move("/tmp/new_cache", CACHE_FILE)
 
 
-def whatisthis(s):
-    if isinstance(s, str):
-        print("ordinary string")
-    elif isinstance(s, unicode):
-        print("unicode string")
-    else:
-        print("not a string")
-
-
 def check_cache():
     global CACHE
 
