@@ -76,6 +76,8 @@ dotfiles_x=(
     gtkrc-2.0
     icons
     kodi/userdata/advancedsettings.xml
+    mpv/config
+    mpv/scripts/convert_script.lua
     themes
     xinitrc
     Xmodmap

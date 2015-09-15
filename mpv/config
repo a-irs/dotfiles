@@ -1,0 +1,8 @@
+# https://github.com/mpv-player/mpv/blob/master/etc/encoding-profiles.conf
+
+[webm]
+ovc = libvpx-vp9
+of = webm
+ovcopts-add = crf=10,b=1M
+ocopyts = yes
+no-audio
