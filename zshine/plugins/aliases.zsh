@@ -214,7 +214,6 @@ alias lt='\ls -F -l -h -t -r --color=auto --group-directories-first'
 [ "$commands[make]" ] && alias make="LC_ALL=C make"
 [ "$commands[gcc]" ]  && alias  gcc="LC_ALL=C gcc"
 [ "$commands[g++]" ]  && alias  g++="LC_ALL=C g++"
-[ "$commands[mpv]" ] && alias mpv='mpv --no-audio-display'
 
 [[ "$commands[redshift]" ]] && alias toggle-redshift='pkill -USR1 redshift'
 

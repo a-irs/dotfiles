@@ -31,6 +31,7 @@ dotfiles=(
     bin
     config/htop/htoprc
     config/mpd/mpd.conf
+    config/mopidy/mopidy.conf
     config/ncmpcpp/config
     config/pacaur/config
     config/ranger/rc.conf
@@ -122,6 +123,10 @@ if [[ -f /usr/bin/xfconf-query ]]; then
     s xfwm4 /general/mousewheel_rollup false
     s xfwm4 /general/workspace_count 1
     print_info "set configs for Xfce"
+fi
+
+if [[ -f /usr/bin/mpv ]]; then
+    sudo ln -s $this_dir/bin/lib/mpv-launcher /usr/local/bin/mpv
 fi
 
 if [[ -f /usr/bin/apm ]]; then
