@@ -64,19 +64,6 @@ globalkeys = awful.util.table.join(
 
     awful.key({ win          }, "Tab",   awful.tag.history.restore),
 
-    awful.key({              }, "F12",
-      function ()
-          local screen = mouse.screen
-          local tag = awful.tag.gettags(screen)[2]
-          if tag then
-              if tag.selected then
-                awful.tag.history.restore()
-              else
-                awful.tag.viewonly(tag)
-              end
-          end
-      end),
-
     -- modify windows
 
     awful.key({ win }, "#35", function() -- plus +
