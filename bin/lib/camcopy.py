@@ -94,7 +94,7 @@ targetDir = sys.argv[2]
 
 totalFiles = totalFiles(sourceDir)
 
-exiftool = ['exiftool', '-v0', '-r', '-o', '.', '-FileName<DateTimeOriginal', '-d', targetDir + '/%Y/%Y-%m/%Y-%m-%d/%Y%m%d_%H%M%S_%%f%%+c.%%ue', sourceDir]
+exiftool = ['exiftool', '-v0', '-r', '-o', '.', '-FileName<DateTimeOriginal', '-d', targetDir + '/%Y/%Y-%m/%Y-%m-%d/%Y%m%d_%H%M%S_%%f.%%ue', sourceDir]
 proc = subprocess.Popen(exiftool, stdout=subprocess.PIPE, universal_newlines=True)
 startTime = time.time()
 
