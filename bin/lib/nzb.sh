@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 DEST="root@srv:/srv/drop"
 SRC=$1
 
@@ -25,3 +27,4 @@ else
     d=$(printf "%q" "$DEST/$package_name{{$password}}.nzb")
     scp -C "$SRC" "$d"
 fi
+trash-put -- "$SRC"

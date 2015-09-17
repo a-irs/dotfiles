@@ -13,10 +13,10 @@ theme.statusbar_position            = "top"
 -- FG, BG COLORS
 
 theme.bg_normal                     = "#2c3643"
-theme.bg_focus                      = "#3c4b5d"
+theme.bg_focus                      = "#2c3643"
 theme.bg_urgent                     = "#aa0000"
 theme.fg_normal                     = "#aaaaaa"
-theme.fg_focus                      = "#ffffff"
+theme.fg_focus                      = "#fa5641"
 theme.fg_urgent                     = "#af1d18"
 
 theme.border_width                  = dpi(0)
@@ -53,7 +53,7 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 -- WIDGETS
 
 theme.font                          = "Fira Sans 8"
-theme.taglist_font                  = "Fira Sans Medium 10"
+theme.taglist_font                  = "Fira Sans 8"
 theme.show_tag_names                = true
 --theme.taglist_squares_unsel         = xpm_folder .. "/indicator.xpm"
 

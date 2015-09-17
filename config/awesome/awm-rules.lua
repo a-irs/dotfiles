@@ -24,9 +24,9 @@ function dynamic_tagging()
         local all_tags = awful.tag.gettags(s)
         for _, t in ipairs(all_tags) do
             if is_empty(t) then
-                t.name = "○"
+                t.name = "□"
             else
-                t.name = "●"
+                t.name = "■"
             end
         end
     end
