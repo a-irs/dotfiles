@@ -66,6 +66,8 @@ dotfiles_x=(
     config/fontconfig/fonts.conf
     config/gtk-3.0/settings.ini
     config/mpv/input.conf
+    config/mpv/mpv.conf
+    config/mpv/scripts/convert_script.lua
     config/sublime-text-3/Packages/User
     config/terminator/config
     config/termite/config
@@ -76,8 +78,6 @@ dotfiles_x=(
     gtkrc-2.0
     icons
     kodi/userdata/advancedsettings.xml
-    mpv/config
-    mpv/scripts/convert_script.lua
     themes
     xinitrc
     Xmodmap
@@ -128,7 +128,7 @@ if [[ -f /usr/bin/xfconf-query ]]; then
 fi
 
 if [[ -f /usr/bin/mpv ]]; then
-    sudo ln -s $this_dir/bin/lib/mpv-launcher /usr/local/bin/mpv
+    sudo ln -s $this_dir/bin/lib/mpv-launcher /usr/local/bin/mpv 2> /dev/null
 fi
 
 if [[ -f /usr/bin/apm ]]; then
