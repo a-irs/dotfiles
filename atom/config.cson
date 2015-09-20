@@ -16,13 +16,13 @@
     autoHideMenuBar: true
   editor:
     invisibles: {}
-    fontFamily: "Input"
     tabLength: 4
     confirmCheckoutHeadRevision: false
     scrollPastEnd: true
     lineHeight: 1.4
     fontSize: 15
     softWrap: true
+    fontFamily: "Monospace"
   "git-diff": {}
   "one-dark-ui":
     layoutMode: "Compact"
