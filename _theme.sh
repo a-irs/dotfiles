@@ -9,7 +9,7 @@ current_color=$(< "$cc_file")
 [[ ! $1 ]] && echo "USAGE: theme 2b4500" && exit 1
 
 cd "$this_dir"
-ag --ignore "$cc_file" -l "$current_color" | xargs -d '\n' sed -i "s|$current_color|$1|g"
+sed -i "s|$current_color|$1|g" "$this_dir/config/awesome/theme.lua" "$this_dir/config/sublime-text-3/Packages/User/Monokai Extended 2.tmTheme" "$this_dir/config/terminator/config" "$this_dir/config/termite/config" "$this_dir/config/zathura/zathurarc" "$this_dir/newtab.html" "$this_dir/userChrome.css"
 echo "$1" > "$cc_file"
 
 echo "awesome.restart()" | awesome-client
