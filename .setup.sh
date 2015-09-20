@@ -127,10 +127,6 @@ if [[ -f /usr/bin/xfconf-query ]]; then
     print_info "set configs for Xfce"
 fi
 
-if [[ -f /usr/bin/mpv ]]; then
-    sudo ln -s $this_dir/bin/lib/mpv-launcher /usr/local/bin/mpv 2> /dev/null
-fi
-
 if [[ -f /usr/bin/apm ]]; then
     new_packages=$(comm -23 <(cat "$this_dir/atom/PACKAGES.txt" | sort) <(apm ls -b -i | cut -d@ -f 1 | sort))
     [[ -n "$new_packages" ]] && apm install $new_packages
