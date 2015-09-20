@@ -6,5 +6,5 @@ a=$(echo "$@" | sed -e 's/^[ \t]*//')
 
 echo "$d $a"  >> ~/.mpv-history
 
-/usr/bin/mpv --no-audio-display "$@"
+/usr/bin/mpv "$@"
 
