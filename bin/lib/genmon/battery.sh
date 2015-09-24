@@ -55,7 +55,7 @@ if [[ "$status" == Charging ]] || [[ "$status" == Full ]]; then
     if [[ $TMUX ]]; then
         txt="#[bg=colour237,fg=colour220]#[bg=colour220,fg=colour235] ⚡ #[default]"
     elif [[ $1 == awesome ]]; then
-            txt="<span foreground='LightGreen'>+</span>"
+            txt="<span foreground='LightGreen'>+ </span>"
     else
         txt="<span weight='bold' fgcolor='LightGreen'> +</span>"
     fi

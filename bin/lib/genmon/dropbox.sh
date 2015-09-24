@@ -27,7 +27,7 @@ if [[ $1 == awesome ]]; then
     color=LightGrey
     [[ $s == "○" ]] && color=red
     [[ $s == "…" ]] && color=red
-    echo -n "<span font='Terminus 7' foreground='$color'>$s</span>   "
+    echo -n "<span font='Terminus 7' foreground='$color'>$s</span>"
 else
     echo "<img>$HOME/.bin/lib/genmon/img/dropbox.png</img><txt><span weight=\"normal\" fgcolor=\"White\">$s</span></txt><tool>$status</tool>"
 fi

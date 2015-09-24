@@ -284,6 +284,9 @@ def opt_download():
 
     for i, p in enumerate(reversed(all_playlists)):
 
+        if p['name'] == "001":
+            continue
+
         last_modified = time.strftime('%a, %d.%m.%Y %H:%M', time.localtime(float(p['lastModifiedTimestamp'])/1000000))
         print(str(i + 2).zfill(len(str(total_count))) + "/" + str(total_count + 1) + " " + Fore.MAGENTA + Style.BRIGHT + p['name'], end='')
         print(" (" + last_modified + ")\n")
