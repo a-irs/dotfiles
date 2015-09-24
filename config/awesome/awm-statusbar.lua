@@ -2,9 +2,6 @@ local awful   = require 'awful'
 local wibox   = require 'wibox'
 local lain    = require 'lain'
 local naughty = require 'naughty'
-local alsa    = require 'alsa'
-local volume  = require 'volume'
-local vicious = require 'vicious'
 local widgets = require 'widgets'
 
 

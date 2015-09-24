@@ -8,7 +8,7 @@ local widgets = {}
 
 markup = lain.util.markup
 
-function widgets.get_genmon(script)
+local function get_genmon(script)
     local command = os.getenv("HOME") .. "/.bin/lib/genmon/" .. script .. " awesome"
     local fh = assert(io.popen(command, "r"))
     local text = fh:read("*l")
@@ -16,16 +16,18 @@ function widgets.get_genmon(script)
     return text
 end
 
-function widgets.make_genmon(script, timeout)
+local function make_genmon(script, timeout)
     local new_widget = wibox.widget.textbox()
-    new_widget:set_markup(widgets.get_genmon(script))
+    new_widget:set_markup(get_genmon(script))
     local new_widget_timer = timer({ timeout = timeout })
     new_widget_timer:connect_signal("timeout",
-        function() new_widget:set_markup(widgets.get_genmon(script)) end
+        function() new_widget:set_markup(get_genmon(script)) end
     )
     new_widget_timer:start()
     return new_widget
 end
+
+
 
 function widgets.make_widget(widget, background_color, left, right)
     if left and right then
@@ -39,17 +41,21 @@ function widgets.make_widget(widget, background_color, left, right)
     return b
 end
 
+
 -- BATTERY
 
-if hostname == "dell" then widgets.batterywidget = widgets.make_genmon("battery.sh", 5) end
+if hostname == "dell" then widgets.batterywidget = make_genmon("battery.sh", 5) end
+
 
 -- NETWORK
 
-widgets.netwidget = widgets.make_genmon("net.sh", 5)
+widgets.netwidget = make_genmon("net.sh", 5)
+
 
 -- DROPBOX
 
-widgets.dropboxwidget = widgets.make_genmon("dropbox.sh", 5)
+widgets.dropboxwidget = make_genmon("dropbox.sh", 5)
+
 
 -- VOLUME
 
@@ -70,6 +76,7 @@ widgets.volumewidget.widget:buttons(awful.util.table.join(
        awful.button({ }, 3, function() volume.toggle()   end)  -- right click
 ))
 
+
 -- DATE, TIME
 
 widgets.datewidget = lain.widgets.base({
@@ -88,6 +95,7 @@ lain.widgets.calendar:attach(widgets.datewidget, { font_size = theme.widget_cale
                                            icons = "",
 })
 
+
 -- MPD
 
 widgets.mpdwidget = wibox.widget.textbox()
@@ -105,6 +113,7 @@ widgets.mpdwidget:buttons(awful.util.table.join(
                       awful.button({ }, 1, function() awful.util.spawn("ario") end)
 ))
 
+
 -- CPU
 
 widgets.cpuwidget = lain.widgets.cpu({
@@ -114,6 +123,7 @@ widgets.cpuwidget = lain.widgets.cpu({
     end
 })
 
+
 --- CPU FREQ
 
 widgets.cpufreq1widget = wibox.widget.textbox()
@@ -121,10 +131,12 @@ vicious.register(widgets.cpufreq1widget, vicious.widgets.cpufreq, markup(theme.w
 widgets.cpufreq2widget = wibox.widget.textbox()
 vicious.register(widgets.cpufreq2widget, vicious.widgets.cpufreq, markup(theme.widget_cpu_freq_fg, "CPU1: " .. markup.bold("$2 GHz     ")), 2, "cpu1")
 
+
 -- MEM
 
 widgets.memwidget = wibox.widget.textbox()
 vicious.register(widgets.memwidget, vicious.widgets.mem, markup(theme.widget_mem_fg, "RAM: " .. markup.bold("$1%     ")), 5)
+
 
 -- LOAD
 
@@ -135,12 +147,14 @@ widgets.loadwidget = lain.widgets.sysload({
     end
 })
 
+
 -- DISK I/O
 
 widgets.iowidget = wibox.widget.textbox()
 vicious.register(widgets.iowidget, vicious.widgets.dio,
        markup(theme.widget_disk_read_fg, "read: " .. markup.bold("${sda read_mb} MB/s "))
     .. markup(theme.widget_disk_write_fg, " write: " .. markup.bold("${sda write_mb} MB/s    ")), 2)
+
 
 -- NETWORK SPEED
 
@@ -155,6 +169,7 @@ widgets.speedwidget = lain.widgets.net({
             markup(theme.widget_speed_up, " ↑ UL: " .. markup.bold(up_speed) .. "     "))
     end
 })
+
 
 -- CPU GRAPH
 
