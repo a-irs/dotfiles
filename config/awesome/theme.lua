@@ -24,7 +24,7 @@ theme.border_normal                 = theme.bg_normal
 theme.border_focus                  = theme.bg_focus
 
 theme.useless_gap_normal            = dpi(vres/150)
-theme.useless_gap_compact           = dpi(4)
+theme.useless_gap_compact           = dpi(3)
 
 if compact_display then
     theme.useless_gap = theme.useless_gap_compact
@@ -60,7 +60,7 @@ theme.show_tag_names                = true
 theme.bg_systray                    = theme.bg_normal
 theme.widget_mpd_fg                 = "#cfcfcf"
 theme.widget_mpd_bg                 = theme.bg_normal
-theme.widget_mpd_font               = "Fira Sans 8"
+theme.widget_mpd_font               = theme.font
 theme.widget_calendar_font          = "Input"
 theme.widget_calendar_font_size     = 8
 theme.widget_calendar_fg            = theme.fg_normal
@@ -80,6 +80,10 @@ theme.widget_load_fg                = "#80d9d8"
 theme.widget_disk_read_fg           = "#ffc350"
 theme.widget_disk_write_fg          = theme.widget_disk_read_fg
 
+theme.tasklist_font                 = "Fira Sans 8"
+theme.tasklist_fg                   = theme.fg_normal
+theme.tasklist_bg                   = theme.bg_normal
+theme.tasklist_disable_icon         = true
 
 -- LAYOUT ICONS
 
