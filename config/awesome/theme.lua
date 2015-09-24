@@ -24,7 +24,7 @@ theme.border_normal                 = theme.bg_normal
 theme.border_focus                  = theme.bg_focus
 
 theme.useless_gap_normal            = dpi(vres/150)
-theme.useless_gap_compact           = dpi(3)
+theme.useless_gap_compact           = dpi(vres/200)
 
 if compact_display then
     theme.useless_gap = theme.useless_gap_compact
@@ -65,7 +65,7 @@ theme.widget_calendar_font          = "Input"
 theme.widget_calendar_font_size     = 8
 theme.widget_calendar_fg            = theme.fg_normal
 theme.widget_calendar_bg            = "#222a34"
-theme.widget_date_fg                = "#dfdfdf"
+theme.widget_date_fg                = "#eeeeee"
 theme.widget_alsa_fg                = "#96b7e2"
 theme.widget_alsa_mute_fg           = "#666666"
 theme.widget_yawn_fg                = "#ababab"

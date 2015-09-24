@@ -38,16 +38,16 @@ for s = 1, screen.count() do
     local layout1 = wibox.layout.fixed.horizontal()
     lay(layout1, mylayoutbox[s])
     lay(layout1, mytasklist[s])
-    lay(layout1, widgets.mpdwidget, theme.bg_normal, 4, 4)
+    lay(layout1, widgets.mpdwidget, nil, 4, 4)
 
     local layout2 = wibox.layout.fixed.horizontal()
     lay(layout2, mytaglist[s])
 
     local layout3 = wibox.layout.fixed.horizontal()
-    lay(layout3, widgets.dropboxwidget, theme.bg_normal, 4, 4)
-    lay(layout3, widgets.batterywidget, theme.bg_normal, 4, 4)
-    lay(layout3, widgets.volumewidget,  theme.bg_normal, 4, 4)
-    lay(layout3, widgets.datewidget,    theme.bg_normal, 4, 6)
+    lay(layout3, widgets.dropboxwidget, nil, 4, 4)
+    lay(layout3, widgets.batterywidget, nil, 4, 4)
+    lay(layout3, widgets.volumewidget,  nil, 4, 4)
+    lay(layout3, widgets.datewidget,    nil, 4, 6)
 
     -- build status bar
 
