@@ -60,7 +60,7 @@ widgets.dropboxwidget = make_genmon("dropbox.sh", 5)
 -- VOLUME
 
 widgets.volumewidget = alsa({
-    timeout = 5,
+    timeout = 3,
     settings = function()
         if volume_now.status == "off" then
             widget:set_markup(markup.bold(markup(theme.widget_alsa_mute_fg, volume_now.level)))
