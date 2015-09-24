@@ -55,7 +55,7 @@ if [[ "$status" == Charging ]] || [[ "$status" == Full ]]; then
     if [[ $TMUX ]]; then
         txt="#[bg=colour237,fg=colour220]#[bg=colour220,fg=colour235] ⚡ #[default]"
     elif [[ $1 == awesome ]]; then
-            txt="<span foreground='LightGreen'>+</span> "
+            txt="<span foreground='LightGreen'>+</span>"
     else
         txt="<span weight='bold' fgcolor='LightGreen'> +</span>"
     fi
@@ -75,7 +75,7 @@ fi
 
 click="sh -c 'xset dpms force off && slimlock'"
 if [[ -n $TMUX ]] || [[ $1 == awesome ]]; then
-    echo -n "<b>$txt</b>   "
+    echo -n "<b>$txt</b>"
 else
     [[ $ICONS == 1 ]] && echo -n "<img>$image</img>"
     echo -n "<txt>$txt</txt><click>$click</click>"
