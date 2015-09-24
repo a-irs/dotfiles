@@ -5,8 +5,8 @@
     showOnStartup: false
   core:
     themes: [
-      "one-light-ui"
-      "pen-paper-coffee-syntax"
+      "one-dark-ui"
+      "atom-dark-fusion-syntax"
     ]
     disabledPackages: [
       "wrap-guide"

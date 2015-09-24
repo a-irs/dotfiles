@@ -1,4 +1,5 @@
 
+atom-dark-fusion-syntax
 atom-terminal
 autocomplete-paths
 autocomplete-python
