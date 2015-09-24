@@ -33,28 +33,64 @@ cursor = #ffffff
 foreground = #fafafa
 foreground_bold = #ffffff
 background = #2c3643
-#background = rgba(44, 54, 67, 0.95)
 
-# if unset, will reverse foreground and background
-#highlight = #2f2f2f
+########################## DEFAULT THEME
 
-# colors from color0 to color254 can be set
-color0  = #3b3b3b
-color8  = #6d7367
-color1  = #fa5641
-color9  = #fa5641
-color2  = #b7ff71
-color10 = #b7ff71
-color3  = #fff073
-color11 = #fcec67
-color4  = #b9d7f8
-color12 = #aed2fa
-color5  = #d1a8cd
-color13 = #d1a8cd
-color6  = #43dddd
-color14 = #43dddd
-color7  = #e0e0e0
-color15 = #e0e0e0
+## black
+#color0   = #3b3b3b
+#color8   = #6d7367
+## red
+#color1   = #fa5641
+#color9   = #fa5641
+## green
+#color2   = #b7ff71
+#color10  = #b7ff71
+## yellow
+#color3   = #fff073
+#color11  = #fcec67
+## blue
+#color4   = #b9d7f8
+#color12  = #aed2fa
+## magenta
+#color5   = #d1a8cd
+#color13  = #d1a8cd
+## cyan
+#color6   = #43dddd
+#color14  = #43dddd
+## white
+#color7   = #e0e0e0
+#color15  = #e0e0e0
+
+########################## DESATURATED THEME
+
+# black
+color0   = #3b3b3b
+color8   = #6d7367
+# red
+color1   = #dd7165
+color9   = #dd7165
+# green
+color2   = #ABCF67
+color10  = #ABCF67
+# yellow
+color3   = #DBA453
+color11  = #DBA453
+# blue
+color4   = #7bc8d8
+color12  = #7bc8d8
+# magenta
+color5   = #b590e3
+color13  = #b590e3
+# cyan
+color6   = #c960b5
+color14  = #c960b5
+# white
+color7   = #e0e0e0
+color15  = #e0e0e0
+# others
+color214 = #de9c4e
+
+##########################
 
 [hints]
 #font = Monospace 12
