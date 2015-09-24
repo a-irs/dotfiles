@@ -52,7 +52,7 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 
 -- WIDGETS
 
-theme.font                          = "Fira Sans 8"
+theme.font                          = "Lime 8"
 theme.taglist_font                  = "Clean 8"
 theme.show_tag_names                = true
 --theme.taglist_squares_unsel         = xpm_folder .. "/indicator.xpm"

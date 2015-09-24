@@ -45,9 +45,9 @@ for s = 1, screen.count() do
 
     local layout3 = wibox.layout.fixed.horizontal()
     lay(layout3, widgets.dropboxwidget, theme.bg_normal, 4, 4)
-    lay(layout3, widgets.volumewidget,  theme.bg_normal, 4, 4)
     lay(layout3, widgets.batterywidget, theme.bg_normal, 4, 4)
-    lay(layout3, widgets.datewidget,    theme.bg_normal, 4, 4)
+    lay(layout3, widgets.volumewidget,  theme.bg_normal, 4, 4)
+    lay(layout3, widgets.datewidget,    theme.bg_normal, 4, 6)
 
     -- build status bar
 
