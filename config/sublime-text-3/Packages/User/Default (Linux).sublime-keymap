@@ -12,4 +12,5 @@
 	{ "keys": ["shift+f11"], "command": "toggle_full_screen" },
 	{ "keys": ["f11"], "command": "toggle_distraction_free" },
     { "keys": ["ctrl+l"], "command": "expand_selection", "args": {"to": "line"} },
+    { "keys": ["ctrl+alt+enter"], "command": "open_terminal" },
 ]
