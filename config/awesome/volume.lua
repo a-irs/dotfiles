@@ -15,14 +15,17 @@ end
 
 function volume.toggle()
     execute 'amixer set Master toggle'
+    volumewidget.update()
 end
 
 function volume.increase()
     local volume = slurpcommand 'amixer set Master 1%+'
+    volumewidget.update()
 end
 
 function volume.decrease()
     local volume = slurpcommand 'amixer set Master 1%-'
+    volumewidget.update()
 end
 
 return volume

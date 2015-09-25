@@ -10,6 +10,7 @@ local function lay(layout, widget, background_color, left, right)
     end
 end
 
+volumewidget = widgets.volumewidget
 mywibox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -45,8 +46,9 @@ for s = 1, screen.count() do
 
     local layout3 = wibox.layout.fixed.horizontal()
     lay(layout3, widgets.dropboxwidget, nil, 4, 4)
+    lay(layout3, volumewidget,          nil, 4, 4)
+    lay(layout3, widgets.netwidget,     nil, 4, 4)
     lay(layout3, widgets.batterywidget, nil, 4, 4)
-    lay(layout3, widgets.volumewidget,  nil, 4, 4)
     lay(layout3, widgets.datewidget,    nil, 4, 6)
 
     -- build status bar
@@ -66,7 +68,6 @@ for s = 1, screen.count() do
     systembox[s] = awful.wibox({ position = systembox_position, screen = s, height = theme.statusbar_height })
 
     local systembox_layout_1 = wibox.layout.fixed.horizontal()
-    lay(systembox_layout_1, widgets.netwidget)
     lay(systembox_layout_1, widgets.speedwidget)
     lay(systembox_layout_1, widgets.iowidget)
     lay(systembox_layout_1, widgets.memwidget)

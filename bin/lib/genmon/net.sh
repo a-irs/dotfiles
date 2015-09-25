@@ -7,7 +7,7 @@ if [[ $MONOCHROME == 1 ]]; then
     image="$HOME/.bin/lib/genmon/img/monochrome/wifi.png"
     vpn_color="#bbbbbb"
 else
-    color="LightBlue"
+    color="Orange"
     color_tmux="blue"
     image="$HOME/.bin/lib/genmon/img/wifi.png"
     vpn_color="gold"
@@ -22,7 +22,7 @@ if [[ $devs == *$'\nwlan'* ]] || [[ $devs == *$'\nwlp'* ]]; then
     if [[ $TMUX ]]; then
         txt+=("#[bg=$color_tmux,fg=colour235] $ssid #[default]")
     elif [[ $1 == awesome ]]; then
-        txt+=("<span foreground='$color'>SSID: <b>$ssid</b></span>")
+        txt+=("<span foreground='$color'><b>$ssid</b></span>")
     else
         txt+=("<span weight='bold' fgcolor='$color'>$ssid</span>")
     fi
@@ -85,20 +85,18 @@ if [[ $total == 0 ]]; then
     if [[ $TMUX ]]; then
         echo -n "#[bg=black,fg=white]n/a#[default]"
     elif [[ $1 == awesome ]]; then
-        echo -n "   <b>no network</b>   "
+        echo -n "<b>no network</b>"
     else
         echo -n "<span weight='bold' fgcolor='grey'>n/a</span>"
         image="$HOME/.bin/lib/genmon/img/wifi_off.png"
     fi
 else
-    [[ $1 == awesome ]] && echo -n "  "
     for item in "${txt[@]}"; do
         echo -n "$item"
         [[ $TMUX ]] && continue
         [[ "$count" == "$total" ]] || echo -n " + "
         count=$((count+1))
     done
-    [[ $1 == awesome ]] && echo -n "   "
 fi
 [[ $TMUX || $1 == awesome ]] || echo "</txt><click>terminator -m -e 'ip addr;read'</click>"
 
