@@ -14,8 +14,6 @@ if [ -z "$percent" ]; then
     exit
 fi
 
-[[ "$percent" -ge 100 ]] && echo "" && exit
-
 if [[ "$percent" -le 19 ]]; then
         image="$HOME/.bin/lib/genmon/img/battery_crit.png"
         color="#DB3131"
@@ -39,7 +37,7 @@ elif [[ "$percent" -le 69 ]]; then
         color="#cccccc"
     fi
 else
-    [[ "$percent" -eq 100 ]] && percent='00'
+    [[ "$percent" -ge 100 ]] && percent='100'
     if [ $MONOCHROME -ne 1 ]; then
         image="$HOME/.bin/lib/genmon/img/battery_high.png"
         color="LightGreen"
@@ -50,27 +48,27 @@ else
     fi
 fi
 
+if [[ $TMUX ]]; then
+    if [[ $charging == 1 ]]; then
+        txt="#[bg=colour220,fg=$color_tmux]#[bg=$color_tmux,fg=colour235] $percent% #[default]"
+    else
+        txt="#[bg=colour237,fg=$color_tmux]#[bg=$color_tmux,fg=colour235] $percent% #[default]"
+    fi
+elif [[ $1 == awesome ]]; then
+    txt="<span foreground='$color'>$percent</span>"
+else
+    txt="<span weight='bold' fgcolor='$color'>$percent</span>"
+fi
+
 if [[ "$status" == Charging ]] || [[ "$status" == Full ]]; then
     charging=1
     if [[ $TMUX ]]; then
-        txt="#[bg=colour237,fg=colour220]#[bg=colour220,fg=colour235] ⚡ #[default]"
+        txt=$txt"#[bg=colour237,fg=colour220]#[bg=colour220,fg=colour235] ⚡ #[default]"
     elif [[ $1 == awesome ]]; then
-            txt="<span foreground='LightGreen'>+ </span>"
+        txt=$txt"<span foreground='Yellow'> +</span>"
     else
-        txt="<span weight='bold' fgcolor='LightGreen'> +</span>"
+        txt=$txt"<span weight='bold' fgcolor='LightGreen'> +</span>"
     fi
-fi
-
-if [[ $TMUX ]]; then
-    if [[ $charging == 1 ]]; then
-        txt=$txt"#[bg=colour220,fg=$color_tmux]#[bg=$color_tmux,fg=colour235] $percent% #[default]"
-    else
-        txt=$txt"#[bg=colour237,fg=$color_tmux]#[bg=$color_tmux,fg=colour235] $percent% #[default]"
-    fi
-elif [[ $1 == awesome ]]; then
-    txt=$txt"<span foreground='$color'>$percent</span>"
-else
-    txt="<span weight='bold' fgcolor='$color'>$percent"$txt"</span>"
 fi
 
 click="sh -c 'xset dpms force off && slimlock'"

@@ -7,7 +7,7 @@ else
     xpm_folder                      = theme.basedir .. "/xpm_100"
 end
 
-theme.statusbar_height              = dpi(20)
+theme.statusbar_height              = dpi(18)
 theme.statusbar_position            = "top"
 
 -- FG, BG COLORS
@@ -61,7 +61,7 @@ theme.bg_systray                    = theme.bg_normal
 theme.widget_mpd_fg                 = "#cfcfcf"
 theme.widget_mpd_bg                 = theme.bg_normal
 theme.widget_mpd_font               = theme.font
-theme.widget_calendar_font          = "Input"
+theme.widget_calendar_font          = "Monospace"
 theme.widget_calendar_font_size     = 8
 theme.widget_calendar_fg            = theme.fg_normal
 theme.widget_calendar_bg            = "#222a34"

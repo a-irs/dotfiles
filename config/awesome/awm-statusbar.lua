@@ -25,14 +25,14 @@ for s = 1, screen.count() do
     -- mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.focused, false, { fg_focus = theme.tasklist_fg, bg_focus = theme.tasklist_bg, font = theme.tasklist_font })
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
     mywibox[s] = awful.wibox({ position = theme.statusbar_position, screen = s, height = theme.statusbar_height })
-    mylayoutbox[s] = awful.widget.layoutbox(s)
-    mylayoutbox[s]:buttons(awful.util.table.join(
-                       awful.button({ }, 1, function() awful.layout.inc(layouts,  1) end),
-                       awful.button({ }, 3, function() awful.layout.inc(layouts, -1) end),
-                       awful.button({ }, 4, function() awful.layout.inc(layouts,  1) end),
-                       awful.button({ }, 5, function() awful.layout.inc(layouts, -1) end)))
-    mylayoutbox[s]:connect_signal("mouse::enter", function() systembox[mouse.screen].visible = true end)
-    mylayoutbox[s]:connect_signal("mouse::leave", function() systembox[mouse.screen].visible = false end)
+    -- mylayoutbox[s] = awful.widget.layoutbox(s)
+    -- mylayoutbox[s]:buttons(awful.util.table.join(
+    --                    awful.button({ }, 1, function() awful.layout.inc(layouts,  1) end),
+    --                    awful.button({ }, 3, function() awful.layout.inc(layouts, -1) end),
+    --                    awful.button({ }, 4, function() awful.layout.inc(layouts,  1) end),
+    --                    awful.button({ }, 5, function() awful.layout.inc(layouts, -1) end)))
+    -- mylayoutbox[s]:connect_signal("mouse::enter", function() systembox[mouse.screen].visible = true end)
+    -- mylayoutbox[s]:connect_signal("mouse::leave", function() systembox[mouse.screen].visible = false end)
 
     -- layouts
 
