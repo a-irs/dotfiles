@@ -1,2 +1,2 @@
-:colorscheme smyck
+execute pathogen#infect()
 
