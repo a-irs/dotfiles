@@ -91,7 +91,7 @@ else
     for fx in "${dotfiles_x[@]}"; do rmlink "$fx"; done
 fi
 
-git clone --depth=1 https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> /dev/null
+#git clone --depth=1 https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2> /dev/null
 #vim +PluginInstall +qall
 #print_info "installed vundles"
 
