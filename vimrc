@@ -12,12 +12,17 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'w0ng/vim-hybrid'
 Plugin 'tpope/vim-scriptease.git'
 Plugin 'tpope/vim-sensible.git'
+Plugin 'Raimondi/delimitMate'
+Plugin 'rking/ag.vim'
 call vundle#end()
 filetype plugin indent on
 
 
 :colorscheme hybrid
 let mapleader=" "
+set background=dark
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
 
 " indentLine
 let gindentLine_char = '┆'
