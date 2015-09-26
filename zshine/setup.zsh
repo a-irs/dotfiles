@@ -82,27 +82,6 @@ if [[ $TERM != *"-256color" ]]; then
     done
 fi
 
-ZSHINE_PLUGINS=(
-  term-title # sets terminal/tab title
-  aliases # provides some aliases and functions for daily work
-  ls-colors # colors for "ls" command
-  virtualenvwrapper # wrapper for python-virtualenv
-  syntax-highlighting # provides a syntax highlighted prompt
-  less-syntax-highlighting # syntax highlighting for "less" command
-  history-substring-search # arrow key up/down history search
-  # command-not-found # show needed packages for unknown commands
-  bd # move back in current directory tree (breadcrumb-style)
-  auto-ls # launch "ls" when entering directory
-  prompt-git # provides functions for a git-prompt
-  completion # tweaks for TAB-completion
-  bindkey # bind keys for delete, history-search etc.
-  fzf # CTRL+T for fuzzy-search of files
-  zaw # better CTRL+R history search
-  # tmux # autostart tmux
-#  notify # notify-send after long command has been completed
-)
-for z in $ZSHINE_PLUGINS; do source "$ZSHINE_DIR/plugins/$z.zsh"; done
-
 export RESET=$(tput sgr0)
 export BLACK=$(tput setaf 0)
 export RED=$(tput setaf 1)
@@ -122,3 +101,25 @@ export BOLD_MAGENTA=$(tput bold; tput setaf 5)
 export BOLD_CYAN=$(tput bold; tput setaf 6)
 export BOLD_WHITE=$(tput bold; tput setaf 7)
 export BOLD_GREY=$(tput bold; tput setaf 8)
+
+ZSHINE_PLUGINS=(
+  term-title # sets terminal/tab title
+  aliases # provides some aliases and functions for daily work
+  ls-colors # colors for "ls" command
+  virtualenvwrapper # wrapper for python-virtualenv
+  syntax-highlighting # provides a syntax highlighted prompt
+  less-syntax-highlighting # syntax highlighting for "less" command
+  history-substring-search # arrow key up/down history search
+  # command-not-found # show needed packages for unknown commands
+  bd # move back in current directory tree (breadcrumb-style)
+  auto-ls # launch "ls" when entering directory
+  prompt-git # provides functions for a git-prompt
+  completion # tweaks for TAB-completion
+  bindkey # bind keys for delete, history-search etc.
+  fzf # CTRL+T for fuzzy-search of files
+  zaw # better CTRL+R history search
+  pwd-hell # show warning message when [[ pwd != readlink -f ./ ]]
+  # tmux # autostart tmux
+  # notify # notify-send after long command has been completed
+)
+for z in $ZSHINE_PLUGINS; do source "$ZSHINE_DIR/plugins/$z.zsh"; done
