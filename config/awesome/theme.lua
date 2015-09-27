@@ -7,7 +7,7 @@ else
     xpm_folder                      = theme.basedir .. "/xpm_100"
 end
 
-theme.statusbar_height              = dpi(18)
+theme.statusbar_height              = dpi(16)
 theme.statusbar_position            = "top"
 
 -- FG, BG COLORS
@@ -24,7 +24,7 @@ theme.border_normal                 = theme.bg_normal
 theme.border_focus                  = theme.bg_focus
 
 theme.useless_gap_normal            = dpi(vres/150)
-theme.useless_gap_compact           = 0 -- dpi(vres/200)
+theme.useless_gap_compact           = 5 -- dpi(vres/200)
 
 if compact_display then
     theme.useless_gap = theme.useless_gap_compact
