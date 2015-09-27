@@ -7,6 +7,7 @@ local wibox     = require 'wibox'
 
 rules.rules = {
     { rule = { class = "mpv" }, properties = { size_hints_honor = false } },
+    { rule = { class = "Gvim" }, properties = { size_hints_honor = false } },
     { rule = { },
       properties = { border_width = beautiful.border_width,
                     border_color = beautiful.border_normal,

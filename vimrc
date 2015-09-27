@@ -3,20 +3,28 @@
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+Plugin 'tpope/vim-sensible.git'
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
-Plugin 'Yggdroot/indentLine'
 Plugin 'bling/vim-airline'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'w0ng/vim-hybrid'
 Plugin 'tpope/vim-scriptease.git'
-Plugin 'tpope/vim-sensible.git'
 Plugin 'Raimondi/delimitMate'
 Plugin 'gabesoft/vim-ags'
 Plugin 'FelikZ/ctrlp-py-matcher'
+" color schemes
+Plugin 'morhetz/gruvbox'
+Plugin 'sickill/vim-monokai'
+Plugin 'ajh17/Spacegray.vim'
+Plugin 'w0ng/vim-hybrid'
 call vundle#end()
 filetype plugin indent on
+
+" gui options
+:set guioptions-=m
+:set guioptions-=T
+:set guioptions-=r
+:set guioptions-=L
 
 if executable('ag')
   let g:ctrlp_user_command = 'ag %s --hidden --files-with-matches -g "" --ignore "\.git$\|\.hg$\|\.svn$"'
@@ -29,12 +37,10 @@ endif
 colorscheme hybrid
 let mapleader=" "
 set background=dark
+set history=10000
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
-set history=10000
 
-" indentLine
-let gindentLine_char = '┆'
 
 " airline
 let g:airline_powerline_fonts = 1
@@ -42,9 +48,11 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme = 'hybrid'
 
 " gitgutter
-let g:gitgutter_sign_column_always = 1
+" let g:gitgutter_sign_column_always = 1
 set updatetime=500
 
 " ctrlp
 let g:ctrlp_by_filename = 1
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+
+
