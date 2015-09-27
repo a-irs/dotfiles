@@ -16,7 +16,7 @@ Plugin 'FelikZ/ctrlp-py-matcher'
 Plugin 'morhetz/gruvbox'
 Plugin 'sickill/vim-monokai'
 Plugin 'ajh17/Spacegray.vim'
-Plugin 'w0ng/vim-hybrid'
+Plugin 'kristijanhusak/vim-hybrid-material'
 call vundle#end()
 filetype plugin indent on
 
@@ -34,7 +34,8 @@ else
   let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
 endif
 
-colorscheme hybrid
+colorscheme hybrid_reverse
+let g:enable_bold_font = 1
 let mapleader=" "
 set background=dark
 set history=10000
@@ -54,5 +55,4 @@ set updatetime=500
 " ctrlp
 let g:ctrlp_by_filename = 1
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-
 
