@@ -14,22 +14,24 @@ Plugin 'tpope/vim-scriptease.git'
 Plugin 'tpope/vim-sensible.git'
 Plugin 'Raimondi/delimitMate'
 Plugin 'gabesoft/vim-ags'
+Plugin 'FelikZ/ctrlp-py-matcher'
 call vundle#end()
 filetype plugin indent on
 
 if executable('ag')
-  let g:ctrlp_user_command = 'ag %s --files-with-matches -g "" --ignore "\.git$\|\.hg$\|\.svn$"'
+  let g:ctrlp_user_command = 'ag %s --hidden --files-with-matches -g "" --ignore "\.git$\|\.hg$\|\.svn$"'
   let g:ctrlp_use_caching = 0
 else
   let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
   let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
 endif
 
-:colorscheme hybrid
+colorscheme hybrid
 let mapleader=" "
 set background=dark
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
+set history=10000
 
 " indentLine
 let gindentLine_char = '┆'
@@ -45,4 +47,4 @@ set updatetime=500
 
 " ctrlp
 let g:ctrlp_by_filename = 1
-let g:ctrlp_show_hidden = 1
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
