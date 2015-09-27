@@ -17,8 +17,8 @@ import locale
 from colorama import init, Fore, Style
 from ConfigParser import SafeConfigParser
 from requests.packages import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from urllib import quote
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 CONFIG_FILE = os.path.expanduser("~/.config/gmdownload.config")
 CACHE_FILE = os.path.expanduser("~/.config/gmdownload.cache")

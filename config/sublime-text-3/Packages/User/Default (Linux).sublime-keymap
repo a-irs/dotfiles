@@ -10,7 +10,6 @@
 	{ "keys": ["ctrl+-"], "command": "toggle_side_bar" },
 	{ "keys": ["f11"], "command": "toggle_distraction_free" },
     { "keys": ["ctrl+alt+enter"], "command": "open_terminal" },
-    { "keys": ["ctrl+shift+c"], "command": "copy" },
     { "keys": ["ctrl+shift+v"], "command": "paste_from_history" },
     { "keys": ["ctrl+<"], "command": "indent" },
     { "keys": ["ctrl+shift+<"], "command": "unindent" },
@@ -18,4 +17,5 @@
     { "keys": ["ctrl+shift+r"], "command": "goto_symbol_in_project" },
     { "keys": ["ctrl++"], "command": "toggle_comment", "args": { "block": false } },
     { "keys": ["ctrl+shift++"], "command": "toggle_comment", "args": { "block": true } },
+    { "keys": ["ctrl+alt+c"], "command": "color_pick" }
 ]

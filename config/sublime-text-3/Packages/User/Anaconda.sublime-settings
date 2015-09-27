@@ -1,6 +1,5 @@
 {
-    "display_signatures": true,
-    "anaconda_gutter_theme": "alpha",
+    "anaconda_gutter_theme": "hard",
     "anaconda_linter_mark_style": "none",
     "pep8_ignore": ["E501"],
 }

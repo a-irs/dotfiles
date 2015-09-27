@@ -7,6 +7,9 @@
 	"installed_packages":
 	[
 		"All Autocomplete",
+		"Anaconda",
+		"BracketHighlighter",
+		"Color Highlighter",
 		"Dotfiles Syntax Highlighting",
 		"Generic Config",
 		"GitGutter-Edge",
@@ -15,7 +18,6 @@
 		"MarkdownLight",
 		"Marking Changed Rows",
 		"Package Control",
-		"PKGBUILD",
 		"SublimeGit",
 		"SublimeLinter",
 		"SublimeLinter-lua",
