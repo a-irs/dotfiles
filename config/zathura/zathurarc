@@ -14,6 +14,8 @@ set default-bg "#2c3643"
 set adjust-open width
 #set scroll-page-aware true
 
+map              b search backward
+map [fullscreen] b search backward
 map              f toggle_fullscreen
 map [fullscreen] f toggle_fullscreen
 map              <C-w> quit
