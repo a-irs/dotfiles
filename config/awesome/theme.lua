@@ -23,7 +23,7 @@ theme.border_width                  = dpi(0)
 theme.border_normal                 = theme.bg_normal
 theme.border_focus                  = theme.bg_focus
 
-theme.useless_gap_normal            = dpi(vres/150)
+theme.useless_gap_normal            = 5 -- dpi(vres/150)
 theme.useless_gap_compact           = 5 -- dpi(vres/200)
 
 if compact_display then
