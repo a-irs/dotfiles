@@ -9,7 +9,7 @@
 	],
 	"bold_folder_labels": false,
 	"close_windows_when_empty": true,
-	"color_scheme": "Packages/User/Monokai Extended 2 desaturated.tmTheme",
+    "color_scheme": "Packages/User/Monokai Extended 2 desaturated.tmTheme",
 	"distraction_free":
 	{
 		"menu_visible": false,
@@ -106,9 +106,10 @@
 	"hot_exit": true,
 	"ignored_packages":
 	[
+		"Markdown",
 		"Vintage"
 	],
-	"line_numbers": false,
+	"line_numbers": true,
 	"margin": 0,
 	"material_theme_disable_fileicons": false,
 	"material_theme_small_tab": true,

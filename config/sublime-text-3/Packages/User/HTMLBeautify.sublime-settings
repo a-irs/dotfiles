@@ -1,6 +1,0 @@
-{
-    "tag_indent":
-    "<head|<body|<div|<nav|<ul|<ol|<dl|<li|<table|<thead|<tbody|<tr|<th|<td|<blockquote|<select|<form|<option|<optgroup|<fieldset|<legend|<label|<header|<section|<aside|<footer|<figure|<video",
-    "tag_unindent":
-    "</head|</body|</div|</nav|</ul|</ol|</dl|</li|</table|</thead|</tbody|</tr|</th|</td|</blockquote|</select|</form|</option|</optgroup|</fieldset|</legend|</label|</header|</section|</aside|</footer|</figure|</video",
-}

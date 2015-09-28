@@ -1,4 +1,0 @@
-{
-    "cmd": ["/home/alex/.bin/md.py", "$file"],
-    "selector": "text.html.markdown"
-}

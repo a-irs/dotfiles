@@ -1,5 +1,5 @@
 {
-    // "color_scheme": "Packages/MarkdownLight/MarkdownLight.tmTheme",
+    "color_scheme": "Packages/MarkdownLight/MarkdownLight.tmTheme",
     "draw_centered": true,
     "draw_indent_guides": false,
     "extensions": [
@@ -8,10 +8,10 @@
         "md",
         "mkd"
     ],
-    "highlight_line": false,
-    "line_numbers": false,
+    "highlight_line": true,
     "gutter": false,
     "rulers": [],
+    "wrap_width": 80,
     "spell_check": false,
     "tab_size": 4,
     "translate_tabs_to_spaces": true,
