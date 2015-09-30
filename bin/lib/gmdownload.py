@@ -273,7 +273,7 @@ def opt_upload():
 
 
 def opt_download():
-    assert mobileclient.login(email, password)
+    assert mobileclient.login(email, password, mobileId)
     assert musicmanager.login(OAUTH_FILE)
 
     # reverse (as the most recently modified playlists appear at the end normally)
@@ -287,7 +287,7 @@ def opt_download():
         if p['name'] == "001":
             continue
 
-        last_modified = time.strftime('%a, %d.%m.%Y %H:%M', time.localtime(float(p['lastModifiedTimestamp'])/1000000))
+        last_modified = time.strftime('%a, %d.%m.%Y %H:%M', time.localtime(float(p['lastModifiedTimestamp']) / 1000000))
         print(str(i + 2).zfill(len(str(total_count))) + "/" + str(total_count + 1) + " " + Fore.MAGENTA + Style.BRIGHT + p['name'], end='')
         print(" (" + last_modified + ")\n")
 
