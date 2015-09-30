@@ -1,4 +1,5 @@
 {
+    "auto_complete_triggers": [{"selector": "source.python - string - comment - constant.numeric", "characters": "."}],
 	"always_show_minimap_viewport": true,
 	"animation_enabled": true,
 	"atomic_save": false,
