@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 from urllib.request import urlopen
@@ -31,12 +31,14 @@ def print_history(js):
     for job in js['history']['slots']:
         status = job['status']
         if status == 'Completed':
-            status = '\033[0;32m' + status + ':\033[0m'
+            status = '\033[0;32m' + 'Completed:  ' + '\033[0m'
         elif status == 'Extracting':
-            status = '\033[0;35m' + status + ':\033[0m'
+            status = '\033[0;35m' + 'Extracting: ' + '\033[0m'
+        elif status == 'Failed':
+            status = '\033[0;31m' + 'Failed:     ' + '\033[0m'
         name = job['name']
         size = '\033[0;33m(' + job['size'] + ')\033[0m'
-        print(status + " " + name + " " + size)
+        print(status, name, size)
 
 
 def pretty_size(b, suffix):

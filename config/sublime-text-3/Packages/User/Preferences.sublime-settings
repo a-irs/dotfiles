@@ -2,7 +2,6 @@
 	"always_show_minimap_viewport": true,
 	"animation_enabled": true,
 	"atomic_save": false,
-	"auto_complete_delay": 0,
 	"binary_file_patterns":
 	[
 		"node_modules/*"
@@ -106,6 +105,7 @@
 	"hot_exit": true,
 	"ignored_packages":
 	[
+		"All Autocomplete",
 		"Markdown",
 		"Vintage"
 	],
