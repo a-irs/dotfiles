@@ -17,7 +17,6 @@
     { "keys": ["ctrl+shift+r"], "command": "goto_symbol_in_project" },
     { "keys": ["ctrl++"], "command": "toggle_comment", "args": { "block": false } },
     { "keys": ["ctrl+shift++"], "command": "toggle_comment", "args": { "block": true } },
-    { "keys": ["ctrl+alt+c"], "command": "color_pick" },
     { "keys": ["ctrl+up"],  "command": "inc_dec_value", "args": { "action": "inc_min" } },
     { "keys": ["ctrl+down"],  "command": "inc_dec_value", "args": { "action": "dec_min" } },
     { "keys": ["ctrl+alt+up"],  "command": "inc_dec_value", "args": { "action": "inc_max" } },
