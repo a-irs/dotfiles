@@ -1,8 +1,14 @@
 {
-    "auto_complete_triggers": [{"selector": "source.python - string - comment - constant.numeric", "characters": "."}],
 	"always_show_minimap_viewport": true,
 	"animation_enabled": true,
 	"atomic_save": false,
+	"auto_complete_triggers":
+	[
+		{
+			"characters": ".",
+			"selector": "source.python - string - comment - constant.numeric"
+		}
+	],
 	"binary_file_patterns":
 	[
 		"node_modules/*"

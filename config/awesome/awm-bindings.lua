@@ -110,19 +110,17 @@ globalkeys = awful.util.table.join(
 
     -- launch programs
 
-    awful.key({ win }, "r",      function () awful.util.spawn("rofi -show run    -no-levenshtein-sort -padding " .. vres/2 .. " -opacity 95 -width 100 -bw 0 -bg '" .. theme.bg_normal .. "' -bc '" .. theme.bg_normal .. "' -fg '#ddd' -hlbg '#666' -hlfg '#fff' -font 'Input 11' -width 30 -padding 10 -terminal " .. user_terminal) end),
-    awful.key({ win, alt }, "r", function () awful.util.spawn("rofi -show window -no-levenshtein-sort -padding " .. vres/2 .. " -opacity 95 -width 100 -bw 0 -bg '" .. theme.bg_normal .. "' -bc '" .. theme.bg_normal .. "' -fg '#ddd' -hlbg '#666' -hlfg '#fff' -font 'Input 11' -width 30 -padding 10 -terminal " .. user_terminal) end),
+    awful.key({ win }, "r",      function () awful.util.spawn("rofi -show run    -no-levenshtein-sort -padding " .. vres/2 .. " -opacity 95 -width 100 -bw 0 -bg '" .. theme.bg_normal .. "' -bc '" .. theme.bg_normal .. "' -fg '#ddd' -hlbg '#666' -hlfg '#fff' -font 'Input 11' -width 30 -padding 10 -terminal " .. user_terminal, false) end),
+    awful.key({ win, alt }, "r", function () awful.util.spawn("rofi -show window -no-levenshtein-sort -padding " .. vres/2 .. " -opacity 95 -width 100 -bw 0 -bg '" .. theme.bg_normal .. "' -bc '" .. theme.bg_normal .. "' -fg '#ddd' -hlbg '#666' -hlfg '#fff' -font 'Input 11' -width 30 -padding 10 -terminal " .. user_terminal, false) end),
     awful.key({ alt }, "Return", function () awful.util.spawn(user_terminal) end),
     awful.key({ alt }, "f",      function () awful.util.spawn("thunar") end),
     awful.key({ alt }, "c",      function () awful.util.spawn("firefox") end),
     awful.key({ alt, "Shift" }, "c", function () awful.util.spawn("firefox --private-window") end),
-    awful.key({ win }, "l",      function () awful.util.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh") end),
-    awful.key({ alt }, "p",      function () awful.util.spawn(os.getenv("HOME") .. "/.bin/pick-color.sh") end),
+    awful.key({ win }, "l",      function () awful.util.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh", false) end),
+    awful.key({ alt }, "p",      function () awful.util.spawn(os.getenv("HOME") .. "/.bin/pick-color.sh", false) end),
     awful.key({ alt }, "s",      function () awful.util.spawn("subl3") end),
 
-    awful.key({ "Ctrl", "Shift" }, "dead_circumflex", function()
-        awful.util.spawn(os.getenv("HOME") .. "/.bin/desktop/toggle-res.sh")
-    end),
+    awful.key({ "Ctrl", "Shift" }, "dead_circumflex", function() awful.util.spawn(os.getenv("HOME") .. "/.bin/desktop/toggle-res.sh") end),
 
     -- media keys
 
@@ -134,7 +132,7 @@ globalkeys = awful.util.table.join(
     awful.key({}, "XF86AudioPrev", function() io.popen("mpc -q prev") end),
     awful.key({}, "XF86AudioNext", function() io.popen("mpc -q next") end),
 
-    awful.key({}, "XF86PowerOff", function() awful.util.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh suspend") end),
+    awful.key({}, "XF86PowerOff", function() awful.util.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh suspend", false) end),
 
     -- restart awesome wm
 
@@ -157,7 +155,7 @@ globalkeys = awful.util.table.join(
 
     -- screenshot
 
-    awful.key({ }, "Print", function() awful.util.spawn("scrot " .. os.getenv("HOME") .. "/%Y-%m-%d_%H-%M-%S.png") end),
+    awful.key({ }, "Print", function() awful.util.spawn("scrot " .. os.getenv("HOME") .. "/%Y-%m-%d_%H-%M-%S.png", false) end),
 
     -- show all tags at once
 
