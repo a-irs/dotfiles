@@ -284,8 +284,9 @@ fi
 
 if [ "$commands[encfs]" ]; then
     enc-mount() {
+        dir=${1:-~/.encrypt}
         mkdir ~/encrypt && \
-        encfs ~/.encrypt ~/encrypt && \
+        encfs "$(readlink -f "$dir")" ~/encrypt && \
         find ~/.thumbnails > ~/.encrypt-thumbs-before && \
         cd ~/encrypt
     }
