@@ -357,11 +357,7 @@ fi
 highlight()       { grep --color -E "$1|$"; }
 highlight_files() { grep --color -E "$1|$" "${@:2}"; }
 
-dict() {
-    dict.py de en "$@"
-    echo
-    dict.py en de "$@"
-}
+alias dict=trans
 
 if [ "$commands[openvpn]" ]; then
     vpn() {
