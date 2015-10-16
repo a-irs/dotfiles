@@ -331,7 +331,7 @@ if [[ -d ~/.dotfiles ]]; then
             cdr
         else
             cd ~/.dotfiles
-            git s
+            git status -sb
         fi
 }
 fi
