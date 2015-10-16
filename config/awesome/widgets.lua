@@ -65,7 +65,7 @@ widgets.volumewidget = alsa({
         if volume_now.status == "off" then
             widget:set_markup(markup.bold(markup(theme.widget_alsa_mute_fg, volume_now.level)))
         else
-            widget:set_markup(markup.bold(markup(theme.widget_alsa_fg, "♫ " .. volume_now.level)))
+            widget:set_markup(markup.bold(markup(theme.widget_alsa_fg, volume_now.level)))
         end
     end
 })

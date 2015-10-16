@@ -20,7 +20,7 @@ rules.rules = {
       callback = awful.client.setslave },
 }
 
-function dynamic_tagging()
+local function dynamic_tagging()
     for s = 1, screen.count() do
         local all_tags = awful.tag.gettags(s)
         for _, t in ipairs(all_tags) do
@@ -33,16 +33,22 @@ function dynamic_tagging()
     end
 end
 
+local function handle_floater(c)
+    c.ontop = awful.client.floating.get(c)
+    awful.placement.centered(c)
+end
+
 dynamic_tagging()
 
 -- floating → set always on top
 client.connect_signal("property::floating", function(c)
-    c.ontop = awful.client.floating.get(c)
-    awful.placement.centered(c)
+    handle_floater(c)
 end)
 
 -- client appears
 client.connect_signal("manage", function(c)
+
+    handle_floater(c)
 
     -- sloppy focus
     c:connect_signal("mouse::enter", function(c)
