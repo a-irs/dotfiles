@@ -67,7 +67,6 @@ dotfiles_x=(
     config/mpv/mpv.conf
     config/mpv/scripts/convert_script.lua
     config/sublime-text-3/Packages/User
-    config/terminator/config
     config/termite/config
     config/user-dirs.dirs
     config/zathura/zathurarc
