@@ -33,7 +33,6 @@ dotfiles=(
     config/mpd/mpd.conf
     config/mopidy/mopidy.conf
     config/ncmpcpp/config
-    config/pacaur/config
     config/ranger/rc.conf
     config/ranger/scope.sh
     gitconfig
@@ -41,7 +40,6 @@ dotfiles=(
     latexmkrc
     nano-syntax
     nanorc
-    ncmpc/config
     openvpn
     psqlrc
     ssh/config
@@ -72,13 +70,11 @@ dotfiles_x=(
     config/terminator/config
     config/termite/config
     config/user-dirs.dirs
-    config/skippy-xd/skippy-xd.rc
     config/zathura/zathurarc
     fonts
     gtkrc-2.0
     icons
     kodi/userdata/advancedsettings.xml
-    themes
     xinitrc
     Xmodmap
     Xresources

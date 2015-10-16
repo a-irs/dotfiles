@@ -35,6 +35,12 @@ end
 
 dynamic_tagging()
 
+-- floating → set always on top
+client.connect_signal("property::floating", function(c)
+    c.ontop = awful.client.floating.get(c)
+    awful.placement.centered(c)
+end)
+
 -- client appears
 client.connect_signal("manage", function(c)
 
@@ -65,7 +71,6 @@ client.connect_signal("manage", function(c)
         layout1:add(awful.titlebar.widget.closebutton(c))
         layout1:add(awful.titlebar.widget.floatingbutton(c))
         layout1:add(awful.titlebar.widget.stickybutton(c))
-        layout1:add(awful.titlebar.widget.ontopbutton(c))
 
         local layout2 = wibox.layout.flex.horizontal()
         local title = awful.titlebar.widget.titlewidget(c)
