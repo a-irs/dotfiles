@@ -11,3 +11,4 @@ setxkbmap -option caps:escape
 xset r rate 200 30
 xrdb -merge ~/.Xresources
 exec awesome
+#exec xfce4-session

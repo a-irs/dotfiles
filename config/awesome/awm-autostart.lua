@@ -41,7 +41,6 @@ local programs = {
     'ln -sf ' .. os.getenv("HOME") .. '/.thumbnails ' .. os.getenv("HOME") .. '/.cache/thumbnails',
     'ln -sf ' .. os.getenv("HOME") .. '/.rofi-2.runcache ' .. os.getenv("HOME") .. '/.cache/rofi-2.runcache',
     'xset -dpms ; xset s off',
-    'pgrep -f "^bash ' .. os.getenv("HOME") .. '/.bin/check-cpu.sh"' .. ' || ' .. os.getenv("HOME") .. '/.bin/check-cpu.sh',
     hostname == "desktop" and 'numlockx',
     hostname == "desktop" and 'pgrep -x mpd || mpd',
     hostname == "desktop" and 'bash -c "pgrep x2godesktopshar || x2godesktopsharing"',
