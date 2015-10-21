@@ -2,7 +2,12 @@ alias fzf="ruby $ZSHINE_DIR/plugins/fzf/fzf --extended-exact --no-256"
 
 __fsel() {
     command find . \
-    \( -fstype 'dev' -o -fstype 'proc' \) -prune \
+    \( -fstype 'dev' -o -fstype 'proc' \
+        -o -path \*Cache\* \
+        -o -path \*cache\* \
+        -o -path \*/.atom/packages \
+        -o -name \*.pyc \
+    \) -prune \
     -o -type f -print \
     -o -type d -print \
     -o -type l -print 2> /dev/null | sed 1d | cut -b3- | fzf -m | while read item; do
