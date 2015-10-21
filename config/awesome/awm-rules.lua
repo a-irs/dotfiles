@@ -24,10 +24,16 @@ local function dynamic_tagging()
     for s = 1, screen.count() do
         local all_tags = awful.tag.gettags(s)
         for _, t in ipairs(all_tags) do
+            all_clients = t:clients()
             if is_empty(t) then
                 t.name = "□"
             else
                 t.name = "■"
+                for _, c in ipairs(all_clients) do
+                    if c.instance == "play.google.com__music_listen" then
+                        t.name = "♬"
+                    end
+                end
             end
         end
     end
