@@ -12,7 +12,7 @@ local needed = {
     "dropbox-cli",
     "lxpolkit",
     "redshift",
---    hostname == "desktop" and "mpd",
+    hostname == "desktop" and "mpd",
     hostname == "desktop" and "x2godesktopsharing",
     hostname == "desktop" and "synergyc",
     hostname == "desktop" and "numlockx",
@@ -41,10 +41,10 @@ local programs = {
     'ln -sf ' .. os.getenv("HOME") .. '/.thumbnails ' .. os.getenv("HOME") .. '/.cache/thumbnails',
     'ln -sf ' .. os.getenv("HOME") .. '/.rofi-2.runcache ' .. os.getenv("HOME") .. '/.cache/rofi-2.runcache',
     'xset -dpms ; xset s off',
-    hostname == "desktop" and 'numlockx',
     hostname == "desktop" and 'pgrep -x mpd || mpd',
     hostname == "desktop" and 'bash -c "pgrep x2godesktopshar || x2godesktopsharing"',
     hostname == "desktop" and 'bash -c "pgrep synergyc || synergyc -d ERROR dell"',
+    hostname == "desktop" and 'numlockx',
     hostname == "desktop" and 'sleep 5 ; sudo ethtool -s eth0 wol g',
 }
 for _, cmd in ipairs(programs) do
