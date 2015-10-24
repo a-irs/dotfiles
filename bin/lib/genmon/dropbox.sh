@@ -4,7 +4,7 @@ status=$(dropbox-cli status)
 
 if [[ $status == "Dropbox isn't running!" ]]; then
     s=""
-elif [[ $status == "Verbindung wird hergestellt ..." ]]; then
+elif [[ $status == "Verbindung wird hergestellt ..." || $status == "Verbindungsaufbau …"]]; then
     s="…"
 elif [[ $status == "Startvorgang läuft ..." ]]; then
     s="…"
