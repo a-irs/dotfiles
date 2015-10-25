@@ -1,3 +1,4 @@
+**/.cache.json
 **/ba
 **/.IntelliJIdea14/system
 **/.atom/packages
@@ -22,7 +23,7 @@
 **/downloads/*
 **/doc
 **/.mozilla/firefox/*/sessionstore-backups
-**/.mozilla/firefox/*/webappsstore.sqlite*
+**/.mozilla/firefox/*/webappsstore.sqlite
 **/.mozilla/firefox/*/storage
 **/.mozilla/firefox/*/extension-data/ublock.sqlite
 **/Package Control.cache
