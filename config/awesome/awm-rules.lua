@@ -30,7 +30,7 @@ local function dynamic_tagging()
             else
                 t.name = "■"
                 for _, c in ipairs(all_clients) do
-                    if c.instance == "play.google.com__music_listen" or string.find(c.name, 'ncmpcpp') then
+                    if c.instance == "play.google.com__music_listen" or (c.name and string.find(c.name, 'ncmpcpp')) then
                         t.name = "♬"
                     end
                 end
