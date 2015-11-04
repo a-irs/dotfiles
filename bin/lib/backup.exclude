@@ -55,3 +55,4 @@
 **/*.pacorig
 **/*.pacsave
 **/*~
+**/intellij-out
