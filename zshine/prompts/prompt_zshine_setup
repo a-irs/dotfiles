@@ -20,6 +20,16 @@ ZSHINE_GIT_SYMBOL_MODIFIED=''
 ZSHINE_GIT_SYMBOL_RENAMED=''
 ZSHINE_GIT_SYMBOL_DELETED=''
 
+ZSHINE_SVN=1
+ZSHINE_SVN_SIMPLE_DIRTY=1
+ZSHINE_SVN_SHRINK_URL=1
+ZSHINE_SVN_SYMBOL_SIMPLE='●'
+ZSHINE_SVN_SYMBOL_UNTRACKED=''
+ZSHINE_SVN_SYMBOL_ADDED=''
+ZSHINE_SVN_SYMBOL_MODIFIED=''
+ZSHINE_SVN_SYMBOL_RENAMED=''
+ZSHINE_SVN_SYMBOL_DELETED=''
+
 ZSHINE_DATE=0
 ZSHINE_USER=0
 
@@ -103,6 +113,10 @@ _prompt_end() {
 
 _prompt_git() {
     [[ $ZSHINE_GIT == 1 ]] && git_prompt_info 2> /dev/null
+}
+
+_prompt_svn() {
+    [[ $ZSHINE_SVN == 1 ]] && svn_prompt_info
 }
 
 _prompt_ssh() {
@@ -221,6 +235,7 @@ _build_left() {
     _prompt_user_host
     _prompt_path
     _prompt_git
+    _prompt_svn
     _prompt_ranger
     _prompt_end
 }

@@ -46,7 +46,7 @@ git_prompt_info() {
             url="$url2/$url1"
         fi
     fi
-   [[ "${url}" == / ]] && url="N/A"
+    [[ "${url}" == / ]] && url="N/A"
     prompt_segment "$ZSHINE_GIT_URL_BG" "$ZSHINE_GIT_URL_FG" "${url}"
     prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_COMMIT_FG" "${commit}"
     [[ "$branch" = '' ]] || prompt_segment "$ZSHINE_GIT_BRANCH_BG" "$ZSHINE_GIT_BRANCH_FG" "${branch}"

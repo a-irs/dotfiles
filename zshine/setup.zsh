@@ -114,6 +114,7 @@ ZSHINE_PLUGINS=(
   bd # move back in current directory tree (breadcrumb-style)
   auto-ls # launch "ls" when entering directory
   prompt-git # provides functions for a git-prompt
+  prompt-svn # provides functions for a svn-prompt
   completion # tweaks for TAB-completion
   bindkey # bind keys for delete, history-search etc.
   fzf # CTRL+T for fuzzy-search of files
