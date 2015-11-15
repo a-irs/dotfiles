@@ -215,6 +215,9 @@ alias lt='\ls -F -l -h -t -r --color=auto --group-directories-first'
 [ "$commands[gcc]" ]  && alias  gcc="LC_ALL=C gcc"
 [ "$commands[g++]" ]  && alias  g++="LC_ALL=C g++"
 
+[[ "$commands[dropbox-cli]" ]] && alias ds='dropbox-cli status'
+[[ "$commands[dropbox-cli]" ]] && alias dstop='dropbox-cli stop'
+[[ "$commands[dropbox-cli]" ]] && alias dstart='dropbox-cli start'
 [[ "$commands[redshift]" ]] && alias toggle-redshift='pkill -USR1 redshift'
 
 if [ "$commands[vlock]" ]; then

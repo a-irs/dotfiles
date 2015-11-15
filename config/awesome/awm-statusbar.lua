@@ -48,7 +48,7 @@ for s = 1, screen.count() do
     lay(layout2, mytaglist[s])
 
     local layout3 = wibox.layout.fixed.horizontal()
-    lay(layout3, widgets.dropboxwidget, nil, 4, 4)
+    -- lay(layout3, widgets.dropboxwidget, nil, 4, 4)
     lay(layout3, volumewidget,          nil, 4, 4)
     lay(layout3, widgets.netwidget,     nil, 4, 4)
     lay(layout3, widgets.batterywidget, nil, 4, 4)
