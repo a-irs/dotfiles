@@ -13,7 +13,7 @@ rsync_launch() {
 	echo target: $3/$2
 	echo
 	echo logfile: $3/$2.log
-	echo backup-dir: $3/old/$2
+	echo backup-dir: $3/__archive/$2
 	echo
 	echo '########################################'
 	echo
