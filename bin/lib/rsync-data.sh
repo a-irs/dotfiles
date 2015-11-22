@@ -7,17 +7,17 @@ rsync_launch() {
 	echo
 	echo '########################################'
 	echo
-	echo starting rsync...
+	echo "starting rsync..."
 	echo
-	echo source: $1/$2
-	echo target: $3/$2
+	echo "source: $1/$2"
+	echo "target: $3/$2"
 	echo
-	echo logfile: $3/$2.log
-	echo backup-dir: $3/__archive/$2
+	echo "logfile: $3/$2.log"
+	echo "backup-dir: $3/__archive/$2/$(date +%Y-%m-%d_%H-%M-%S)/"
 	echo
 	echo '########################################'
 	echo
-	rsync -av -h --delete --stats --log-file="$3/$2.log" --backup-dir="$3/__archive/$2" "$1/$2" "$3"
+	rsync -av -h --delete --stats --log-file="$3/$2.log" --backup --backup-dir="$3/__archive/$2/$(date +%Y-%m-%d_%H-%M-%S)/" "$1/$2" "$3"
 }
 
 control_c() {
