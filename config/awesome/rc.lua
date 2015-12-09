@@ -3,6 +3,12 @@ local awful      = require 'awful'
 local lain       = require 'lain'
 local xresources = require('beautiful').xresources
 
+-- revert "Only use useless_gap with multiple tiled clients"
+local getgap = awful.tag.getgap
+function awful.tag.getgap(t, numclients)
+    return getgap(t, 42)
+end
+
 os.execute('xrdb -merge ' .. os.getenv("HOME") .. '/.Xresources')
 
 enable_tyrannical = false
