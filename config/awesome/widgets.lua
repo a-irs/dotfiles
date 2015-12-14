@@ -52,11 +52,6 @@ if hostname == "dell" then widgets.batterywidget = make_genmon("battery.sh", 5) 
 if hostname == "dell" then widgets.netwidget = make_genmon("net.sh", 5) end
 
 
--- DROPBOX
-
-widgets.dropboxwidget = make_genmon("dropbox.sh", 5)
-
-
 -- VOLUME
 
 widgets.volumewidget = alsa({

@@ -116,7 +116,7 @@
 		"Markdown",
 		"Vintage"
 	],
-	"line_numbers": true,
+	"line_numbers": false,
 	"margin": 0,
 	"material_theme_disable_fileicons": false,
 	"material_theme_small_tab": true,
