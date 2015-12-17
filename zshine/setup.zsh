@@ -37,7 +37,7 @@ zstyle ':chpwd:*' recent-dirs-max 31
 zstyle ':completion:*' rehash true # always rehash on completion
 
 export GREP_COLOR='1;32'
-export EDITOR="vim"
+export EDITOR="nano"
 export PAGER="less"
 export TZ='Europe/Berlin'
 export REPORTTIME=5
