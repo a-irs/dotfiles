@@ -4,7 +4,6 @@ local rules     = require 'awful.rules'
 local beautiful = require 'beautiful'
 local wibox     = require 'wibox'
 
-
 rules.rules = {
     { rule = { class = "mpv" }, properties = { size_hints_honor = false } },
     { rule = { class = "Gvim" }, properties = { size_hints_honor = false } },
@@ -106,7 +105,11 @@ end)
 -- client exits
 client.connect_signal("unmanage", function(c)
 
-  -- return to last tag and reset settings when last window is closed
+    if c.class == "Kupfer.py" then
+        return
+    end
+
+    -- return to last tag and reset settings when last window is closed
     if is_empty(awful.tag.selected()) then
         awful.tag.setmwfact(0.5)
         awful.tag.setnmaster(1)

@@ -2,15 +2,23 @@ local volume     = require 'volume'
 local awful      = require 'awful'
 local lain       = require 'lain'
 local naughty    = require 'naughty'
-local revelation = require 'revelation'
 local beautiful  = require 'beautiful'
-
-revelation.init({tag_name = ''})
+local hotkeys_popup = require("awful.hotkeys_popup.widget")
+hotkeys_popup.height = math.floor(vres/1.5)
+hotkeys_popup.width = math.floor(hres/1.5)
+hotkeys_popup.modifiers_color = "#777777"
+hotkeys_popup.description_font = "Monospace 9"
+hotkeys_popup.labels['Mod4'] = "Win"
+hotkeys_popup.labels['#35'] = "+"
+hotkeys_popup.labels['#61'] = "-"
 
 win = "Mod4"
 alt = "Mod1"
 
 globalkeys = awful.util.table.join(
+
+    awful.key({ win }, "s",      hotkeys_popup.show_help,
+              {description="show keybindings", group="awesome"} ),
 
     -- focus windows
 
@@ -18,22 +26,26 @@ globalkeys = awful.util.table.join(
         function()
             awful.client.focus.bydirection("down")
             if client.focus then client.focus:raise() end
-        end),
+        end,
+        {description="focus down", group="focus"}),
     awful.key({ alt }, "Up",
         function()
             awful.client.focus.bydirection("up")
             if client.focus then client.focus:raise() end
-        end),
+        end,
+        {description="focus up", group="focus"}),
     awful.key({ alt }, "Left",
         function()
             awful.client.focus.bydirection("left")
             if client.focus then client.focus:raise() end
-        end),
+        end,
+        {description="focus left", group="focus"}),
     awful.key({ alt }, "Right",
         function()
             awful.client.focus.bydirection("right")
             if client.focus then client.focus:raise() end
-        end),
+        end,
+        {description="focus right", group="focus"}),
 
     -- toggle "compact display mode"
 
@@ -52,17 +64,24 @@ globalkeys = awful.util.table.join(
             end
         end
         awful.layout.arrange(mouse.screen)
-    end),
+    end,
+    {description="toggle compact mode", group="useless"}),
 
     -- switch tags
 
-    awful.key({ win          }, "Right", awful.tag.viewnext),
-    awful.key({ win          }, "Left",  awful.tag.viewprev),
+    awful.key({ win          }, "Right", awful.tag.viewnext,
+        {description="view right tag", group="tags"}),
+    awful.key({ win          }, "Left",  awful.tag.viewprev,
+        {description="view left tag", group="tags"}),
 
-    awful.key({ alt          }, "Tab",   function() lain.util.tag_view_nonempty( 1) end),
-    awful.key({ alt, "Shift" }, "Tab",   function() lain.util.tag_view_nonempty(-1) end),
+    awful.key({ alt          }, "Tab",   function() lain.util.tag_view_nonempty( 1) end,
+        {description="view right nonempty tag", group="tags"}),
 
-    awful.key({ win          }, "Tab",   awful.tag.history.restore),
+    awful.key({ alt, "Shift" }, "Tab",   function() lain.util.tag_view_nonempty(-1) end,
+        {description="view left nonempty tag", group="tags"}),
+
+    awful.key({ win          }, "Tab",   awful.tag.history.restore,
+        {description="toggle history tag", group="tags"}),
 
     -- modify windows
 
@@ -73,40 +92,50 @@ globalkeys = awful.util.table.join(
             beautiful.useless_gap = beautiful.useless_gap - 1
         end
         awful.layout.arrange(mouse.screen)
-    end),
+    end, {description="increase useless gap", group="useless"}),
     awful.key({ win }, "#61", function() -- minus -
         beautiful.useless_gap = beautiful.useless_gap + 1
         awful.layout.arrange(mouse.screen)
-    end),
+    end, {description="decrease useless gap", group="useless"}),
 
-    awful.key({ win, "Control" }, "Right", function() awful.tag.incmwfact( 0.01) end),
-    awful.key({ win, "Control" }, "Left",  function() awful.tag.incmwfact(-0.01) end),
+    awful.key({ win, "Control" }, "Right", function() awful.tag.incmwfact( 0.01) end,
+        {description="increase window size", group="window"}),
+
+    awful.key({ win, "Control" }, "Left",  function() awful.tag.incmwfact(-0.01) end,
+        {description="decrease window size", group="window"}),
 
     awful.key({ win, "Shift"   }, "Left",
         function()
             awful.client.swap.bydirection("left")
             if client.focus then client.focus:raise() end
-        end),
+        end,
+        {description="swap with left window", group="window"}),
     awful.key({ win, "Shift"   }, "Right",
         function()
             awful.client.swap.bydirection("right")
             if client.focus then client.focus:raise() end
-        end),
+        end,
+        {description="swap with right window", group="window"}),
     awful.key({ win, "Shift"   }, "Up",
         function()
             awful.client.swap.bydirection("up")
             if client.focus then client.focus:raise() end
-        end),
+        end,
+        {description="swap with up window", group="window"}),
     awful.key({ win, "Shift"   }, "Down",
         function()
             awful.client.swap.bydirection("down")
             if client.focus then client.focus:raise() end
-        end),
+        end,
+        {description="swap with down window", group="window"}),
 
     -- switch layouts
 
-    awful.key({ win            }, "space", function() awful.layout.inc(layouts,  1) end),
-    awful.key({ win, "Shift"   }, "space", function() awful.layout.inc(layouts, -1) end),
+    awful.key({ win            }, "space", function() awful.layout.inc(layouts,  1) end,
+        {description="next layout", group="layout"}),
+
+    awful.key({ win, "Shift"   }, "space", function() awful.layout.inc(layouts, -1) end,
+        {description="previous layout", group="layout"}),
 
     -- launch programs
 
@@ -121,6 +150,7 @@ globalkeys = awful.util.table.join(
     awful.key({ alt }, "s",      function () awful.util.spawn("subl3") end),
 
     awful.key({ "Ctrl", "Shift" }, "dead_circumflex", function() awful.util.spawn(os.getenv("HOME") .. "/.bin/desktop/toggle-res.sh") end),
+    awful.key({ }, "Print", function() awful.util.spawn("scrot " .. os.getenv("HOME") .. "/%Y-%m-%d_%H-%M-%S.png", false) end),
 
     -- media keys
 
@@ -141,21 +171,18 @@ globalkeys = awful.util.table.join(
 
     -- toggle status bars
 
-    awful.key({ win }, "b", function()
-        mywibox[mouse.screen].visible = not mywibox[mouse.screen].visible
-    end),
+    awful.key({ win }, "b",
+        function()
+            mywibox[mouse.screen].visible = not mywibox[mouse.screen].visible
+        end,
+        {description="toggle main status bar", group="bars"}),
 
-    awful.key({ win }, "n", function()
-        systembox[mouse.screen].visible = not systembox[mouse.screen].visible
-    end),
 
-    -- expose
-
-    awful.key({ win }, "e", revelation),
-
-    -- screenshot
-
-    awful.key({ }, "Print", function() awful.util.spawn("scrot " .. os.getenv("HOME") .. "/%Y-%m-%d_%H-%M-%S.png", false) end),
+    awful.key({ win }, "n",
+        function()
+            systembox[mouse.screen].visible = not systembox[mouse.screen].visible
+        end,
+        {description="toggle system status bar", group="bars"}),
 
     -- show all tags at once
 
@@ -180,30 +207,39 @@ globalkeys = awful.util.table.join(
                   else
                       awful.tag.viewmore(all_tags, screen)
                   end
-              end),
+              end,
+        {description="show all tags", group="tags"}),
 
     -- change master/column count
 
-    awful.key({ win }, ".", function()
-        awful.tag.incnmaster(1)
-        local text = "Number of master windows: " .. awful.tag.getnmaster()
-        naughty.notify({ text = text, timeout = 1 })
-    end),
-    awful.key({ win }, ",", function()
-        awful.tag.incnmaster(-1)
-        local text = "Number of master windows: " .. awful.tag.getnmaster()
-        naughty.notify({ text = text, timeout = 1 })
-    end),
-    awful.key({ win, alt }, ".", function()
-        awful.tag.incncol(1)
-        local text = "Number of columns: " .. awful.tag.getncol()
-        naughty.notify({ text = text, timeout = 1 })
-    end),
-    awful.key({ win, alt }, ",", function()
-        awful.tag.incncol(-1)
-        local text = "Number of columns: " .. awful.tag.getncol()
-        naughty.notify({ text = text, timeout = 1 })
-    end)
+    awful.key({ win }, ".",
+        function()
+            awful.tag.incnmaster(1)
+            local text = "Number of master windows: " .. awful.tag.getnmaster()
+            naughty.notify({ text = text, timeout = 1 })
+        end,
+        {description="increase # of master windows", group="layout"}),
+    awful.key({ win }, ",",
+        function()
+            awful.tag.incnmaster(-1)
+            local text = "Number of master windows: " .. awful.tag.getnmaster()
+            naughty.notify({ text = text, timeout = 1 })
+        end,
+        {description="decrease # of master windows", group="layout"}),
+    awful.key({ win, alt }, ".",
+        function()
+            awful.tag.incncol(1)
+            local text = "Number of columns: " .. awful.tag.getncol()
+            naughty.notify({ text = text, timeout = 1 })
+        end,
+        {description="increase # of columns", group="layout"}),
+    awful.key({ win, alt }, ",",
+        function()
+            awful.tag.incncol(-1)
+            local text = "Number of columns: " .. awful.tag.getncol()
+            naughty.notify({ text = text, timeout = 1 })
+        end,
+        {description="decrease # of columns", group="layout"})
 )
 
 clientkeys = awful.util.table.join(
@@ -211,7 +247,7 @@ clientkeys = awful.util.table.join(
     awful.key({ alt }, "F4", function(c) c:kill() end),
     awful.key({ win }, "w",  function(c) c:kill() end),
     awful.key({ win }, "q",  function(c) c:kill() end),
-    awful.key({ win }, "m",  awful.titlebar.toggle)
+    awful.key({ win }, "m",  awful.titlebar.toggle, { description="toggle active window titlebar", group="bars"})
 )
 
 for i = 1, 9 do
