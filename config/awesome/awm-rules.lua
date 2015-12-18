@@ -6,7 +6,6 @@ local wibox     = require 'wibox'
 
 rules.rules = {
     { rule = { class = "mpv" }, properties = { size_hints_honor = false } },
-    { rule = { class = "Gvim" }, properties = { size_hints_honor = false } },
     { rule = { },
       properties = { focus = awful.client.focus.filter,
                      raise = true,

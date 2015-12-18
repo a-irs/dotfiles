@@ -66,6 +66,7 @@ dotfiles_x=(
     config/mpv/input.conf
     config/mpv/mpv.conf
     config/mpv/scripts/convert_script.lua
+    config/mpv/scripts/stats.lua
     config/sublime-text-3/Packages/User
     config/termite/config
     config/user-dirs.dirs
