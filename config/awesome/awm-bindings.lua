@@ -4,6 +4,8 @@ local lain       = require 'lain'
 local naughty    = require 'naughty'
 local beautiful  = require 'beautiful'
 local hotkeys_popup = require("awful.hotkeys_popup.widget")
+
+-- TODO: refactor
 hotkeys_popup.height = math.floor(vres/1.5)
 hotkeys_popup.width = math.floor(hres/1.5)
 hotkeys_popup.modifiers_color = "#777777"
