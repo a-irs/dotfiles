@@ -19,9 +19,7 @@ theme.fg_normal                     = "#aaaaaa"
 theme.fg_focus                      = "#ffffff"
 theme.fg_urgent                     = "#af1d18"
 
-theme.border_width                  = dpi(0)
-theme.border_normal                 = theme.bg_normal
-theme.border_focus                  = theme.bg_focus
+theme.border_width                  = 0
 
 theme.useless_gap_normal            = 5 -- dpi(vres/150)
 theme.useless_gap_compact           = 5 -- dpi(vres/200)

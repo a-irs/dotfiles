@@ -8,9 +8,7 @@ rules.rules = {
     { rule = { class = "mpv" }, properties = { size_hints_honor = false } },
     { rule = { class = "Gvim" }, properties = { size_hints_honor = false } },
     { rule = { },
-      properties = { border_width = beautiful.border_width,
-                     border_color = beautiful.border_normal,
-                     focus = awful.client.focus.filter,
+      properties = { focus = awful.client.focus.filter,
                      raise = true,
                      keys = clientkeys,
                      maximized_vertical   = false,
@@ -119,9 +117,6 @@ client.connect_signal("unmanage", function(c)
 
     dynamic_tagging()
 end)
-
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 client.connect_signal("tagged",   dynamic_tagging)
 client.connect_signal("untagged", dynamic_tagging)
