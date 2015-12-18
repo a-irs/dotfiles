@@ -2,7 +2,8 @@
 
 sleep 1
 
-logger "running xset"
+logger "running xset, setxkbmap"
+setxkbmap -option caps:escape
 xset r rate 200 30
 
 logger "waiting for network"

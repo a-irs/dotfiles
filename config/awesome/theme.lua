@@ -1,5 +1,7 @@
 theme                               = {}
 
+light_theme = false
+
 theme.basedir                       = os.getenv("HOME") .. "/.config/awesome"
 if high_dpi then
     xpm_folder                      = theme.basedir .. "/xpm_175"
@@ -118,5 +120,21 @@ theme.titlebar_floating_button_focus_inactive  = xpm_folder .. "/titlebar/floati
 theme.titlebar_floating_button_focus_active    = xpm_folder .. "/titlebar/floating_active.xpm"
 theme.titlebar_floating_button_normal_inactive = xpm_folder .. "/titlebar/unfocused_inactive.xpm"
 theme.titlebar_floating_button_normal_active   = xpm_folder .. "/titlebar/unfocused_active.xpm"
+
+if light_theme then
+    theme.bg_normal = "#E7E8EB"
+    theme.bg_focus  = "#E7E8EB"
+    theme.bg_urgent = "#aa0000"
+    theme.fg_normal = "#3c4b5d"
+    theme.fg_focus  = "#2c3643"
+    theme.fg_urgent = "#af1d18"
+    theme.titlebar_fg_normal  = theme.fg_normal
+    theme.titlebar_fg_focus = theme.fg_focus
+    theme.titlebar_bg_normal = theme.bg_normal
+    theme.titlebar_bg_focus = theme.bg_normal
+    theme.widget_date_fg = theme.fg_focus
+    theme.widget_alsa_fg = "#96b7e2"
+    theme.widget_alsa_mute_fg = "#666666"
+end
 
 return theme
