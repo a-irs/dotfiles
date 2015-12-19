@@ -247,7 +247,7 @@ clientkeys = awful.util.table.join(
 for i = 1, 9 do
     globalkeys = awful.util.table.join(globalkeys,
         -- view tag
-        awful.key({ win, alt }, "#" .. i + 9,
+        awful.key({ win }, "#" .. i + 9,
             function()
                 local tag = awful.tag.gettags(mouse.screen)[i]
                 if tag then
@@ -255,7 +255,7 @@ for i = 1, 9 do
                 end
             end),
         -- toggle tag
-        awful.key({ win }, "#" .. i + 9,
+        awful.key({ win, alt }, "#" .. i + 9,
             function()
                 local tag = awful.tag.gettags(mouse.screen)[i]
                 if tag then
