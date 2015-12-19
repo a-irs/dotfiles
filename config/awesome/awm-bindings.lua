@@ -54,18 +54,15 @@ globalkeys = awful.util.table.join(
     awful.key({ win          }, "u", function()
         if compact_display then
             compact_display = false
-            beautiful.useless_gap = theme.useless_gap_normal
             for _, c in ipairs(client.get()) do
                 awful.titlebar.show(c)
             end
         else
             compact_display = true
-            beautiful.useless_gap = theme.useless_gap_compact
             for _, c in ipairs(client.get()) do
                 awful.titlebar.hide(c)
             end
         end
-        awful.layout.arrange(mouse.screen)
     end,
     {description="toggle compact mode", group="useless"}),
 
@@ -250,7 +247,7 @@ clientkeys = awful.util.table.join(
 for i = 1, 9 do
     globalkeys = awful.util.table.join(globalkeys,
         -- view tag
-        awful.key({ win }, "#" .. i + 9,
+        awful.key({ win, alt }, "#" .. i + 9,
             function()
                 local tag = awful.tag.gettags(mouse.screen)[i]
                 if tag then
@@ -258,7 +255,7 @@ for i = 1, 9 do
                 end
             end),
         -- toggle tag
-        awful.key({ win, alt }, "#" .. i + 9,
+        awful.key({ win }, "#" .. i + 9,
             function()
                 local tag = awful.tag.gettags(mouse.screen)[i]
                 if tag then
