@@ -97,6 +97,14 @@ client.connect_signal("manage", function(c)
     if compact_display then awful.titlebar.hide(c) end
 
     dynamic_tagging()
+
+
+    if (c.class == "Kodi") then
+        c.fullscreen = true
+        t = awful.tag.gettags(1)[5]
+        awful.client.movetotag(t, c)
+        awful.tag.viewonly(t)
+    end
 end)
 
 -- client exits

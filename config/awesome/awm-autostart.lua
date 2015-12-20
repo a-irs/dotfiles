@@ -1,3 +1,5 @@
+home_bin = os.getenv("HOME") .. "/.bin/"
+
 function file_exists(name)
     local f = io.open("/usr/bin/" .. name, "r")
     if f ~= nil then io.close(f) return true else return false end
@@ -17,6 +19,7 @@ local needed = {
     hostname == "desktop" and "synergyc",
     hostname == "desktop" and "numlockx",
     hostname == "desktop" and "ethtool",
+    hostname == "desktop" and "kodi",
 }
 
 for _, cmd in ipairs(needed) do
@@ -46,6 +49,7 @@ local programs = {
     hostname == "desktop" and 'bash -c "pgrep synergyc || synergyc -d ERROR dell"',
     hostname == "desktop" and 'numlockx',
     hostname == "desktop" and 'sh -c \'sleep 10; sudo ethtool -s eth0 wol g\'',
+    hostname == "desktop" and 'bash -c \"pgrep kodi || ' .. home_bin .. "wait-for-srv.sh kodi" .. "\"",
 }
 for _, cmd in ipairs(programs) do
     if cmd then
