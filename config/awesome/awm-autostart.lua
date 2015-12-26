@@ -14,12 +14,12 @@ local needed = {
     "dropbox-cli",
     "lxpolkit",
     "redshift",
+    hostname == "dell" and "nm-applet",
     hostname == "desktop" and "mpd",
     hostname == "desktop" and "x2godesktopsharing",
     hostname == "desktop" and "synergyc",
     hostname == "desktop" and "numlockx",
     hostname == "desktop" and "ethtool",
-    hostname == "desktop" and "kodi",
 }
 
 for _, cmd in ipairs(needed) do
@@ -44,12 +44,12 @@ local programs = {
     'ln -sf ' .. os.getenv("HOME") .. '/.thumbnails ' .. os.getenv("HOME") .. '/.cache/thumbnails',
     'ln -sf ' .. os.getenv("HOME") .. '/.rofi-2.runcache ' .. os.getenv("HOME") .. '/.cache/rofi-2.runcache',
     'xset -dpms ; xset s off',
+    hostname == "dell" and 'bash -c "pgrep -x nm-applet || nm-applet"',
     hostname == "desktop" and 'pgrep -x mpd || mpd',
     hostname == "desktop" and 'bash -c "pgrep x2godesktopshar || x2godesktopsharing"',
     hostname == "desktop" and 'bash -c "pgrep synergyc || synergyc -d ERROR dell"',
     hostname == "desktop" and 'numlockx',
     hostname == "desktop" and 'sh -c \'sleep 10; sudo ethtool -s eth0 wol g\'',
-    hostname == "desktop" and 'bash -c \"pgrep kodi || ' .. home_bin .. "wait-for-srv.sh kodi" .. "\"",
 }
 for _, cmd in ipairs(programs) do
     if cmd then
