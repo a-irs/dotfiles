@@ -1,16 +1,16 @@
 set font "Input normal 8"
 set guioptions vhs
 set statusbar-basename true
-set statusbar-bg "#2c3643"
+set statusbar-bg "#303e5b"
 set statusbar-fg "#ffffff"
-set inputbar-bg "#2c3643"
+set inputbar-bg "#303e5b"
 set inputbar-fg "#ffffff"
 set page-padding 5
 set smooth-scroll true
 set window-title-page true
 set selection-clipboard clipboard
 set first-page-column 2
-set default-bg "#2c3643"
+set default-bg "#303e5b"
 set adjust-open width
 #set scroll-page-aware true
 
