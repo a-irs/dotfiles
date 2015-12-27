@@ -80,21 +80,20 @@ widgets.datewidget = lain.widgets.base({
     settings = function()
         local t_output = ""
         local o_it = string.gmatch(output, "%S+")
-        widget:set_markup(markup("#ccc", o_it(1) .. " " .. o_it(1)) .. " " .. markup.bold(markup(theme.widget_date_fg, o_it(1))))
+        widget:set_markup(markup(theme.widget_date_fg, o_it(1) .. " " .. o_it(1)) .. " " .. markup.bold(markup(theme.widget_time_fg, o_it(1))))
     end
 })
 lain.widgets.calendar:attach(widgets.datewidget, { font_size = theme.widget_calendar_font_size,
                                            font = theme.widget_calendar_font,
                                            fg = theme.widget_calendar_fg,
-                                           bg = theme.widget_calendar_bg,
-                                           icons = "",
+                                           bg = "#222a34",
 })
 
 
 -- MPD
 
 widgets.mpdwidget = wibox.widget.textbox()
-widgets.mpdwidget:set_font(theme.widget_mpd_font)
+widgets.mpdwidget:set_font(theme.font)
 
 vicious.register(widgets.mpdwidget, vicious.widgets.mpd,
     function(mpdwidget, args)

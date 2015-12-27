@@ -42,11 +42,13 @@ if not enable_tyrannical then
 
     tags = {}
     for s = 1, screen.count() do
-        tags[s] = awful.tag({ make_name(nil, 1),
+        tags[s] = awful.tag({
+            make_name(nil, 1),
             make_name(nil, 2),
             make_name(nil, 3),
             make_name(nil, 4),
-            make_name(nil, 5)
+            make_name(nil, 5),
+            make_name(nil, 6),
             }, s, layouts[1])
     end
 

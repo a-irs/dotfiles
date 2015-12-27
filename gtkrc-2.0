@@ -19,6 +19,6 @@ class "*tray*" style "panel-color"
 
 gtk-theme-name = "Arc"
 gtk-font-name = "Roboto Medium 9"
-gtk-icon-theme-name = "Moka"
+gtk-icon-theme-name = "Paper"
 gtk-cursor-theme-name = "Breeze_Snow"
 gtk-toolbar-style = GTK_TOOLBAR_BOTH_HORIZ

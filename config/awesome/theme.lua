@@ -1,12 +1,10 @@
 theme                               = {}
 
-light_theme = false
-
-theme.basedir                       = os.getenv("HOME") .. "/.config/awesome"
+local basedir                       = os.getenv("HOME") .. "/.config/awesome"
 if high_dpi then
-    xpm_folder                      = theme.basedir .. "/xpm_175"
+    xpm_folder                      = basedir .. "/xpm_175"
 else
-    xpm_folder                      = theme.basedir .. "/xpm_100"
+    xpm_folder                      = basedir .. "/xpm_100"
 end
 
 theme.statusbar_height              = dpi(16)
@@ -19,7 +17,7 @@ theme.bg_focus                      = "#485a70"
 theme.bg_urgent                     = "#aa0000"
 theme.fg_normal                     = "#aaaaaa"
 theme.fg_focus                      = "#ffffff"
-theme.fg_urgent                     = "#af1d18"
+theme.fg_urgent                     = "#ce4756"
 
 theme.border_width                  = 0
 
@@ -55,20 +53,23 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 theme.font                          = "Cure 8"
 theme.taglist_font                  = "Clean 8"
 theme.show_tag_names                = true
---theme.taglist_squares_unsel         = xpm_folder .. "/indicator.xpm"
+-- theme.taglist_squares_unsel         = xpm_folder .. "/indicator.xpm"
+
+theme.tasklist_font                 = "Fira Sans 8"
+theme.tasklist_fg                   = theme.fg_normal
+theme.tasklist_bg                   = theme.bg_normal
+theme.tasklist_disable_icon         = true
 
 theme.bg_systray                    = theme.bg_normal
 theme.widget_mpd_fg                 = "#cfcfcf"
-theme.widget_mpd_bg                 = theme.bg_normal
-theme.widget_mpd_font               = theme.font
 theme.widget_calendar_font          = "Monospace"
 theme.widget_calendar_font_size     = 8
-theme.widget_calendar_fg            = theme.fg_normal
-theme.widget_calendar_bg            = "#222a34"
-theme.widget_date_fg                = "#eeeeee"
+theme.widget_calendar_fg            = theme.fg_focus
+theme.widget_date_fg                = "#cccccc"
+theme.widget_time_fg                = "#eeeeee"
 theme.widget_alsa_fg                = "#96b7e2"
 theme.widget_alsa_mute_fg           = "#666666"
-theme.widget_yawn_fg                = "#ababab"
+
 theme.widget_speed_down             = "#ff8a5a"
 theme.widget_speed_up               = theme.widget_speed_down
 theme.widget_cpu_fg                 = "#ff6997"
@@ -79,11 +80,6 @@ theme.widget_mem_fg                 = "#71ee5c"
 theme.widget_load_fg                = "#80d9d8"
 theme.widget_disk_read_fg           = "#ffc350"
 theme.widget_disk_write_fg          = theme.widget_disk_read_fg
-
-theme.tasklist_font                 = "Fira Sans 8"
-theme.tasklist_fg                   = theme.fg_normal
-theme.tasklist_bg                   = theme.bg_normal
-theme.tasklist_disable_icon         = true
 
 -- LAYOUT ICONS
 
@@ -120,21 +116,5 @@ theme.titlebar_floating_button_focus_inactive  = xpm_folder .. "/titlebar/floati
 theme.titlebar_floating_button_focus_active    = xpm_folder .. "/titlebar/floating_active.xpm"
 theme.titlebar_floating_button_normal_inactive = xpm_folder .. "/titlebar/unfocused_inactive.xpm"
 theme.titlebar_floating_button_normal_active   = xpm_folder .. "/titlebar/unfocused_active.xpm"
-
-if light_theme then
-    theme.bg_normal = "#E7E8EB"
-    theme.bg_focus  = "#E7E8EB"
-    theme.bg_urgent = "#aa0000"
-    theme.fg_normal = "#3c4b5d"
-    theme.fg_focus  = "#303e5b"
-    theme.fg_urgent = "#af1d18"
-    theme.titlebar_fg_normal  = theme.fg_normal
-    theme.titlebar_fg_focus = theme.fg_focus
-    theme.titlebar_bg_normal = theme.bg_normal
-    theme.titlebar_bg_focus = theme.bg_normal
-    theme.widget_date_fg = theme.fg_focus
-    theme.widget_alsa_fg = "#96b7e2"
-    theme.widget_alsa_mute_fg = "#666666"
-end
 
 return theme
