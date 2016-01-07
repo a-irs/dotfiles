@@ -13,4 +13,4 @@ pandoc -V lang=de \
 --to=html5 \
 --toc \
 --standalone --smart --css "$css" \
--o ~/"${out}.html" "$1"
+-o "${out}.html" "$1"

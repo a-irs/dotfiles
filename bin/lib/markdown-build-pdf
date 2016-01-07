@@ -11,4 +11,4 @@ pandoc --latex-engine=xelatex \
 -V geometry:margin=2cm -V lang=german \
 --to=latex \
 --standalone --smart \
--o ~/"${out}.pdf" "$1"
+-o "${out}.pdf" "$1"
