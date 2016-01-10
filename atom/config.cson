@@ -6,7 +6,7 @@
   core:
     themes: [
       "one-dark-ui"
-      "atom-dark-fusion-syntax"
+      "pen-paper-coffee-syntax"
     ]
     disabledPackages: [
       "wrap-guide"

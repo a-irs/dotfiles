@@ -33,6 +33,8 @@
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
 	[
+		"*.odt",
+		"*.war",
 		"*.ind",
 		"*.ilg",
 		"*.pyc",
