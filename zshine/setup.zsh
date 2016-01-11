@@ -110,7 +110,6 @@ ZSHINE_PLUGINS=(
   syntax-highlighting # provides a syntax highlighted prompt
   less-syntax-highlighting # syntax highlighting for "less" command
   history-substring-search # arrow key up/down history search
-  # command-not-found # show needed packages for unknown commands
   bd # move back in current directory tree (breadcrumb-style)
   auto-ls # launch "ls" when entering directory
   prompt-git # provides functions for a git-prompt
@@ -118,10 +117,10 @@ ZSHINE_PLUGINS=(
   completion # tweaks for TAB-completion
   bindkey # bind keys for delete, history-search etc.
   fzf # CTRL+T for fuzzy-search of files
-  zaw # better CTRL+R history search
   pwd-hell # show warning message when [[ pwd != readlink -f ./ ]]
   # tmux # autostart tmux
   # notify # notify-send after long command has been completed
   zshmarks # set bookmarks
+  zaw # better CTRL+R history search
 )
 for z in $ZSHINE_PLUGINS; do source "$ZSHINE_DIR/plugins/$z.zsh"; done
