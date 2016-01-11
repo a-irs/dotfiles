@@ -6,8 +6,8 @@ ZSHINE_DIR=~/.zshine
 typeset -gU cdpath fpath mailpath path
 [ -d "$HOME/.bin" ] && path=("$HOME/.bin" $path)
 [ -d "$HOME/.bin/$HOST" ] && path=("$HOME/.bin/$HOST" $path)
-[ -d "$HOME/.gem/ruby/2.2.0/bin" ] && path=("$HOME/.gem/ruby/2.2.0/bin" $path)
-fpath+=($ZSHINE_DIR/completion $ZSHINE_DIR/prompts)
+[ -d "$HOME/.gem/ruby/2.3.0/bin" ] && path=("$HOME/.gem/ruby/2.3.0/bin" $path)
+fpath+=($ZSHINE_DIR/completion $ZSHINE_DIR/prompts $ZSHINE_DIR/plugins/zshmarks)
 
 # load prompt
 autoload -U promptinit
@@ -122,5 +122,6 @@ ZSHINE_PLUGINS=(
   pwd-hell # show warning message when [[ pwd != readlink -f ./ ]]
   # tmux # autostart tmux
   # notify # notify-send after long command has been completed
+  zshmarks # set bookmarks
 )
 for z in $ZSHINE_PLUGINS; do source "$ZSHINE_DIR/plugins/$z.zsh"; done
