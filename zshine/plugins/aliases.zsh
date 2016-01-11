@@ -179,7 +179,7 @@ s() {
         fi
 
         mime=$(file --mime-encoding -b -- "$f")
-        if [[ $mime == "binary" ]]; then
+        if [[ $mime == *binary ]]; then
             if [[ -s "$f" ]]; then
                 echo -e "${RED}BINARY FILE${RESET}" && continue
             else

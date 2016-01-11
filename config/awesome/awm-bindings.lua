@@ -135,8 +135,27 @@ globalkeys = awful.util.table.join(
     -- launch programs
 
 
-    awful.key({ win }, "r", function() myprompt[awful.screen.focused()]:run() end,
-              {description = "run prompt", group = "apps"}),
+    awful.key({ win }, "r",
+        function()
+            awful.util.spawn("rofi \
+                -disable-history \
+                -show run \
+                -opacity 100 \
+                -width 50 \
+                -lines 10 \
+                -bw 5 \
+                -bg '" .. theme.bg_normal .. "' \
+                -bc '" .. theme.bg_normal .. "' \
+                -fg '#ddd' \
+                -hlbg '#666' \
+                -hlfg '#fff' \
+                -font 'Monospace 11' \
+                -no-parse-known-hosts \
+                -terminal " .. user_terminal,
+            false)
+        end,
+        {description = "run prompt", group = "apps"}),
+
     awful.key({ alt }, "Return", function () awful.util.spawn(user_terminal) end,
               {description = "run terminal", group = "apps"}),
     awful.key({ alt }, "f",      function () awful.util.spawn("thunar") end,
