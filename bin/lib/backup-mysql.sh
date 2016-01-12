@@ -18,5 +18,5 @@ for f in /media/data/backups/sql/${HOSTNAME}_kodi_*.sql.gz; do
     d=$(basename "$f")
     d=$(echo "$d" | cut -d_ -f 3)
     d=${d//-/}
-    [[ ${d} -lt ${limit} ]] && echo rm -f "$f"
+    [[ ${d} -lt ${limit} ]] && rm -f "$f"
 done
