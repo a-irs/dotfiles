@@ -5,6 +5,7 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 ZSH_HIGHLIGHT_PATTERNS+=('rm -r*' 'fg=red,bold')
 ZSH_HIGHLIGHT_PATTERNS+=('rm -fr*' 'fg=red,bold')
 ZSH_HIGHLIGHT_PATTERNS+=('wipe *' 'fg=red,bold')
+ZSH_HIGHLIGHT_PATTERNS+=('dd *' 'fg=red,bold')
 
 ZSH_HIGHLIGHT_STYLES[path]='fg=blue,bold'
 ZSH_HIGHLIGHT_STYLES[path_prefix]='fg=blue'

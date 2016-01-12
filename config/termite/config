@@ -29,7 +29,7 @@ size_hints = false
 #modify_other_keys = false
 
 [colors]
-cursor = #8A9DB4
+cursor = #eba50c
 foreground = #fafafa
 foreground_bold = #ffffff
 background = #303e5b
@@ -60,35 +60,6 @@ color14  = #43dddd
 # white
 color7   = #e0e0e0
 color15  = #e0e0e0
-
-########################## DESATURATED THEME
-
-## black
-#color0   = #3b3b3b
-#color8   = #6d7367
-## red
-#color1   = #dd7165
-#color9   = #dd7165
-## green
-#color2   = #ABCF67
-#color10  = #ABCF67
-## yellow
-#color3   = #DBA453
-#color11  = #DBA453
-## blue
-#color4   = #7bc8d8
-#color12  = #7bc8d8
-## magenta
-#color5   = #b590e3
-#color13  = #b590e3
-## cyan
-#color6   = #c960b5
-#color14  = #c960b5
-## white
-#color7   = #e0e0e0
-#color15  = #e0e0e0
-## others
-#color214 = #de9c4e
 
 ##########################
 
