@@ -2,6 +2,7 @@ local awful   = require 'awful'
 local wibox   = require 'wibox'
 local lain    = require 'lain'
 local alsa    = require 'alsa'
+local battery = require 'battery'
 local volume  = require 'volume'
 local vicious = require 'vicious'
 local widgets = {}
@@ -29,23 +30,49 @@ end
 
 
 
-function widgets.make_widget(widget, background_color, left, right)
-    if left and right then
-        local m = wibox.layout.margin(widget, left, right, 0, 0)
-        local b = wibox.widget.background(m)
-        b:set_bg(background_color)
-        return b
+function widgets.make_widget(widget, left_margin, right_margin, background_color)
+    if left_margin and not right_margin then
+        right_margin = left_margin
     end
-    local b = wibox.widget.background(widget)
-    b:set_bg(background_color)
-    return b
+
+    if right_margin or left_margin then
+        widget = wibox.layout.margin(widget, left_margin, right_margin, 0, 0)
+    end
+
+    if background_color then
+        widget = wibox.widget.background(widget)
+        widget:set_bg(background_color)
+    end
+
+    return widget
 end
 
 
 -- BATTERY
 
-if hostname == "dell" then widgets.batterywidget = make_genmon("battery.sh", 5) end
+if hostname == "dell" then
+    widgets.batterywidget = battery({
+        timeout = 5,
+        settings = function()
+            if battery_now.level < 20 then
+                color = "#db3131"
+            elseif battery_now.level < 40 then
+                color = "#ffff00"
+            elseif battery_now.level < 70 then
+                color = "#ffffff"
+            else
+                color = "#90ee90"
+            end
 
+            if battery_now.status == "Full" or battery_now.status == "Charging" then
+                a = markup("#ffff00", ' +')
+            else
+                a = ''
+            end
+            widget:set_markup(markup.bold(markup(color, battery_now.level .. a)))
+        end
+    })
+end
 
 -- NETWORK
 
