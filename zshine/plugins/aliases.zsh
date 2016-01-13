@@ -181,9 +181,11 @@ s() {
         mime=$(file --mime-encoding -b -- "$f")
         if [[ $mime == *binary ]]; then
             if [[ -s "$f" ]]; then
-                echo -e "${RED}BINARY FILE${RESET}" && continue
+                echo -e "${RED}BINARY FILE: $(file -b -- "$f")${RESET}"
+                continue
             else
-                echo -e "${MAGENTA}EMPTY FILE${RESET}" && continue
+                echo -e "${MAGENTA}EMPTY FILE${RESET}"
+                continue
             fi
         fi
 
