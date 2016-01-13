@@ -10,6 +10,8 @@ case $HOST in
     *)        ZSHINE_HOST_COLOR='white' ;;
 esac
 
+ZSHINE_PROMPT_SYMBOL='❯'
+
 ZSHINE_GIT=1
 ZSHINE_GIT_SIMPLE_DIRTY=1
 ZSHINE_GIT_SHRINK_URL=1
@@ -65,13 +67,14 @@ ZSHINE_SEGMENT_RSYMBOL=''
 ZSHINE_SEGMENT_RSEPARATOR=' '
 
 if [[ "$TERM" == "linux" ]]; then
-    ZSHINE_SEGMENT_SYMBOL=' '
-    ZSHINE_SEGMENT_RSYMBOL=' '
+    ZSHINE_SEGMENT_SYMBOL=''
+    ZSHINE_SEGMENT_RSYMBOL=''
     ZSHINE_GIT_SYMBOL_MODIFIED='m'
     ZSHINE_BATTERY=1
     ZSHINE_DATE=1
-    ZSHINE_SEGMENT_RSEPARATOR=''
+    ZSHINE_SEGMENT_RSEPARATOR=' '
     ZSHINE_PATH_FG='yellow'
+    ZSHINE_PROMPT_SYMBOL='>'
 fi
 
 [[ $UID == 0 ]] && ZSHINE_USER=1 && ZSHINE_USER_COLOR='red' && ZSHINE_USER_FG='red'
@@ -250,7 +253,7 @@ _build_right() {
 }
 
 prompt_zshine_setup() {
-    PROMPT=$'\n%{%f%b%k%}$(_build_left) %{%f%k%b%}\n❯ '
+    PROMPT=$'\n%{%f%b%k%}$(_build_left) %{%f%k%b%}\n$ZSHINE_PROMPT_SYMBOL '
     RPROMPT='%{%f%b%k%}$(_build_right)%{%f%k%b%}'
 }
 
