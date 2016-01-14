@@ -129,18 +129,18 @@ client.connect_signal("tagged",   dynamic_tagging)
 client.connect_signal("untagged", dynamic_tagging)
 
 -- set focus to client under mouse cursor when switching tags
-tag.connect_signal("property::selected", function(t)
-    local selected = tostring(t.selected) == "false"
-    if selected then
-        local focus_timer = timer({ timeout = 0.05 })
-        focus_timer:connect_signal("timeout", function()
-            local c = awful.mouse.client_under_pointer()
-            if not (c == nil) then
-                client.focus = c
-                c:raise()
-            end
-            focus_timer:stop()
-        end)
-        focus_timer:start()
-    end
-end)
+-- tag.connect_signal("property::selected", function(t)
+--     local selected = tostring(t.selected) == "false"
+--     if selected then
+--         local focus_timer = timer({ timeout = 0.05 })
+--         focus_timer:connect_signal("timeout", function()
+--             local c = awful.mouse.client_under_pointer()
+--             if not (c == nil) then
+--                 client.focus = c
+--                 c:raise()
+--             end
+--             focus_timer:stop()
+--         end)
+--         focus_timer:start()
+--     end
+-- end)

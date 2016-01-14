@@ -289,19 +289,24 @@ fi
 
 if [ "$commands[encfs]" ]; then
     enc-mount() {
-        dir=${1:-~/.encrypt}
-        mkdir ~/encrypt && \
-        encfs "$(readlink -f "$dir")" ~/encrypt && \
-        find ~/.thumbnails > ~/.encrypt-thumbs-before && \
-        cd ~/encrypt
+        dir=${1:-encrypt}
+        mkdir ~/"$dir"{,-locked} && \
+        mkdir ~/"$dir" && \
+        sshfs srv:/media/data/backups/"$dir" ~/"$dir"-locked && \
+        encfs ~/"$dir"-locked ~/"$dir" && \
+        find ~/.thumbnails > ~/."$dir"-thumbs-before && \
+        cd ~/"$dir"
     }
     enc-umount() {
-        [[ "$PWD" == $HOME/encrypt* ]] && cd
-        fusermount -u ~/encrypt
-        rmdir ~/encrypt
-        find ~/.thumbnails > ~/.encrypt-thumbs-after
-        diff ~/.encrypt-thumbs-* 2> /dev/null | awk '{print $NF}' | tail -n +2 | xargs rm -f
-        rm -f ~/.encrypt-thumbs-* 2> /dev/null
+        dir=${1:-encrypt}
+        [[ "$PWD" == ~/"$dir"* ]] && cd
+        fusermount -u ~/"$dir"
+        fusermount -u ~/"$dir"-locked
+        rmdir ~/"$dir"
+        rmdir ~/"$dir"-locked
+        find ~/.thumbnails > ~/."$dir"-thumbs-after
+        diff ~/."$dir"-thumbs-* 2> /dev/null | awk '{print $NF}' | tail -n +2 | xargs rm -f
+        rm -f ~/."$dir"-thumbs-* 2> /dev/null
     }
 fi
 
