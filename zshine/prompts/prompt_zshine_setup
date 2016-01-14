@@ -6,8 +6,7 @@ case $HOST in
     dell    ) ZSHINE_HOST_COLOR='green' ;;
     desktop ) ZSHINE_HOST_COLOR='yellow' ;;
     srv     ) ZSHINE_HOST_COLOR='magenta' ;;
-    erasmus ) ZSHINE_HOST_COLOR='cyan' ;;
-    *)        ZSHINE_HOST_COLOR='white' ;;
+    *)        ZSHINE_HOST_COLOR='cyan' ;;
 esac
 
 ZSHINE_PROMPT_SYMBOL='❯'
