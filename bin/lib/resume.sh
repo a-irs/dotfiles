@@ -8,5 +8,8 @@ xset r rate 200 30
 
 logger "waiting for network"
 nm-online
+
 logger "network online, starting dropboxd"
+sleep 1
+killall dropboxd
 $HOME/.dropbox-dist/dropboxd

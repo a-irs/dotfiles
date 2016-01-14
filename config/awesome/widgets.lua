@@ -1,8 +1,8 @@
 local awful   = require 'awful'
 local wibox   = require 'wibox'
 local lain    = require 'lain'
-local alsa    = require 'alsa'
-local battery = require 'battery'
+local widget_alsa = require 'widget_alsa'
+local widget_battery = require 'widget_battery'
 local volume  = require 'volume'
 local vicious = require 'vicious'
 local widgets = {}
@@ -51,7 +51,7 @@ end
 -- BATTERY
 
 if hostname == "dell" then
-    widgets.batterywidget = battery({
+    widgets.batterywidget = widget_battery({
         timeout = 5,
         settings = function()
             if battery_now.level < 20 then
@@ -81,7 +81,7 @@ if hostname == "dell" then widgets.netwidget = make_genmon("net.sh", 5) end
 
 -- VOLUME
 
-widgets.volumewidget = alsa({
+widgets.volumewidget = widget_alsa({
     timeout = 3,
     settings = function()
         if volume_now.status == "off" then
