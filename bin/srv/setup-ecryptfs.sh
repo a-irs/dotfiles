@@ -1,1 +1,0 @@
-../lib/setup-ecryptfs.sh
