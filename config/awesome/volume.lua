@@ -1,30 +1,18 @@
-local popen    = io.popen
 local execute  = os.execute
-local tonumber = tonumber
 local volume   = {}
 
-local function slurpcommand(cmd)
-    local pipe, error = popen(cmd, 'r')
-    if not pipe then
-        return pipe, error
-    end
-    local contents = pipe:read '*a'
-    pipe:close()
-    return contents
-end
-
 function volume.toggle()
-    execute 'amixer set Master toggle'
+    execute 'pamixer --toggle-mute'
     volumewidget.update()
 end
 
 function volume.increase()
-    local volume = slurpcommand 'amixer set Master 1%+'
+    execute 'pamixer --increase 1'
     volumewidget.update()
 end
 
 function volume.decrease()
-    local volume = slurpcommand 'amixer set Master 1%-'
+    execute 'pamixer --decrease 1'
     volumewidget.update()
 end
 

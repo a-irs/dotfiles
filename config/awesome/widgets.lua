@@ -1,7 +1,7 @@
 local awful   = require 'awful'
 local wibox   = require 'wibox'
 local lain    = require 'lain'
-local widget_alsa = require 'widget_alsa'
+local widget_pulse = require 'widget_pulse'
 local widget_battery = require 'widget_battery'
 local volume  = require 'volume'
 local vicious = require 'vicious'
@@ -81,13 +81,13 @@ if hostname == "dell" then widgets.netwidget = make_genmon("net.sh", 5) end
 
 -- VOLUME
 
-widgets.volumewidget = widget_alsa({
+widgets.volumewidget = widget_pulse({
     timeout = 3,
     settings = function()
-        if volume_now.status == "off" then
-            widget:set_markup(markup.bold(markup(theme.widget_alsa_mute_fg, volume_now.level)))
+        if volume_now.mute then
+            widget:set_markup(markup.bold(markup(theme.widget_pulse_mute_fg, volume_now.level)))
         else
-            widget:set_markup(markup.bold(markup(theme.widget_alsa_fg, volume_now.level)))
+            widget:set_markup(markup.bold(markup(theme.widget_pulse_fg, volume_now.level)))
         end
     end
 })

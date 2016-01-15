@@ -67,8 +67,8 @@ theme.widget_calendar_font_size     = 8
 theme.widget_calendar_fg            = theme.fg_focus
 theme.widget_date_fg                = "#cccccc"
 theme.widget_time_fg                = "#eeeeee"
-theme.widget_alsa_fg                = "#96b7e2"
-theme.widget_alsa_mute_fg           = "#666666"
+theme.widget_pulse_fg                = "#96b7e2"
+theme.widget_pulse_mute_fg           = "#666666"
 
 theme.widget_speed_down             = "#ff8a5a"
 theme.widget_speed_up               = theme.widget_speed_down
