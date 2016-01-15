@@ -19,24 +19,24 @@ local function worker(args)
     function pulse.update()
         volume_now = {}
 
-        local f = assert(io.popen("pamixer --get-volume"))
-        volume_now.level = f:read("*a")
+        local f = assert(io.popen("pacmd dump"))
+        local out = f:read("*a")
         f:close()
-
-        local f2 = assert(io.popen("pamixer --get-mute"))
-        volume_now.mute = f2:read("*a"):match'^%s*(.*%S)'
-        f2:close()
-
-        if volume_now.level == nil then
-            volume_now.level  = "0"
-            volume_now.mute = true
+        local default_sink = string.match(out, "set%-default%-sink ([^\n]+)")
+        for sink, value in out:gmatch("set%-sink%-volume ([^%s]+) (0x%x+)") do
+            if sink == default_sink then
+                volume_now.level = math.floor(tonumber(value) / 0x10000 * 100)
+            end
         end
 
-        if volume_now.mute == "false" then
-            volume_now.mute = false
-        else
-            volume_now.mute = true
+        local m
+        for sink, value in out:gmatch("set%-sink%-mute ([^%s]+) (%a+)") do
+            if sink == default_sink then
+                m = value
+            end
         end
+
+        volume_now.mute = m == "yes"
 
         if round then
             if tonumber(volume_now.level) == 0 then
