@@ -34,6 +34,7 @@ uploader_id = config.get('config', 'uploader_id')
 main_dir = os.path.expanduser(config.get('config', 'directory'))
 pl_dir = os.path.expanduser(config.get('config', 'playlist_directory'))
 pl_dir_mpd = os.path.expanduser(config.get('config', 'playlist_directory_mpd'))
+pl_dir_lms = os.path.expanduser(config.get('config', 'playlist_directory_lms'))
 pl_dir_mopidy = os.path.expanduser(config.get('config', 'playlist_directory_mopidy'))
 
 CACHE = None
@@ -167,6 +168,10 @@ def remove_playlist(playlist_name):
     if os.path.isfile(filename):
         os.remove(filename)
 
+    filename = pl_dir_lms + "/" + playlist_name.replace('/', '-') + ".m3u"
+    if os.path.isfile(filename):
+        os.remove(filename)
+
     filename = pl_dir_mopidy + "/" + playlist_name.replace('/', '-') + ".m3u"
     if os.path.isfile(filename):
         os.remove(filename)
@@ -186,6 +191,8 @@ def append_playlist(trackId, playlist_name, playlist_type='absolute'):
         d = pl_dir_mpd
     elif playlist_type == 'mopidy':
         d = pl_dir_mopidy
+    elif playlist_type == 'lms':
+        d = pl_dir_lms
 
     if not os.path.exists(d):
         os.makedirs(d)
@@ -200,6 +207,8 @@ def append_playlist(trackId, playlist_name, playlist_type='absolute'):
                 f.write(uri + '\n')
             elif playlist_type == 'mpd':
                 f.write(CACHE[trackId].replace(main_dir + '/', 'gmusic/') + '\n')
+            elif playlist_type == 'lms':
+                f.write(CACHE[trackId].replace(main_dir + '/', '../gmusic/') + '\n')
             else:
                 f.write(CACHE[trackId] + '\n')
 
@@ -253,6 +262,7 @@ def get_thumbsup():
         get_song(s['storeId'])
         append_playlist(s['storeId'], 'ThumbsUp')
         append_playlist(s['storeId'], 'ThumbsUp', 'mpd')
+        append_playlist(s['storeId'], 'ThumbsUp', 'lms')
         append_playlist(s['storeId'], 'ThumbsUp', 'mopidy')
     print('')
 
@@ -301,6 +311,7 @@ def opt_download():
             get_song(t['trackId'])
             append_playlist(t['trackId'], p['name'])
             append_playlist(t['trackId'], p['name'], 'mpd')
+            append_playlist(t['trackId'], p['name'], 'lms')
             append_playlist(t['trackId'], p['name'], 'mopidy')
         print('')
 
