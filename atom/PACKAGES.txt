@@ -5,11 +5,8 @@ autocomplete-paths
 autocomplete-python
 chester-atom-syntax
 color-picker
-git-control
-git-plus
 gutter-shadow
 highlight-selected
-language-docker
 language-generic-config
 language-lua
 linter
@@ -18,7 +15,6 @@ linter-flake8
 linter-lua
 linter-shellcheck
 markdown-scroll-sync
-merge-conflicts
 minimap
 minimap-find-and-replace
 minimap-git-diff
