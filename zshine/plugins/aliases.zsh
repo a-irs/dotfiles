@@ -8,7 +8,7 @@ done
 each-file() {
     for f in *(.); do
         echo -e "\n${BOLD_YELLOW}$* ${f}${RESET}\n"
-        "$@" "$f"
+        eval "$@" "$f"
     done
 }
 
@@ -41,11 +41,11 @@ wait_until_file_does_not_exist() {
 }
 
 count_files() {
-    find "$1" -maxdepth 1 -type f | wc -l
+    find $@ -maxdepth 1 -type f | wc -l
 }
 
 count_files_rec() {
-    find "$1" -type f | wc -l
+    find $@ -type f | wc -l
 }
 
 ranger() {
@@ -58,7 +58,6 @@ ranger() {
 alias ra='ranger'
 
 dl() {
-
     case "$1" in
         (*T|*t|*Tb|*TB|*tb|*tB) UNIT1=TB ;;
         (*G|*g|*Gb|*GB|*gb|*gB) UNIT1=GB ;;
@@ -124,7 +123,7 @@ if [[ "$commands[pdfgrep]" ]]; then
     }
 fi
 
-show() {
+s() {
     typeset -U files
     [[ "$@" ]] && files=("$@") || files=(*(.))
     for f in $files; do
@@ -159,28 +158,40 @@ show() {
         fi
     done
 }
-alias s='show'
 
+[ "$commands[less]" ] && alias less='less -FXR'
+[ "$commands[lsblk]" ] && alias lsblk='lsblk -o NAME,LABEL,TYPE,FSTYPE,SIZE,MOUNTPOINT,UUID -p'
+[ "$commands[grep]" ] && alias grep='grep --color=auto'
 alias cp='cp -i'
 alias ln='ln -i'
 alias mv='mv -i'
-alias mmv='noglob zmv -W'
 alias mkdir='mkdir -p'
+alias ls='command ls -F -l -h --color=auto --group-directories-first'
+[ "$commands[dmesg]" ] && alias dmesg='dmesg -T --color=auto'
+[ "$commands[make]" ] && alias make="LC_ALL=C make"
+[ "$commands[gcc]" ]  && alias  gcc="LC_ALL=C gcc"
+[ "$commands[g++]" ]  && alias  g++="LC_ALL=C g++"
+[ "$commands[tree]" ] && alias tree="tree -F --dirsfirst --noreport"
+[ "$commands[mc]" ] && alias mc='mc --nocolor'
+[ "$commands[iotop]" ] && alias iotop='sudo iotop -o'
+[ "$commands[updatedb]" ] && alias updatedb='sudo updatedb'
+[ "$commands[ps_mem]" ] && alias ps_mem='sudo ps_mem'
+[ "$commands[abs]" ] && alias abs='sudo abs'
+[ "$commands[ufw]" ] && alias ufw='sudo ufw'
+[ "$commands[lvm]" ] && alias lvm='sudo lvm'
+[ "$commands[sudo]" ] && alias sudo='sudo '
+[ "$commands[journalctl]" ] && alias journalctl='sudo journalctl'
+[ "$commands[pydf]" ] && alias df='pydf'
+[ "$commands[colorsvn]" ] && alias svn='colorsvn'
+
+
+alias mmv='noglob zmv -W'
 alias l='\ls  -F             --color=auto --group-directories-first'
-alias ls='\ls -F -l -h       --color=auto --group-directories-first'
 alias la='\ls -F -l -h -A    --color=auto --group-directories-first'
 alias l.='\ls -F    -h -d .* --color=auto --group-directories-first'
 alias lt='\ls -F -l -h -t -r --color=auto --group-directories-first'
 [ "$commands[python]" ] && alias http-share='python -m http.server 10000'
-[ "$commands[dmesg]" ] && alias dmesg='dmesg -T --color=auto'
 [ "$commands[watch]" ] && alias ddstatus='sudo watch --interval=1 "pkill -USR1 dd"'
-[ "$commands[less]" ] && alias less='less -FXR'
-[ "$commands[lsblk]" ] && alias lsblk='lsblk -o NAME,LABEL,TYPE,FSTYPE,SIZE,MOUNTPOINT,UUID -p'
-[ "$commands[grep]" ] && alias grep='grep --color=auto'
-[ "$commands[make]" ] && alias make="LC_ALL=C make"
-[ "$commands[gcc]" ]  && alias  gcc="LC_ALL=C gcc"
-[ "$commands[g++]" ]  && alias  g++="LC_ALL=C g++"
-
 [[ "$commands[dropbox-cli]" ]] && alias ds='dropbox-cli status'
 [[ "$commands[dropbox-cli]" ]] && alias dstop='dropbox-cli stop'
 [[ "$commands[dropbox-cli]" ]] && alias dstart='dropbox-cli start'
@@ -202,25 +213,12 @@ capture-keys() {
     xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'
 }
 
-[ "$commands[tree]" ] && alias tree="tree -F --dirsfirst --noreport"
-[ "$commands[sudo]" ] && alias sudo='sudo '
-[ "$commands[mc]" ] && alias mc='mc --nocolor'
-[ "$commands[iotop]" ] && alias iotop='sudo iotop -o'
-[ "$commands[updatedb]" ] && alias updatedb='sudo updatedb'
-[ "$commands[ps_mem]" ] && alias ps_mem='sudo ps_mem'
-[ "$commands[abs]" ] && alias abs='sudo abs'
-[ "$commands[ufw]" ] && alias ufw='sudo ufw'
-[ "$commands[lvm]" ] && alias lvm='sudo lvm'
-
 [ "$commands[aunpack]" ] && alias x='aunpack'
 [ "$commands[latexmk]" ] && alias ltx="latexmk -cd -f -pdf -pvc -outdir=/tmp/latexmk"
 [ "$commands[reflector]" ] && alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose && sudo pacman -Syy"
 [ "$commands[impressive]" ] && alias show='impressive -t FadeOutFadeIn --fade --transtime 300 --mousedelay 500 --nologo --nowheel --noclicks'
 [ "$commands[youtube-dl]" ] && alias yt-audio='youtube-dl -f bestaudio -x -o "%(title)s.%(ext)s"'
-[ "$commands[colorsvn]" ] && alias svn='colorsvn'
-[ "$commands[pydf]" ] && alias df='pydf'
 [ "$commands[journalctl]" ] && alias j='sudo journalctl'
-[ "$commands[journalctl]" ] && alias journalctl='sudo journalctl'
 [ "$commands[docker]" ] && alias d='docker'
 [ "$commands[scrot]" ] && alias shoot="sleep 1 && scrot '%Y-%m-%d_%H-%M-%S.png' -e 'mv \$f ~/media/screenshots/'"
 [ "$commands[ncmpc]" ] && alias ncmpc='LC_ALL=en_IE.UTF-8 ncmpc'
