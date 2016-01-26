@@ -5,8 +5,47 @@ for c in $noglobs; do
     [[ "$commands[$c]" ]] && alias $c="noglob $c"
 done
 
-search() {
-    nohup recoll -q "$@" > /dev/null 2>&1 &
+each-file() {
+    for f in *(.); do
+        echo -e "\n${BOLD_YELLOW}$* ${f}${RESET}\n"
+        "$@" "$f"
+    done
+}
+
+back() {
+    nohup "$@" </dev/null &>/dev/null &
+}
+
+monitor() {
+    while true; do
+        clear
+        printf '%s%s\n' "$(tput setaf 2)" "$*"
+        printf '%s%*s%s' "$(tput setaf 2)" "$(tput cols)" "$(date +%H:%M:%S)" "$(tput sgr0)"
+        eval "$@"
+        sleep 0.5
+    done
+}
+
+wait_until_process_not_exists() {
+    while pgrep "$1" > /dev/null; do
+        sleep 0.5
+    done
+    echo "$1 does not exist any more"
+}
+
+wait_until_file_does_not_exist() {
+    while [[ -e "$1" ]]; do
+        sleep 0.1
+    done
+    echo "$1 does not exist any more"
+}
+
+count_files() {
+    find "$1" -maxdepth 1 -type f | wc -l
+}
+
+count_files_rec() {
+    find "$1" -type f | wc -l
 }
 
 ranger() {
@@ -69,82 +108,6 @@ dl() {
     echo "${RESET}"
 }
 
-each-file() {
-    for f in *(.); do
-        echo -e "\n${BOLD_YELLOW}$* ${f}${RESET}\n"
-        "$@" "$f"
-    done
-}
-
-bottomblur() {
-    local d="/tmp/blur"
-    mkdir -p $d && \
-    convert "$1" -resize 1280x800\! "$d/out.png" && \
-    convert "$d/out.png" -flip "$d/flip.png" && \
-    convert "$d/flip.png" -blur 12x8 "$d/blur.png" && \
-    convert "$d/flip.png" -gamma 0 -fill white -draw "rectangle 0,-22 1280,22" "$d/mask.png" && \
-    convert "$d/flip.png" "$d/blur.png" "$d/mask.png" -composite "$d/final_flip.png" && \
-    convert "$d/final_flip.png" -flip "${1:r}_blur.png" && \
-    rm -rf "$d"
-}
-
-if [[ -d /home/.snapshots ]]; then
-    restore() {
-        [ -z "$1" ] && echo "usage: restore <files|directories>" && return 1
-        echo ""
-        if [ "$commands[snapper]" ]; then
-            LC_ALL=C snapper -c home list | awk '{print $3 " | " $6 " " $7 " " $8 " " $9 " " $10}' | tail -n +4
-        else
-            command ls --color -lgGh /home/.snapshots | tail -n +2 | cut -d " " -f 4-
-        fi
-        echo ""
-        read "gen?${BOLD_BLUE}Choose generation: ${RESET}"
-        echo ""
-        [ -z "$gen" ] && return 1
-        for el in "$@"; do
-            el=$(readlink -f "$el")
-            src="/home/.snapshots/$gen/snapshot/${el/\/home\//}"
-            [ ! -e "$src" ] && echo "'$src' does not exist" && continue
-            if [ -d "$el" ]; then
-                cp -i -a "$src"/. "$el"
-            else
-                cp -i -a "$src" "$el"
-            fi
-        done
-    }
-fi
-
-__pan() {
-    [[ ! -d "$1" ]] && echo "no directory selected" && return 1
-    ending=$2
-    [[ $ending == pdf ]] && params="--number-sections -Vlang=ngerman -V geometry:\"top=3cm, bottom=3.5cm, left=2.5cm, right=2.5cm\" --standalone --smart --toc"
-    [[ $ending == html ]] && params="--number-sections --standalone --self-contained --smart --toc -t html5"
-    [[ $ending == beamer ]] && params="-t beamer" && ending=pdf
-    echodir=$(readlink -f "$1")
-    echodir=${echodir/$HOME/\~}
-    printf "recursively monitoring directory %s\n" "$echodir"
-    inotifywait -mrq -e move -e create -e modify --format %w%f "$1" | while read f
-    do
-        [[ ! -f "$f" ]] && continue
-        case "$f" in
-            *.md) printf "$GREY$(date +%H:%M:%S) |$RESET converting $YELLOW$f$RESET to $GREEN${f%.*}.${ending}$RESET ... " ;
-                  secondline=$(head -2 "$f" | tail -1)
-                  if [[ "$secondline" =~ "<!--" ]]; then
-                      params=${secondline/<\!-- /}
-                      params=${params/ -->/}
-                  fi ;
-                  eval $(echo pandoc $params -o "${f%.*}.${ending}" "$f") \
-                  && printf "done\n" \
-                  || printf "${RED}error${RESET}\n" ;;
-        esac
-    done
-}
-if [[ "$commands[pandoc]" && -n "$commands[inotifywait]" ]]; then
-    pan-pdf() { __pan "$1" pdf; }
-    pan-html() { __pan "$1" html; }
-    pan-beamer() { __pan "$1" beamer; }
-fi
-
 if [[ "$commands[gcalcli]" ]]; then
     __gcal() {
         width=$((COLUMNS/7-2))
@@ -161,7 +124,7 @@ if [[ "$commands[pdfgrep]" ]]; then
     }
 fi
 
-s() {
+show() {
     typeset -U files
     [[ "$@" ]] && files=("$@") || files=(*(.))
     for f in $files; do
@@ -196,6 +159,7 @@ s() {
         fi
     done
 }
+alias s='show'
 
 alias cp='cp -i'
 alias ln='ln -i'
@@ -222,19 +186,6 @@ alias lt='\ls -F -l -h -t -r --color=auto --group-directories-first'
 [[ "$commands[dropbox-cli]" ]] && alias dstart='dropbox-cli start'
 [[ "$commands[redshift]" ]] && alias toggle-redshift='pkill -USR1 redshift'
 
-if [ "$commands[vlock]" ]; then
-    vlock(){
-        [[ $TTY == /dev/pts/* ]] && echo "not a TTY" && return 1
-        local active_ttys=$(w --no-header --no-current --short | grep -v "tty${XDG_VTNR}" | grep -v "pts/" | awk '{print $2}')
-        if [[ "$active_ttys" ]]; then
-            echo -e "${RED}WARNING:${RESET} other TTY(s) still active!\n"
-            echo "$active_ttys"
-        else
-            command vlock
-        fi
-    }
-fi
-
 if [ "$commands[tmux]" ]; then
     alias t='tmux'
     alias ta='tmux attach -t'
@@ -243,9 +194,13 @@ if [ "$commands[tmux]" ]; then
     alias tl='tmux list-sessions'
 fi
 
-take() { mkdir -p "$1" && cd "$1"; }
+take() {
+    mkdir -p "$1" && cd "$1"
+}
 
-alias capture-keys="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'"
+capture-keys() {
+    xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'
+}
 
 [ "$commands[tree]" ] && alias tree="tree -F --dirsfirst --noreport"
 [ "$commands[sudo]" ] && alias sudo='sudo '
@@ -277,12 +232,10 @@ if [ "$commands[xdg-open]" ]; then
         command cp -f ~/.local/share/applications/defaults.list ~/.local/share/applications/mimeapps.list
     }
     o() {
-        if [ -r "$1" ]; then
-            nohup xdg-open "$1" > /dev/null 2>&1 &
-        elif [ -z "$1" ]; then
+        if [ -z "$1" ]; then
             nohup xdg-open . > /dev/null 2>&1 &
         else
-            echo "'$1' could not be read"
+            nohup xdg-open $* > /dev/null 2>&1 &
         fi
     }
 fi
@@ -358,14 +311,19 @@ alias cd..='cd ..'
 
 if [ "$commands[subl3]" ]; then
     alias e='subl3'
-    alias sudoe='EDITOR="subl3 -w" sudoedit'
 else
     alias e="\$EDITOR"
-    alias sudoe="sudoedit"
 fi
 
-highlight()       { grep --color -E "$1|$"; }
-highlight_files() { grep --color -E "$1|$" "${@:2}"; }
+alias sudoe="sudoedit"
+
+highlight()       {
+    grep --color -E "$1|$"
+}
+
+highlight_files() {
+    grep --color -E "$1|$" "${@:2}"
+}
 
 alias dict=trans
 
@@ -508,37 +466,6 @@ if [ "$commands[man]" ]; then
     }
 fi
 
-cmp-init() {
-    rm /tmp/after.log 2> /dev/null
-    find ~ | sort > /tmp/before.log
-}
-
-cmp-diff() {
-    if [ -f /tmp/before.log ]; then
-        find ~ | sort > /tmp/after.log
-        echo "" ; command diff /tmp/before.log /tmp/after.log | sed "s|.\./| |" | sed '/<\|>/!d' \
-            | sed "s|>|"$'\e[1;32m'"&|" | sed "s|<|"$'\e[1;31m'"&|" # colorize
-    else
-        echo "use cmp-init first"
-    fi
-}
-
-if [ -f "$HOME/.config/user-dirs.dirs" ]; then
-    new() {
-        if [ -z "$1" ] || [ -z "$2" ]; then
-            echo "usage: new <Filetype> <Name>"
-            return
-        fi
-        source "$HOME/.config/user-dirs.dirs"
-        tofind=$(find "$XDG_TEMPLATES_DIR/" -type f -name "$1*")
-        extension="${tofind##*.}"
-        newfile="$2".$extension
-        cp "$tofind" "$newfile"
-        unset XDG_DESKTOP_DIR XDG_TEMPLATES_DIR XDG_DOWNLOAD_DIR XDG_PUBLICSHARE_DIR XDG_DOCUMENTS_DIR XDG_MUSIC_DIR XDG_PICTURES_DIR XDG_VIDEOS_DIR
-        xdg-open "$newfile"
-    }
-fi
-
 xr-scale() {
     # get settings from xrandr
     xrandr=$(LC_ALL=C xrandr)
@@ -574,21 +501,6 @@ xr-scale() {
     echo "size: ${x}x${y}"
     echo "scale: ${scale}"
     xrandr --output "${output}" --mode "${x_default}x${y_default}" --panning "${x}x${y}" --scale "${scale}x${scale}"
-}
-
-rollback() {
-    base="ftp://seblu.net/archlinux/arm/packages"
-    arch=$(uname -m)
-
-    if [[ "$1" == "list" ]]; then
-        url="${base}/${2:0:1}/${2}/"
-        avail=$(command curl -ss -l "$url" --user anonymous:anonymous | grep -e $arch -e any.pkg)
-        echo "$avail"
-    else
-        pkgname=$(echo "$1" | rev | cut -d "-" -f 4- | rev)
-        url="${base}/${pkgname:0:1}/${pkgname}"
-        command curl -o "/tmp/$1" --progress-bar "$url/$1" --user anonymous:anonymous && sudo pacman -U "/tmp/$1" && rm "/tmp/$1"
-    fi
 }
 
 russian-roulette() {
@@ -670,19 +582,10 @@ if [ "$commands[machinectl]" ]; then
 fi
 
 if [ "$commands[netctl]" ]; then
-    user_nc_commands=(
-        list status is-enabled)
-    sudo_nc_commands=(
-        start stop stop-all restart switch-to enable disable
-        reenable)
+    user_nc_commands=(list status is-enabled)
+    sudo_nc_commands=(start stop stop-all restart switch-to enable disable reenable)
     for c in $user_nc_commands; do; alias nc-$c="netctl $c"; done
     for c in $sudo_nc_commands; do; alias nc-$c="sudo netctl $c"; done
-fi
-
-if [  -n "$commands[pushbullet.sh]" ]; then
-    alias pushf='pushbullet.sh push "Xperia ZL" file'
-    alias pusht='pushbullet.sh push "Xperia ZL" note Text'
-    alias pushl='pushbullet.sh push "Xperia ZL" link Link'
 fi
 
 nfo() {

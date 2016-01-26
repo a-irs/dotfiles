@@ -208,7 +208,7 @@ def append_playlist(trackId, playlist_name, playlist_type='absolute'):
             elif playlist_type == 'mpd':
                 f.write(CACHE[trackId].replace(main_dir + '/', 'gmusic/') + '\n')
             elif playlist_type == 'lms':
-                f.write(CACHE[trackId].replace(main_dir + '/', '../gmusic/') + '\n')
+                f.write(CACHE[trackId].replace(main_dir + '/', 'tmp:///mnt/music/gmusic/') + '\n')
             else:
                 f.write(CACHE[trackId] + '\n')
 
