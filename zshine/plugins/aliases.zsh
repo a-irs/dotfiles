@@ -589,10 +589,3 @@ fi
 nfo() {
     iconv -f cp437 -t utf8 "$@" | less -Q
 }
-
-kodi-youtube() {
-    local host=leno
-    local port=80
-    video_id=$(echo "$1" | tr "?&" "\n\n" | grep "^v=" | cut -d "=" -f 2)
-    curl -s --data-binary "{\"jsonrpc\":\"2.0\",\"id\":\"1\",\"method\":\"Player.Open\",\"params\":{\"item\":{\"file\":\"plugin://plugin.video.youtube/?action=play_video&videoid=${video_id}\"}}}" -H 'content-type: application/json;' "http://$host:$port/jsonrpc"
-}
