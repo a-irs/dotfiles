@@ -1,11 +1,21 @@
+**/.npm
+**/.gem
+**/.node-gyp
+**/.m2/repository
+**/.gnupg/dirmngr-cache.d
+**/.local/share/xorg/*.old
+**/.smb/gencache*
+**/*.pyc
 **/.cache.json
 **/ba
 **/.IntelliJIdea14/system
 **/.atom/packages
+**/.atom/blob-store
+**/.atom/.node-gyp
 **/.atom/.apm
 **/.atom/compile-cache
 **/.config/ario/covers
-**/.config/Atom/Cache
+**/.config/Atom
 **/.config/freshwrapper-data
 **/.git
 **/.svn
@@ -25,7 +35,9 @@
 **/.mozilla/firefox/*/sessionstore-backups
 **/.mozilla/firefox/*/webappsstore.sqlite
 **/.mozilla/firefox/*/storage
-**/.mozilla/firefox/*/extension-data/ublock.sqlite
+**/.mozilla/firefox/*/saved-telemetry-pings
+**/.mozilla/firefox/*/datareporting
+**/.mozilla/firefox/*/extension-data/ublock*.sqlite
 **/Package Control.cache
 **/Cache
 **/cache
