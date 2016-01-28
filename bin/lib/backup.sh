@@ -97,7 +97,7 @@ rm -rf "$t"
 
 b=/media/data/backups
 
-rsync --size-only -av --delete -e "ssh -p 5522" "$b/borg" alex@zshine.net:backups
+rsync --size-only -av --delete -e "ssh -p 5522" "$b/borg/" alex@zshine.net:backups/borg-hosts
 
 REPO=ssh://alex@zshine.net:5522/backups/borg-private
 DATE=$(date +%Y-%m-%d)_$(date +%H-%M-%S)
