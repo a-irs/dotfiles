@@ -105,7 +105,6 @@ BACKUP=( $b/host $b/studium $b/encrypt $b/encrypt-old $b/privat )
 
 borg init --encryption repokey "$REPO" || true
 borg create --verbose --stats \
-    --exclude-caches --exclude-from "$excludes" \
     --one-file-system \
     --compression lz4 \
     --chunker-params 19,23,21,4095 \
