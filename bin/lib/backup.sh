@@ -75,7 +75,7 @@ header 2 "INIT REPOSITORY"
 borg init --encryption repokey "$REPO" || true
 
 header 2 "BACKING UP ${BACKUP[*]}"
-borg create --progress --stats \
+borg create --progress --stats --verbose \
     --exclude-caches --exclude-from "$excludes" \
     --checkpoint-interval 30 \
     --one-file-system \
