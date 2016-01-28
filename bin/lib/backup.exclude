@@ -1,3 +1,7 @@
+**/subsonic.log
+**/dropbox/state
+**/sonarr/state/mediacover
+**/syncthing/state/index
 **/.npm
 **/.gem
 **/.node-gyp

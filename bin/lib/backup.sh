@@ -16,13 +16,12 @@ trap finish EXIT
 
 REPO=root@srv:/media/data/backups/borg/$HOSTNAME
 DATE=$(date +%Y-%m-%d)_$(date +%H-%M-%S)
-
+BACKUP=( $t )
 [[ -d /home ]]           && BACKUP+=( /home )
 [[ -d /etc ]]            && BACKUP+=( /etc )
 [[ -d /root ]]           && BACKUP+=( /root )
 [[ -d /srv ]]            && BACKUP+=( /srv )
 [[ -d /var/spool/cron ]] && BACKUP+=( /var/spool/cron )
-BACKUP+=( /0-backup-info )
 
 header() {
     echo -e "\n$(tput setaf "${1}";tput bold)${2}$(tput init;tput sgr0)\n"
@@ -90,3 +89,26 @@ borg prune --verbose --stats --keep-within 1m "$REPO"
 
 header 2 "CLEANING UP BACKUP INFO FILES in $t"
 rm -rf "$t"
+
+
+############## offsite backup
+
+[[ $HOSTNAME != srv ]] && exit
+
+b=/media/data/backups
+
+rsync --size-only -av --delete -e "ssh -p 5522" "$b/borg" alex@zshine.net:backups
+
+REPO=ssh://alex@zshine.net:5522/backups/borg-private
+DATE=$(date +%Y-%m-%d)_$(date +%H-%M-%S)
+BACKUP=( $b/host $b/studium $b/encrypt $b/encrypt-old $b/privat )
+
+borg init --encryption repokey "$REPO" || true
+borg create --verbose --stats \
+    --exclude-caches --exclude-from "$excludes" \
+    --one-file-system \
+    --compression lz4 \
+    --chunker-params 19,23,21,4095 \
+    "$REPO"::"$DATE" \
+    "${BACKUP[@]}"
+borg prune --verbose --stats --keep-within 1m "$REPO"
