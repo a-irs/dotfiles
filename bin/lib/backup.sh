@@ -31,25 +31,30 @@ if [[ -z "$BORG_PASSPHRASE" ]]; then
     if [[ -f /borg-passphrase ]]; then
         export BORG_PASSPHRASE=$(< /borg-passphrase)
     else
-       read -r -s -p "Passphrase: " BORG_PASSPHRASE
-       echo ''
-       export BORG_PASSPHRASE
+        header 2 "ENTER PASSPHRASE"
+        read -r -s -p "Passphrase: " BORG_PASSPHRASE
+        echo ''
+        export BORG_PASSPHRASE
     fi
 fi
 
+export BORG_CACHE_DIR=/var/tmp/borg
 excludes="$(dirname "$(readlink -f "$0")")/backup.exclude"
 
 if [[ $1 == list ]]; then
+    header 3 "LIST ARCHIVES OF $REPO"
     borg list "$REPO"
     exit
 fi
 
 if [[ $1 == extract ]]; then
+    header 3 "EXTRACT $REPO::$2"
     borg extract --verbose "$REPO"::"$2"
     exit
 fi
 
 if [[ $1 == info ]]; then
+    header 3 "INFO FOR $REPO::$2"
     borg info --verbose "$REPO"::"$2"
     exit
 fi
