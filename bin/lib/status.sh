@@ -32,6 +32,7 @@ sstatus media-data1.mount
 sstatus media-data2.mount
 sstatus media-data3.mount
 echo ""
+dstatus logitechmediaserver
 dstatus samba
 dstatus mariadb
 dstatus sabnzbd
