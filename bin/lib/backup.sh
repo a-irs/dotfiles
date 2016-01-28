@@ -104,7 +104,7 @@ DATE=$(date +%Y-%m-%d)_$(date +%H-%M-%S)
 BACKUP=( $b/host $b/studium $b/encrypt $b/encrypt-old $b/privat )
 
 borg init --encryption repokey "$REPO" || true
-borg create --verbose --stats \
+borg create --verbose --stats --progress \
     --one-file-system \
     --compression lz4 \
     --chunker-params 19,23,21,4095 \
