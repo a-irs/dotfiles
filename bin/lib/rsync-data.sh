@@ -35,7 +35,6 @@ if mount "$TARGET"; then
 		borg init --encryption none "$repo" || true
 		borg create --progress --stats --verbose \
 		    --one-file-system \
-	    	--compression lz4 \
 	    	--chunker-params 19,23,21,4095 \
 	    	"$repo"::"$date" \
 	    	"$d"
