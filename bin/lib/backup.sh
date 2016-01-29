@@ -18,7 +18,6 @@ BACKUP=( $t )
 [[ -d /etc ]]            && BACKUP+=( /etc )
 [[ -d /root ]]           && BACKUP+=( /root )
 [[ -d /srv ]]            && BACKUP+=( /srv )
-[[ -d /var/spool/cron ]] && BACKUP+=( /var/spool/cron )
 
 header() {
     echo -e "\n$(tput setaf "${1}";tput bold)${2}$(tput init;tput sgr0)\n"
