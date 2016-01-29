@@ -11,7 +11,6 @@ b=/media/data/backups
 
 [[ ! -d "$b" ]] && exit 1
 
-header 2 "ENTER PASSPHRASE"
 read -r -s -p "Passphrase: " BORG_PASSPHRASE
 echo ''
 export BORG_PASSPHRASE
