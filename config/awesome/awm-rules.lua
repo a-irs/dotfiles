@@ -28,6 +28,8 @@ local function dynamic_tagging()
                 for _, c in ipairs(all_clients) do
                     if c.instance == "play.google.com__music_listen" or (c.name and string.find(c.name, 'ncmpcpp')) then
                         open_clients = open_clients == "" and "music" or open_clients .. ", music"
+                    elseif c.name and string.find(c.name, 'ssh ') then
+                        open_clients = open_clients == "" and "ssh" or open_clients .. ", ssh"
                     elseif c.class == "Firefox" then
                         open_clients = open_clients == "" and "firefox" or open_clients .. ", firefox"
                     elseif c.class == "Subl3" then
@@ -119,16 +121,12 @@ end)
 -- client exits
 client.connect_signal("unmanage", function(c)
 
-    if c.class == "Kupfer.py" then
-        return
-    end
-
     -- return to last tag and reset settings when last window is closed
     if is_empty(awful.tag.selected()) then
         awful.tag.setmwfact(0.5)
         awful.tag.setnmaster(1)
         awful.tag.setncol(1)
-        awful.tag.history.restore()
+        if c.class ~= "Kupfer.py" then awful.tag.history.restore() end
     end
 
     dynamic_tagging()
