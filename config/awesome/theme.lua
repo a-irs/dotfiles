@@ -17,7 +17,7 @@ theme.bg_focus                      = "#485a70"
 theme.bg_urgent                     = "#aa0000"
 theme.fg_normal                     = "#aaaaaa"
 theme.fg_focus                      = "#ffffff"
-theme.fg_urgent                     = "#ce4756"
+theme.fg_urgent                     = "#ffffff"
 
 theme.border_width                  = 0
 
@@ -51,7 +51,7 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 -- WIDGETS
 
 theme.font                          = "Cure 8"
-theme.taglist_font                  = "Clean 8"
+theme.taglist_font                  = "Cure 8"
 theme.show_tag_names                = true
 -- theme.taglist_squares_unsel         = xpm_folder .. "/indicator.xpm"
 

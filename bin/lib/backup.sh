@@ -37,7 +37,7 @@ case $1 in
         borg list "$REPO"
         exit
         ;;
-    extract)
+    extract|restore)
         header 3 "EXTRACT $REPO::$2"
         borg extract --verbose "$REPO"::"$2"
         exit

@@ -24,12 +24,21 @@ local function dynamic_tagging()
             if is_empty(t) then
                 t.name = "□"
             else
-                t.name = "■"
+                open_clients = ""
                 for _, c in ipairs(all_clients) do
                     if c.instance == "play.google.com__music_listen" or (c.name and string.find(c.name, 'ncmpcpp')) then
-                        t.name = "♬"
+                        open_clients = open_clients == "" and "music" or open_clients .. ", music"
+                    elseif c.class == "Firefox" then
+                        open_clients = open_clients == "" and "firefox" or open_clients .. ", firefox"
+                    elseif c.class == "Subl3" then
+                        open_clients = open_clients == "" and "sublime" or open_clients .. ", sublime"
+                    elseif c.class == "Termite" then
+                        open_clients = open_clients == "" and "term" or open_clients .. ", term"
+                    else
+                        open_clients = open_clients == "" and c.class:lower() or open_clients .. ", " .. c.class:lower()
                     end
                 end
+                t.name = " ■ " .. open_clients .. " "
             end
         end
     end

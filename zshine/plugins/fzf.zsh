@@ -1,4 +1,4 @@
-alias fzf="ruby $ZSHINE_DIR/plugins/fzf/fzf --extended-exact --no-256"
+alias fzf="ruby $ZSHINE_DIR/plugins/fzf/fzf --extended --no-256"
 
 __fsel() {
     command find . \
@@ -6,6 +6,12 @@ __fsel() {
         -o -path \*Cache\* \
         -o -path \*cache\* \
         -o -path \*/.atom/packages \
+        -o -path \*/.atom/.node-gyp \
+        -o -path \*/.atom/.apm \
+        -o -path \*/.gem \
+        -o -path \*/.kodi/userdata/thumbnails \
+        -o -path \*/.npm \
+        -o -path \*/.m2 \
         -o -name \*.pyc \
     \) -prune \
     -o -type f -print \
