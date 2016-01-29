@@ -11,6 +11,11 @@ b=/media/data/backups
 
 [[ ! -d "$b" ]] && exit 1
 
+header 2 "ENTER PASSPHRASE"
+read -r -s -p "Passphrase: " BORG_PASSPHRASE
+echo ''
+export BORG_PASSPHRASE
+
 rsync --size-only -av --delete -e "ssh -p 5522" "$b/borg/" alex@zshine.net:backups/borg-hosts
 
 REPO=ssh://alex@zshine.net:5522/home/alex/backups/borg-private
