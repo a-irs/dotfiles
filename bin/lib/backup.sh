@@ -2,19 +2,16 @@
 
 set -e
 
-if [[ $UID != 0 ]]; then
-    echo "run as root"
-    exit 1
-fi
+[[ $UID != 0 ]] && { echo "$(tput setaf 1)run as root"; exit 1; }
 
-t=/0-backup-info
+TARGET=/media/crypto/borg
+USER_HOST=root@srv
 
-finish() {
-    rm -rf "$t"
-}
-trap finish EXIT
+ssh $USER_HOST test -d $TARGET || { echo "$(tput setaf 1)$USER_HOST:$TARGET does not exist"; exit 1; }
 
-REPO=root@srv:/media/crypto/borg/$HOSTNAME
+t=/0-info
+
+REPO=$USER_HOST:$TARGET/$HOSTNAME
 DATE=$(date +%Y-%m-%d)_$(date +%H-%M-%S)
 BACKUP=( $t )
 [[ -d /home ]]           && BACKUP+=( /home )
@@ -27,26 +24,30 @@ header() {
     echo -e "\n$(tput setaf "${1}";tput bold)${2}$(tput init;tput sgr0)\n"
 }
 
+finish() {
+    rm -rf "$t"
+}
+trap finish EXIT
+
 export BORG_CACHE_DIR=/var/tmp/borg
-excludes="$(dirname "$(readlink -f "$0")")/backup.exclude"
 
-if [[ $1 == list ]]; then
-    header 3 "LIST ARCHIVES OF $REPO"
-    borg list "$REPO"
-    exit
-fi
-
-if [[ $1 == extract ]]; then
-    header 3 "EXTRACT $REPO::$2"
-    borg extract --verbose "$REPO"::"$2"
-    exit
-fi
-
-if [[ $1 == info ]]; then
-    header 3 "INFO FOR $REPO::$2"
-    borg info --verbose "$REPO"::"$2"
-    exit
-fi
+case $1 in
+    list|ls)
+        header 3 "LIST ARCHIVES OF $REPO"
+        borg list "$REPO"
+        exit
+        ;;
+    extract)
+        header 3 "EXTRACT $REPO::$2"
+        borg extract --verbose "$REPO"::"$2"
+        exit
+        ;;
+    info)
+        header 3 "INFO FOR $REPO::$2"
+        borg info --verbose "$REPO"::"$2"
+        exit
+        ;;
+esac
 
 header 2 "INFORMATION ABOUT BACKUP"
 echo "  - TARGET:   $(tput setaf 4)$REPO$(tput init;tput sgr0)::$DATE"
@@ -71,7 +72,7 @@ borg init --encryption none "$REPO" || true
 header 2 "BACKING UP ${BACKUP[*]}"
 borg create \
     --progress --stats --verbose \
-    --exclude-caches --exclude-from "$excludes" \
+    --exclude-caches --exclude-from "$(dirname "$(readlink -f "$0")")/backup.exclude" \
     --checkpoint-interval 30 \
     --one-file-system \
     --compression lz4 \
