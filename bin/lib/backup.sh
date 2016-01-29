@@ -84,4 +84,4 @@ borg create \
 # borg prune --verbose --stats --keep-within 1m "$REPO"
 
 header 2 "CLEANING UP BACKUP INFO FILES in $t"
-rm -rf "$t"
+rm -rfv "$t"
