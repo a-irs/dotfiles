@@ -27,16 +27,10 @@ header() {
     echo -e "\n$(tput setaf "${1}";tput bold)${2}$(tput init;tput sgr0)\n"
 }
 
-if [[ -z "$BORG_PASSPHRASE" ]]; then
-    if [[ -f /borg-passphrase ]]; then
-        export BORG_PASSPHRASE=$(< /borg-passphrase)
-    else
-        header 2 "ENTER PASSPHRASE"
-        read -r -s -p "Passphrase: " BORG_PASSPHRASE
-        echo ''
-        export BORG_PASSPHRASE
-    fi
-fi
+header 2 "ENTER PASSPHRASE"
+read -r -s -p "Passphrase: " BORG_PASSPHRASE
+echo ''
+export BORG_PASSPHRASE
 
 export BORG_CACHE_DIR=/var/tmp/borg
 excludes="$(dirname "$(readlink -f "$0")")/backup.exclude"
