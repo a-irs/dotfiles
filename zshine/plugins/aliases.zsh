@@ -238,29 +238,6 @@ if [ "$commands[xdg-open]" ]; then
     }
 fi
 
-if [ "$commands[encfs]" ]; then
-    enc-mount() {
-        dir=${1:-encrypt}
-        mkdir ~/"$dir"{,-locked} && \
-        mkdir ~/"$dir" && \
-        sshfs srv:/media/crypto/"$dir" ~/"$dir"-locked && \
-        encfs ~/"$dir"-locked ~/"$dir" && \
-        find ~/.thumbnails > ~/."$dir"-thumbs-before && \
-        cd ~/"$dir"
-    }
-    enc-umount() {
-        dir=${1:-encrypt}
-        [[ "$PWD" == ~/"$dir"* ]] && cd
-        fusermount -u ~/"$dir"
-        fusermount -u ~/"$dir"-locked
-        rmdir ~/"$dir"
-        rmdir ~/"$dir"-locked
-        find ~/.thumbnails > ~/."$dir"-thumbs-after
-        diff ~/."$dir"-thumbs-* 2> /dev/null | awk '{print $NF}' | tail -n +2 | xargs rm -f
-        rm -f ~/."$dir"-thumbs-* 2> /dev/null
-    }
-fi
-
 if [ "$commands[adb]" ]; then
     alias adb-forward='adb forward tcp:2222 tcp:22'
     alias adb-ssh='ssh root@localhost -p 2222'
