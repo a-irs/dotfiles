@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+echo "UNUSABLE AT THE MOMENT"
+exit 1
+
 set -e
 
 if [[ $UID != 0 ]]; then
@@ -7,8 +10,7 @@ if [[ $UID != 0 ]]; then
     exit 1
 fi
 
-b=/media/data/backups
-
+b=/media/crypto/backups
 [[ ! -d "$b" ]] && exit 1
 
 read -r -s -p "Passphrase: " BORG_PASSPHRASE

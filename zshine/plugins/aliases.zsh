@@ -243,7 +243,7 @@ if [ "$commands[encfs]" ]; then
         dir=${1:-encrypt}
         mkdir ~/"$dir"{,-locked} && \
         mkdir ~/"$dir" && \
-        sshfs srv:/media/data/backups/"$dir" ~/"$dir"-locked && \
+        sshfs srv:/media/crypto/"$dir" ~/"$dir"-locked && \
         encfs ~/"$dir"-locked ~/"$dir" && \
         find ~/.thumbnails > ~/."$dir"-thumbs-before && \
         cd ~/"$dir"

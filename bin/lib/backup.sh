@@ -14,7 +14,7 @@ finish() {
 }
 trap finish EXIT
 
-REPO=root@srv:/media/data/backups/borg/$HOSTNAME
+REPO=root@srv:/media/crypto/borg/$HOSTNAME
 DATE=$(date +%Y-%m-%d)_$(date +%H-%M-%S)
 BACKUP=( $t )
 [[ -d /home ]]           && BACKUP+=( /home )
@@ -26,11 +26,6 @@ BACKUP=( $t )
 header() {
     echo -e "\n$(tput setaf "${1}";tput bold)${2}$(tput init;tput sgr0)\n"
 }
-
-header 2 "ENTER PASSPHRASE"
-read -r -s -p "Passphrase: " BORG_PASSPHRASE
-echo ''
-export BORG_PASSPHRASE
 
 export BORG_CACHE_DIR=/var/tmp/borg
 excludes="$(dirname "$(readlink -f "$0")")/backup.exclude"
@@ -59,22 +54,23 @@ echo "  - SOURCES:  $(tput setaf 4)${BACKUP[*]}$(tput init;tput sgr0)"
 
 header 2 "MAKING BACKUP INFO FILES in $t"
 mkdir -p $t
-echo "  - PACMAN PACKAGES"
+echo "  - PACMAN PACKAGES → packages.txt"
 pacman -Qe | sort > $t/packages.txt
-echo "  - PARTITION LAYOUT OF /dev/sda"
+echo "  - PARTITION LAYOUT OF /dev/sda → disk-fdisk-sda.txt"
 LC_ALL=C fdisk -l /dev/sda > $t/disk-fdisk-sda.txt
 if [[ $HOSTNAME == dell ]]; then
-    echo "  - LUKS DUMP OF /dev/sda5"
+    echo "  - LUKS DUMP OF /dev/sda5 → disk-luks-sda5.txt"
     LC_ALL=C cryptsetup luksDump /dev/sda5 > $t/disk-luks-sda5.txt
-    echo "  - LUKS HEADER BACKUP OF /dev/sda5"
+    echo "  - LUKS HEADER BACKUP OF /dev/sda5 → disk-luks-header-sda5.img"
     cryptsetup luksHeaderBackup /dev/sda5 --header-backup-file $t/disk-luks-header-sda5.img
 fi
 
 header 2 "INIT REPOSITORY"
-borg init --encryption repokey "$REPO" || true
+borg init --encryption none "$REPO" || true
 
 header 2 "BACKING UP ${BACKUP[*]}"
-borg create --progress --stats --verbose \
+borg create \
+    --progress --stats --verbose \
     --exclude-caches --exclude-from "$excludes" \
     --checkpoint-interval 30 \
     --one-file-system \
@@ -83,8 +79,8 @@ borg create --progress --stats --verbose \
     "$REPO"::"$DATE" \
     "${BACKUP[@]}"
 
-header 2 "PRUNING BACKUPS OLDER THAN 1 MONTH"
-borg prune --verbose --stats --keep-within 1m "$REPO"
+# header 2 "PRUNING BACKUPS OLDER THAN 1 MONTH"
+# borg prune --verbose --stats --keep-within 1m "$REPO"
 
 header 2 "CLEANING UP BACKUP INFO FILES in $t"
 rm -rf "$t"
