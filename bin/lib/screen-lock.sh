@@ -2,17 +2,11 @@
 
 # lock
 
-logger "preparing screenshot"
 killall i3lock
-tmpbg=/tmp/screen.png
 icon=~/.bin/lib/screen-lock.png
-scrot -z -q 100 "$tmpbg"
-convert -limit thread 2 "$tmpbg" -scale 10% -scale 1000% -strip "$tmpbg"
-convert -limit thread 2 "$tmpbg" "$icon" -gravity center -composite -matte "$tmpbg"
 
 logger "locking screen"
-i3lock --image="$tmpbg" --show-failed-attempts --ignore-empty-password
-rm -f "$tmpbg"
+i3lock --image="$icon" --tiling --color=303E5B --show-failed-attempts --ignore-empty-password
 
 
 (($# == 0)) && exit
@@ -20,8 +14,8 @@ rm -f "$tmpbg"
 # suspend
 
 logger "stopping services"
-mpc pause
-killall ncmpcpp
+mpc pause 2> /dev/null
+killall ncmpcpp 2> /dev/null
 dropbox-cli stop
 
 logger "suspending"
