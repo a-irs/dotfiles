@@ -54,9 +54,6 @@ if mount "$TARGET"; then
 		    "$TARGET"
 	done
 
-        date=$(date +%Y-%m-%d)_$(date +%H-%M-%S)
-	pv < /dev/disk/by-uuid/30e17b83-aaa2-4164-9248-00610b01ffed > $TARGET/crypto_$date.img
-
 	sync
 	umount -lf "$TARGET"
 	sleep 5s
