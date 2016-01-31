@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e
 
@@ -9,6 +9,9 @@ control_c() {
   sync
   umount -lf "$TARGET"
   sync
+  umount /mnt || true
+  cryptsetup close crypto-usb || true
+  losetup -d /dev/loop0 || true
   exit $?
 }
 trap control_c SIGINT
@@ -20,7 +23,6 @@ BACKUP=(
 	/media/data/virtualbox
 	/media/data/games
 	/media/data/videos/kids
-	/dev/disk/by-uuid/30e17b83-aaa2-4164-9248-00610b01ffed
 )
 
 delay=0.3
@@ -28,17 +30,32 @@ delay=0.3
 if mount "$TARGET"; then
 	echo -e '\a' > /dev/console
 
+        ~/.bin/lib/mount-crypto.sh
+        losetup /dev/loop0 $TARGET/crypto.img
+        cryptsetup open /dev/loop0 crypto-usb
+        mount /dev/mapper/crypto-usb /mnt
+
+        date=$(date +%Y-%m-%d)_$(date +%H-%M-%S)
+        rsync -av -h --delete --stats \
+                --log-file="/mnt/crypto.log" \
+                --backup --backup-dir="/mnt/0-archive/$date/" \
+                /media/crypto/ /mnt
+        umount /mnt
+        cryptsetup close crypto-usb
+        losetup -d /dev/loop0
+
 	for d in "${BACKUP[@]}"; do
 		date=$(date +%Y-%m-%d)_$(date +%H-%M-%S)
-		repo=$TARGET/"$(basename "$d")"
-
-		borg init --encryption none "$repo" || true
-		borg create --progress --stats --verbose \
-		    --one-file-system \
-	    	--chunker-params 19,23,21,4095 \
-	    	"$repo"::"$date" \
-	    	"$d"
+		dir=$(basename "$d")
+		rsync -av -h --delete --stats \
+		    --log-file="$TARGET/$dir.log" \
+		    --backup --backup-dir="$TARGET/0-archive/$dir/$date/" \
+		    "$d" \
+		    "$TARGET"
 	done
+
+        date=$(date +%Y-%m-%d)_$(date +%H-%M-%S)
+	pv < /dev/disk/by-uuid/30e17b83-aaa2-4164-9248-00610b01ffed > $TARGET/crypto_$date.img
 
 	sync
 	umount -lf "$TARGET"

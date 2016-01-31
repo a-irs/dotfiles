@@ -13,7 +13,7 @@ if [[ $1 == close ]]; then
     exit
 fi
 
-mkdir $MOUNTPOINT
+mkdir -p $MOUNTPOINT
 cryptsetup luksOpen /dev/disk/by-uuid/$UUID $MAPPER_NAME
 mount /dev/mapper/$MAPPER_NAME $MOUNTPOINT
 cd $MOUNTPOINT
