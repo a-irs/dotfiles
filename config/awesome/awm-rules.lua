@@ -18,39 +18,45 @@ rules.rules = {
 
 local function dynamic_tagging()
     for s = 1, screen.count() do
-        local all_tags = awful.tag.gettags(s)
-        for _, t in ipairs(all_tags) do
-            all_clients = t:clients()
+        for _, t in ipairs(awful.tag.gettags(s)) do
             if is_empty(t) then
                 t.name = "□"
             else
-                open_clients = ""
-                for _, c in ipairs(all_clients) do
+                name = ""
+                for _, c in ipairs(t:clients()) do
                     if c.class == nil or c.class == "" or c.class == "Kupfer.py" then
                         break
                     elseif c.instance == "play.google.com__music_listen" or (c.name and string.find(c.name, 'ncmpcpp')) then
-                        open_clients = open_clients == "" and "music" or open_clients .. ", music"
+                        name = name == "" and "music" or name .. ", music"
                     elseif c.name and string.find(c.name, 'ssh ') then
-                        open_clients = open_clients == "" and "ssh" or open_clients .. ", ssh"
+                        name = name == "" and "ssh" or name .. ", ssh"
                     elseif c.class == "Firefox" then
-                        open_clients = open_clients == "" and "firefox" or open_clients .. ", firefox"
+                        name = name == "" and "firefox" or name .. ", firefox"
                     elseif string.find(c.class:lower(), "libreoffice") then
-                        open_clients = open_clients == "" and "office" or open_clients .. ", office"
+                        name = name == "" and "office" or name .. ", office"
                     elseif c.class == "Subl3" then
-                        open_clients = open_clients == "" and "sublime" or open_clients .. ", sublime"
+                        name = name == "" and "sublime" or name .. ", sublime"
                     elseif c.class == "Thunar" then
-                        open_clients = open_clients == "" and "files" or open_clients .. ", files"
+                        name = name == "" and "files" or name .. ", files"
                     elseif c.class == "Termite" then
-                        open_clients = open_clients == "" and "term" or open_clients .. ", term"
+                        name = name == "" and "term" or name .. ", term"
                     else
-                        open_clients = open_clients == "" and c.class:lower() or open_clients .. ", " .. c.class:lower()
+                        name = name == "" and c.class:lower() or name .. ", " .. c.class:lower()
                     end
                 end
-                t.name = " ■ " .. open_clients .. " "
+                t.name = " ■ " .. name .. " "
             end
         end
     end
 end
+
+local t = timer({ timeout = 2 })
+t:connect_signal("timeout",
+    function()
+        dynamic_tagging()
+    end
+)
+t:start()
 
 local function handle_floater(c)
     c.ontop = awful.client.floating.get(c)
