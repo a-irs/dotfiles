@@ -26,14 +26,20 @@ local function dynamic_tagging()
             else
                 open_clients = ""
                 for _, c in ipairs(all_clients) do
-                    if c.instance == "play.google.com__music_listen" or (c.name and string.find(c.name, 'ncmpcpp')) then
+                    if c.class == nil or c.class == "" or c.class == "Kupfer.py" then
+                        break
+                    elseif c.instance == "play.google.com__music_listen" or (c.name and string.find(c.name, 'ncmpcpp')) then
                         open_clients = open_clients == "" and "music" or open_clients .. ", music"
                     elseif c.name and string.find(c.name, 'ssh ') then
                         open_clients = open_clients == "" and "ssh" or open_clients .. ", ssh"
                     elseif c.class == "Firefox" then
                         open_clients = open_clients == "" and "firefox" or open_clients .. ", firefox"
+                    elseif string.find(c.class:lower(), "libreoffice") then
+                        open_clients = open_clients == "" and "office" or open_clients .. ", office"
                     elseif c.class == "Subl3" then
                         open_clients = open_clients == "" and "sublime" or open_clients .. ", sublime"
+                    elseif c.class == "Thunar" then
+                        open_clients = open_clients == "" and "files" or open_clients .. ", files"
                     elseif c.class == "Termite" then
                         open_clients = open_clients == "" and "term" or open_clients .. ", term"
                     else
