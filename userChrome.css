@@ -41,4 +41,14 @@
     #tabbrowser-tabs { background-color: #303e5b !important; }
     .tab-background { background-color: #C7C7C7 !important; }
 
+    /* PRIVATE TAB ADDON */
+
+    .tabbrowser-tab[privateTab-isPrivate],
+    .tabbrowser-tab[privateTab-isPrivate] .tab-content {
+        background: #93AFCC !important;
+    }
+    .tabbrowser-tab[privateTab-isPrivate][selected],
+    .tabbrowser-tab[privateTab-isPrivate][selected] .tab-content {
+        background: #BBD7F3 !important;
+    }
 }
