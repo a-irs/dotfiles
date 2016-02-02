@@ -144,10 +144,10 @@ globalkeys = awful.util.table.join(
                 -width 50 \
                 -lines 10 \
                 -bw 5 \
-                -bg '" .. theme.bg_normal .. "' \
-                -bc '" .. theme.bg_normal .. "' \
+                -bg '" .. theme.bg_focus .. "' \
+                -bc '" .. theme.bg_focus .. "' \
                 -fg '#ddd' \
-                -hlbg '#666' \
+                -hlbg '" .. theme.bg_normal .. "' \
                 -hlfg '#fff' \
                 -font 'Monospace 11' \
                 -no-parse-known-hosts \
@@ -170,6 +170,8 @@ globalkeys = awful.util.table.join(
               {description = "run color picker", group = "apps"}),
     awful.key({ alt }, "s",      function () awful.util.spawn("subl3") end,
               {description = "run sublime text", group = "apps"}),
+    awful.key({ alt }, "o",      function () awful.util.spawn(os.getenv("HOME") .. "/.bin/mpv-clipboard.sh", false) end,
+              {description = "mpv-clipboard.sh", group = "apps"}),
 
     awful.key({ "Ctrl", "Shift" }, "dead_circumflex", function() awful.util.spawn(os.getenv("HOME") .. "/.bin/desktop/toggle-res.sh") end,
               {description = "toggle screen resolution", group = "apps"}),
