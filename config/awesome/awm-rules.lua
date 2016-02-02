@@ -30,8 +30,8 @@ local function dynamic_tagging()
                         name = name == "" and "music" or name .. ", music"
                     elseif c.name and string.find(c.name, 'ssh ') then
                         name = name == "" and "ssh" or name .. ", ssh"
-                    elseif c.class == "Firefox" then
-                        name = name == "" and "firefox" or name .. ", firefox"
+                    elseif c.class == "Firefox" or c.class == "Chrome" or c.class == "chromium" then
+                        name = name == "" and "web" or name .. ", web"
                     elseif string.find(c.class:lower(), "libreoffice") then
                         name = name == "" and "office" or name .. ", office"
                     elseif c.class == "Subl3" then
@@ -40,6 +40,8 @@ local function dynamic_tagging()
                         name = name == "" and "files" or name .. ", files"
                     elseif c.class == "Termite" then
                         name = name == "" and "term" or name .. ", term"
+                    elseif c.class == "Zathura" then
+                        name = name == "" and "pdf" or name .. ", pdf"
                     else
                         name = name == "" and c.class:lower() or name .. ", " .. c.class:lower()
                     end
