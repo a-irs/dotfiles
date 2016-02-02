@@ -33,18 +33,18 @@ end
 -- NOTIFICATIONS (NAUGHTY)
 
 theme.naughty_font                  = "Fira Sans Medium 8"
-theme.naughty_padding               = dpi(12)
-theme.naughty_spacing               = dpi(12)
-theme.naughty_border_width          = dpi(6)
-theme.naughty_timeout               = 4
+theme.naughty_padding               = dpi(18)
+theme.naughty_spacing               = dpi(18)
+theme.naughty_border_width          = dpi(4)
+theme.naughty_timeout               = 6
 theme.naughty_position              = "top_right"
 
-theme.naughty_defaults_fg           = '#aaaaaa'
-theme.naughty_defaults_bg           = '#222a34'
+theme.naughty_defaults_fg           = theme.fg_focus
+theme.naughty_defaults_bg           = theme.bg_focus
 theme.naughty_defaults_border_color = theme.naughty_defaults_bg
 
 theme.naughty_critical_fg           = '#ffffff'
-theme.naughty_critical_bg           = '#fa5641'
+theme.naughty_critical_bg           = '#F05F4D'
 theme.naughty_critical_border_color = theme.naughty_critical_bg
 
 

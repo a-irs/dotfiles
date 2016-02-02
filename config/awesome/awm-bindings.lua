@@ -171,7 +171,7 @@ globalkeys = awful.util.table.join(
     awful.key({ alt }, "s",      function () awful.util.spawn("subl3") end,
               {description = "run sublime text", group = "apps"}),
     awful.key({ alt }, "o",      function () awful.util.spawn(os.getenv("HOME") .. "/.bin/mpv-clipboard.sh", false) end,
-              {description = "mpv-clipboard.sh", group = "apps"}),
+              {description = "run mpv-clipboard.sh", group = "apps"}),
 
     awful.key({ "Ctrl", "Shift" }, "dead_circumflex", function() awful.util.spawn(os.getenv("HOME") .. "/.bin/desktop/toggle-res.sh") end,
               {description = "toggle screen resolution", group = "apps"}),
