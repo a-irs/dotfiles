@@ -7,7 +7,7 @@ else
     xpm_folder                      = basedir .. "/xpm_100"
 end
 
-theme.statusbar_height              = dpi(16)
+theme.statusbar_height              = dpi(15)
 theme.statusbar_position            = "top"
 
 -- FG, BG COLORS
