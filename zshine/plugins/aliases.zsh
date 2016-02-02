@@ -348,6 +348,9 @@ if [ "$commands[git]" ]; then
     alias glog='git log --color --patch --stat --decorate --date=relative --all --abbrev-commit'
     alias gpull="builtin cd ~/.dotfiles && git pull"
     alias gpush="builtin cd ~/.dotfiles && git p"
+    clone() {
+        git clone --depth 1 "$1" && cd $(basename $1)
+    }
 fi
 
 psg() {

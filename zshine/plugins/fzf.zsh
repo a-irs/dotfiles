@@ -1,4 +1,4 @@
-alias fzf="ruby $ZSHINE_DIR/plugins/fzf/fzf --extended --no-256"
+alias fzf="ruby $ZSHINE_DIR/plugins/fzf/fzf --extended-exact --no-256"
 
 __fsel() {
     command find . \

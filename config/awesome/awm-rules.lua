@@ -38,6 +38,8 @@ local function dynamic_tagging()
                         name = name == "" and "sublime" or name .. ", sublime"
                     elseif c.class == "Thunar" then
                         name = name == "" and "files" or name .. ", files"
+                    elseif c.class == "Gimp-2.8" then
+                        name = name == "" and "gimp" or name .. ", gimp"
                     elseif c.class == "Termite" then
                         name = name == "" and "term" or name .. ", term"
                     elseif c.class == "Zathura" then
