@@ -51,7 +51,7 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 -- WIDGETS
 
 theme.font                          = "Cure 8"
-theme.taglist_font                  = "Cure 8"
+theme.taglist_font                  = "Cure 5"
 theme.show_tag_names                = true
 -- theme.taglist_squares_unsel         = xpm_folder .. "/indicator.xpm"
 
