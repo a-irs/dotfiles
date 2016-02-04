@@ -34,23 +34,21 @@
     </audio>
     <videolibrary>
         <importwatchedstate>true</importwatchedstate>
-        <dateadded>0</dateadded>
+        <dateadded>1</dateadded>
     </videolibrary>
     <videodatabase>
         <type>mysql</type>
-        <host>srv</host>
         <port>3306</port>
-        <user>xbmc</user>
-        <pass>GtquwKYtYdueTbmI</pass>
-        <name>video</name>
+        <host>10.0.0.10</host>
+        <user>root</user>
+        <pass>root</pass>
     </videodatabase>
     <musicdatabase>
         <type>mysql</type>
-        <host>srv</host>
         <port>3306</port>
-        <user>xbmc</user>
-        <pass>GtquwKYtYdueTbmI</pass>
-        <name>music</name>
+        <host>10.0.0.10</host>
+        <user>root</user>
+        <pass>root</pass>
     </musicdatabase>
     <pathsubstitution>
         <substitute>
