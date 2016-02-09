@@ -4,6 +4,7 @@
 		".gitignore",
 		".gitmodules",
 		"rc",
-		".muttrc"
+		".muttrc",
+		"idx"
 	]
 }
