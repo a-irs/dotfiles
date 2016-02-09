@@ -36,4 +36,4 @@ dstatus logitechmediaserver
 dstatus samba
 dstatus mariadb
 dstatus sabnzbd
-sstatus minidlna.service
+sstatus emby-server

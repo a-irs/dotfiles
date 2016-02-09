@@ -1,3 +1,4 @@
+**/downloads-*
 **/subsonic.log
 **/dropbox/state
 **/sonarr/state/mediacover
@@ -71,3 +72,4 @@
 **/*.pacsave
 **/*~
 **/intellij-out
+
