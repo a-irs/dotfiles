@@ -4,6 +4,8 @@ clip=$(xclip -o -selection clipboard)
 [[ -z "$clip" ]] && clip=$(xclip -o -selection primary)
 [[ -z "$clip" ]] && clip=$(xclip -o -selection secondary)
 
+clip=$(echo "$clip" | tr '\n' ' ')
+
 [[ -z "$clip" ]] && { notify-send -u critical "EMPTY"; exit 1; }
 
 notify-send "$clip"

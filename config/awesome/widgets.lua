@@ -125,9 +125,9 @@ widgets.mpdwidget:set_font(theme.font)
 vicious.register(widgets.mpdwidget, vicious.widgets.mpd,
     function(mpdwidget, args)
         if args["{state}"] == "Play" then
-            return markup(theme.widget_mpd_fg, markup.bold(args["{Artist}"]) .. ' - ' .. args["{Title}"])
+            return " " .. markup(theme.widget_mpd_fg, markup.bold("♫ " .. args["{Title}"]) .. ' (' .. args["{Artist}"] .. ") ")
         else
-            return "          "
+            return ""
         end
     end, 2)
 widgets.mpdwidget:buttons(awful.util.table.join(

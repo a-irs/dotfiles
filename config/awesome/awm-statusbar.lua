@@ -4,9 +4,9 @@ local lain    = require 'lain'
 local naughty = require 'naughty'
 local widgets = require 'widgets'
 
-local function lay(layout, widget, background_color, left, right)
+local function lay(layout, widget, left, right, background_color)
     if widget then
-        layout:add(widgets.make_widget(widget, background_color, left, right))
+        layout:add(widgets.make_widget(widget, left, right, background_color))
     end
 end
 
@@ -21,24 +21,24 @@ mytaglist.buttons = awful.util.table.join(
 systembox = {}
 mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
-                     awful.button({ }, 1, function (c)
-                                              if c == client.focus then
-                                                  c.minimized = true
-                                              else
-                                                  c.minimized = false
-                                                  if not c:isvisible() then
-                                                      awful.tag.viewonly(c.first_tag)
-                                                  end
-                                                  client.focus = c
-                                                  c:raise()
-                                              end
-                                          end))
+    awful.button({ }, 1, function(c)
+        if c == client.focus then
+            c.minimized = true
+        else
+            c.minimized = false
+            if not c:isvisible() then
+                awful.tag.viewonly(c.first_tag)
+            end
+        client.focus = c
+        c:raise()
+        end
+    end))
 myprompt = {}
 
 for s = 1, screen.count() do
-    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
-    mywibox[s] = awful.wibox({ position = theme.statusbar_position, screen = s, height = theme.statusbar_height })
-    myprompt[s] = awful.widget.prompt()
+    mytaglist[s]  = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
+    mywibox[s]    = awful.wibox({ position = theme.statusbar_position, screen = s, height = theme.statusbar_height })
+    myprompt[s]   = awful.widget.prompt()
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, mytasklist.buttons, { fg_normal = theme.tasklist_fg, bg_normal = theme.tasklist_bg, font = theme.tasklist_font })
     --[[
     mylayoutbox[s] = awful.widget.layoutbox(s)
@@ -56,10 +56,10 @@ for s = 1, screen.count() do
     local m = 3
 
     local layout1 = wibox.layout.fixed.horizontal()
+    lay(layout1, widgets.mpdwidget, 0, 0, theme.bg_focus)
     lay(layout1, myprompt[s])
     lay(layout1, mylayoutbox[s])
     lay(layout1, mytasklist[s])
-    lay(layout1, widgets.mpdwidget)
 
     local layout2 = wibox.layout.fixed.horizontal()
     lay(layout2, mytaglist[s])
