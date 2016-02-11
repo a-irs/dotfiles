@@ -16,6 +16,18 @@ rules.rules = {
       callback = awful.client.setslave },
 }
 
+local function make_name(existing_clients, client, wanted_name)
+    if client.minimized then
+        wanted_name = "[" .. wanted_name .. "]"
+    end
+
+    if existing_clients == nil or existing_clients == "" then
+        return wanted_name
+    else
+        return existing_clients .. ", " .. wanted_name
+    end
+end
+
 local function dynamic_tagging()
     for s = 1, screen.count() do
         for _, t in ipairs(awful.tag.gettags(s)) do
@@ -24,28 +36,36 @@ local function dynamic_tagging()
             else
                 name = ""
                 for _, c in ipairs(t:clients()) do
-                    if c.class == nil or c.class == "" or c.class == "Kupfer.py" then
+                    if c.class == "Kupfer.py" then
                         break
                     elseif c.instance == "play.google.com__music_listen" or (c.name and string.find(c.name, 'ncmpcpp')) then
-                        name = name == "" and "music" or name .. ", music"
+                        name = make_name(name, c, "music")
                     elseif c.name and string.find(c.name, 'ssh ') then
-                        name = name == "" and "ssh" or name .. ", ssh"
+                        name = make_name(name, c, "ssh")
                     elseif c.class == "Firefox" or c.class == "Chrome" or c.class == "chromium" then
-                        name = name == "" and "web" or name .. ", web"
+                        name = make_name(name, c, "web")
                     elseif string.find(c.class:lower(), "libreoffice") then
-                        name = name == "" and "office" or name .. ", office"
+                        name = make_name(name, c, "office")
                     elseif c.class == "Subl3" then
-                        name = name == "" and "sublime" or name .. ", sublime"
+                        name = make_name(name, c, "sublime")
                     elseif c.class == "Thunar" then
-                        name = name == "" and "files" or name .. ", files"
+                        name = make_name(name, c, "files")
                     elseif c.class == "Gimp-2.8" then
-                        name = name == "" and "gimp" or name .. ", gimp"
+                        name = make_name(name, c, "gimp")
                     elseif c.class == "Termite" then
-                        name = name == "" and "term" or name .. ", term"
+                        name = make_name(name, c, "term")
+                    elseif c.class == "Gpicview" then
+                        name = make_name(name, c, "image")
+                    elseif c.class == "Engrampa" then
+                        name = make_name(name, c, "archive")
                     elseif c.class == "Zathura" then
-                        name = name == "" and "pdf" or name .. ", pdf"
+                        name = make_name(name, c, "pdf")
                     else
-                        name = name == "" and c.class:lower() or name .. ", " .. c.class:lower()
+                        if c.class == nil or c.class == "" then
+                            name = make_name(name, c, c.name:lower())
+                        else
+                            name = make_name(name, c, c.class:lower())
+                        end
                     end
                 end
                 t.name = " ■ " .. name .. " "
@@ -131,7 +151,11 @@ client.connect_signal("manage", function(c)
         t = awful.tag.gettags(1)[#awful.tag.gettags(1)]
         awful.client.movetotag(t, c)
         awful.tag.viewonly(t)
+    elseif c.class == "Steam" or c.name == "Steam" then
+        t = awful.tag.gettags(1)[#awful.tag.gettags(1)]
+        awful.client.movetotag(t, c)
     end
+
 end)
 
 -- client exits
@@ -150,6 +174,7 @@ end)
 
 client.connect_signal("tagged",   dynamic_tagging)
 client.connect_signal("untagged", dynamic_tagging)
+client.connect_signal("property::minimized", dynamic_tagging)
 
 -- set focus to client under mouse cursor when switching tags
 -- tag.connect_signal("property::selected", function(t)

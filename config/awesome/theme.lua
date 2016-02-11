@@ -55,7 +55,7 @@ theme.taglist_font                  = "Cure 5"
 theme.show_tag_names                = true
 -- theme.taglist_squares_unsel         = xpm_folder .. "/indicator.xpm"
 
-theme.tasklist_font                 = "Fira Sans 8"
+theme.tasklist_font                 = theme.font
 theme.tasklist_fg                   = theme.fg_normal
 theme.tasklist_bg                   = theme.bg_normal
 theme.tasklist_disable_icon         = true

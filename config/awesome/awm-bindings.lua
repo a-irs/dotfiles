@@ -85,6 +85,19 @@ globalkeys = awful.util.table.join(
 
     -- modify windows
 
+    awful.key({ win }, "Down",  function()
+        for _, t in ipairs(awful.tag.selectedlist(1)) do
+            for _, c in ipairs(t:clients()) do
+                if c.minimized then
+                    c.minimized = false
+                    client.focus = c
+                    c:raise()
+                    break
+                end
+            end
+        end
+    end),
+
     awful.key({ win }, "#35", function() -- plus +
         awful.tag.incgap(-1)
     end, {description="increase useless gap", group="useless"}),
@@ -273,7 +286,8 @@ clientkeys = awful.util.table.join(
     awful.key({ alt }, "F4", function(c) c:kill() end),
     awful.key({ win }, "w",  function(c) c:kill() end),
     awful.key({ win }, "q",  function(c) c:kill() end),
-    awful.key({ win }, "m",  awful.titlebar.toggle, { description="toggle active window titlebar", group="bars"})
+    awful.key({ win }, "m",  awful.titlebar.toggle, { description="toggle active window titlebar", group="bars"}),
+    awful.key({ win }, "Up",  function(c) c.minimized = true end)
 )
 
 for i = 1, 9 do

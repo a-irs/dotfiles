@@ -20,14 +20,27 @@ mytaglist.buttons = awful.util.table.join(
                     )
 systembox = {}
 mytasklist = {}
+mytasklist.buttons = awful.util.table.join(
+                     awful.button({ }, 1, function (c)
+                                              if c == client.focus then
+                                                  c.minimized = true
+                                              else
+                                                  c.minimized = false
+                                                  if not c:isvisible() then
+                                                      awful.tag.viewonly(c.first_tag)
+                                                  end
+                                                  client.focus = c
+                                                  c:raise()
+                                              end
+                                          end))
 myprompt = {}
 
 for s = 1, screen.count() do
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
     mywibox[s] = awful.wibox({ position = theme.statusbar_position, screen = s, height = theme.statusbar_height })
     myprompt[s] = awful.widget.prompt()
+    mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, mytasklist.buttons, { fg_focus = theme.tasklist_fg, bg_focus = theme.tasklist_bg, font = theme.tasklist_font })
     --[[
-    mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.focused, false, { fg_focus = theme.tasklist_fg, bg_focus = theme.tasklist_bg, font = theme.tasklist_font })
     mylayoutbox[s] = awful.widget.layoutbox(s)
     mylayoutbox[s]:buttons(awful.util.table.join(
                        awful.button({ }, 1, function() awful.layout.inc(layouts,  1) end),
