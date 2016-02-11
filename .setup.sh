@@ -90,31 +90,10 @@ if [[ -f /usr/bin/kupfer ]]; then
     cp -f "$this_dir/kupfer-recdirs.py" ~/.local/share/kupfer/plugins/recdirs.py
 fi
 
-if [[ -f /usr/bin/mpd ]]; then
-    touch -a ~/.config/mpd/{database.gz,state.txt,sticker.sqlite}
-    print_info "set up files for MPD"
-fi
-
 if [[ -f /usr/lib/xorg/modules/drivers/radeon_drv.so ]]; then
     rm -f ~/.compton.conf
     ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/compton-radeon.conf" ~/.compton.conf 2> /dev/null
     print_info "activated compton.conf for Radeon"
-fi
-
-if [[ -f /usr/bin/xfconf-query ]]; then
-    s() {
-        xfconf-query -c "$1" -p "$2" -s "$3" 2> /dev/null
-    }
-    s keyboards /Default/KeyRepeat/Delay 200
-    s keyboards /Default/KeyRepeat/Rate 30
-    s keyboard-layout /Default/XkbDisable false
-    s keyboard-layout /Default/XkbLayout de
-    s keyboard-layout /Default/XkbVariant nodeadkeys
-    s xfce4-session /general/SaveOnExit false
-    s xfwm4 /general/button_layout "CHM|"
-    s xfwm4 /general/mousewheel_rollup false
-    s xfwm4 /general/workspace_count 1
-    print_info "set configs for Xfce"
 fi
 
 if [[ -f /usr/bin/apm ]]; then
