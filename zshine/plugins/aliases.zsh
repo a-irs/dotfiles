@@ -166,7 +166,6 @@ alias cp='cp -i'
 alias ln='ln -i'
 alias mv='mv -i'
 alias mkdir='mkdir -p'
-alias ls='command ls -F -l -h --color=auto --group-directories-first'
 [ "$commands[dmesg]" ] && alias dmesg='dmesg -T --color=auto'
 [ "$commands[make]" ] && alias make="LC_ALL=C make"
 [ "$commands[gcc]" ]  && alias  gcc="LC_ALL=C gcc"
@@ -186,10 +185,11 @@ alias ls='command ls -F -l -h --color=auto --group-directories-first'
 
 
 alias mmv='noglob zmv -W'
-alias l='\ls  -F             --color=auto --group-directories-first'
-alias la='\ls -F -l -h -A    --color=auto --group-directories-first'
-alias l.='\ls -F    -h -d .* --color=auto --group-directories-first'
-alias lt='\ls -F -l -h -t -r --color=auto --group-directories-first'
+alias ls='command ls --quoting-style=literal -F -l -h --color=auto --group-directories-first'
+alias l='\ls  --quoting-style=literal -F             --color=auto --group-directories-first'
+alias la='\ls --quoting-style=literal -F -l -h -A    --color=auto --group-directories-first'
+alias l.='\ls --quoting-style=literal -F    -h -d .* --color=auto --group-directories-first'
+alias lt='\ls --quoting-style=literal -F -l -h -t -r --color=auto --group-directories-first'
 [ "$commands[python]" ] && alias http-share='python -m http.server 10000'
 [ "$commands[watch]" ] && alias ddstatus='sudo watch --interval=1 "pkill -USR1 dd"'
 [[ "$commands[dropbox-cli]" ]] && alias ds='dropbox-cli status'
