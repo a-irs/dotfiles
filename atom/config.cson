@@ -23,6 +23,7 @@
     fontSize: 15
     softWrap: true
     fontFamily: "Monospace"
+    showLineNumbers: false
   "git-diff": {}
   "one-dark-ui":
     layoutMode: "Compact"

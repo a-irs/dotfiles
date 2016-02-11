@@ -29,7 +29,7 @@ size_hints = false
 #modify_other_keys = false
 
 [colors]
-cursor = #eba50c
+cursor = #ffc646
 foreground = #f0f0f0
 foreground_bold = #f0f0f0
 background = #303e5b

@@ -32,6 +32,7 @@ end
 
 
 local programs = {
+    'killall -USR1 termite',
     'nitrogen --restore',
     'parcellite --no-icon',
     'start-pulseaudio-x11',
