@@ -48,7 +48,7 @@ local function dynamic_tagging()
                         name = make_name(name, c, "office")
                     elseif c.class == "Subl3" then
                         name = make_name(name, c, "sublime")
-                    elseif c.class == "Thunar" then
+                    elseif c.class == "Thunar" or c.class == "Pcmanfm" then
                         name = make_name(name, c, "files")
                     elseif c.class == "Gimp-2.8" then
                         name = make_name(name, c, "gimp")

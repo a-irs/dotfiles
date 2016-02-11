@@ -27,3 +27,6 @@ map              w adjust_window width
 map [fullscreen] w adjust_window width
 map              e adjust_window best-fit
 map [fullscreen] e adjust_window best-fit
+
+set recolor-darkcolor  "#dddddd"
+set recolor-lightcolor "#303e5b"

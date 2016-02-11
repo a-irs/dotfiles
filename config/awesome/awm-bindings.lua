@@ -1,5 +1,7 @@
 local volume     = require 'volume'
 local awful      = require 'awful'
+local rules     = require 'awful.rules'
+
 local lain       = require 'lain'
 local naughty    = require 'naughty'
 local beautiful  = require 'beautiful'
@@ -171,18 +173,26 @@ globalkeys = awful.util.table.join(
 
     awful.key({ alt }, "Return", function () awful.util.spawn(user_terminal) end,
               {description = "run terminal", group = "apps"}),
-    awful.key({ alt }, "f",      function () awful.util.spawn("thunar") end,
-              {description = "run thunar", group = "apps"}),
-    awful.key({ alt }, "c",      function () awful.util.spawn("chromium") end,
-              {description = "run browser", group = "apps"}),
+    awful.key({ alt }, "f",      function () awful.util.spawn("pcmanfm") end,
+              {description = "run pcmanfm", group = "apps"}),
+    awful.key({ alt }, "c",      function()
+            local matcher = function(c)
+                return rules.match(c, {class = 'chromium'})
+            end
+            awful.client.run_or_raise('chromium', matcher)
+        end, {description = "run browser", group = "apps"}),
     awful.key({ alt, "Shift" }, "c", function () awful.util.spawn("chromium --incognito") end,
               {description = "run private browser", group = "apps"}),
     awful.key({ win }, "l",      function () awful.util.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh", false) end,
               {description = "lock screen", group = "apps"}),
     awful.key({ alt }, "p",      function () awful.util.spawn(os.getenv("HOME") .. "/.bin/pick-color.sh", false) end,
               {description = "run color picker", group = "apps"}),
-    awful.key({ alt }, "s",      function () awful.util.spawn("subl3") end,
-              {description = "run sublime text", group = "apps"}),
+    awful.key({ alt }, "s",      function()
+            local matcher = function(c)
+                return rules.match(c, {class = 'Subl3'})
+            end
+            awful.client.run_or_raise('subl3', matcher)
+        end, {description = "run sublime text", group = "apps"}),
     awful.key({ alt }, "o",      function () awful.util.spawn(os.getenv("HOME") .. "/.bin/mpv-clipboard.sh", false) end,
               {description = "run mpv-clipboard.sh", group = "apps"}),
 
