@@ -44,7 +44,7 @@ local function dynamic_tagging()
                         name = make_name(name, c, "ssh")
                     elseif c.class == "Firefox" or c.class == "Chrome" or c.class == "chromium" then
                         name = make_name(name, c, "web")
-                    elseif string.find(c.class:lower(), "libreoffice") then
+                    elseif c.class ~= nil and string.find(c.class:lower(), "libreoffice") then
                         name = make_name(name, c, "office")
                     elseif c.class == "Subl3" then
                         name = make_name(name, c, "sublime")

@@ -39,7 +39,7 @@ for s = 1, screen.count() do
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
     mywibox[s] = awful.wibox({ position = theme.statusbar_position, screen = s, height = theme.statusbar_height })
     myprompt[s] = awful.widget.prompt()
-    mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, mytasklist.buttons, { fg_focus = theme.tasklist_fg, bg_focus = theme.tasklist_bg, font = theme.tasklist_font })
+    mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, mytasklist.buttons, { fg_normal = theme.tasklist_fg, bg_normal = theme.tasklist_bg, font = theme.tasklist_font })
     --[[
     mylayoutbox[s] = awful.widget.layoutbox(s)
     mylayoutbox[s]:buttons(awful.util.table.join(

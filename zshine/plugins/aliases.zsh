@@ -292,6 +292,12 @@ fi
 
 alias sudoe="sudoedit"
 
+makeimg() {
+    color=$1
+    convert -size 100x100 xc:\#$color $color.png
+}
+alias makeimg='noglob makeimg'
+
 highlight()       {
     grep --color -E "$1|$"
 }

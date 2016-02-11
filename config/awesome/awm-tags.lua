@@ -48,7 +48,6 @@ if not enable_tyrannical then
             make_name(nil, 3),
             make_name(nil, 4),
             make_name(nil, 5),
-            make_name(nil, 6),
             }, s, layouts[1])
     end
 
