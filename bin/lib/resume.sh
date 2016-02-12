@@ -11,5 +11,5 @@ nm-online
 
 logger "network online, starting dropboxd"
 sleep 1
-killall dropboxd
+killall dropboxd 2> /dev/null
 $HOME/.dropbox-dist/dropboxd
