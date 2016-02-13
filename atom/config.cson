@@ -20,7 +20,6 @@
     confirmCheckoutHeadRevision: false
     scrollPastEnd: true
     lineHeight: 1.4
-    fontSize: 15
     softWrap: true
     fontFamily: "Monospace"
     showLineNumbers: false

@@ -306,8 +306,6 @@ highlight_files() {
     grep --color -E "$1|$" "${@:2}"
 }
 
-alias dict=trans
-
 if [ "$commands[openvpn]" ]; then
     vpn() {
         set +e
