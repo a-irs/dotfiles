@@ -1,0 +1,92 @@
+directory: /media/data/music/beets
+
+library: /media/data/music/beets/beets.blb
+
+ignore: .* .*~ *.nfo *.sfv *.srr *.m3u
+
+art_filename: folder
+
+asciify_paths: yes
+
+original_date: yes
+
+plugins:
+    # scrub
+    # embedart
+    # zero
+    chroma
+    echonest
+    fetchart
+    lastgenre
+    ftintitle
+    missing
+    badfiles
+    info
+    smartplaylist
+
+threaded: no
+
+smartplaylist:
+    auto: no
+    relative_to: /media/data/music
+    playlist_dir: /media/data/music/playlists_lms
+    playlists:
+        - name: audiobooks.m3u
+          query: 'albumtype:audiobook'
+        - name: all.m3u
+          query: ''
+        - name: new.m3u
+          query: 'added+'
+        - name: 1960s.m3u
+          query: 'year:1960..1969'
+        - name: 1970s.m3u
+          query: 'year:1970..1979'
+        - name: 1980s.m3u
+          query: 'year:1980..1989'
+        - name: 1990s.m3u
+          query: 'year:1990..1999'
+
+zero:
+    auto: no
+    fields: comments
+
+import:
+    move: yes
+
+fetchart:
+    maxwidth: 1024
+    cautious: yes
+    sources: coverart itunes amazon wikipedia google
+
+embedart:
+    maxwidth: 500
+
+paths:
+    albumtype:audiobook: audiobooks/$album ($albumartist)/$track. $title
+    default: albums/%upper{%left{$albumartist,1}}/$albumartist/$year - $album%aunique{}/$track. $title
+    singleton: tracks/%upper{%left{$artist,1}}/$artist/$title
+    comp: sampler/$album%aunique{}/$track. $title
+
+lastgenre:
+    canonical: yes
+    count: 4
+    min_weight: 20
+    separator: ';'
+    source: artist
+
+ftintitle:
+    format: '(feat. {0})'
+
+echonest:
+    auto: no
+    upload: no
+
+replace:
+    '[\x91\x92]': "'"
+    '[\\/]': "-"
+    '^\.': "-"
+    '[\x00-\x1f]': "-"
+    '[<>:"\?\*\|]': ""
+    '\.$': "-"
+    '\s+$': ""
+    '^\s+': ""

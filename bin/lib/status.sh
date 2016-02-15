@@ -34,6 +34,5 @@ sstatus media-data3.mount
 echo ""
 dstatus logitechmediaserver
 dstatus samba
-dstatus mariadb
+dstatus mysql
 dstatus sabnzbd
-sstatus emby-server

@@ -29,6 +29,7 @@ mklink() {
 
 dotfiles=(
     bin
+    config/beets/config.yaml
     config/htop/htoprc
     config/mpd/mpd.conf
     config/mopidy/mopidy.conf
