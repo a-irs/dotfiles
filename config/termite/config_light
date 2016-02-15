@@ -1,0 +1,79 @@
+[options]
+scroll_on_output = false
+scroll_on_keystroke = true
+audible_bell = false
+mouse_autohide = false
+allow_bold = true
+dynamic_title = true
+urgent_on_bell = true
+clickable_url = true
+font = Monospace 9
+scrollback_lines = 10000
+search_wrap = true
+icon_name = terminal
+#geometry = 640x480
+
+# "system", "on" or "off"
+cursor_blink = system
+
+# "block", "underline" or "ibeam"
+cursor_shape = block
+
+# $BROWSER is used by default
+browser = xdg-open
+
+# set size hints for the window
+size_hints = false
+
+# emit escape sequences for other keys modified by Control
+#modify_other_keys = false
+
+[colors]
+cursor = #315f81
+foreground = #2a3750
+foreground_bold = #2a3750
+background = #F0E8D3
+
+########################## DEFAULT THEME
+
+# black.
+color0   = #bdb6a6
+color8   = #bdb6a6
+# red.
+color1   = #e2412c
+color9   = #e2412c
+# green.
+color2   = #7aa650
+color10  = #7aa650
+# yellow.
+color3   = #a8692e
+color11  = #a8692e
+# blue.
+color4   = #4572a4
+color12  = #4572a4
+# magenta.
+color5   = #9e5797
+color13  = #9e5797
+# cyan.
+color6   = #218e74
+color14  = #218e74
+# grey.
+color7   = #5d6981
+color15  = #5d6981
+
+color214 = #face6d
+color237 = #fcdd99
+color238 = #fcd682
+
+##########################
+
+[hints]
+#font = Monospace 12
+#foreground = #dcdccc
+#background = #3f3f3f
+#active_foreground = #e68080
+#active_background = #3f3f3f
+#padding = 2
+#border = #3f3f3f
+#border_width = 0.5
+#roundness = 2.0

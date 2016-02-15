@@ -5,6 +5,17 @@ for c in $noglobs; do
     [[ "$commands[$c]" ]] && alias $c="noglob $c"
 done
 
+if [[ "$commands[termite]" ]]; then
+    toggle-termite() {
+        if [[ $(readlink -f ~/.config/termite/config) == *_light ]]; then
+            ln -sfrv ~/.dotfiles/config/termite/config ~/.config/termite/config
+        else
+            ln -sfrv ~/.dotfiles/config/termite/config_light ~/.config/termite/config
+        fi
+        killall -USR1 termite 2> /dev/null
+    }
+fi
+
 each-file() {
     for f in *(.); do
         echo -e "\n${BOLD_YELLOW}$* ${f}${RESET}\n"
