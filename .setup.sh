@@ -100,25 +100,3 @@ if [[ -f /usr/bin/apm ]]; then
     new_packages=$(comm -23 <(cat "$this_dir/atom/PACKAGES.txt" | sort) <(apm ls -b -i | cut -d@ -f 1 | sort))
     [[ -n "$new_packages" ]] && apm install $new_packages
 fi
-
-if pidof firefox > /dev/null; then
-    echo "Firefox running, exit first!"
-    read
-fi
-
-if ! pidof firefox > /dev/null; then
-    if [[ -d ~/.mozilla/firefox ]]; then
-        profile=$(find ~/.mozilla/firefox -mindepth 1 -maxdepth 1 -type d | head -n 1)
-        mkdir -p "$profile/chrome"
-        ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/userChrome.css" "$profile/chrome/userChrome.css" 2> /dev/null
-        print_info "installed firefox userChrome"
-
-        echo 'user_pref("media.peerconnection.enabled", false);' >> "$profile/prefs.js"
-        echo 'user_pref("media.peerconnection.turn.disable", true);' >> "$profile/prefs.js"
-        echo 'user_pref("media.peerconnection.use_document_iceservers", false);' >> "$profile/prefs.js"
-        echo 'user_pref("media.peerconnection.video.enabled", false);' >> "$profile/prefs.js"
-        echo 'user_pref("media.peerconnection.identity.timeout", 1);' >> "$profile/prefs.js"
-        echo 'user_pref("browser.backspace.action", 0);' >> "$profile/prefs.js"
-        print_info "added prefs to prefs.js"
-    fi
-fi
