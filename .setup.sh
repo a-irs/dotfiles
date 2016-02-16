@@ -44,7 +44,6 @@ dotfiles=(
     openvpn
     psqlrc
     ssh/config
-    templates
     tmux.conf
     zprofile
     zshine
