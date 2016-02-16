@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 is_svn() {
+    [[ $PWD != $ZSHINE_SVN_FOLDER* ]] && return 1
     [[ -d .svn ]] && return 0
 
     if $(svn info >/dev/null 2>&1); then

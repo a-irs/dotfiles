@@ -22,6 +22,7 @@ ZSHINE_GIT_SYMBOL_RENAMED=''
 ZSHINE_GIT_SYMBOL_DELETED=''
 
 ZSHINE_SVN=1
+ZSHINE_SVN_FOLDER=$HOME/ba/stipsys
 ZSHINE_SVN_SIMPLE_DIRTY=1
 ZSHINE_SVN_SHRINK_URL=1
 ZSHINE_SVN_SYMBOL_SIMPLE='●'
@@ -40,7 +41,7 @@ ZSHINE_BATTERY_COLOR_CRIT='red'
 ZSHINE_BATTERY_COLOR_HIGH='green'
 ZSHINE_BATTERY_COLOR_MED='white'
 
-ZSHINE_JOBS=0
+ZSHINE_JOBS=1
 ZSHINE_JOBS_COLOR='214'
 
 ZSHINE_ERROR_COLOR='red'
@@ -76,7 +77,11 @@ if [[ "$TERM" == "linux" ]]; then
     ZSHINE_PROMPT_SYMBOL='>'
 fi
 
-[[ $UID == 0 ]] && ZSHINE_USER=1 && ZSHINE_USER_COLOR='red' && ZSHINE_USER_FG='red'
+if [[ $UID == 0 ]]; then
+    ZSHINE_USER=1
+    ZSHINE_USER_COLOR='red'
+    ZSHINE_USER_FG='red'
+fi
 
 #######################################
 # powerline functions                 #
@@ -122,17 +127,9 @@ _prompt_svn() {
 }
 
 _prompt_ssh() {
-    if [[ $USERNAME == "vagrant" ]]; then
-        prompt_segment $ZSHINE_PATH_FG 232 "VAGRANT"
-    elif pgrep x2goagent -x > /dev/null; then
-        prompt_segment $ZSHINE_SSH_FG $ZSHINE_SSH_BG "X2GO"
-    elif [[ $USERNAME == "docker" ]]; then
-        prompt_segment $ZSHINE_PATH_FG 232 "DOCKER"
-    else
-        [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ] && return
-        ZSHINE_USER=1
-        prompt_segment $ZSHINE_SSH_BG $ZSHINE_SSH_FG "SSH"
-    fi
+    [[ ! "$SSH_CLIENT" && ! "$SSH_TTY" ]] && return
+    ZSHINE_USER=1
+    prompt_segment $ZSHINE_SSH_BG $ZSHINE_SSH_FG "SSH"
 }
 
 _prompt_ranger() {
@@ -140,19 +137,15 @@ _prompt_ranger() {
 }
 
 _prompt_path() {
-    [ ! -w . ] && prompt_segment $ZSHINE_PATH_BG_RO $ZSHINE_PATH_FG_RO ro
+    [[ ! -w ./ ]] && prompt_segment $ZSHINE_PATH_BG_RO $ZSHINE_PATH_FG_RO ro
     prompt_segment $ZSHINE_PATH_BG $ZSHINE_PATH_FG "${PWD/#$HOME/~}"
 }
 
 _prompt_user_host() {
-    if [[ $USER == vagrant ]]; then
-        prompt_segment $ZSHINE_USER_BG $ZSHINE_HOST_COLOR "${HOST/vagrant-/}"
-        return
-    fi
     [[ $ZSHINE_USER == 0 ]] && return
-    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-            ZSHINE_USER=1
-            prompt_segment $ZSHINE_USER_BG "" "%{%F{$ZSHINE_USER_FG}%}%n%{%F{$ZSHINE_HOST_COLOR}%}@%M"
+    if [[ "$SSH_CLIENT" ]] || [[ "$SSH_TTY" ]]; then
+        ZSHINE_USER=1
+        prompt_segment $ZSHINE_USER_BG "" "%{%F{$ZSHINE_USER_FG}%}%n%{%F{$ZSHINE_HOST_COLOR}%}@%M"
     else
         prompt_segment $ZSHINE_USER_BG $ZSHINE_USER_FG "%n"
     fi
@@ -215,7 +208,7 @@ _rprompt_jobs() {
 }
 
 _rprompt_virtualenv() {
-    [ -z "$VIRTUAL_ENV" ] && return
+    [[ "$VIRTUAL_ENV" ]] || return
     rprompt_segment 237 $ZSHINE_HOST_COLOR "${VIRTUAL_ENV##*/}"
 }
 
@@ -247,7 +240,7 @@ _build_right() {
     _rprompt_battery
     _rprompt_date
     _rprompt_virtualenv
-    #_rprompt_userhost
+    # _rprompt_userhost
     _rprompt_jobs
 }
 
