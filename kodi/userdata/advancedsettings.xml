@@ -34,7 +34,7 @@
     </audio>
     <videolibrary>
         <importwatchedstate>true</importwatchedstate>
-        <dateadded>1</dateadded>
+        <dateadded>0</dateadded>
     </videolibrary>
     <videodatabase>
         <type>mysql</type>
