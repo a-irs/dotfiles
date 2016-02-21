@@ -1,5 +1,10 @@
-#!/root/dev/venvs/gmusicapi/bin/python2
+#!/root/dev/venvs/gmdl/bin/python2
 # -*- coding: utf-8 -*-
+
+# BOOTSTRAP INSTRUCTIONS:
+# # package "pkg-config" required on arch linux
+# mkvirtualenv2 gmdl
+# pip install --upgrade gmusicapi==7.0.0 colorama==0.3.6 eyeD3==0.7.9
 
 from __future__ import print_function
 from gmusicapi import Mobileclient
@@ -20,9 +25,9 @@ from requests.packages import urllib3
 from urllib import quote
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-CONFIG_FILE = os.path.expanduser("~/.config/gmdownload.config")
-CACHE_FILE = os.path.expanduser("~/.config/gmdownload.cache")
-OAUTH_FILE = os.path.expanduser("~/.config/gmdownload.oauth")
+CONFIG_FILE = os.path.expanduser("~/.config/gmdl.config")
+CACHE_FILE = os.path.expanduser("~/.config/gmdl.cache")
+OAUTH_FILE = os.path.expanduser("~/.config/gmdl.oauth")
 
 config = SafeConfigParser()
 config.read(CONFIG_FILE)
