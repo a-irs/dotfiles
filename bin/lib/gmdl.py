@@ -1,4 +1,4 @@
-#!/home/alex/dev/venvs/gmusicapi/bin/python2
+#!/root/dev/venvs/gmusicapi/bin/python2
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
