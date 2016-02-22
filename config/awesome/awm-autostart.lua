@@ -45,7 +45,6 @@ local programs = {
     'bash -c "if ! pgrep -x redshift; then redshift& fi"',
     'mkdir -p ' .. os.getenv("HOME") .. '/.thumbnails',
     'ln -sf ' .. os.getenv("HOME") .. '/.thumbnails ' .. os.getenv("HOME") .. '/.cache/thumbnails',
-    'ln -sf ' .. os.getenv("HOME") .. '/.rofi-2.runcache ' .. os.getenv("HOME") .. '/.cache/rofi-2.runcache',
     'xset -dpms ; xset s off',
     hostname == "dell" and 'bash -c "if ! pgrep -x nm-applet; then nm-applet& fi"',
     hostname == "desktop" and 'pgrep -x mpd || mpd',
