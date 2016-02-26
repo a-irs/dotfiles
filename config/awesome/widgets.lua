@@ -1,7 +1,6 @@
 local awful   = require 'awful'
 local wibox   = require 'wibox'
 local lain    = require 'lain'
-local widget_battery = require 'widget_battery'
 local volume  = require 'volume'
 local vicious = require 'vicious'
 local widgets = {}
@@ -50,25 +49,26 @@ end
 -- BATTERY
 
 if hostname == "dell" then
-    widgets.batterywidget = widget_battery({
+    widgets.batterywidget = lain.widgets.bat({
         timeout = 5,
         settings = function()
-            if battery_now.level < 20 then
+            p = tonumber(bat_now.perc)
+            if p < 20 then
                 color = "#db3131"
-            elseif battery_now.level < 40 then
+            elseif p < 40 then
                 color = "#ffff00"
-            elseif battery_now.level < 70 then
+            elseif p < 70 then
                 color = "#ffffff"
             else
                 color = "#90ee90"
             end
 
-            if battery_now.status == "Full" or battery_now.status == "Charging" then
-                a = markup("#ffff00", ' +')
+            if bat_now.status == "Full" or bat_now.status == "Charging" then
+                charg = markup("#ffff00", ' +')
             else
-                a = ''
+                charg = ''
             end
-            widget:set_markup(markup.bold(markup(color, battery_now.level .. a)))
+            widget:set_markup(markup.bold(markup(color, p .. charg)))
         end
     })
 end
