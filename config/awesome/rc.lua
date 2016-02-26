@@ -57,7 +57,7 @@ local function bat_notification()
     end
 end
 if hostname == "dell" then
-    battimer = timer({ timeout = 120 })
+    battimer = timer({ timeout = 60 })
     battimer:connect_signal("timeout", bat_notification)
     battimer:start()
 end
