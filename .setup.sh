@@ -66,6 +66,7 @@ dotfiles_x=(
     config/mpv/scripts/convert_script.lua
     config/mpv/scripts/stats.lua
     config/retroarch/retroarch.cfg
+    config/retroarch/retroarch-core-options.cfg
     config/sublime-text-3/Packages/User
     config/termite/config
     config/user-dirs.dirs
