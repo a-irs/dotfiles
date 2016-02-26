@@ -40,11 +40,11 @@ if hostname == "dell" then
         timeout = 5,
         settings = function()
             p = tonumber(bat_now.perc)
-            if p < 20 then
+            if p <= 15 then
                 color = "#db3131"
-            elseif p < 40 then
+            elseif p <= 40 then
                 color = "#ffff00"
-            elseif p < 70 then
+            elseif p <= 70 then
                 color = "#ffffff"
             else
                 color = "#90ee90"

@@ -40,30 +40,6 @@ function dbg_crit(text)
     naughty.notify({ preset = naughty.config.presets.critical, text = text, timeout = 0 })
 end
 
-
--- battery critical notification
-local function trim(s)
-  return s:find'^%s*$' and '' or s:match'^%s*(.*%S)'
-end
-local function bat_notification()
-  local f_capacity = assert(io.open("/sys/class/power_supply/BAT0/capacity", "r"))
-  local f_status = assert(io.open("/sys/class/power_supply/BAT0/status", "r"))
-  local bat_capacity = tonumber(f_capacity:read("*all"))
-  local bat_status = trim(f_status:read("*all"))
-  if (bat_capacity <= 20 and bat_status == "Discharging") then
-      naughty.notify({
-          preset = naughty.config.presets.critical,
-          text = lain.util.markup.bold("Critical battery!")
-      })
-  end
-end
-if hostname == "dell" then
-    battimer = timer({ timeout = 120 })
-    battimer:connect_signal("timeout", bat_notification)
-    battimer:start()
-end
-
-
 require 'awm-error-handling'
 require 'awm-autostart'
 require 'awm-layouts'
