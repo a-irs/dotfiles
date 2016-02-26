@@ -65,10 +65,12 @@ dotfiles_x=(
     config/mpv/mpv.conf
     config/mpv/scripts/convert_script.lua
     config/mpv/scripts/stats.lua
+    config/retroarch/retroarch.cfg
     config/sublime-text-3/Packages/User
     config/termite/config
     config/user-dirs.dirs
     config/zathura/zathurarc
+    emulationstation/es_systems.cfg
     fonts
     gtkrc-2.0
     icons
