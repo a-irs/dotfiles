@@ -7,26 +7,6 @@ local widgets = {}
 
 markup = lain.util.markup
 
-local function get_genmon(script)
-    local command = os.getenv("HOME") .. "/.bin/lib/genmon/" .. script .. " awesome"
-    local fh = assert(io.popen(command, "r"))
-    local text = fh:read("*l")
-    fh:close()
-    return text
-end
-
-local function make_genmon(script, timeout)
-    local new_widget = wibox.widget.textbox()
-    new_widget:set_markup(get_genmon(script))
-    local new_widget_timer = timer({ timeout = timeout })
-    new_widget_timer:connect_signal("timeout",
-        function() new_widget:set_markup(get_genmon(script)) end
-    )
-    new_widget_timer:start()
-    return new_widget
-end
-
-
 
 function widgets.make_widget(widget, left_margin, right_margin, background_color)
     if left_margin and not right_margin then
@@ -73,9 +53,18 @@ if hostname == "dell" then
     })
 end
 
+
 -- NETWORK
 
-if hostname == "dell" then widgets.netwidget = make_genmon("net.sh", 5) end
+if hostname == "dell" then
+    widgets.netwidget = lain.widgets.base({
+        timeout = 5,
+        cmd = os.getenv("HOME") .. "/.config/awesome/network-info.sh",
+        settings = function()
+            widget:set_markup(output)
+        end
+    })
+end
 
 
 -- VOLUME
@@ -109,10 +98,11 @@ widgets.datewidget = lain.widgets.base({
         widget:set_markup(markup(theme.widget_date_fg, o_it(1) .. " " .. o_it(1)) .. " " .. markup.bold(markup(theme.widget_time_fg, o_it(1))))
     end
 })
-lain.widgets.calendar:attach(widgets.datewidget, { font_size = theme.widget_calendar_font_size,
+lain.widgets.calendar:attach(widgets.datewidget, {
+                                           font_size = theme.widget_calendar_font_size,
                                            font = theme.widget_calendar_font,
-                                           fg = theme.widget_calendar_fg,
-                                           bg = "#222a34",
+                                           fg   = theme.widget_calendar_fg,
+                                           bg   = "#222a34",
 })
 
 
