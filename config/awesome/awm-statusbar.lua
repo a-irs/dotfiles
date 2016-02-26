@@ -38,6 +38,7 @@ end
 if hostname == "dell" then
     batterywidget = lain.widgets.bat({
         timeout = 5,
+        notify = "off",
         settings = function()
             p = tonumber(bat_now.perc)
             if p <= 15 then
@@ -106,10 +107,10 @@ datewidget = lain.widgets.base({
     end
 })
 lain.widgets.calendar:attach(datewidget, {
-    font_size = theme.widget_calendar_font_size,
-    font = theme.widget_calendar_font,
-    fg   = theme.widget_calendar_fg,
-    bg   = "#222a34",
+    font_size = "8",
+    font = "Monospace",
+    fg   = theme.fg_focus,
+    bg   = theme.bg_focus
 })
 
 
