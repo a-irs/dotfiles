@@ -10,7 +10,7 @@ local function lay(layout, widget, left, right, background_color)
     end
 end
 
-volumewidget = widgets.volumewidget
+pulsewidget = widgets.pulsewidget
 mywibox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -66,7 +66,7 @@ for s = 1, screen.count() do
 
     local layout3 = wibox.layout.fixed.horizontal()
     -- lay(layout3, widgets.dropboxwidget, nil, 4, 4)
-    lay(layout3, volumewidget, m)
+    lay(layout3, pulsewidget, m)
     lay(layout3, widgets.netwidget, m)
     lay(layout3, widgets.batterywidget, m)
     lay(layout3, widgets.datewidget, m, m * 2)

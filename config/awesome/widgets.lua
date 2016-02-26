@@ -1,7 +1,6 @@
 local awful   = require 'awful'
 local wibox   = require 'wibox'
 local lain    = require 'lain'
-local widget_pulse = require 'widget_pulse'
 local widget_battery = require 'widget_battery'
 local volume  = require 'volume'
 local vicious = require 'vicious'
@@ -81,17 +80,17 @@ if hostname == "dell" then widgets.netwidget = make_genmon("net.sh", 5) end
 
 -- VOLUME
 
-widgets.volumewidget = widget_pulse({
+widgets.pulsewidget = lain.widgets.pulseaudio({
     timeout = 3,
     settings = function()
-        if volume_now.mute then
-            widget:set_markup(markup.bold(markup(theme.widget_pulse_mute_fg, volume_now.level)))
+        if volume_now.muted =="yes" then
+            widget:set_markup(markup.bold(markup(theme.widget_pulse_mute_fg, volume_now.left)))
         else
-            widget:set_markup(markup.bold(markup(theme.widget_pulse_fg, volume_now.level)))
+            widget:set_markup(markup.bold(markup(theme.widget_pulse_fg, volume_now.left)))
         end
     end
 })
-widgets.volumewidget.widget:buttons(awful.util.table.join(
+widgets.pulsewidget.widget:buttons(awful.util.table.join(
        awful.button({ }, 4, function() volume.increase() end), -- wheel up
        awful.button({ }, 5, function() volume.decrease() end), -- wheel down
        awful.button({ }, 1, function() volume.toggle()   end), -- left click
