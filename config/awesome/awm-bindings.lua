@@ -263,28 +263,28 @@ globalkeys = awful.util.table.join(
 
     awful.key({ win }, ".",
         function()
-            awful.tag.incnmaster(1)
+            awful.tag.incnmaster(1, nil, true)
             local text = "Number of master windows: " .. awful.tag.getnmaster()
             naughty.notify({ text = text, timeout = 1 })
         end,
         {description="increase # of master windows", group="layout"}),
     awful.key({ win }, ",",
         function()
-            awful.tag.incnmaster(-1)
+            awful.tag.incnmaster(-1, nil, true)
             local text = "Number of master windows: " .. awful.tag.getnmaster()
             naughty.notify({ text = text, timeout = 1 })
         end,
         {description="decrease # of master windows", group="layout"}),
     awful.key({ win, alt }, ".",
         function()
-            awful.tag.incncol(1)
+            awful.tag.incncol(1, nil, true)
             local text = "Number of columns: " .. awful.tag.getncol()
             naughty.notify({ text = text, timeout = 1 })
         end,
         {description="increase # of columns", group="layout"}),
     awful.key({ win, alt }, ",",
         function()
-            awful.tag.incncol(-1)
+            awful.tag.incncol(-1, nil, true)
             local text = "Number of columns: " .. awful.tag.getncol()
             naughty.notify({ text = text, timeout = 1 })
         end,
