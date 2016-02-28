@@ -1,6 +1,6 @@
 local volume     = require 'volume'
 local awful      = require 'awful'
-local rules     = require 'awful.rules'
+local rules      = require 'awful.rules'
 
 local lain       = require 'lain'
 local naughty    = require 'naughty'

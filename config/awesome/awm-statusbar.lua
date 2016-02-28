@@ -1,4 +1,5 @@
 local awful   = require 'awful'
+local rules   = require 'awful.rules'
 local wibox   = require 'wibox'
 local lain    = require 'lain'
 local naughty = require 'naughty'
@@ -89,10 +90,15 @@ pulsewidget = lain.widgets.pulseaudio({
     end
 })
 pulsewidget.widget:buttons(awful.util.table.join(
-       awful.button({ }, 4, function() volume.increase() end), -- wheel up
-       awful.button({ }, 5, function() volume.decrease() end), -- wheel down
-       awful.button({ }, 1, function() volume.toggle()   end), -- left click
-       awful.button({ }, 3, function() volume.toggle()   end)  -- right click
+    awful.button({ }, 4, function() volume.increase() end), -- wheel up
+    awful.button({ }, 5, function() volume.decrease() end), -- wheel down
+    awful.button({ }, 1, function() volume.toggle()   end), -- left click
+    awful.button({ }, 3, function() -- right click
+        local matcher = function(c)
+            return rules.match(c, {class = 'Pavucontrol'})
+        end
+        awful.client.run_or_raise('pavucontrol', matcher)
+    end)
 ))
 
 
