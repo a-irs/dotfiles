@@ -80,10 +80,11 @@ end
 pulsewidget = lain.widgets.pulseaudio({
     timeout = 3,
     settings = function()
+        local level = math.floor((volume_now.left + volume_now.right) / 2 / 5 + 0.5) * 5
         if volume_now.muted =="yes" then
-            widget:set_markup(markup.bold(markup(theme.widget_pulse_mute_fg, volume_now.left)))
+            widget:set_markup(markup.bold(markup(theme.widget_pulse_mute_fg, level)))
         else
-            widget:set_markup(markup.bold(markup(theme.widget_pulse_fg, volume_now.left)))
+            widget:set_markup(markup.bold(markup(theme.widget_pulse_fg, level)))
         end
     end
 })
