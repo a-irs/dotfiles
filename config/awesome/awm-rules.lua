@@ -19,6 +19,8 @@ rules.rules = {
 local function make_name(existing_clients, client, wanted_name)
     if client.minimized then
         wanted_name = "[" .. wanted_name .. "]"
+    elseif client.fullscreen then
+        wanted_name = wanted_name .. "^"
     end
 
     if existing_clients == nil or existing_clients == "" then
