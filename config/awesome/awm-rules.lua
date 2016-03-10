@@ -19,6 +19,8 @@ rules.rules = {
 local function make_name(existing_clients, client, wanted_name)
     if client.minimized then
         wanted_name = "[" .. wanted_name .. "]"
+    elseif client.fullscreen then
+        wanted_name = wanted_name .. "^"
     end
 
     if existing_clients == nil or existing_clients == "" then
@@ -32,9 +34,9 @@ local function dynamic_tagging()
     for s = 1, screen.count() do
         for _, t in ipairs(awful.tag.gettags(s)) do
             if is_empty(t) then
-                t.name = "□"
+                t.name = " □ "
             else
-                name = ""
+                local name = ""
                 for _, c in ipairs(t:clients()) do
                     if c.class == "Kupfer.py" then
                         break

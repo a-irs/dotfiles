@@ -2,9 +2,9 @@
 
 em() {
     echo ""
-    echo "-------------------------------------------------"
-    echo $(tput setaf 2;tput bold)${1}$(tput sgr0;tput init)
-    echo "-------------------------------------------------"
+    echo "--------------------------------------------------"
+    echo "$(tput setaf 2;tput bold)${1}$(tput sgr0;tput init)"
+    echo "--------------------------------------------------"
 }
 
 echo ""
@@ -57,6 +57,7 @@ mv -v -- *.nfo "$DEST/$FOLDER/#$REL" 2> /dev/null
 touch "$DEST/$FOLDER/#$REL" 2> /dev/null
 
 em ":: move subtitles (rename manually)"
+shopt -s globstar
 mv -v -- *.srt *.idx *.sub **/*.srt **/*.idx **/*.sub "$DEST/$FOLDER/" 2> /dev/null
 
 em ":: remove unneeded files"

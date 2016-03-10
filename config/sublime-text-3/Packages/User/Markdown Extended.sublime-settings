@@ -1,19 +1,22 @@
 {
-    "color_scheme": "Packages/MarkdownLight/MarkdownLight.tmTheme",
-    "draw_centered": true,
-    "draw_indent_guides": false,
-    "extensions": [
-        "markdown",
-        "mdown",
-        "md",
-        "mkd"
-    ],
-    "highlight_line": true,
-    "gutter": false,
-    "rulers": [],
-    "wrap_width": 80,
-    "spell_check": false,
-    "tab_size": 4,
-    "translate_tabs_to_spaces": true,
-    "trim_trailing_white_space_on_save": true,
+	"draw_centered": true,
+	"draw_indent_guides": false,
+	"extensions":
+	[
+		"markdown",
+		"mdown",
+		"mkd",
+		"md",
+		"md"
+	],
+	"gutter": false,
+	"highlight_line": false,
+	"rulers":
+	[
+	],
+	"spell_check": false,
+	"tab_size": 4,
+	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": true,
+	"wrap_width": 80
 }
