@@ -38,7 +38,7 @@ monitor() {
 }
 
 wait_until_process_not_exists() {
-    while pgrep "$1" > /dev/null; do
+    while pgrep -x "$1" > /dev/null; do
         sleep 0.5
     done
     echo "$1 does not exist any more"

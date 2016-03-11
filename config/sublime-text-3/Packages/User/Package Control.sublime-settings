@@ -23,6 +23,7 @@
 		"SublimeLinter",
 		"SublimeLinter-flake8",
 		"SublimeLinter-lua",
+		"SublimeLinter-pyyaml",
 		"SublimeLinter-shellcheck",
 		"Terminal",
 		"Theme - Hero",

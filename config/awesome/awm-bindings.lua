@@ -149,6 +149,8 @@ globalkeys = awful.util.table.join(
 
     -- launch programs
 
+    awful.key({ win }, "p", function() awful.util.spawn("bash -c 'sleep 0.1 && xset dpms force off'") end,
+        {description = "turn off LCD", group = "apps" }),
 
     awful.key({ win }, "r",
         function()
@@ -171,7 +173,7 @@ globalkeys = awful.util.table.join(
         end,
         {description = "run prompt", group = "apps"}),
 
-    awful.key({ alt }, "Return", function () awful.util.spawn(user_terminal) end,
+    awful.key({ alt }, "Return", function() awful.util.spawn(user_terminal) end,
               {description = "run terminal", group = "apps"}),
     awful.key({ alt }, "f",      function () awful.util.spawn("pcmanfm") end,
               {description = "run pcmanfm", group = "apps"}),
