@@ -8,16 +8,18 @@ em() {
 }
 
 echo ""
-read -er -p "$(tput setaf 1)ONLY CONTINUE IF YOU ARE IN THE FOLDER OF THE DOWNLOADED MOVIE$(tput sgr0;tput init) "
+#read -er -p "$(tput setaf 1)ONLY CONTINUE IF YOU ARE IN THE FOLDER OF THE DOWNLOADED MOVIE$(tput sgr0;tput init) "
 
 DEST=/media/data/videos/movies
 
 echo ""
+m_from_name=$(basename "$PWD" | grep -o '^[^[:digit:]]*' | tr "." " " | xargs)
 while [[ -z "$MOVIE" ]]; do
-    read -er -p "movie:   " MOVIE
+    read -er -i "$m_from_name" -p "movie:   " MOVIE
 done
+y_from_name=$(basename "$PWD" | grep -oE '[1-2][0-9][0-9][0-9]')
 while [[ -z "$YEAR" ]]; do
-    read -er -p "year:    " YEAR
+    read -er -i "$y_from_name" -p "year:    " YEAR
 done
 
 this=$(basename "$PWD")
@@ -53,7 +55,7 @@ mv -v -- *.mp4 "$DEST/$FOLDER/$MOVIE.mp4" 2> /dev/null
 mv -v -- *.m4v "$DEST/$FOLDER/$MOVIE.m4v" 2> /dev/null
 
 em ":: create nfo, release information"
-mv -v -- *.nfo "$DEST/$FOLDER/#$REL" 2> /dev/null
+mv -v -f -- *.nfo "$DEST/$FOLDER/#$REL" 2> /dev/null
 touch "$DEST/$FOLDER/#$REL" 2> /dev/null
 
 em ":: move subtitles (rename manually)"
