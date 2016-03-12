@@ -23,7 +23,7 @@ for SRC in "$@"; do
     read -r -e -i "$password" -p "${YELLOW}PASSWORD: $RESET" input
     password="${input:-$password}"
 
-    if [ -z "$password" ]; then
+    if [[ -z "$password" ]]; then
         d=$(printf "%q" "$DEST/$package_name.nzb")
         scp -q -C "$SRC" "$d"
     else
