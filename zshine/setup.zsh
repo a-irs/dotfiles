@@ -18,12 +18,6 @@ prompt zshine
 # zmv file-renaming
 autoload -U zmv
 
-# auto-escape URLs
-autoload -U url-quote-magic
-zle -N self-insert url-quote-magic
-autoload -Uz bracketed-paste-magic
-zle -N bracketed-paste bracketed-paste-magic
-
 # edit current command line in $EDITOR
 autoload -U edit-command-line
 zle -N edit-command-line
@@ -103,6 +97,7 @@ export BOLD_WHITE=$(tput bold; tput setaf 7)
 export BOLD_GREY=$(tput bold; tput setaf 8)
 
 ZSHINE_PLUGINS=(
+  # magic-paste # auto-quote URLs on paste
   term-title # sets terminal/tab title
   aliases # provides some aliases and functions for daily work
   ls-colors # colors for "ls" command
