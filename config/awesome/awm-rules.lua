@@ -154,11 +154,13 @@ client.connect_signal("manage", function(c)
 
     if (c.class == "Kodi") then
         c.fullscreen = true
-        t = awful.tag.gettags(1)[#awful.tag.gettags(1)]
+        t = awful.tag.add("kodi")
+        awful.tag.setvolatile(true, t)
         awful.client.movetotag(t, c)
         awful.tag.viewonly(t)
     elseif c.class == "Steam" or c.name == "Steam" then
-        t = awful.tag.gettags(1)[#awful.tag.gettags(1)]
+        t = awful.tag.add("steam")
+        awful.tag.setvolatile(true, t)
         awful.client.movetotag(t, c)
     end
 
