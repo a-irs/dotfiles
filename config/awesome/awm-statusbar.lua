@@ -80,7 +80,11 @@ spotifywidget = lain.widgets.base({
     timeout = 2,
     cmd = os.getenv("HOME") .. "/.config/awesome/spotify-info.sh",
     settings = function()
-        widget:set_markup(output)
+        if output == "" then
+            widget:set_markup("")
+        else
+            widget:set_markup(output)
+        end
     end
 })
 
