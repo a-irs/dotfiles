@@ -66,6 +66,9 @@ dotfiles_x=(
     config/mpv/scripts/convert_script.lua
     config/mpv/scripts/stats.lua
     config/retroarch/remap
+    config/retroarch/core-config/scph5500.bin
+    config/retroarch/core-config/scph5501.bin
+    config/retroarch/core-config/scph5502.bin
     config/retroarch/retroarch.cfg
     config/retroarch/retroarch-core-options.cfg
     config/sublime-text-3/Packages/User
