@@ -66,6 +66,8 @@ local function dynamic_tagging()
                         name = make_name(name, c, "archive")
                     elseif c.class == "Zathura" then
                         name = make_name(name, c, "pdf")
+                    elseif c.class == "jetbrains-idea" then
+                        name = make_name(name, c, "intelliJ")
                     else
                         if c.class == nil or c.class == "" then
                             name = make_name(name, c, c.name:lower())
