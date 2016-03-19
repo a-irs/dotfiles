@@ -32,7 +32,6 @@ dotfiles=(
     config/beets/config.yaml
     config/htop/htoprc
     config/mpd/mpd.conf
-    config/mopidy/mopidy.conf
     config/ncmpcpp/config
     config/ranger/rc.conf
     config/ranger/scope.sh

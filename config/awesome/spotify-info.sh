@@ -5,4 +5,4 @@ out=$(dbus-send --print-reply --session --dest=org.mpris.MediaPlayer2.spotify /o
 title=$(echo "$out" | grep -A 1 xesam:title | tail -1 | cut -d\" -f 2)
 artist=$(echo "$out" | grep -A 2 xesam:artist | tail -1 | cut -d\" -f 2)
 
-echo "<span foreground='#ffffff'>♫ <b>$title</b> ($artist)</span> "
+echo " <span foreground='#ffffff'>♫ <b>$title</b> ($artist)</span> "
