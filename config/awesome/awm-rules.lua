@@ -70,7 +70,9 @@ local function dynamic_tagging()
                         name = make_name(name, c, "intelliJ")
                     else
                         if c.class == nil or c.class == "" then
-                            name = make_name(name, c, c.name:lower())
+                            if c.name then
+                                name = make_name(name, c, c.name:lower())
+                            end
                         else
                             name = make_name(name, c, c.class:lower())
                         end

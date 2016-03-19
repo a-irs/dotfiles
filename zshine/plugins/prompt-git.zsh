@@ -18,7 +18,7 @@ git_prompt_info() {
     [[ "$?" -eq 0 ]] && commit="$tag"
     url=$(command git ls-remote --get-url 2> /dev/null)
     if [[ $ZSHINE_GIT_SHRINK_URL == 1 ]]; then
-        if [[ "$url" == *://*github.com/*/*.git ]]; then
+        if [[ "$url" == *://*github.com/*/* ]]; then
             # https://github.com/user/repo.git -> user/repo
             #   git://github.com/user/repo.git -> user/repo
             if [[ "$url" == */ ]]; then

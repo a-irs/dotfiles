@@ -76,6 +76,14 @@ if hostname == "dell" then
 end
 
 
+spotifywidget = lain.widgets.base({
+    timeout = 2,
+    cmd = os.getenv("HOME") .. "/.config/awesome/spotify-info.sh",
+    settings = function()
+        widget:set_markup(output)
+    end
+})
+
 -- VOLUME
 
 pulsewidget = lain.widgets.pulseaudio({
@@ -252,6 +260,7 @@ for s = 1, screen.count() do
 
     local layout1 = wibox.layout.fixed.horizontal()
     lay(layout1, mpdwidget, 0, 0, theme.bg_focus)
+    lay(layout1, spotifywidget, 0, 0, theme.bg_focus)
     lay(layout1, myprompt[s])
     lay(layout1, mylayoutbox[s])
     lay(layout1, mytasklist[s])
