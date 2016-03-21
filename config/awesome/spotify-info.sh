@@ -12,4 +12,3 @@ artist=${artist//&/&amp;}
 if [[ "$title" && "$artist" ]]; then
     echo " <span foreground='#ffffff'>♫ <b>$title</b> ($artist)</span> "
 fi
-
