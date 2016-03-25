@@ -24,8 +24,6 @@ mklink() {
 dotfiles=(
     bin
     config/htop/htoprc
-    config/ranger/rc.conf
-    config/ranger/scope.sh
     gitconfig
     nano-syntax
     nanorc
