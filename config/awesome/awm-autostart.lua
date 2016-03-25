@@ -16,7 +16,6 @@ local needed = {
     "redshift",
     "pcmanfm",
     hostname == "dell" and "nm-applet",
-    hostname == "desktop" and "mpd",
     hostname == "desktop" and "numlockx",
     hostname == "desktop" and "ethtool",
 }
@@ -45,7 +44,6 @@ local programs = {
     'ln -sf ' .. os.getenv("HOME") .. '/.thumbnails ' .. os.getenv("HOME") .. '/.cache/thumbnails',
     'xset -dpms ; xset s off',
     hostname == "dell" and 'bash -c "if ! pgrep -x nm-applet; then nm-applet& fi"',
-    hostname == "desktop" and 'pgrep -x mpd || mpd',
     hostname == "desktop" and 'numlockx',
     hostname == "desktop" and 'sh -c \'sleep 10; sudo ethtool -s eth0 wol g\'',
 }

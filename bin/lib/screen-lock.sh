@@ -15,6 +15,7 @@ i3lock --image="$icon" --tiling --color=303E5B --show-failed-attempts --ignore-e
 
 logger "stopping services"
 mpc pause 2> /dev/null
+dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Pause 2> /dev/null
 killall ncmpcpp 2> /dev/null
 dropbox-cli stop
 

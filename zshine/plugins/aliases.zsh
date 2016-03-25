@@ -226,13 +226,17 @@ capture-keys() {
 
 [ "$commands[aunpack]" ] && alias x='aunpack'
 [ "$commands[latexmk]" ] && alias ltx="latexmk -cd -f -pdf -pvc -outdir=/tmp/latexmk"
-[ "$commands[reflector]" ] && alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose && sudo pacman -Syy"
 [ "$commands[impressive]" ] && alias show='impressive -t FadeOutFadeIn --fade --transtime 300 --mousedelay 500 --nologo --nowheel --noclicks'
 [ "$commands[youtube-dl]" ] && alias yt-audio='youtube-dl -f bestaudio -x -o "%(title)s.%(ext)s"'
 [ "$commands[journalctl]" ] && alias j='sudo journalctl'
 [ "$commands[docker]" ] && alias d='docker'
 [ "$commands[scrot]" ] && alias shoot="sleep 1 && scrot '%Y-%m-%d_%H-%M-%S.png' -e 'mv \$f ~/media/screenshots/'"
 [ "$commands[ncmpc]" ] && alias ncmpc='LC_ALL=en_IE.UTF-8 ncmpc'
+
+if [[ "$commands[reflector]" ]]; then
+    alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist-reflector --verbose && sudo pacman -Syy"
+fi
+
 
 if [ "$commands[xdg-open]" ]; then
     os() {
