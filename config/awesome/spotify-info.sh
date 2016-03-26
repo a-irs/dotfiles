@@ -5,11 +5,11 @@ set -e
 ### slower, worse parsing, but can get paused status
 
 windowtitle=$(wmctrl -lx | awk '$3 ~ /spotify.Spotify/{$1=$2=$3=$4=""; print}' | xargs)
+[[ $windowtitle ]] || exit
 if [[ $windowtitle == "Spotify" ]]; then
     echo ''
     exit
 else
-    status="active"
     artist=$(echo "$windowtitle" | cut -d- -f 1 | xargs)
     title=$(echo "$windowtitle" | cut -d- -f 2- | xargs)
     echo " <span foreground='#eaa12e'>♫ <b>$title</b> ($artist)</span> "
