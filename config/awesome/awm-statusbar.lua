@@ -93,6 +93,10 @@ spotifywidget = lain.widgets.base({
 pulsewidget = lain.widgets.pulseaudio({
     timeout = 3,
     settings = function()
+        if volume_now.left == nil or volume_now.right == nil then
+            widget:set_markup("ERROR")
+            return
+        end
         local level = math.floor((volume_now.left + volume_now.right) / 2 / 5 + 0.5) * 5
         if volume_now.muted =="yes" then
             widget:set_markup(markup.bold(markup(theme.widget_pulse_mute_fg, level)))

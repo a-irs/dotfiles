@@ -152,27 +152,6 @@ globalkeys = awful.util.table.join(
     awful.key({ win }, "p", function() awful.util.spawn("bash -c 'sleep 0.1 && xset dpms force off'") end,
         {description = "turn off LCD", group = "apps" }),
 
-    awful.key({ win }, "r",
-        function()
-            awful.util.spawn("rofi \
-                -disable-history \
-                -show run \
-                -opacity 100 \
-                -width 50 \
-                -lines 10 \
-                -bw 5 \
-                -bg '" .. theme.bg_focus .. "' \
-                -bc '" .. theme.bg_focus .. "' \
-                -fg '#ddd' \
-                -hlbg '" .. theme.bg_normal .. "' \
-                -hlfg '#fff' \
-                -font 'Monospace 11' \
-                -no-parse-known-hosts \
-                -terminal " .. user_terminal,
-            false)
-        end,
-        {description = "run prompt", group = "apps"}),
-
     awful.key({ alt }, "Return", function() awful.util.spawn(user_terminal) end,
               {description = "run terminal", group = "apps"}),
     awful.key({ alt }, "f",      function () awful.util.spawn("pcmanfm") end,

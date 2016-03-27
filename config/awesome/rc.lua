@@ -63,7 +63,6 @@ if hostname == "dell" then
 end
 
 require 'awm-error-handling'
-require 'awm-autostart'
 require 'awm-layouts'
 require 'awm-tags'
 require 'awm-bindings'

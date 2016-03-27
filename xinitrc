@@ -7,9 +7,29 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
     unset f
 fi
 
+# keyboard
 setxkbmap -option caps:escape
 xset r rate 200 30
 xrdb -merge ~/.Xresources
+[[ $HOSTNAME == desktop ]] && numlockx &
+
+# screen
+xset -dpms &
+xset s off &
+
+# applications
+nitrogen --restore &
+parcellite --no-icon &
+kupfer --no-splash &
+pcmanfm --daemon-mode &
+lxpolkit &
+redshift &
+dropbox-cli start &
+mkdir -p ~/.thumbnails &
+ln -sf ~/.thumbnails ~/.cache/thumbnails &
+test $HOSTNAME == dell && nm-applet &
+compton &
+start-pulseaudio-x11
 
 session=${1:-awesome}
 exec "$session"
