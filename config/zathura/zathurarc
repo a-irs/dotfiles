@@ -1,9 +1,9 @@
 set font "Roboto Medium 9"
 set guioptions vh
 set statusbar-home-tilde true
-set statusbar-bg "#303e5b"
+set statusbar-bg "#212D45"
 set statusbar-fg "#ffffff"
-set inputbar-bg "#303e5b"
+set inputbar-bg "#212D45"
 set inputbar-fg "#ffffff"
 set page-padding 5
 set zoom-step 5
@@ -29,4 +29,4 @@ map              e adjust_window best-fit
 map [fullscreen] e adjust_window best-fit
 
 set recolor-darkcolor  "#dddddd"
-set recolor-lightcolor "#303e5b"
+set recolor-lightcolor "#212D45"
