@@ -12,7 +12,7 @@ theme.statusbar_position            = "top"
 
 -- FG, BG COLORS
 
-theme.bg_normal                     = "#212D45"
+theme.bg_normal                     = "#212d45"
 theme.bg_focus                      = "#304366"
 theme.bg_urgent                     = "#aa0000"
 theme.fg_normal                     = "#aaaaaa"
@@ -67,10 +67,11 @@ theme.tasklist_disable_icon         = true
 
 theme.bg_systray                    = theme.bg_normal
 theme.widget_mpd_fg                 = theme.fg_focus
+theme.widget_spotify_fg             = theme.fg_focus
 theme.widget_date_fg                = "#cccccc"
 theme.widget_time_fg                = "#eeeeee"
-theme.widget_pulse_fg                = "#96b7e2"
-theme.widget_pulse_mute_fg           = "#666666"
+theme.widget_pulse_fg               = "#96b7e2"
+theme.widget_pulse_mute_fg          = "#666666"
 
 theme.widget_speed_down             = "#ff8a5a"
 theme.widget_speed_up               = theme.widget_speed_down

@@ -2,18 +2,19 @@
 
 set -e
 
+color=${1:-ffffff}
 
 ### slower, worse parsing, but can get paused status
 
-windowtitle=$(wmctrl -lx | awk '$3 ~ /spotify.Spotify/{$1=$2=$3=$4=""; print}' | xargs)
+windowtitle=$(wmctrl -lx | awk '$3 ~ /spotify.Spotify/{$1=$2=$3=$4=""; print}')
 [[ $windowtitle ]] || exit
 if [[ $windowtitle == "Spotify" ]]; then
     echo ''
     exit
 else
-    artist=$(echo "$windowtitle" | cut -d- -f 1 | xargs)
-    title=$(echo "$windowtitle" | cut -d- -f 2- | xargs)
-    echo " <span foreground='#eaa12e'>♫ <b>$title</b> ($artist)</span> "
+    artist=$(echo "$windowtitle" | cut -d- -f 1 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+    title=$(echo "$windowtitle" | cut -d- -f 2- | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+    echo " <span foreground='#$color'>♫ <b>$title</b> ($artist)</span> "
 fi
 
 

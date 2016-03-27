@@ -78,7 +78,7 @@ end
 
 spotifywidget = lain.widgets.base({
     timeout = 2,
-    cmd = os.getenv("HOME") .. "/.config/awesome/spotify-info.sh",
+    cmd = os.getenv("HOME") .. "/.config/awesome/spotify-info.sh " .. theme.widget_spotify_fg:gsub('#', ''),
     settings = function()
         if output == "" then
             widget:set_markup("")
@@ -277,7 +277,6 @@ for s = 1, screen.count() do
     lay(layout2, mytaglist[s])
 
     local layout3 = wibox.layout.fixed.horizontal()
-    -- lay(layout3, dropboxwidget, nil, 4, 4)
     lay(layout3, pulsewidget, m)
     lay(layout3, netwidget, m)
     lay(layout3, batterywidget, m)

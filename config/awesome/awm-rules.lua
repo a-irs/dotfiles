@@ -155,7 +155,6 @@ client.connect_signal("manage", function(c)
 
     dynamic_tagging()
 
-
     if (c.class == "Kodi") then
         c.fullscreen = true
         t = awful.tag.add("kodi")
@@ -175,10 +174,12 @@ client.connect_signal("unmanage", function(c)
 
     -- return to last tag and reset settings when last window is closed
     if is_empty(awful.tag.selected()) then
-        awful.tag.setmwfact(0.5)
-        awful.tag.setnmaster(1)
-        awful.tag.setncol(1)
-        if c.class ~= "Kupfer.py" then awful.tag.history.restore() end
+        if c.class ~= "Kupfer.py" then
+            awful.tag.setmwfact(0.5)
+            awful.tag.setnmaster(1)
+            awful.tag.setncol(1)
+            awful.tag.history.restore()
+        end
     end
 
     dynamic_tagging()
