@@ -18,7 +18,7 @@ hostname        = io.popen("uname -n"):read()
 
 vres            = tonumber(io.popen("xrandr | grep \\* | awk '{print $1}' | cut -dx -f 2"):read()) * 96 / xresources.get_dpi()
 hres            = tonumber(io.popen("xrandr | grep \\* | awk '{print $1}' | cut -dx -f 1 | xargs echo"):read()) * 96 / xresources.get_dpi()
-compact_display = vres < 1000
+compact_display = true -- vres < 1000
 high_dpi        = xresources.get_dpi() >= 168
 
 function dpi(value)
