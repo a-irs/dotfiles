@@ -5,6 +5,13 @@ for c in $noglobs; do
     [[ "$commands[$c]" ]] && alias $c="noglob $c"
 done
 
+alias tar-tar="tar cvaf "$(basename "$PWD")".tar --"
+alias tar-gz="tar cvaf "$(basename "$PWD")".tar.gz --"
+alias tar-xz="tar cvaf "$(basename "$PWD")".tar.xz --"
+alias tar-bz="tar cvaf "$(basename "$PWD")".tar.bz2 --"
+alias tar-lz="tar cvaf "$(basename "$PWD")".tar.lzma --"
+alias tar-zip="zip -r "$(basename "$PWD")".zip --"
+
 if [[ "$commands[termite]" ]]; then
     toggle-termite() {
         if [[ $(readlink -f ~/.config/termite/config) == *_light ]]; then

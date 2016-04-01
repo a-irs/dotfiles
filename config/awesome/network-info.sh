@@ -16,7 +16,7 @@ if [[ $devs == *$'\neth'* ]] || [[ $devs == *$'\nenp'* ]]; then
     speed="${speed##*:}"
     speed="${speed// /}"
     speed="${speed//[^0-9]/}"
-    txt+=("<span foreground='$color'>Speed: <b>$speed</b></span>")
+    txt+=("<span foreground='$color'>ETH0 <b>$speed</b></span>")
 fi
 
 if [[ $devs == *$'\nusb'* ]]; then
