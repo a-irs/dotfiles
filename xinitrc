@@ -27,7 +27,6 @@ redshift &
 dropbox-cli start &
 mkdir -p ~/.thumbnails &
 ln -sf ~/.thumbnails ~/.cache/thumbnails &
-test $HOSTNAME == dell && nm-applet &
 compton &
 start-pulseaudio-x11
 
