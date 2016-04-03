@@ -19,5 +19,5 @@ sed -i "s|$current_color|$1|g" \
 
 echo "$1" > "$cc_file"
 
-killall -USR1 termite
-echo "awesome.restart()" | awesome-client
+killall -USR1 termite 2> /dev/null
+echo "awesome.restart()" | awesome-client 2> /dev/null

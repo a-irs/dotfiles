@@ -32,7 +32,7 @@ size_hints = false
 cursor = #ffc646
 foreground = #f0f0f0
 foreground_bold = #f0f0f0
-background = #212D45
+background = #212d45
 
 ########################## DEFAULT THEME
 
