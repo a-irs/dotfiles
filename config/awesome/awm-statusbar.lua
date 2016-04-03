@@ -120,16 +120,15 @@ pulsewidget.widget:buttons(awful.util.table.join(
 
 -- DATE, TIME
 
-datewidget = lain.widgets.base({
-    timeout  = 2,
-    cmd      = "date +'%a, %d.%m. %H:%M'",
-    settings = function()
-        local t_output = ""
-        local o_it = string.gmatch(output, "%S+")
-        widget:set_markup(markup(theme.widget_date_fg, o_it(1) .. " " .. o_it(1)) .. " " .. markup.bold(markup(theme.widget_time_fg, o_it(1))))
-    end
-})
+timewidget = awful.widget.textclock(markup.bold(markup(theme.widget_time_fg, '%H:%M')))
+datewidget = awful.widget.textclock(markup(theme.widget_date_fg, '%a, %d.%m.'))
 lain.widgets.calendar:attach(datewidget, {
+    font_size = "8",
+    font = "Monospace",
+    fg   = theme.fg_focus,
+    bg   = theme.bg_focus
+})
+lain.widgets.calendar:attach(timewidget, {
     font_size = "8",
     font = "Monospace",
     fg   = theme.fg_focus,
@@ -139,6 +138,7 @@ lain.widgets.calendar:attach(datewidget, {
 
 -- MPD
 
+--[[
 mpdwidget = wibox.widget.textbox()
 mpdwidget:set_font(theme.font)
 
@@ -153,7 +153,7 @@ vicious.register(mpdwidget, vicious.widgets.mpd,
 mpdwidget:buttons(awful.util.table.join(
     awful.button({ }, 1, function() awful.util.spawn("ario") end)
 ))
-
+--]]
 
 -- CPU
 
@@ -280,7 +280,8 @@ for s = 1, screen.count() do
     lay(layout3, pulsewidget, m)
     lay(layout3, netwidget, m)
     lay(layout3, batterywidget, m)
-    lay(layout3, datewidget, m, m * 2)
+    lay(layout3, datewidget, m, 2)
+    lay(layout3, timewidget, m, m * 2)
 
     -- build status bar
 
