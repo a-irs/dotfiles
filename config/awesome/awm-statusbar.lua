@@ -42,6 +42,9 @@ if hostname == "dell" then
         notify = "off",
         settings = function()
             p = tonumber(bat_now.perc)
+            if p > 100 then
+                p = 100
+            end
             if p <= 15 then
                 color = "#db3131"
             elseif p <= 40 then
@@ -76,6 +79,8 @@ if hostname == "dell" then
 end
 
 
+-- SPOTIFY
+
 spotifywidget = lain.widgets.base({
     timeout = 2,
     cmd = os.getenv("HOME") .. "/.config/awesome/spotify-info.sh " .. theme.widget_spotify_fg:gsub('#', ''),
@@ -87,6 +92,7 @@ spotifywidget = lain.widgets.base({
         end
     end
 })
+
 
 -- VOLUME
 
@@ -220,7 +226,20 @@ cpugraphwidget:set_background_color(theme.widget_cpu_graph_bg)
 cpugraphwidget:set_color(theme.widget_cpu_graph_fg)
 vicious.register(cpugraphwidget, vicious.widgets.cpu, "$1")
 
+-- WEATHER
 
+weatherwidget = lain.widgets.weather({
+    city_id = 2761369,
+    lang = "de",
+    settings = function()
+        local units = math.floor(weather_now["main"]["temp"])
+        local main = weather_now["weather"][1]["main"]:lower()
+        if main == "rain" then
+            main = "Regen"
+        end
+        widget:set_markup(markup("#eca4c4", units .. " Grad, " .. main))
+    end
+})
 
 mywibox = {}
 mylayoutbox = {}
@@ -277,6 +296,7 @@ for s = 1, screen.count() do
     lay(layout2, mytaglist[s])
 
     local layout3 = wibox.layout.fixed.horizontal()
+    lay(layout3, weatherwidget, m)
     lay(layout3, pulsewidget, m)
     lay(layout3, netwidget, m)
     lay(layout3, batterywidget, m)
