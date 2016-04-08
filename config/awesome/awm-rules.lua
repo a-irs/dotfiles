@@ -23,6 +23,10 @@ local function make_name(existing_clients, client, wanted_name)
         wanted_name = wanted_name .. "^"
     end
 
+    if client.machine ~= hostname then
+        wanted_name = wanted_name .. " [" .. client.machine .. "]"
+    end
+
     if existing_clients == nil or existing_clients == "" then
         return wanted_name
     else
