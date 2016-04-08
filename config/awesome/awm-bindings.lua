@@ -181,6 +181,8 @@ globalkeys = awful.util.table.join(
               {description = "toggle screen resolution", group = "apps"}),
     awful.key({ }, "Print", function() awful.util.spawn("scrot " .. os.getenv("HOME") .. "/%Y-%m-%d_%H-%M-%S.png", false) end,
               {description = "make screenshot", group = "apps"}),
+    awful.key({ "Ctrl" }, "Print", function() awful.util.spawn("bash -c 'sleep 1 && scrot -s /home/alex/%Y-%m-%d_%H-%M-%S.png'", false) end,
+              {description = "make screenshot", group = "apps"}),
 
     -- media keys
 
