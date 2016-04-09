@@ -2,6 +2,7 @@ local naughty    = require 'naughty'
 local awful      = require 'awful'
 local lain       = require 'lain'
 local xresources = require('beautiful').xresources
+local beautiful  = require 'beautiful'
 
 -- revert "Only use useless_gap with multiple tiled clients"
 local getgap = awful.tag.getgap
@@ -29,7 +30,8 @@ function is_empty(tag)
     return #tag:clients() == 0
 end
 
-require 'awm-beautiful'
+beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme.lua")
+
 require 'awm-notify-settings'
 
 function dbg(text)
