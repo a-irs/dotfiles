@@ -23,7 +23,7 @@ local function make_name(existing_clients, client, wanted_name)
         wanted_name = wanted_name .. "^"
     end
 
-    if client.machine ~= hostname then
+    if client.machine and client.machine ~= hostname then
         wanted_name = wanted_name .. " [" .. client.machine .. "]"
     end
 

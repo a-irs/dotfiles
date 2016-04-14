@@ -226,21 +226,6 @@ cpugraphwidget:set_background_color(theme.widget_cpu_graph_bg)
 cpugraphwidget:set_color(theme.widget_cpu_graph_fg)
 vicious.register(cpugraphwidget, vicious.widgets.cpu, "$1")
 
--- WEATHER
-
-weatherwidget = lain.widgets.weather({
-    city_id = 2761369,
-    lang = "de",
-    settings = function()
-        local units = math.floor(weather_now["main"]["temp"])
-        local main = weather_now["weather"][1]["main"]:lower()
-        if main == "rain" then
-            main = "Regen"
-        end
-        widget:set_markup(markup("#eca4c4", units .. " Grad, " .. main))
-    end
-})
-
 mywibox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -296,7 +281,6 @@ for s = 1, screen.count() do
     lay(layout2, mytaglist[s])
 
     local layout3 = wibox.layout.fixed.horizontal()
-    lay(layout3, weatherwidget, m)
     lay(layout3, pulsewidget, m)
     lay(layout3, netwidget, m)
     lay(layout3, batterywidget, m)

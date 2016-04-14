@@ -154,13 +154,9 @@ globalkeys = awful.util.table.join(
 
     awful.key({ alt }, "Return", function() awful.util.spawn(user_terminal) end,
               {description = "run terminal", group = "apps"}),
-    awful.key({ alt }, "f",      function () awful.util.spawn("pcmanfm") end,
+    awful.key({ alt }, "f",      function() awful.util.spawn("pcmanfm") end,
               {description = "run pcmanfm", group = "apps"}),
-    awful.key({ alt }, "c",      function()
-            local matcher = function(c)
-                return rules.match(c, {class = 'chromium'})
-            end
-            awful.client.run_or_raise('chromium', matcher)
+    awful.key({ alt }, "c",      function() awful.util.spawn('chromium')
         end, {description = "run browser", group = "apps"}),
     awful.key({ alt, "Shift" }, "c", function () awful.util.spawn("chromium --incognito") end,
               {description = "run private browser", group = "apps"}),
