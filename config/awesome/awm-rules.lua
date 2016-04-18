@@ -35,7 +35,7 @@ local function make_name(existing_clients, client, wanted_name)
 end
 
 local function dynamic_tagging()
-    for s = 1, screen.count() do
+    awful.screen.connect_for_each_screen(function(s)
         for _, t in ipairs(awful.tag.gettags(s)) do
             if is_empty(t) then
                 t.name = " □ "
@@ -85,7 +85,7 @@ local function dynamic_tagging()
                 t.name = " ■ " .. name .. " "
             end
         end
-    end
+    end)
 end
 
 local t = timer({ timeout = 2 })

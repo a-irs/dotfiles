@@ -8,7 +8,21 @@ devs=$(< /proc/net/route)
 if [[ $devs == *$'\nwlan'* ]] || [[ $devs == *$'\nwlp'* ]]; then
     ssid=$(iwgetid --raw)
     [[ -z "$ssid" ]] && return
-    txt+=("<span foreground='$color'><b>$ssid</b></span>")
+    if [[ "$ssid" == *_2_4_* ]]; then
+        ssid_start=${ssid%%_2_4_*}
+        ssid_end=${ssid##*_2_4_}
+        ssid_between=_2_4_
+        color_between="#ff0000"
+        txt+=("<span foreground='$color'><b>$ssid_start</b></span><span foreground='$color_between'><b>$ssid_between</b></span><span foreground='$color'><b>$ssid_end</b></span>")
+    elif [[ "$ssid" == *_5_* ]]; then
+        ssid_start=${ssid%%_5_*}
+        ssid_end="${ssid##*_5_}"
+        ssid_between=_5_
+        color_between="#00ff00"
+        txt+=("<span foreground='$color'><b>$ssid_start</b></span><span foreground='$color_between'><b>$ssid_between</b></span><span foreground='$color'><b>$ssid_end</b></span>")
+    else
+        txt+=("<span foreground='$color'><b>$ssid</b></span>")
+    fi
 fi
 
 if [[ $devs == *$'\neth'* ]] || [[ $devs == *$'\nenp'* ]]; then

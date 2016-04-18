@@ -250,21 +250,19 @@ mytasklist.buttons = awful.util.table.join(
     end))
 myprompt = {}
 
-for s = 1, screen.count() do
+awful.screen.connect_for_each_screen(function(s)
     mytaglist[s]  = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
     mywibox[s]    = awful.wibox({ position = theme.statusbar_position, screen = s, height = theme.statusbar_height })
     myprompt[s]   = awful.widget.prompt()
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, mytasklist.buttons, { fg_normal = theme.tasklist_fg, bg_normal = theme.tasklist_bg, font = theme.tasklist_font })
-    --[[
     mylayoutbox[s] = awful.widget.layoutbox(s)
     mylayoutbox[s]:buttons(awful.util.table.join(
                        awful.button({ }, 1, function() awful.layout.inc(layouts,  1) end),
                        awful.button({ }, 3, function() awful.layout.inc(layouts, -1) end),
                        awful.button({ }, 4, function() awful.layout.inc(layouts,  1) end),
                        awful.button({ }, 5, function() awful.layout.inc(layouts, -1) end)))
-    mylayoutbox[s]:connect_signal("mouse::enter", function() systembox[mouse.screen].visible = true end)
-    mylayoutbox[s]:connect_signal("mouse::leave", function() systembox[mouse.screen].visible = false end)
-    --]]
+    mylayoutbox[s]:connect_signal("mouse::enter", function() systembox[awful.screen.focused()].visible = true end)
+    mylayoutbox[s]:connect_signal("mouse::leave", function() systembox[awful.screen.focused()].visible = false end)
 
     -- layouts
 
@@ -326,4 +324,4 @@ for s = 1, screen.count() do
     systembox_layout_full:add(systembox_align_right)
     systembox[s]:set_widget(systembox_layout_full)
     systembox[s].visible = false
-end
+end)

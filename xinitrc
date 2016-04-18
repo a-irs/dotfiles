@@ -29,6 +29,7 @@ mkdir -p ~/.thumbnails &
 ln -sf ~/.thumbnails ~/.cache/thumbnails &
 compton &
 start-pulseaudio-x11
+[[ $HOSTNAME == desktop ]] && nm-applet &
 
 session=${1:-awesome}
 exec "$session"

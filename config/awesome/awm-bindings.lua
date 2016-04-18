@@ -149,6 +149,9 @@ globalkeys = awful.util.table.join(
 
     -- launch programs
 
+    awful.key({ win }, "r", function () myprompt[awful.screen.focused()]:run() end,
+        {description = "run prompt", group = "apps"}),
+
     awful.key({ win }, "p", function() awful.util.spawn("bash -c 'sleep 0.1 && xset dpms force off'") end,
         {description = "turn off LCD", group = "apps" }),
 
@@ -210,14 +213,13 @@ globalkeys = awful.util.table.join(
 
     awful.key({ win }, "b",
         function()
-            mywibox[mouse.screen].visible = not mywibox[mouse.screen].visible
+            mywibox[awful.screen.focused()].visible = not mywibox[awful.screen.focused()].visible
         end,
         {description="toggle main status bar", group="bars"}),
 
-
     awful.key({ win }, "n",
         function()
-            systembox[mouse.screen].visible = not systembox[mouse.screen].visible
+            systembox[awful.screen.focused()].visible = not systembox[awful.screen.focused()].visible
         end,
         {description="toggle system status bar", group="bars"}),
 
@@ -225,7 +227,7 @@ globalkeys = awful.util.table.join(
 
     awful.key({ win }, "z",
               function()
-                  local screen = mouse.screen
+                  local screen = awful.screen.focused()
                   local all_tags = awful.tag.gettags(screen)
                   local selected_tags = awful.tag.selectedlist(screen)
 
@@ -293,7 +295,7 @@ for i = 1, 9 do
         -- view tag
         awful.key({ win }, "#" .. i + 9,
             function()
-                local tag = awful.tag.gettags(mouse.screen)[i]
+                local tag = awful.tag.gettags(awful.screen.focused())[i]
                 if tag then
                     awful.tag.viewonly(tag)
                 end
@@ -301,7 +303,7 @@ for i = 1, 9 do
         -- toggle tag
         awful.key({ win, alt }, "#" .. i + 9,
             function()
-                local tag = awful.tag.gettags(mouse.screen)[i]
+                local tag = awful.tag.gettags(awful.screen.focused())[i]
                 if tag then
                     awful.tag.viewtoggle(tag)
                 end
