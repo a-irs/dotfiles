@@ -255,6 +255,7 @@ awful.screen.connect_for_each_screen(function(s)
     mywibox[s]    = awful.wibox({ position = theme.statusbar_position, screen = s, height = theme.statusbar_height })
     myprompt[s]   = awful.widget.prompt()
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, mytasklist.buttons, { fg_normal = theme.tasklist_fg, bg_normal = theme.tasklist_bg, font = theme.tasklist_font })
+    --[[
     mylayoutbox[s] = awful.widget.layoutbox(s)
     mylayoutbox[s]:buttons(awful.util.table.join(
                        awful.button({ }, 1, function() awful.layout.inc(layouts,  1) end),
@@ -263,17 +264,18 @@ awful.screen.connect_for_each_screen(function(s)
                        awful.button({ }, 5, function() awful.layout.inc(layouts, -1) end)))
     mylayoutbox[s]:connect_signal("mouse::enter", function() systembox[awful.screen.focused()].visible = true end)
     mylayoutbox[s]:connect_signal("mouse::leave", function() systembox[awful.screen.focused()].visible = false end)
+    ]]--
 
     -- layouts
 
     local m = 3
 
     local layout1 = wibox.layout.fixed.horizontal()
+    lay(layout1, mylayoutbox[s])
     lay(layout1, mpdwidget, 0, 0, theme.bg_focus)
     lay(layout1, spotifywidget, 0, 0, theme.bg_focus)
-    lay(layout1, myprompt[s])
-    lay(layout1, mylayoutbox[s])
     lay(layout1, mytasklist[s])
+    lay(layout1, myprompt[s], 0, 0, theme.bg_focus)
 
     local layout2 = wibox.layout.fixed.horizontal()
     lay(layout2, mytaglist[s])

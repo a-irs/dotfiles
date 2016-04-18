@@ -6,22 +6,23 @@ color=${1:-ffffff}
 
 ### slower, worse parsing, but can get paused status
 
-windowtitle=$(echo "$windows" | awk '$3 ~ /spotify.Spotify/{$1=$2=$3=$4=""; print}')
+windows=$(wmctrl -lx)
+windowtitle=$(echo -n "$windows" | awk '$3 ~ /spotify.Spotify/{$1=$2=$3=$4=""; print}')
 if [[ $windowtitle ]]; then
-    windowtitle=$(echo "$windowtitle" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+    windowtitle=$(echo -n "$windowtitle" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
 else
     exit
 fi
 
 if [[ $windowtitle == "Spotify" ]]; then
-    echo ''
+    echo -n ''
     exit
 else
     artist=$(echo "$windowtitle" | cut -d- -f 1 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
     artist=${artist//&/&amp;}
     title=$(echo "$windowtitle" | cut -d- -f 2- | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
     title=${title//&/&amp;}
-    echo " <span foreground='#$color'>♫ <b>$title</b> ($artist)</span> "
+    echo -n " <span foreground='#$color'>♫ <b>$title</b> ($artist)</span> "
 fi
 
 
