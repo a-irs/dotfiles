@@ -202,6 +202,19 @@ globalkeys = awful.util.table.join(
         io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next")
     end),
 
+    awful.key({ alt }, "<", function()
+        io.popen("mpc -q next")
+        io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next")
+    end),
+    awful.key({ alt, "Shift" }, "<", function()
+        io.popen("mpc -q prev")
+        io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous")
+    end),
+    awful.key({ alt }, "y", function()
+        io.popen("mpc -q toggle")
+        io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
+    end),
+
     awful.key({}, "XF86PowerOff", function() awful.util.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh suspend", false) end),
 
     -- restart awesome wm
