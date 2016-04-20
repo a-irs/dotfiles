@@ -10,8 +10,6 @@ function awful.tag.getgap(t, numclients)
     return getgap(t, 42)
 end
 
-os.execute('xrdb -merge ' .. os.getenv("HOME") .. '/.Xresources')
-
 user_terminal   = "termite"
 hostname        = io.popen("uname -n"):read()
 
