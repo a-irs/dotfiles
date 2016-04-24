@@ -66,3 +66,8 @@ require 'awm-tags'
 require 'awm-bindings'
 require 'awm-statusbar'
 require 'awm-rules'
+
+local tag = awful.tag.gettags(awful.screen.focused())[1]
+local tag2 = awful.tag.gettags(awful.screen.focused())[2]
+if tag2 then awful.tag.viewonly(tag2) end
+if tag then awful.tag.viewonly(tag) end

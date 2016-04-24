@@ -39,14 +39,14 @@
     <videodatabase>
         <type>mysql</type>
         <port>3306</port>
-        <host>10.0.0.10</host>
+        <host>srv</host>
         <user>root</user>
         <pass>root</pass>
     </videodatabase>
     <musicdatabase>
         <type>mysql</type>
         <port>3306</port>
-        <host>10.0.0.10</host>
+        <host>srv</host>
         <user>root</user>
         <pass>root</pass>
     </musicdatabase>
