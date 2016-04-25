@@ -26,11 +26,7 @@ if [[ $devs == *$'\nwlan'* ]] || [[ $devs == *$'\nwlp'* ]]; then
 fi
 
 if [[ $devs == *$'\neth'* ]] || [[ $devs == *$'\nenp'* ]]; then
-    speed=$(ethtool eth0 2> /dev/null | grep Speed)
-    speed="${speed##*:}"
-    speed="${speed// /}"
-    speed="${speed//[^0-9]/}"
-    txt+=("<span foreground='$color'>ETH0 <b>$speed</b></span>")
+    txt+=("<span foreground='$color'><b>eth0</b></span>")
 fi
 
 if [[ $devs == *$'\nusb'* ]]; then

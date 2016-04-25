@@ -5,7 +5,8 @@ local beautiful = require 'beautiful'
 local wibox     = require 'wibox'
 
 rules.rules = {
-    { rule = { class = "mpv" }, properties = { size_hints_honor = false } },
+    { rule = { class = "Mpv" },   properties = { size_hints_honor = false } },
+    { rule = { class = "Gpick" }, properties = { floating = true } },
     { rule = { },
       properties = { focus = awful.client.focus.filter,
                      raise = true,

@@ -214,6 +214,7 @@ alias lt='\ls --quoting-style=literal -F -l -h -t -r --color=auto --group-direct
 [[ "$commands[dropbox-cli]" ]] && alias dstop='dropbox-cli stop'
 [[ "$commands[dropbox-cli]" ]] && alias dstart='dropbox-cli start'
 [[ "$commands[redshift]" ]] && alias toggle-redshift='pkill -USR1 redshift'
+[[ "$commands[nmcli]" ]] && alias n='nmcli con up id'
 
 if [ "$commands[tmux]" ]; then
     alias t='tmux'
@@ -231,7 +232,7 @@ capture-keys() {
     xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'
 }
 
-[ "$commands[aunpack]" ] && alias x='aunpack'
+[ "$commands[dtrx]" ] && alias x='dtrx'
 [ "$commands[latexmk]" ] && alias ltx="latexmk -cd -f -pdf -pvc -outdir=/tmp/latexmk"
 [ "$commands[impressive]" ] && alias show='impressive -t FadeOutFadeIn --fade --transtime 300 --mousedelay 500 --nologo --nowheel --noclicks'
 [ "$commands[youtube-dl]" ] && alias yt-audio='youtube-dl -f bestaudio -x -o "%(title)s.%(ext)s"'
