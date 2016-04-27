@@ -279,7 +279,7 @@ cd() {
     if [[ ! -e "$1" ]]; then
         print "'$1' not found"
     elif [[ -f "$1" ]]; then
-        echo "correcting $1 to ${1:h}"
+        printf "${YELLOW}%s${RESET}\n\n" "correcting $1 to ${1:h}"
         builtin cd "${1:h}"
     else
         builtin cd "$1"

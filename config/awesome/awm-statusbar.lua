@@ -38,7 +38,7 @@ end
 
 if hostname == "dell" then
     batterywidget = lain.widgets.bat({
-        timeout = 5,
+        timeout = 3,
         notify = "off",
         settings = function()
             p = tonumber(bat_now.perc)
@@ -55,10 +55,9 @@ if hostname == "dell" then
                 color = "#90ee90"
             end
 
+            charg = ''
             if bat_now.status == "Full" or bat_now.status == "Charging" then
                 charg = markup("#ffff00", ' +')
-            else
-                charg = ''
             end
             widget:set_markup(markup.bold(markup(color, p .. charg)))
         end
@@ -70,7 +69,7 @@ end
 
 if hostname == "dell" then
     netwidget = lain.widgets.base({
-        timeout = 5,
+        timeout = 3,
         cmd = os.getenv("HOME") .. "/.config/awesome/network-info.sh",
         settings = function()
             widget:set_markup(output)

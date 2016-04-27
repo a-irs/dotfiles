@@ -178,9 +178,9 @@ globalkeys = awful.util.table.join(
 
     awful.key({ "Ctrl", "Shift" }, "dead_circumflex", function() awful.util.spawn(os.getenv("HOME") .. "/.bin/desktop/toggle-res.sh") end,
               {description = "toggle screen resolution", group = "apps"}),
-    awful.key({ }, "Print", function() awful.util.spawn("scrot " .. os.getenv("HOME") .. "/%Y-%m-%d_%H-%M-%S.png", false) end,
+    awful.key({        }, "Print", function() awful.util.spawn("mate-screenshot", false) end,
               {description = "make screenshot", group = "apps"}),
-    awful.key({ "Ctrl" }, "Print", function() awful.util.spawn("bash -c 'sleep 1 && scrot -s /home/alex/%Y-%m-%d_%H-%M-%S.png'", false) end,
+    awful.key({ "Ctrl" }, "Print", function() awful.util.spawn("mate-screenshot --area", false) end,
               {description = "make screenshot", group = "apps"}),
 
     -- media keys
