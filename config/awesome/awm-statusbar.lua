@@ -91,7 +91,14 @@ spotifywidget = lain.widgets.base({
         end
     end
 })
-
+spotifywidget.widget:buttons(awful.util.table.join(
+    awful.button({ }, 1, function() -- right click
+        local matcher = function(c)
+            return rules.match(c, {class = 'Spotify'})
+        end
+        awful.client.run_or_raise('spotify', matcher)
+    end)
+))
 
 -- VOLUME
 
