@@ -242,7 +242,7 @@ capture-keys() {
 [ "$commands[ncmpc]" ] && alias ncmpc='LC_ALL=en_IE.UTF-8 ncmpc'
 
 if [[ "$commands[reflector]" ]]; then
-    alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist-reflector --verbose && sudo pacman -Syy"
+    alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose && sudo pacman -Syy"
 fi
 
 
