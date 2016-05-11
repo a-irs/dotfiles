@@ -105,7 +105,7 @@
 		"classes",
 		".texpadtmp"
 	],
-	"font_face": "Monospace",
+	"font_face": "Input",
 	"font_size": 9,
 	"gutter": true,
 	"hero_folder_icons": false,
