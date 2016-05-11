@@ -39,7 +39,7 @@ local function dynamic_tagging()
     awful.screen.connect_for_each_screen(function(s)
         for _, t in ipairs(awful.tag.gettags(s)) do
             if is_empty(t) then
-                t.name = " □ "
+                t.name = " \28 "
             else
                 local name = ""
                 for _, c in ipairs(t:clients()) do
@@ -83,7 +83,7 @@ local function dynamic_tagging()
                         end
                     end
                 end
-                t.name = " ■ " .. name .. " "
+                t.name = " \27 " .. name .. " "
             end
         end
     end)
