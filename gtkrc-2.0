@@ -1,22 +1,3 @@
-style "panel-background" {
-}
-style "panel-color" {
-fg[NORMAL] = "#eeeeee"
-fg[ACTIVE] = "#eeeeee"
-fg[PRELIGHT] = "#eeeeee"
-bg[NORMAL] = "#2d2d2d"
-bg[PRELIGHT] = "#555555"
-bg[ACTIVE] = "#444444"
-}
-widget_class "*Panel*" style "panel-background"
-widget "*PanelWidget*" style "panel-color"
-widget "*PanelApplet*" style "panel-color"
-widget "*Panel*" style "panel-color"
-widget_class "*Panel*" style "panel-color"
-class "*Panel*" style "panel-color"
-class "*Tray*" style "panel-color"
-class "*tray*" style "panel-color"
-
 gtk-theme-name = "Arc"
 gtk-font-name = "Roboto Medium 9"
 gtk-icon-theme-name = "Moka"
