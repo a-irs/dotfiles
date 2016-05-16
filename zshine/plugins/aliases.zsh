@@ -232,7 +232,7 @@ capture-keys() {
     xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'
 }
 
-[ "$commands[dtrx]" ] && alias x='dtrx'
+alias x='dtrx'
 [ "$commands[latexmk]" ] && alias ltx="latexmk -cd -f -pdf -pvc -outdir=/tmp/latexmk"
 [ "$commands[impressive]" ] && alias show='impressive -t FadeOutFadeIn --fade --transtime 300 --mousedelay 500 --nologo --nowheel --noclicks'
 [ "$commands[youtube-dl]" ] && alias yt-audio='youtube-dl -f bestaudio -x -o "%(title)s.%(ext)s"'
