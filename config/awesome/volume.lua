@@ -2,17 +2,17 @@ local execute  = os.execute
 local volume   = {}
 
 function volume.toggle()
-    execute 'pamixer --toggle-mute'
+    execute 'pactl set-sink-mute 0 toggle'
     pulsewidget.update()
 end
 
 function volume.increase()
-    execute 'pamixer --increase 1'
+    execute 'pactl set-sink-volume 0 +1%'
     pulsewidget.update()
 end
 
 function volume.decrease()
-    execute 'pamixer --decrease 1'
+    execute 'pactl set-sink-volume 0 -1%'
     pulsewidget.update()
 end
 

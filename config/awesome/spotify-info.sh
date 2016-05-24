@@ -18,11 +18,11 @@ if [[ $windowtitle == "Spotify" ]]; then
     echo -n ''
     exit
 else
-    artist=$(echo "$windowtitle" | awk -F" - " '{$0=$1}1' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | iconv -f utf-8 -t ascii//translit)
+    artist=$(echo "$windowtitle" | awk -F" - " '{$0=$1}1' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')  #| iconv -f utf-8 -t ascii//translit)
     artist=${artist//&/&amp;}
-    title=$(echo "$windowtitle" | awk -F" - " '{$0=$2}1' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | iconv -f utf-8 -t ascii//translit)
+    title=$(echo "$windowtitle" | awk -F" - " '{$0=$2}1' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')  #| iconv -f utf-8 -t ascii//translit)
     title=${title//&/&amp;}
-    echo -n " <span foreground='#$color'>♫ <b>$title</b> ($artist)</span> "
+    echo -n " <span foreground='#$color'><b>$title</b> ($artist)</span> "
 fi
 
 
