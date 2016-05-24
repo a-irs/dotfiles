@@ -48,6 +48,7 @@ install_always() {
     done
 }
 
+rm -rf ~/.cache
 ln -sf /tmp/ ~/.cache 2> /dev/null
 mkdir -p ~/.thumbnails &  2> /dev/null
 ln -sf ~/.thumbnails ~/.cache/thumbnails 2> /dev/null
