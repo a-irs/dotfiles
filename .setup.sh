@@ -20,7 +20,7 @@ rmlink() {
 mklink() {
     dest=~/.$1
     mkdir -p "$(dirname "$dest")"
-    ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/$1" "$dest" 2> /dev/null
+    ln --force --symbolic --no-target-directory --no-dereference "$this_dir/$1" "$dest" 2> /dev/null
     if [[ $? != 0 ]]; then
         print_error "error creating link to $dest"
     else
@@ -48,7 +48,9 @@ install_always() {
     done
 }
 
-ln -s /tmp/ ~/.cache 2> /dev/null
+ln -sf /tmp/ ~/.cache 2> /dev/null
+mkdir -p ~/.thumbnails &  2> /dev/null
+ln -sf ~/.thumbnails ~/.cache/thumbnails 2> /dev/null
 
 install_always bin hushlogin
 install gtk-demo gtkrc-2.0 icons config/user-dirs.dirs
@@ -80,7 +82,7 @@ install zsh zprofile zshrc zshine
 install compton config/compton.conf
 if lspci | grep -e VGA -e 3D | grep -q AMD; then
     rm -f ~/config/compton.conf
-    ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/config/compton-radeon.conf" ~/config/compton.conf 2> /dev/null
+    ln --force --symbolic --no-target-directory --no-dereference "$this_dir/config/compton-radeon.conf" ~/.config/compton.conf 2> /dev/null
     print_info "activated compton.conf for AMD"
 fi
 
@@ -88,4 +90,3 @@ if [[ -f /usr/bin/kupfer ]]; then
     mkdir -p ~/.local/share/kupfer/plugins
     cp -f "$this_dir/kupfer-recdirs.py" ~/.local/share/kupfer/plugins/recdirs.py
 fi
-
