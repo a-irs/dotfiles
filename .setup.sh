@@ -53,6 +53,18 @@ mkdir -p ~/.thumbnails &  2> /dev/null
 ln -sf ~/.thumbnails ~/.cache/thumbnails 2> /dev/null
 
 install_always bin hushlogin
+install beet config/beets/config.yaml
+install htop config/htop/htoprc
+install mpd config/mpd/mpd.conf
+install ncmpcpp config/ncmpcpp/config
+install git gitconfig
+install latexmk latexmkrc
+install nano nanorc nano-syntax
+install psql psqlrc
+install ssh ssh/config
+install tmux tmux.conf
+install zsh zprofile zshrc zshine
+
 install gtk-demo gtkrc-2.0 icons config/user-dirs.dirs
 install gtk3-demo config/gtk-3.0/settings.ini
 install awesome config/awesome
@@ -65,18 +77,6 @@ install kodi kodi/userdata/advancedsettings.xml
 install mpv config/mpv/input.conf config/mpv/mpv.conf config/mpv/scripts/convert_script.lua config/mpv/scripts/stats.lua
 install retroarch config/retroarch/remap config/retroarch/core-config/gba_bios.bin config/retroarch/core-config/scph5500.bin config/retroarch/core-config/scph5501.bin config/retroarch/core-config/scph5502.bin config/retroarch/retroarch.cfg config/retroarch/retroarch-core-options.cfg
 install X xinitrc Xmodmap config/fontconfig/fonts.conf fonts
-install beet config/beets/config.yaml
-install htop config/htop/htoprc
-install mpd config/mpd/mpd.conf
-install ncmpcpp config/ncmpcpp/config
-install git gitconfig
-install latexmk latexmkrc
-install nano nanorc nano-syntax
-install openvpn openvpn
-install psql psqlrc
-install ssh ssh/config
-install tmux tmux.conf
-install zsh zprofile zshrc zshine
 
 install compton config/compton.conf
 if lspci | grep -e VGA -e 3D | grep -q AMD; then
