@@ -12,8 +12,9 @@ print_info() {
 
 rmlink() {
     dest=~/.$1
-    [ -L "$dest" ] && rm -f "$dest"
+    [ -L "$dest" ] && rm -f "$dest" && print_error "removed $dest"
     rmdir --ignore-fail-on-non-empty -p "$(dirname "$dest")" 2> /dev/null
+    rmdir --ignore-fail-on-non-empty -p "$(dirname "$(dirname "$dest")")" 2> /dev/null
 }
 
 mklink() {
@@ -27,66 +28,60 @@ mklink() {
     fi
 }
 
-dotfiles=(
-    bin
-    config/beets/config.yaml
-    config/htop/htoprc
-    config/mpd/mpd.conf
-    config/ncmpcpp/config
-    gitconfig
-    hushlogin
-    latexmkrc
-    nano-syntax
-    nanorc
-    openvpn
-    psqlrc
-    ssh/config
-    tmux.conf
-    zprofile
-    zshine
-    zshrc
-)
+install() {
+    if [[ -f "/usr/bin/$1" ]]; then
+        shift
+        for f in "$@"; do
+            mklink "$f"
+        done
+    else
+        shift
+        for f in "$@"; do
+            rmlink "$f"
+        done
+    fi
+}
 
-dotfiles_x=(
-    atom/config.cson
-    atom/init.coffee
-    atom/keymap.cson
-    atom/snippets.cson
-    atom/styles.less
-    compton.conf
-    config/redshift.conf
-    config/awesome
-    config/fontconfig/fonts.conf
-    config/gtk-3.0/settings.ini
-    config/mpv/input.conf
-    config/mpv/mpv.conf
-    config/mpv/scripts/convert_script.lua
-    config/mpv/scripts/stats.lua
-    config/retroarch/remap
-    config/retroarch/core-config/gba_bios.bin
-    config/retroarch/core-config/scph5500.bin
-    config/retroarch/core-config/scph5501.bin
-    config/retroarch/core-config/scph5502.bin
-    config/retroarch/retroarch.cfg
-    config/retroarch/retroarch-core-options.cfg
-    config/sublime-text-3/Packages/User
-    config/termite/config
-    config/user-dirs.dirs
-    config/zathura/zathurarc
-    emulationstation/es_systems.cfg
-    fonts
-    gtkrc-2.0
-    icons
-    kodi/userdata/advancedsettings.xml
-    xinitrc
-    Xmodmap
-)
+install_always() {
+    for f in "$@"; do
+        mklink "$f"
+    done
+}
 
-for f in "${dotfiles[@]}"; do mklink "$f"; done
-if [[ -f /usr/bin/X ]]; then
-    for fx in "${dotfiles_x[@]}"; do mklink "$fx"; done
-else
-    for fx in "${dotfiles_x[@]}"; do rmlink "$fx"; done
+ln -s /tmp/ ~/.cache 2> /dev/null
+
+install_always bin hushlogin
+install gtk-demo gtkrc-2.0 icons config/user-dirs.dirs
+install gtk3-demo config/gtk-3.0/settings.ini
+install awesome config/awesome
+install redshift config/redshift.conf
+install fc-scan config/fontconfig/fonts.conf fonts
+install emulationstation emulationstation/es_systems.cfg
+install subl3 config/sublime-text-3/Packages/User
+install termite config/termite/config
+install zathura config/zathura/zathurarc
+install kodi kodi/userdata/advancedsettings.xml
+install mpv config/mpv/input.conf config/mpv/mpv.conf config/mpv/scripts/convert_script.lua config/mpv/scripts/stats.lua
+install retroarch config/retroarch/remap config/retroarch/core-config/gba_bios.bin config/retroarch/core-config/scph5500.bin config/retroarch/core-config/scph5501.bin config/retroarch/core-config/scph5502.bin config/retroarch/retroarch.cfg config/retroarch/retroarch-core-options.cfg
+install X xinitrc Xmodmap
+install beets config/beets/config.yaml
+install htop config/htop/htoprc
+install mpd config/mpd/mpd.conf
+install ncmpcpp config/ncmpcpp/config
+install git gitconfig
+install latexmk latexmkrc
+install nano nanorc nano-syntax
+install openvpn openvpn
+install psql psqlrc
+install ssh ssh/config
+install tmux tmux.conf
+install zsh zprofile zshrc zshine
+
+install compton config/compton.conf
+if lspci | grep -e VGA -e 3D | grep -q AMD; then
+    rm -f ~/config/compton.conf
+    ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/config/compton-radeon.conf" ~/config/compton.conf 2> /dev/null
+    print_info "activated compton.conf for AMD"
 fi
 
 if [[ -f /usr/bin/kupfer ]]; then
@@ -94,13 +89,3 @@ if [[ -f /usr/bin/kupfer ]]; then
     cp -f "$this_dir/kupfer-recdirs.py" ~/.local/share/kupfer/plugins/recdirs.py
 fi
 
-if [[ -f /usr/lib/xorg/modules/drivers/radeon_drv.so ]]; then
-    rm -f ~/.compton.conf
-    ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/compton-radeon.conf" ~/.compton.conf 2> /dev/null
-    print_info "activated compton.conf for Radeon"
-fi
-
-if [[ -f /usr/bin/apm ]]; then
-    new_packages=$(comm -23 <(cat "$this_dir/atom/PACKAGES.txt" | sort) <(apm ls -b -i | cut -d@ -f 1 | sort))
-    [[ -n "$new_packages" ]] && apm install $new_packages
-fi
