@@ -92,7 +92,7 @@ spotifywidget = lain.widgets.base({
     end
 })
 spotifywidget.widget:buttons(awful.util.table.join(
-    awful.button({ }, 1, function() -- right click
+    awful.button({ }, 1, function() -- left click
         local matcher = function(c)
             return rules.match(c, {class = 'Spotify'})
         end
