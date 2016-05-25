@@ -8,10 +8,10 @@ local beautiful  = require 'beautiful'
 local hotkeys_popup = require("awful.hotkeys_popup.widget")
 
 -- TODO: refactor
-hotkeys_popup.height = math.floor(vres/1.5)
-hotkeys_popup.width = math.floor(hres/1.5)
+hotkeys_popup.height = math.floor(vres/2)
+hotkeys_popup.width = math.floor(hres/2)
 hotkeys_popup.modifiers_color = "#777777"
-hotkeys_popup.description_font = "Monospace 9"
+hotkeys_popup.description_font = "Input 9"
 hotkeys_popup.labels['Mod4'] = "Win"
 hotkeys_popup.labels['#35'] = "+"
 hotkeys_popup.labels['#61'] = "-"
