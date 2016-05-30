@@ -12,7 +12,7 @@ print_info() {
 
 rmlink() {
     dest=~/.$1
-    [ -L "$dest" ] && rm -f "$dest" && print_error "removed $dest"
+    [ -L "$dest" ] && rm -f "$dest" && print_error "removed ${dest/$HOME/\~}"
     rmdir --ignore-fail-on-non-empty -p "$(dirname "$dest")" 2> /dev/null
     rmdir --ignore-fail-on-non-empty -p "$(dirname "$(dirname "$dest")")" 2> /dev/null
 }
@@ -29,7 +29,7 @@ mklink() {
 }
 
 install() {
-    if [[ -f "/usr/bin/$1" ]]; then
+    if command -v "$1" > /dev/null 2>&1; then
         shift
         for f in "$@"; do
             mklink "$f"
