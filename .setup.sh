@@ -61,7 +61,7 @@ install mpd config/mpd/mpd.conf
 install ncmpcpp config/ncmpcpp/config
 install git gitconfig
 install latexmk latexmkrc
-install nano nanorc nano-syntax
+install nano nanorc nano/syntax-highlighting
 install psql psqlrc
 install ssh ssh/config
 install tmux tmux.conf
