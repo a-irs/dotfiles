@@ -68,7 +68,7 @@ end
 -- NETWORK
 
 if hostname == "dell" then
-    netwidget = lain.widgets.base({
+    netwidget = lain.widgets.abase({
         timeout = 3,
         cmd = os.getenv("HOME") .. "/.config/awesome/network-info.sh",
         settings = function()
@@ -78,11 +78,11 @@ if hostname == "dell" then
 end
 
 
--- SPOTIFY
+-- MUSIC
 
-spotifywidget = lain.widgets.base({
+musicwidget = lain.widgets.abase({
     timeout = 2,
-    cmd = os.getenv("HOME") .. "/.config/awesome/spotify-info.sh " .. theme.widget_spotify_fg:gsub('#', ''),
+    cmd = os.getenv("HOME") .. "/.config/awesome/music.sh " .. theme.widget_music_fg:gsub('#', ''),
     settings = function()
         if output == "" then
             widget:set_markup("")
@@ -91,7 +91,7 @@ spotifywidget = lain.widgets.base({
         end
     end
 })
-spotifywidget.widget:buttons(awful.util.table.join(
+musicwidget.widget:buttons(awful.util.table.join(
     awful.button({ }, 1, function() -- left click
         local matcher = function(c)
             return rules.match(c, {class = 'Spotify'})
@@ -147,25 +147,6 @@ lain.widgets.calendar:attach(timewidget, {
     bg   = theme.bg_focus
 })
 
-
--- MPD
-
---[[
-mpdwidget = wibox.widget.textbox()
-mpdwidget:set_font(theme.font)
-
-vicious.register(mpdwidget, vicious.widgets.mpd,
-    function(mpdwidget, args)
-        if args["{state}"] == "Play" then
-            return " " .. markup(theme.widget_mpd_fg, markup.bold("♫ " .. args["{Title}"]) .. ' (' .. args["{Artist}"] .. ") ")
-        else
-            return ""
-        end
-    end, 2)
-mpdwidget:buttons(awful.util.table.join(
-    awful.button({ }, 1, function() awful.util.spawn("ario") end)
-))
---]]
 
 -- CPU
 
@@ -279,7 +260,7 @@ awful.screen.connect_for_each_screen(function(s)
     local layout1 = wibox.layout.fixed.horizontal()
     lay(layout1, mylayoutbox[s])
     lay(layout1, mpdwidget, 0, 0, theme.bg_focus)
-    lay(layout1, spotifywidget, 0, 0, theme.bg_focus)
+    lay(layout1, musicwidget, 0, 0, theme.bg_focus)
     lay(layout1, mytasklist[s])
     lay(layout1, myprompt[s], 0, 0, theme.bg_focus)
 
