@@ -66,7 +66,7 @@ theme.tasklist_bg                   = theme.bg_normal
 theme.tasklist_disable_icon         = true
 
 theme.bg_systray                    = theme.bg_normal
-theme.widget_music_fg             = theme.fg_focus
+theme.widget_music_fg               = theme.fg_focus
 theme.widget_date_fg                = "#cccccc"
 theme.widget_time_fg                = "#eeeeee"
 theme.widget_pulse_fg               = "#96b7e2"

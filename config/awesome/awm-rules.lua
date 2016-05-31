@@ -3,6 +3,7 @@ local rules     = require 'awful.rules'
                   require 'awful.autofocus'
 local beautiful = require 'beautiful'
 local wibox     = require 'wibox'
+local naughty    = require 'naughty'
 
 rules.rules = {
     { rule = { class = "mpv" },   properties = { size_hints_honor = false } },
@@ -193,6 +194,10 @@ end)
 client.connect_signal("tagged",   dynamic_tagging)
 client.connect_signal("untagged", dynamic_tagging)
 client.connect_signal("property::minimized", dynamic_tagging)
+
+tag.connect_signal("property::layout", function(t)
+    naughty.notify({ text = awful.tag.getproperty(t, "layout").name, timeout = 2 })
+end)
 
 -- set focus to client under mouse cursor when switching tags
 -- tag.connect_signal("property::selected", function(t)

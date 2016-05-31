@@ -5,7 +5,6 @@ local lain    = require 'lain'
 local naughty = require 'naughty'
 local volume  = require 'volume'
 local vicious = require 'vicious'
-
 markup = lain.util.markup
 
 
@@ -259,7 +258,6 @@ awful.screen.connect_for_each_screen(function(s)
 
     local layout1 = wibox.layout.fixed.horizontal()
     lay(layout1, mylayoutbox[s])
-    lay(layout1, mpdwidget, 0, 0, theme.bg_focus)
     lay(layout1, musicwidget, 0, 0, theme.bg_focus)
     lay(layout1, mytasklist[s])
     lay(layout1, myprompt[s], 0, 0, theme.bg_focus)

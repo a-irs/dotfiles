@@ -2,20 +2,10 @@ local awful = require 'awful'
 local lain  = require 'lain'
 
 layouts = {
-    -- lain.layout.uselessfair.horizontal,
-    -- lain.layout.uselessfair,
-    -- lain.layout.uselesstile,
-    -- lain.layout.uselesstile.left,
-    -- lain.layout.uselesstile.bottom,
-    -- lain.layout.uselesstile.top,
-    -- lain.layout.uselesspiral,
     -- lain.layout.termfair,
     -- lain.layout.centerfair,
-    -- lain.layout.cascade,
-    -- lain.layout.cascadetile,
     -- lain.layout.centerwork,
-    -- awful.layout.suit.max,
-    -- awful.layout.suit.max.fullscreen,
+    -- lain.layout.centerworkd,
     awful.layout.suit.tile,
     -- awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
