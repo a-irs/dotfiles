@@ -7,8 +7,8 @@ by re-downloading the fonts at <http://input.fontbureau.com/download>.
 
 
 	Four Style Family
-		Regular: InputMonoNarrow-Medium.ttf
-		Italic: InputMonoNarrow-MediumItalic.ttf
+		Regular: InputMonoNarrow-Bold.ttf
+		Italic: InputMonoNarrow-BoldItalic.ttf
 		Bold: InputMonoNarrow-Black.ttf
 		Bold Italic: InputMonoNarrow-BlackItalic.ttf
 
