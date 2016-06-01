@@ -37,11 +37,11 @@ background = #212d45
 ########################## DEFAULT THEME
 
 # black.
-color0   = #3b3b3b
+color0   = #505050
 color8   = #6d7367
 # red.
-color1   = #fa5641
-color9   = #fa5641
+color1   = #ff7563
+color9   = #ff7563
 # green.
 color2   = #aae373
 color10  = #aae373
@@ -55,13 +55,15 @@ color12  = #aed2fa
 color5   = #e2afdd
 color13  = #e2afdd
 # cyan.
-color6   = #6cf1f1
-color14  = #6cf1f1
+color6   = #a8f6fd
+color14  = #a8f6fd
 # grey.
 color7   = #d7d7d7
 color15  = #d7d7d7
 
-color214 = #ffc646
+color214 = #ffd77e
+color237 = #314366
+color238 = #3b507a
 
 ##########################
 
