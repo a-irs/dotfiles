@@ -13,23 +13,12 @@
 	[
 		"node_modules/*"
 	],
-	"bold_folder_labels": false,
+	"bold_folder_labels": true,
 	"close_windows_when_empty": true,
 	"color_scheme": "Packages/User/Monokai Extended 2 desaturated.tmTheme",
-	"distraction_free":
-	{
-		"menu_visible": false,
-		"show_minimap": false,
-		"show_open_files": false,
-		"show_tabs": false,
-		"side_bar_visible": false,
-		"status_bar_visible": false
-	},
 	"dpi_scale": 1.0,
-	"draw_white_space": "none",
-	"elementary_folder_icons": false,
 	"enable_tab_scrolling": false,
-	"enable_telemetry": "disabled",
+	"enable_telemetry": false,
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
 	[
@@ -108,27 +97,16 @@
 	"font_face": "Input",
 	"font_size": 9,
 	"gutter": true,
-	"hero_folder_icons": false,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
-	"hot_exit": true,
 	"ignored_packages":
 	[
 		"Markdown",
 		"Vintage"
 	],
-	"line_numbers": false,
+	"line_numbers": true,
 	"margin": 0,
-	"material_theme_disable_fileicons": false,
-	"material_theme_small_tab": true,
-	"new_window_settings":
-	{
-		"menu_visible": false,
-		"show_minimap": false,
-		"side_bar_visible": false
-	},
 	"overlay_scroll_bars": "enabled",
-	"remember_open_files": false,
 	"scroll_past_end": true,
 	"scroll_speed": 0,
 	"show_encoding": true,
