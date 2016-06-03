@@ -79,13 +79,7 @@ install kodi kodi/userdata/advancedsettings.xml
 install mpv config/mpv/input.conf config/mpv/mpv.conf config/mpv/scripts/convert_script.lua config/mpv/scripts/stats.lua
 install retroarch config/retroarch/remap config/retroarch/core-config/gba_bios.bin config/retroarch/core-config/scph5500.bin config/retroarch/core-config/scph5501.bin config/retroarch/core-config/scph5502.bin config/retroarch/retroarch.cfg config/retroarch/retroarch-core-options.cfg
 install X xinitrc Xmodmap config/fontconfig/fonts.conf fonts
-
 install compton config/compton.conf
-if lspci | grep -e VGA -e 3D | grep -q AMD; then
-    rm -f ~/.config/compton.conf
-    ln --force --symbolic --no-target-directory --no-dereference "$this_dir/config/compton-radeon.conf" ~/.config/compton.conf 2> /dev/null
-    print_info "activated compton.conf for AMD"
-fi
 
 if [[ -f /usr/bin/kupfer ]]; then
     mkdir -p ~/.local/share/kupfer/plugins
