@@ -82,7 +82,7 @@ install X xinitrc Xmodmap config/fontconfig/fonts.conf fonts
 
 install compton config/compton.conf
 if lspci | grep -e VGA -e 3D | grep -q AMD; then
-    rm -f ~/config/compton.conf
+    rm -f ~/.config/compton.conf
     ln --force --symbolic --no-target-directory --no-dereference "$this_dir/config/compton-radeon.conf" ~/.config/compton.conf 2> /dev/null
     print_info "activated compton.conf for AMD"
 fi
