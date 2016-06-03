@@ -196,7 +196,7 @@ client.connect_signal("untagged", dynamic_tagging)
 client.connect_signal("property::minimized", dynamic_tagging)
 
 tag.connect_signal("property::layout", function(t)
-    naughty.notify({ text = awful.tag.getproperty(t, "layout").name, timeout = 2 })
+    naughty.notify({ text = awful.tag.getproperty(t, "layout").name, timeout = 2, position = "top_middle" })
 end)
 
 -- set focus to client under mouse cursor when switching tags
