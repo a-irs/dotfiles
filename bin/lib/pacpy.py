@@ -62,17 +62,17 @@ class Package(object):
         self.path = path
         for i, line in enumerate(searchlines):
             if "%NAME%" in line:
-                self.name = searchlines[i:i+2][1].strip()
+                self.name = searchlines[i:i + 2][1].strip()
             elif "%VERSION" in line:
-                self.version = searchlines[i:i+2][1].strip()
+                self.version = searchlines[i:i + 2][1].strip()
             elif "%SIZE" in line:
-                self.size = int(searchlines[i:i+2][1].strip())
+                self.size = int(searchlines[i:i + 2][1].strip())
             elif "%INSTALLDATE%" in line:
-                self.install_date = int(searchlines[i:i+2][1].strip())
+                self.install_date = int(searchlines[i:i + 2][1].strip())
             elif "%VALIDATION%" in line:
-                self.is_aur = searchlines[i:i+2][1].strip() == "none"
+                self.is_aur = searchlines[i:i + 2][1].strip() == "none"
             elif "%REASON%" in line:
-                reason = int(searchlines[i:i+2][1].strip())
+                reason = int(searchlines[i:i + 2][1].strip())
                 if reason == 1:
                     self.is_explicit = False
 
@@ -175,7 +175,7 @@ def pretty_name(p):
 
 
 def pretty_size(i):
-    if i < 1024*1024:
+    if i < 1024 * 1024:
         return "{:.2f}".format(i / 1024) + " KiB"
     return "{:.2f}".format(i / 1024 / 1024) + " MiB"
 
@@ -189,7 +189,7 @@ def pretty_date(p, format):
 def pretty_time(p, format):
     """returns pretty time of the package that was given as seconds"""
     time = datetime.fromtimestamp(p.install_date)
-    return Config.TIME_COLOR + time.strftime(format)
+    return Config.TIME_COLOR + time.strftime(format) + Color.RESET
 
 if __name__ == '__main__':
     main()
