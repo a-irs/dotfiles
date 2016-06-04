@@ -1,7 +1,6 @@
 local awful     = require 'awful'
 local rules     = require 'awful.rules'
                   require 'awful.autofocus'
-local beautiful = require 'beautiful'
 local wibox     = require 'wibox'
 local naughty    = require 'naughty'
 
@@ -9,7 +8,9 @@ rules.rules = {
     { rule = { class = "mpv" },   properties = { size_hints_honor = false } },
     { rule = { class = "Gpick" }, properties = { floating = true } },
     { rule = { },
-      properties = { focus = awful.client.focus.filter,
+      properties = { border_width = theme.border_width,
+                     border_color = theme.border_normal,
+                     focus = awful.client.focus.filter,
                      raise = true,
                      keys = clientkeys,
                      maximized_vertical   = false,
@@ -194,6 +195,9 @@ end)
 client.connect_signal("tagged",   dynamic_tagging)
 client.connect_signal("untagged", dynamic_tagging)
 client.connect_signal("property::minimized", dynamic_tagging)
+
+client.connect_signal("focus",   function(c) c.border_color = theme.border_focus end)
+client.connect_signal("unfocus", function(c) c.border_color = theme.border_normal end)
 
 tag.connect_signal("property::layout", function(t)
     naughty.notify({ text = awful.tag.getproperty(t, "layout").name, timeout = 2, position = "top_middle" })

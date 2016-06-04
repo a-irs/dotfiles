@@ -2,4 +2,4 @@
 
 killall compton &> /dev/null
 gpick
-compton -b
+compton
