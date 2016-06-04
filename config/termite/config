@@ -1,40 +1,26 @@
 [options]
 scroll_on_output = false
 scroll_on_keystroke = true
-audible_bell = false
+audible_bell = true
 mouse_autohide = false
 allow_bold = true
 dynamic_title = true
 urgent_on_bell = true
 clickable_url = true
 font = Input 9
-scrollback_lines = 10000
+scrollback_lines = 100000
 search_wrap = true
 icon_name = terminal
-#geometry = 640x480
-
-# "system", "on" or "off"
-cursor_blink = system
-
-# "block", "underline" or "ibeam"
+cursor_blink = on
 cursor_shape = block
-
-# $BROWSER is used by default
 browser = chromium
-
-# set size hints for the window
 size_hints = false
-
-# emit escape sequences for other keys modified by Control
-#modify_other_keys = false
 
 [colors]
 cursor = #ffc646
 foreground = #f0f0f0
 foreground_bold = #f0f0f0
 background = #212d45
-
-########################## DEFAULT THEME
 
 # black.
 color0   = #505050

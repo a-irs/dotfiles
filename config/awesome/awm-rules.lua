@@ -187,6 +187,12 @@ client.connect_signal("unmanage", function(c)
             awful.tag.setncol(1)
             awful.tag.history.restore()
         end
+        -- return to last non-empty tag
+        i = 2
+        while is_empty(awful.tag.selected()) and i <= 4 do
+            awful.tag.history.restore(nil, i)
+            i = i + 1
+        end
     end
 
     dynamic_tagging()
