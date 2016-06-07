@@ -193,6 +193,12 @@ client.connect_signal("unmanage", function(c)
             awful.tag.history.restore(nil, i)
             i = i + 1
         end
+
+        -- if still empty, return to first
+        if is_empty(awful.tag.selected()) then
+            local tag = awful.tag.gettags(awful.screen.focused())[1]
+            if tag then awful.tag.viewonly(tag) end
+        end
     end
 
     dynamic_tagging()

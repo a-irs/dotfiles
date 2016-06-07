@@ -26,6 +26,7 @@ function dpi(value)
 end
 
 function is_empty(tag)
+    if tag == nil then return true end
     return #tag:clients() == 0
 end
 
