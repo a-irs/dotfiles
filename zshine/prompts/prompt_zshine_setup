@@ -136,6 +136,11 @@ _prompt_ranger() {
     [[ -n "$RANGER_LEVEL" ]] && prompt_segment white 16 "RANGER"
 }
 
+_prompt_virtualenv() {
+    [[ "$VIRTUAL_ENV" ]] || return
+    prompt_segment 237 $ZSHINE_PATH_BG "${VIRTUAL_ENV##*/}"
+}
+
 _prompt_path() {
     [[ ! -w ./ ]] && prompt_segment $ZSHINE_PATH_BG_RO $ZSHINE_PATH_FG_RO ro
     prompt_segment $ZSHINE_PATH_BG $ZSHINE_PATH_FG "${PWD/#$HOME/~}"
@@ -228,6 +233,7 @@ _rprompt_date() {
 _build_left() {
     _prompt_ssh
     _prompt_user_host
+    _prompt_virtualenv
     _prompt_path
     _prompt_git
     _prompt_svn
@@ -239,7 +245,7 @@ _build_right() {
     _rprompt_error
     _rprompt_battery
     _rprompt_date
-    _rprompt_virtualenv
+    # _rprompt_virtualenv
     # _rprompt_userhost
     _rprompt_jobs
 }
