@@ -4,7 +4,7 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
 # main
 ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=8,bold'
-ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=cyan'
 ZSH_HIGHLIGHT_STYLES[alias]='fg=magenta,bold'
 ZSH_HIGHLIGHT_STYLES[function]='fg=yellow,bold'
 ZSH_HIGHLIGHT_STYLES[builtin]='fg=cyan,bold'
