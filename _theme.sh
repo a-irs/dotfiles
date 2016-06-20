@@ -14,6 +14,8 @@ sed -i "s|$current_color|$1|g" \
     "$this_dir/config/awesome/theme.lua" \
     "$this_dir/config/sublime-text-3/Packages/User/Monokai Extended 2.tmTheme" \
     "$this_dir/config/sublime-text-3/Packages/User/Monokai Extended 2 desaturated.tmTheme" \
+    "$this_dir/config/sublime-text-3/Packages/User/zshine.tmTheme" \
+    "$this_dir/config/sublime-text-3/Packages/User/zshine-desaturated.tmTheme" \
     "$this_dir/config/termite/config" \
     "$this_dir/config/zathura/zathurarc"
 
