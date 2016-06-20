@@ -18,8 +18,8 @@ size_hints = false
 
 [colors]
 cursor = #ffc646
-foreground = #f0f0f0
-foreground_bold = #f0f0f0
+foreground = #ffffff
+foreground_bold = #ffffff
 background = #212d5a
 
 # black.
