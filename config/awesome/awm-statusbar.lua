@@ -66,15 +66,13 @@ end
 
 -- NETWORK
 
-if hostname == "dell" then
-    netwidget = lain.widgets.abase({
-        timeout = 3,
-        cmd = os.getenv("HOME") .. "/.config/awesome/network-info.sh",
-        settings = function()
-            widget:set_markup(output)
-        end
-    })
-end
+netwidget = lain.widgets.abase({
+    timeout = 2,
+    cmd = os.getenv("HOME") .. "/.config/awesome/network-info.sh",
+    settings = function()
+        widget:set_markup(output)
+    end
+})
 
 
 -- MUSIC
@@ -98,6 +96,7 @@ musicwidget.widget:buttons(awful.util.table.join(
         awful.client.run_or_raise('spotify', matcher)
     end)
 ))
+
 
 -- VOLUME
 
