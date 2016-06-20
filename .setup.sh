@@ -62,6 +62,7 @@ install ncmpcpp config/ncmpcpp/config
 install git gitconfig
 install nano nanorc nano/syntax-highlighting
 install psql psqlrc
+install ranger config/ranger/rc.conf config/ranger/scope.sh
 install ssh ssh/config
 install tmux tmux.conf
 install zsh zprofile zshrc zshine
