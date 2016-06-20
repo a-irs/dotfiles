@@ -1,1 +1,0 @@
-lib/check-cpu.sh
