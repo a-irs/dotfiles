@@ -9,7 +9,7 @@
         <readbufferfactor>3.0</readbufferfactor>
     </network>
     <splash>false</splash>
-    <packagefoldersize>200</packagefoldersize>
+    <packagefoldersize>100</packagefoldersize>
     <samba>
         <statfiles>false</statfiles>
     </samba>

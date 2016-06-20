@@ -170,9 +170,9 @@ s() {
         fi
 
         if [[ -r "$f" ]]; then
-            source-highlight -t 4 --failsafe --infer-lang -f esc --style-file=esc.style -i "$f"
+            command highlight --out-format=ansi "$f"
         else
-            sudo source-highlight -t 4 --failsafe --infer-lang -f esc --style-file=esc.style -i "$f"
+            sudo command highlight --out-format=ansi "$f"
         fi
     done
 }
