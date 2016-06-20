@@ -20,7 +20,7 @@ size_hints = false
 cursor = #ffc646
 foreground = #ffffff
 foreground_bold = #ffffff
-background = #212d5a
+background = #212d45
 
 # black.
 color0   = #505050
