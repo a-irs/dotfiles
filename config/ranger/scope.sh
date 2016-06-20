@@ -53,8 +53,10 @@ highlight() { command highlight "$@"; test $? = 0 -o $? = 141; }
 
 case "$extension" in
     7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|\
-    rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)
+    rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z)
         atool --quiet --list "$path" | trim | tail -n +3; exit 0;;
+    zip)
+        try zipinfo -2tz "$path" && { dump | trim; exit 0; } ;;
     rar)
         try unrar -p- lb "$path" && { dump | trim; exit 0; } || exit 1;;
     pdf)
@@ -71,8 +73,7 @@ esac
 
 case "$mimetype" in
     text/* | */xml | application/postscript )
-        try highlight --out-format=ansi "$path" && { dump | trim | remove_blank | remove_double_blank; exit 5; }
-        exit 2;;
+        try highlight --out-format=ansi "$path" && { dump | trim | remove_blank | remove_double_blank; exit 5; } || exit 2;;
     image/* )
         img2txt --gamma=0.6 --width="$width" "$path" && exit 4 || exit 1;;
     video/* | audio/* )
@@ -81,7 +82,7 @@ esac
 
 case "$mimeencoding" in
     *binary* )
-        try file -b -- "$path" && { dump | trim; exit 5; } || exit 2 ;;
+        try echo "$(tput bold; tput setaf 1)BINARY FILE: $(file -b -- "$path")" && { dump | trim; exit 5; } || exit 2 ;;
 esac
 
 exit 1
