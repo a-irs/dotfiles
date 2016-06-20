@@ -6,8 +6,7 @@ color=${1:-ffffff}
 
 ### slower, worse parsing, but can get paused status
 
-windows=$(wmctrl -lx)
-windowtitle=$(echo -n "$windows" | awk '$3 ~ /spotify.Spotify/{$1=$2=$3=$4=""; print}')
+windowtitle=$(wmctrl -lx | awk '$3 ~ /spotify.Spotify/{$1=$2=$3=$4=""; print}')
 if [[ $windowtitle ]]; then
     windowtitle=$(echo -n "$windowtitle" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
 else
