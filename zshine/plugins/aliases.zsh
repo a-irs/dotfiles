@@ -176,6 +176,7 @@ s() {
         fi
     done
 }
+alias p=preview
 
 [[ "$commands[less]" ]] && alias less='less -FXR'
 [[ "$commands[lsblk]" ]] && alias lsblk='lsblk -o NAME,LABEL,TYPE,FSTYPE,SIZE,MOUNTPOINT,UUID -p'
