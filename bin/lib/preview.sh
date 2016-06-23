@@ -11,48 +11,53 @@ filename="${path##*/}"
 [[ -d "$path" ]] && { echo "ERROR: '$filename' is a directory"; exit; }
 [[ ! -r "$path" ]] && exec sudo -n "$0" "$@"
 
-mime_type=$(file --mime-type -Lb -- "$path")
-mime_encoding=$(file --mime-encoding -Lb -- "$path")
-extension="${filename##*.}"
-extension="${extension,,}" # lower case
-
 #highlight() { command highlight "$@"; test $? = 0 -o $? = 141; } # wraps highlight to treat exit code 141 (killed by SIGPIPE) as success
 
 trim() { head -n "$height"; }
+wrap() { fmt -s -t -w "$width"; }
 remove_blank() { sed '/./,$!d'; } # remove blank lines at top of file
 remove_double_blank() { cat -s; } # remove multiple blank lines
-highlight_dirs() { GREP_COLOR='1;33' grep -E --color=always '(.)*/|$'; } # TODO: not working in ranger
-highlight() {
-    command highlight --out-format=ansi "$1" 2> /dev/null || \
-    command highlight --out-format=ansi --syntax=conf "$1"
-}
+highlight_dirs() { GREP_COLOR='1;33' egrep --color=always '(.)*/|$'; } # TODO: not working in ranger
+highlight() { command highlight --out-format=ansi "$1" 2> /dev/null || command highlight --out-format=ansi --syntax=conf "$1"; }
+showbin() { strings -6 "$1" | tr '\n' ' ' | wrap | trim; }
+showbin_compressed() { zcat "$1" | strings -6 | tr '\n' ' ' | wrap | trim; }
+
+preview_tar() { tar tf "$path" | trim | highlight_dirs; }
+preview_zip() { zipinfo -2tz "$path" | trim | highlight_dirs; }
+preview_htm() { elinks -dump 1 -dump-color-mode 1 "$path" | remove_blank | remove_double_blank | trim | wrap; }
+preview_pdf() { pdftotext -l 10 -nopgbrk -q "$path" - | remove_blank | remove_double_blank | trim | wrap; }
+preview_txt() { highlight "$path" | remove_blank | remove_double_blank | trim | wrap; }
+previde_med() { mediainfo "$path" | remove_blank | remove_double_blank | trim | sed 's/  \+:/ --/;' | wrap; }
+
+mime_type=$(file --mime-type -Lb -- "$path")
+extension="${filename##*.}"
+extension="${extension,,}" # lower case
 
 # echo "-----------------------------"
 # echo "$mime_type"
-# echo "$mime_encoding"
 # echo "$filename"
 # echo "$extension"
 # echo "-----------------------------"
 
 case "$extension" in
     bz|bz2|gz|lz|lzh|lzma|lzo|tar|tbz|tbz2|tgz|tlz|txz|xz )
-        tar tf "$path" | trim | highlight_dirs; exit ;;
+        preview_tar && exit ;;
     zip )
-        zipinfo -2tz "$path" | trim | highlight_dirs; exit ;;
+        preview_zip && exit ;;
     html|html|xhtml )
-        elinks -dump 1 -dump-color-mode 1 "$path" | remove_blank | remove_double_blank | trim; exit ;;
+        preview_htm && exit ;;
 esac
 
 case "$mime_type" in
     application/pdf )
-        pdftotext -l 10 -nopgbrk -q "$path" - | remove_blank | remove_double_blank | trim; exit ;;
+        preview_pdf && exit ;;
     text/* | */xml | application/postscript )
-        highlight "$path" | remove_blank | remove_double_blank | trim; exit ;;
+        preview_txt && exit ;;
     video/* | audio/* | image/* )
-        mediainfo "$path" | remove_blank | remove_double_blank | trim | sed 's/  \+:/ --/;'; exit ;;
+        previde_med && exit ;;
 esac
 
-printf "$(tput bold; tput setaf 5)%s\n" "$(file -b -- "$path")" | fmt -s -w "$width"
+printf "$(tput bold; tput setaf 5)%s\n" "$(file -b -- "$path")" | wrap
 printf "$(tput bold; tput setaf 5)%s\n" "================"
 
-strings "$path" | tr '\n' ' ' | fmt -s -w "$width" | trim
+showbin_compressed "$path" 2> /dev/null || showbin "$path"

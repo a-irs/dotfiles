@@ -176,7 +176,7 @@ s() {
         fi
     done
 }
-alias p=preview
+p() { for f in "$@"; do printf "\n%s\n\n" "=========== $f" && preview "$f"; done }
 
 [[ "$commands[less]" ]] && alias less='less -FXR'
 [[ "$commands[lsblk]" ]] && alias lsblk='lsblk -o NAME,LABEL,TYPE,FSTYPE,SIZE,MOUNTPOINT,UUID -p'
