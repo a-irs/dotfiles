@@ -32,10 +32,13 @@ zstyle ':chpwd:*' recent-dirs-max 31
 zstyle ':completion:*' rehash true # always rehash on completion
 
 export GREP_COLOR='1;32'
-export EDITOR="vim"
-export PAGER="less"
+export PAGER=less
 export TZ='Europe/Berlin'
 export REPORTTIME=5
+
+[[ $commands[nano] ]] && export EDITOR=nano
+[[ $commands[vi] ]]   && export EDITOR=vi
+[[ $commands[vim] ]]  && export EDITOR=vim
 
 export HISTSIZE=100000
 export SAVEHIST=100000
