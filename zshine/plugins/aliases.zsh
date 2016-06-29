@@ -170,9 +170,9 @@ s() {
         fi
 
         if [[ -r "$f" ]]; then
-            command highlight --out-format=ansi "$f"
+            command highlight --out-format=ansi "$f" 2> /dev/null || cat "$f"
         else
-            sudo command highlight --out-format=ansi "$f"
+            sudo command highlight --out-format=ansi "$f" 2> /dev/null || cat "$f"
         fi
     done
 }
