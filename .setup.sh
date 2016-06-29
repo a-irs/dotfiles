@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
-this_dir="$(dirname "$(readlink -f "$0")")"
+os="$(uname)"
+
+if [[ "$os" = Darwin ]]; then
+    this_dir="$(dirname "$(greadlink -f "$0")")"
+else
+    this_dir="$(dirname "$(readlink -f "$0")")"
+fi
 
 print_error() {
     echo -e "\033[1;31m$*\033[0m"
@@ -13,14 +19,23 @@ print_info() {
 rmlink() {
     dest=~/.$1
     [ -L "$dest" ] && rm -f "$dest" && print_error "removed ${dest/$HOME/\~}"
-    rmdir --ignore-fail-on-non-empty -p "$(dirname "$dest")" 2> /dev/null
-    rmdir --ignore-fail-on-non-empty -p "$(dirname "$(dirname "$dest")")" 2> /dev/null
+    if [[ "$os" = Darwin ]]; then
+        rmdir --ignore-fail-on-non-empty -p "$(dirname "$dest")" 2> /dev/null
+        rmdir --ignore-fail-on-non-empty -p "$(dirname "$(dirname "$dest")")" 2> /dev/null
+    else
+        grmdir --ignore-fail-on-non-empty -p "$(dirname "$dest")" 2> /dev/null
+        grmdir --ignore-fail-on-non-empty -p "$(dirname "$(dirname "$dest")")" 2> /dev/null
+    fi       
 }
 
 mklink() {
     dest=~/.$1
     mkdir -p "$(dirname "$dest")"
-    ln --force --symbolic --no-target-directory --no-dereference "$this_dir/$1" "$dest" 2> /dev/null
+    if [[ "$os" = Darwin ]]; then
+        gln --force --symbolic --no-target-directory --no-dereference "$this_dir/$1" "$dest" 2> /dev/null
+    else
+        ln --force --symbolic --no-target-directory --no-dereference "$this_dir/$1" "$dest" 2> /dev/null
+    fi
     if [[ $? != 0 ]]; then
         print_error "error creating link to $dest"
     else
@@ -65,6 +80,7 @@ install psql psqlrc
 install ranger config/ranger/rc.conf config/ranger/scope.sh
 install ssh ssh/config
 install tmux tmux.conf
+install vim vimrc vim/autoload/plug.vim
 install zsh zprofile zshrc zshine
 
 install gtk-demo gtkrc-2.0 icons config/user-dirs.dirs
