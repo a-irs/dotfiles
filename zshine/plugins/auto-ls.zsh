@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 if [[ "$os" = Darwin ]]; then
-    chpwd() { command ls -hFG; }
+    chpwd() {        gls --quoting-style=literal -F --color=auto --group-directories-first; }
 else
     chpwd() { command ls --quoting-style=literal -F --color=auto --group-directories-first; }
 fi

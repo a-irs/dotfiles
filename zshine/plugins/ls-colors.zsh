@@ -4,7 +4,6 @@ if [[ -f "$ZSHINE_DIR/dircolors" ]]; then
 fi
 
 autoload colors; colors;
-export LSCOLORS="Gxfxcxdxbxegedabagacad"
 
 # Use same colors for autocompletion
 zmodload -a colors
@@ -14,5 +13,6 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 if [[ $os == Darwin ]]; then
     export CLICOLOR=1
+    #export LSCOLORS="Gxfxcxdxbxegedabagacad"
     zstyle ':completion:*:default' list-colors ''  
 fi
