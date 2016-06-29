@@ -203,11 +203,22 @@ alias mv='mv -i'
 alias mkdir='mkdir -p'
 
 alias mmv='noglob zmv -W'
-alias ls='command ls --quoting-style=literal -F -l -h --color=auto --group-directories-first'
-alias l='\ls  --quoting-style=literal -F             --color=auto --group-directories-first'
-alias la='\ls --quoting-style=literal -F -l -h -A    --color=auto --group-directories-first'
-alias l.='\ls --quoting-style=literal -F    -h -d .* --color=auto --group-directories-first'
-alias lt='\ls --quoting-style=literal -F -l -h -t -r --color=auto --group-directories-first'
+
+if [[ "$os" = Darwin ]]; then
+    alias  l='\ls   -GF'
+    alias ll='\ls -lhGF'
+    alias ls='\ls -lhGF'
+    alias la='\ls -lhGF -A'
+    alias l.='\ls -lhGF -d .*'
+    alias lo='\ls -lhGF -O@'
+else
+    alias ls='command ls --quoting-style=literal -F -l -h --color=auto --group-directories-first'
+    alias l='\ls  --quoting-style=literal -F             --color=auto --group-directories-first'
+    alias la='\ls --quoting-style=literal -F -l -h -A    --color=auto --group-directories-first'
+    alias l.='\ls --quoting-style=literal -F    -h -d .* --color=auto --group-directories-first'
+    alias lt='\ls --quoting-style=literal -F -l -h -t -r --color=auto --group-directories-first'
+fi
+
 [[ "$commands[python]" ]] && alias http-share='python -m http.server 10000'
 [[ "$commands[watch]" ]] && alias ddstatus='sudo watch --interval=1 "pkill -USR1 dd"'
 [[ "$commands[dropbox-cli]" ]] && alias ds='dropbox-cli status'

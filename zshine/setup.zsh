@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 ZSHINE_DIR=~/.zshine
+os="$(uname)"
 
 # no duplicate entries for path arrays
 typeset -gU cdpath fpath mailpath path
@@ -112,7 +113,7 @@ ZSHINE_PLUGINS=(
   completion # tweaks for TAB-completion
   bindkey # bind keys for delete, history-search etc.
   fzf # CTRL+T for fuzzy-search of files
-  pwd-hell # show warning message when [[ pwd != readlink -f ./ ]]
+  # pwd-hell # show warning message when [[ pwd != readlink -f ./ ]]
   # tmux # autostart tmux
   # notify # notify-send after long command has been completed
   zshmarks # set bookmarks

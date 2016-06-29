@@ -1,4 +1,7 @@
-[[ -f "$ZSHINE_DIR/dircolors" ]] && eval $(dircolors -b "$ZSHINE_DIR/dircolors")
+if [[ -f "$ZSHINE_DIR/dircolors" ]]; then
+    [[ "$os" = Darwin ]] && eval $(gdircolors -b "$ZSHINE_DIR/dircolors")
+    [[ "$os" = Linux  ]] && eval $(dircolors -b "$ZSHINE_DIR/dircolors")
+fi
 
 autoload colors; colors;
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
