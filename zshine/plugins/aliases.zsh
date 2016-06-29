@@ -331,7 +331,7 @@ fi
 
 alias sudoe="sudoedit"
 
-x() {
+extract() {
     while (( $# > 0 )); do
         if [[ ! -f "$1" ]]; then
             echo "extract: '$1' is not a valid file" 1>&2
@@ -373,6 +373,7 @@ x() {
       shift
   done
 }
+alias x=extract
 
 makeimg() {
     color=$1
