@@ -1,6 +1,13 @@
 #!/usr/bin/env zsh
 
+export http_proxy=http://proxy.staatsdruckerei.at:8080/
+export https_proxy=https://proxy.staatsdruckerei.at:8080/
+
 ZSHINE_DIR=~/.zshine
+
+#alias ls=gls
+alias readlink=greadlink
+alias dircolors=gdircolors
 
 # no duplicate entries for path arrays
 typeset -gU cdpath fpath mailpath path

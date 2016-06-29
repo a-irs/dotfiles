@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-this_dir="$(dirname "$(readlink -f "$0")")"
+this_dir="$(dirname "$(greadlink -f "$0")")"
 
 print_error() {
     echo -e "\033[1;31m$*\033[0m"
@@ -20,7 +20,7 @@ rmlink() {
 mklink() {
     dest=~/.$1
     mkdir -p "$(dirname "$dest")"
-    ln --force --symbolic --no-target-directory --no-dereference "$this_dir/$1" "$dest" 2> /dev/null
+    gln --force --symbolic --no-target-directory --no-dereference "$this_dir/$1" "$dest"
     if [[ $? != 0 ]]; then
         print_error "error creating link to $dest"
     else
@@ -50,9 +50,9 @@ install_always() {
 
 print_info "link ~/.cache and ~/.thumbnails"
 rm -rf ~/.cache
-ln -sf /tmp/ ~/.cache 2> /dev/null
+gln -sf /tmp/ ~/.cache 2> /dev/null
 mkdir -p ~/.thumbnails 2> /dev/null
-ln -sf ~/.thumbnails ~/.cache/thumbnails 2> /dev/null
+gln -sf ~/.thumbnails ~/.cache/thumbnails 2> /dev/null
 
 install_always bin hushlogin
 install beet config/beets/config.yaml

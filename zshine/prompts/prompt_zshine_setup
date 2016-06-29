@@ -15,13 +15,13 @@ ZSHINE_GIT=1
 ZSHINE_GIT_SIMPLE_DIRTY=0
 ZSHINE_GIT_SHRINK_URL=1
 ZSHINE_GIT_SYMBOL_SIMPLE='●'
-ZSHINE_GIT_SYMBOL_UNTRACKED=''
-ZSHINE_GIT_SYMBOL_ADDED=''
-ZSHINE_GIT_SYMBOL_MODIFIED=''
-ZSHINE_GIT_SYMBOL_RENAMED=''
-ZSHINE_GIT_SYMBOL_DELETED=''
+ZSHINE_GIT_SYMBOL_UNTRACKED='?'
+ZSHINE_GIT_SYMBOL_ADDED='+'
+ZSHINE_GIT_SYMBOL_MODIFIED='m'
+ZSHINE_GIT_SYMBOL_RENAMED='>'
+ZSHINE_GIT_SYMBOL_DELETED='-'
 
-ZSHINE_SVN=1
+ZSHINE_SVN=0
 ZSHINE_SVN_FOLDER=$HOME/ba/stipsys
 ZSHINE_SVN_SIMPLE_DIRTY=1
 ZSHINE_SVN_SHRINK_URL=1
@@ -33,7 +33,7 @@ ZSHINE_SVN_SYMBOL_RENAMED=''
 ZSHINE_SVN_SYMBOL_DELETED=''
 
 ZSHINE_DATE=0
-ZSHINE_USER=0
+ZSHINE_USER=1
 
 ZSHINE_BATTERY=0
 ZSHINE_BATTERY_COLOR_LOW='yellow'
@@ -50,10 +50,10 @@ ZSHINE_SSH_FG='255'
 ZSHINE_SSH_BG='red'
 ZSHINE_USER_FG='blue'
 ZSHINE_USER_BG='240'
-ZSHINE_PATH_FG='235'
+ZSHINE_PATH_FG='yellow'
 ZSHINE_PATH_BG='214'
-ZSHINE_PATH_FG_RO='232'
-ZSHINE_PATH_BG_RO='cyan'
+ZSHINE_PATH_FG_RO='red'
+ZSHINE_PATH_BG_RO='232'
 ZSHINE_GIT_URL_FG='magenta'
 ZSHINE_GIT_URL_BG='237'
 ZSHINE_GIT_COMMIT_FG='green'
@@ -62,8 +62,8 @@ ZSHINE_GIT_BRANCH_FG='cyan'
 ZSHINE_GIT_BRANCH_BG='237'
 ZSHINE_GIT_DIRTY_FG='red'
 ZSHINE_GIT_DIRTY_BG='237'
-ZSHINE_SEGMENT_SYMBOL=''
-ZSHINE_SEGMENT_RSYMBOL=''
+ZSHINE_SEGMENT_SYMBOL=''
+ZSHINE_SEGMENT_RSYMBOL=''
 ZSHINE_SEGMENT_RSEPARATOR=' '
 
 if [[ "$TERM" == "linux" ]]; then
@@ -98,19 +98,12 @@ rprompt_segment() {
 
 prompt_segment() {
     [ -z "$3" ] && return
-    if [[ $ZSHINE_CURRENT_BG != 'NONE' && $1 != $ZSHINE_CURRENT_BG ]]; then
-        echo -n " %B%{%K{$1}%F{$ZSHINE_CURRENT_BG}%}$ZSHINE_SEGMENT_SYMBOL%{%F{$2}%} "
-    else
-        echo -n "%B%{%K{$1}%}%{%F{$2}%} "
-    fi
-    ZSHINE_CURRENT_BG=$1
-    echo -n $3
+    [[ $3 ]] && echo -n "%B%{%F{$2}%}$3"
 }
 
 _prompt_end() {
-    echo -n " %{%k%F{$ZSHINE_CURRENT_BG}%}$ZSHINE_SEGMENT_SYMBOL"
+#    echo -n " %{%k%F{$ZSHINE_CURRENT_BG}%}$ZSHINE_SEGMENT_SYMBOL"
     echo -n "%{%f%}"
-    ZSHINE_CURRENT_BG=''
 }
 
 
@@ -142,8 +135,8 @@ _prompt_virtualenv() {
 }
 
 _prompt_path() {
-    [[ ! -w ./ ]] && prompt_segment $ZSHINE_PATH_BG_RO $ZSHINE_PATH_FG_RO ro
-    prompt_segment $ZSHINE_PATH_BG $ZSHINE_PATH_FG "${PWD/#$HOME/~}"
+    prompt_segment $ZSHINE_PATH_BG $ZSHINE_PATH_FG " ${PWD/#$HOME/~}"
+    [[ ! -w ./ ]] && prompt_segment $ZSHINE_PATH_BG_RO $ZSHINE_PATH_FG_RO " (read-only)"
 }
 
 _prompt_user_host() {
@@ -152,7 +145,8 @@ _prompt_user_host() {
         ZSHINE_USER=1
         prompt_segment $ZSHINE_USER_BG "" "%{%F{$ZSHINE_USER_FG}%}%n%{%F{$ZSHINE_HOST_COLOR}%}@%M"
     else
-        prompt_segment $ZSHINE_USER_BG $ZSHINE_USER_FG "%n"
+        prompt_segment $ZSHINE_USER_BG "" "%{%F{$ZSHINE_USER_FG}%}%n%{%F{$ZSHINE_HOST_COLOR}%}@%m"
+        #prompt_segment $ZSHINE_USER_BG $ZSHINE_USER_FG "%n"
     fi
 }
 
