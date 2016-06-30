@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 path=$1
 width="${2:-$(tput cols)}"
 height="${3:-$(tput lines)}"
@@ -14,11 +12,15 @@ filename="${path##*/}"
 #highlight() { command highlight "$@"; test $? = 0 -o $? = 141; } # wraps highlight to treat exit code 141 (killed by SIGPIPE) as success
 
 trim() { head -n "$height"; }
-wrap() { fmt -s -t -w "$width"; }
+if [[ "$(uname)" = Darwin ]]; then
+    wrap() { cat; }
+else
+    wrap() { fmt -s -t -w "$width"; }
+fi
 remove_blank() { sed '/./,$!d'; } # remove blank lines at top of file
 remove_double_blank() { cat -s; } # remove multiple blank lines
 highlight_dirs() { GREP_COLOR='1;33' egrep --color=always '(.)*/|$'; } # TODO: not working in ranger
-highlight() { command highlight --out-format=ansi "$1" 2> /dev/null || command highlight --out-format=ansi --syntax=conf "$1"; }
+highlight() { command highlight --out-format=ansi "$1" 2> /dev/null || command highlight --out-format=ansi --syntax=conf "$1" 2> /dev/null || cat "$1"; }
 showbin() { strings -6 "$1" | tr '\n' ' ' | wrap | trim; }
 showbin_compressed() { zcat "$1" | strings -6 | tr '\n' ' ' | wrap | trim; }
 
@@ -31,7 +33,7 @@ previde_med() { mediainfo "$path" | remove_blank | remove_double_blank | trim | 
 
 mime_type=$(file --mime-type -Lb -- "$path")
 extension="${filename##*.}"
-extension="${extension,,}" # lower case
+#extension="${extension,,}" # lower case
 
 # echo "-----------------------------"
 # echo "$mime_type"
@@ -52,7 +54,7 @@ case "$mime_type" in
     application/pdf )
         preview_pdf && exit ;;
     text/* | */xml | application/postscript )
-        preview_txt && exit ;;
+	preview_txt && exit ;;
     video/* | audio/* | image/* )
         previde_med && exit ;;
 esac

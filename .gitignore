@@ -8,6 +8,7 @@ i_opener_history.sublime-settings
 *.user-ca-bundle
 config/sublime-text-3/Packages/User/Color Highlighter
 vim/bundle
+*.swp
 
 *.py[cod]
 build
