@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export LC_ALL=C
+
 path=$1
 width="${2:-$(tput cols)}"
 height="${3:-$(tput lines)}"
@@ -14,6 +16,7 @@ filename="${path##*/}"
 trim() { head -n "$height"; }
 if [[ "$(uname)" = Darwin ]]; then
     wrap() { cat; }
+    wrap() { gfmt -s -t -w "$width"; }
 else
     wrap() { fmt -s -t -w "$width"; }
 fi
@@ -46,6 +49,8 @@ case "$extension" in
         preview_tar && exit ;;
     zip )
         preview_zip && exit ;;
+    plist|CodeResources|failurerequests )
+	command highlight --out-format=ansi --syntax=xml "$path" && exit ;;
     html|html|xhtml )
         preview_htm && exit ;;
 esac
@@ -62,4 +67,5 @@ esac
 printf "$(tput bold; tput setaf 5)%s\n" "$(file -b -- "$path")" | wrap
 printf "$(tput bold; tput setaf 5)%s\n" "================"
 
-showbin_compressed "$path" 2> /dev/null || showbin "$path"
+#showbin_compressed "$path" 2> /dev/null
+showbin "$path"
