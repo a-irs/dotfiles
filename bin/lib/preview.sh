@@ -32,7 +32,7 @@ preview_zip() { zipinfo -2tz "$path" | trim | highlight_dirs; }
 preview_htm() { elinks -dump 1 -dump-color-mode 1 "$path" | remove_blank | remove_double_blank | trim | wrap; }
 preview_pdf() { pdftotext -l 10 -nopgbrk -q "$path" - | remove_blank | remove_double_blank | trim | wrap; }
 preview_txt() { highlight "$path" | remove_blank | remove_double_blank | trim | wrap; }
-previde_med() { mediainfo "$path" | remove_blank | remove_double_blank | trim | sed 's/  \+:/ --/;' | wrap; }
+preview_med() { mediainfo "$path" | remove_blank | remove_double_blank | trim | sed 's/  \+:/ --/;' | wrap; }
 
 mime_type=$(file --mime-type -Lb -- "$path")
 extension="${filename##*.}"
@@ -51,6 +51,8 @@ case "$extension" in
         preview_zip && exit ;;
     plist|CodeResources|failurerequests )
 	command highlight --out-format=ansi --syntax=xml "$path" && exit ;;
+    rrd )
+        rrdinfo "$path" && exit ;;
     html|html|xhtml )
         preview_htm && exit ;;
 esac
@@ -61,7 +63,7 @@ case "$mime_type" in
     text/* | */xml | application/postscript )
 	preview_txt && exit ;;
     video/* | audio/* | image/* )
-        previde_med && exit ;;
+        preview_med && exit ;;
 esac
 
 printf "$(tput bold; tput setaf 5)%s\n" "$(file -b -- "$path")" | wrap
