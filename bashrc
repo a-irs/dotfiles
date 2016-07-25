@@ -16,7 +16,7 @@ function __prompt_command() {
 
     user_color=$blue
     [ $UID = 0 ] && user_color=$red
-    PS1="${reset}${user_color}\u${green}@\h ${yellow}\w "
+    PS1="\n${reset}${user_color}\u${green}@\h ${yellow}\w "
 
     if [ $EXIT != 0 ]; then
         PS1+="${red}$EXIT ${reset}\$ "
