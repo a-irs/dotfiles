@@ -11,11 +11,12 @@ function __prompt_command() {
     local reset='\[\e[0m\]'
     local red='\[\e[1;31m\]'
     local green='\[\e[1;32m\]'
+    local blue='\[\e[1;36m\]'
     local yellow='\[\e[1;33m\]'
 
     user_color=$blue
     [ $UID = 0 ] && user_color=$red
-    PS1="${reset}${user_color}\u@${green}\h ${yellow}\w "
+    PS1="${reset}${user_color}\u${green}@\h ${yellow}\w "
 
     if [ $EXIT != 0 ]; then
         PS1+="${red}$EXIT ${reset}\$ "
