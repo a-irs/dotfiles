@@ -5,4 +5,4 @@ set tabstospaces
 set suspend
 set autoindent
 
-#include "~/.nano/syntax-highlighting/*"
+include "~/Documents/nanorc/*.nanorc"

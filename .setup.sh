@@ -25,7 +25,7 @@ rmlink() {
     else
         grmdir --ignore-fail-on-non-empty -p "$(dirname "$dest")" 2> /dev/null
         grmdir --ignore-fail-on-non-empty -p "$(dirname "$(dirname "$dest")")" 2> /dev/null
-    fi       
+    fi
 }
 
 mklink() {
@@ -70,6 +70,7 @@ mkdir -p ~/.thumbnails 2> /dev/null
 ln -sf ~/.thumbnails ~/.cache/thumbnails 2> /dev/null
 
 install_always bin hushlogin
+install bash bashrc
 install beet config/beets/config.yaml
 install htop config/htop/htoprc
 install mpd config/mpd/mpd.conf

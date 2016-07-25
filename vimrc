@@ -12,7 +12,11 @@ Plug 'morhetz/gruvbox' "colorscheme
 Plug 'mhinz/vim-startify' "fancy start screen
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 call plug#end()
+
+let g:vim_markdown_folding_disabled = 1
 
 let g:airline_powerline_fonts = 1
 
