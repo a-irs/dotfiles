@@ -23,12 +23,6 @@ autoload -U zmv
 autoload -U edit-command-line
 zle -N edit-command-line
 
-# http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Recent-Directories
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
-add-zsh-hook chpwd chpwd_recent_dirs
-zstyle ':chpwd:*' recent-dirs-file ~/.zsh_recent-dirs +
-zstyle ':chpwd:*' recent-dirs-max 31
-
 zstyle ':completion:*' rehash true # always rehash on completion
 
 export GREP_COLOR='1;32'
@@ -101,10 +95,11 @@ BOLD_WHITE=$(tput bold; tput setaf 7)
 BOLD_GREY=$(tput bold; tput setaf 8)
 
 ZSHINE_PLUGINS=(
+  cdr # recent dirs command
   # magic-paste # auto-quote URLs on paste
   term-title # sets terminal/tab title
   aliases # provides some aliases and functions for daily work
-  ls-colors # colors for "ls" command
+  dircolors # colors for "ls" command
   virtualenvwrapper # wrapper for python-virtualenv
   syntax-highlighting # provides a syntax highlighted prompt
   less-syntax-highlighting # syntax highlighting for "less" command
@@ -123,4 +118,6 @@ ZSHINE_PLUGINS=(
   tty-colors # colors for $TERM=linux
 )
 for z in $ZSHINE_PLUGINS; do; source "$ZSHINE_DIR/plugins/$z.zsh"; done
+unset z
+
 
