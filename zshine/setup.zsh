@@ -108,7 +108,7 @@ ZSHINE_PLUGINS=(
   virtualenvwrapper # wrapper for python-virtualenv
   syntax-highlighting # provides a syntax highlighted prompt
   less-syntax-highlighting # syntax highlighting for "less" command
-  history-substring-search # arrow key up/down history search
+  zsh-history-substring-search # arrow key up/down history search
   bd # move back in current directory tree (breadcrumb-style)
   auto-ls # launch "ls" when entering directory
   prompt-git # provides functions for a git-prompt

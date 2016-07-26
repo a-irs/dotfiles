@@ -1,3 +1,5 @@
+zmodload zsh/terminfo
+
 ___prepend-sudo() {
     [[ $BUFFER != "sudo "* ]] && BUFFER="sudo $BUFFER" && zle end-of-line
 }
@@ -5,10 +7,6 @@ zle -N ___prepend-sudo
 bindkey "^[a" ___prepend-sudo
 
 bindkey '^r' history-incremental-search-backward
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey '\eOA' history-substring-search-up
-bindkey '\eOB' history-substring-search-down
 bindkey '^?' backward-delete-char
 bindkey "^[[3~" delete-char
 bindkey "^[3;5~" delete-char
@@ -24,3 +22,4 @@ bindkey -M menuselect '\e^M' accept-and-menu-complete # select multiple entries 
 fg-toggle() { fg; }
 zle -N fg-toggle
 bindkey '^Z' fg-toggle
+

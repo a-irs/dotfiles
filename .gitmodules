@@ -13,3 +13,6 @@
 [submodule "nano/syntax"]
 	path = nano/syntax
 	url = https://github.com/scopatz/nanorc.git
+[submodule "zshine/plugins/zsh-history-substring-search"]
+	path = zshine/plugins/zsh-history-substring-search
+	url = https://github.com/zsh-users/zsh-history-substring-search
