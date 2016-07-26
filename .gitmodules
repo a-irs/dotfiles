@@ -13,3 +13,6 @@
 [submodule "zshine/plugins/zshmarks"]
 	path = zshine/plugins/zshmarks
 	url = https://github.com/jocelynmallon/zshmarks
+[submodule "nano/syntax"]
+	path = nano/syntax
+	url = https://github.com/scopatz/nanorc.git

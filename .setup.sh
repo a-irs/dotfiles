@@ -76,7 +76,7 @@ install htop config/htop/htoprc
 install mpd config/mpd/mpd.conf
 install ncmpcpp config/ncmpcpp/config
 install git gitconfig
-install nano nanorc nano/syntax-highlighting
+install nano nanorc nano/syntax
 install psql psqlrc
 install ranger config/ranger/rc.conf config/ranger/scope.sh
 install ssh ssh/config

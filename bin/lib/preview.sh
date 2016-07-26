@@ -16,7 +16,7 @@ filename="${path##*/}"
 trim() { head -n "$height"; }
 if [[ "$(uname)" = Darwin ]]; then
     wrap() { cat; }
-    wrap() { gfmt -s -t -w "$width"; }
+#    wrap() { gfmt -s -t -w "$width"; }
 else
     wrap() { fmt -s -t -w "$width"; }
 fi
