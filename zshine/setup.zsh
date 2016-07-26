@@ -40,9 +40,8 @@ export REPORTTIME=5
 [[ $commands[vi] ]]   && export EDITOR=vi
 [[ $commands[vim] ]]  && export EDITOR=vim
 
-export HISTSIZE=100000
-export SAVEHIST=100000
-export HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
 
 setopt NOTIFY # Report status of background jobs immediately.
 unsetopt BG_NICE # Don't run all background jobs at a lower priority.

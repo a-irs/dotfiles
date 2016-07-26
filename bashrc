@@ -1,4 +1,3 @@
-HISTFILE=~/.bash_history
 HISTSIZE=100000
 HISTFILESIZE=100000
 shopt -s globstar 2> /dev/null  # ** to glob recursive
