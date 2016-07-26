@@ -28,7 +28,6 @@ Plug 'mhinz/vim-startify'  " fancy start screen
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'gabrielelana/vim-markdown'
-Plug 'lygaret/autohighlight.vim'  " auto-highlight same words under cursor
 call plug#end()
 
 let g:markdown_enable_spell_checking = 0
@@ -52,6 +51,4 @@ highlight NonText ctermfg=grey
 " do not colorize background
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
-
-highlight CursorAutoHighlight ctermbg=black
 
