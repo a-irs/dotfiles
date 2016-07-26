@@ -4,6 +4,8 @@ shopt -s globstar  # ** to glob recursive
 shopt -s histappend  # append history instead of overwrite
 HISTCONTROL=ignoreboth  # don't put duplicate lines or lines starting with whitespace in history
 
+eval "$(dircolors -b)"
+
 export PROMPT_COMMAND=__prompt_command
 function __prompt_command() {
     local EXIT="$?"
