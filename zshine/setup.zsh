@@ -42,6 +42,7 @@ export REPORTTIME=5
 
 HISTSIZE=100000
 SAVEHIST=100000
+HISTFILE=~/.zsh_history
 
 setopt NOTIFY # Report status of background jobs immediately.
 unsetopt BG_NICE # Don't run all background jobs at a lower priority.
@@ -79,25 +80,25 @@ if [[ $TERM != *"-256color" ]]; then
     done
 fi
 
-export RESET=$(tput sgr0)
-export BLACK=$(tput setaf 0)
-export RED=$(tput setaf 1)
-export GREEN=$(tput setaf 2)
-export YELLOW=$(tput setaf 3)
-export BLUE=$(tput setaf 4)
-export MAGENTA=$(tput setaf 5)
-export CYAN=$(tput setaf 6)
-export WHITE=$(tput setaf 7)
-export GREY=$(tput setaf 8)
-export BOLD_BLACK=$(tput bold; tput setaf 0)
-export BOLD_RED=$(tput bold; tput setaf 1)
-export BOLD_GREEN=$(tput bold; tput setaf 2)
-export BOLD_YELLOW=$(tput bold; tput setaf 3)
-export BOLD_BLUE=$(tput bold; tput setaf 4)
-export BOLD_MAGENTA=$(tput bold; tput setaf 5)
-export BOLD_CYAN=$(tput bold; tput setaf 6)
-export BOLD_WHITE=$(tput bold; tput setaf 7)
-export BOLD_GREY=$(tput bold; tput setaf 8)
+RESET=$(tput sgr0)
+BLACK=$(tput setaf 0)
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+BLUE=$(tput setaf 4)
+MAGENTA=$(tput setaf 5)
+CYAN=$(tput setaf 6)
+WHITE=$(tput setaf 7)
+GREY=$(tput setaf 8)
+BOLD_BLACK=$(tput bold; tput setaf 0)
+BOLD_RED=$(tput bold; tput setaf 1)
+BOLD_GREEN=$(tput bold; tput setaf 2)
+BOLD_YELLOW=$(tput bold; tput setaf 3)
+BOLD_BLUE=$(tput bold; tput setaf 4)
+BOLD_MAGENTA=$(tput bold; tput setaf 5)
+BOLD_CYAN=$(tput bold; tput setaf 6)
+BOLD_WHITE=$(tput bold; tput setaf 7)
+BOLD_GREY=$(tput bold; tput setaf 8)
 
 ZSHINE_PLUGINS=(
   # magic-paste # auto-quote URLs on paste
@@ -120,7 +121,7 @@ ZSHINE_PLUGINS=(
   zshmarks # set bookmarks
   zaw # better CTRL+R history search
 )
-for z in $ZSHINE_PLUGINS; do source "$ZSHINE_DIR/plugins/$z.zsh"; done
+for z in $ZSHINE_PLUGINS; do; source "$ZSHINE_DIR/plugins/$z.zsh"; done
 
 # TTY colors // TODO parse from termite config
 if [ "$TERM" = "linux" ]; then
