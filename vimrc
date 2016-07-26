@@ -10,7 +10,7 @@ set smarttab
 set laststatus=2  " always show statusbar
 set autoread  " auto reload file when unchanged in vim and changed outside vim
 set history=2000
-set scrolloff=1  " scrolling shows one line extra
+set scrolloff=2  " scrolling shows one line extra
 set hlsearch  " highlight search results
 
 set tabstop=4
