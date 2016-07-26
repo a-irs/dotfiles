@@ -8,13 +8,13 @@ export GREP_OPTIONS='--color=auto'
 
 is_cmd() { command -v "$1" > /dev/null 2>&1; }
 is_cmd vi   && export EDITOR=vi
-is_cmd vim  && export EDITOR=vim
 is_cmd nano && export EDITOR=nano
+is_cmd vim  && export EDITOR=vim
 
 is_cmd dircolors && eval "$(dircolors -b)"
 
-export PROMPT_COMMAND=__prompt
-function __prompt() {
+PROMPT_COMMAND=_prompt
+_prompt() {
     local EXIT="$?"
 
     local reset='\[\e[0m\]'
