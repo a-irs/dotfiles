@@ -1,13 +1,12 @@
+.DS_Store
 .netrwhist
 Package Control.cache
 Package Control.last-run
 password.txt
 i_opener_history.sublime-settings
 */*Colorcode*.tmTheme
-*.merged-ca-bundle
-*.user-ca-bundle
+*-ca-bundle
 config/sublime-text-3/Packages/User/Color Highlighter
-vim/bundle
 *.swp
 
 *.py[cod]
