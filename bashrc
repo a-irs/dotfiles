@@ -1,13 +1,21 @@
-HISTSIZE=1000000
-HISTFILESIZE=1000000
-shopt -s globstar  # ** to glob recursive
+HISTFILE=~/.bash_history
+HISTSIZE=100000
+HISTFILESIZE=100000
+shopt -s globstar 2> /dev/null  # ** to glob recursive
 shopt -s histappend  # append history instead of overwrite
-HISTCONTROL=ignoreboth  # don't put duplicate lines or lines starting with whitespace in history
+HISTCONTROL=ignoreboth:erasedups  # don't put duplicate lines or lines starting with whitespace in history
 
-eval "$(dircolors -b)"
+export GREP_OPTIONS='--color=auto'
 
-export PROMPT_COMMAND=__prompt_command
-function __prompt_command() {
+is_cmd() { command -v "$1" > /dev/null 2>&1; }
+is_cmd vi   && export EDITOR=vi
+is_cmd vim  && export EDITOR=vim
+is_cmd nano && export EDITOR=nano
+
+is_cmd dircolors && eval "$(dircolors -b)"
+
+export PROMPT_COMMAND=__prompt
+function __prompt() {
     local EXIT="$?"
 
     local reset='\[\e[0m\]'
@@ -30,9 +38,7 @@ function __prompt_command() {
 [ -f /etc/bashrc ] && . /etc/bashrc
 [ -f ~/.bash_aliases ] && . ~/.bash_aliases
 
-export GREP_OPTIONS='--color=auto'
-
-# color man pages
+### color man pages
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_md=$'\E[01;31m'
 export LESS_TERMCAP_me=$'\E[0m'
@@ -41,10 +47,12 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
+### security aliases
 alias cp='cp -i'
 alias mv='mv -i'
 alias ln='ln -i'
 
+### convenience aliases
 alias ls='ls -Fhl  --color=auto'
 alias la='ls -FhlA --color=auto'
 alias ll='ls -Fhl  --color=auto'
