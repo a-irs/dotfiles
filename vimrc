@@ -2,7 +2,7 @@ set encoding=utf-8
 scriptencoding utf-8
 
 filetype plugin indent on
-syntax enable 
+syntax enable
 set autoindent  " use indent from current line when making new line
 set backspace=indent,eol,start  " when at beginning of line, pressing backspace joins with prev line
 set whichwrap+=<,>,[,]  " moves to next line when pressing right at end of line
@@ -23,17 +23,22 @@ nnoremap <tab> %
 vnoremap <tab> %
 
 call plug#begin()
-Plug 'morhetz/gruvbox'  " colorscheme
-Plug 'mhinz/vim-startify'  " fancy start screen
+Plug 'morhetz/gruvbox'
+Plug 'mhinz/vim-startify'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'gabrielelana/vim-markdown'
+Plug 'scrooloose/nerdtree'
 call plug#end()
+
+let g:netrw_liststyle=3
+map <C-_> :NERDTreeToggle<CR>
 
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_input_abbreviations = 0
 
 let g:airline_powerline_fonts = 1
+let g:airline_section_z = '%l|%c'
 
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
@@ -42,9 +47,9 @@ set updatetime=500  " 500ms to update screen (e.g. gutter) instead of default 40
 set background=dark
 colorscheme gruvbox
 
-" highlight tab char
+" show invisible chars
 set list
-set listchars=tab:▸\ 
+set listchars=tab:▸\ ,trail:•,extends:»,precedes:«
 highlight SpecialKey ctermfg=grey
 highlight NonText ctermfg=grey
 
