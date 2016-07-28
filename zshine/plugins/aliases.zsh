@@ -6,10 +6,10 @@ for c in $noglobs; do
 done
 
 tar-tar() { tar cvaf "$(basename "$PWD")".tar -- "$@"; }
-tar-gz() { tar cvaf "$(basename "$PWD")".tar.gz -- "$@"; }
-tar-xz() { tar cvaf "$(basename "$PWD")".tar.xz -- "$@"; }
-tar-bz() { tar cvaf "$(basename "$PWD")".tar.bz2 -- "$@"; }
-tar-lz() { tar cvaf "$(basename "$PWD")".tar.lzma -- "$@"; }
+tar-gz()  { tar cvaf "$(basename "$PWD")".tar.gz -- "$@"; }
+tar-xz()  { tar cvaf "$(basename "$PWD")".tar.xz -- "$@"; }
+tar-bz()  { tar cvaf "$(basename "$PWD")".tar.bz2 -- "$@"; }
+tar-lz()  { tar cvaf "$(basename "$PWD")".tar.lzma -- "$@"; }
 tar-zip() { zip -r "$(basename "$PWD")".zip -- "$@"; }
 
 if [[ "$commands[termite]" ]]; then
