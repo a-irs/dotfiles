@@ -18,9 +18,9 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
-" tab to switch to beg/end of bracket
-nnoremap <tab> %
-vnoremap <tab> %
+" SPACE as leader key
+nnoremap <SPACE> <Nop>
+let mapleader="\<SPACE>"
 
 call plug#begin()
 Plug 'morhetz/gruvbox'
@@ -29,7 +29,17 @@ Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'gabrielelana/vim-markdown'
 Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'  " gc motion to toggle comments
+Plug 'kshenoy/vim-signature'  " marks in gutter
+Plug 'dahu/vim-fanfingtastic'  " f/t wraps over lines
+Plug 'easymotion/vim-easymotion'
 call plug#end()
+
+" single <leader> as easymotion key, e.g. <leader>w, <leader>e, ...
+map <Leader> <Plug>(easymotion-prefix)
+
+nnoremap <silent> <C-l> :nohl<CR><C-l>
 
 let g:netrw_liststyle=3
 map <C-_> :NERDTreeToggle<CR>

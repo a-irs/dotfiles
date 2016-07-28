@@ -202,6 +202,8 @@ alias ln='ln -i'
 alias mv='mv -i'
 alias mkdir='mkdir -p'
 
+alias vimrc="vim ~/.vimrc"
+
 alias mmv='noglob zmv -W'
 
 if [[ "$os" = Darwin ]]; then
