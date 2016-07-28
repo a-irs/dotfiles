@@ -256,7 +256,6 @@ capture-keys() {
 [[ "$commands[journalctl]" ]] && alias j='sudo journalctl'
 [[ "$commands[docker]" ]] && alias d='docker'
 [[ "$commands[scrot]" ]] && alias shoot="sleep 1 && scrot '%Y-%m-%d_%H-%M-%S.png' -e 'mv \$f ~/media/screenshots/'"
-[[ "$commands[ncmpc]" ]] && alias ncmpc='LC_ALL=en_IE.UTF-8 ncmpc'
 
 if [[ "$commands[reflector]" ]]; then
     alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose && sudo pacman -Syy"
@@ -433,7 +432,6 @@ if [[ "$commands[openvpn]" ]]; then
 fi
 
 if [[ "$commands[git]" ]]; then
-    alias git="LC_ALL=en_IE.UTF-8 git"
     alias g="git"
     alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white) %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
     alias glog='git log --color --patch --stat --decorate --date=relative --all --abbrev-commit'
@@ -497,7 +495,6 @@ if [[ "$commands[pacman]" ]]; then
         alias aura='sudo aura'
     fi
     if [[ "$commands[yaourt]" ]]; then
-        alias yaourt='LC_ALL=en_IE.UTF-8 yaourt'
         alias y='yaourt'
         alias ys='yaourt -S'
         alias ysua='yaourt -Syua'
