@@ -23,9 +23,13 @@ _prompt() {
     local blue='\[\e[1;36m\]'
     local yellow='\[\e[1;33m\]'
 
+    if [[ -n "$SSH_CONNECTION" ]]; then
+        local PREFIX="${red}[SSH] ${reset}"
+    fi
+
     user_color=$blue
     [ $UID = 0 ] && user_color=$red
-    PS1="\n${reset}${user_color}\u${green}@\h ${yellow}\w "
+    PS1="\n${reset}${PREFIX}${user_color}\u${green}@\h ${yellow}\w "
 
     if [ $EXIT != 0 ]; then
         PS1+="${red}$EXIT ${reset}\$ "
