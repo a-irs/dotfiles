@@ -116,6 +116,7 @@ ZSHINE_PLUGINS=(
   zshmarks # set bookmarks
   zaw # better CTRL+R history search
   tty-colors # colors for $TERM=linux
+  termite # include CTRL+T for termite terminal program
 )
 for z in $ZSHINE_PLUGINS; do; source "$ZSHINE_DIR/plugins/$z.zsh"; done
 unset z

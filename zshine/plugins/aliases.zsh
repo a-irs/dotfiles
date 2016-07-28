@@ -312,6 +312,8 @@ if [[ -d ~/.dotfiles ]]; then
             git status -sb
         fi
 }
+else
+   alias dot='jump dot'
 fi
 
 alias ..='cd ..'

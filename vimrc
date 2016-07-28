@@ -34,6 +34,7 @@ Plug 'tpope/vim-commentary'  " gc motion to toggle comments
 Plug 'kshenoy/vim-signature'  " marks in gutter
 Plug 'dahu/vim-fanfingtastic'  " f/t wraps over lines
 Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-repeat'
 call plug#end()
 
 " single <leader> as easymotion key, e.g. <leader>w, <leader>e, ...
