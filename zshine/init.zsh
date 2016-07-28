@@ -19,10 +19,6 @@ prompt zshine
 # zmv file-renaming
 autoload -U zmv
 
-# edit current command line in $EDITOR
-autoload -U edit-command-line
-zle -N edit-command-line
-
 zstyle ':completion:*' rehash true # always rehash on completion
 
 export GREP_COLOR='1;32'
@@ -95,3 +91,4 @@ BOLD_WHITE=$(tput bold; tput setaf 7)
 BOLD_GREY=$(tput bold; tput setaf 8)
 
 source "$ZSHINE_DIR/init-plugins.zsh"
+
