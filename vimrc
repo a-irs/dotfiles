@@ -35,6 +35,7 @@ Plug 'kshenoy/vim-signature'  " marks in gutter
 Plug 'dahu/vim-fanfingtastic'  " f/t wraps over lines
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-repeat'
+Plug 'pearofducks/ansible-vim'
 call plug#end()
 
 " single <leader> as easymotion key, e.g. <leader>w, <leader>e, ...
