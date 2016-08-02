@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 os="$(uname)"
 
 if [[ "$os" = Darwin ]]; then
