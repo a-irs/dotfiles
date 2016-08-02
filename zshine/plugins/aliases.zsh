@@ -500,9 +500,9 @@ if [[ "$commands[pacman]" ]]; then
         alias ysua='yaourt -Syua'
     fi
 elif [[ "$commands[apt-get]" ]]; then
-    alias aptupg="apt-get update && apt-get -V upgrade && apt-get -V dist-upgrade"
-    alias aptin="apt-get -V install"
-    alias aptrem="apt-get -V purge"
+    alias aptupg="sudo apt-get update && sudo apt-get -V upgrade && sudo apt-get -V dist-upgrade"
+    alias aptin="sudo apt-get -V install"
+    alias aptrem="sudo apt-get -V purge"
     alias aptsearch="apt-cache search"
 fi
 
