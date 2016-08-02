@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 os="$(uname)"
 
 if [[ "$os" = Darwin ]]; then
@@ -9,11 +11,11 @@ else
 fi
 
 print_error() {
-    echo -e "\033[1;31m$*\033[0m"
+    [[ -t 1 ]] && echo -e "\033[1;31m$*\033[0m"
 }
 
 print_info() {
-    echo -e "\033[33m$*\033[0m"
+    [[ -t 1 ]] && echo -e "\033[33m$*\033[0m"
 }
 
 rmlink() {
