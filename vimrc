@@ -18,6 +18,9 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
+" :w!! saves as sudo
+cmap w!! w !sudo tee > /dev/null %
+
 " SPACE as leader key
 nnoremap <SPACE> <Nop>
 let mapleader="\<SPACE>"
