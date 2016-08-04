@@ -63,18 +63,14 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 nnoremap <SPACE> <Nop>
 let mapleader="\<SPACE>"
 
-if exists(":Tabularize")
-    nmap <Leader>a= :Tabularize /=<CR>
-    vmap <Leader>a= :Tabularize /=<CR>
-    nmap <Leader>a: :Tabularize /:\zs<CR>
-    vmap <Leader>a: :Tabularize /:\zs<CR>
-endif
+nmap <Leader>= :Tabularize /=<CR>
+vmap <Leader>= :Tabularize /=<CR>
+nmap <Leader>: :Tabularize /:\zs<CR>
+vmap <Leader>: :Tabularize /:\zs<CR>
 
-if exists(":CtrlP")
-    let g:ctrlp_by_filename = 1
-    map <Leader>n :CtrlP<CR>
-    map <Leader>m :CtrlPMRU<CR>
-endif
+let g:ctrlp_by_filename = 1
+map <Leader>n :CtrlP<CR>
+map <Leader>m :CtrlPMRU<CR>
 
 " :w!! saves as sudo
 cmap w!! w !sudo tee > /dev/null %
@@ -86,9 +82,7 @@ map <Leader> <Plug>(easymotion-prefix)
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 
 let g:netrw_liststyle=3
-if exists("NERDTreeToggle")
-    map <C-_> :NERDTreeToggle<CR>
-endif
+map <C-_> :NERDTreeToggle<CR>
 
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_input_abbreviations = 0
