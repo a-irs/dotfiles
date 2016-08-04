@@ -2,27 +2,16 @@
 
 os="$(uname)"
 
+print_error() { echo -e "\033[1;31m$*\033[0m"; }
+print_skip() { echo -e "\033[34m$*\033[0m"; }
+print_cleanup() { echo -e "\033[35m$*\033[0m"; }
+print_install() { echo -e "\033[33m$*\033[0m"; }
+
 if [[ "$os" = Darwin ]]; then
     this_dir="$(dirname "$(greadlink -f "$0")")"
 else
     this_dir="$(dirname "$(readlink -f "$0")")"
 fi
-
-print_error() {
-    echo -e "\033[1;31m$*\033[0m"
-}
-
-print_skip() {
-    echo -e "\033[34m$*\033[0m"
-}
-
-print_cleanup() {
-    echo -e "\033[35m$*\033[0m"
-}
-
-print_install() {
-    echo -e "\033[33m$*\033[0m"
-}
 
 rmlink() {
     dest=~/.$1
@@ -41,7 +30,6 @@ mklink() {
         return
     fi
 
-    # create subdirectories of target
     mkdir -p "$(dirname "$dest")"
 
     if [[ "$os" = Darwin ]]; then
@@ -104,4 +92,6 @@ install compton config/compton.conf
 if [[ -f /usr/bin/kupfer ]]; then
     mkdir -p ~/.local/share/kupfer/plugins
     cp -f "$this_dir/kupfer-recdirs.py" ~/.local/share/kupfer/plugins/recdirs.py
+else
+    rm -f ~/.local/share/kupfer/plugins/recdirs.py
 fi
