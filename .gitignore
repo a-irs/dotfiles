@@ -16,3 +16,5 @@ cache
 client.key
 GitHub.sublime-settings
 **/SublimeLinter/*.tmTheme
+
+vim/autoload/plug.vim.old

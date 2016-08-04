@@ -38,24 +38,14 @@ Plug 'dahu/vim-fanfingtastic'  " f/t wraps over lines
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-repeat'
 Plug 'ervandew/supertab'
-" Plug 'Valloric/YouCompleteMe' " > 7.4 needed, not working atm?
 Plug 'sirver/ultisnips' " > 7.4 needed
-" Plug 'honza/vim-snippets'
 
 call plug#end()
 
 let g:UltiSnipsSnippetDirectories=["snip"]
-
-" make YCM compatible with UltiSnips (using supertab)
-" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-" let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
 
 " SPACE as leader key
 nnoremap <SPACE> <Nop>
