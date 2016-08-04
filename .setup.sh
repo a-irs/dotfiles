@@ -12,35 +12,44 @@ print_error() {
     [[ -t 1 ]] && echo -e "\033[1;31m$*\033[0m"
 }
 
-print_info() {
+print_skip() {
+    [[ -t 1 ]] && echo -e "\033[34m$*\033[0m"
+}
+
+print_cleanup() {
+    [[ -t 1 ]] && echo -e "\033[35m$*\033[0m"
+}
+
+print_install() {
     [[ -t 1 ]] && echo -e "\033[33m$*\033[0m"
 }
 
 rmlink() {
     dest=~/.$1
-    [ -L "$dest" ] && rm -f "$dest" && print_error "removed ${dest/$HOME/\~}"
-    if [[ "$os" = Darwin ]]; then
-        rmdir --ignore-fail-on-non-empty -p "$(dirname "$dest")" 2> /dev/null
-        rmdir --ignore-fail-on-non-empty -p "$(dirname "$(dirname "$dest")")" 2> /dev/null
-    else
-        grmdir --ignore-fail-on-non-empty -p "$(dirname "$dest")" 2> /dev/null
-        grmdir --ignore-fail-on-non-empty -p "$(dirname "$(dirname "$dest")")" 2> /dev/null
-    fi
+    [[ -L "$dest" ]] && rm -f "$dest" && print_cleanup "[CLEANUP] removed ${dest/$HOME/\~}"
 }
 
 mklink() {
     dest=~/.$1
+    if [[ -L "$dest" ]]; then
+        if [[ "$(readlink "$dest")" = "$this_dir/$1" ]]; then
+            # print_skip "[SKIP] ${dest/$HOME/\~}"
+            return
+        fi
+    elif [[ -e "$dest" ]]; then
+        print_error "[ERROR] ${dest/$HOME/\~} already exists and is no symlink!"
+        return
+    fi
+
+    # create subdirectories of target
     mkdir -p "$(dirname "$dest")"
+
     if [[ "$os" = Darwin ]]; then
-        gln --force --symbolic --no-target-directory --no-dereference "$this_dir/$1" "$dest" 2> /dev/null
+        gln --force --symbolic --no-target-directory --no-dereference "$this_dir/$1" "$dest"
     else
-        ln --force --symbolic --no-target-directory --no-dereference "$this_dir/$1" "$dest" 2> /dev/null
+        ln --force --symbolic --no-target-directory --no-dereference "$this_dir/$1" "$dest"
     fi
-    if [[ $? != 0 ]]; then
-        print_error "error creating link to $dest"
-    else
-        print_info "${dest/$HOME/\~} <== ${this_dir/$HOME/\~}/$1"
-    fi
+    print_install "[INSTALL] ${dest/$HOME/\~}"
 }
 
 install() {
@@ -62,12 +71,6 @@ install_always() {
         mklink "$f"
     done
 }
-
-print_info "link ~/.cache and ~/.thumbnails"
-rm -rf ~/.cache
-ln -sfh /tmp/ ~/.cache 2> /dev/null
-mkdir -p ~/.thumbnails 2> /dev/null
-ln -sfh ~/.thumbnails/ ~/.cache/thumbnails 2> /dev/null
 
 install_always bin hushlogin
 install bash bashrc
