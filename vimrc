@@ -55,7 +55,7 @@ call plug#end()
 """ EXTENDED SETTINGS
 
 " UltraSnips
-let g:UltiSnipsSnippetDirectories=["snip"]
+let g:UltiSnipsSnippetDirectories = ["snip"]
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
@@ -86,6 +86,7 @@ nnoremap <silent> <C-l> :nohl<CR><C-l>
 let g:netrw_liststyle=3
 map <C-_> :NERDTreeToggle<CR>
 
+let g:markdown_enable_mappings = 0
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_input_abbreviations = 0
 

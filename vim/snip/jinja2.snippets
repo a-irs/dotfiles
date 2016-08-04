@@ -1,23 +1,24 @@
-snippet for
+snippet for "for loop"
 {% for ${1:item} in ${2:list} %}
 $3
 {% endfor %}
 endsnippet
 
-snippet {
+snippet { "variable"
 {{ $1 }}
 endsnippet
 
-snippet if
+snippet if "if statement"
 {% if ${1:expr} %}
 $2
 {% endif %}
 endsnippet
 
-snippet elif
+snippet "eif|elif|elseif" "else if" r
 {% elif %}
 endsnippet
 
-snippet else
+snippet else "else"
 {% else %}
 endsnippet
+

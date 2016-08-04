@@ -1,0 +1,18 @@
+snippet "link|ln|url" "link to something" wr
+[${1::text}](${2:https://www.google.com})$0
+endsnippet
+
+snippet "!|img|pic" "Image" br
+![${1:alt}](${2:path}${3/.+/ "/}${3:title}${3/.+/"/})$0
+endsnippet
+
+snippet c "inline code" w
+\`${1:code}\`
+endsnippet
+
+snippet "cb|block|codeblock" "code block" rb
+\`\`\`
+$1
+\`\`\`
+endsnippet
+
