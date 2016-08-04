@@ -1,12 +1,11 @@
 HISTSIZE=100000
 HISTFILESIZE=100000
+HISTCONTROL=ignoreboth:erasedups  # don't put duplicate lines or lines starting with whitespace in history
 shopt -s globstar 2> /dev/null  # ** to glob recursive
 shopt -s histappend  # append history instead of overwrite
-HISTCONTROL=ignoreboth:erasedups  # don't put duplicate lines or lines starting with whitespace in history
-
-export GREP_OPTIONS='--color=auto'
 
 is_cmd() { command -v "$1" > /dev/null 2>&1; }
+
 is_cmd vi   && export EDITOR=vi
 is_cmd nano && export EDITOR=nano
 is_cmd vim  && export EDITOR=vim
@@ -38,8 +37,8 @@ _prompt() {
     fi
 }
 
-[ -f /etc/bashrc ] && . /etc/bashrc
-[ -f ~/.bash_aliases ] && . ~/.bash_aliases
+export GREP_OPTIONS='--color=auto'
+export CLICOLOR='1'
 
 ### color man pages
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -70,4 +69,6 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
+
+[ -f ~/.bash_aliases ] && source ~/.bash_aliases
 
