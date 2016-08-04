@@ -38,7 +38,10 @@ Plug 'dahu/vim-fanfingtastic'  " f/t wraps over lines
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-repeat'
 Plug 'ervandew/supertab'
-Plug 'sirver/ultisnips' " > 7.4 needed
+Plug 'sirver/ultisnips'  " > 7.4 needed
+Plug 'tpope/vim-endwise'  " auto-close if/func/...
+Plug 'raimondi/delimitmate'  "auto-close brackets
+Plug 'kien/ctrlp.vim'
 
 call plug#end()
 
