@@ -54,6 +54,7 @@ call plug#end()
 
 """ EXTENDED SETTINGS
 
+" UltraSnips
 let g:UltiSnipsSnippetDirectories=["snip"]
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
@@ -63,8 +64,9 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 nnoremap <SPACE> <Nop>
 let mapleader="\<SPACE>"
 
-nmap <Leader>= :Tabularize /=<CR>
-vmap <Leader>= :Tabularize /=<CR>
+" split on first = or :
+nmap <Leader>= :Tabularize /^[^=]*\zs=<CR>
+vmap <Leader>= :Tabularize /^[^=]*\zs=<CR>
 nmap <Leader>: :Tabularize /:\zs<CR>
 vmap <Leader>: :Tabularize /:\zs<CR>
 
