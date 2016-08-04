@@ -54,12 +54,16 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 nnoremap <SPACE> <Nop>
 let mapleader="\<SPACE>"
 
+let g:ctrlp_by_filename = 1
+map <Leader>m :CtrlPMRU<CR>
+
 " :w!! saves as sudo
 cmap w!! w !sudo tee > /dev/null %
 
 " single <leader> as easymotion key, e.g. <leader>w, <leader>e, ...
 map <Leader> <Plug>(easymotion-prefix)
 
+" disable highlighting search results
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 
 let g:netrw_liststyle=3
