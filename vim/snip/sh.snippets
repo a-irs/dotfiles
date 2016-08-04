@@ -19,6 +19,20 @@ BOLD_WHITE=$(tput bold; tput setaf 7)
 BOLD_GREY=$(tput bold; tput setaf 8)
 endsnippet
 
+snippet &&
+[[ $1 ]] && 
+endsnippet
+
+snippet ||
+[[ $1 ]] || 
+endsnippet
+
+snippet which
+if command -v $1 > /dev/null 2>&1; then
+	$2
+fi
+endsnippet
+
 snippet #!
 #!/usr/bin/env bash
 `!p snip.rv = '\n'`
@@ -32,7 +46,7 @@ endsnippet
 
 snippet case
 case ${1:word} in
-	${2:pattern} ) $0 ;;
+	${2:pattern}) $0 ;;
 esac
 endsnippet
 
