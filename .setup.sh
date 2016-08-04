@@ -9,19 +9,19 @@ else
 fi
 
 print_error() {
-    [[ -t 1 ]] && echo -e "\033[1;31m$*\033[0m"
+    echo -e "\033[1;31m$*\033[0m"
 }
 
 print_skip() {
-    [[ -t 1 ]] && echo -e "\033[34m$*\033[0m"
+    echo -e "\033[34m$*\033[0m"
 }
 
 print_cleanup() {
-    [[ -t 1 ]] && echo -e "\033[35m$*\033[0m"
+    echo -e "\033[35m$*\033[0m"
 }
 
 print_install() {
-    [[ -t 1 ]] && echo -e "\033[33m$*\033[0m"
+    echo -e "\033[33m$*\033[0m"
 }
 
 rmlink() {
