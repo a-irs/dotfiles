@@ -19,11 +19,12 @@ _prompt() {
     local reset='\[\e[0m\]'
     local red='\[\e[1;31m\]'
     local green='\[\e[1;32m\]'
-    local blue='\[\e[1;36m\]'
     local yellow='\[\e[1;33m\]'
+    local blue='\[\e[1;34m\]'
+    local magenta='\[\e[1;35m\]'
 
     if [[ -n "$SSH_CONNECTION" ]]; then
-        local PREFIX="${red}[SSH] ${reset}"
+        local PREFIX="${magenta}[SSH] ${reset}"
     fi
 
     user_color=$blue
