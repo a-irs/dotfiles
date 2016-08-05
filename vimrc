@@ -69,6 +69,8 @@ nmap <Leader>= :Tabularize /^[^=]*\zs=<CR>
 vmap <Leader>= :Tabularize /^[^=]*\zs=<CR>
 nmap <Leader>: :Tabularize /:\zs<CR>
 vmap <Leader>: :Tabularize /:\zs<CR>
+nmap <Leader>, :Tabularize /,\zs<CR>
+vmap <Leader>, :Tabularize /,\zs<CR>
 
 let g:ctrlp_by_filename = 1
 map <Leader>n :CtrlP<CR>

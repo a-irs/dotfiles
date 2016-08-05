@@ -1,3 +1,5 @@
+[[ "$(uname)" != Linux ]] && return
+
 v="fzf-0.13.3-linux_amd64"
 bin="$HOME/.local/share/fzf-bin/$v"
 
