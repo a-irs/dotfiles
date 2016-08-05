@@ -1,3 +1,4 @@
+**/dev/moto
 **/tmp
 **/.fr-*
 **/Default/Extensions/fahmaaghhglfmonjliepjlchgpgfmobi
@@ -18,9 +19,13 @@
 **/ba
 **/.IntelliJIdea14/system
 **/.atom/packages
+**/.atom/electron
 **/.atom/blob-store
+**/.minecraft
+**/.tor-browser-en
 **/.atom/.node-gyp
 **/.atom/.apm
+**/.atom/.npm
 **/.atom/compile-cache
 **/.config/ario/covers
 **/.config/Atom
@@ -76,4 +81,4 @@
 **/*.pacsave
 **/*~
 **/intellij-out
-
+**/.vim/plugged
