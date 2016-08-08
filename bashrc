@@ -71,5 +71,5 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
-[ -f ~/.bash_aliases ] && source ~/.bash_aliases
+[ -f ~/.bash_aliases ] && source ~/.bash_aliases || true
 
