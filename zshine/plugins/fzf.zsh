@@ -1,6 +1,5 @@
-[[ "$(uname)" != Linux ]] && return
-
-v="fzf-0.13.3-linux_amd64"
+os=$(uname | tr '[:upper:]' '[:lower:]')
+v="fzf-0.13.3-${os}_amd64"
 bin="$HOME/.local/share/fzf-bin/$v"
 
 if [[ ! -f "$bin" ]]; then
