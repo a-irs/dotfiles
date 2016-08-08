@@ -18,7 +18,6 @@ ZSHINE_PLUGINS=(
   # tmux # autostart tmux
   # notify # notify-send after long command has been completed
   zshmarks # set bookmarks
-  # zaw # better CTRL+R history search
   tty-colors # colors for $TERM=linux
   termite # include CTRL+T for termite terminal program
 )
