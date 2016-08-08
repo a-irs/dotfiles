@@ -79,11 +79,11 @@ install_always() {
 install_always bin hushlogin
 install bash bashrc
 install beet config/beets/config.yaml
+install git gitconfig
 install htop config/htop/htoprc
 install mpd config/mpd/mpd.conf
-install ncmpcpp config/ncmpcpp/config
-install git gitconfig
 install nano nanorc nano/syntax
+install ncmpcpp config/ncmpcpp/config
 install psql psqlrc
 install ranger config/ranger/rc.conf config/ranger/scope.sh
 install ssh ssh/config
@@ -92,16 +92,16 @@ install vim vimrc vim/autoload/plug.vim vim/snip
 install zsh zprofile zshrc zshine
 
 install awesome config/awesome
-install redshift config/redshift.conf
+install compton config/compton.conf
 install emulationstation emulationstation/es_systems.cfg
-install subl3 config/sublime-text-3/Packages/User
-install termite config/termite/config
-install zathura config/zathura/zathurarc
 install kodi kodi/userdata/advancedsettings.xml
 install mpv config/mpv/input.conf config/mpv/mpv.conf config/mpv/scripts/convert_script.lua config/mpv/scripts/stats.lua
+install redshift config/redshift.conf
 install retroarch config/retroarch/remap config/retroarch/core-config/gba_bios.bin config/retroarch/core-config/scph5500.bin config/retroarch/core-config/scph5501.bin config/retroarch/core-config/scph5502.bin config/retroarch/retroarch.cfg config/retroarch/retroarch-core-options.cfg
+install subl3 config/sublime-text-3/Packages/User
+install termite config/termite/config
 install xinit xinitrc Xmodmap config/fontconfig/fonts.conf fonts gtkrc-2.0 icons config/user-dirs.dirs config/gtk-3.0/settings.ini
-install compton config/compton.conf
+install zathura config/zathura/zathurarc
 
 if [[ -f /usr/bin/kupfer ]]; then
     mkdir -p ~/.local/share/kupfer/plugins
