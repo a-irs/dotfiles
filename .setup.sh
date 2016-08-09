@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 rm=0
-if [[ "$1" == rm ]]; then
-    rm=1
-fi
+all=0
+[[ "$1" == rm ]] && rm=1
+[[ "$1" == all ]] && all=1
 
 os="$(uname)"
 
@@ -21,6 +21,7 @@ fi
 rmlink() {
     dest=~/.$1
     [[ -L "$dest" ]] && rm -f "$dest" && print_remove "${dest/$HOME/\~}"
+    rmdir -p --ignore-fail-on-non-empty "$(dirname "$dest")" 2> /dev/null
 }
 
 mklink() {
@@ -47,8 +48,17 @@ mklink() {
 
 install() {
     if [[ "$rm" == 1 ]]; then
+        shift
         for f in "$@"; do
             rmlink "$f"
+        done
+        return
+    fi
+
+    if [[ "$all" == 1 ]]; then
+        shift
+        for f in "$@"; do
+            mklink "$f"
         done
         return
     fi
