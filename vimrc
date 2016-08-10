@@ -144,3 +144,6 @@ highlight NonText ctermfg=grey
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
 
+" black background for columns>81
+highlight ColorColumn ctermbg=235 guibg=#2c2d27
+let &colorcolumn=join(range(81,999),",")
