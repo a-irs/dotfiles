@@ -37,7 +37,7 @@ Plug 'pearofducks/ansible-vim'
 
 " behavior plugins
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'  " gc motion to toggle comments
+Plug 'scrooloose/nerdcommenter'
 Plug 'dahu/vim-fanfingtastic'  " f/t object wraps over lines
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-repeat'
@@ -117,6 +117,14 @@ map <Leader> <Plug>(easymotion-prefix)
 
 " stop highlighting search results
 nnoremap <silent> <C-l> :nohl<CR><C-l>
+
+" NERDCommenter
+nnoremap # :call NERDComment(0,"toggle")<CR>
+vnoremap # :call NERDComment(0,"toggle")<CR>
+let g:NERDCommentEmptyLines = 1
+let g:NERDRemoveExtraSpaces = 1
+let g:NERDSpaceDelims = 1
+
 
 " netrw
 let g:netrw_liststyle=3  " tree style
