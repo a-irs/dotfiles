@@ -27,7 +27,7 @@ call plug#begin()
 
 " UI plugins
 Plug 'morhetz/gruvbox'
-Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'  " git/changed gutter
 Plug 'vim-airline/vim-airline'
 Plug 'junegunn/goyo.vim'
 
@@ -58,6 +58,9 @@ call plug#end()
 " SPACE as leader key
 nnoremap <SPACE> <Nop>
 let mapleader="\<SPACE>"
+
+" Signify
+let g:signify_vcs_list = [ 'git' ]
 
 " Goyo
 nnoremap <leader>l :Goyo<CR>
@@ -112,7 +115,7 @@ cmap w!! w !sudo tee > /dev/null %
 " single <leader> as easymotion key, e.g. <leader>w, <leader>e, ...
 map <Leader> <Plug>(easymotion-prefix)
 
-" disable highlighting search results
+" stop highlighting search results
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 
 " netrw
@@ -123,16 +126,14 @@ let g:netrw_sort_options='i'  " ignore case
 let g:netrw_bufsettings = 'nomodifiable nomodified readonly nobuflisted nowrap'
 map <C-_> :Lexplore<CR>
 
+" Markdown
 let g:markdown_enable_mappings = 0
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_input_abbreviations = 0
 
+" Airline
 let g:airline_powerline_fonts = 1
 let g:airline_section_z = '%l|%c'
-
-let g:gitgutter_realtime = 0
-let g:gitgutter_eager = 0
-set updatetime=500  " 500ms to update screen (e.g. gutter) instead of default 4000ms
 
 " fallback color scheme
 set background=dark
