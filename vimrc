@@ -29,8 +29,6 @@ call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
-Plug 'scrooloose/nerdtree'
-Plug 'kshenoy/vim-signature'  " marks in gutter
 
 " syntax plugins
 Plug 'gabrielelana/vim-markdown'
@@ -42,7 +40,7 @@ Plug 'tpope/vim-commentary'  " gc motion to toggle comments
 Plug 'dahu/vim-fanfingtastic'  " f/t object wraps over lines
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-repeat'
-Plug 'ervandew/supertab'
+Plug 'ervandew/supertab'  " enables TAB for snips autocomplete
 Plug 'sirver/ultisnips'  " > 7.4 needed
 Plug 'tpope/vim-endwise'  " auto-close if/func/...
 Plug 'raimondi/delimitmate'  " auto-close brackets
@@ -117,8 +115,13 @@ map <Leader> <Plug>(easymotion-prefix)
 " disable highlighting search results
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 
-let g:netrw_liststyle=3
-map <C-_> :NERDTreeToggle<CR>
+" netrw
+let g:netrw_liststyle=3  " tree style
+let g:netrw_list_hide='.*\.swp$,\.DS_Store'
+let g:netrw_sort_sequence='[\/]$'  " directories first
+let g:netrw_sort_options='i'  " ignore case
+let g:netrw_bufsettings = 'nomodifiable nomodified readonly nobuflisted nowrap'
+map <C-_> :Lexplore<CR>
 
 let g:markdown_enable_mappings = 0
 let g:markdown_enable_spell_checking = 0
