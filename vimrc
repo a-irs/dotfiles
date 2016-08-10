@@ -48,11 +48,46 @@ Plug 'tpope/vim-endwise'  " auto-close if/func/...
 Plug 'raimondi/delimitmate'  " auto-close brackets
 Plug 'kien/ctrlp.vim'
 Plug 'godlygeek/tabular'
+Plug 'wellle/targets.vim'  " add more text objects
+Plug 'mhinz/vim-grepper'
+Plug 'junegunn/goyo.vim'
 
 call plug#end()
 
 
 """ EXTENDED SETTINGS
+
+" SPACE as leader key
+nnoremap <SPACE> <Nop>
+let mapleader="\<SPACE>"
+
+" Goyo
+nnoremap <leader>l :Goyo<CR>
+
+" Goyo auto-close with :q
+function! s:goyo_enter()
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+endfunction
+function! s:goyo_leave()
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
+endfunction
+autocmd! User GoyoEnter call <SID>goyo_enter()
+autocmd! User GoyoLeave call <SID>goyo_leave()
+
+" Grepper
+let g:grepper = {}
+let g:grepper.highlight = 1
+nnoremap <leader>g :Grepper<CR>
+nnoremap <leader>G :Grepper -cword -noprompt<cr>
 
 " UltraSnips
 let g:UltiSnipsSnippetDirectories = ["snip"]
@@ -60,11 +95,7 @@ let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
-" SPACE as leader key
-nnoremap <SPACE> <Nop>
-let mapleader="\<SPACE>"
-
-" split on first = or :
+" Tabular split on first = or :
 nmap <Leader>= :Tabularize /^[^=]*\zs=<CR>
 vmap <Leader>= :Tabularize /^[^=]*\zs=<CR>
 nmap <Leader>: :Tabularize /:\zs<CR>
@@ -72,6 +103,7 @@ vmap <Leader>: :Tabularize /:\zs<CR>
 nmap <Leader>, :Tabularize /,\zs<CR>
 vmap <Leader>, :Tabularize /,\zs<CR>
 
+" CtrlP
 let g:ctrlp_by_filename = 1
 map <Leader>n :CtrlP<CR>
 map <Leader>m :CtrlPMRU<CR>
