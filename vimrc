@@ -34,11 +34,9 @@ call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'mhinz/vim-signify'  " git/changed gutter
 Plug 'vim-airline/vim-airline'
-Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim', {'on': ['Goyo']}
 
 " syntax plugins
-" Plug 'gabrielelana/vim-markdown'
-" Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'pearofducks/ansible-vim'
 
@@ -48,8 +46,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'dahu/vim-fanfingtastic'  " f/t object wraps over lines
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-repeat'
-Plug 'ervandew/supertab'  " enables TAB for snips autocomplete
-Plug 'sirver/ultisnips'  " > 7.4 needed
+Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
 Plug 'tpope/vim-endwise'  " auto-close if/func/...
 Plug 'raimondi/delimitmate'  " auto-close brackets
 Plug 'kien/ctrlp.vim'
