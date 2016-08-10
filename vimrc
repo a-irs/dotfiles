@@ -22,6 +22,10 @@ set expandtab
 
 set relativenumber
 
+augroup pandoc_syntax
+    au! BufNewFile,BufFilePRe,BufRead *.md set filetype=markdown.pandoc
+augroup END
+
 """ PLUGINS
 
 call plug#begin()
@@ -33,7 +37,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'junegunn/goyo.vim'
 
 " syntax plugins
-Plug 'gabrielelana/vim-markdown'
+" Plug 'gabrielelana/vim-markdown'
+" Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'pearofducks/ansible-vim'
 
 " behavior plugins
