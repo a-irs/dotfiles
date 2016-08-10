@@ -76,9 +76,9 @@ endfunction
 function! s:goyo_leave()
   if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
     if b:quitting_bang
-      qa!
+        qa!
     else
-      qa
+        qa
     endif
   endif
 endfunction
@@ -126,7 +126,6 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDRemoveExtraSpaces = 1
 let g:NERDSpaceDelims = 1
 
-
 " netrw
 let g:netrw_liststyle=3  " tree style
 let g:netrw_list_hide='.*\.swp$,\.DS_Store'
@@ -168,6 +167,6 @@ highlight clear DiffAdd
 highlight clear DiffChange
 highlight clear DiffDelete
 
-" really dark line numbers
-highlight LineNr ctermfg=239
-
+" dark line numbers and tilde symbols after EOF
+highlight LineNr ctermfg=240
+highlight NonText ctermfg=240
