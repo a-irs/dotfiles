@@ -20,6 +20,7 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
+set relativenumber
 
 """ PLUGINS
 
@@ -160,4 +161,13 @@ highlight NonText ctermfg=grey
 " do not colorize background
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
+
+" do not colorize gutter
+highlight clear SignColumn
+highlight clear DiffAdd
+highlight clear DiffChange
+highlight clear DiffDelete
+
+" really dark line numbers
+highlight LineNr ctermfg=239
 
