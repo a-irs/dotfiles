@@ -29,6 +29,7 @@ call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
+Plug 'junegunn/goyo.vim'
 
 " syntax plugins
 Plug 'gabrielelana/vim-markdown'
@@ -48,7 +49,6 @@ Plug 'kien/ctrlp.vim'
 Plug 'godlygeek/tabular'
 Plug 'wellle/targets.vim'  " add more text objects
 Plug 'mhinz/vim-grepper'
-Plug 'junegunn/goyo.vim'
 
 call plug#end()
 
@@ -134,8 +134,13 @@ let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
 set updatetime=500  " 500ms to update screen (e.g. gutter) instead of default 4000ms
 
+" fallback color scheme
 set background=dark
-colorscheme gruvbox
+try
+    colorscheme gruvbox
+catch
+    colorscheme peachpuff
+endtry
 
 " show invisible chars
 set list
@@ -147,6 +152,3 @@ highlight NonText ctermfg=grey
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
 
-" black background for columns>81
-highlight ColorColumn ctermbg=235 guibg=#2c2d27
-let &colorcolumn=join(range(81,999),",")
