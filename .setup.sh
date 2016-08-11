@@ -92,7 +92,6 @@ install beet config/beets/config.yaml
 install git gitconfig
 install htop config/htop/htoprc
 install mpd config/mpd/mpd.conf
-install nano nanorc nano/syntax
 install ncmpcpp config/ncmpcpp/config
 install psql psqlrc
 install ranger config/ranger/rc.conf config/ranger/scope.sh

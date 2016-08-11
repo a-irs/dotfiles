@@ -22,9 +22,9 @@ set expandtab
 
 set relativenumber
 
-augroup pandoc_syntax
-    au! BufNewFile,BufFilePRe,BufRead *.md set filetype=markdown.pandoc
-augroup END
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'yaml=ansible', 'jinja2=ansible_template', 'ini=dosini']
+let g:markdown_syntax_conceal = 0
 
 """ PLUGINS
 
@@ -37,7 +37,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'junegunn/goyo.vim', {'on': ['Goyo']}
 
 " syntax plugins
-Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'pearofducks/ansible-vim'
 
 " behavior plugins
