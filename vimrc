@@ -138,12 +138,13 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 let g:fzf_files_options = '--preview "$HOME/.bin/preview {}" --extended-exact'
+let g:fzf_lines_options = '--extended-exact'
 let g:fzf_buffers_jump = 1  " jump to existing if possible
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
 nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader><space> :Files<CR>
+nnoremap <silent> <leader><space> :Lines<CR>
 nnoremap <silent> <leader>n :Files<CR>
 nnoremap <silent> <leader>m :History<CR>
 nnoremap <silent> <leader>o :Commits<CR>
