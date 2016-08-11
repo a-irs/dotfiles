@@ -71,7 +71,7 @@ let mapleader="\<SPACE>"
 " buffer on <Leader>1-9
 nnoremap <leader><left> :bprev<CR>
 nnoremap <leader><right> :bnext<CR>
-nnoremap <leader><down> :b#<CR>
+nnoremap <leader><up> :b#<CR>
 nnoremap <leader>1 :buffer 1<CR>
 nnoremap <leader>2 :buffer 2<CR>
 nnoremap <leader>3 :buffer 3<CR>
