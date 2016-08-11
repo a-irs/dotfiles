@@ -22,7 +22,7 @@ set expandtab
 
 set relativenumber
 
-autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'yaml=ansible', 'jinja2=ansible_template', 'ini=dosini']
 let g:markdown_syntax_conceal = 0
 
@@ -67,6 +67,7 @@ let g:signify_vcs_list = [ 'git' ]
 
 " Goyo
 nnoremap <leader>l :Goyo<CR>
+let g:goyo_height = 100
 
 " Goyo auto-close with :q
 function! s:goyo_enter()
