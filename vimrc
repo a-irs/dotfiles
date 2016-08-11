@@ -41,6 +41,31 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
+" SPACE as leader key
+nnoremap <SPACE> <Nop>
+let mapleader="\<SPACE>"
+
+" :w!! saves as sudo
+cmap w!! w !sudo tee > /dev/null %
+
+" stop highlighting search results
+nnoremap <silent> <C-l> :nohl<CR><C-l>
+
+" buffer on <Leader>1-9
+nnoremap <leader><left> :bprev<CR>
+nnoremap <leader><right> :bnext<CR>
+nnoremap <leader><up> :b#<CR>
+nnoremap <leader>1 :buffer 1<CR>
+nnoremap <leader>2 :buffer 2<CR>
+nnoremap <leader>3 :buffer 3<CR>
+nnoremap <leader>4 :buffer 4<CR>
+nnoremap <leader>5 :buffer 5<CR>
+nnoremap <leader>6 :buffer 6<CR>
+nnoremap <leader>7 :buffer 7<CR>
+nnoremap <leader>8 :buffer 8<CR>
+nnoremap <leader>9 :buffer 9<CR>
+
+
 """ PLUGINS
 
 call plug#begin()
@@ -73,24 +98,6 @@ Plug 'mhinz/vim-grepper'
 call plug#end()
 
 """ EXTENDED SETTINGS
-
-" SPACE as leader key
-nnoremap <SPACE> <Nop>
-let mapleader="\<SPACE>"
-
-" buffer on <Leader>1-9
-nnoremap <leader><left> :bprev<CR>
-nnoremap <leader><right> :bnext<CR>
-nnoremap <leader><up> :b#<CR>
-nnoremap <leader>1 :buffer 1<CR>
-nnoremap <leader>2 :buffer 2<CR>
-nnoremap <leader>3 :buffer 3<CR>
-nnoremap <leader>4 :buffer 4<CR>
-nnoremap <leader>5 :buffer 5<CR>
-nnoremap <leader>6 :buffer 6<CR>
-nnoremap <leader>7 :buffer 7<CR>
-nnoremap <leader>8 :buffer 8<CR>
-nnoremap <leader>9 :buffer 9<CR>
 
 " Signify
 let g:signify_vcs_list = [ 'git' ]
@@ -151,12 +158,6 @@ nnoremap <silent> <leader>n :Files<CR>
 nnoremap <silent> <leader>m :History<CR>
 nnoremap <silent> <leader>o :Commits<CR>
 
-" :w!! saves as sudo
-cmap w!! w !sudo tee > /dev/null %
-
-" stop highlighting search results
-nnoremap <silent> <C-l> :nohl<CR><C-l>
-
 " NERDCommenter
 nnoremap # :call NERDComment(0,"toggle")<CR>
 vnoremap # :call NERDComment(0,"toggle")<CR>
@@ -187,6 +188,9 @@ let g:airline#extensions#default#layout = [
     \ ]
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_min_count = 2
+
+
+""" COLOR SCHEME
 
 " fallback color scheme
 set background=dark
