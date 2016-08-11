@@ -41,7 +41,7 @@ call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
-Plug 'junegunn/goyo.vim', {'on': ['Goyo']}
+Plug 'junegunn/goyo.vim'
 
 Plug 'sheerun/vim-polyglot'  " collection of syntax plugins
 let g:polyglot_disabled = ['markdown']
@@ -49,17 +49,16 @@ let g:polyglot_disabled = ['markdown']
 " behavior plugins
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdcommenter'
-Plug 'dahu/vim-fanfingtastic'  " f/t object wraps over lines
+" Plug 'dahu/vim-fanfingtastic'  " f/t object wraps over lines
 " Plug 'easymotion/vim-easymotion'
-Plug 'tpope/vim-repeat'
+" Plug 'tpope/vim-repeat'
 Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
 Plug 'tpope/vim-endwise'  " auto-close if/func/...
 Plug 'raimondi/delimitmate'  " auto-close brackets
-" Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'godlygeek/tabular'
-Plug 'wellle/targets.vim'  " add more text objects
+" Plug 'wellle/targets.vim'  " add more text objects
 Plug 'mhinz/vim-grepper'
 " Plug 'tpope/vim-fugitive'
 
@@ -179,7 +178,7 @@ map <C-_> :Lexplore<CR>
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline_skip_empty_sections = 1
-let g:airline_section_z = '%l'
+let g:airline_section_z = '%c'
 let g:airline#extensions#default#layout = [
     \ [ 'a', 'b' ],
     \ [ 'z', 'error', 'warning' ]
