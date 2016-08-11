@@ -42,7 +42,6 @@ Plug 'morhetz/gruvbox'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'junegunn/goyo.vim', {'on': ['Goyo']}
-Plug 'bling/vim-bufferline'
 
 Plug 'sheerun/vim-polyglot'  " collection of syntax plugins
 let g:polyglot_disabled = ['markdown']
@@ -97,6 +96,7 @@ let g:signify_vcs_list = [ 'git' ]
 
 " Goyo
 nnoremap <leader>l :Goyo<CR>
+let g:goyo_width = 80
 let g:goyo_height = 100
 
 " Goyo auto-close with :q
@@ -150,9 +150,6 @@ nnoremap <silent> <leader>n :Files<CR>
 nnoremap <silent> <leader>m :History<CR>
 nnoremap <silent> <leader>o :Commits<CR>
 
-" bufferline
-let g:bufferline_echo = 0
-
 " :w!! saves as sudo
 cmap w!! w !sudo tee > /dev/null %
 
@@ -184,9 +181,11 @@ let g:airline_powerline_fonts = 1
 let g:airline_skip_empty_sections = 1
 let g:airline_section_z = '%l'
 let g:airline#extensions#default#layout = [
-      \ [ 'a', 'c' ],
-      \ [ 'b', 'z', 'error', 'warning' ]
-      \ ]
+    \ [ 'a', 'b' ],
+    \ [ 'z', 'error', 'warning' ]
+    \ ]
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_min_count = 2
 
 " fallback color scheme
 set background=dark
