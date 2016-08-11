@@ -26,6 +26,10 @@ set updatetime=250
 set number
 set relativenumber
 
+" more responsive vim, really needed if relative numbers are enabled in term
+set lazyredraw
+set ttyfast
+
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'yaml=ansible', 'jinja2=ansible_template', 'ini=dosini']
 let g:markdown_syntax_conceal = 0
