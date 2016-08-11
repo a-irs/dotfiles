@@ -24,7 +24,7 @@ set updatetime=250
 
 " show relative line numbers, except in current line
 set number
-set relativenumber
+" set relativenumber
 
 " more responsive vim, really needed if relative numbers are enabled in term
 set lazyredraw
