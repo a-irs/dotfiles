@@ -53,7 +53,7 @@ Plug 'scrooloose/nerdcommenter'
 " Plug 'easymotion/vim-easymotion'
 " Plug 'tpope/vim-repeat'
 Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
-Plug 'tpope/vim-endwise'  " auto-close if/func/...
+" Plug 'tpope/vim-endwise'  " auto-close if/func/...
 Plug 'raimondi/delimitmate'  " auto-close brackets
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
@@ -205,6 +205,6 @@ highlight NonText ctermfg=240
 highlight clear SignColumn
 
 " dark line numbers and tilde symbols after EOF
-highlight LineNr ctermfg=240 guifg=#555555
-highlight NonText ctermfg=240 guifg=#555555
+highlight LineNr ctermfg=240 guifg=#444444
+highlight NonText ctermfg=240 guifg=#444444
 
