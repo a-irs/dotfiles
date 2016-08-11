@@ -22,7 +22,7 @@ set expandtab
 
 set relativenumber
 
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'yaml=ansible', 'jinja2=ansible_template', 'ini=dosini']
 let g:markdown_syntax_conceal = 0
 
