@@ -162,6 +162,7 @@ let g:NERDRemoveExtraSpaces = 1
 let g:NERDSpaceDelims = 1
 
 " gitgutter
+let g:gitgutter_map_keys = 0
 nmap <Leader>< <Plug>GitGutterNextHunk
 nmap <Leader>> <Plug>GitGutterPrevHunk
 
