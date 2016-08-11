@@ -27,6 +27,9 @@ set relativenumber
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'yaml=ansible', 'jinja2=ansible_template', 'ini=dosini']
 let g:markdown_syntax_conceal = 0
+let g:markdown_enable_mappings = 0
+let g:markdown_enable_spell_checking = 0
+let g:markdown_enable_input_abbreviations = 0
 
 """ PLUGINS
 
@@ -177,32 +180,23 @@ let g:netrw_sort_options='i'  " ignore case
 let g:netrw_bufsettings = 'nomodifiable nomodified readonly nobuflisted nowrap'
 map <C-_> :Lexplore<CR>
 
-" Markdown
-let g:markdown_enable_mappings = 0
-let g:markdown_enable_spell_checking = 0
-let g:markdown_enable_input_abbreviations = 0
-
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline_section_z = '%l|%c'
 
 " fallback color scheme
-set background=dark
 try
     colorscheme gruvbox
 catch
     colorscheme peachpuff
 endtry
+set background=dark
 
 " show invisible chars
 set list
 set listchars=tab:▸\ ,trail:•,extends:»,precedes:«
-highlight SpecialKey ctermfg=grey
-highlight NonText ctermfg=grey
-
-" do not colorize background
-highlight Normal ctermbg=none
-highlight NonText ctermbg=none
+highlight SpecialKey ctermfg=240
+highlight NonText ctermfg=240
 
 " do not colorize gutter
 highlight clear SignColumn
@@ -213,3 +207,4 @@ highlight clear DiffDelete
 " dark line numbers and tilde symbols after EOF
 highlight LineNr ctermfg=240
 highlight NonText ctermfg=240
+
