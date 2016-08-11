@@ -20,6 +20,8 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
+" show relative line numbers, except in current line
+set number
 set relativenumber
 
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
@@ -55,7 +57,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'godlygeek/tabular'
 Plug 'wellle/targets.vim'  " add more text objects
 Plug 'mhinz/vim-grepper'
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
@@ -67,6 +69,9 @@ nnoremap <SPACE> <Nop>
 let mapleader="\<SPACE>"
 
 " buffer on <Leader>1-9
+nnoremap <leader><left> :bprev<CR>
+nnoremap <leader><right> :bnext<CR>
+nnoremap <leader><down> :b#<CR>
 nnoremap <leader>1 :buffer 1<CR>
 nnoremap <leader>2 :buffer 2<CR>
 nnoremap <leader>3 :buffer 3<CR>
@@ -137,8 +142,7 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
-let g:fzf_files_options = '--preview "$HOME/.bin/preview {}" --extended-exact'
-let g:fzf_lines_options = '--extended-exact'
+let g:fzf_files_options = '--preview "$HOME/.bin/preview {}"'
 let g:fzf_buffers_jump = 1  " jump to existing if possible
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
