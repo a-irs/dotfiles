@@ -37,6 +37,10 @@ let g:markdown_enable_mappings = 0
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_input_abbreviations = 0
 
+if (has("termguicolors"))
+    set termguicolors
+endif
+
 """ PLUGINS
 
 call plug#begin()
@@ -67,12 +71,6 @@ Plug 'mhinz/vim-grepper'
 " Plug 'tpope/vim-fugitive'
 
 call plug#end()
-
-
-if (has("termguicolors"))
-    set termguicolors
-endif
-
 
 """ EXTENDED SETTINGS
 
