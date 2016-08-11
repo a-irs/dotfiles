@@ -1,8 +1,0 @@
-set nowrap
-set morespace
-set smooth
-set tabstospaces
-set suspend
-set autoindent
-
-include "~/.nano/syntax/*.nanorc"
