@@ -182,7 +182,12 @@ map <C-_> :Lexplore<CR>
 
 " Airline
 let g:airline_powerline_fonts = 1
-let g:airline_section_z = '%l|%c'
+let g:airline_skip_empty_sections = 1
+let g:airline_section_z = '%l'
+let g:airline#extensions#default#layout = [
+      \ [ 'a', 'c' ],
+      \ [ 'b', 'z', 'error', 'warning' ]
+      \ ]
 
 " fallback color scheme
 try
