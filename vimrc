@@ -4,7 +4,7 @@ set encoding=utf-8
 scriptencoding utf-8
 
 filetype plugin on
-syntax enable
+syntax on
 set autoindent  " use indent from current line when making new line
 set backspace=indent,eol,start  " when at beginning of line, pressing backspace joins with prev line
 set whichwrap+=<,>,[,]  " moves to next line when pressing right at end of line
@@ -44,8 +44,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'junegunn/goyo.vim', {'on': ['Goyo']}
 Plug 'bling/vim-bufferline'
 
-" syntax plugins
-Plug 'pearofducks/ansible-vim'
+Plug 'sheerun/vim-polyglot'  " collection of syntax plugins
+let g:polyglot_disabled = ['markdown']
 
 " behavior plugins
 Plug 'tpope/vim-surround'
@@ -65,6 +65,11 @@ Plug 'mhinz/vim-grepper'
 " Plug 'tpope/vim-fugitive'
 
 call plug#end()
+
+
+if (has("termguicolors"))
+    set termguicolors
+endif
 
 
 """ EXTENDED SETTINGS
@@ -184,6 +189,7 @@ let g:airline#extensions#default#layout = [
       \ ]
 
 " fallback color scheme
+set background=dark
 try
     colorscheme gruvbox
 catch
@@ -201,6 +207,6 @@ highlight NonText ctermfg=240
 highlight clear SignColumn
 
 " dark line numbers and tilde symbols after EOF
-highlight LineNr ctermfg=240
-highlight NonText ctermfg=240
+highlight LineNr ctermfg=240 guifg=#555555
+highlight NonText ctermfg=240 guifg=#555555
 
