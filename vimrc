@@ -35,6 +35,7 @@ Plug 'morhetz/gruvbox'
 Plug 'mhinz/vim-signify'  " git/changed gutter
 Plug 'vim-airline/vim-airline'
 Plug 'junegunn/goyo.vim', {'on': ['Goyo']}
+Plug 'bling/vim-bufferline'
 
 " syntax plugins
 Plug 'pearofducks/ansible-vim'
@@ -43,15 +44,18 @@ Plug 'pearofducks/ansible-vim'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdcommenter'
 Plug 'dahu/vim-fanfingtastic'  " f/t object wraps over lines
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-repeat'
 Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
 Plug 'tpope/vim-endwise'  " auto-close if/func/...
 Plug 'raimondi/delimitmate'  " auto-close brackets
-Plug 'kien/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
 Plug 'godlygeek/tabular'
 Plug 'wellle/targets.vim'  " add more text objects
 Plug 'mhinz/vim-grepper'
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
@@ -61,6 +65,17 @@ call plug#end()
 " SPACE as leader key
 nnoremap <SPACE> <Nop>
 let mapleader="\<SPACE>"
+
+" buffer on <Leader>1-9
+nnoremap <leader>1 :buffer 1<CR>
+nnoremap <leader>2 :buffer 2<CR>
+nnoremap <leader>3 :buffer 3<CR>
+nnoremap <leader>4 :buffer 4<CR>
+nnoremap <leader>5 :buffer 5<CR>
+nnoremap <leader>6 :buffer 6<CR>
+nnoremap <leader>7 :buffer 7<CR>
+nnoremap <leader>8 :buffer 8<CR>
+nnoremap <leader>9 :buffer 9<CR>
 
 " Signify
 let g:signify_vcs_list = [ 'git' ]
@@ -108,16 +123,36 @@ vmap <Leader>: :Tabularize /:\zs<CR>
 nmap <Leader>, :Tabularize /,\zs<CR>
 vmap <Leader>, :Tabularize /,\zs<CR>
 
-" CtrlP
-let g:ctrlp_by_filename = 1
-map <Leader>n :CtrlP<CR>
-map <Leader>m :CtrlPMRU<CR>
+" FZF
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+let g:fzf_files_options = '--preview "$HOME/.bin/preview {}" --extended-exact'
+let g:fzf_buffers_jump = 1  " jump to existing if possible
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader><space> :Files<CR>
+nnoremap <silent> <leader>n :Files<CR>
+nnoremap <silent> <leader>m :History<CR>
+nnoremap <silent> <leader>o :Commits<CR>
+
+" bufferline
+let g:bufferline_echo = 0
 
 " :w!! saves as sudo
 cmap w!! w !sudo tee > /dev/null %
-
-" single <leader> as easymotion key, e.g. <leader>w, <leader>e, ...
-map <Leader> <Plug>(easymotion-prefix)
 
 " stop highlighting search results
 nnoremap <silent> <C-l> :nohl<CR><C-l>
