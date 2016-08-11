@@ -20,6 +20,8 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
+set updatetime=250
+
 " show relative line numbers, except in current line
 set number
 set relativenumber
@@ -37,7 +39,7 @@ call plug#begin()
 
 " UI plugins
 Plug 'morhetz/gruvbox'
-Plug 'mhinz/vim-signify'  " git/changed gutter
+Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'junegunn/goyo.vim', {'on': ['Goyo']}
 Plug 'bling/vim-bufferline'
@@ -132,19 +134,6 @@ nmap <Leader>, :Tabularize /,\zs<CR>
 vmap <Leader>, :Tabularize /,\zs<CR>
 
 " FZF
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
 let g:fzf_files_options = '--preview "$HOME/.bin/preview {}"'
 let g:fzf_buffers_jump = 1  " jump to existing if possible
 nmap <leader><tab> <plug>(fzf-maps-n)
@@ -171,6 +160,10 @@ vnoremap # :call NERDComment(0,"toggle")<CR>
 let g:NERDCommentEmptyLines = 1
 let g:NERDRemoveExtraSpaces = 1
 let g:NERDSpaceDelims = 1
+
+" gitgutter
+nmap <Leader>< <Plug>GitGutterNextHunk
+nmap <Leader>> <Plug>GitGutterPrevHunk
 
 " netrw
 let g:netrw_liststyle=3  " tree style
@@ -205,9 +198,6 @@ highlight NonText ctermfg=240
 
 " do not colorize gutter
 highlight clear SignColumn
-highlight clear DiffAdd
-highlight clear DiffChange
-highlight clear DiffDelete
 
 " dark line numbers and tilde symbols after EOF
 highlight LineNr ctermfg=240
