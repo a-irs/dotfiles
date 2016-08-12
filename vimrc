@@ -72,8 +72,10 @@ call plug#begin()
 
 " UI plugins
 Plug 'morhetz/gruvbox'
+Plug 'sjl/badwolf'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/goyo.vim'
 
 Plug 'sheerun/vim-polyglot'  " collection of syntax plugins
@@ -193,13 +195,13 @@ let g:airline#extensions#tabline#buffer_min_count = 2
 """ COLOR SCHEME
 
 " fallback color scheme
-set background=dark
 try
-    colorscheme gruvbox
+    set background=dark
+    colorscheme badwolf " available: gruvbox, badwolf
+    let g:airline_theme='jellybeans'
 catch
     colorscheme peachpuff
 endtry
-set background=dark
 
 " show invisible chars
 set list
