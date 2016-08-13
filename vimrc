@@ -43,7 +43,7 @@ endif
 
 " SPACE as leader key
 nnoremap <SPACE> <Nop>
-let mapleader="\<SPACE>"
+let g:mapleader="\<SPACE>"
 
 " :w!! saves as sudo
 cmap w!! w !sudo tee > /dev/null %
@@ -76,7 +76,11 @@ Plug 'sjl/badwolf'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
 Plug 'junegunn/goyo.vim'
+nnoremap <leader>l :Goyo<CR>
+let g:goyo_width = 80
+let g:goyo_height = 100
 
 Plug 'sheerun/vim-polyglot'  " collection of syntax plugins
 let g:polyglot_disabled = ['markdown']
@@ -87,27 +91,37 @@ Plug 'scrooloose/nerdcommenter'
 " Plug 'dahu/vim-fanfingtastic'  " f/t object wraps over lines
 " Plug 'easymotion/vim-easymotion'
 " Plug 'tpope/vim-repeat'
+
 Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
+let g:UltiSnipsSnippetDirectories = ["snip"]
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
 " Plug 'tpope/vim-endwise'  " auto-close if/func/...
 Plug 'raimondi/delimitmate'  " auto-close brackets
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'godlygeek/tabular'
 " Plug 'wellle/targets.vim'  " add more text objects
+
 Plug 'mhinz/vim-grepper'
+let g:grepper = {}
+let g:grepper.highlight = 1
+nnoremap <leader>g :Grepper<CR>
+nnoremap <leader>G :Grepper -cword -noprompt<cr>
+
 " Plug 'tpope/vim-fugitive'
+
+Plug 'xolox/vim-misc' | Plug 'xolox/vim-session'
+let g:session_autosave = 'yes'
+let g:session_autoload = 'yes'
+set sessionoptions-=buffers  " don't save hidden and unloaded buffers
 
 call plug#end()
 
+
 """ EXTENDED SETTINGS
-
-" Signify
-let g:signify_vcs_list = [ 'git' ]
-
-" Goyo
-nnoremap <leader>l :Goyo<CR>
-let g:goyo_width = 80
-let g:goyo_height = 100
 
 " Goyo auto-close with :q
 function! s:goyo_enter()
@@ -127,18 +141,6 @@ function! s:goyo_leave()
 endfunction
 autocmd! User GoyoEnter call <SID>goyo_enter()
 autocmd! User GoyoLeave call <SID>goyo_leave()
-
-" Grepper
-let g:grepper = {}
-let g:grepper.highlight = 1
-nnoremap <leader>g :Grepper<CR>
-nnoremap <leader>G :Grepper -cword -noprompt<cr>
-
-" UltraSnips
-let g:UltiSnipsSnippetDirectories = ["snip"]
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Tabular split on first = or :
 nmap <Leader>= :Tabularize /^[^=]*\zs=<CR>
