@@ -103,18 +103,14 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 Plug 'raimondi/delimitmate'  " auto-close brackets
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
-func! s:fzf_root()  " set fzf root to upper repo
-    let path = finddir(".git", expand("%:p:h").";")
-    return fnamemodify(substitute(path, ".git", "", ""), ":p:h")
-endfunc
 let g:fzf_files_options = '--preview "$HOME/.bin/preview {}"'
+let $FZF_DEFAULT_COMMAND = 'ag -g "" --nocolor --nogroup --files-with-matches'
 let g:fzf_buffers_jump = 1  " jump to existing if possible
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
+
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader><space> :Lines<CR>
 nnoremap <silent> <leader>n :Files<CR>
+nnoremap <C-p> :Files<CR>
 nnoremap <silent> <leader>m :History<CR>
 nnoremap <silent> <leader>o :Commits<CR>
 

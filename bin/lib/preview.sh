@@ -23,7 +23,8 @@ fi
 remove_blank() { sed '/./,$!d'; } # remove blank lines at top of file
 remove_double_blank() { cat -s; } # remove multiple blank lines
 highlight_dirs() { GREP_COLOR='1;33' egrep --color=always '(.)*/|$'; } # TODO: not working in ranger
-highlight() { command highlight --out-format=ansi "$1" 2> /dev/null || command highlight --out-format=ansi --syntax=conf "$1" 2> /dev/null || cat "$1"; }
+highlight() { cat "$1"; }
+[[ -t 1 ]] && highlight() { command highlight --out-format=ansi "$1" 2> /dev/null || command highlight --out-format=ansi --syntax=conf "$1" 2> /dev/null || cat "$1"; }
 showbin() { strings -6 "$1" | tr '\n' ' ' | wrap | trim; }
 showbin_compressed() { zcat "$1" | strings -6 | tr '\n' ' ' | wrap | trim; }
 
@@ -66,8 +67,9 @@ case "$mime_type" in
         preview_med && exit ;;
 esac
 
-printf "$(tput bold; tput setaf 5)%s\n" "$(file -b -- "$path")" | wrap
-printf "$(tput bold; tput setaf 5)%s\n" "================"
+[[ -t 1 ]] && c=$(tput bold; tput setaf 5)
+printf "${c}%s\n" "$(file -b -- "$path")" | wrap
+printf "${c}%s\n" "================"
 
 #showbin_compressed "$path" 2> /dev/null
 showbin "$path"
