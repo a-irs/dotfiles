@@ -52,6 +52,7 @@ cmap w!! w !sudo tee > /dev/null %
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 
 " buffer on <Leader>1-9
+nnoremap <BS> :b#<CR>
 nnoremap <leader><left> :bprev<CR>
 nnoremap <leader><right> :bnext<CR>
 nnoremap <leader><up> :b#<CR>
@@ -100,8 +101,23 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Plug 'tpope/vim-endwise'  " auto-close if/func/...
 Plug 'raimondi/delimitmate'  " auto-close brackets
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-Plug 'junegunn/fzf.vim'
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
+func! s:fzf_root()  " set fzf root to upper repo
+    let path = finddir(".git", expand("%:p:h").";")
+    return fnamemodify(substitute(path, ".git", "", ""), ":p:h")
+endfunc
+let g:fzf_files_options = '--preview "$HOME/.bin/preview {}"'
+let g:fzf_buffers_jump = 1  " jump to existing if possible
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader><space> :Lines<CR>
+nnoremap <silent> <leader>n :Files<CR>
+nnoremap <silent> <leader>m :History<CR>
+nnoremap <silent> <leader>o :Commits<CR>
+
 Plug 'godlygeek/tabular'
 " Plug 'wellle/targets.vim'  " add more text objects
 
@@ -113,10 +129,10 @@ nnoremap <leader>G :Grepper -cword -noprompt<cr>
 
 " Plug 'tpope/vim-fugitive'
 
-Plug 'xolox/vim-misc' | Plug 'xolox/vim-session'
-let g:session_autosave = 'yes'
-let g:session_autoload = 'yes'
-set sessionoptions-=buffers  " don't save hidden and unloaded buffers
+" Plug 'xolox/vim-misc' | Plug 'xolox/vim-session'
+" let g:session_autosave = 'yes'
+" let g:session_autoload = 'yes'
+" set sessionoptions-=buffers  " don't save hidden and unloaded buffers
 
 call plug#end()
 
@@ -149,18 +165,6 @@ nmap <Leader>: :Tabularize /:\zs<CR>
 vmap <Leader>: :Tabularize /:\zs<CR>
 nmap <Leader>, :Tabularize /,\zs<CR>
 vmap <Leader>, :Tabularize /,\zs<CR>
-
-" FZF
-let g:fzf_files_options = '--preview "$HOME/.bin/preview {}"'
-let g:fzf_buffers_jump = 1  " jump to existing if possible
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader><space> :Lines<CR>
-nnoremap <silent> <leader>n :Files<CR>
-nnoremap <silent> <leader>m :History<CR>
-nnoremap <silent> <leader>o :Commits<CR>
 
 " NERDCommenter
 nnoremap # :call NERDComment(0,"toggle")<CR>
