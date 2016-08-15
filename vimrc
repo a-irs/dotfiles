@@ -30,6 +30,23 @@ set number
 set lazyredraw
 set ttyfast
 
+" disable mouse in neovim
+if has("nvim")
+    set mouse-=a
+endif
+
+" better TAB command autocomplete
+set wildmenu
+set wildmode=list:longest,full
+
+" netrw
+let g:netrw_liststyle=3  " tree style
+let g:netrw_list_hide='.*\.swp$,\.DS_Store'
+let g:netrw_sort_sequence='[\/]$'  " directories first
+let g:netrw_sort_options='i'  " ignore case
+let g:netrw_bufsettings = 'nomodifiable nomodified readonly nobuflisted nowrap'
+map <C-_> :Lexplore<CR>
+
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'yaml=ansible', 'jinja2=ansible_template', 'ini=dosini']
 let g:markdown_syntax_conceal = 0
@@ -71,10 +88,14 @@ nnoremap <leader>9 :buffer 9<CR>
 
 call plug#begin()
 
+Plug 'blueyed/vim-diminactive'  " turn off syntax highlight for inactive panes
+let g:diminactive_use_syntax = 1
+let g:diminactive_use_colorcolumn = 0
+let g:diminactive_buftype_blacklist = ['nofile', 'nowrite', 'acwrite', 'quickfix' ]
+
 " UI plugins
 Plug 'morhetz/gruvbox'
 Plug 'sjl/badwolf'
-Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -88,7 +109,6 @@ let g:polyglot_disabled = ['markdown']
 
 " behavior plugins
 Plug 'tpope/vim-surround'
-Plug 'scrooloose/nerdcommenter'
 " Plug 'dahu/vim-fanfingtastic'  " f/t object wraps over lines
 " Plug 'easymotion/vim-easymotion'
 " Plug 'tpope/vim-repeat'
@@ -106,18 +126,16 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegu
 let g:fzf_files_options = '--preview "$HOME/.bin/preview {}"'
 let $FZF_DEFAULT_COMMAND = 'ag -g "" --nocolor --nogroup --files-with-matches'
 let g:fzf_buffers_jump = 1  " jump to existing if possible
-
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader><space> :Lines<CR>
 nnoremap <silent> <leader>n :Files<CR>
-nnoremap <C-p> :Files<CR>
+nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <leader>m :History<CR>
 nnoremap <silent> <leader>o :Commits<CR>
 
-Plug 'godlygeek/tabular'
 " Plug 'wellle/targets.vim'  " add more text objects
 
-Plug 'mhinz/vim-grepper'
+Plug 'mhinz/vim-grepper'  " auto-uses ag, ack etc.
 let g:grepper = {}
 let g:grepper.highlight = 1
 nnoremap <leader>g :Grepper<CR>
@@ -129,8 +147,6 @@ nnoremap <leader>G :Grepper -cword -noprompt<cr>
 " let g:session_autosave = 'yes'
 " let g:session_autoload = 'yes'
 " set sessionoptions-=buffers  " don't save hidden and unloaded buffers
-
-call plug#end()
 
 
 """ EXTENDED SETTINGS
@@ -145,9 +161,9 @@ endfunction
 function! s:goyo_leave()
   if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
     if b:quitting_bang
-        qa!
+      qa!
     else
-        qa
+      qa
     endif
   endif
 endfunction
@@ -155,6 +171,7 @@ autocmd! User GoyoEnter call <SID>goyo_enter()
 autocmd! User GoyoLeave call <SID>goyo_leave()
 
 " Tabular split on first = or :
+Plug 'godlygeek/tabular'
 nmap <Leader>= :Tabularize /^[^=]*\zs=<CR>
 vmap <Leader>= :Tabularize /^[^=]*\zs=<CR>
 nmap <Leader>: :Tabularize /:\zs<CR>
@@ -163,6 +180,7 @@ nmap <Leader>, :Tabularize /,\zs<CR>
 vmap <Leader>, :Tabularize /,\zs<CR>
 
 " NERDCommenter
+Plug 'scrooloose/nerdcommenter'
 nnoremap # :call NERDComment(0,"toggle")<CR>
 vnoremap # :call NERDComment(0,"toggle")<CR>
 let g:NERDCommentEmptyLines = 1
@@ -170,28 +188,23 @@ let g:NERDRemoveExtraSpaces = 1
 let g:NERDSpaceDelims = 1
 
 " gitgutter
+Plug 'airblade/vim-gitgutter'
 let g:gitgutter_map_keys = 0
 nmap <Leader>< <Plug>GitGutterNextHunk
 nmap <Leader>> <Plug>GitGutterPrevHunk
-
-" netrw
-let g:netrw_liststyle=3  " tree style
-let g:netrw_list_hide='.*\.swp$,\.DS_Store'
-let g:netrw_sort_sequence='[\/]$'  " directories first
-let g:netrw_sort_options='i'  " ignore case
-let g:netrw_bufsettings = 'nomodifiable nomodified readonly nobuflisted nowrap'
-map <C-_> :Lexplore<CR>
 
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline_skip_empty_sections = 1
 let g:airline_section_z = '%c'
 let g:airline#extensions#default#layout = [
-    \ [ 'a', 'b' ],
-    \ [ 'z', 'error', 'warning' ]
-    \ ]
+  \ [ 'a', 'b' ],
+  \ [ 'z', 'error', 'warning' ]
+  \ ]
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_min_count = 2
+
+call plug#end()
 
 
 """ COLOR SCHEME
