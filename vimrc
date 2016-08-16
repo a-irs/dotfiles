@@ -1,5 +1,3 @@
-""" BASIC SETTINGS
-
 set encoding=utf-8
 scriptencoding utf-8
 
@@ -88,7 +86,8 @@ nnoremap <leader>9 :buffer 9<CR>
 
 call plug#begin()
 
-Plug 'blueyed/vim-diminactive'  " turn off syntax highlight for inactive panes
+" turn off syntax highlight for inactive panes
+Plug 'blueyed/vim-diminactive'
 let g:diminactive_use_syntax = 1
 let g:diminactive_use_colorcolumn = 0
 let g:diminactive_buftype_blacklist = ['nofile', 'nowrite', 'acwrite', 'quickfix' ]
@@ -96,18 +95,44 @@ let g:diminactive_buftype_blacklist = ['nofile', 'nowrite', 'acwrite', 'quickfix
 " UI plugins
 Plug 'morhetz/gruvbox'
 Plug 'sjl/badwolf'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+
+" Airline
+Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
+let g:airline_powerline_fonts = 1
+let g:airline_skip_empty_sections = 1
+let g:airline_section_z = '%c'
+let g:airline#extensions#default#layout = [
+  \ [ 'a', 'b' ],
+  \ [ 'z', 'error', 'warning' ]
+  \ ]
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_min_count = 2
 
 Plug 'junegunn/goyo.vim'
 nnoremap <leader>l :Goyo<CR>
 let g:goyo_width = 80
 let g:goyo_height = 100
+function! s:goyo_enter()  " Goyo auto-close with :q
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+endfunction
+function! s:goyo_leave()
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
+endfunction
+autocmd! User GoyoEnter call <SID>goyo_enter()
+autocmd! User GoyoLeave call <SID>goyo_leave()
 
 Plug 'sheerun/vim-polyglot'  " collection of syntax plugins
 let g:polyglot_disabled = ['markdown']
 
-" behavior plugins
 Plug 'tpope/vim-surround'
 " Plug 'dahu/vim-fanfingtastic'  " f/t object wraps over lines
 " Plug 'easymotion/vim-easymotion'
@@ -148,28 +173,6 @@ nnoremap <leader>G :Grepper -cword -noprompt<cr>
 " let g:session_autoload = 'yes'
 " set sessionoptions-=buffers  " don't save hidden and unloaded buffers
 
-
-""" EXTENDED SETTINGS
-
-" Goyo auto-close with :q
-function! s:goyo_enter()
-  let b:quitting = 0
-  let b:quitting_bang = 0
-  autocmd QuitPre <buffer> let b:quitting = 1
-  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-endfunction
-function! s:goyo_leave()
-  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
-    if b:quitting_bang
-      qa!
-    else
-      qa
-    endif
-  endif
-endfunction
-autocmd! User GoyoEnter call <SID>goyo_enter()
-autocmd! User GoyoLeave call <SID>goyo_leave()
-
 " Tabular split on first = or :
 Plug 'godlygeek/tabular'
 nmap <Leader>= :Tabularize /^[^=]*\zs=<CR>
@@ -193,17 +196,6 @@ let g:gitgutter_map_keys = 0
 nmap <Leader>< <Plug>GitGutterNextHunk
 nmap <Leader>> <Plug>GitGutterPrevHunk
 
-" Airline
-let g:airline_powerline_fonts = 1
-let g:airline_skip_empty_sections = 1
-let g:airline_section_z = '%c'
-let g:airline#extensions#default#layout = [
-  \ [ 'a', 'b' ],
-  \ [ 'z', 'error', 'warning' ]
-  \ ]
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_min_count = 2
-
 call plug#end()
 
 
@@ -212,7 +204,7 @@ call plug#end()
 " fallback color scheme
 try
     set background=dark
-    colorscheme badwolf " available: gruvbox, badwolf
+    colorscheme badwolf  " available: gruvbox, badwolf
     let g:airline_theme='jellybeans'
 catch
     colorscheme peachpuff
@@ -221,8 +213,8 @@ endtry
 " show invisible chars
 set list
 set listchars=tab:▸\ ,trail:•,extends:»,precedes:«
-highlight SpecialKey ctermfg=240
-highlight NonText ctermfg=240
+highlight SpecialKey ctermfg=240 guifg=#444444
+highlight NonText ctermfg=240 guifg=#444444
 
 " do not colorize gutter
 highlight clear SignColumn
