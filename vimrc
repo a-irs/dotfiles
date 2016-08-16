@@ -2,7 +2,6 @@ set encoding=utf-8
 scriptencoding utf-8
 
 filetype plugin on
-syntax on
 set autoindent  " use indent from current line when making new line
 set backspace=indent,eol,start  " when at beginning of line, pressing backspace joins with prev line
 set whichwrap+=<,>,[,]  " moves to next line when pressing right at end of line
@@ -92,10 +91,6 @@ let g:diminactive_use_syntax = 1
 let g:diminactive_use_colorcolumn = 0
 let g:diminactive_buftype_blacklist = ['nofile', 'nowrite', 'acwrite', 'quickfix' ]
 
-" UI plugins
-Plug 'morhetz/gruvbox'
-Plug 'sjl/badwolf'
-
 " Airline
 Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
 let g:airline_powerline_fonts = 1
@@ -130,7 +125,8 @@ endfunction
 autocmd! User GoyoEnter call <SID>goyo_enter()
 autocmd! User GoyoLeave call <SID>goyo_leave()
 
-Plug 'sheerun/vim-polyglot'  " collection of syntax plugins
+" collection of syntax plugins
+Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['markdown']
 
 Plug 'tpope/vim-surround'
@@ -166,13 +162,6 @@ let g:grepper.highlight = 1
 nnoremap <leader>g :Grepper<CR>
 nnoremap <leader>G :Grepper -cword -noprompt<cr>
 
-" Plug 'tpope/vim-fugitive'
-
-" Plug 'xolox/vim-misc' | Plug 'xolox/vim-session'
-" let g:session_autosave = 'yes'
-" let g:session_autoload = 'yes'
-" set sessionoptions-=buffers  " don't save hidden and unloaded buffers
-
 " Tabular split on first = or :
 Plug 'godlygeek/tabular'
 nmap <Leader>= :Tabularize /^[^=]*\zs=<CR>
@@ -182,19 +171,20 @@ vmap <Leader>: :Tabularize /:\zs<CR>
 nmap <Leader>, :Tabularize /,\zs<CR>
 vmap <Leader>, :Tabularize /,\zs<CR>
 
-" NERDCommenter
-Plug 'scrooloose/nerdcommenter'
-nnoremap # :call NERDComment(0,"toggle")<CR>
-vnoremap # :call NERDComment(0,"toggle")<CR>
-let g:NERDCommentEmptyLines = 1
-let g:NERDRemoveExtraSpaces = 1
-let g:NERDSpaceDelims = 1
+" TComment
+nnoremap # :TComment<CR>
+vnoremap # :TComment<CR>
+Plug 'tomtom/tcomment_vim'
 
 " gitgutter
 Plug 'airblade/vim-gitgutter'
 let g:gitgutter_map_keys = 0
 nmap <Leader>< <Plug>GitGutterNextHunk
 nmap <Leader>> <Plug>GitGutterPrevHunk
+
+" color schemes
+Plug 'morhetz/gruvbox'
+Plug 'sjl/badwolf'
 
 call plug#end()
 
@@ -223,3 +213,4 @@ highlight clear SignColumn
 highlight LineNr ctermfg=240 guifg=#444444
 highlight NonText ctermfg=240 guifg=#444444
 
+syntax on
