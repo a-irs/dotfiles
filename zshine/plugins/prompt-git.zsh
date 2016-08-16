@@ -43,6 +43,11 @@ git_prompt_info() {
             url2=${url2#*:}
             url2=${url2//\//}
             url="$url2/$url1"
+        elif [[ "$url" == ssh://gitlab@git.office.*/*.git ]]; then
+            url1=${url##*/}
+            url1=${url1/.git/}
+            url2=$(echo "$url" | rev | cut -d/ -f 2 | rev)
+            url="$url2/$url1"
         fi
     fi
     [[ "${url}" == / ]] && url="N/A"
