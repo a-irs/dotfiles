@@ -11,6 +11,7 @@ set autoread  " auto reload file when unchanged in vim and changed outside vim
 set history=2000
 set scrolloff=2  " scrolling shows one line extra
 set hlsearch  " highlight search results
+set incsearch  " search during input
 
 set tabstop=4
 set shiftwidth=4
@@ -54,6 +55,9 @@ let g:markdown_enable_input_abbreviations = 0
 if (has("termguicolors"))
     set termguicolors
 endif
+
+" match parantheses etc. with % key
+runtime macros/matchit.vim
 
 " SPACE as leader key
 nnoremap <SPACE> <Nop>
@@ -164,12 +168,14 @@ nnoremap <leader>G :Grepper -cword -noprompt<cr>
 
 " Tabular split on first = or :
 Plug 'godlygeek/tabular'
-nmap <Leader>= :Tabularize /^[^=]*\zs=<CR>
-vmap <Leader>= :Tabularize /^[^=]*\zs=<CR>
-nmap <Leader>: :Tabularize /:\zs<CR>
-vmap <Leader>: :Tabularize /:\zs<CR>
-nmap <Leader>, :Tabularize /,\zs<CR>
-vmap <Leader>, :Tabularize /,\zs<CR>
+nmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
+vmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
+nmap <Leader>a: :Tabularize /:\zs<CR>
+vmap <Leader>a: :Tabularize /:\zs<CR>
+nmap <Leader>a, :Tabularize /,\zs<CR>
+vmap <Leader>a, :Tabularize /,\zs<CR>
+
+Plug 'tpope/vim-fugitive'
 
 " TComment
 nnoremap # :TComment<CR>
