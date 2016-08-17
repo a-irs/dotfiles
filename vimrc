@@ -2,6 +2,7 @@ set encoding=utf-8
 scriptencoding utf-8
 
 filetype plugin on
+syntax on
 set autoindent  " use indent from current line when making new line
 set backspace=indent,eol,start  " when at beginning of line, pressing backspace joins with prev line
 set whichwrap+=<,>,[,]  " moves to next line when pressing right at end of line
@@ -219,4 +220,3 @@ highlight clear SignColumn
 highlight LineNr ctermfg=240 guifg=#444444
 highlight NonText ctermfg=240 guifg=#444444
 
-syntax on
