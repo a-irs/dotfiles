@@ -210,8 +210,8 @@ endtry
 " show invisible chars
 set list
 set listchars=tab:▸\ ,trail:•,extends:»,precedes:«
-highlight SpecialKey ctermfg=240 guifg=#444444
-highlight NonText ctermfg=240 guifg=#444444
+highlight SpecialKey ctermfg=240 guifg=#888888
+highlight NonText ctermfg=240 guifg=#888888
 
 " do not colorize gutter
 highlight clear SignColumn
