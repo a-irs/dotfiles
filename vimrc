@@ -96,14 +96,14 @@ let g:diminactive_use_syntax = 1
 let g:diminactive_use_colorcolumn = 0
 let g:diminactive_buftype_blacklist = ['nofile', 'nowrite', 'acwrite', 'quickfix' ]
 
-" Airline
+" airline
 Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
 let g:airline_powerline_fonts = 1
 let g:airline_skip_empty_sections = 1
-let g:airline_section_z = '%c'
+let g:airline_section_c = '%<%f%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
 let g:airline#extensions#default#layout = [
-  \ [ 'a', 'b' ],
-  \ [ 'z', 'error', 'warning' ]
+  \ [ 'a', 'b', 'c' ],
+  \ [ 'error', 'warning' ]
   \ ]
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_min_count = 2
@@ -138,7 +138,6 @@ autocmd BufNewFile,BufFilePre,BufRead play*.yml set filetype=ansible
 Plug 'tpope/vim-surround'
 " Plug 'dahu/vim-fanfingtastic'  " f/t object wraps over lines
 " Plug 'easymotion/vim-easymotion'
-" Plug 'tpope/vim-repeat'
 
 Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
 let g:UltiSnipsSnippetDirectories = ["snip"]

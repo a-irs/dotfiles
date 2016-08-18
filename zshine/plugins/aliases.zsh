@@ -5,6 +5,9 @@ for c in $noglobs; do
     [[ "$commands[$c]" ]] && alias $c="noglob $c"
 done
 
+[[ -d ~/Documents ]] && alias todo="$EDITOR ~/Documents/todo.md"
+[[ -d ~/doc ]] && alias todo="$EDITOR ~/doc/todo.md"
+
 tar-tar() { tar cvaf "$(basename "$PWD")".tar -- "$@"; }
 tar-gz()  { tar cvaf "$(basename "$PWD")".tar.gz -- "$@"; }
 tar-xz()  { tar cvaf "$(basename "$PWD")".tar.xz -- "$@"; }
