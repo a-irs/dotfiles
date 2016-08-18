@@ -133,6 +133,7 @@ autocmd! User GoyoLeave call <SID>goyo_leave()
 " collection of syntax plugins
 Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['markdown']
+autocmd BufNewFile,BufFilePre,BufRead play*.yml set filetype=ansible
 
 Plug 'tpope/vim-surround'
 " Plug 'dahu/vim-fanfingtastic'  " f/t object wraps over lines

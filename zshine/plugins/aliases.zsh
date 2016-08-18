@@ -66,14 +66,16 @@ count_files_rec() {
     find "$@" -type f | wc -l
 }
 
-ranger() {
-    [[ "$RANGER_LEVEL" ]] && exit
-    tmp='/tmp/chosendir'
-    command ranger --choosedir="$tmp" "${@:-$PWD}"
-    [[ -f "$tmp" && $(cat -- "$tmp") != "$PWD" ]] && cd -- "$(cat -- "$tmp")"
-    rm -f -- "$tmp"
-}
-alias ra='ranger'
+if [[ "$commands[ranger]" ]]; then
+    ranger() {
+        [[ "$RANGER_LEVEL" ]] && exit
+        tmp='/tmp/chosendir'
+        command ranger --choosedir="$tmp" "${@:-$PWD}"
+        [[ -f "$tmp" && $(cat -- "$tmp") != "$PWD" ]] && cd -- "$(cat -- "$tmp")"
+        rm -f -- "$tmp"
+    }
+    alias ra='ranger'
+fi
 
 dl() {
     case "$1" in
