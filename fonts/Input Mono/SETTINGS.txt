@@ -14,5 +14,7 @@ by re-downloading the fonts at <http://input.fontbureau.com/download>.
 
 	Alternates
 		--g=ss
+		--l=serifs_round
+		--zero=slash
 
-	Line Height: 1.5×
+	Line Height: 1.4×
