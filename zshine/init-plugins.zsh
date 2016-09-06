@@ -20,6 +20,7 @@ ZSHINE_PLUGINS=(
   zshmarks # set bookmarks
   tty-colors # colors for $TERM=linux
   termite # include CTRL+T for termite terminal program
+  todo # show ~/.todo on start
 )
 for z in $ZSHINE_PLUGINS; do; source "$ZSHINE_DIR/plugins/$z.zsh"; done
 
