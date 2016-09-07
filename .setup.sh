@@ -20,6 +20,7 @@ fi
 
 rmlink() {
     dest=~/.$1
+    [[ "$(basename "$dest")" == .bashrc ]] && rm -f "$dest"
     [[ -L "$dest" ]] && rm -f "$dest" && print_remove "${dest/$HOME/\~}"
     rmdir -p --ignore-fail-on-non-empty "$(dirname "$dest")" 2> /dev/null
 }
