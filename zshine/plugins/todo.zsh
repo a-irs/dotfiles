@@ -1,7 +1,7 @@
-f=~/.todo
+TODO_FILE=~/.todo
 
-[[ -f "$f" ]] || return
-content=$(cat -s "$f")
+[[ -s "$TODO_FILE" ]] || return
+content=$(cat -s "$TODO_FILE")
 
-echo "\n$(tput setaf 6)${content}$(tput sgr0)"
+printf "\n$(tput setaf 6)%s$(tput sgr0)\n" "${content}"
 

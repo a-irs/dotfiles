@@ -21,6 +21,7 @@ ZSHINE_PLUGINS=(
   tty-colors # colors for $TERM=linux
   termite # include CTRL+T for termite terminal program
   todo # show ~/.todo on start
+  brew # notify on outdated brew
 )
 for z in $ZSHINE_PLUGINS; do; source "$ZSHINE_DIR/plugins/$z.zsh"; done
 
