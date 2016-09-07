@@ -20,7 +20,6 @@ fi
 
 rmlink() {
     dest=~/.$1
-    [[ "$(basename "$dest")" == .bashrc ]] && rm -f "$dest"
     [[ -L "$dest" ]] && rm -f "$dest" && print_remove "${dest/$HOME/\~}"
     rmdir -p --ignore-fail-on-non-empty "$(dirname "$dest")" 2> /dev/null
 }
@@ -33,6 +32,7 @@ mklink() {
             return
         fi
     elif [[ -e "$dest" ]]; then
+        [[ "$(basename "$dest")" == .bashrc ]] && rm -f "$dest" && return
         print_error "${dest/$HOME/\~} already exists and is no symlink!"
         return
     fi
