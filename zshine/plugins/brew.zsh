@@ -1,3 +1,4 @@
+[[ $commands[brew] ]] || return
 
 alias bup() {
     brew update && brew upgrade
