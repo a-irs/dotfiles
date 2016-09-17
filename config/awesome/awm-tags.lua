@@ -1,5 +1,4 @@
 local awful      = require 'awful'
-local lain       = require 'lain'
 
 
 function make_name(icon, name)

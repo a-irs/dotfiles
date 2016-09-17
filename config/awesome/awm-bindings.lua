@@ -1,13 +1,10 @@
 local volume     = require 'volume'
 local awful      = require 'awful'
 local rules      = require 'awful.rules'
-
-local lain       = require 'lain'
 local naughty    = require 'naughty'
 local beautiful  = require 'beautiful'
 local hotkeys_popup = require("awful.hotkeys_popup.widget")
 
--- TODO: refactor
 hotkeys_popup.height = math.floor(vres/2)
 hotkeys_popup.width = math.floor(hres/2)
 hotkeys_popup.modifiers_color = "#777777"
@@ -19,6 +16,16 @@ hotkeys_popup.labels['dead_circumflex'] = "^"
 
 win = "Mod4"
 alt = "Mod1"
+
+function tag_view_nonempty(direction)
+    local s = mouse.screen
+    for i = 1, #awful.tag.gettags(s) do
+        awful.tag.viewidx(direction, s)
+        if #awful.client.visible(s) > 0 then
+            return
+        end
+    end
+end
 
 globalkeys = awful.util.table.join(
 
@@ -76,10 +83,10 @@ globalkeys = awful.util.table.join(
     awful.key({ win          }, "Left",  awful.tag.viewprev,
         {description="view left tag", group="tags"}),
 
-    awful.key({ alt          }, "Tab",   function() lain.util.tag_view_nonempty( 1) end,
+    awful.key({ alt          }, "Tab",   function() tag_view_nonempty( 1) end,
         {description="view right nonempty tag", group="tags"}),
 
-    awful.key({ alt, "Shift" }, "Tab",   function() lain.util.tag_view_nonempty(-1) end,
+    awful.key({ alt, "Shift" }, "Tab",   function() tag_view_nonempty(-1) end,
         {description="view left nonempty tag", group="tags"}),
 
     awful.key({ win          }, "Tab",   awful.tag.history.restore,

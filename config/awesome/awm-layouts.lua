@@ -1,11 +1,6 @@
 local awful = require 'awful'
-local lain  = require 'lain'
 
 layouts = {
-    -- lain.layout.termfair,
-    -- lain.layout.centerfair,
-    -- lain.layout.centerwork,
-    -- lain.layout.centerworkd,
     awful.layout.suit.tile,
     -- awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
