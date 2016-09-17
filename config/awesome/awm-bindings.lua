@@ -237,12 +237,6 @@ globalkeys = awful.util.table.join(
         end,
         {description="toggle main status bar", group="bars"}),
 
-    awful.key({ win }, "n",
-        function()
-            systembox[awful.screen.focused()].visible = not systembox[awful.screen.focused()].visible
-        end,
-        {description="toggle system status bar", group="bars"}),
-
     -- show all tags at once
 
     awful.key({ win }, "z",

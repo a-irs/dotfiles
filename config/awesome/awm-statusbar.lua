@@ -146,71 +146,6 @@ lain.widgets.calendar:attach(timewidget, {
 })
 
 
--- CPU
-
-cpuwidget = lain.widgets.cpu({
-    timeout = 2,
-    settings = function()
-        widget:set_markup(markup(theme.widget_cpu_fg, "CPU: " .. markup.bold(markup.bold(cpu_now.usage .. "%     "))))
-    end
-})
-
-
---- CPU FREQ
-
-cpufreq1widget = wibox.widget.textbox()
-vicious.register(cpufreq1widget, vicious.widgets.cpufreq, markup(theme.widget_cpu_freq_fg, "CPU0: " .. markup.bold("$2 Ghz   ")), 2, "cpu0")
-cpufreq2widget = wibox.widget.textbox()
-vicious.register(cpufreq2widget, vicious.widgets.cpufreq, markup(theme.widget_cpu_freq_fg, "CPU1: " .. markup.bold("$2 GHz     ")), 2, "cpu1")
-
-
--- MEM
-
-memwidget = wibox.widget.textbox()
-vicious.register(memwidget, vicious.widgets.mem, markup(theme.widget_mem_fg, "RAM: " .. markup.bold("$1%     ")), 5)
-
-
--- LOAD
-
-loadwidget = lain.widgets.sysload({
-    timeout = 2,
-    settings  = function()
-        widget:set_markup(markup(theme.widget_load_fg, "Load: " .. markup.bold(load_1 .. " " .. load_5 .. " " .. load_15 .. "     ")))
-    end
-})
-
-
--- DISK I/O
-
-iowidget = wibox.widget.textbox()
-vicious.register(iowidget, vicious.widgets.dio,
-       markup(theme.widget_disk_read_fg, "read: " .. markup.bold("${sda read_mb} MB/s "))
-    .. markup(theme.widget_disk_write_fg, " write: " .. markup.bold("${sda write_mb} MB/s    ")), 2)
-
-
--- NETWORK SPEED
-
-speedwidget = lain.widgets.net({
-    notify = "off",
-    settings = function()
-        down_speed = math.floor(tonumber(net_now.received))
-        up_speed   = math.floor(tonumber(net_now.sent))
-        widget:set_markup(
-            markup(theme.widget_speed_down, " ↓ DL: " .. markup.bold(down_speed))
-            .. " " ..
-            markup(theme.widget_speed_up, " ↑ UL: " .. markup.bold(up_speed) .. "     "))
-    end
-})
-
-
--- CPU GRAPH
-
-cpugraphwidget = awful.widget.graph()
-cpugraphwidget:set_width(80)
-cpugraphwidget:set_background_color(theme.widget_cpu_graph_bg)
-cpugraphwidget:set_color(theme.widget_cpu_graph_fg)
-vicious.register(cpugraphwidget, vicious.widgets.cpu, "$1")
-
 mywibox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -218,7 +153,6 @@ mytaglist.buttons = awful.util.table.join(
                         awful.button({ }, 1, awful.tag.viewonly),
                         awful.button({ }, 3, awful.tag.viewtoggle)
                     )
-systembox = {}
 mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
     awful.button({ }, 1, function(c)
@@ -247,8 +181,6 @@ awful.screen.connect_for_each_screen(function(s)
                        awful.button({ }, 3, function() awful.layout.inc(layouts, -1) end),
                        awful.button({ }, 4, function() awful.layout.inc(layouts,  1) end),
                        awful.button({ }, 5, function() awful.layout.inc(layouts, -1) end)))
-    mylayoutbox[s]:connect_signal("mouse::enter", function() systembox[awful.screen.focused()].visible = true end)
-    mylayoutbox[s]:connect_signal("mouse::leave", function() systembox[awful.screen.focused()].visible = false end)
     ]]--
 
     -- layouts
@@ -280,34 +212,4 @@ awful.screen.connect_for_each_screen(function(s)
     layout:set_right(layout3)
 
     mywibox[s]:set_widget(layout)
-
-    -- SYSTEM BOX
-
-    local systembox_position = "bottom"
-    if theme.statusbar_position == "bottom" then systembox_position = "top" end
-    systembox[s] = awful.wibox({ position = systembox_position, screen = s, height = theme.statusbar_height })
-
-    local systembox_layout_1 = wibox.layout.fixed.horizontal()
-    lay(systembox_layout_1, speedwidget)
-    lay(systembox_layout_1, iowidget)
-    lay(systembox_layout_1, memwidget)
-
-    local systembox_layout_2 = wibox.layout.fixed.horizontal()
-    lay(systembox_layout_2, loadwidget)
-    lay(systembox_layout_2, cpufreq1widget)
-    lay(systembox_layout_2, cpufreq2widget)
-    lay(systembox_layout_2, cpuwidget)
-    lay(systembox_layout_2, cpugraphwidget)
-    lay(systembox_layout_2, wibox.widget.systray())
-
-    local systembox_align_left = wibox.layout.align.horizontal()
-    systembox_align_left:set_left(systembox_layout_1)
-    local systembox_align_right = wibox.layout.align.horizontal()
-    systembox_align_right:set_right(systembox_layout_2)
-
-    local systembox_layout_full = wibox.layout.flex.horizontal()
-    systembox_layout_full:add(systembox_align_left)
-    systembox_layout_full:add(systembox_align_right)
-    systembox[s]:set_widget(systembox_layout_full)
-    systembox[s].visible = false
 end)
