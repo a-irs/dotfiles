@@ -1,6 +1,6 @@
 [[ $commands[brew] ]] || return
 
-alias bup() {
+bup() {
     brew update && brew upgrade
     date +%s > ~/.brew-last-update
 }
