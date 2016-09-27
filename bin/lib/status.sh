@@ -31,9 +31,12 @@ sstatus media-data.mount
 sstatus media-data1.mount
 sstatus media-data2.mount
 sstatus media-data3.mount
+sstatus media-data4.mount
 echo ""
 dstatus samba
 dstatus mysql
 dstatus sabnzbd
 dstatus deluge
 dstatus logitechmediaserver
+echo ""
+pydf /media/data*
