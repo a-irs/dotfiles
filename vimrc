@@ -22,7 +22,7 @@ set expandtab
 set updatetime=250
 
 " show relative line numbers, except in current line
-set number
+" set number
 " set relativenumber
 
 " more responsive vim, really needed if relative numbers are enabled in term
