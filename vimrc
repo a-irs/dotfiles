@@ -184,8 +184,8 @@ vmap <Leader>a, :Tabularize /,\zs<CR>
 Plug 'tpope/vim-fugitive'
 
 " TComment
-nnoremap # :TComment<CR>
-vnoremap # :TComment<CR>
+nnoremap <silent> # :TComment<CR>
+vnoremap <silent> # :TComment<CR>
 Plug 'tomtom/tcomment_vim'
 
 " gitgutter
