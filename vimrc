@@ -70,6 +70,9 @@ cmap w!! w !sudo tee > /dev/null %
 " stop highlighting search results
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 
+" toggle line numbers
+nnoremap <silent> <C-n> :set number!<CR>
+
 " buffer on <Leader>1-9
 nnoremap <BS> :b#<CR>
 nnoremap <leader><left> :bprev<CR>
