@@ -209,7 +209,7 @@ try
     colorscheme badwolf  " available: gruvbox, badwolf
     let g:airline_theme='jellybeans'
 catch
-    colorscheme peachpuff
+    colorscheme pablo
 endtry
 
 " show invisible chars
