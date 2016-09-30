@@ -96,7 +96,7 @@ nnoremap <silent> <Leader>. :execute 's/^\(\s*[-+*]\?\s*\)\[x]/\1[ ]/'<cr>
 call plug#begin()
 
 " turn off syntax highlight for inactive panes
-Plug 'blueyed/vim-diminactive'
+" Plug 'blueyed/vim-diminactive'
 let g:diminactive_use_syntax = 1
 let g:diminactive_use_colorcolumn = 0
 let g:diminactive_buftype_blacklist = ['nofile', 'nowrite', 'acwrite', 'quickfix' ]
