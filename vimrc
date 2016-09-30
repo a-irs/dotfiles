@@ -210,6 +210,7 @@ try
     let g:airline_theme='jellybeans'
 catch
     colorscheme pablo
+    highlight StatusLine term=bold,reverse ctermfg=11 ctermbg=242 guifg=yellow guibg=DarkGray
 endtry
 
 " show invisible chars
