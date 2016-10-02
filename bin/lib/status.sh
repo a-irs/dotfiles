@@ -31,12 +31,13 @@ sstatus media-data2.mount
 sstatus media-data3.mount
 sstatus media-data4.mount
 echo ""
-dstatus samba
+dstatus muximux
 dstatus mysql
 dstatus nzbget
+dstatus plex
 dstatus rutorrent
+dstatus samba
 dstatus sonarr
-dstatus muximux
 echo ""
 pydf /media/data*
 
