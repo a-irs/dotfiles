@@ -19,9 +19,7 @@ dstatus() {
     if echo "$docker_active" | grep -q $1; then
         green "$1.docker\n"
     else
-        red "$1.docker "
-        echo -n "["
-        echo "$docker_inactive" | grep $1 | awk -F '[[:space:]][[:space:]]+' '{print $5"]"}'
+        red "$1.docker\n"
     fi
 }
 
@@ -35,8 +33,10 @@ sstatus media-data4.mount
 echo ""
 dstatus samba
 dstatus mysql
-dstatus sabnzbd
-dstatus deluge
-dstatus logitechmediaserver
+dstatus nzbget
+dstatus rutorrent
+dstatus sonarr
+dstatus muximux
 echo ""
 pydf /media/data*
+
