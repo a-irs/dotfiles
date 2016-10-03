@@ -6,6 +6,7 @@ syntax on
 set autoindent  " use indent from current line when making new line
 set backspace=indent,eol,start  " when at beginning of line, pressing backspace joins with prev line
 set whichwrap+=<,>,[,]  " moves to next line when pressing right at end of line
+set linebreak  " wrap lines at words
 set smarttab
 set laststatus=2  " always show statusbar
 set autoread  " auto reload file when unchanged in vim and changed outside vim
@@ -24,6 +25,12 @@ set updatetime=250
 " show relative line numbers, except in current line
 " set number
 " set relativenumber
+
+" move through wrapped lines
+imap <silent> <Down> <C-o>gj
+imap <silent> <Up> <C-o>gk
+nmap <silent> <Down> gj
+nmap <silent> <Up> gk
 
 " more responsive vim, really needed if relative numbers are enabled in term
 set lazyredraw
