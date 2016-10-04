@@ -233,3 +233,9 @@ highlight clear SignColumn
 highlight LineNr ctermfg=240 guifg=#444444
 highlight NonText ctermfg=240 guifg=#444444
 
+" make VIM background like terminal/gui background
+hi NonText guibg=#282a36 ctermbg=none
+hi Normal guibg=#282a36 ctermbg=NONE
+hi SignColumn guibg=#282a36 ctermbg=NONE
+hi LineNr guibg=#282a36 ctermbg=NONE
+
