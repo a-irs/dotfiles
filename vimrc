@@ -26,6 +26,21 @@ set updatetime=250
 " set number
 " set relativenumber
 
+" jump to last position on VIM start
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+
+" ^M opens file with new colors etc.
+function ActivateNoteMode()
+    colorscheme gruvbox
+    set bg=light
+    AirlineTheme gruvbox
+    Goyo
+endfunction
+nmap <silent> <C-M> :call ActivateNoteMode()<CR>
+
 " move through wrapped lines
 imap <silent> <Down> <C-o>gj
 imap <silent> <Up> <C-o>gk
@@ -234,8 +249,8 @@ highlight LineNr ctermfg=240 guifg=#444444
 highlight NonText ctermfg=240 guifg=#444444
 
 " make VIM background like terminal/gui background
-hi NonText guibg=#282a36 ctermbg=none
-hi Normal guibg=#282a36 ctermbg=NONE
-hi SignColumn guibg=#282a36 ctermbg=NONE
-hi LineNr guibg=#282a36 ctermbg=NONE
+highlight NonText guibg=#282a36 ctermbg=none
+highlight Normal guibg=#282a36 ctermbg=NONE
+highlight SignColumn guibg=#282a36 ctermbg=NONE
+highlight LineNr guibg=#282a36 ctermbg=NONE
 
