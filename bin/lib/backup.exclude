@@ -1,12 +1,13 @@
+**/nzbget.log
+/srv/docker/rutorrent/state/log
+/srv/docker/sonarr/state/logs*
+/srv/docker/sonarr/state/MediaCover
+/srv/docker/plex/state
 **/dev/moto
 **/tmp
 **/.fr-*
 **/Default/Extensions/fahmaaghhglfmonjliepjlchgpgfmobi
 **/downloads-*
-**/subsonic.log
-**/dropbox/state
-**/sonarr/state/mediacover
-**/syncthing/state/index
 **/.npm
 **/.gem
 **/.node-gyp
@@ -16,7 +17,6 @@
 **/.smb/gencache*
 **/*.pyc
 **/.cache.json
-**/ba
 **/.IntelliJIdea14/system
 **/.atom/packages
 **/.atom/electron
