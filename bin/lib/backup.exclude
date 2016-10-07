@@ -1,3 +1,12 @@
+**/.config/retroarch/assets
+**/.config/retroarch/shaders
+**/.config/retroarch/cores
+**/.config/retroarch/cheats
+**/.config/retroarch/database
+**/.config/retroarch/autoconf
+**/.config/retroarch/core-info
+**/.config/retroarch/downloads
+**/.config/.fzf/bin
 **/nzbget.log
 /srv/docker/rutorrent/state/log
 /srv/docker/sonarr/state/logs*
@@ -70,7 +79,7 @@
 **/.config/freshwrapper-data/Shockwave Flash/WritableRoot
 **/.zsh_recent-dirs
 **/.zcompdump
-**/.config/chrom*/Safe Browsing*
+**/.config/chrom*
 **/.config/mpd/log
 **/.xfce4-session.verbose-log*
 **/.git-credentials
