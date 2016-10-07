@@ -32,6 +32,11 @@ trap finish EXIT
 export BORG_CACHE_DIR=/var/tmp/borg
 
 case $1 in
+    mount|mnt)
+        header 3 "MOUNT $REPO::$2 to $3"
+        borg mount "$REPO"::"$2" "$3" -o allow_other
+        exit
+        ;;
     list|ls)
         header 3 "LIST ARCHIVES OF $REPO"
         borg list "$REPO"
