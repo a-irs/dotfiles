@@ -18,6 +18,7 @@ BACKUP=( $t )
 [[ -d /etc ]]            && BACKUP+=( /etc )
 [[ -d /root ]]           && BACKUP+=( /root )
 [[ -d /srv ]]            && BACKUP+=( /srv )
+[[ -d /var/spool/cron ]] && BACKUP+=( /var/spool/cron )
 
 header() {
     echo -e "\n$(tput setaf "${1}";tput bold)${2}$(tput init;tput sgr0)\n"
@@ -31,6 +32,11 @@ trap finish EXIT
 export BORG_CACHE_DIR=/var/tmp/borg
 
 case $1 in
+    mount|mnt)
+        header 3 "MOUNT $REPO::$2 to $3"
+        borg mount "$REPO"::"$2" "$3" -o allow_other
+        exit
+        ;;
     list|ls)
         header 3 "LIST ARCHIVES OF $REPO"
         borg list "$REPO"
@@ -74,8 +80,6 @@ borg create \
     --exclude-caches --exclude-from "$(dirname "$(readlink -f "$0")")/backup.exclude" \
     --checkpoint-interval 30 \
     --one-file-system \
-    --compression lz4 \
-    --chunker-params 19,23,21,4095 \
     "$REPO"::"$DATE" \
     "${BACKUP[@]}"
 
@@ -84,3 +88,4 @@ borg create \
 
 header 2 "CLEANING UP BACKUP INFO FILES in $t"
 rm -rfv "$t"
+
