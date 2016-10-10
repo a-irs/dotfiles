@@ -32,14 +32,15 @@ if has("autocmd")
     \| exe "normal! g'\"" | endif
 endif
 
-" ^M opens file with new colors etc.
-function ActivateNoteMode()
-    colorscheme gruvbox
-    set bg=light
-    AirlineTheme gruvbox
-    Goyo
-endfunction
-nmap <silent> <C-M> :call ActivateNoteMode()<CR>
+" ^M opens file with new colors etc. 
+" FIXME: Does strange things, like applying it on 2xRETURN
+" function ActivateNoteMode()
+"     colorscheme gruvbox
+"     set bg=light
+"     AirlineTheme gruvbox
+"     Goyo
+" endfunction
+" nmap <silent> <C-M> :call ActivateNoteMode()<CR>
 
 " move through wrapped lines
 imap <silent> <Down> <C-o>gj
@@ -219,6 +220,24 @@ nmap <Leader>> <Plug>GitGutterPrevHunk
 " color schemes
 Plug 'morhetz/gruvbox'
 Plug 'sjl/badwolf'
+
+" python
+Plug 'scrooloose/syntastic'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers = [ 'pycodestyle', 'pyflakes' ]
+let g:syntastic_python_pycodestyle_args='--ignore=E501,W391,E402,E129'
+let g:syntastic_error_symbol = "\u2717"
+let g:syntastic_style_error_symbol = "\u2717"
+let g:syntastic_warning_symbol = "\u26A0"
+let g:syntastic_style_warning_symbol = "\u26A0"
+" highlight SyntasticErrorSign guifg=red guibg=NONE
+
 
 call plug#end()
 
