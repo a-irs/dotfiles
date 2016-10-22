@@ -105,7 +105,7 @@ install awesome config/awesome
 install compton config/compton.conf
 install emulationstation emulationstation/es_systems.cfg
 install kodi kodi/userdata/advancedsettings.xml
-install mpv config/mpv/input.conf config/mpv/mpv.conf config/mpv/scripts/convert_script.lua config/mpv/scripts/stats.lua
+install mpv config/mpv/input.conf config/mpv/mpv.conf config/mpv/scripts/convert_script.lua config/mpv/scripts/stats.lua config/mpv/lua-settings/osc.conf
 install redshift config/redshift.conf
 install retroarch config/retroarch/remap config/retroarch/core-config/gba_bios.bin config/retroarch/core-config/scph5500.bin config/retroarch/core-config/scph5501.bin config/retroarch/core-config/scph5502.bin config/retroarch/retroarch.cfg config/retroarch/retroarch-core-options.cfg
 install subl3 config/sublime-text-3/Packages/User
