@@ -120,11 +120,3 @@ else
     rm -f ~/.local/share/kupfer/plugins/recdirs.py
 fi
 
-if [[ -d ~/doc/zsh/ ]]; then
-    t=~/doc/zsh/$HOSTNAME
-    if [[ "$(readlink "$t")" != ~/.zsh_history ]]; then
-        ln -sf ~/.zsh_history "$t"
-        print_install "[INSTALL] ${t/$HOME/\~}"
-    fi
-fi
-
