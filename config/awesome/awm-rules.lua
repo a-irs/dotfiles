@@ -65,6 +65,8 @@ local function dynamic_tagging()
                         name = make_name(name, c, "files")
                     elseif c.class == "Gimp-2.8" then
                         name = make_name(name, c, "gimp")
+                    elseif c.name and string.find(c.name, 'vim ') then
+                        name = make_name(name, c, "vim")
                     elseif c.class == "Termite" then
                         name = make_name(name, c, "term")
                     elseif c.class == "Gpicview" then
@@ -91,7 +93,7 @@ local function dynamic_tagging()
     end)
 end
 
-local t = timer({ timeout = 2 })
+local t = timer({ timeout = 1 })
 t:connect_signal("timeout",
     function()
         dynamic_tagging()
