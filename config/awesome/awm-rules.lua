@@ -65,7 +65,7 @@ local function dynamic_tagging()
                         name = make_name(name, c, "files")
                     elseif c.class == "Gimp-2.8" then
                         name = make_name(name, c, "gimp")
-                    elseif c.name and string.find(c.name, 'vim ') then
+                    elseif c.name and (string.find(c.name, 'vim ') or string.find(c.name, ' - VIM')) then
                         name = make_name(name, c, "vim")
                     elseif c.class == "Termite" then
                         name = make_name(name, c, "term")
