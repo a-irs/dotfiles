@@ -103,7 +103,7 @@ install zsh zprofile zshrc zshine
 
 install awesome config/awesome
 install compton config/compton.conf
-install emulationstation emulationstation/es_systems.cfg
+install emulationstation config/emulationstation/es_systems.cfg
 install kodi kodi/userdata/advancedsettings.xml
 install mpv config/mpv/input.conf config/mpv/mpv.conf config/mpv/scripts/convert_script.lua config/mpv/scripts/stats.lua config/mpv/lua-settings/osc.conf
 install redshift config/redshift.conf
