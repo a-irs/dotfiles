@@ -66,7 +66,7 @@ end
 
 -- NETWORK
 
-netwidget = lain.widgets.abase({
+netwidget = lain.widgets.base({
     timeout = 2,
     cmd = os.getenv("HOME") .. "/.config/awesome/network-info.sh",
     settings = function()
@@ -77,7 +77,7 @@ netwidget = lain.widgets.abase({
 
 -- MUSIC
 
-musicwidget = lain.widgets.abase({
+musicwidget = lain.widgets.base({
     timeout = 2,
     cmd = os.getenv("HOME") .. "/.config/awesome/music.sh " .. theme.widget_music_fg:gsub('#', ''),
     settings = function()
