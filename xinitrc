@@ -21,7 +21,7 @@ xset s off &
 nitrogen --restore &
 parcellite --no-icon &
 kupfer --no-splash &
-thunar --daemon &
+pcmanfm --daemon-mode &
 lxpolkit &
 redshift &
 dropbox-cli start &

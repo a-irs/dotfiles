@@ -4,7 +4,6 @@ local wibox   = require 'wibox'
 local lain    = require 'lain'
 local naughty = require 'naughty'
 local volume  = require 'volume'
-local vicious = require 'vicious'
 markup = lain.util.markup
 
 
