@@ -52,10 +52,19 @@ name_prefix() {
     for p in ${prefixes[@]}; do
         if [[ "$1" == "$p "* ]]; then
             printf "%s\n" "${1/$p /}, $p"
-            break
+            return
         fi
     done
     printf "%s\n" "$1"
+}
+
+first() {
+    f=${1:0:1}
+    f=${f^^}
+    case "$f" in
+        [0-9]) f=0 ;;
+    esac
+    printf "%s\n" "$f"
 }
 
 em() {
@@ -77,30 +86,41 @@ if [[ $category == movies ]]; then
     # printf "\n"
 
     read -er -i "$release"          -p "$(y 'Release:  ')" RELEASE
-    read -er -i "$(name_prefix "$(get_name)")" -p "$(y 'Movie:    ')" NAME
+    read -er -i "$(get_name)"       -p "$(y 'Movie:    ')" NAME
     read -er -i "$(get_year)"       -p "$(y 'Year:     ')" YEAR
     read -er -i "$(get_languages)"  -p "$(y 'Langs:    ')" LANGS
     read -er -i "$(get_video_size)" -p "$(y 'Size:     ')" SIZE
     read -er -i "$(get_source)"     -p "$(y 'Source:   ')" SOURCE
 
-    folder="$NAME ($YEAR) [$LANGS] [$SIZE $SOURCE]"
+    folder="$(first "$(name_prefix "$NAME")")/$(name_prefix "$NAME") ($YEAR) [$LANGS] [$SIZE $SOURCE]"
 
     em ":: make destination folder"
     mkdir -pv "$DEST/$folder"
 
     em ":: remove unneeded files"
-    rm -rvf -- "$1"/proof "$1"/Proof "$1"/sample "$1"/Sample "$1"/*-sample.* "$1"/*-Sample.* "$1"/*-proof.* "$1"/*-Proof.* 2> /dev/null
+    rm -rvf -- "$1"/proof "$1"/Proof "$1"/sample "$1"/Sample "$1"/*-sample.* "$1"/*-Sample.* "$1"/*-proof.* "$1"/*-Proof.* "$1"/*.nzb "$1"/*.url "$1"/*.srr "$1"/*.srs 2> /dev/null
+    rm -rvf -- "$1"/*/proof "$1"/*/Proof "$1"/*/sample "$1"/*/Sample "$1"/*/*-sample.* "$1"/*/*-Sample.* "$1"/*/*-proof.* "$1"/*/*-Proof.* "$1"/*/*.nzb "$1"/*/*.url "$1"/*/*.srr "$1"/*/*.srs 2> /dev/null
 
     em ":: move video file"
-    mv -v -- "$1"/**/*.mkv "$DEST/$folder/$NAME.mkv" 2> /dev/null
-    mv -v -- "$1/"**/*.avi "$DEST/$folder/$NAME.avi" 2> /dev/null
-    mv -v -- "$1"/**/*.mp4 "$DEST/$folder/$NAME.mp4" 2> /dev/null
-    mv -v -- "$1"/**/*.m4v "$DEST/$folder/$NAME.m4v" 2> /dev/null
+    mv -v -- "$1"/*/*.mkv "$DEST/$folder/$NAME.mkv" 2> /dev/null
+    mv -v -- "$1"/*.mkv "$DEST/$folder/$NAME.mkv" 2> /dev/null
+    mv -v -- "$1"/*/*.avi "$DEST/$folder/$NAME.avi" 2> /dev/null
+    mv -v -- "$1"/*.avi "$DEST/$folder/$NAME.avi" 2> /dev/null
+    mv -v -- "$1"/*/*.mp4 "$DEST/$folder/$NAME.mp4" 2> /dev/null
+    mv -v -- "$1"/*.mp4 "$DEST/$folder/$NAME.mp4" 2> /dev/null
+    mv -v -- "$1"/*/*.m4v "$DEST/$folder/$NAME.m4v" 2> /dev/null
+    mv -v -- "$1"/*.m4v "$DEST/$folder/$NAME.m4v" 2> /dev/null
 
     em ":: create nfo"
-    mv -vf -- "$1"/**/*.nfo "$DEST/$folder/#$release" 2> /dev/null
+    mv -vf -- "$1"/*/*.nfo "$DEST/$folder/#$release" 2> /dev/null
+    mv -vf -- "$1"/*.nfo "$DEST/$folder/#$release" 2> /dev/null
     touch "$DEST/$folder/#$release" 2> /dev/null
 
+    em ":: delete empty folder"
+    rmdir -pv "$1"/*/ 2> /dev/null
+    rmdir -pv "$1" 2> /dev/null
+
     em "→ '$DEST/$folder'"
+    find "$DEST/$folder"
 fi
 
