@@ -41,7 +41,7 @@ local function dynamic_tagging()
     awful.screen.connect_for_each_screen(function(s)
         for _, t in ipairs(awful.tag.gettags(s)) do
             if is_empty(t) then
-                t.name = " \28 "
+                t.name = " " .. theme.taglist_empty_tag .. " "
             else
                 local name = ""
                 for _, c in ipairs(t:clients()) do
@@ -87,7 +87,7 @@ local function dynamic_tagging()
                         end
                     end
                 end
-                t.name = " \27 " .. name .. " "
+                t.name = " " .. theme.taglist_nonempty_tag .. " " .. name .. " "
             end
         end
     end)

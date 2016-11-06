@@ -52,10 +52,10 @@ count=1
 if [[ $total == 0 ]]; then
     echo -n "<b>disconnected</b>"
 else
-    ping -c 1 -W 2 8.8.8.8 > /dev/null 2>&1
-    if [[ $? -ne 0 ]]; then
-        printf "%s" "<span foreground='#ff0000'>***</span> "
-    fi
+    # ping -c 1 -W 2 8.8.8.8 > /dev/null 2>&1
+    # if [[ $? -ne 0 ]]; then
+        # printf "%s" "<span foreground='#ff0000'>***</span> "
+    # fi
     for item in "${txt[@]}"; do
         echo -n "$item"
         [[ "$count" == "$total" ]] || echo -n " + "
