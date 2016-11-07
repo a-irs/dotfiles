@@ -57,6 +57,7 @@ theme.taglist_font                  = "cure.se 6"
 theme.show_tag_names                = true
 -- theme.taglist_squares_unsel         = xpm_folder .. "/indicator.xpm"
 theme.taglist_empty_tag             = "\28"
+theme.taglist_nonempty_tag          = "\27"
 
 if high_dpi then
     theme.font = "Monospace 7"
