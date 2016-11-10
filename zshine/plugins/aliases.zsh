@@ -8,6 +8,8 @@ done
 [[ -d ~/Documents ]] && alias todo="$EDITOR ~/Documents/todo.md"
 [[ -d ~/doc ]] && alias todo="$EDITOR ~/doc/todo.md"
 
+mac() { tput setaf 2 && curl -q "http://api.macvendors.com/$1" && printf "\n"; }
+
 tar-tar() { tar cvaf "$(basename "$PWD")".tar -- "$@"; }
 tar-gz()  { tar cvaf "$(basename "$PWD")".tar.gz -- "$@"; }
 tar-xz()  { tar cvaf "$(basename "$PWD")".tar.xz -- "$@"; }
