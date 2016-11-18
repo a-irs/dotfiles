@@ -19,7 +19,6 @@ xset s off &
 
 # applications
 nitrogen --restore &
-parcellite --no-icon &
 kupfer --no-splash &
 pcmanfm --daemon-mode &
 lxpolkit &
