@@ -3,16 +3,6 @@ local awful      = require 'awful'
 local rules      = require 'awful.rules'
 local naughty    = require 'naughty'
 local beautiful  = require 'beautiful'
-local hotkeys_popup = require("awful.hotkeys_popup.widget")
-
-hotkeys_popup.height = math.floor(vres/2)
-hotkeys_popup.width = math.floor(hres/2)
-hotkeys_popup.modifiers_color = "#777777"
-hotkeys_popup.description_font = "Input 9"
-hotkeys_popup.labels['Mod4'] = "Win"
-hotkeys_popup.labels['#35'] = "+"
-hotkeys_popup.labels['#61'] = "-"
-hotkeys_popup.labels['dead_circumflex'] = "^"
 
 win = "Mod4"
 alt = "Mod1"
@@ -28,9 +18,6 @@ function tag_view_nonempty(direction)
 end
 
 globalkeys = awful.util.table.join(
-
-    awful.key({ win }, "s",      hotkeys_popup.show_help,
-              {description="show keybindings", group="awesome"} ),
 
     -- focus windows
 
