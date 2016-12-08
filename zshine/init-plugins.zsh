@@ -22,6 +22,7 @@ ZSHINE_PLUGINS=(
   termite # include CTRL+T for termite terminal program
   todo # show ~/.todo on start
   brew # notify on outdated brew
+  explain # explain command switches
 )
 for z in $ZSHINE_PLUGINS; do; source "$ZSHINE_DIR/plugins/$z.zsh"; done
 
