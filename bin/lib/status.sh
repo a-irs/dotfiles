@@ -31,13 +31,15 @@ sstatus media-data2.mount
 sstatus media-data3.mount
 sstatus media-data4.mount
 echo ""
+dstatus grafana
+dstatus graphite
+dstatus netdata
 dstatus muximux
-dstatus mysql
+dstatus deluge
 dstatus nzbget
 dstatus plex
-dstatus rutorrent
+dstatus plexpy
 dstatus samba
-dstatus sonarr
 echo ""
 pydf /media/data*
 
