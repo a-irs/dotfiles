@@ -2,7 +2,7 @@ local awful     = require 'awful'
 local rules     = require 'awful.rules'
                   require 'awful.autofocus'
 local wibox     = require 'wibox'
-local naughty    = require 'naughty'
+local naughty   = require 'naughty'
 
 rules.rules = {
     { rule = { class = "mpv" },   properties = { size_hints_honor = false } },
@@ -116,6 +116,10 @@ end)
 -- client appears
 client.connect_signal("manage", function(c)
 
+    if (c.class == "Kupfer.py") then
+        return
+    end
+
     handle_floater(c)
 
     -- sloppy focus
@@ -162,8 +166,6 @@ client.connect_signal("manage", function(c)
 
     if compact_display then awful.titlebar.hide(c) end
 
-    dynamic_tagging()
-
     if (c.class == "Kodi") then
         c.fullscreen = true
         t = awful.tag.add("kodi")
@@ -180,6 +182,10 @@ end)
 
 -- client exits
 client.connect_signal("unmanage", function(c)
+
+    if (c.class == "Kupfer.py") then
+        return
+    end
 
     -- return to last tag and reset settings when last window is closed
     if is_empty(awful.tag.selected()) then

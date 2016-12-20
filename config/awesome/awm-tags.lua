@@ -1,7 +1,7 @@
 local awful      = require 'awful'
 
 
-function make_name(icon, name)
+local function make_name(icon, name)
     str = " "
     if icon == "globe" then
         str = str .. string.char(239, 130, 172)
