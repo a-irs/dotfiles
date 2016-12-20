@@ -2,5 +2,19 @@
 	"bootstrapped": true,
 	"in_process_packages":
 	[
+	],
+	"installed_packages":
+	[
+		"BracketHighlighter",
+		"GitGutter",
+		"Markdown Extended",
+		"MarkdownEditing",
+		"Package Control",
+		"SublimeLinter",
+		"SublimeLinter-lua",
+		"SublimeLinter-pyyaml",
+		"SublimeLinter-shellcheck",
+		"Terminal",
+		"Theme - Spacegray"
 	]
 }
