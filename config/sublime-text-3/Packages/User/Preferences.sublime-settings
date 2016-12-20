@@ -9,12 +9,7 @@
 			"selector": "source.python - string - comment - constant.numeric"
 		}
 	],
-	"binary_file_patterns":
-	[
-		"node_modules/*"
-	],
 	"bold_folder_labels": true,
-	"close_windows_when_empty": true,
 	"color_scheme": "Packages/User/zshine-desaturated.tmTheme",
 	"dpi_scale": 1.0,
 	"enable_tab_scrolling": false,

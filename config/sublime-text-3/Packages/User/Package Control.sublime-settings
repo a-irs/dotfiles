@@ -1,32 +1,6 @@
 {
-	"auto_upgrade": true,
 	"bootstrapped": true,
 	"in_process_packages":
 	[
-	],
-	"installed_packages":
-	[
-		"Anaconda",
-		"BracketHighlighter",
-		"Djaneiro",
-		"Dockerfile Syntax Highlighting",
-		"Dotfiles Syntax Highlighting",
-		"Generic Config",
-		"GitGutter-Edge",
-		"Inc-Dec-Value",
-		"iOpener",
-		"Markdown Extended",
-		"MarkdownEditing",
-		"Marking Changed Rows",
-		"Package Control",
-		"SublimeGit",
-		"SublimeLinter",
-		"SublimeLinter-flake8",
-		"SublimeLinter-lua",
-		"SublimeLinter-pyyaml",
-		"SublimeLinter-shellcheck",
-		"Terminal",
-		"Theme - Spacegray"
-	],
-	"submit_usage": false
+	]
 }
