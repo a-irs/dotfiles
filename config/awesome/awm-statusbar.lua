@@ -133,13 +133,13 @@ pulsewidget.widget:buttons(awful.util.table.join(
 
 timewidget = awful.widget.textclock(markup.bold(markup(theme.widget_time_fg, '%H:%M')))
 datewidget = awful.widget.textclock(markup(theme.widget_date_fg, '%a, %d.%m.'))
-lain.widgets.calendar:attach(datewidget, {
+lain.widgets.calendar.attach(datewidget, {
     font_size = "8",
     font = "Monospace",
     fg   = theme.fg_focus,
     bg   = theme.bg_focus
 })
-lain.widgets.calendar:attach(timewidget, {
+lain.widgets.calendar.attach(timewidget, {
     font_size = "8",
     font = "Monospace",
     fg   = theme.fg_focus,

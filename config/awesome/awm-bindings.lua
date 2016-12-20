@@ -213,7 +213,6 @@ globalkeys = awful.util.table.join(
 
     -- restart awesome wm
 
-    awful.key({ win, "Shift" }, "r", awesome.restart),
     awful.key({ win, "Ctrl"  }, "r", awesome.restart),
 
     -- toggle status bars
