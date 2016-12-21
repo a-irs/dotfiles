@@ -7,7 +7,8 @@
 		"mdown",
 		"mkd",
 		"md",
-		"md"
+		"txt",
+		"README"
 	],
 	"gutter": false,
 	"highlight_line": false,

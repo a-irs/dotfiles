@@ -23,6 +23,7 @@ kupfer --no-splash &
 pcmanfm --daemon-mode &
 lxpolkit &
 redshift &
+parcellite --no-icon&
 dropbox-cli start &
 mkdir -p ~/.thumbnails &
 ln -sf ~/.thumbnails ~/.cache/thumbnails &

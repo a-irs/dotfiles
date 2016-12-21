@@ -7,6 +7,7 @@
 	[
 		"BracketHighlighter",
 		"GitGutter",
+		"Jinja2",
 		"Markdown Extended",
 		"MarkdownEditing",
 		"Package Control",
@@ -14,6 +15,7 @@
 		"SublimeLinter-lua",
 		"SublimeLinter-pyyaml",
 		"SublimeLinter-shellcheck",
+		"SyncedSideBar",
 		"Terminal",
 		"Theme - Spacegray"
 	]
