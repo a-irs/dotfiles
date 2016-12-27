@@ -3,7 +3,7 @@
 set -euo pipefail
 
 [[ $UID != 0 ]] && { echo "$(tput setaf 1)run as root"; exit 1; }
-(( $# < 1 )) && { echo "$(tput setaf 1)$(basename "$0") start|mount|list|check"; exit 2; }
+(( $# < 1 )) && { echo "$(tput setaf 3)$(basename "$0") start|mount|list|check"; exit 2; }
 
 TARGET=/media/crypto/borg
 USER_HOST=root@srv
@@ -12,8 +12,8 @@ ssh $USER_HOST test -d $TARGET || { echo "$(tput setaf 1)$USER_HOST:$TARGET does
 
 t=/0-info
 
-REPO=$USER_HOST:$TARGET/$HOSTNAME
-DATE=$(date +%Y-%m-%d)_$(date +%H-%M-%S)
+REPO=$USER_HOST:$TARGET
+DATE=$(date +%Y-%m-%d_%H-%M-%S)
 BACKUP=( $t )
 [[ -d /home ]]           && BACKUP+=( /home )
 [[ -d /etc ]]            && BACKUP+=( /etc )
@@ -54,7 +54,7 @@ case $1 in
 esac
 
 header 2 "INFORMATION ABOUT BACKUP"
-echo "  - TARGET:   $(tput setaf 4)$REPO$(tput init;tput sgr0)::$DATE"
+echo "  - TARGET:   $(tput setaf 4)$REPO$(tput init;tput sgr0)"
 echo "  - SOURCES:  $(tput setaf 4)${BACKUP[*]}$(tput init;tput sgr0)"
 
 header 2 "MAKING BACKUP INFO FILES in $t"
@@ -71,18 +71,18 @@ if [[ $HOSTNAME == dell ]]; then
 fi
 
 header 2 "INIT REPOSITORY"
-borg init --encryption none "$REPO" || true
+borg init --verbose --encryption none "$REPO" || true
 
 header 2 "BACKING UP ${BACKUP[*]}"
 borg create \
     --progress --stats --verbose \
     --exclude-caches --exclude-from "$(dirname "$(readlink -f "$0")")/backup.exclude" \
     --one-file-system \
-    "$REPO"::"$DATE" \
+    "$REPO"::'{hostname}_'"$DATE" \
     "${BACKUP[@]}"
 
 header 2 "PRUNING BACKUPS OLDER THAN 1 MONTH"
-borg prune --verbose --stats --keep-within 1m "$REPO"
+borg prune --verbose --stats --list --prefix '{hostname}_' --keep-within 1m "$REPO"
 
 header 2 "CLEANING UP BACKUP INFO FILES in $t"
 rm -rfv "$t"
