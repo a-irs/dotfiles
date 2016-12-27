@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
 [[ $UID != 0 ]] && { echo "$(tput setaf 1)run as root"; exit 1; }
+(( $# < 1 )) && { echo "$(tput setaf 1)$(basename "$0") start|mount|list|check"; exit 2; }
 
 TARGET=/media/crypto/borg
 USER_HOST=root@srv
@@ -37,21 +38,19 @@ case $1 in
         borg mount "$REPO"::"$2" "$3" -o allow_other
         exit
         ;;
+    check|chk)
+        header 3 "CHECK $REPO"
+        borg check "$REPO"
+        ;;
     list|ls)
         header 3 "LIST ARCHIVES OF $REPO"
-        borg list "$REPO"
+        borg list --verbose "$REPO"
         exit
         ;;
-    extract|restore)
-        header 3 "EXTRACT $REPO::$2"
-        borg extract --verbose "$REPO"::"$2"
-        exit
+    start)
         ;;
-    info)
-        header 3 "INFO FOR $REPO::$2"
-        borg info --verbose "$REPO"::"$2"
+    *)
         exit
-        ;;
 esac
 
 header 2 "INFORMATION ABOUT BACKUP"
@@ -78,7 +77,6 @@ header 2 "BACKING UP ${BACKUP[*]}"
 borg create \
     --progress --stats --verbose \
     --exclude-caches --exclude-from "$(dirname "$(readlink -f "$0")")/backup.exclude" \
-    --checkpoint-interval 30 \
     --one-file-system \
     "$REPO"::"$DATE" \
     "${BACKUP[@]}"
