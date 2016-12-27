@@ -41,6 +41,7 @@ case $1 in
     check|chk)
         header 3 "CHECK $REPO"
         borg check "$REPO"
+        exit
         ;;
     list|ls)
         header 3 "LIST ARCHIVES OF $REPO"
