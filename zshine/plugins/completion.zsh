@@ -61,8 +61,6 @@ expand-or-complete-with-dots() {
 zle -N expand-or-complete-with-dots
 bindkey "^I" expand-or-complete-with-dots
 
-ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zcompdump"
-autoload -U compinit
-compinit -i -d "${ZSH_COMPDUMP}"
+autoload -U compinit && compinit
 
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==02=01}:${(s.:.)LS_COLORS}")'
