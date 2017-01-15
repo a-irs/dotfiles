@@ -198,7 +198,7 @@ awful.screen.connect_for_each_screen(function(s)
     lay(layout2, mytaglist[s])
 
     local layout3 = wibox.layout.fixed.horizontal()
-    lay(layout3, wibox.widget.systray())
+    -- lay(layout3, wibox.widget.systray())
     lay(layout3, pulsewidget, m)
     lay(layout3, netwidget, m)
     lay(layout3, batterywidget, m)

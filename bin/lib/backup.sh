@@ -65,10 +65,10 @@ pacman -Qe | sort > $t/packages.txt
 echo "  - PARTITION LAYOUT OF /dev/sda → disk-fdisk-sda.txt"
 LC_ALL=C fdisk -l /dev/sda > $t/disk-fdisk-sda.txt
 if [[ $HOSTNAME == dell ]]; then
-    echo "  - LUKS DUMP OF /dev/sda5 → disk-luks-sda5.txt"
-    LC_ALL=C cryptsetup luksDump /dev/sda5 > $t/disk-luks-sda5.txt
-    echo "  - LUKS HEADER BACKUP OF /dev/sda5 → disk-luks-header-sda5.img"
-    cryptsetup luksHeaderBackup /dev/sda5 --header-backup-file $t/disk-luks-header-sda5.img
+    echo "  - LUKS DUMP OF /dev/sda1 → disk-luks-sda1.txt"
+    LC_ALL=C cryptsetup luksDump /dev/sda1 > $t/disk-luks-sda1.txt
+    echo "  - LUKS HEADER BACKUP OF /dev/sda1 → disk-luks-header-sda1.img"
+    cryptsetup luksHeaderBackup /dev/sda1 --header-backup-file $t/disk-luks-header-sda1.img
 fi
 
 header 2 "INIT REPOSITORY"
