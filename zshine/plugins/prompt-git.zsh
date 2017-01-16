@@ -18,40 +18,15 @@ git_prompt_info() {
     [[ "$?" -eq 0 ]] && commit="$tag"
     url=$(command git ls-remote --get-url 2> /dev/null)
     if [[ $ZSHINE_GIT_SHRINK_URL == 1 ]]; then
-        if [[ "$url" == *://*github.com/*/* ]]; then
-            # https://github.com/user/repo.git -> user/repo
-            #   git://github.com/user/repo.git -> user/repo
-            if [[ "$url" == */ ]]; then
-                url1=${url%?}
-                url1=${url1##*/}
-            else
-                url1=${url##*/}
-            fi
-            url2=${url//$url1/}
-            url1=${url1%.git}
-            url2=${url2#*:}
-            url2=${url2#*/}
-            url2=${url2#*/}
-            url2=${url2#*/}
-            url2=${url2//\//}
-            url="$url2/$url1"
-        elif [[ "$url" == git@github.com:*/*.git ]]; then
-            # git@github.com:user/repo.git -> user/repo
-            url1=${url##*/}
-            url2=${url//$url1/}
-            url1=${url1%.git}
-            url2=${url2#*:}
-            url2=${url2//\//}
-            url="$url2/$url1"
-        elif [[ "$url" == ssh://gitlab@git.office.*/*.git ]]; then
-            url1=${url##*/}
-            url1=${url1/.git/}
-            url2=$(echo "$url" | rev | cut -d/ -f 2 | rev)
-            url="$url2/$url1"
-        fi
+        repo=${url:t}
+        repo=${repo//.git/}
+        protocol=${url%%:*}
+        user=$(printf "$url" | rev | cut -d '/' -f 2 | rev)
+        url="${user}/${repo}"
     fi
     [[ "${url}" == / ]] && url="N/A"
-    prompt_segment "$ZSHINE_GIT_URL_BG" "$ZSHINE_GIT_URL_FG" "${url}"
+    prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_URL_FG" "${url}"
+    prompt_segment "$ZSHINE_GIT_URL_BG" "cyan" "${protocol}"
     prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_COMMIT_FG" "${commit}"
     [[ "$branch" = '' ]] || prompt_segment "$ZSHINE_GIT_BRANCH_BG" "$ZSHINE_GIT_BRANCH_FG" "${branch}"
     prompt_segment "$ZSHINE_GIT_DIRTY_BG" "$ZSHINE_GIT_DIRTY_FG" "$(git_remote_state)$(git_dirty)"
