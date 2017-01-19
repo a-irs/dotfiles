@@ -23,3 +23,8 @@ fg-toggle() { fg; }
 zle -N fg-toggle
 bindkey '^Z' fg-toggle
 
+# insert last arguments with CTRL+k/j
+autoload -Uz copy-earlier-word
+zle -N copy-earlier-word
+bindkey "^k" copy-earlier-word
+bindkey "^j" insert-last-word
