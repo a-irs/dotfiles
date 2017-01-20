@@ -7,3 +7,6 @@
 [submodule "zshine/plugins/zsh-history-substring-search"]
 	path = zshine/plugins/zsh-history-substring-search
 	url = https://github.com/zsh-users/zsh-history-substring-search
+[submodule "zshine/plugins/fzf"]
+	path = zshine/plugins/fzf
+	url = https://github.com/junegunn/fzf
