@@ -1,7 +1,11 @@
-TODO_FILE=~/.todo
+TODO_FILES=(
+    ~/.todo
+    ~/Documents/TODO.md
+)
 
-[[ -s "$TODO_FILE" ]] || return
-content=$(cat -s "$TODO_FILE")
-
-printf "\n$(tput setaf 6)%s$(tput sgr0)\n" "${content}"
+for f in ${TODO_FILES[@]}; do
+    [[ -s "$f" ]] || continue
+    content=$(cat "$f" | grep '\S*\[ \] ' | sed 's/\[ \] /• /')
+    printf "\n$(tput setaf 2)%s$(tput sgr0)\n" "${content}"
+done
 

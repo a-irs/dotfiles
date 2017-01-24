@@ -5,7 +5,7 @@ for c in $noglobs; do
     [[ "$commands[$c]" ]] && alias $c="noglob $c"
 done
 
-[[ -d ~/Documents ]] && alias todo="$EDITOR ~/Documents/todo.md"
+[[ -d ~/Documents ]] && alias todo="$EDITOR ~/Documents/TODO.md"
 [[ -d ~/doc ]] && alias todo="$EDITOR ~/doc/todo.md"
 
 mac() { tput setaf 2 && curl -q "http://api.macvendors.com/$1" && printf "\n"; }
