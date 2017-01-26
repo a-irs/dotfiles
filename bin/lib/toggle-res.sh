@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-[[ $HOSTNAME == desktop ]] || exit
+[[ $HOSTNAME == desk ]] || exit
 
 OUTPUT="DVI-1"
 MODE1="1920x1200"

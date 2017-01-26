@@ -11,7 +11,7 @@ fi
 setxkbmap -option caps:escape &
 xset r rate 200 30 &
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources &
-[[ $HOSTNAME == desktop ]] && numlockx &
+[[ $HOSTNAME == desk ]] && numlockx &
 
 # screen
 xset -dpms &

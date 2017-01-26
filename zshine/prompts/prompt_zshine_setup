@@ -3,10 +3,10 @@
 # ± ➤ → ⚡ ● » α λ ϟ ✯ ★ ➜ ↪ ▶ ► ↦ ⇆ φ └ > ★ ❯ ❱ ❩
 
 case $HOST in
-    dell    ) ZSHINE_HOST_COLOR='green' ;;
-    desktop ) ZSHINE_HOST_COLOR='yellow' ;;
-    srv     ) ZSHINE_HOST_COLOR='magenta' ;;
-    *)        ZSHINE_HOST_COLOR='cyan' ;;
+    dell ) ZSHINE_HOST_COLOR='green' ;;
+    desk ) ZSHINE_HOST_COLOR='yellow' ;;
+    srv  ) ZSHINE_HOST_COLOR='magenta' ;;
+    *)     ZSHINE_HOST_COLOR='cyan' ;;
 esac
 
 ZSHINE_PROMPT_SYMBOL='❯'
