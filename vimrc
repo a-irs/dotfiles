@@ -240,6 +240,7 @@ let g:syntastic_style_warning_symbol = "\u26A0"
 
 Plug 'davidoc/taskpaper.vim'
 highlight taskpaperDone ctermfg=243 guifg=#857f78
+let g:task_paper_styles={ 'high': 'guibg=#cc5010' }
 
 call plug#end()
 

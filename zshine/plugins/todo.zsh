@@ -1,11 +1,12 @@
 TODO_FILES=(
     ~/.todo
     ~/Documents/TODO.md
+    ~/Documents/TODO.taskpaper
 )
 
 for f in ${TODO_FILES[@]}; do
     [[ -s "$f" ]] || continue
-    content=$(cat "$f" | grep '\S*\[ \] ' | sed 's/\[ \] /• /')
-    printf "\n$(tput setaf 2)%s$(tput sgr0)\n" "${content}"
+    content=$(cat "$f" | grep -v '@done' | grep '\S*- ' | sed 's/- /• /')
+    echo "$content" | grep --color -E '@.*|$'
 done
 
