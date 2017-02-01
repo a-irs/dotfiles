@@ -32,16 +32,6 @@ if has("autocmd")
     \| exe "normal! g'\"" | endif
 endif
 
-" ^M opens file with new colors etc. 
-" FIXME: Does strange things, like applying it on 2xRETURN
-" function ActivateNoteMode()
-"     colorscheme gruvbox
-"     set bg=light
-"     AirlineTheme gruvbox
-"     Goyo
-" endfunction
-" nmap <silent> <C-M> :call ActivateNoteMode()<CR>
-
 " move through wrapped lines
 imap <silent> <Down> <C-o>gj
 imap <silent> <Up> <C-o>gk
