@@ -6,7 +6,7 @@ TODO_FILES=(
 
 for f in ${TODO_FILES[@]}; do
     [[ -s "$f" ]] || continue
-    content=$(cat "$f" | grep -v '@done' | grep '\S*- ' | sed 's/- /• /')
+    content=$(cat "$f" | grep -v '@done' | grep '\S*- ' | sed 's/- /• /' | perl -pe 's/\t/    /g')
     echo "$content" | grep --color -E '@.*|$'
 done
 
