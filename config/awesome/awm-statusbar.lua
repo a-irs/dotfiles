@@ -64,15 +64,15 @@ end
 
 
 -- NETWORK
-
-netwidget = lain.widget.watch({
-    timeout = 2,
-    cmd = os.getenv("HOME") .. "/.config/awesome/network-info.sh",
-    settings = function()
-        widget:set_markup(output)
-    end
-})
-
+if hostname == "dell" then
+    netwidget = lain.widget.watch({
+        timeout = 2,
+        cmd = os.getenv("HOME") .. "/.config/awesome/network-info.sh",
+        settings = function()
+            widget:set_markup(output)
+        end
+    })
+end
 
 -- MUSIC
 
@@ -190,7 +190,9 @@ awful.screen.connect_for_each_screen(function(s)
     local layout3 = wibox.layout.fixed.horizontal()
     -- lay(layout3, wibox.widget.systray())
     lay(layout3, pulsewidget.widget, m)
-    lay(layout3, netwidget.widget, m)
+    if hostname == "dell" then
+        lay(layout3, netwidget.widget, m)
+    end
     lay(layout3, batterywidget, m)
     lay(layout3, datewidget, m, 2)
     lay(layout3, timewidget, m, m * 2)
