@@ -4,8 +4,8 @@ local lain       = require 'lain'
 local xresources = require('beautiful').xresources
 local beautiful  = require 'beautiful'
 
-awful.util.spawn("nitrogen --restore", false)
-awful.util.spawn("killall -USR1 termite", false)
+awful.spawn("nitrogen --restore", false)
+awful.spawn("killall -USR1 termite", false)
 
 -- revert "Only use useless_gap with multiple tiled clients"
 local getgap = awful.tag.getgap

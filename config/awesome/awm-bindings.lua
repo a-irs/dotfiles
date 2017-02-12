@@ -8,7 +8,7 @@ win = "Mod4"
 alt = "Mod1"
 
 function tag_view_nonempty(direction)
-    local s = mouse.screen
+    local s = awful.screen.focused()
     for i = 1, #awful.tag.gettags(s) do
         awful.tag.viewidx(direction, s)
         if #awful.client.visible(s) > 0 then
@@ -143,23 +143,23 @@ globalkeys = awful.util.table.join(
 
     -- launch programs
 
-    awful.key({ win }, "r", function () myprompt[awful.screen.focused()]:run() end,
+    awful.key({ win }, "r", function () awful.screen.focused().myprompt:run() end,
         {description = "run prompt", group = "apps"}),
 
-    awful.key({ win }, "p", function() awful.util.spawn("bash -c 'sleep 0.1 && xset dpms force off'") end,
+    awful.key({ win }, "p", function() awful.spawn("bash -c 'sleep 0.1 && xset dpms force off'") end,
         {description = "turn off LCD", group = "apps" }),
 
-    awful.key({ alt }, "Return", function() awful.util.spawn(user_terminal) end,
+    awful.key({ alt }, "Return", function() awful.spawn(user_terminal) end,
               {description = "run terminal", group = "apps"}),
-    awful.key({ alt }, "f",      function() awful.util.spawn("pcmanfm") end,
+    awful.key({ alt }, "f",      function() awful.spawn("pcmanfm") end,
               {description = "run filemanager", group = "apps"}),
-    awful.key({ alt }, "c",      function() awful.util.spawn('chromium')
+    awful.key({ alt }, "c",      function() awful.spawn('chromium')
         end, {description = "run browser", group = "apps"}),
-    awful.key({ alt, "Shift" }, "c", function () awful.util.spawn("chromium --incognito") end,
+    awful.key({ alt, "Shift" }, "c", function () awful.spawn("chromium --incognito") end,
               {description = "run private browser", group = "apps"}),
-    awful.key({ win }, "l",      function () awful.util.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh", false) end,
+    awful.key({ win }, "l",      function () awful.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh", false) end,
               {description = "lock screen", group = "apps"}),
-    awful.key({ alt }, "p",      function () awful.util.spawn(os.getenv("HOME") .. "/.bin/pick-color.sh", false) end,
+    awful.key({ alt }, "p",      function () awful.spawn(os.getenv("HOME") .. "/.bin/pick-color.sh", false) end,
               {description = "run color picker", group = "apps"}),
     awful.key({ alt }, "k",      function()
         local matcher = function(c)
@@ -173,14 +173,14 @@ globalkeys = awful.util.table.join(
             end
             awful.client.run_or_raise('subl3', matcher)
         end, {description = "run sublime text", group = "apps"}),
-    awful.key({ alt }, "o",      function () awful.util.spawn(os.getenv("HOME") .. "/.bin/mpv-clipboard.sh", false) end,
+    awful.key({ alt }, "o",      function () awful.spawn(os.getenv("HOME") .. "/.bin/mpv-clipboard.sh", false) end,
               {description = "run mpv-clipboard.sh", group = "apps"}),
 
-    awful.key({ "Ctrl", "Shift" }, "dead_circumflex", function() awful.util.spawn(os.getenv("HOME") .. "/.bin/desk/toggle-res.sh") end,
+    awful.key({ "Ctrl", "Shift" }, "dead_circumflex", function() awful.spawn(os.getenv("HOME") .. "/.bin/desk/toggle-res.sh") end,
               {description = "toggle screen resolution", group = "apps"}),
-    awful.key({        }, "Print", function() awful.util.spawn("mate-screenshot", false) end,
+    awful.key({        }, "Print", function() awful.spawn("mate-screenshot", false) end,
               {description = "make screenshot", group = "apps"}),
-    awful.key({ "Ctrl" }, "Print", function() awful.util.spawn("mate-screenshot --area", false) end,
+    awful.key({ "Ctrl" }, "Print", function() awful.spawn("mate-screenshot --area", false) end,
               {description = "make screenshot", group = "apps"}),
 
     -- media keys
@@ -215,7 +215,7 @@ globalkeys = awful.util.table.join(
         io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
     end),
 
-    awful.key({}, "XF86PowerOff", function() awful.util.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh suspend", false) end),
+    awful.key({}, "XF86PowerOff", function() awful.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh suspend", false) end),
 
     -- restart awesome wm
 
@@ -234,7 +234,7 @@ globalkeys = awful.util.table.join(
     awful.key({ win }, "z",
               function()
                   local screen = awful.screen.focused()
-                  local all_tags = awful.tag.gettags(screen)
+                  local all_tags = screen.tags
                   local selected_tags = awful.tag.selectedlist(screen)
 
                   local all_tags_count = 0
@@ -288,10 +288,14 @@ globalkeys = awful.util.table.join(
 )
 
 clientkeys = awful.util.table.join(
-    awful.key({ win }, "f",  function(c) c.fullscreen = not c.fullscreen end),
+    awful.key({ win }, "f",  function(c)
+        c.fullscreen = not c.fullscreen
+        c:raise()
+    end),
     awful.key({ alt }, "F4", function(c) c:kill() end),
     awful.key({ win }, "w",  function(c) c:kill() end),
     awful.key({ win }, "q",  function(c) c:kill() end),
+    awful.key({ win }, "e",  awful.client.floating.toggle),
     awful.key({ win }, "m",  awful.titlebar.toggle, { description="toggle active window titlebar", group="bars"}),
     awful.key({ win }, "Up",  function(c) c.minimized = true end)
 )
@@ -301,15 +305,17 @@ for i = 1, 9 do
         -- view tag
         awful.key({ win }, "#" .. i + 9,
             function()
-                local tag = awful.tag.gettags(awful.screen.focused())[i]
+                local screen = awful.screen.focused()
+                local tag = screen.tags[i]
                 if tag then
-                    awful.tag.viewonly(tag)
+                    tag:view_only()
                 end
             end),
-        -- toggle tag
+        -- toggle tag display
         awful.key({ win, alt }, "#" .. i + 9,
             function()
-                local tag = awful.tag.gettags(awful.screen.focused())[i]
+                local screen = awful.screen.focused()
+                local tag = screen.tags[i]
                 if tag then
                     awful.tag.viewtoggle(tag)
                 end
@@ -318,9 +324,9 @@ for i = 1, 9 do
         awful.key({ win, "Shift" }, "#" .. i + 9,
             function()
                 if client.focus then
-                    local tag = awful.tag.gettags(client.focus.screen)[i]
+                    local tag = client.focus.screen.tags[i]
                     if tag then
-                        awful.client.movetotag(tag)
+                        client.focus:move_to_tag(tag)
                     end
                 end
             end)
@@ -328,12 +334,9 @@ for i = 1, 9 do
 end
 
 clientbuttons = awful.util.table.join(
-    awful.button({     }, 1,      function(c) client.focus = c; c:raise() end),
-    awful.button({ win }, 1,      awful.mouse.client.move),
-    awful.button({ win }, 3,      awful.mouse.client.resize)
+    awful.button({     }, 1, function(c) client.focus = c; c:raise() end),
+    awful.button({ win }, 1, awful.mouse.client.move),
+    awful.button({ win }, 3, awful.mouse.client.resize)
 )
-root.buttons(awful.util.table.join(
-    awful.button({     }, 3,      function() awful.util.spawn("xfce4-appfinder --disable-server") end)
-))
 
 root.keys(globalkeys)

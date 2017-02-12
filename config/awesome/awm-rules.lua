@@ -11,11 +11,13 @@ rules.rules = {
       properties = { border_width = theme.border_width,
                      border_color = theme.border_normal,
                      focus = awful.client.focus.filter,
+                     screen = awful.screen.preferred,
+                     placement = awful.placement.no_overlap + awful.placement.no_offscreen,
                      raise = true,
                      keys = clientkeys,
+                     buttons = clientbuttons,
                      maximized_vertical   = false,
-                     maximized_horizontal = false,
-                     buttons = clientbuttons },
+                     maximized_horizontal = false },
       callback = awful.client.setslave },
 }
 
