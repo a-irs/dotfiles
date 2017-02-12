@@ -35,7 +35,7 @@ end
 -- BATTERY
 
 if hostname == "dell" then
-    batterywidget = lain.widgets.bat({
+    batterywidget = lain.widget.bat({
         timeout = 3,
         notify = "off",
         settings = function()
@@ -65,7 +65,7 @@ end
 
 -- NETWORK
 
-netwidget = lain.widgets.base({
+netwidget = lain.widget.watch({
     timeout = 2,
     cmd = os.getenv("HOME") .. "/.config/awesome/network-info.sh",
     settings = function()
@@ -76,7 +76,7 @@ netwidget = lain.widgets.base({
 
 -- MUSIC
 
-musicwidget = lain.widgets.base({
+musicwidget = lain.widget.watch({
     timeout = 2,
     cmd = os.getenv("HOME") .. "/.config/awesome/music.sh " .. theme.widget_music_fg:gsub('#', ''),
     settings = function()
@@ -99,7 +99,7 @@ musicwidget.widget:buttons(awful.util.table.join(
 
 -- VOLUME
 
-pulsewidget = lain.widgets.pulseaudio({
+pulsewidget = lain.widget.pulseaudio({
     timeout = 3,
     settings = function()
         if volume_now.left == nil or volume_now.right == nil then
@@ -131,15 +131,15 @@ pulsewidget.widget:buttons(awful.util.table.join(
 
 -- DATE, TIME
 
-timewidget = awful.widget.textclock(markup.bold(markup(theme.widget_time_fg, '%H:%M')))
-datewidget = awful.widget.textclock(markup(theme.widget_date_fg, '%a, %d.%m.'))
-lain.widgets.calendar.attach(datewidget, {
+timewidget = wibox.widget.textclock(markup.bold(markup(theme.widget_time_fg, '%H:%M')))
+datewidget = wibox.widget.textclock(markup(theme.widget_date_fg, '%a, %d.%m.'))
+lain.widget.calendar.attach(datewidget, {
     font_size = "8",
     font = "Monospace",
     fg   = theme.fg_focus,
     bg   = theme.bg_focus
 })
-lain.widgets.calendar.attach(timewidget, {
+lain.widget.calendar.attach(timewidget, {
     font_size = "8",
     font = "Monospace",
     fg   = theme.fg_focus,
@@ -147,63 +147,54 @@ lain.widgets.calendar.attach(timewidget, {
 })
 
 
-mywibox = {}
-mylayoutbox = {}
-mytaglist = {}
-mytaglist.buttons = awful.util.table.join(
-                        awful.button({ }, 1, awful.tag.viewonly),
-                        awful.button({ }, 3, awful.tag.viewtoggle)
-                    )
-mytasklist = {}
-mytasklist.buttons = awful.util.table.join(
-    awful.button({ }, 1, function(c)
+local taglist_buttons = awful.util.table.join(
+    awful.button({ }, 1, function(t) t:view_only() end),
+    awful.button({ }, 3, awful.tag.viewtoggle),
+    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
+    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
+    )
+
+local tasklist_buttons = awful.util.table.join(
+    awful.button({ }, 1, function (c)
         if c == client.focus then
             c.minimized = true
         else
             c.minimized = false
-            if not c:isvisible() then
-                awful.tag.viewonly(c.first_tag)
+            if not c:isvisible() and c.first_tag then
+                c.first_tag:view_only()
             end
-        client.focus = c
-        c:raise()
+            client.focus = c
+            c:raise()
         end
-    end))
-myprompt = {}
+end))
 
 awful.screen.connect_for_each_screen(function(s)
-    mytaglist[s]  = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
-    mywibox[s]    = awful.wibox({ position = theme.statusbar_position, screen = s, height = theme.statusbar_height })
-    myprompt[s]   = awful.widget.prompt()
-    mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, mytasklist.buttons, { fg_normal = theme.tasklist_fg, bg_normal = theme.tasklist_bg, font = theme.tasklist_font })
-    --[[
-    mylayoutbox[s] = awful.widget.layoutbox(s)
-    mylayoutbox[s]:buttons(awful.util.table.join(
-                       awful.button({ }, 1, function() awful.layout.inc(layouts,  1) end),
-                       awful.button({ }, 3, function() awful.layout.inc(layouts, -1) end),
-                       awful.button({ }, 4, function() awful.layout.inc(layouts,  1) end),
-                       awful.button({ }, 5, function() awful.layout.inc(layouts, -1) end)))
-    ]]--
+    s.mytaglist  = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
+    s.mywibox    = awful.wibox({ position = theme.statusbar_position, screen = s, height = theme.statusbar_height })
+    s.myprompt   = awful.widget.prompt()
+    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, tasklist_buttons, { fg_normal = theme.tasklist_fg, bg_normal = theme.tasklist_bg, font = theme.tasklist_font })
+
 
     -- layouts
 
     local m = 3
 
     local layout1 = wibox.layout.fixed.horizontal()
-    lay(layout1, mylayoutbox[s])
-    lay(layout1, musicwidget, 0, 0, theme.bg_focus)
-    lay(layout1, mytasklist[s])
-    lay(layout1, myprompt[s], 0, 0, theme.bg_focus)
+    lay(layout1, musicwidget.widget, 0, 0, theme.bg_focus)
+    lay(layout1, s.mytasklist)
+    lay(layout1, s.myprompt)
 
     local layout2 = wibox.layout.fixed.horizontal()
-    lay(layout2, mytaglist[s])
+    lay(layout2, s.mytaglist)
 
     local layout3 = wibox.layout.fixed.horizontal()
     -- lay(layout3, wibox.widget.systray())
-    lay(layout3, pulsewidget, m)
-    lay(layout3, netwidget, m)
+    lay(layout3, pulsewidget.widget, m)
+    lay(layout3, netwidget.widget, m)
     lay(layout3, batterywidget, m)
     lay(layout3, datewidget, m, 2)
     lay(layout3, timewidget, m, m * 2)
+
 
     -- build status bar
 
@@ -213,5 +204,5 @@ awful.screen.connect_for_each_screen(function(s)
     layout:set_middle(layout2)
     layout:set_right(layout3)
 
-    mywibox[s]:set_widget(layout)
+    s.mywibox:set_widget(layout)
 end)
