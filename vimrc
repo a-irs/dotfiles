@@ -32,16 +32,6 @@ if has("autocmd")
     \| exe "normal! g'\"" | endif
 endif
 
-" ^M opens file with new colors etc. 
-" FIXME: Does strange things, like applying it on 2xRETURN
-" function ActivateNoteMode()
-"     colorscheme gruvbox
-"     set bg=light
-"     AirlineTheme gruvbox
-"     Goyo
-" endfunction
-" nmap <silent> <C-M> :call ActivateNoteMode()<CR>
-
 " move through wrapped lines
 imap <silent> <Down> <C-o>gj
 imap <silent> <Up> <C-o>gk
@@ -238,12 +228,9 @@ let g:syntastic_warning_symbol = "\u26A0"
 let g:syntastic_style_warning_symbol = "\u26A0"
 " highlight SyntasticErrorSign guifg=red guibg=NONE
 
-Plug 'vitalk/vim-simple-todo'
-let g:simple_todo_map_keys = 0
-
-nmap <leader>s <Plug>(simple-todo-mark-switch)
-nmap <leader>d <Plug>(simple-todo-below)
-nmap <leader>D <Plug>(simple-todo-abov)
+Plug 'davidoc/taskpaper.vim'
+highlight taskpaperDone ctermfg=243 guifg=#857f78
+let g:task_paper_styles={ 'crit': 'guibg=#dd5010' }
 
 call plug#end()
 
@@ -261,8 +248,8 @@ catch
 endtry
 
 " show invisible chars
-set list
-set listchars=tab:▸\ ,trail:•,extends:»,precedes:«
+"set list
+"set listchars=tab:▸\ ,trail:•,extends:»,precedes:«
 highlight SpecialKey ctermfg=240 guifg=#888888
 highlight NonText ctermfg=240 guifg=#888888
 

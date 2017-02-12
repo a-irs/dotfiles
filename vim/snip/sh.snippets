@@ -99,7 +99,7 @@ ${1:name}() {
 endsnippet
 
 snippet "root|su" "check for root" br
-if [[ "$UID" ${1:==} 0 ]]; then
+if [[ "$EUID" ${1:==} 0 ]]; then
 	${0:# TODO}
 fi
 endsnippet
