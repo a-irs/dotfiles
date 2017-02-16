@@ -133,17 +133,13 @@ pulsewidget.widget:buttons(awful.util.table.join(
 
 timewidget = wibox.widget.textclock(markup.bold(markup(theme.widget_time_fg, '%H:%M')))
 datewidget = wibox.widget.textclock(markup(theme.widget_date_fg, '%a, %d.%m.'))
-lain.widget.calendar.attach(datewidget, {
-    font_size = "8",
-    font = "Monospace",
-    fg   = theme.fg_focus,
-    bg   = theme.bg_focus
-})
-lain.widget.calendar.attach(timewidget, {
-    font_size = "8",
-    font = "Monospace",
-    fg   = theme.fg_focus,
-    bg   = theme.bg_focus
+lain.widget.calendar({
+    attach_to = { timewidget, datewidget  },
+    notification_preset = {
+        font = "Input 8",
+        fg   = theme.fg_focus,
+        bg   = theme.bg_focus
+    }
 })
 
 
