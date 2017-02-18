@@ -188,8 +188,8 @@ awful.screen.connect_for_each_screen(function(s)
     lay(layout3, pulsewidget.widget, m)
     if hostname == "dell" then
         lay(layout3, netwidget.widget, m)
+        lay(layout3, batterywidget.widget, m)
     end
-    lay(layout3, batterywidget, m)
     lay(layout3, datewidget, m, 2)
     lay(layout3, timewidget, m, m * 2)
 
