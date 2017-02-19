@@ -40,6 +40,7 @@ dstatus nzbget
 dstatus plex
 dstatus plexpy
 dstatus samba
+dstatus openvpn
 echo ""
 pydf /media/data*
 
