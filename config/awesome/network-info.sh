@@ -1,64 +1,33 @@
 #!/usr/bin/env bash
 
-color="#ffa500"
+wifi_color="#ffa200"
+eth_color="#ffa500"
 vpn_color="#ffd700"
 
-devs=$(< /proc/net/route)
+out=$(nmcli --wait 1 --terse --colors no --fields name,type,device,state,active connection show)
+active=$(printf "%s\n" "$out" | awk -F: '$5 == "yes" {print $1":"$2}' | sort -r)
 
-if [[ $devs == *$'\nwlan'* ]] || [[ $devs == *$'\nwlp'* ]]; then
-    ssid=$(iwgetid --raw)
-    [[ -z "$ssid" ]] && return
-    if [[ "$ssid" == *_2_4_* ]]; then
-        ssid_start=${ssid%%_2_4_*}
-        ssid_end=${ssid##*_2_4_}
-        ssid_between=_2_4_
-        color_between="#ff0000"
-        txt+=("<span foreground='$color'><b>$ssid_start</b></span><span foreground='$color_between'><b>$ssid_between</b></span><span foreground='$color'><b>$ssid_end</b></span>")
-    elif [[ "$ssid" == *_5_* ]]; then
-        ssid_start=${ssid%%_5_*}
-        ssid_end="${ssid##*_5_}"
-        ssid_between=_5_
-        color_between="#00ff00"
-        txt+=("<span foreground='$color'><b>$ssid_start</b></span><span foreground='$color_between'><b>$ssid_between</b></span><span foreground='$color'><b>$ssid_end</b></span>")
-    else
-        txt+=("<span foreground='$color'><b>$ssid</b></span>")
-    fi
-fi
-
-if [[ $devs == *$'\neth'* ]] || [[ $devs == *$'\nenp'* ]]; then
-    txt+=("<span foreground='$color'><b>eth0</b></span>")
-fi
-
-if [[ $devs == *$'\nusb'* ]]; then
-    txt+=("<span foreground='$color'><b>USB</b></span>")
-fi
-
-if [ -f /tmp/sshuttle.pid ]; then
-    txt+=("<span foreground='$vpn_color'><b>sshuttle</b></span>")
-fi
-
-if [[ $devs == *$'\ntun'* ]] || [[ $devs == *$'\ntap'* ]]; then
-    pid=$(pidof -s openvpn)
-    if [[ -n "$pid" ]]; then
-        vpn_profile=$(cat "/proc/$pid/cmdline")
-        vpn_profile="${vpn_profile##*/}"
-        vpn_profile="${vpn_profile%.ovpn}"
-        txt+=("<span foreground='$vpn_color'><b>$vpn_profile</b></span>")
-    fi
-fi
+declare -a txt
+while read -r line; do
+    type=${line##*:}
+    name=${line%%:*}
+    case "$type" in
+        tun)        continue ;;
+        vpn)        c=$vpn_color; name=vpn ;;
+        *-wireless) c=$wifi_color ;;
+        *-ethernet) c=$eth_color ;;
+    esac
+    txt+=("<span foreground='$c'><b>${name}</b></span>")
+done <<< "$active"
 
 total="${#txt[@]}"
 count=1
 if [[ $total == 0 ]]; then
-    echo -n "<b>disconnected</b>"
+    printf "%s" "<b>disconnected</b>"
 else
-    # ping -c 1 -W 2 8.8.8.8 > /dev/null 2>&1
-    # if [[ $? -ne 0 ]]; then
-        # printf "%s" "<span foreground='#ff0000'>***</span> "
-    # fi
     for item in "${txt[@]}"; do
-        echo -n "$item"
-        [[ "$count" == "$total" ]] || echo -n " + "
+        printf "%s" "$item"
+        [[ "$count" == "$total" ]] || printf "%s" "+"
         count=$((count+1))
     done
 fi
