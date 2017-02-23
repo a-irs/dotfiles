@@ -105,7 +105,6 @@ t:start()
 
 local function handle_floater(c)
     c.ontop = awful.client.floating.get(c)
-    awful.placement.centered(c)
 end
 
 dynamic_tagging()
