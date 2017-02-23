@@ -151,7 +151,7 @@ globalkeys = awful.util.table.join(
 
     awful.key({ alt }, "Return", function() awful.spawn(user_terminal) end,
               {description = "run terminal", group = "apps"}),
-    awful.key({ alt }, "f",      function() awful.spawn("pcmanfm") end,
+    awful.key({ alt }, "f",      function() awful.spawn("thunar") end,
               {description = "run filemanager", group = "apps"}),
     awful.key({ alt }, "c",      function() awful.spawn('chromium')
         end, {description = "run browser", group = "apps"}),

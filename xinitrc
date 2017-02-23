@@ -20,13 +20,11 @@ xset s off &
 # applications
 nitrogen --restore &
 kupfer --no-splash &
-pcmanfm --daemon-mode &
 lxpolkit &
 redshift &
-parcellite --no-icon&
+parcellite --no-icon &
 dropbox-cli start &
-mkdir -p ~/.thumbnails &
-ln -sf ~/.thumbnails ~/.cache/thumbnails &
+mkdir -p ~/.thumbnails && ln -sf ~/.thumbnails ~/.cache/thumbnails
 compton &
 start-pulseaudio-x11 &
 
