@@ -42,8 +42,12 @@ end
 local function dynamic_tagging()
     awful.screen.connect_for_each_screen(function(s)
         for _, t in ipairs(awful.tag.gettags(s)) do
+            append = ""
+            if t.layout.name == "floating" then
+                append = "[f]"
+            end
             if is_empty(t) then
-                t.name = " " .. theme.taglist_empty_tag .. " "
+                t.name = " " .. theme.taglist_empty_tag .. " " .. append
             else
                 local name = ""
                 for _, c in ipairs(t:clients()) do
@@ -89,7 +93,7 @@ local function dynamic_tagging()
                         end
                     end
                 end
-                t.name = " " .. theme.taglist_nonempty_tag .. " " .. name .. " "
+                t.name = " " .. theme.taglist_nonempty_tag .. " " .. name .. " " .. append
             end
         end
     end)
