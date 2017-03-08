@@ -1,3 +1,3 @@
-[ -f ~/.zshrc.prefix ] && source ~/.zshrc.prefix || return 0
+[ -f ~/.zshrc.prefix ] && source ~/.zshrc.prefix
 source ~/.zshine/init.zsh
-[ -f ~/.zshrc.append ] && source ~/.zshrc.append || return 0
+[ -f ~/.zshrc.append ] && source ~/.zshrc.append
