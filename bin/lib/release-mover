@@ -6,7 +6,7 @@ DEST=/media/data/videos/movies
 
 release=$(basename "$1")
 release=${release// /.}
-category=$2
+category=movies
 
 y() { printf "$(tput setaf 3)%s$(tput sgr0)\n" "$@"; }
 
