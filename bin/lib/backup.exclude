@@ -8,9 +8,11 @@
 **/.config/retroarch/downloads
 **/.config/.fzf/bin
 **/nzbget.log
-/srv/docker/plex
-/srv/docker/graphite/storage
-/srv/docker/influxdb
+/srv/docker/media/nzbget/drop
+/srv/docker/media/plex
+/srv/docker/monitor/graphite/storage
+/srv/docker/monitor/influxdb
+/srv/docker/monitor/prometheus
 **/dev/moto
 **/tmp
 **/.fr-*
