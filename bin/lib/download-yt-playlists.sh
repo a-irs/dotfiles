@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 out=/media/data/videos/youtube
 
 playlist_urls=(
@@ -7,6 +9,8 @@ playlist_urls=(
 'https://www.youtube.com/playlist?list=PLjpFFKfSIL4LVHgdqn0mjZ1Oany3en7n3'
 )
 
+args="--write-description"
+
 for url in "${playlist_urls[@]}"; do
-    youtube-dl --restrict-filenames -o "$out/%(playlist)s/%(playlist_index)03d - %(title)s - %(id)s.%(ext)s" -- "$url"
+    youtube-dl --restrict-filenames $args -o "$out/%(playlist)s/%(title)s - %(id)s.%(ext)s" -- "$url"
 done
