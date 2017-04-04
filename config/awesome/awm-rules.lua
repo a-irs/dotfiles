@@ -43,7 +43,7 @@ local function dynamic_tagging()
     awful.screen.connect_for_each_screen(function(s)
         for _, t in ipairs(awful.tag.gettags(s)) do
             append = ""
-            if t.layout.name == "floating" then
+            if t.layout and t.layout.name == "floating" then
                 append = "[f]"
             end
             if is_empty(t) then
