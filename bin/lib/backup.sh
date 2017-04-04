@@ -5,10 +5,11 @@ set -euo pipefail
 [[ $UID != 0 ]] && { echo "$(tput setaf 1)run as root"; exit 1; }
 (( $# < 1 )) && { echo "$(tput setaf 3)$(basename "$0") start|mount|list|check"; exit 2; }
 
-TARGET=/media/crypto/borg
+TOPDIR=/media/crypto/borg
+TARGET=$TOPDIR/$HOSTNAME
 USER_HOST=root@srv
 
-ssh $USER_HOST test -d $TARGET || { echo "$(tput setaf 1)$USER_HOST:$TARGET does not exist"; exit 1; }
+ssh $USER_HOST test -d "$TOPDIR" || { echo "$(tput setaf 1)$USER_HOST:$TOPDIR does not exist"; exit 1; }
 
 t=/0-info
 
@@ -79,11 +80,11 @@ borg create \
     --progress --stats --verbose \
     --exclude-caches --exclude-from "$(dirname "$(readlink -f "$0")")/backup.exclude" \
     --one-file-system \
-    "$REPO"::'{hostname}_'"$DATE" \
+    "$REPO"::"$DATE" \
     "${BACKUP[@]}"
 
 header 2 "PRUNING BACKUPS OLDER THAN 1 MONTH"
-borg prune --verbose --stats --list --prefix '{hostname}_' --keep-within 1m "$REPO"
+borg prune --verbose --stats --list --keep-within 1m "$REPO"
 
 header 2 "CLEANING UP BACKUP INFO FILES in $t"
 rm -rfv "$t"
