@@ -31,16 +31,10 @@ sstatus media-data2.mount
 sstatus media-data3.mount
 sstatus media-data4.mount
 echo ""
-dstatus grafana
-dstatus graphite
-dstatus netdata
-dstatus muximux
-dstatus deluge
-dstatus nzbget
-dstatus plex
-dstatus plexpy
-dstatus samba
-dstatus openvpn
-echo ""
 pydf /media/data*
-
+echo ""
+echo -n "$(tput setaf 1)"
+docker ps -f status=exited | tail +2
+docker ps -f status=dead | tail +2
+echo -n "$(tput sgr0)"
+echo ""
