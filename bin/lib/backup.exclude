@@ -8,6 +8,7 @@
 **/.config/retroarch/downloads
 **/.config/.fzf/bin
 **/nzbget.log
+/srv/vuls-database/db
 /srv/docker/media/nzbget/drop
 /srv/docker/media/plex
 /srv/docker/monitor/graphite/storage
