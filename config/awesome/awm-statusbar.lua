@@ -184,7 +184,7 @@ awful.screen.connect_for_each_screen(function(s)
     lay(layout2, s.mytaglist)
 
     local layout3 = wibox.layout.fixed.horizontal()
-    -- lay(layout3, wibox.widget.systray())
+    lay(layout3, wibox.widget.systray())
     lay(layout3, pulsewidget.widget, m)
     if hostname == "dell" then
         lay(layout3, netwidget.widget, m)

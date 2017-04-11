@@ -64,6 +64,7 @@
 **/.mozilla/firefox/*/extension-data/ublock*.sqlite
 **/Package Control.cache
 **/Cache
+**/CacheStorage
 **/cache
 **/temp
 **/backup
