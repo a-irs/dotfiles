@@ -221,14 +221,6 @@ globalkeys = awful.util.table.join(
 
     awful.key({ win, "Ctrl"  }, "r", awesome.restart),
 
-    -- toggle status bars
-
-    awful.key({ win }, "b",
-        function()
-            mywibox[awful.screen.focused()].visible = not mywibox[awful.screen.focused()].visible
-        end,
-        {description="toggle main status bar", group="bars"}),
-
     -- show all tags at once
 
     awful.key({ win }, "z",
