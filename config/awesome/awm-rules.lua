@@ -53,6 +53,8 @@ local function dynamic_tagging()
                 for _, c in ipairs(t:clients()) do
                     if c.class == "Kupfer.py" then
                         break
+                    elseif c.name and c.name == "Grafana - dash" then
+                        name = "dashboard"
                     elseif c.instance == "play.google.com__music_listen" or (c.name and string.find(c.name, 'ncmpcpp')) then
                         name = make_name(name, c, "music")
                     elseif c.name and string.find(c.name, 'ssh ') then
