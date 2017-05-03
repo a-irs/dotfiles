@@ -64,37 +64,28 @@ end
 
 
 -- NETWORK
-if hostname == "dell" then
-    netwidget = lain.widget.watch({
-        timeout = 2,
-        cmd = os.getenv("HOME") .. "/.config/awesome/network-info.sh",
-        settings = function()
-            widget:set_markup(output)
-        end
-    })
-end
+--if hostname == "dell" then
+--    netwidget = awful.widget.watch({
+--        timeout = 2,
+--        cmd = os.getenv("HOME") .. "/.config/awesome/network-info.sh",
+--        settings = function()
+--            widget:set_markup(output)
+--        end
+--    })
+--end
 
 -- MUSIC
 
-musicwidget = lain.widget.watch({
-    timeout = 2,
-    cmd = os.getenv("HOME") .. "/.config/awesome/music.sh " .. theme.widget_music_fg:gsub('#', ''),
-    settings = function()
-        if output == "" then
+musicwidget = awful.widget.watch(
+    os.getenv("HOME") .. "/.config/awesome/music.sh " .. theme.widget_music_fg:gsub('#', ''), 2,
+    function(widget, stdout)
+        if stdout == "" then
             widget:set_markup("")
         else
-            widget:set_markup(output)
+            widget:set_markup(stdout)
         end
     end
-})
-musicwidget.widget:buttons(awful.util.table.join(
-    awful.button({ }, 1, function() -- left click
-        local matcher = function(c)
-            return rules.match(c, {class = 'Spotify'})
-        end
-        awful.client.run_or_raise('spotify', matcher)
-    end)
-))
+)
 
 
 -- VOLUME
@@ -176,7 +167,7 @@ awful.screen.connect_for_each_screen(function(s)
     local m = 3
 
     local layout1 = wibox.layout.fixed.horizontal()
-    lay(layout1, musicwidget.widget, 0, 0, theme.bg_focus)
+    lay(layout1, musicwidget, 0, 0, theme.bg_focus)
     lay(layout1, s.mytasklist)
     lay(layout1, s.myprompt)
 
