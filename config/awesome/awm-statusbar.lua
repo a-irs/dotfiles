@@ -64,15 +64,14 @@ end
 
 
 -- NETWORK
---if hostname == "dell" then
---    netwidget = awful.widget.watch({
---        timeout = 2,
---        cmd = os.getenv("HOME") .. "/.config/awesome/network-info.sh",
---        settings = function()
---            widget:set_markup(output)
---        end
---    })
---end
+if hostname == "dell" then
+    netwidget = awful.widget.watch(
+        os.getenv("HOME") .. "/.config/awesome/network-info.sh", 2,
+        function(widget, stdout)
+            widget:set_markup(stdout)
+        end
+    )
+end
 
 -- MUSIC
 
@@ -178,7 +177,7 @@ awful.screen.connect_for_each_screen(function(s)
     lay(layout3, wibox.widget.systray())
     lay(layout3, pulsewidget.widget, m)
     if hostname == "dell" then
-        lay(layout3, netwidget.widget, m)
+        lay(layout3, netwidget, m)
         lay(layout3, batterywidget.widget, m)
     end
     lay(layout3, datewidget, m, 2)
