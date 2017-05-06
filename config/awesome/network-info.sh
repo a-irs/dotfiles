@@ -14,10 +14,17 @@ while read -r line; do
     case "$type" in
         tun)        continue ;;
         vpn)        c=$vpn_color; name=vpn ;;
-        *-wireless) c=$wifi_color ;;
+        *-wireless)
+            c=$wifi_color
+            freq=$(iwgetid -f --raw)
+            [[ $freq == 5* ]] && freq=5
+            [[ $freq == 2* ]] && freq=2.4
+            suffix="(${freq})"
+            suffix_color="#A8F5EF"
+            ;;
         *-ethernet) c=$eth_color ;;
     esac
-    txt+=("<span foreground='$c'><b>${name}</b></span>")
+    txt+=("<span foreground='$c'><b>${name}</b></span><span foreground='$suffix_color'><b>${suffix}</b></span>")
 done <<< "$active"
 
 total="${#txt[@]}"
