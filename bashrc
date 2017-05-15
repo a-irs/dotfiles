@@ -1,3 +1,5 @@
+eval $(ssh-agent) > /dev/null
+
 HISTSIZE=100000
 HISTFILESIZE=100000
 HISTCONTROL=ignoreboth:erasedups  # don't put duplicate lines or lines starting with whitespace in history
