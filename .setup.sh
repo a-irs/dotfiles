@@ -103,10 +103,8 @@ install zsh zprofile zshrc zshine
 
 install awesome config/awesome
 install compton config/compton.conf
-install emulationstation config/emulationstation/es_systems.cfg
 install mpv config/mpv/input.conf config/mpv/mpv.conf config/mpv/scripts/convert_script.lua config/mpv/scripts/stats.lua config/mpv/lua-settings/osc.conf
 install redshift config/redshift.conf
-install retroarch config/retroarch/remap config/retroarch/core-config/gba_bios.bin config/retroarch/core-config/scph5500.bin config/retroarch/core-config/scph5501.bin config/retroarch/core-config/scph5502.bin config/retroarch/retroarch.cfg config/retroarch/retroarch-core-options.cfg
 install subl3 config/sublime-text-3/Packages/User
 install termite config/termite/config
 install xinit xinitrc Xmodmap config/fontconfig/fonts.conf fonts gtkrc-2.0 icons config/user-dirs.dirs config/gtk-3.0/settings.ini
