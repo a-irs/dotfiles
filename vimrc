@@ -108,7 +108,6 @@ nnoremap <silent> <Leader>. :execute 's/^\(\s*[-+*]\?\s*\)\[x]/\1[ ]/'<cr>
 
 call plug#begin()
 
-
 " " airline
 " Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
 " let g:airline_powerline_fonts = 1

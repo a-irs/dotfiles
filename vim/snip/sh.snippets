@@ -1,4 +1,8 @@
-snippet color
+snippet "pr|printf" "Printf" br
+printf "%s\n" "$1"
+endsnippet
+
+snippet color "Color" b
 BLACK=$(tput setaf 0)
 RED=$(tput setaf 1)
 GREEN=$(tput setaf 2)
@@ -47,7 +51,7 @@ snippet "#\!|env|she|shebang|bang|#" "shebang" br
 `!p snip.rv = '\n'`
 endsnippet
 
-snippet "safe|strict" "set bash strict mode" br
+snippet "safe|strict|head|header" "set bash strict mode" br
 set -euo pipefail
 IFS=$'\n\t'
 `!p snip.rv ='\n'`

@@ -7,9 +7,9 @@ endsnippet
 snippet "tpl|templ|template" "Ansible Template" br
 - name: ${1:taskname}
   template:
-    backup: yes
     src: ${2:src}
     dest: ${3:dest}
+    backup: yes
 endsnippet
 
 snippet role "Role" b
@@ -27,3 +27,68 @@ snippet "play|playbook" "Playbook" br
     - role: ${2:rolename}
       tags: $2
 endsnippet
+
+snippet user "Ansible User" b
+- name: create user $1
+  user:
+   name: $1
+endsnippet
+
+snippet service "Ansible Service" b
+- name: ${1:taskname}
+  service:
+   name: $2
+   state: restarted
+endsnippet
+
+snippet replace "Ansible Replace" b
+- name: ${1:taskname}
+  replace:
+   dest: $2
+   regexp: $3
+   replace: $4
+   backup: yes
+endsnippet
+
+snippet "lineinfile|line" "Ansible Lineinfile" rb
+- name: ${1:taskname}
+  lineinfile:
+   dest: $2
+   regexp: ${3:^#?abc}
+   line: $4
+   backup: yes
+endsnippet
+
+snippet file "Ansible File" b
+- name: ${1:taskname}
+  file:
+   src: $1
+   dest: $2
+   backup: yes
+endsnippet
+
+snippet "dir|mkdir" "Ansible Directory" rb
+- name: ${1:taskname}
+  file:
+    path: ${2:/some/directory}
+    state: directory
+endsnippet
+
+snippet copy "Ansible Copy" b
+- name: ${1:taskname}
+  copy:
+    src: $2
+    dest: $3
+    validate: '$4 %s'
+    backup: yes
+endsnippet
+
+snippet copyc "Ansible Copy Content" b
+- name: ${1:taskname}
+  copy:
+    content: $2
+    dest: $3
+    validate: '$4 %s'
+    backup: yes
+endsnippet
+
