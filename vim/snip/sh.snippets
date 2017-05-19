@@ -38,11 +38,11 @@ endsnippet
 
 snippet "which|cmd|command|exist|exists" "check if command is available in PATH" br
 if command -v $1 > /dev/null 2>&1; then
-	$0
+    $0
 fi
 endsnippet
 
-snippet "#\!|env|she|shebang|bang" "shebang" br
+snippet "#\!|env|she|shebang|bang|#" "shebang" br
 #!/usr/bin/env bash
 `!p snip.rv = '\n'`
 endsnippet
@@ -55,36 +55,36 @@ endsnippet
 
 snippet "case|switch" "swicht-case" br
 case ${1:word} in
-	${2:pattern}) $0 ;;
+    ${2:pattern}) $0 ;;
 esac
 endsnippet
 
 snippet if "if-statement" b
 if ${2:[[ ${1:condition} ]]}; then
-	${0:# statements}
+    ${0:# statements}
 fi
 endsnippet
 
 snippet "elif|eif|elseif" "else-if" br
 elif ${2:[[ ${1:condition} ]]}; then
-	${0:# statements}
+    ${0:# statements}
 endsnippet
 
 snippet for "for loop" b
 for (( i = 0; i < ${1:10}; i++ )); do
-	${0:# statements}
+    ${0:# statements}
 done
 endsnippet
 
 snippet "forin|each|foreach" "for .. in .." br
 for ${1:i}${2/.+/ in /}${2:words}; do
-	${0:# statements}
+    ${0:# statements}
 done
 endsnippet
 
 snippet while "while loop" b
 while ${2:[[ ${1:condition} ]]}; do
-	${0:# statements}
+    ${0:# statements}
 done
 endsnippet
 
@@ -94,19 +94,19 @@ endsnippet
 
 snippet "fn|func|function|f" "function" br
 ${1:name}() {
-	${0:# TODO}
+    ${0:# TODO}
 }
 endsnippet
 
 snippet "root|su" "check for root" br
 if [[ "$EUID" ${1:==} 0 ]]; then
-	${0:# TODO}
+    ${0:# TODO}
 fi
 endsnippet
 
 snippet trap "trap" b
 trap_${1:name}() {
-	${2:# TODO}
+    ${2:# TODO}
 }
 trap trap_$1 ${0:EXIT}
 endsnippet
