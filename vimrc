@@ -3,12 +3,12 @@ scriptencoding utf-8
 
 filetype plugin on
 syntax on
-set autoindent  " use indent from current line when making new line
+" set autoindent  " use indent from current line when making new line
 set backspace=indent,eol,start  " when at beginning of line, pressing backspace joins with prev line
 set whichwrap+=<,>,[,]  " moves to next line when pressing right at end of line
 set linebreak  " wrap lines at words
 set smarttab
-set laststatus=2  " always show statusbar
+" set laststatus=2  " always show statusbar
 set autoread  " auto reload file when unchanged in vim and changed outside vim
 set history=2000
 set scrolloff=2  " scrolling shows one line extra
@@ -23,8 +23,8 @@ set expandtab
 set updatetime=250
 
 " show relative line numbers, except in current line
-" set number
-" set relativenumber
+set number
+set relativenumber
 
 " jump to last position on VIM start
 if has("autocmd")
@@ -60,7 +60,7 @@ let g:netrw_bufsettings = 'nomodifiable nomodified readonly nobuflisted nowrap'
 map <C-_> :Lexplore<CR>
 
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'yaml=ansible', 'jinja2=ansible_template', 'ini=dosini']
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ini=dosini']
 let g:markdown_syntax_conceal = 0
 let g:markdown_enable_mappings = 0
 let g:markdown_enable_spell_checking = 0
@@ -108,54 +108,18 @@ nnoremap <silent> <Leader>. :execute 's/^\(\s*[-+*]\?\s*\)\[x]/\1[ ]/'<cr>
 
 call plug#begin()
 
-" turn off syntax highlight for inactive panes
-" Plug 'blueyed/vim-diminactive'
-let g:diminactive_use_syntax = 1
-let g:diminactive_use_colorcolumn = 0
-let g:diminactive_buftype_blacklist = ['nofile', 'nowrite', 'acwrite', 'quickfix' ]
 
-" airline
-Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
-let g:airline_powerline_fonts = 1
-let g:airline_skip_empty_sections = 1
-let g:airline_section_c = '%<%f%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
-let g:airline#extensions#default#layout = [
-  \ [ 'a', 'b', 'c' ],
-  \ [ 'error', 'warning' ]
-  \ ]
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_min_count = 2
-
-Plug 'junegunn/goyo.vim'
-nnoremap <leader>l :Goyo<CR>
-let g:goyo_width = 80
-let g:goyo_height = 100
-function! s:goyo_enter()  " Goyo auto-close with :q
-  let b:quitting = 0
-  let b:quitting_bang = 0
-  autocmd QuitPre <buffer> let b:quitting = 1
-  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-endfunction
-function! s:goyo_leave()
-  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
-    if b:quitting_bang
-      qa!
-    else
-      qa
-    endif
-  endif
-endfunction
-autocmd! User GoyoEnter call <SID>goyo_enter()
-autocmd! User GoyoLeave call <SID>goyo_leave()
-
-" collection of syntax plugins
-Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['markdown']
-autocmd BufNewFile,BufFilePre,BufRead play*.yml set filetype=ansible
-
-Plug 'tpope/vim-surround'
-" Plug 'dahu/vim-fanfingtastic'  " f/t object wraps over lines
-" Plug 'easymotion/vim-easymotion'
+" " airline
+" Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
+" let g:airline_powerline_fonts = 1
+" let g:airline_skip_empty_sections = 1
+" let g:airline_section_c = '%<%f%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
+" let g:airline#extensions#default#layout = [
+"   \ [ 'a', 'b', 'c' ],
+"   \ [ 'error', 'warning' ]
+"   \ ]
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#buffer_min_count = 2
 
 Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
 let g:UltiSnipsSnippetDirectories = ["snip"]
@@ -163,7 +127,6 @@ let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
-" Plug 'tpope/vim-endwise'  " auto-close if/func/...
 Plug 'raimondi/delimitmate'  " auto-close brackets
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
@@ -177,24 +140,11 @@ nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <leader>m :History<CR>
 nnoremap <silent> <leader>o :Commits<CR>
 
-" Plug 'wellle/targets.vim'  " add more text objects
-
 Plug 'mhinz/vim-grepper'  " auto-uses ag, ack etc.
 let g:grepper = {}
 let g:grepper.highlight = 1
 nnoremap <leader>g :Grepper<CR>
 nnoremap <leader>G :Grepper -cword -noprompt<cr>
-
-" Tabular split on first = or :
-Plug 'godlygeek/tabular'
-nmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
-vmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
-nmap <Leader>a: :Tabularize /:\zs<CR>
-vmap <Leader>a: :Tabularize /:\zs<CR>
-nmap <Leader>a, :Tabularize /,\zs<CR>
-vmap <Leader>a, :Tabularize /,\zs<CR>
-
-Plug 'tpope/vim-fugitive'
 
 " TComment
 nnoremap <silent> <leader># :TComment<CR>
@@ -208,8 +158,8 @@ nmap <Leader>< <Plug>GitGutterNextHunk
 nmap <Leader>> <Plug>GitGutterPrevHunk
 
 " color schemes
-Plug 'morhetz/gruvbox'
 Plug 'sjl/badwolf'
+Plug 'morhetz/gruvbox'
 
 " python
 Plug 'scrooloose/syntastic'
@@ -240,16 +190,24 @@ call plug#end()
 " fallback color scheme
 try
     set background=dark
-    colorscheme badwolf  " available: gruvbox, badwolf
-    let g:airline_theme='jellybeans'
+
+    " GRUVBOX
+    colorscheme gruvbox
+    highlight GruvboxGreenSign ctermbg=NONE guibg=NONE ctermfg=142 guifg=#b8bb26
+    highlight GruvboxAquaSign ctermfg=108 ctermbg=NONE guifg=#8ec07c guibg=NONE
+    highlight GruvboxRedSign ctermfg=167 ctermbg=NONE guifg=#fb4934 guibg=NONE
+
+    " BADWOLF
+    " colorscheme badwolf
+    " let g:airline_theme='jellybeans'
 catch
     colorscheme pablo
     highlight StatusLine term=bold,reverse ctermfg=11 ctermbg=242 guifg=yellow guibg=DarkGray
 endtry
 
 " show invisible chars
-"set list
-"set listchars=tab:▸\ ,trail:•,extends:»,precedes:«
+set list
+set listchars=tab:▸\ ,trail:•,extends:»,precedes:«
 highlight SpecialKey ctermfg=240 guifg=#888888
 highlight NonText ctermfg=240 guifg=#888888
 
@@ -257,8 +215,8 @@ highlight NonText ctermfg=240 guifg=#888888
 highlight clear SignColumn
 
 " dark line numbers and tilde symbols after EOF
-highlight LineNr ctermfg=240 guifg=#444444
-highlight NonText ctermfg=240 guifg=#444444
+highlight LineNr ctermfg=241 guifg=#555555
+highlight NonText ctermfg=241 guifg=#555555
 
 " make VIM background like terminal/gui background
 highlight NonText guibg=#282a36 ctermbg=none
