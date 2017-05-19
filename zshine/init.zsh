@@ -35,9 +35,9 @@ SAVEHIST=100000
 HISTFILE=~/.zsh_history
 
 setopt NOTIFY # Report status of background jobs immediately.
-unsetopt BG_NICE # Don't run all background jobs at a lower priority.
-unsetopt HUP # Don't kill jobs on shell exit.
-unsetopt CHECK_JOBS # Don't report on jobs when shell exit.
+unsetopt BG_NICE # Dont run all background jobs at a lower priority.
+unsetopt HUP # Dont kill jobs on shell exit.
+unsetopt CHECK_JOBS # Dont report on jobs when shell exit.
 setopt LONG_LIST_JOBS # list jobs in the long format (with pid etc.)
 setopt HIST_IGNORE_ALL_DUPS # dont add duplicate dommands
 setopt HIST_IGNORE_SPACE # do not add commands starting with space to history

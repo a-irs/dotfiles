@@ -23,8 +23,8 @@ set expandtab
 set updatetime=250
 
 " show relative line numbers, except in current line
-set number
-set relativenumber
+" set number
+" set relativenumber
 
 " jump to last position on VIM start
 if has("autocmd")
