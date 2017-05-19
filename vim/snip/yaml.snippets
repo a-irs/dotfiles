@@ -1,10 +1,10 @@
-snippet task "Task"
+snippet task "Task" b
 - name: ${1:taskname}
   ${2:module}:
     ${3:arg}: ${4:value}
 endsnippet
 
-snippet "tpl|template" "Ansible Template"
+snippet "tpl|templ|template" "Ansible Template" br
 - name: ${1:taskname}
   template:
     backup: yes
@@ -12,12 +12,12 @@ snippet "tpl|template" "Ansible Template"
     dest: ${3:dest}
 endsnippet
 
-snippet role "Role"
+snippet role "Role" b
     - role: ${1:rolename}
-      tags: ${0:rolename}
+      tags: $1
 endsnippet
 
-snippet "play|playbook" "Playbook"
+snippet "play|playbook" "Playbook" br
 - name: ${1:playbook name}
   hosts: all
   become: yes
@@ -25,5 +25,5 @@ snippet "play|playbook" "Playbook"
   roles:
 
     - role: ${2:rolename}
-      tags: ${3:rolename}
+      tags: $2
 endsnippet
