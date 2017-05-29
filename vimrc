@@ -181,6 +181,18 @@ Plug 'davidoc/taskpaper.vim'
 highlight taskpaperDone ctermfg=243 guifg=#857f78
 let g:task_paper_styles={ 'crit': 'guibg=#dd5010' }
 
+Plug 'ap/vim-buftabline'
+set hidden
+let g:buftabline_show = 1
+
+Plug 'ntpeters/vim-better-whitespace'
+
+Plug 'pearofducks/ansible-vim'
+let g:ansible_unindent_after_newline = 1
+let g:ansible_extra_keywords_highlight = 1
+autocmd BufNewFile,BufFilePre,BufRead inventory/* set filetype=ansible_hosts
+autocmd BufNewFile,BufFilePre,BufRead *.yml set filetype=ansible
+
 call plug#end()
 
 
