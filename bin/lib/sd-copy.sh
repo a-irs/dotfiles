@@ -1,27 +1,32 @@
 #!/usr/bin/env bash
 
-DEST=/media/data/photos
-SRC=/media/sd-card
-
-control_c() {
-  echo -en "\n*** CTRL+C - starting cleanup ***\n"
-  sync
-  umount -lf "$SRC"
-  sync
-  exit $?
+log() {
+    printf "%s\n" "$(date +'%F %T') $1" >> ~/camcopy.log
 }
 
-trap control_c SIGINT
+SRC=/media/sd-card
+DEST=/media/data/photos
+
+log "starting"
+
+cleanup() {
+    log "starting cleanup"
+    sync
+    umount -lf "$SRC"
+    sync
+    log "finished cleanup, exiting"
+    exit $?
+}
+trap cleanup INT TERM EXIT
 
 delay=0.3
+log "mounting $SRC"
 mount "$SRC"
 if [ $? -eq 0 ]; then
         echo -e '\a' > /dev/console
-        /root/.bin/camcopy.py "$SRC" "$DEST"
-        sync
-        umount -lf "$SRC"
-        sleep 2s
-        sync
+        log "starting copy"
+        /root/.bin/camcopy.py "$SRC" "$DEST" >> ~/camcopy.log 2>> ~/camcopy.err
+        log "finished copy"
         echo -e '\a' > /dev/console ; sleep $delay
         echo -e '\a' > /dev/console
 else
