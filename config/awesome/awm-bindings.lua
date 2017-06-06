@@ -163,9 +163,9 @@ globalkeys = awful.util.table.join(
               {description = "run color picker", group = "apps"}),
     awful.key({ alt }, "k",      function()
         local matcher = function(c)
-            return rules.match(c, {class = 'Keepassx2'})
+            return rules.match(c, {class = 'keepassxc'})
         end
-        awful.client.run_or_raise('keepassx2', matcher)
+        awful.client.run_or_raise('keepassxc', matcher)
     end, {description = "run keepass", group = "apps"}),
     awful.key({ alt }, "s",      function()
             local matcher = function(c)
