@@ -35,13 +35,14 @@ git_prompt_info() {
             server=$(printf "%s" "$server" | cut -d ':' -f 1)
             user=$(printf "$url" | cut -d ':' -f 2 | cut -d '/' -f 1)
         fi
-        if [[ $server == github.com ]]; then
-            url="${user}/${repo}"
-        else
-            url="${server}/${user}/${repo}"
+        if [[ $url ]]; then
+            if [[ $server == github.com ]]; then
+                url="${user}/${repo}"
+            else
+                url="${server}/${user}/${repo}"
+            fi
         fi
     fi
-    [[ "${url}" == / ]] && url="N/A"
     prompt_segment "$ZSHINE_GIT_URL_BG" "$ZSHINE_GIT_URL_FG" "${url}"
     prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_COMMIT_FG" "${commit}"
     [[ "$protocol" == 'ssh' ]] || prompt_segment "$ZSHINE_GIT_PROTOCOL_BG" "$ZSHINE_GIT_PROTOCOL_FG" "${protocol}"
