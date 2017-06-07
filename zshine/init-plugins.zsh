@@ -22,7 +22,6 @@ ZSHINE_PLUGINS=(
   termite # include CTRL+T for termite terminal program
   todo # show ~/.todo on start
   explain # explain command switches
-  ansible # ansible functions
 )
 for z in $ZSHINE_PLUGINS; do; source "$ZSHINE_DIR/plugins/$z.zsh"; done
 

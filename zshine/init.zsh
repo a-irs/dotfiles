@@ -7,7 +7,6 @@ os="$(uname)"
 typeset -gU cdpath fpath mailpath path
 [ -d "$HOME/.bin" ] && path=("$HOME/.bin" $path)
 [ -d "$HOME/.bin/$HOST" ] && path=("$HOME/.bin/$HOST" $path)
-[ -d "$HOME/.gem/ruby/2.3.0/bin" ] && path=("$HOME/.gem/ruby/2.3.0/bin" $path)
 fpath+=($ZSHINE_DIR/completion $ZSHINE_DIR/prompts $ZSHINE_DIR/plugins/zshmarks)
 
 # load prompt
