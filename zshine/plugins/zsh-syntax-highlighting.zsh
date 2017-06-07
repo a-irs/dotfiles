@@ -24,7 +24,7 @@ ZSH_HIGHLIGHT_STYLES[redirection]='fg=yellow,bold'
 ZSH_HIGHLIGHT_STYLES[comment]='fg=8,bold'
 
 # pattern
-ZSH_HIGHLIGHT_PATTERNS+=('rm -r*' 'fg=red,bold')
-ZSH_HIGHLIGHT_PATTERNS+=('rm -fr*' 'fg=red,bold')
-ZSH_HIGHLIGHT_PATTERNS+=('wipe *' 'fg=red,bold')
-ZSH_HIGHLIGHT_PATTERNS+=('dd *' 'fg=red,bold')
+ZSH_HIGHLIGHT_PATTERNS+=('rm -*r* ' 'fg=red,bold')
+ZSH_HIGHLIGHT_PATTERNS+=('wipe ' 'fg=red,bold')
+ZSH_HIGHLIGHT_PATTERNS+=('dd ' 'fg=red,bold')
+ZSH_HIGHLIGHT_PATTERNS+=('sudo ' 'fg=red,bold')
