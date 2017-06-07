@@ -18,11 +18,28 @@ git_prompt_info() {
     [[ "$?" -eq 0 ]] && commit="$tag"
     url=$(command git ls-remote --get-url 2> /dev/null)
     if [[ $ZSHINE_GIT_SHRINK_URL == 1 ]]; then
-        repo=${url:t}
-        repo=${repo//.git/}
-        protocol=${url%%:*}
-        user=$(printf "$url" | rev | cut -d '/' -f 2 | rev)
-        url="${user}/${repo}"
+        if [[ $url == *'://'* ]]; then
+            # ssh://git@server/user/project.git
+            # https://server/user/project.git
+            repo=${url:t}
+            repo=${repo//.git/}
+            protocol=${url%%://*}
+            server=$(printf "%s" "$url" | cut -d '/' -f 3)
+            user=$(printf "$url" | rev | cut -d '/' -f 2 | rev)
+        else
+            # git@server:user/project.git
+            repo=${url:t}
+            repo=${repo//.git/}
+            protocol=ssh
+            server=$(printf "%s" "$url" | cut -d '@' -f 2)
+            server=$(printf "%s" "$server" | cut -d ':' -f 1)
+            user=$(printf "$url" | cut -d ':' -f 2 | cut -d '/' -f 1)
+        fi
+        if [[ $server == github.com ]]; then
+            url="${user}/${repo}"
+        else
+            url="${server}/${user}/${repo}"
+        fi
     fi
     [[ "${url}" == / ]] && url="N/A"
     prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_URL_FG" "${url}"
