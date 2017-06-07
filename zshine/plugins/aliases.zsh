@@ -217,11 +217,6 @@ if [[ "$os" = Darwin ]]; then
     alias la='gls --quoting-style=literal -F -l -h -A    --color=auto --group-directories-first'
     alias l.='gls --quoting-style=literal -F    -h -d .* --color=auto --group-directories-first'
     alias lt='gls --quoting-style=literal -F -l -h -t -r --color=auto --group-directories-first'
-#    alias  l='\ls   -GF'
-#    alias ll='\ls -lhGF'
-#    alias ls='\ls -lhGF'
-#    alias la='\ls -lhGF -A'
-#    alias l.='\ls -lhGF -d .*'
     alias lo='\ls -lhGF -O@'
 else
     alias ls='command ls --quoting-style=literal -F -l -h --color=auto --group-directories-first'
