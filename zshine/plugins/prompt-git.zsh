@@ -42,10 +42,10 @@ git_prompt_info() {
         fi
     fi
     [[ "${url}" == / ]] && url="N/A"
-    prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_URL_FG" "${url}"
-    prompt_segment "$ZSHINE_GIT_URL_BG" "cyan" "${protocol}"
+    prompt_segment "$ZSHINE_GIT_URL_BG" "$ZSHINE_GIT_URL_FG" "${url}"
     prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_COMMIT_FG" "${commit}"
-    [[ "$branch" = '' ]] || prompt_segment "$ZSHINE_GIT_BRANCH_BG" "$ZSHINE_GIT_BRANCH_FG" "${branch}"
+    [[ "$protocol" == 'ssh' ]] || prompt_segment "$ZSHINE_GIT_PROTOCOL_BG" "$ZSHINE_GIT_PROTOCOL_FG" "${protocol}"
+    [[ "$branch" == '' ]] || prompt_segment "$ZSHINE_GIT_BRANCH_BG" "$ZSHINE_GIT_BRANCH_FG" "${branch}"
     prompt_segment "$ZSHINE_GIT_DIRTY_BG" "$ZSHINE_GIT_DIRTY_FG" "$(git_remote_state)$(git_dirty)"
 }
 
