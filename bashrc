@@ -8,8 +8,8 @@ shopt -s histappend  # append history instead of overwrite
 
 is_cmd() { command -v "$1" > /dev/null 2>&1; }
 
-is_cmd vi   && export EDITOR=vi
 is_cmd nano && export EDITOR=nano
+is_cmd vi   && export EDITOR=vi
 is_cmd vim  && export EDITOR=vim
 
 is_cmd dircolors && eval "$(dircolors -b)"
@@ -73,5 +73,4 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
-[ -f ~/.bash_aliases ] && source ~/.bash_aliases || true
-
+[[ -f ~/.bash_aliases ]] && source ~/.bash_aliases
