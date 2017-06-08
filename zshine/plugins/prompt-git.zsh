@@ -24,7 +24,7 @@ git_prompt_info() {
             repo=${url:t}
             repo=${repo//.git/}
             protocol=${url%%://*}
-            server=$(printf "%s" "$url" | cut -d '/' -f 3)
+            server=$(printf "%s" "$url" | cut -d '/' -f 3 | cut -d '@' -f 2 | cut -d ':' -f 1)
             user=$(printf "$url" | rev | cut -d '/' -f 2 | rev)
         else
             # git@server:user/project.git
