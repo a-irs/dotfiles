@@ -31,19 +31,13 @@ git_prompt_info() {
             repo=${url:t}
             repo=${repo//.git/}
             protocol=ssh
-            server=$(printf "%s" "$url" | cut -d '@' -f 2)
-            server=$(printf "%s" "$server" | cut -d ':' -f 1)
+            server=$(printf "%s" "$url" | cut -d '@' -f 2 | cut -d ':' -f 1)
             user=$(printf "$url" | cut -d ':' -f 2 | cut -d '/' -f 1)
         fi
-        if [[ $url ]]; then
-            if [[ $server == github.com ]]; then
-                url="${user}/${repo}"
-            else
-                url="${server}/${user}/${repo}"
-            fi
-        fi
+        url="${user}/${repo}"
     fi
-    prompt_segment "$ZSHINE_GIT_URL_BG" "$ZSHINE_GIT_URL_FG" "${url}"
+    [[ "$server" == github.com ]] || prompt_segment "$ZSHINE_GIT_SERVER_BG" "$ZSHINE_GIT_SERVER_FG" "${server}"
+    prompt_segment "$ZSHINE_GIT_PROJECT_BG" "$ZSHINE_GIT_PROJECT_FG" "${url}"
     prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_COMMIT_FG" "${commit}"
     [[ "$protocol" == 'ssh' ]] || prompt_segment "$ZSHINE_GIT_PROTOCOL_BG" "$ZSHINE_GIT_PROTOCOL_FG" "${protocol}"
     [[ "$branch" == '' ]] || prompt_segment "$ZSHINE_GIT_BRANCH_BG" "$ZSHINE_GIT_BRANCH_FG" "${branch}"
