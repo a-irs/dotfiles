@@ -104,6 +104,12 @@ nnoremap <leader>9 :buffer 9<CR>
 nnoremap <silent> <Leader>, :execute 's/^\(\s*[-+*]\?\s*\)\[ \]/\1[x]/'<cr>
 nnoremap <silent> <Leader>. :execute 's/^\(\s*[-+*]\?\s*\)\[x]/\1[ ]/'<cr>
 
+" surround with something
+nnoremap <leader>z viw<esc>a"<esc>hbi"<esc>lel
+nnoremap <leader>Z viW<esc>a"<esc>hBi"<esc>lel
+nnoremap <leader>u viw<esc>a)<esc>hbi(<esc>lel
+nnoremap <leader>U viW<esc>a)<esc>hBi(<esc>lel
+
 """ PLUGINS
 
 call plug#begin()
@@ -192,6 +198,8 @@ let g:ansible_unindent_after_newline = 1
 let g:ansible_extra_keywords_highlight = 1
 autocmd BufNewFile,BufFilePre,BufRead inventory/* set filetype=ansible_hosts
 autocmd BufNewFile,BufFilePre,BufRead *.yml set filetype=ansible
+
+Plug 'rhysd/committia.vim'
 
 call plug#end()
 
