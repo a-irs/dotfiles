@@ -37,7 +37,7 @@ git_prompt_info() {
         url="${user}/${repo}"
     fi
     [[ "$server" == github.com ]] || prompt_segment "$ZSHINE_GIT_SERVER_BG" "$ZSHINE_GIT_SERVER_FG" "${server}"
-    prompt_segment "$ZSHINE_GIT_PROJECT_BG" "$ZSHINE_GIT_PROJECT_FG" "${url}"
+    [[ "$url" == '/' ]] || prompt_segment "$ZSHINE_GIT_PROJECT_BG" "$ZSHINE_GIT_PROJECT_FG" "${url}"
     prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_COMMIT_FG" "${commit}"
     [[ "$protocol" == 'ssh' ]] || prompt_segment "$ZSHINE_GIT_PROTOCOL_BG" "$ZSHINE_GIT_PROTOCOL_FG" "${protocol}"
     [[ "$branch" == '' ]] || prompt_segment "$ZSHINE_GIT_BRANCH_BG" "$ZSHINE_GIT_BRANCH_FG" "${branch}"
