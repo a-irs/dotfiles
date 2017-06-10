@@ -9,11 +9,11 @@
 **/.config/.fzf/bin
 **/nzbget.log
 /srv/vuls-database/db
-/srv/docker/media/nzbget/drop
-/srv/docker/media/plex
-/srv/docker/monitor/graphite/storage
-/srv/docker/monitor/influxdb
-/srv/docker/monitor/prometheus
+/srv/docker/nzbget/drop
+/srv/docker/plex
+/srv/docker/graphite/storage
+/srv/docker/influxdb
+/srv/docker/prometheus
 **/dev/moto
 **/tmp
 **/.fr-*
