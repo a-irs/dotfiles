@@ -83,8 +83,8 @@ borg create \
     "$REPO"::"$DATE" \
     "${BACKUP[@]}"
 
-header 2 "PRUNING BACKUPS OLDER THAN 1 MONTH"
-borg prune --verbose --stats --list --keep-within 1m "$REPO"
+header 2 "PRUNING BACKUPS OLDER THAN 6 MONTHS"
+borg prune --verbose --stats --list --keep-within 6m "$REPO"
 
 header 2 "CLEANING UP BACKUP INFO FILES in $t"
 rm -rfv "$t"
