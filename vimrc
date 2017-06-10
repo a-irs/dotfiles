@@ -114,6 +114,8 @@ nnoremap <leader>U viW<esc>a)<esc>hBi(<esc>lel
 
 call plug#begin()
 
+Plug 'ekalinin/Dockerfile.vim'
+
 " " airline
 " Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
 " let g:airline_powerline_fonts = 1
