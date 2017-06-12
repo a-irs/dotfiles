@@ -202,6 +202,7 @@ autocmd BufNewFile,BufFilePre,BufRead inventory/* set filetype=ansible_hosts
 autocmd BufNewFile,BufFilePre,BufRead *.yml set filetype=ansible
 
 Plug 'rhysd/committia.vim'
+let g:committia_use_singlecolumn = 'always'
 
 call plug#end()
 
