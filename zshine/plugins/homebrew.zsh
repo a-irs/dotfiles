@@ -1,6 +1,6 @@
 [[ -d ~/Homebrew ]] || return
 
-path+=~/Homebrew/bin
+path=(~/Homebrew/bin $path)
 bup() {  brew update && brew upgrade && date +%s > ~/.brew-last-update; }
 local bup_current=$(date +%s)
 local bup_last=$(< ~/.brew-last-update)
