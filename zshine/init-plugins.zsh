@@ -22,6 +22,7 @@ ZSHINE_PLUGINS=(
   termite # include CTRL+T for termite terminal program
   todo # show ~/.todo on start
   explain # explain command switches
+  homebrew # macos package manager
 )
 for z in $ZSHINE_PLUGINS; do; source "$ZSHINE_DIR/plugins/$z.zsh"; done
 
