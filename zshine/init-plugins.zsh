@@ -24,7 +24,14 @@ ZSHINE_PLUGINS=(
   explain # explain command switches
   homebrew # macos package manager
 )
-for z in $ZSHINE_PLUGINS; do; source "$ZSHINE_DIR/plugins/$z.zsh"; done
 
-unset z
-unset ZSHINE_PLUGINS
+#zmodload zsh/datetime
+#prof_last=$((EPOCHREALTIME * 1000))
+for z in $ZSHINE_PLUGINS; do
+    source "$ZSHINE_DIR/plugins/$z.zsh"
+#    prof_now=$((EPOCHREALTIME * 1000))
+#    printf "%3d %s %s\n" "$((prof_now - prof_last))" "ms" "$z"
+#    prof_last=$prof_now
+done
+
+unset z ZSHINE_PLUGINS
