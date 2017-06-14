@@ -4,18 +4,20 @@ $3
 {% endfor %}
 endsnippet
 
-snippet "{|v" "variable"
+snippet "{|v" "variable" r
 {{ $1 }}
 endsnippet
 
 snippet if "if statement"
 {% if ${1:expr} %}
 $2
+{% else %}
+$3
 {% endif %}
 endsnippet
 
 snippet "eif|elif|elseif" "else if" r
-{% elif %}
+{% elif ${1:expr} %}
 endsnippet
 
 snippet else "else"
