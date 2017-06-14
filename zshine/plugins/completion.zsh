@@ -9,7 +9,9 @@ zmodload -i zsh/complist
 fpath+=($ZSHINE_DIR/completion $ZSHINE_DIR/plugins/zshmarks)
 [[ -d ~/Homebrew/share/zsh/site-functions ]] && fpath+=~/Homebrew/share/zsh/site-functions
 
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+# Try smart-case completion, then case-insensitive, then partial-word, and then substring completion.
+# See http://zsh.sourceforge.net/Doc/Release/Completion-Widgets.html#Completion-Matching-Control.
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Z}{a-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' list-colors ''
 
 # should this be in keybindings?

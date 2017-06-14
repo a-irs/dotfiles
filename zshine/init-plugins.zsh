@@ -23,6 +23,7 @@ ZSHINE_PLUGINS=(
   todo # show ~/.todo on start
   explain # explain command switches
   homebrew # macos package manager
+  calc # "=" alias
 )
 
 #zmodload zsh/datetime
