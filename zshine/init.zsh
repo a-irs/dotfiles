@@ -7,13 +7,11 @@ os="$(uname)"
 typeset -gU cdpath fpath mailpath path
 [ -d "$HOME/.bin" ] && path=("$HOME/.bin" $path)
 [ -d "$HOME/.bin/$HOST" ] && path=("$HOME/.bin/$HOST" $path)
-fpath+=($ZSHINE_DIR/completion $ZSHINE_DIR/prompts $ZSHINE_DIR/plugins/zshmarks)
 
 # load prompt
-autoload -U promptinit
-promptinit
-setopt prompt_subst
-prompt zshine
+fpath+=($ZSHINE_DIR/prompts)
+autoload -U promptinit && promptinit
+setopt prompt_subst && prompt zshine
 
 # zmv file-renaming
 autoload -U zmv
