@@ -153,9 +153,9 @@ globalkeys = awful.util.table.join(
               {description = "run terminal", group = "apps"}),
     awful.key({ alt }, "f",      function() awful.spawn("thunar") end,
               {description = "run filemanager", group = "apps"}),
-    awful.key({ alt }, "c",      function() awful.spawn('chromium')
+    awful.key({ alt }, "c",      function() awful.spawn('firefox')
         end, {description = "run browser", group = "apps"}),
-    awful.key({ alt, "Shift" }, "c", function () awful.spawn("chromium --incognito") end,
+    awful.key({ alt, "Shift" }, "c", function () awful.spawn("firefox --private-window") end,
               {description = "run private browser", group = "apps"}),
     awful.key({ win }, "l",      function () awful.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh", false) end,
               {description = "lock screen", group = "apps"}),

@@ -13,7 +13,7 @@ search_wrap = true
 icon_name = terminal
 cursor_blink = on
 cursor_shape = block
-browser = chromium
+browser = firefox
 size_hints = false
 
 [colors]
