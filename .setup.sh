@@ -98,6 +98,7 @@ install psql psqlrc
 install ranger config/ranger/rc.conf config/ranger/scope.sh
 install ssh ssh/config
 install tmux tmux.conf
+install nvim config/nvim/init.vim
 install vim vimrc vim/autoload/plug.vim vim/snip
 install zsh zprofile zshrc zshine
 

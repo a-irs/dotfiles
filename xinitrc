@@ -27,6 +27,7 @@ dropbox-cli start &
 mkdir -p ~/.thumbnails && ln -sf ~/.thumbnails ~/.cache/thumbnails
 compton &
 start-pulseaudio-x11 &
+keepassxc &
 
 session=${1:-awesome}
 exec "$session"
