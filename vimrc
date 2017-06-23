@@ -147,7 +147,7 @@ nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <leader>m :History<CR>
 nnoremap <silent> <leader>o :Commits<CR>
 
-Plug 'mhinz/vim-grepper'  " auto-uses ag, ack etc.
+Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }  " auto-uses ag, ack etc.
 let g:grepper = {}
 let g:grepper.highlight = 1
 nnoremap <leader>g :Grepper<CR>
