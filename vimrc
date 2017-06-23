@@ -114,8 +114,6 @@ nnoremap <leader>U viW<esc>a)<esc>hBi(<esc>lel
 
 call plug#begin()
 
-Plug 'ekalinin/Dockerfile.vim'
-
 " " airline
 " Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
 " let g:airline_powerline_fonts = 1
@@ -154,9 +152,9 @@ nnoremap <leader>g :Grepper<CR>
 nnoremap <leader>G :Grepper -cword -noprompt<cr>
 
 " TComment
+Plug 'tomtom/tcomment_vim'
 nnoremap <silent> <leader># :TComment<CR>
 vnoremap <silent> <leader># :TComment<CR>
-Plug 'tomtom/tcomment_vim'
 
 " gitgutter
 Plug 'airblade/vim-gitgutter'
@@ -165,8 +163,8 @@ nmap <Leader>< <Plug>GitGutterNextHunk
 nmap <Leader>> <Plug>GitGutterPrevHunk
 
 " color schemes
-Plug 'sjl/badwolf'
 Plug 'morhetz/gruvbox'
+" Plug 'sjl/badwolf'
 
 " python
 Plug 'scrooloose/syntastic'
@@ -185,7 +183,7 @@ let g:syntastic_warning_symbol = "\u26A0"
 let g:syntastic_style_warning_symbol = "\u26A0"
 " highlight SyntasticErrorSign guifg=red guibg=NONE
 
-Plug 'davidoc/taskpaper.vim'
+Plug 'davidoc/taskpaper.vim', { 'for': 'taskpaper' }
 highlight taskpaperDone ctermfg=243 guifg=#857f78
 let g:task_paper_styles={ 'crit': 'guibg=#dd5010' }
 
