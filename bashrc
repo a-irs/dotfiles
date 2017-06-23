@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 eval $(ssh-agent) > /dev/null
 
 HISTSIZE=100000
@@ -12,6 +14,8 @@ is_cmd nano && export EDITOR=nano
 is_cmd vi   && export EDITOR=vi
 is_cmd vim  && export EDITOR=vim
 
+is_cmd gls  && ls() { gls "$@"; }
+
 is_cmd dircolors && eval "$(dircolors -b)"
 
 PROMPT_COMMAND=_prompt
@@ -25,9 +29,7 @@ _prompt() {
     local blue='\[\e[1;34m\]'
     local magenta='\[\e[1;35m\]'
 
-    if [[ -n "$SSH_CONNECTION" ]]; then
-        local PREFIX="${magenta}[SSH] ${reset}"
-    fi
+    [[ -n "$SSH_CONNECTION" ]] && local PREFIX="${magenta}[SSH] ${reset}"
 
     user_color=$blue
     [ $UID = 0 ] && user_color=$red
