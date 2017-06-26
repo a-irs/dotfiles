@@ -1,7 +1,11 @@
 #!/usr/bin/env zsh
 
-noglobs=(find ftp locate rake rsync scp sftp wcalc)
-for c in $noglobs; do
+for x in :q :q! :wq :x; do
+    alias "$x"=exit
+done
+unset x
+
+for c in find ftp locate rake rsync scp sftp wcalc; do
     [[ "$commands[$c]" ]] && alias $c="noglob $c"
 done
 
@@ -70,17 +74,6 @@ count_files() {
 count_files_rec() {
     find "$@" -type f | wc -l
 }
-
-if [[ "$commands[ranger]" ]]; then
-    ranger() {
-        [[ "$RANGER_LEVEL" ]] && exit
-        tmp='/tmp/chosendir'
-        command ranger --choosedir="$tmp" "${@:-$PWD}"
-        [[ -f "$tmp" && $(cat -- "$tmp") != "$PWD" ]] && cd -- "$(cat -- "$tmp")"
-        rm -f -- "$tmp"
-    }
-    alias ra='ranger'
-fi
 
 dl() {
     case "$1" in
@@ -401,45 +394,6 @@ highlight_files() {
     grep --color -E "$1|$" "${@:2}"
 }
 
-if [[ "$commands[openvpn]" ]]; then
-    vpn() {
-        set +e
-        if [[ -f /tmp/openvpn.pid ]]; then
-            ps "$(</tmp/openvpn.pid)" &> /dev/null
-            if (( $? != 0 )); then
-                sudo rm -f /tmp/openvpn.pid
-            else
-                echo -e "${BOLD_RED}VPN with PID $(</tmp/openvpn.pid) already active:${RESET}\n"
-                ps -o cmd "$(</tmp/openvpn.pid)" | tail -n 1
-                return 1
-            fi
-        fi
-        for f in $HOME/.openvpn/**/$1.ovpn; do
-            d=$(echo "$f" | rev | cut -d "/" -f 2- | rev)
-            #vpncolor.py sudo openvpn --cd "$d" --config "$f"
-            sudo openvpn --daemon --writepid /tmp/openvpn.pid --cd "$d" --config "$f"
-        done
-        set -e
-    }
-
-    vpn-log() {
-        if [[ -f /tmp/openvpn.pid ]]; then
-            journalctl -n 20 -f _PID="$(</tmp/openvpn.pid)"
-        else
-            echo "${BOLD_RED}No VPN active.${RESET}"
-        fi
-    }
-
-    vpn-stop() {
-        if [[ -f /tmp/openvpn.pid ]]; then
-            sudo kill "$(</tmp/openvpn.pid)"
-            sudo rm -f /tmp/openvpn.pid
-        else
-            echo "${BOLD_RED}No VPN active.${RESET}"
-        fi
-    }
-fi
-
 if [[ "$commands[git]" ]]; then
     alias g="git"
     alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white) %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
@@ -580,11 +534,10 @@ xr-scale() {
 
 russian-roulette() {
     echo -n "spinning "
-    s=$(( $RANDOM.0 / 100000 ))
+    s=$(( $RANDOM.0 / 75000 ))
     num=$(( RANDOM % 8 + 2 ))
 
-    for (( c = 0; c <= num; c++ ))
-    do
+    for (( c = 0; c <= num; c++ )); do
         echo -n "."
         sleep $s
     done
