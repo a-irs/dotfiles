@@ -118,9 +118,11 @@ else
     rm -f ~/.local/share/kupfer/plugins/recdirs.py
 fi
 
-if [[ -d ~/.mozilla/firefox ]]; then
-    profile=$(find ~/.mozilla/firefox -mindepth 1 -maxdepth 1 -type d | tail -n 1)
-    mkdir -p "$profile/chrome"
-    ln --force --symbolic --relative --no-target-directory --no-dereference "$this_dir/userChrome.css" "$profile/chrome/userChrome.css" 2> /dev/null
-    print_install "installed firefox userChrome"
+if [[ -f /usr/bin/firefox ]]; then
+    profile=$(find ~/.mozilla/firefox -mindepth 1 -maxdepth 1 -type d -name '*.default' | tail -n 1)
+    if [[ ! -f "$profile/chrome/userChrome.css" ]]; then
+        mkdir -p "$profile/chrome"
+        ln --force --symbolic --no-target-directory --no-dereference "$this_dir/userChrome.css" "$profile/chrome/userChrome.css" 2> /dev/null
+        print_install "${profile/$HOME/\~}/chrome/userChrome.css"
+    fi
 fi

@@ -28,6 +28,7 @@ mkdir -p ~/.thumbnails && ln -sf ~/.thumbnails ~/.cache/thumbnails
 compton &
 start-pulseaudio-x11 &
 keepassxc &
+~/.bin/wait-for-host 8.8.8.8 spotify &
 
 session=${1:-awesome}
 exec "$session"

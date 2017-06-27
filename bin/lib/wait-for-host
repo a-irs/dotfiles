@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
+REACHABLE_HOST="$1"
+shift
 cmd=$*
-[ -z "$cmd" ] && exit 1
-REACHABLE_HOST="srv"
 
 TRIES=0
 while true; do
     let TRIES++
-    if ((TRIES>50)); then
+    if ((TRIES>120)); then
         echo "Maximum tries reached, aborting."
         notify-send "\"$REACHABLE_HOST\" not reachable." "Command: $cmd" --icon=dialog-error
         exit 1
@@ -15,7 +15,7 @@ while true; do
 
     echo "Waiting for host at \"$REACHABLE_HOST\". Attempt Number "$TRIES"."
 
-    ping -c 1 $REACHABLE_HOST &> /dev/null
+    ping -W 1 -c 1 $REACHABLE_HOST &> /dev/null
     if [ $? -eq 0 ]; then
         echo "Host now reachable, executing \"$cmd\""
         $cmd
