@@ -23,7 +23,7 @@ set expandtab
 set updatetime=250
 
 " system clipboard and VIM default register is the same
-set clipboard^=unnamed,unnamedplus
+"   set clipboard^=unnamed,unnamedplus
 " delete single chars without yanking them
 noremap x "_x
 
