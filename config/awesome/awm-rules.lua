@@ -43,9 +43,6 @@ local function dynamic_tagging()
     awful.screen.connect_for_each_screen(function(s)
         for _, t in ipairs(awful.tag.gettags(s)) do
             append = ""
-            if t.layout and t.layout.name == "floating" then
-                append = "[f]"
-            end
             if is_empty(t) then
                 t.name = " " .. theme.taglist_empty_tag .. " " .. append
             else
@@ -111,16 +108,7 @@ t:connect_signal("timeout",
 )
 t:start()
 
-local function handle_floater(c)
-    c.ontop = awful.client.floating.get(c)
-end
-
 dynamic_tagging()
-
--- floating → set always on top
-client.connect_signal("property::floating", function(c)
-    handle_floater(c)
-end)
 
 -- client appears
 client.connect_signal("manage", function(c)
@@ -128,8 +116,6 @@ client.connect_signal("manage", function(c)
     if (c.class == "Kupfer.py") then
         return
     end
-
-    handle_floater(c)
 
     -- sloppy focus
     c:connect_signal("mouse::enter", function(c)

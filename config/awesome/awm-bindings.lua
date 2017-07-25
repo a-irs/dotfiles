@@ -3,6 +3,8 @@ local awful      = require 'awful'
 local rules      = require 'awful.rules'
 local naughty    = require 'naughty'
 local beautiful  = require 'beautiful'
+local gears      = require 'gears'
+
 
 win = "Mod4"
 alt = "Mod1"
@@ -135,10 +137,10 @@ globalkeys = awful.util.table.join(
 
     -- switch layouts
 
-    awful.key({ win            }, "space", function() awful.layout.inc(layouts,  1) end,
+    awful.key({ win            }, "space", function() awful.layout.inc(1) end,
         {description="next layout", group="layout"}),
 
-    awful.key({ win, "Shift"   }, "space", function() awful.layout.inc(layouts, -1) end,
+    awful.key({ win, "Shift"   }, "space", function() awful.layout.inc(-1) end,
         {description="previous layout", group="layout"}),
 
     -- launch programs
@@ -279,7 +281,7 @@ globalkeys = awful.util.table.join(
         {description="decrease # of columns", group="layout"})
 )
 
-clientkeys = awful.util.table.join(
+clientkeys = gears.table.join(
     awful.key({ win }, "f",  function(c)
         c.fullscreen = not c.fullscreen
         c:raise()

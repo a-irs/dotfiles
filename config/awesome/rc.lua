@@ -1,5 +1,6 @@
 local naughty    = require 'naughty'
 local awful      = require 'awful'
+local gears      = require 'gears'
 local lain       = require 'lain'
 local xresources = require('beautiful').xresources
 local beautiful  = require 'beautiful'
@@ -30,7 +31,7 @@ function is_empty(tag)
     return #tag:clients() == 0
 end
 
-beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme.lua")
+beautiful.init(gears.filesystem.get_configuration_dir () .. "theme.lua")
 
 require 'awm-notify-settings'
 

@@ -36,13 +36,12 @@ local function make_name(icon, name)
     return str .. " "
 end
 
-tags = {}
 awful.screen.connect_for_each_screen(function(s)
-    tags[s] = awful.tag({
+    awful.tag({
         make_name(nil, 1),
         make_name(nil, 2),
         make_name(nil, 3),
         make_name(nil, 4),
         make_name(nil, 5),
-        }, s, layouts[1])
+        }, s, awful.layout.layouts[1])
 end)
