@@ -1,28 +1,14 @@
 WORKON_HOME=~/dev/venvs
 VIRTUAL_ENV_DISABLE_PROMPT=1
 
-[ -f /usr/bin/python2 ] && alias mkvirtualenv2="mkvirtualenv -p /usr/bin/python2"
-[ -f /usr/bin/python3 ] && alias mkvirtualenv3="mkvirtualenv -p /usr/bin/python3"
+# (N) is for NULL_GLOB
+for p in /usr/bin/python[2-3]\.[0-9](N) /usr/bin/python[2-3](N); do
+    local v=${p:t}
+    v=${v//python/}
+    alias mkvirtualenv${v}="mkvirtualenv -p ${p}"
+done
 
-[ -f /usr/bin/virtualenvwrapper_lazy.sh ] && source /usr/bin/virtualenvwrapper_lazy.sh
-[ -f /usr/local/bin/virtualenvwrapper_lazy.sh ] && source /usr/local/bin/virtualenvwrapper_lazy.sh
-[ -f /usr/share/virtualenvwrapper/virtualenvwrapper_lazy.sh ] && source /usr/share/virtualenvwrapper/virtualenvwrapper_lazy.sh
-
-pa="$WORKON_HOME/postactivate"
-if [[ -w "$pa" ]]; then
-
-    cat <<EOF > $pa
-#!/usr/bin/zsh
-
-cd "\$VIRTUAL_ENV"
-
-cd() {
-    if (( \$# == 0 )) && [[ -n "\$VIRTUAL_ENV" ]]; then
-        builtin cd "\$VIRTUAL_ENV"
-    else
-        builtin cd "\$@"
-    fi
-}
-EOF
-
-fi
+for p in /usr/bin /usr/local/bin /usr/share/virtualenvwrapper; do
+    p=$p/virtualenvwrapper_lazy.sh
+    [[ -f "$p" ]] && source "$p"
+done
