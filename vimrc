@@ -169,7 +169,7 @@ nmap <Leader>> <Plug>GitGutterPrevHunk
 
 " color schemes
 Plug 'morhetz/gruvbox'
-" Plug 'sjl/badwolf'
+Plug 'sjl/badwolf'
 
 " python
 Plug 'scrooloose/syntastic'
@@ -217,14 +217,14 @@ try
     set background=dark
 
     " GRUVBOX
-    colorscheme gruvbox
+    " colorscheme gruvbox
     highlight GruvboxGreenSign ctermbg=NONE guibg=NONE ctermfg=142 guifg=#b8bb26
     highlight GruvboxAquaSign ctermfg=108 ctermbg=NONE guifg=#8ec07c guibg=NONE
     highlight GruvboxRedSign ctermfg=167 ctermbg=NONE guifg=#fb4934 guibg=NONE
 
     " BADWOLF
-    " colorscheme badwolf
-    " let g:airline_theme='jellybeans'
+    colorscheme badwolf
+    let g:airline_theme='jellybeans'
 catch
     colorscheme pablo
     highlight StatusLine term=bold,reverse ctermfg=11 ctermbg=242 guifg=yellow guibg=DarkGray
