@@ -5,7 +5,7 @@ ZSHINE_PLUGINS=(
   aliases # provides some aliases and functions for daily work
   dircolors # colors for "ls" command
   virtualenvwrapper # wrapper for python-virtualenv
-  zsh-syntax-highlighting # provides a syntax highlighted prompt
+  syntax-highlighting # provides a syntax highlighted prompt
   less-syntax-highlighting # syntax highlighting for "less" command
   zsh-history-substring-search # arrow key up/down history search
   bd # move back in current directory tree (breadcrumb-style)
