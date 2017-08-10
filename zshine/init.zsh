@@ -38,7 +38,6 @@ unsetopt CHECK_JOBS # Dont report on jobs when shell exit.
 setopt LONG_LIST_JOBS # list jobs in the long format (with pid etc.)
 setopt HIST_IGNORE_ALL_DUPS # dont add duplicate dommands
 setopt HIST_IGNORE_SPACE # do not add commands starting with space to history
-setopt HIST_NO_FUNCTIONS # do not add function declarations to history
 setopt HIST_NO_STORE # do not add 'history' command to history
 setopt HIST_REDUCE_BLANKS # strip spaces etc. when adding to history
 setopt HIST_VERIFY # safe history expansion

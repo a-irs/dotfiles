@@ -100,6 +100,9 @@ install ssh ssh/config
 install tmux tmux.conf
 install nvim config/nvim/init.vim
 install vim vimrc vim/autoload/plug.vim vim/snip
+if command -v vim >/dev/null 2>&1; then
+    vim '+PlugInstall' '+qall'
+fi
 install zsh zprofile zshrc zshine
 
 install awesome config/awesome
@@ -108,7 +111,7 @@ install mpv config/mpv/input.conf config/mpv/mpv.conf config/mpv/scripts/convert
 install redshift config/redshift.conf
 install subl3 config/sublime-text-3/Packages/User
 install termite config/termite/config
-install xinit xinitrc Xmodmap config/fontconfig/fonts.conf fonts gtkrc-2.0 icons config/user-dirs.dirs config/gtk-3.0/settings.ini
+install xinit xinitrc Xmodmap config/fontconfig/fonts.conf fonts gtkrc-2.0 icons/default/index.theme config/user-dirs.dirs config/gtk-3.0/settings.ini
 install zathura config/zathura/zathurarc
 
 if [[ -f /usr/bin/kupfer ]]; then
