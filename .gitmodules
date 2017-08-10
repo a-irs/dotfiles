@@ -7,3 +7,6 @@
 [submodule "zshine/plugins/fzf"]
 	path = zshine/plugins/fzf
 	url = https://github.com/junegunn/fzf
+[submodule "zshine/plugins/fast-syntax-highlighting"]
+	path = zshine/plugins/fast-syntax-highlighting
+	url = https://github.com/zdharma/fast-syntax-highlighting
