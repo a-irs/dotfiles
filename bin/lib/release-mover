@@ -12,6 +12,11 @@ get_name() { printf "%s\n" "$release" | grep -oP '^.*?((19|20)[0-9]{2}|German|S[
 
 get_year() { printf "%s\n" "$release" | grep -oP '(19|20)[0-9]{2}' | head -1; }
 
+get_year_tv() {
+    y=("/media/data/videos/tv/${1}"*)
+    printf "%s\n" "$y" | grep -oP '(19|20)[0-9]{2}' | head -1
+}
+
 get_metadata() {
     name=$(get_name)
     name_length=${#name}
@@ -137,7 +142,7 @@ if [[ $category == tv ]]; then
 
     read -er -i "$release"          -p "$(y 'Release:  ')" RELEASE
     read -er -i "$(get_name)"       -p "$(y 'Series:   ')" NAME
-    read -er -i "$(get_year)"       -p "$(y 'Year:     ')" YEAR
+    read -er -i "$(get_year_tv "$NAME")" -p "$(y 'Year:     ')" YEAR
     read -er -i "$(get_languages)"  -p "$(y 'Langs:    ')" LANGS
     read -er -i "$(get_video_size)" -p "$(y 'Size:     ')" SIZE
     read -er -i "$(get_source)"     -p "$(y 'Source:   ')" SOURCE
