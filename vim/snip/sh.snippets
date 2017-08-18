@@ -46,7 +46,7 @@ if command -v $1 > /dev/null 2>&1; then
 fi
 endsnippet
 
-snippet "#\!|env|she|shebang|bang|#" "shebang" br
+snippet "#\!|env|she|shebang|bang|#|sh" "shebang" br
 #!/usr/bin/env bash
 `!p snip.rv = '\n'`
 endsnippet
@@ -80,7 +80,7 @@ for (( i = 0; i < ${1:10}; i++ )); do
 done
 endsnippet
 
-snippet "forin|each|foreach" "for .. in .." br
+snippet "forin|each|foreach|fore" "for .. in .." br
 for ${1:i}${2/.+/ in /}${2:words}; do
     ${0:# statements}
 done
@@ -115,3 +115,15 @@ trap_${1:name}() {
 trap trap_$1 ${0:EXIT}
 endsnippet
 
+snippet "read|readline|readfile" "read line for line" br
+while read -r line; do
+    printf "%s\n" "$line"
+done < ${0:file}
+endsnippet
+
+snippet "confirmation|sure|input|prompt" "confirmation prompt" br
+read -r -p "Are you sure? (y/N) " -n1
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    pass
+fi
+endsnippet
