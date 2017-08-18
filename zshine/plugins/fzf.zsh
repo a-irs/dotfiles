@@ -27,3 +27,11 @@ fi
 
 FZF_ALT_C_OPTS='--height=20 --preview="gls -1 --color=always --group-directories-first -F -- {}"'
 bindkey '^f' fzf-cd-widget
+
+c() {
+    dir=$(while read -r line; do
+        d="${(Q)line}"
+        [[ -d "$d" ]] && printf "%s\n" "${d/$HOME/~}"
+    done < ~/.zsh_recent-dirs | fzf)
+    cd "${dir/\~/$HOME}"
+}
