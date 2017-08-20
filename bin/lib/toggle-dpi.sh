@@ -3,18 +3,21 @@
 set -e
 
 f=~/.Xresources
-value=$(grep Xft.dpi "$f" | rev | cut -d ":" -f 1 | tr -d '[[:space:]]' | rev)
+value=$(grep Xft.dpi "$f" | rev | cut -d ":" -f 1 | tr -d '[:space:]' | rev)
 
-hi=144
 no=96
+hi=144
+factor=1.5
 
+printf "%s\n" "current DPI: $value"
 if [[ $value == "$hi" ]]; then
-    sed --follow-symlinks -i "s|Xft.dpi: $hi|Xft.dpi: $no|" "$f"
-    echo "Xresources: HiDPI → normal"
+    sed --follow-symlinks -i "s|Xft.dpi: .*|Xft.dpi: $no|" "$f"
+    sudo sed -i "s|Exec=spotify .*|Exec=spotify %U|" /usr/share/applications/spotify.desktop
+    echo "Xresources: HiDPI $hi → normal $no"
 elif [[ $value == "$no" ]]; then
-    sed --follow-symlinks -i "s|Xft.dpi: $no|Xft.dpi: $hi|" "$f"
-    echo "Xresources: normal → HiDPI"
+    sed --follow-symlinks -i "s|Xft.dpi: .*|Xft.dpi: $hi|" "$f"
+    sudo sed -i "s|Exec=spotify .*|Exec=spotify --force-device-scale-factor=$factor %U|" /usr/share/applications/spotify.desktop
+    echo "Xresources: normal $no → HiDPI $hi"
 fi
 
 echo "awesome.quit()" | awesome-client
-
