@@ -60,8 +60,8 @@ theme.taglist_empty_tag             = "\28"
 theme.taglist_nonempty_tag          = "\27"
 
 if high_dpi then
-    theme.font = "Monospace 7"
-    theme.taglist_font = "Monospace 7"
+    theme.font = "Input 7"
+    theme.taglist_font = "Input 7"
     theme.taglist_empty_tag = "☐"  -- ○
     theme.taglist_nonempty_tag = "■"  -- ●
 end
