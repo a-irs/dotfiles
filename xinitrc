@@ -11,7 +11,6 @@ fi
 setxkbmap -option caps:escape &
 xset r rate 200 30 &
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources &
-[[ $HOSTNAME == desk ]] && numlockx &
 
 # screen
 xset -dpms &
@@ -23,12 +22,17 @@ kupfer --no-splash &
 lxpolkit &
 redshift &
 parcellite --no-icon &
-dropbox-cli start &
 mkdir -p ~/.thumbnails && ln -sf ~/.thumbnails ~/.cache/thumbnails
 compton &
 start-pulseaudio-x11 &
 keepassxc &
-~/.bin/wait-for-host 8.8.8.8 spotify &
+
+# wait for internet
+~/.bin/wait-for-host dropbox.com && dropbox-cli start &
+if [[ $HOSTNAME == desk ]]; then
+    numlockx &
+    ~/.bin/wait-for-host spotify.com && exo-open /usr/share/applications/spotify.desktop &
+fi
 
 session=${1:-awesome}
 exec "$session"
