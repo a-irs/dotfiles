@@ -1,6 +1,6 @@
 if [[ -f "$ZSHINE_DIR/dircolors" ]]; then
-    [[ "$os" = Linux  ]]  && eval $(dircolors -b "$ZSHINE_DIR/dircolors")
-    [[ "$os" = Darwin  ]] && eval $(gdircolors -b "$ZSHINE_DIR/dircolors")
+    [[ "$commands[dircolors]" ]] && eval $(dircolors -b "$ZSHINE_DIR/dircolors")
+    [[ "$commands[gdircolors]" ]] && eval $(gdircolors -b "$ZSHINE_DIR/dircolors")
 fi
 
 autoload colors; colors;
@@ -14,5 +14,5 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 if [[ $os == Darwin ]]; then
     export CLICOLOR=1
     #export LSCOLORS="Gxfxcxdxbxegedabagacad"
-    zstyle ':completion:*:default' list-colors ''  
+    zstyle ':completion:*:default' list-colors ''
 fi
