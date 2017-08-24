@@ -27,13 +27,18 @@ ZSHINE_PLUGINS=(
   ssh-agent
 )
 
-#zmodload zsh/datetime
-#prof_last=$((EPOCHREALTIME * 1000))
-for z in $ZSHINE_PLUGINS; do
-    source "$ZSHINE_DIR/plugins/$z.zsh"
-#    prof_now=$((EPOCHREALTIME * 1000))
-#    printf "%3d %s %s\n" "$((prof_now - prof_last))" "ms" "$z"
-#    prof_last=$prof_now
-done
-
-unset z ZSHINE_PLUGINS
+if [[ "$ZSHINE_DEBUG" == 1 ]]; then
+    zmodload zsh/datetime
+    b_prof_last=$((EPOCHREALTIME * 1000))
+    for z in $ZSHINE_PLUGINS; do
+        source "$ZSHINE_DIR/plugins/$z.zsh"
+        b_prof_now=$((EPOCHREALTIME * 1000))
+        printf "%3d %s -- %s\n" "$((b_prof_now - b_prof_last))" "ms" "$ZSHINE_DIR/plugins/$z.zsh"
+        b_prof_last=$b_prof_now
+    done
+else
+    for z in $ZSHINE_PLUGINS; do
+        source "$ZSHINE_DIR/plugins/$z.zsh"
+    done
+fi
+unset z

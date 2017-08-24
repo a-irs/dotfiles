@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
 
-ZSHINE_DIR=~/.zshine
 os="$(uname)"
 
 # no duplicate entries for path arrays
@@ -87,4 +86,3 @@ BOLD_WHITE=$(tput bold; tput setaf 7)
 BOLD_GREY=$(tput bold; tput setaf 8)
 
 source "$ZSHINE_DIR/init-plugins.zsh"
-
