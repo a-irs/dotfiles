@@ -12,7 +12,7 @@ done
 [[ -d ~/Documents ]] && alias todo="vim + ~/Documents/TODO.taskpaper"
 [[ -d ~/doc ]] && alias todo="vim + ~/doc/TODO.taskpaper"
 
-mac() { tput setaf 2 && curl -q "http://api.macvendors.com/$1" && printf "\n"; }
+mac() { printf "%s" "$GREEN" && curl -q "http://api.macvendors.com/$1" && printf "\n"; }
 
 tar-tar() { tar cvaf "$(basename "$PWD")".tar -- "$@"; }
 tar-gz()  { tar cvaf "$(basename "$PWD")".tar.gz -- "$@"; }
@@ -46,8 +46,8 @@ back() {
 monitor() {
     while true; do
         clear
-        printf '%s%s\n' "$(tput setaf 2)" "$*"
-        printf '%s%*s%s' "$(tput setaf 2)" "$(tput cols)" "$(date +%H:%M:%S)" "$(tput sgr0)"
+        printf '%s%s\n' "$GREEN" "$*"
+        printf '%s%*s%s' "$GREEN" "$(tput cols)" "$(date +%H:%M:%S)" "$RESET"
         eval "$@"
         sleep 0.5
     done

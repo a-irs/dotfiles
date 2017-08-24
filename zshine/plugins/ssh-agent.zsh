@@ -12,7 +12,7 @@ export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 export SSH_AGENT_PID=$(find ~/.ssh/ssh_agent_pid -printf %l)
 
 if ! ssh-add -l > /dev/null; then
-    printf "\n%s" "$(tput setaf 6)"
+    printf "\n%s" "$BOLD_CYAN"
     ssh-add
-    printf "%s" "$(tput sgr0)"
+    printf "%s" "$RESET"
 fi
