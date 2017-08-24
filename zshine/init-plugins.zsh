@@ -23,7 +23,6 @@ ZSHINE_PLUGINS=(
   termite # include CTRL+T for termite terminal program
   todo # show ~/.todo on start
   explain # explain command switches
-  calc # "=" alias
   ssh-agent
 )
 
