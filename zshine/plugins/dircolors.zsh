@@ -1,5 +1,6 @@
 if [[ -f "$ZSHINE_DIR/dircolors" ]]; then
-    [[ "$os" = Linux  ]] && eval $(dircolors -b "$ZSHINE_DIR/dircolors")
+    [[ "$os" = Linux  ]]  && eval $(dircolors -b "$ZSHINE_DIR/dircolors")
+    [[ "$os" = Darwin  ]] && eval $(gdircolors -b "$ZSHINE_DIR/dircolors")
 fi
 
 autoload colors; colors;

@@ -1,4 +1,5 @@
 ZSHINE_PLUGINS=(
+  homebrew # macos package manager
   cdr # recent dirs command
   # magic-paste # auto-quote URLs on paste
   term-title # sets terminal/tab title
@@ -22,7 +23,6 @@ ZSHINE_PLUGINS=(
   termite # include CTRL+T for termite terminal program
   todo # show ~/.todo on start
   explain # explain command switches
-  homebrew # macos package manager
   calc # "=" alias
 )
 
