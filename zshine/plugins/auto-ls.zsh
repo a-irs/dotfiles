@@ -1,9 +1,11 @@
 #!/usr/bin/env zsh
 
 if [[ "$os" = Darwin ]]; then
-    chpwd() {        gls --quoting-style=literal -F --color=auto --group-directories-first; }
+    if [[ "$commands[gls]" ]]; then
+        chpwd() { gls -F --literal --color=auto; }
+    else
+        chpwd() { command ls -F; }
+    fi
 else
-    chpwd() { command ls --quoting-style=literal -F --color=auto --group-directories-first; }
+    chpwd() { command ls -F --literal --color=auto; }
 fi
-
-[[ "$TERM" != linux ]] && chpwd 2> /dev/null

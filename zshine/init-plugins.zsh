@@ -24,6 +24,7 @@ ZSHINE_PLUGINS=(
   todo # show ~/.todo on start
   explain # explain command switches
   calc # "=" alias
+  ssh-agent
 )
 
 #zmodload zsh/datetime
