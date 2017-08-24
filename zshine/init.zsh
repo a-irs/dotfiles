@@ -18,16 +18,18 @@ autoload -U zmv
 zstyle ':completion:*' rehash true # always rehash on completion
 
 export GREP_COLOR='1;32'
-export PAGER=less
 export TZ='Europe/Berlin'
 export REPORTTIME=5
+
+[[ $commands[more] ]] && export PAGER=more
+[[ $commands[less] ]] && export PAGER=less
 
 [[ $commands[nano] ]] && export EDITOR=nano
 [[ $commands[vi] ]]   && export EDITOR=vi
 [[ $commands[vim] ]]  && export EDITOR=vim
 
-HISTSIZE=100000
-SAVEHIST=100000
+HISTSIZE=10000000
+SAVEHIST=10000000
 HISTFILE=~/.zsh_history
 
 setopt NOTIFY # Report status of background jobs immediately.
@@ -66,6 +68,8 @@ if [[ $TERM != *"-256color" ]]; then
 fi
 
 RESET=$(tput sgr0)
+BOLD=$(tput bold)
+
 BLACK=$(tput setaf 0)
 RED=$(tput setaf 1)
 GREEN=$(tput setaf 2)
@@ -75,14 +79,15 @@ MAGENTA=$(tput setaf 5)
 CYAN=$(tput setaf 6)
 WHITE=$(tput setaf 7)
 GREY=$(tput setaf 8)
-BOLD_BLACK=$(tput bold; tput setaf 0)
-BOLD_RED=$(tput bold; tput setaf 1)
-BOLD_GREEN=$(tput bold; tput setaf 2)
-BOLD_YELLOW=$(tput bold; tput setaf 3)
-BOLD_BLUE=$(tput bold; tput setaf 4)
-BOLD_MAGENTA=$(tput bold; tput setaf 5)
-BOLD_CYAN=$(tput bold; tput setaf 6)
-BOLD_WHITE=$(tput bold; tput setaf 7)
-BOLD_GREY=$(tput bold; tput setaf 8)
+
+BOLD_BLACK=${BOLD}${BLACK}
+BOLD_RED=${BOLD}${RED}
+BOLD_GREEN=${BOLD}${GREEN}
+BOLD_YELLOW=${BOLD}${YELLOW}
+BOLD_BLUE=${BOLD}${BLUE}
+BOLD_MAGENTA=${BOLD}${MAGENTA}
+BOLD_CYAN=${BOLD}${CYAN}
+BOLD_WHITE=${BOLD}${WHITE}
+BOLD_GREY=${BOLD}${GREY}
 
 source "$ZSHINE_DIR/init-plugins.zsh"
