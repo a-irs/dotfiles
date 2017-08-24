@@ -1,7 +1,5 @@
-if [[ -f "$ZSHINE_DIR/dircolors" ]]; then
-    [[ "$commands[dircolors]" ]] && eval $(dircolors -b "$ZSHINE_DIR/dircolors")
-    [[ "$commands[gdircolors]" ]] && eval $(gdircolors -b "$ZSHINE_DIR/dircolors")
-fi
+[[ "$commands[dircolors]" ]]  && eval $(dircolors  -b "$ZSHINE_DIR/plugins/dircolors.txt")
+[[ "$commands[gdircolors]" ]] && eval $(gdircolors -b "$ZSHINE_DIR/plugins/dircolors.txt")
 
 autoload colors; colors;
 
