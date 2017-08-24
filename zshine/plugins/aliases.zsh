@@ -201,23 +201,26 @@ alias cp='cp -i'
 alias ln='ln -i'
 alias mv='mv -i'
 alias mkdir='mkdir -p'
+take() { mkdir -p "$1" && cd "$1"; }
+alias rd='rmdir'
+alias f='noglob find . -name'
+alias fd='noglob find . -type d -name'
+alias ff='noglob find . -type f -name'
 
 alias mmv='noglob zmv -W'
 
+ls="command ls -F --literal --color=auto"
 if [[ "$os" = Darwin ]]; then
-    alias ls='gls --quoting-style=literal -F -l -h --color=auto --group-directories-first'
-    alias l='gls  --quoting-style=literal -F             --color=auto --group-directories-first'
-    alias la='gls --quoting-style=literal -F -l -h -A    --color=auto --group-directories-first'
-    alias l.='gls --quoting-style=literal -F    -h -d .* --color=auto --group-directories-first'
-    alias lt='gls --quoting-style=literal -F -l -h -t -r --color=auto --group-directories-first'
-    alias lo='\ls -lhGF -O@'
-else
-    alias ls='command ls --quoting-style=literal -F -l -h --color=auto --group-directories-first'
-    alias l='\ls  --quoting-style=literal -F             --color=auto --group-directories-first'
-    alias la='\ls --quoting-style=literal -F -l -h -A    --color=auto --group-directories-first'
-    alias l.='\ls --quoting-style=literal -F    -h -d .* --color=auto --group-directories-first'
-    alias lt='\ls --quoting-style=literal -F -l -h -t -r --color=auto --group-directories-first'
+    ls="gls -F --literal --color=auto"
+    alias lo="$ls -lhGF -O@"
 fi
+alias l="$ls"
+alias ls="$ls -lh"
+alias ll="$ls -lh"
+alias la="$ls -lhA"
+alias l.="$ls -lhd .*"
+alias lt="$ls -lhtr"
+alias lS="$ls -lhSr"
 
 [[ "$commands[python]" ]] && alias http-share='python -m http.server 10000'
 [[ "$commands[watch]" ]] && alias ddstatus='sudo watch --interval=1 "pkill -USR1 dd"'
@@ -235,24 +238,14 @@ if [[ "$commands[tmux]" ]]; then
     alias tl='tmux list-sessions'
 fi
 
-take() {
-    mkdir -p "$1" && cd "$1"
-}
-
-capture-keys() {
-    xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'
-}
-
+[[ "$commands[xev]" ]] && capture-keys() { xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'; }
 [[ "$commands[latexmk]" ]] && alias ltx="latexmk -cd -f -pdf -pvc -outdir=/tmp/latexmk"
 [[ "$commands[impressive]" ]] && alias show='impressive -t FadeOutFadeIn --fade --transtime 300 --mousedelay 500 --nologo --nowheel --noclicks'
 [[ "$commands[youtube-dl]" ]] && alias yt-audio='youtube-dl -f bestaudio -x -o "%(title)s.%(ext)s"'
 [[ "$commands[journalctl]" ]] && alias j='sudo journalctl'
 [[ "$commands[docker]" ]] && alias d='docker'
 [[ "$commands[scrot]" ]] && alias shoot="sleep 1 && scrot '%Y-%m-%d_%H-%M-%S.png' -e 'mv \$f ~/media/screenshots/'"
-
-if [[ "$commands[reflector]" ]]; then
-    alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose && sudo pacman -Syy"
-fi
+[[ "$commands[reflector]" ]] && alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose && sudo pacman -Syy"
 
 
 if [[ "$commands[xdg-open]" ]]; then
@@ -274,12 +267,6 @@ if [[ "$commands[adb]" ]]; then
     alias adb-forward='adb forward tcp:2222 tcp:22'
     alias adb-ssh='ssh root@localhost -p 2222'
 fi
-
-alias rd='rmdir'
-
-alias f='noglob find . -name'
-alias fd='noglob find . -type d -name'
-alias ff='noglob find . -type f -name'
 
 cd() {
     setopt localoptions
@@ -333,7 +320,11 @@ ansrole() {
         printf "%s\n" "missing role name"
         return 1
     fi
-    mkdir -vp roles/$1/{handlers,tasks,templates,files,defaults}
+    if [[ -d roles ]]; then
+        mkdir -vp roles/$1/{handlers,tasks,templates,files,defaults}
+    else
+        mkdir -vp $1/{handlers,tasks,templates,files,defaults}
+    fi
 }
 
 extract() {
@@ -495,7 +486,7 @@ if [[ "$commands[man]" ]]; then
     }
 fi
 
-xr-scale() {
+[[ "$commands[xrandr]" ]] && xr-scale() {
     # get settings from xrandr
     xrandr=$(LC_ALL=C xrandr)
     local -i x_default=$(echo ${xrandr} | grep "\*" | column -t | cut -d " " -f 1 | cut -d "x" -f 1)
