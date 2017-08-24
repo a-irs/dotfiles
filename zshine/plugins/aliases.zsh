@@ -210,8 +210,9 @@ alias ff='noglob find . -type f -name'
 alias mmv='noglob zmv -W'
 
 ls="command ls -F --literal --color=auto"
-if [[ "$os" = Darwin ]]; then
-    ls="gls -F --literal --color=auto"
+if [[ "$os" == Darwin ]]; then
+    ls="command ls -F"
+    [[ "$commands[gls]" ]] && ls="gls -F --literal --color=auto"
     alias lo="$ls -lhGF -O@"
 fi
 alias l="$ls"
