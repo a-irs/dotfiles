@@ -20,4 +20,5 @@ elif [[ $value == "$no" ]]; then
     echo "Xresources: normal $no → HiDPI $hi"
 fi
 
-echo "awesome.quit()" | awesome-client
+xrdb -merge ~/.Xresources
+echo "awesome.restart()" | awesome-client

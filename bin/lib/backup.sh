@@ -23,11 +23,17 @@ BACKUP=( $t )
 [[ -d /var/spool/cron ]] && BACKUP+=( /var/spool/cron )
 
 header() {
-    echo -e "\n$(tput setaf "${1}";tput bold)${2}$(tput init;tput sgr0)\n"
+    d=$(date +'%F %T')
+    if [[ -t 1 ]]; then
+        echo -e "\n$(tput setaf "${1}";tput bold)${d} -- ${2}$(tput init;tput sgr0)\n"
+    else
+        echo -e "\n${d} -- ${2}\n"
+    fi
 }
 
 finish() {
-    rm -rf "$t"
+    header 2 "CLEANING UP BACKUP INFO FILES in $t"
+    rm -rfv "$t"
 }
 trap finish EXIT
 
@@ -55,21 +61,23 @@ case $1 in
         exit
 esac
 
-header 2 "INFORMATION ABOUT BACKUP"
+header 2 "STARTING BACKUP. INFORMATION ABOUT BACKUP"
 echo "  - TARGET:   $(tput setaf 4)$REPO$(tput init;tput sgr0)"
 echo "  - SOURCES:  $(tput setaf 4)${BACKUP[*]}$(tput init;tput sgr0)"
 
 header 2 "MAKING BACKUP INFO FILES in $t"
-mkdir -p $t
+mkdir -p "$t"
 echo "  - PACMAN PACKAGES → packages.txt"
-pacman -Qe | sort > $t/packages.txt
+pacman -Qe | sort > "$t/packages.txt"
 echo "  - PARTITION LAYOUT OF /dev/sda → disk-fdisk-sda.txt"
-LC_ALL=C fdisk -l /dev/sda > $t/disk-fdisk-sda.txt
+LC_ALL=C fdisk -l /dev/sda > "$t/disk-fdisk-sda.txt"
 if [[ $HOSTNAME == dell ]]; then
-    echo "  - LUKS DUMP OF /dev/sda1 → disk-luks-sda1.txt"
-    LC_ALL=C cryptsetup luksDump /dev/sda1 > $t/disk-luks-sda1.txt
-    echo "  - LUKS HEADER BACKUP OF /dev/sda1 → disk-luks-header-sda1.img"
-    cryptsetup luksHeaderBackup /dev/sda1 --header-backup-file $t/disk-luks-header-sda1.img
+    LUKS=/dev/sda1
+    name=$(basename $LUKS)
+    echo "  - LUKS DUMP OF $LUKS → disk-luks-$name.txt"
+    LC_ALL=C cryptsetup luksDump $LUKS > "$t/disk-luks-$name.txt"
+    echo "  - LUKS HEADER BACKUP OF $LUKS → disk-luks-header-$name.img"
+    cryptsetup luksHeaderBackup $LUKS --header-backup-file "$t/disk-luks-header-$name.img"
 fi
 
 header 2 "INIT REPOSITORY"
@@ -85,7 +93,3 @@ borg create \
 
 header 2 "PRUNING BACKUPS OLDER THAN 6 MONTHS"
 borg prune --verbose --stats --list --keep-within 6m "$REPO"
-
-header 2 "CLEANING UP BACKUP INFO FILES in $t"
-rm -rfv "$t"
-
