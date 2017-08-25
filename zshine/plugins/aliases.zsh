@@ -9,8 +9,8 @@ for c in find ftp locate rake rsync scp sftp wcalc; do
     [[ "$commands[$c]" ]] && alias $c="noglob $c"
 done
 
-[[ -d ~/Documents ]] && alias todo="vim + ~/Documents/TODO.taskpaper"
-[[ -d ~/doc ]] && alias todo="vim + ~/doc/TODO.taskpaper"
+[[ -d ~/Documents ]] && alias todo="vim + ~/Documents/todo.taskpaper"
+[[ -d ~/doc ]] && alias todo="vim + ~/doc/todo.taskpaper"
 
 mac() { printf "%s" "$GREEN" && curl -q "http://api.macvendors.com/$1" && printf "\n"; }
 

@@ -9,7 +9,7 @@ if [[ ! -S ~/.ssh/ssh_auth_sock ]]; then
     ln -sf "$SSH_AGENT_PID" ~/.ssh/ssh_agent_pid
 fi
 export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
-export SSH_AGENT_PID=$(find ~/.ssh/ssh_agent_pid -printf %l)
+export SSH_AGENT_PID=$(readlink ~/.ssh/ssh_agent_pid)
 
 if ! ssh-add -l > /dev/null; then
     printf "\n%s" "$BOLD_CYAN"
