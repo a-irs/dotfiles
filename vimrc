@@ -119,18 +119,6 @@ nnoremap <leader>U viW<esc>a)<esc>hBi(<esc>lel
 
 call plug#begin()
 
-" " airline
-" Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
-" let g:airline_powerline_fonts = 1
-" let g:airline_skip_empty_sections = 1
-" let g:airline_section_c = '%<%f%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
-" let g:airline#extensions#default#layout = [
-"   \ [ 'a', 'b', 'c' ],
-"   \ [ 'error', 'warning' ]
-"   \ ]
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#buffer_min_count = 2
-
 Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
 let g:UltiSnipsSnippetDirectories = ['snip']
 let g:UltiSnipsExpandTrigger = '<tab>'
@@ -144,11 +132,9 @@ let g:fzf_files_options = '--preview "$HOME/.bin/preview {}"'
 let $FZF_DEFAULT_COMMAND = 'ag -g "" --nocolor --nogroup --files-with-matches'
 let g:fzf_buffers_jump = 1  " jump to existing if possible
 nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader><space> :Lines<CR>
-nnoremap <silent> <leader>n :Files<CR>
-nnoremap <silent> <C-p> :Files<CR>
-nnoremap <silent> <leader>m :History<CR>
 nnoremap <silent> <leader>o :Commits<CR>
+nnoremap <silent> - :Files<CR>
+nnoremap <silent> _ :History<CR>
 
 Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }  " auto-uses ag, ack etc.
 let g:grepper = {}
@@ -221,13 +207,12 @@ try
 
     " GRUVBOX
     " colorscheme gruvbox
-    highlight GruvboxGreenSign ctermbg=NONE guibg=NONE ctermfg=142 guifg=#b8bb26
-    highlight GruvboxAquaSign ctermfg=108 ctermbg=NONE guifg=#8ec07c guibg=NONE
-    highlight GruvboxRedSign ctermfg=167 ctermbg=NONE guifg=#fb4934 guibg=NONE
+    " highlight GruvboxGreenSign ctermbg=NONE guibg=NONE ctermfg=142 guifg=#b8bb26
+    " highlight GruvboxAquaSign ctermfg=108 ctermbg=NONE guifg=#8ec07c guibg=NONE
+    " highlight GruvboxRedSign ctermfg=167 ctermbg=NONE guifg=#fb4934 guibg=NONE
 
     " BADWOLF
     colorscheme badwolf
-    let g:airline_theme='jellybeans'
 catch
     colorscheme pablo
     highlight StatusLine term=bold,reverse ctermfg=11 ctermbg=242 guifg=yellow guibg=DarkGray
