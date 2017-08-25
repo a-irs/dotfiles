@@ -209,6 +209,12 @@ let g:committia_use_singlecolumn = 'always'
 
 call plug#end()
 
+" auto-install missing plugins
+autocmd VimEnter *
+  \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \|   PlugInstall --sync | q
+  \| endif
+
 
 """ COLOR SCHEME
 
