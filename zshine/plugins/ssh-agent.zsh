@@ -16,3 +16,9 @@ if ! ssh-add -l > /dev/null; then
     ssh-add
     printf "%s" "$RESET"
 fi
+
+ssh-agent-kill() {
+    eval $(ssh-agent -k)
+    rm -vf ~/.ssh/ssh_auth_sock
+    rm -vf ~/.ssh/ssh_agent_pid
+}
