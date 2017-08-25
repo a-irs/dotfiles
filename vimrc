@@ -32,10 +32,10 @@ noremap x "_x
 " set relativenumber
 
 " jump to last position on VIM start
-if has('autocmd')
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g'\"" | endif
-endif
+augroup lastposition
+    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+      \| exe "normal! g'\"" | endif
+augroup END
 
 " move through wrapped lines
 imap <silent> <Down> <C-o>gj
@@ -205,10 +205,12 @@ let g:committia_use_singlecolumn = 'always'
 call plug#end()
 
 " auto-install missing plugins
-autocmd VimEnter *
-  \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \|   PlugInstall --sync | q
-  \| endif
+augroup pluginstall
+    autocmd VimEnter *
+      \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+      \|   PlugInstall --sync | q
+      \| endif
+augroup END
 
 
 """ COLOR SCHEME
