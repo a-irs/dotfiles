@@ -32,7 +32,7 @@ noremap x "_x
 " set relativenumber
 
 " jump to last position on VIM start
-if has("autocmd")
+if has('autocmd')
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
 endif
@@ -48,7 +48,7 @@ set lazyredraw
 set ttyfast
 
 " disable mouse in neovim
-if has("nvim")
+if has('nvim')
     set mouse-=a
 endif
 
@@ -71,7 +71,7 @@ let g:markdown_enable_mappings = 0
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_input_abbreviations = 0
 
-if (has("termguicolors"))
+if (has('termguicolors'))
     set termguicolors
 endif
 
@@ -132,10 +132,10 @@ call plug#begin()
 " let g:airline#extensions#tabline#buffer_min_count = 2
 
 Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
-let g:UltiSnipsSnippetDirectories = ["snip"]
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsSnippetDirectories = ['snip']
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
 Plug 'raimondi/delimitmate'  " auto-close brackets
 
@@ -171,22 +171,17 @@ nmap <Leader>> <Plug>GitGutterPrevHunk
 Plug 'morhetz/gruvbox'
 Plug 'sjl/badwolf'
 
-" python
-Plug 'scrooloose/syntastic'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = [ 'flake8' ]
-let g:syntastic_python_flake8_args='--ignore=E501,W391,E402,E129'
-let g:syntastic_error_symbol = "\u2717"
-let g:syntastic_style_error_symbol = "\u2717"
-let g:syntastic_warning_symbol = "\u26A0"
-let g:syntastic_style_warning_symbol = "\u26A0"
-" highlight SyntasticErrorSign guifg=red guibg=NONE
+" async linter
+Plug 'w0rp/ale'
+let g:ale_linters = { 'python': ['flake8'] }
+let g:ale_python_flake8_options = '--ignore=E501,W391,E402,E129'
+let g:ale_sign_warning = "\u26A0"
+let g:ale_sign_style_warning = "\u26A0"
+let g:ale_sign_error = "\u2717"
+let g:ale_sign_style_error = "\u2717"
+let g:ale_echo_msg_format = '%severity%: %s [%linter%]'
+highlight ALEWarningSign guibg=NONE guifg=yellow
+highlight ALEErrorSign guibg=NONE guifg=red
 
 Plug 'davidoc/taskpaper.vim', { 'for': 'taskpaper' }
 highlight taskpaperDone ctermfg=243 guifg=#857f78
