@@ -106,16 +106,6 @@ local function dynamic_tagging()
     end)
 end
 
-local t = timer({ timeout = 1 })
-t:connect_signal("timeout",
-    function()
-        dynamic_tagging()
-    end
-)
-t:start()
-
-dynamic_tagging()
-
 -- client appears
 client.connect_signal("manage", function(c)
 
@@ -214,6 +204,7 @@ end)
 
 client.connect_signal("tagged",   dynamic_tagging)
 client.connect_signal("untagged", dynamic_tagging)
+client.connect_signal("property::name", dynamic_tagging)
 
 -- never minimize keepassxc
 client.connect_signal("property::minimized", function(c)
