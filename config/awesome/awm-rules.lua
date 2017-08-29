@@ -5,11 +5,12 @@ local wibox     = require 'wibox'
 local naughty   = require 'naughty'
 
 rules.rules = {
-    { rule = { class = "mpv" },   properties = { size_hints_honor = false } },
+    { rule = { class = "mpv" }, properties = { size_hints_honor = false } },
+
     { rule_any = {
         class = { "Arandr", "Gpick", "pinentry", "keepassxc" },
         role = { "AlarmWindow", "pop-up" }
-        }, properties = { floating = true, ontop = true }
+        }, properties = { floating = true }
     },
 
     { rule = { },
@@ -157,14 +158,25 @@ client.connect_signal("manage", function(c)
         awful.titlebar(c, { size = theme.titlebar_height }):set_widget(layout)
     end
 
-    if not (c.floating) then
+    if not c.floating then
         awful.titlebar.hide(c)
     end
 end)
 
+-- sloppy focus
 client.connect_signal("mouse::enter", function(c)
     if awful.client.focus.filter(c) then
         client.focus = c
+    end
+end)
+
+client.connect_signal("property::floating", function(c)
+    if c.floating then
+        awful.titlebar.show(c)
+        awful.placement.no_offscreen(c)
+        c.ontop = true
+    else
+        awful.titlebar.hide(c)
     end
 end)
 
@@ -202,6 +214,8 @@ end)
 
 client.connect_signal("tagged",   dynamic_tagging)
 client.connect_signal("untagged", dynamic_tagging)
+
+-- never minimize keepassxc
 client.connect_signal("property::minimized", function(c)
     if c.class == "keepassxc" then
         c.minimized = false
