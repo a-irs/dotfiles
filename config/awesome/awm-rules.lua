@@ -6,7 +6,12 @@ local naughty   = require 'naughty'
 
 rules.rules = {
     { rule = { class = "mpv" },   properties = { size_hints_honor = false } },
-    { rule = { class = "Gpick" }, properties = { floating = true } },
+    { rule_any = {
+        class = { "Arandr", "Gpick", "pinentry", "keepassxc" },
+        role = { "AlarmWindow", "pop-up" }
+        }, properties = { floating = true, ontop = true }
+    },
+
     { rule = { },
       properties = { border_width = theme.border_width,
                      border_color = theme.border_normal,
@@ -117,13 +122,6 @@ client.connect_signal("manage", function(c)
         return
     end
 
-    -- sloppy focus
-    c:connect_signal("mouse::enter", function(c)
-        if awful.client.focus.filter(c) then
-            client.focus = c
-        end
-    end)
-
     -- titlebar
 
     if c.type == "normal" or c.type == "dialog" then
@@ -161,18 +159,12 @@ client.connect_signal("manage", function(c)
 
     if compact_display then awful.titlebar.hide(c) end
 
-    if (c.class == "Kodi") then
-        c.fullscreen = true
-        t = awful.tag.add("kodi")
-        awful.tag.setvolatile(true, t)
-        awful.client.movetotag(t, c)
-        awful.tag.viewonly(t)
-    elseif c.class == "Steam" or c.name == "Steam" then
-        t = awful.tag.add("steam")
-        awful.tag.setvolatile(true, t)
-        awful.client.movetotag(t, c)
-    end
+end)
 
+client.connect_signal("mouse::enter", function(c)
+    if awful.client.focus.filter(c) then
+        client.focus = c
+    end
 end)
 
 -- client exits
@@ -209,7 +201,14 @@ end)
 
 client.connect_signal("tagged",   dynamic_tagging)
 client.connect_signal("untagged", dynamic_tagging)
-client.connect_signal("property::minimized", dynamic_tagging)
+client.connect_signal("property::minimized", function(c)
+    if c.class == "keepassxc" then
+        c.minimized = false
+        client.focus = c
+        c:raise()
+    end
+    dynamic_tagging()
+end)
 
 client.connect_signal("focus",   function(c) c.border_color = theme.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = theme.border_normal end)
