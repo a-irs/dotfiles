@@ -48,23 +48,6 @@ globalkeys = awful.util.table.join(
         end,
         {description="focus right", group="focus"}),
 
-    -- toggle "compact display mode"
-
-    awful.key({ win          }, "u", function()
-        if compact_display then
-            compact_display = false
-            for _, c in ipairs(client.get()) do
-                awful.titlebar.show(c)
-            end
-        else
-            compact_display = true
-            for _, c in ipairs(client.get()) do
-                awful.titlebar.hide(c)
-            end
-        end
-    end,
-    {description="toggle compact mode", group="useless"}),
-
     -- switch tags
 
     awful.key({ win          }, "Right", awful.tag.viewnext,

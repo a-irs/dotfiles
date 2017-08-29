@@ -157,8 +157,9 @@ client.connect_signal("manage", function(c)
         awful.titlebar(c, { size = theme.titlebar_height }):set_widget(layout)
     end
 
-    if compact_display then awful.titlebar.hide(c) end
-
+    if not (c.floating) then
+        awful.titlebar.hide(c)
+    end
 end)
 
 client.connect_signal("mouse::enter", function(c)

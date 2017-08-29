@@ -23,14 +23,7 @@ theme.border_width                  = 0
 theme.border_normal                 = "#3f405f"
 theme.border_focus                  = "#ffffff"
 
-theme.useless_gap_normal            = 0 -- dpi(vres/150)
-theme.useless_gap_compact           = 0 -- dpi(vres/200)
-
-if compact_display then
-    theme.useless_gap = theme.useless_gap_compact
-else
-    theme.useless_gap = theme.useless_gap_normal
-end
+theme.useless_gap                   = 0
 
 -- NOTIFICATIONS (NAUGHTY)
 
