@@ -66,7 +66,7 @@ end
 -- NETWORK
 if hostname == "dell" then
     netwidget = awful.widget.watch(
-        os.getenv("HOME") .. "/.config/awesome/network-info.sh", 2,
+        os.getenv("HOME") .. "/.config/awesome/statusbar/network-info.sh", 2,
         function(widget, stdout)
             widget:set_markup(stdout)
         end
@@ -76,7 +76,7 @@ end
 -- MUSIC
 
 musicwidget = awful.widget.watch(
-    os.getenv("HOME") .. "/.config/awesome/music.sh " .. theme.widget_music_fg:gsub('#', ''), 2,
+    os.getenv("HOME") .. "/.config/awesome/statusbar/music.sh " .. theme.widget_music_fg:gsub('#', ''), 2,
     function(widget, stdout)
         if stdout == "" then
             widget:set_markup("")
