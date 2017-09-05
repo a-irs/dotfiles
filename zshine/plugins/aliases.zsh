@@ -1,10 +1,5 @@
 #!/usr/bin/env zsh
 
-for x in :q :q! :wq :x; do
-    alias "$x"=exit
-done
-unset x
-
 for c in find ftp locate rake rsync scp sftp wcalc; do
     [[ "$commands[$c]" ]] && alias $c="noglob $c"
 done
