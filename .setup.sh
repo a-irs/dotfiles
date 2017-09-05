@@ -100,9 +100,7 @@ install ssh ssh/config
 install tmux tmux.conf
 install nvim config/nvim/init.vim
 install vim vimrc vim/autoload/plug.vim vim/snip
-if command -v vim >/dev/null 2>&1; then
-    vim '+PlugInstall' '+qall'
-fi
+command -v vim >/dev/null 2>&1 && vim '+PlugInstall' '+qall'
 install zsh zprofile zshrc zshine
 
 install awesome config/awesome

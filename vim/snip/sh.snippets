@@ -42,7 +42,7 @@ endsnippet
 
 snippet "which|cmd|command|exist|exists" "check if command is available in PATH" br
 if command -v $1 > /dev/null 2>&1; then
-    $0
+    ${0:${VISUAL:# TODO}}
 fi
 endsnippet
 
@@ -65,30 +65,30 @@ endsnippet
 
 snippet if "if-statement" b
 if ${2:[[ ${1:condition} ]]}; then
-    ${0:# statements}
+    ${0:${VISUAL:# TODO}}
 fi
 endsnippet
 
 snippet "elif|eif|elseif" "else-if" br
 elif ${2:[[ ${1:condition} ]]}; then
-    ${0:# statements}
+    ${0:# TODO}
 endsnippet
 
 snippet for "for loop" b
 for (( i = 0; i < ${1:10}; i++ )); do
-    ${0:# statements}
+    ${0:${VISUAL:# TODO}}
 done
 endsnippet
 
 snippet "forin|each|foreach|fore" "for .. in .." br
 for ${1:i}${2/.+/ in /}${2:words}; do
-    ${0:# statements}
+    ${0:${VISUAL:# TODO}}
 done
 endsnippet
 
 snippet while "while loop" b
 while ${2:[[ ${1:condition} ]]}; do
-    ${0:# statements}
+    ${0:${VISUAL:# TODO}}
 done
 endsnippet
 
@@ -98,19 +98,19 @@ endsnippet
 
 snippet "fn|func|function|f" "function" br
 ${1:name}() {
-    ${0:# TODO}
+    ${0:${VISUAL:# TODO}}
 }
 endsnippet
 
 snippet "root|su" "check for root" br
 if [[ "$EUID" ${1:==} 0 ]]; then
-    ${0:# TODO}
+    ${0:${VISUAL:# TODO}}
 fi
 endsnippet
 
 snippet trap "trap" b
 trap_${1:name}() {
-    ${2:# TODO}
+    ${2:${VISUAL:# TODO}}
 }
 trap trap_$1 ${0:EXIT}
 endsnippet
@@ -124,6 +124,6 @@ endsnippet
 snippet "confirmation|sure|input|prompt" "confirmation prompt" br
 read -r -p "Are you sure? (y/N) " -n1
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    pass
+    ${0:${VISUAL:# TODO}}
 fi
 endsnippet

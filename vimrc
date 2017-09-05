@@ -8,12 +8,13 @@ set backspace=indent,eol,start  " when at beginning of line, pressing backspace 
 set whichwrap+=<,>,[,]  " moves to next line when pressing right at end of line
 set linebreak  " wrap lines at words
 set smarttab
-" set laststatus=2  " always show statusbar
+set laststatus=0  " never show statusbar
 set autoread  " auto reload file when unchanged in vim and changed outside vim
 set history=2000
 set scrolloff=2  " scrolling shows one line extra
 set hlsearch  " highlight search results
 set incsearch  " search during input
+set fillchars+=vert:│  " prettier split separator
 
 set tabstop=4
 set shiftwidth=4
@@ -68,6 +69,8 @@ let g:netrw_sort_sequence='[\/]$'  " directories first
 let g:netrw_sort_options='i'  " ignore case
 let g:netrw_bufsettings = 'nomodifiable nomodified readonly nobuflisted nowrap'
 map <C-_> :Lexplore<CR>
+
+autocmd BufNewFile,BufFilePre,BufRead Jenkinsfile set filetype=groovy
 
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ini=dosini']
