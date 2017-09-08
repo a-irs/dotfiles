@@ -1,11 +1,26 @@
 local awful     = require 'awful'
-local rules     = require 'awful.rules'
                   require 'awful.autofocus'
 local wibox     = require 'wibox'
 local naughty   = require 'naughty'
 
-rules.rules = {
+awful.rules.rules = {
+
+    { rule = { },
+      properties = { border_width = theme.border_width,
+                     border_color = theme.border_normal,
+                     focus = awful.client.focus.filter,
+                     screen = awful.screen.preferred,
+                     placement = awful.placement.no_overlap + awful.placement.no_offscreen + awful.placement.centered,
+                     raise = true,
+                     keys = clientkeys,
+                     buttons = clientbuttons,
+                     maximized_vertical   = false,
+                     maximized_horizontal = false },
+      callback = awful.client.setslave },
+
     { rule = { class = "mpv" }, properties = { size_hints_honor = false } },
+
+    { rule = { class = "Kodi" }, properties = { fullscreen = true, placement = awful.placement.restore } },
 
     { rule_any = {
         class = { "Arandr", "Gpick", "pinentry", "keepassxc" },
@@ -13,18 +28,6 @@ rules.rules = {
         }, properties = { floating = true }
     },
 
-    { rule = { },
-      properties = { border_width = theme.border_width,
-                     border_color = theme.border_normal,
-                     focus = awful.client.focus.filter,
-                     screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap + awful.placement.no_offscreen,
-                     raise = true,
-                     keys = clientkeys,
-                     buttons = clientbuttons,
-                     maximized_vertical   = false,
-                     maximized_horizontal = false },
-      callback = awful.client.setslave },
 }
 
 local function make_name(existing_clients, client, wanted_name)
@@ -161,7 +164,7 @@ client.connect_signal("mouse::enter", function(c)
 end)
 
 client.connect_signal("property::floating", function(c)
-    if c.floating then
+    if c.floating and not c.fullscreen then
         awful.titlebar.show(c)
         awful.placement.no_offscreen(c)
         c.ontop = true
