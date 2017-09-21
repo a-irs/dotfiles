@@ -16,6 +16,12 @@ tar-bz()  { tar cvaf "$(basename "$PWD")".tar.bz2 -- "$@"; }
 tar-lz()  { tar cvaf "$(basename "$PWD")".tar.lzma -- "$@"; }
 tar-zip() { zip -r "$(basename "$PWD")".zip -- "$@"; }
 
+rotate() {
+    [[ ! "$1" ]] && return 1
+    local outname="$1.$(date +'%F_%T')"
+    mv -v "$1" "$outname" && bzip2 -v "$outname"
+}
+
 if [[ "$commands[termite]" ]]; then
     toggle-termite() {
         if [[ $(readlink -f ~/.config/termite/config) == *_light ]]; then
