@@ -64,6 +64,7 @@ end
 
 
 -- NETWORK
+
 if hostname == "dell" then
     netwidget = awful.widget.watch(
         os.getenv("HOME") .. "/.config/awesome/statusbar/network-info.sh", 2,
@@ -72,6 +73,18 @@ if hostname == "dell" then
         end
     )
 end
+
+-- DOWNLOAD STATUS
+
+if hostname == "desk" then
+    dlwidget = awful.widget.watch(
+        os.getenv("HOME") .. "/.config/awesome/statusbar/dl-status.py", 2,
+        function(widget, stdout)
+            widget:set_markup(stdout)
+        end
+    )
+end
+
 
 -- MUSIC
 
@@ -169,6 +182,9 @@ awful.screen.connect_for_each_screen(function(s)
     lay(layout1, musicwidget, 0, 0, theme.bg_focus)
     lay(layout1, s.mytasklist)
     lay(layout1, s.myprompt)
+    if hostname == "desk" then
+        lay(layout1, dlwidget)
+    end
 
     local layout2 = wibox.layout.fixed.horizontal()
     lay(layout2, s.mytaglist)

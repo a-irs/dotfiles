@@ -146,6 +146,12 @@ globalkeys = awful.util.table.join(
               {description = "lock screen", group = "apps"}),
     awful.key({ alt }, "p",      function () awful.spawn(os.getenv("HOME") .. "/.bin/pick-color.sh", false) end,
               {description = "run color picker", group = "apps"}),
+    awful.key({ alt }, "l",      function()
+        local matcher = function(c)
+            return rules.match(c, {class = 'Lampe-gtk'})
+        end
+        awful.client.run_or_raise('lampe-gtk', matcher)
+    end, {description = "run keepass", group = "apps"}),
     awful.key({ alt }, "k",      function()
         local matcher = function(c)
             return rules.match(c, {class = 'keepassxc'})
