@@ -96,3 +96,4 @@
 **/*~
 **/intellij-out
 **/.vim/plugged
+/root/.config/borg/security
