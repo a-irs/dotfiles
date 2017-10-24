@@ -85,7 +85,7 @@ borg init --verbose --encryption none "$REPO" || true
 
 header 2 "BACKING UP ${BACKUP[*]}"
 borg create \
-    --progress --stats --verbose \
+    --list --filter=AME --stats --verbose \
     --exclude-caches --exclude-from "$(dirname "$(readlink -f "$0")")/backup.exclude" \
     --one-file-system \
     "$REPO"::"$DATE" \

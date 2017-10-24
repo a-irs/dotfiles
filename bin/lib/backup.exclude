@@ -14,6 +14,8 @@
 /srv/docker/graphite/storage
 /srv/docker/influxdb
 /srv/docker/prometheus
+/srv/docker/splunk
+**/dolphin/User/Load/Textures
 **/dev/moto
 **/tmp
 **/.fr-*
