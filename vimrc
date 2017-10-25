@@ -196,6 +196,12 @@ autocmd BufNewFile,BufFilePre,BufRead *.yml set filetype=ansible
 Plug 'rhysd/committia.vim'
 let g:committia_use_singlecolumn = 'always'
 
+Plug 'mbbill/undotree'
+let g:undotree_WindowLayout = 1
+let g:undotree_ShortIndicators = 1
+let g:undotree_HelpLine = 0
+let g:undotree_SetFocusWhenToggle = 1
+
 call plug#end()
 
 " auto-install missing plugins

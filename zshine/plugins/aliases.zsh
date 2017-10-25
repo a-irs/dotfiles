@@ -217,7 +217,7 @@ ls="command ls -F --literal --color=auto"
 if [[ "$os" == Darwin ]]; then
     ls="command ls -F"
     [[ "$commands[gls]" ]] && ls="gls -F --literal --color=auto"
-    alias lo="$ls -lhGF -O@"
+    alias lo="command ls -lhGF -O@"
 fi
 alias l="$ls"
 alias ls="$ls -lh"
