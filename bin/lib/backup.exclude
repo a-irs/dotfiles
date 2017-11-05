@@ -7,6 +7,7 @@
 **/.config/retroarch/core-info
 **/.config/retroarch/downloads
 **/.config/.fzf/bin
+**/.fzf
 **/nzbget.log
 /srv/vuls-database/db
 /srv/docker/nzbget/drop
