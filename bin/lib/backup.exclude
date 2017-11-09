@@ -1,3 +1,5 @@
+*.swp
+**/*~
 **/.config/retroarch/assets
 **/.config/retroarch/shaders
 **/.config/retroarch/cores
@@ -94,7 +96,6 @@
 **/*.pacnew
 **/*.pacorig
 **/*.pacsave
-**/*~
 **/intellij-out
 **/.vim/plugged
 /root/.config/borg/security
