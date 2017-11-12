@@ -3,7 +3,7 @@
 set -e
 export LC_ALL=C
 
-out="/root/filesgit"
+out="~/work/filesgit"
 
 lsfiles() { find "$1" -type f | sort -hf > "$out/$(basename "$1").txt"; }
 

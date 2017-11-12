@@ -17,12 +17,13 @@ control_c() {
 trap control_c SIGINT
 
 BACKUP=(
-	/media/data/photos
-	/media/data/music
+	/media/data/apps
 	/media/data/books
-	/media/data/virtualbox
 	/media/data/games
+	/media/data/music
+	/media/data/photos
 	/media/data/videos/kids
+	/media/data/virtualbox
 )
 
 delay=0.3

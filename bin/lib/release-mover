@@ -40,7 +40,7 @@ get_source() { printf "%s\n" "$metadata" | grep -oiP 'BluRay|BDRip|DVDRip|BRRip|
 
 get_season() { printf "%s\n" "$metadata" | grep -oP 'S[0-9][0-9]'; }
 
-get_episode() { printf "%s\n" "$metadata" | grep -oP 'E[0-9][0-9]'; }
+get_episode() { printf "%s\n" "$metadata" | grep -oP '(E[0-9][0-9])+'; }
 
 get_languages() {
     langs=""
@@ -142,7 +142,7 @@ if [[ $category == tv ]]; then
 
     read -er -i "$release"          -p "$(y 'Release:  ')" RELEASE
     read -er -i "$(get_name)"       -p "$(y 'Series:   ')" NAME
-    read -er -i "$(get_year_tv "$NAME")" -p "$(y 'Year:     ')" YEAR
+    read -er -i "$(get_year_tv "$(name_prefix "$NAME")")" -p "$(y 'Year:     ')" YEAR
     read -er -i "$(get_languages)"  -p "$(y 'Langs:    ')" LANGS
     read -er -i "$(get_video_size)" -p "$(y 'Size:     ')" SIZE
     read -er -i "$(get_source)"     -p "$(y 'Source:   ')" SOURCE

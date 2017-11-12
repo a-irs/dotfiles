@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 log() {
-    printf "%s\n" "$(date +'%F %T') $1" >> ~/camcopy.log
+    printf "%s\n" "$(date +'%F %T') $1"
 }
 
 SRC=/media/sd-card
@@ -25,7 +25,7 @@ mount "$SRC"
 if [ $? -eq 0 ]; then
         echo -e '\a' > /dev/console
         log "starting copy"
-        /root/.bin/camcopy.py "$SRC" "$DEST" >> ~/camcopy.log 2>> ~/camcopy.err
+        /root/.bin/camcopy.py "$SRC" "$DEST"
         log "finished copy"
         echo -e '\a' > /dev/console ; sleep $delay
         echo -e '\a' > /dev/console
