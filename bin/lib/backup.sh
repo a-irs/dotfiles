@@ -17,10 +17,10 @@ REPO=$USER_HOST:$TARGET
 DATE=$(date +%Y-%m-%d_%H-%M-%S)
 BACKUP=( $t )
 [[ -d /home ]]           && BACKUP+=( /home )
-[[ -d /boot ]]           && BACKUP+=( /boot )
 [[ -d /etc ]]            && BACKUP+=( /etc )
 [[ -d /root ]]           && BACKUP+=( /root )
 [[ -d /srv ]]            && BACKUP+=( /srv )
+[[ -d /boot ]]           && BACKUP+=( /boot )
 [[ -d /var/spool/cron ]] && BACKUP+=( /var/spool/cron )
 
 header() {
