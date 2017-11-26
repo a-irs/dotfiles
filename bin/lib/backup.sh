@@ -70,8 +70,9 @@ header 2 "MAKING BACKUP INFO FILES in $t"
 mkdir -p "$t"
 echo "  - PACMAN PACKAGES → packages.txt"
 pacman -Qe | sort > "$t/packages.txt"
-echo "  - PARTITION LAYOUT OF /dev/sda → disk-fdisk-sda.txt"
-LC_ALL=C fdisk -l /dev/sda > "$t/disk-fdisk-sda.txt"
+root_disk=$(awk '$2 == "/"' /proc/self/mounts | grep -oP '^/dev/(sd|mmcblk).')
+echo "  - PARTITION LAYOUT OF $root_disk → disk-fdisk-rootdisk.txt"
+LC_ALL=C fdisk -l "$root_disk" > "$t/disk-fdisk-rootdisk.txt"
 if [[ $HOSTNAME == dell ]]; then
     LUKS=/dev/sda1
     name=$(basename $LUKS)
