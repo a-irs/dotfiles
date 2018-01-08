@@ -2,14 +2,14 @@
 
 set -euo pipefail
 
-[[ $UID != 0 ]] && { echo "$(tput setaf 1)run as root"; exit 1; }
-(( $# < 1 )) && { echo "$(tput setaf 3)$(basename "$0") start|mount|list|check"; exit 2; }
+[[ $UID != 0 ]] && { echo "run as root"; exit 1; }
+(( $# < 1 )) && { echo "$(basename "$0") start|mount|list|check"; exit 2; }
 
 TOPDIR=/media/crypto/borg
 TARGET=$TOPDIR/$HOSTNAME
 USER_HOST=root@srv
 
-ssh $USER_HOST test -d "$TOPDIR" || { echo "$(tput setaf 1)$USER_HOST:$TOPDIR does not exist"; exit 1; }
+ssh $USER_HOST test -d "$TOPDIR" || { echo "$USER_HOST:$TOPDIR does not exist"; exit 1; }
 
 t=/0-info
 
@@ -42,8 +42,8 @@ export BORG_CACHE_DIR=/var/tmp/borg
 
 case $1 in
     mount|mnt)
-        header 3 "MOUNT $REPO::$2 to $3"
-        borg mount "$REPO"::"$2" "$3" -o allow_other
+        header 3 "MOUNT $REPO to $2"
+        borg mount "$REPO" "$2" -o allow_other
         exit
         ;;
     check|chk)
@@ -63,8 +63,8 @@ case $1 in
 esac
 
 header 2 "STARTING BACKUP. INFORMATION ABOUT BACKUP"
-echo "  - TARGET:   $(tput setaf 4)$REPO$(tput init;tput sgr0)"
-echo "  - SOURCES:  $(tput setaf 4)${BACKUP[*]}$(tput init;tput sgr0)"
+header 2 "TARGET: $REPO"
+header 2 "SOURCES: ${BACKUP[*]}"
 
 header 2 "MAKING BACKUP INFO FILES in $t"
 mkdir -p "$t"
@@ -95,3 +95,6 @@ borg create \
 
 header 2 "PRUNING BACKUPS OLDER THAN 6 MONTHS"
 borg prune --verbose --stats --list --keep-within 6m "$REPO"
+
+# header 2 "CHECKING ARCHIVES"
+# borg check --verbose --info --archives-only "$REPO"
