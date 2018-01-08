@@ -6,8 +6,8 @@ f=~/.Xresources
 value=$(grep Xft.dpi "$f" | rev | cut -d ":" -f 1 | tr -d '[:space:]' | rev)
 
 no=96
-hi=144
-factor=1.5
+hi=192
+factor=2
 
 printf "%s\n" "current DPI: $value"
 if [[ $value == "$hi" ]]; then
