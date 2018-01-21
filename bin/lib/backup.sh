@@ -9,7 +9,11 @@ TOPDIR=/media/crypto/borg
 TARGET=$TOPDIR/$HOSTNAME
 USER_HOST=root@srv
 
-ssh $USER_HOST test -d "$TOPDIR" || { echo "$USER_HOST:$TOPDIR does not exist"; exit 1; }
+if ! ssh $USER_HOST test -d "$TOPDIR"; then
+    echo "$USER_HOST:$TOPDIR does not exist"
+    pushover bash "ERROR: backup disk not mounted"
+    exit 1
+fi
 
 t=/0-info
 
