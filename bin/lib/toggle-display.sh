@@ -16,3 +16,4 @@ echo "$on --> $off"
 xrandr --output "$on" --auto && xrandr --output "$off" --off
 
 echo 'awesome.restart()' | awesome-client
+nitrogen --restore
