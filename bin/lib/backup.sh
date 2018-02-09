@@ -11,7 +11,7 @@ USER_HOST=root@srv
 
 if ! ssh $USER_HOST test -d "$TOPDIR"; then
     echo "$USER_HOST:$TOPDIR does not exist"
-    pushover bash "ERROR: backup disk not mounted"
+    /home/alex/.bin/pushover bash "ERROR: backup disk not mounted"
     exit 1
 fi
 
