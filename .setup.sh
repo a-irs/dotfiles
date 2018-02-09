@@ -94,7 +94,6 @@ install git gitconfig
 install htop config/htop/htoprc
 install ipython ipython/profile_default/ipython_config.py
 install nvim config/nvim/init.vim
-install psql psqlrc
 install ranger config/ranger/rc.conf config/ranger/scope.sh
 install ssh ssh/config
 install vim vimrc vim/autoload/plug.vim vim/snip
