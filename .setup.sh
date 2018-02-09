@@ -87,23 +87,21 @@ install_always() {
     done
 }
 
+# CLI tools
 install_always bin hushlogin
 install bash bashrc
-install beet config/beets/config.yaml
 install git gitconfig
 install htop config/htop/htoprc
-install mpd config/mpd/mpd.conf
-install ncmpcpp config/ncmpcpp/config
+install ipython ipython/profile_default/ipython_config.py
+install nvim config/nvim/init.vim
 install psql psqlrc
 install ranger config/ranger/rc.conf config/ranger/scope.sh
 install ssh ssh/config
-install tmux tmux.conf
-install nvim config/nvim/init.vim
 install vim vimrc vim/autoload/plug.vim vim/snip
 command -v vim >/dev/null 2>&1 && vim '+PlugInstall' '+qall'
 install zsh zprofile zshrc zshine
-install ipython ipython/profile_default/ipython_config.py
 
+# GUI tools
 install awesome config/awesome
 install compton config/compton.conf
 install mpv config/mpv/input.conf config/mpv/mpv.conf config/mpv/scripts/convert_script.lua config/mpv/scripts/stats.lua config/mpv/lua-settings/osc.conf
@@ -113,18 +111,11 @@ install termite config/termite/config
 install xinit xinitrc Xmodmap config/fontconfig/fonts.conf fonts gtkrc-2.0 icons/default/index.theme config/user-dirs.dirs config/gtk-3.0/settings.ini
 install zathura config/zathura/zathurarc
 
-if [[ -f /usr/bin/kupfer ]]; then
-    mkdir -p ~/.local/share/kupfer/plugins
-    cp -f "$this_dir/kupfer-recdirs.py" ~/.local/share/kupfer/plugins/recdirs.py
-else
-    rm -f ~/.local/share/kupfer/plugins/recdirs.py
-fi
-
 if [[ -f /usr/bin/firefox ]]; then
     profile=$(find ~/.mozilla/firefox -mindepth 1 -maxdepth 1 -type d -name '*.default' | tail -n 1)
     if [[ ! -f "$profile/chrome/userChrome.css" ]]; then
         mkdir -p "$profile/chrome"
-        ln --force --symbolic --no-target-directory --no-dereference "$this_dir/userChrome.css" "$profile/chrome/userChrome.css" 2> /dev/null
+        ln --force --symbolic --no-target-directory --no-dereference "$this_dir/mozilla/userChrome.css" "$profile/chrome/userChrome.css" 2> /dev/null
         print_install "${profile/$HOME/\~}/chrome/userChrome.css"
     fi
 fi
