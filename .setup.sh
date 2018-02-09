@@ -102,6 +102,7 @@ install nvim config/nvim/init.vim
 install vim vimrc vim/autoload/plug.vim vim/snip
 command -v vim >/dev/null 2>&1 && vim '+PlugInstall' '+qall'
 install zsh zprofile zshrc zshine
+install ipython ipython/profile_default/ipython_config.py
 
 install awesome config/awesome
 install compton config/compton.conf
