@@ -16,7 +16,7 @@ def convert_size(size_bytes):
     return "%s %s" % (s, size_name[i])
 
 
-server = client.ServerProxy('http://srv/nzbget/xmlrpc')
+server = client.ServerProxy('http://10.0.1.1/nzbget/xmlrpc')
 status = server.status()
 
 l = server.listgroups(1)

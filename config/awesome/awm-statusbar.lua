@@ -102,7 +102,7 @@ musicwidget = awful.widget.watch(
 
 -- VOLUME
 
-pulsewidget = lain.widget.pulseaudio({
+pulsewidget = lain.widget.pulse({
     timeout = 3,
     settings = function()
         if volume_now.left == nil or volume_now.right == nil then
