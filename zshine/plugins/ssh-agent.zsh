@@ -11,11 +11,12 @@ fi
 export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 export SSH_AGENT_PID=$(readlink ~/.ssh/ssh_agent_pid)
 
-if ! ssh-add -l > /dev/null; then
-    printf "\n%s" "$BOLD_CYAN"
-    ssh-add
-    printf "%s" "$RESET"
-fi
+# auto-add ssh keys
+# if ! ssh-add -l > /dev/null; then
+#    printf "\n%s" "$BOLD_CYAN"
+#    ssh-add
+#    printf "%s" "$RESET"
+# fi
 
 ssh-agent-kill() {
     eval $(ssh-agent -k)
