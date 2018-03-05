@@ -133,7 +133,8 @@ let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
-Plug 'raimondi/delimitmate'  " auto-close brackets
+" auto-close brackets
+Plug 'raimondi/delimitmate'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
 let g:fzf_files_options = '--preview "$HOME/.bin/preview {}" --no-exact --color=16 --cycle --no-mouse'
@@ -143,12 +144,6 @@ nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>o :Commits<CR>
 nnoremap <silent> - :Files<CR>
 nnoremap <silent> _ :History<CR>
-
-Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }  " auto-uses ag, ack etc.
-let g:grepper = {}
-let g:grepper.highlight = 1
-nnoremap <leader>g :Grepper<CR>
-nnoremap <leader>G :Grepper -cword -noprompt<cr>
 
 " TComment
 Plug 'tomtom/tcomment_vim'
@@ -162,7 +157,7 @@ nmap <Leader>< <Plug>GitGutterNextHunk
 nmap <Leader>> <Plug>GitGutterPrevHunk
 
 " color schemes
-Plug 'morhetz/gruvbox'
+" Plug 'morhetz/gruvbox'
 Plug 'sjl/badwolf'
 
 " async linter
@@ -177,9 +172,9 @@ let g:ale_echo_msg_format = '%severity%: %s [%linter%]'
 highlight ALEWarningSign guibg=NONE guifg=yellow
 highlight ALEErrorSign guibg=NONE guifg=red
 
-Plug 'davidoc/taskpaper.vim', { 'for': 'taskpaper' }
-highlight taskpaperDone ctermfg=243 guifg=#857f78
-let g:task_paper_styles={ 'crit': 'guibg=#dd5010' }
+" Plug 'davidoc/taskpaper.vim', { 'for': 'taskpaper' }
+" highlight taskpaperDone ctermfg=243 guifg=#857f78
+" let g:task_paper_styles={ 'crit': 'guibg=#dd5010' }
 
 Plug 'ap/vim-buftabline'
 set hidden
@@ -190,17 +185,13 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'pearofducks/ansible-vim'
 let g:ansible_unindent_after_newline = 1
 let g:ansible_extra_keywords_highlight = 1
+let g:ansible_name_highlight = 'd'
+let g:ansible_with_keywords_highlight = 'Constant'
 autocmd BufNewFile,BufFilePre,BufRead inventory/* set filetype=ansible_hosts
 autocmd BufNewFile,BufFilePre,BufRead *.yml set filetype=ansible
 
 Plug 'rhysd/committia.vim'
 let g:committia_use_singlecolumn = 'always'
-
-Plug 'mbbill/undotree'
-let g:undotree_WindowLayout = 1
-let g:undotree_ShortIndicators = 1
-let g:undotree_HelpLine = 0
-let g:undotree_SetFocusWhenToggle = 1
 
 call plug#end()
 
