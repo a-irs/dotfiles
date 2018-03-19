@@ -77,14 +77,15 @@ pacman -Qe | sort > "$t/packages.txt"
 root_disk=$(awk '$2 == "/"' /proc/self/mounts | grep -oP '^/dev/(sd.|mmcblk.|mapper/\S+)')
 echo "  - PARTITION LAYOUT OF $root_disk → disk-fdisk-rootdisk.txt"
 LC_ALL=C fdisk -l "$root_disk" > "$t/disk-fdisk-rootdisk.txt"
-if [[ $HOSTNAME == dell ]]; then
-    LUKS=/dev/sda1
-    name=$(basename $LUKS)
-    echo "  - LUKS DUMP OF $LUKS → disk-luks-$name.txt"
-    LC_ALL=C cryptsetup luksDump $LUKS > "$t/disk-luks-$name.txt"
-    echo "  - LUKS HEADER BACKUP OF $LUKS → disk-luks-header-$name.img"
-    cryptsetup luksHeaderBackup $LUKS --header-backup-file "$t/disk-luks-header-$name.img"
-fi
+for dev in /dev/sd[a-z]?; do
+    if cryptsetup isLuks "$dev"; then
+        name=$(basename $dev)
+        echo "  - LUKS DUMP OF $dev → disk-luks-$name.txt"
+        LC_ALL=C cryptsetup luksDump $dev > "$t/disk-luks-$name.txt"
+        echo "  - LUKS HEADER BACKUP OF $dev → disk-luks-header-$name.img"
+        cryptsetup luksHeaderBackup $dev --header-backup-file "$t/disk-luks-header-$name.img"
+    fi
+done
 
 header 2 "INIT REPOSITORY"
 borg init --verbose --encryption none "$REPO" || true
