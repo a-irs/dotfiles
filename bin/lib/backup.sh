@@ -77,7 +77,7 @@ pacman -Qe | sort > "$t/packages.txt"
 root_disk=$(awk '$2 == "/"' /proc/self/mounts | grep -oP '^/dev/(sd.|mmcblk.|mapper/\S+)')
 echo "  - PARTITION LAYOUT OF $root_disk → disk-fdisk-rootdisk.txt"
 LC_ALL=C fdisk -l "$root_disk" > "$t/disk-fdisk-rootdisk.txt"
-for dev in /dev/sd[a-z]?; do
+for dev in /dev/disk/by-uuid/*; do
     if cryptsetup isLuks "$dev"; then
         name=$(basename $dev)
         echo "  - LUKS DUMP OF $dev → disk-luks-$name.txt"
