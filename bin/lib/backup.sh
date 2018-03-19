@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -uo pipefail
 
 [[ $UID != 0 ]] && { echo "run as root"; exit 1; }
 (( $# < 1 )) && { echo "$(basename "$0") start|mount|list|check"; exit 2; }
@@ -74,7 +74,7 @@ header 2 "MAKING BACKUP INFO FILES in $t"
 mkdir -p "$t"
 echo "  - PACMAN PACKAGES → packages.txt"
 pacman -Qe | sort > "$t/packages.txt"
-root_disk=$(awk '$2 == "/"' /proc/self/mounts | grep -oP '^/dev/(sd|mmcblk).')
+root_disk=$(awk '$2 == "/"' /proc/self/mounts | grep -oP '^/dev/(sd.|mmcblk.|mapper/\S+)')
 echo "  - PARTITION LAYOUT OF $root_disk → disk-fdisk-rootdisk.txt"
 LC_ALL=C fdisk -l "$root_disk" > "$t/disk-fdisk-rootdisk.txt"
 if [[ $HOSTNAME == dell ]]; then
@@ -97,8 +97,8 @@ borg create \
     "$REPO"::"$DATE" \
     "${BACKUP[@]}"
 
-header 2 "PRUNING BACKUPS OLDER THAN 6 MONTHS"
-borg prune --verbose --stats --list --keep-within 6m "$REPO"
+header 2 "PRUNING BACKUPS OLDER THAN 6 MONTHS AND >5"
+borg prune --verbose --stats --list --keep-within 6m "$REPO" --keep-last 5
 
 # header 2 "CHECKING ARCHIVES"
 # borg check --verbose --info --archives-only "$REPO"
