@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -eu
+
+action=$1
+
+if [[ "$action" == makerole ]]; then
+    role_name=$2
+    mkdir -p "$role_name"/{tasks,files,templates,handlers}
+    touch "$role_name"/{tasks,handlers}/main.yml
+fi
