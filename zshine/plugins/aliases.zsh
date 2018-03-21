@@ -4,6 +4,10 @@ for c in find ftp locate rake rsync scp sftp wcalc; do
     [[ "$commands[$c]" ]] && alias $c="noglob $c"
 done
 
+outdated() {
+    sudo lsof +c 0 -a +L1 / 2> /dev/null | awk '{print $1}' | tail +2 | sort -u | python -c "import sys; print(', '.join([x.strip() for x in sys.stdin.readlines()]))"
+}
+
 [[ -d ~/Documents ]] && alias todo="vim + ~/Documents/todo.taskpaper"
 [[ -d ~/doc ]] && alias todo="vim + ~/doc/todo.taskpaper"
 
