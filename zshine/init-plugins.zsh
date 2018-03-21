@@ -8,12 +8,12 @@ ZSHINE_PLUGINS=(
   python # python dev stuff
   syntax-highlighting # provides a syntax highlighted prompt
   less-syntax-highlighting # syntax highlighting for "less" command
+  completion # tweaks for TAB-completion
+  keys # bind keys for delete, history-search etc.
   zsh-history-substring-search # arrow key up/down history search
   bd # move back in current directory tree (breadcrumb-style)
   auto-ls # launch "ls" when entering directory
   prompt-git # provides functions for a git-prompt
-  completion # tweaks for TAB-completion
-  keys # bind keys for delete, history-search etc.
   fzf # CTRL+T for fuzzy-search of files
   # pwd-hell # show warning message when [[ pwd != readlink -f ./ ]]
   # tmux # autostart tmux
