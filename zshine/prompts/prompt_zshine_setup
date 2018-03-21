@@ -232,7 +232,7 @@ _build_left() {
 _build_right() {
     _rprompt_error
     _rprompt_battery
-    _rprompt_date
+    # _rprompt_date
     # _rprompt_virtualenv
     # _rprompt_userhost
     _rprompt_jobs
