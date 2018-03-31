@@ -96,6 +96,7 @@ install ipython ipython/profile_default/ipython_config.py
 install nvim config/nvim/init.vim
 install ranger config/ranger/rc.conf config/ranger/scope.sh
 install ssh ssh/config
+install tmux tmux.conf
 install vim vimrc vim/autoload/plug.vim vim/snip
 command -v vim >/dev/null 2>&1 && vim '+PlugInstall' '+qall'
 install zsh zprofile zshrc zshine
