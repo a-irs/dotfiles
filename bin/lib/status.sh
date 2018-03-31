@@ -31,7 +31,7 @@ sstatus media-data2.mount
 sstatus media-data3.mount
 sstatus media-data4.mount
 echo ""
-pydf /media/data*
+pydf | grep -v '/var/lib/docker'
 echo ""
 echo -n "$(tput setaf 1)"
 docker ps -f status=exited | tail +2
