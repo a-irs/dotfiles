@@ -80,9 +80,9 @@ let g:markdown_enable_mappings = 0
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_input_abbreviations = 0
 
-" if (has('termguicolors'))
-"     set termguicolors
-" endif
+if (has('termguicolors'))
+    set termguicolors
+endif
 
 " match parantheses etc. with % key
 runtime macros/matchit.vim
