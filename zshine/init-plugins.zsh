@@ -1,29 +1,30 @@
 ZSHINE_PLUGINS=(
-  homebrew # macos package manager
-  cdr # recent dirs command
-  # magic-paste # auto-quote URLs on paste
-  term-title # sets terminal/tab title
-  aliases # provides some aliases and functions for daily work
-  dircolors # colors for "ls" command
-  python # python dev stuff
-  syntax-highlighting # provides a syntax highlighted prompt
-  less-syntax-highlighting # syntax highlighting for "less" command
   completion # tweaks for TAB-completion
   keys # bind keys for delete, history-search etc.
+
+  dircolors # colors for "ls" command
+  tty-colors # colors for $TERM=linux
+  syntax-highlighting # provides a syntax highlighted prompt
   zsh-history-substring-search # arrow key up/down history search
-  bd # move back in current directory tree (breadcrumb-style)
-  auto-ls # launch "ls" when entering directory
+
   prompt-git # provides functions for a git-prompt
-  fzf # CTRL+T for fuzzy-search of files
+  # magic-paste # auto-quote URLs on paste
+  term-title # sets terminal/tab title
+
   # pwd-hell # show warning message when [[ pwd != readlink -f ./ ]]
   # tmux # autostart tmux
   # notify # notify-send after long command has been completed
+  bd # move back in current directory tree (breadcrumb-style)
+  auto-ls # launch "ls" when entering directory
+  fzf # CTRL+T for fuzzy-search of files
   zshmarks # set bookmarks
-  tty-colors # colors for $TERM=linux
-  termite # include CTRL+T for termite terminal program
   todo # show ~/.todo on start
   explain # explain command switches
-  ssh-agent
+  ssh-agent # autostart ssh-agent
+  homebrew # macos package manager
+  cdr # recent dirs command
+  python # python dev stuff
+  aliases # provides some aliases and functions for daily work
 )
 
 if [[ "$ZSHINE_DEBUG" == 1 ]]; then

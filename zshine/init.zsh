@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+zmodload zsh/terminfo
+
 os="$(uname)"
 
 # no duplicate entries for path arrays
@@ -54,15 +56,6 @@ setopt GLOBDOTS
 setopt MULTIOS
 unsetopt CORRECTALL
 unsetopt CORRECT
-
-if [[ $TERM != *"-256color" ]]; then
-    for terminfos in "${HOME}/.terminfo" "/etc/terminfo" "/lib/terminfo" "/usr/share/terminfo"; do
-        if [[ -e "$terminfos"/$TERM[1]/${TERM}-256color || -e "$terminfos"/${TERM}-256color ]]; then
-            export TERM="${TERM}-256color"
-            break
-        fi
-    done
-fi
 
 RESET=$(tput sgr0)
 BOLD=$(tput bold)
