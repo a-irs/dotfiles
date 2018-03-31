@@ -21,10 +21,7 @@ export GREP_COLOR='1;32'
 export TZ='Europe/Berlin'
 export REPORTTIME=5
 
-[[ $commands[more] ]] && export PAGER=more
 [[ $commands[less] ]] && export PAGER=less
-
-[[ $commands[nano] ]] && export EDITOR=nano
 [[ $commands[vi] ]]   && export EDITOR=vi
 [[ $commands[vim] ]]  && export EDITOR=vim
 
