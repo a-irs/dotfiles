@@ -28,8 +28,9 @@ set undofile
 set undodir=~/.vim/undo
 silent call system('mkdir -p ' . &undodir)
 
-" system clipboard and VIM default register is the same
-"   set clipboard^=unnamed,unnamedplus
+" make system clipboard and VIM default register the same
+" set clipboard^=unnamed,unnamedplus
+
 " delete single chars without yanking them
 noremap x "_x
 
@@ -79,9 +80,9 @@ let g:markdown_enable_mappings = 0
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_input_abbreviations = 0
 
-if (has('termguicolors'))
-    set termguicolors
-endif
+" if (has('termguicolors'))
+"     set termguicolors
+" endif
 
 " match parantheses etc. with % key
 runtime macros/matchit.vim
@@ -114,6 +115,7 @@ nnoremap <leader>7 :buffer 7<CR>
 nnoremap <leader>8 :buffer 8<CR>
 nnoremap <leader>9 :buffer 9<CR>
 
+" toggle markdown checkboxes
 nnoremap <silent> <Leader>, :execute 's/^\(\s*[-+*]\?\s*\)\[ \]/\1[x]/'<cr>
 nnoremap <silent> <Leader>. :execute 's/^\(\s*[-+*]\?\s*\)\[x]/\1[ ]/'<cr>
 
@@ -122,6 +124,7 @@ nnoremap <leader>z viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>Z viW<esc>a"<esc>hBi"<esc>lel
 nnoremap <leader>u viw<esc>a)<esc>hbi(<esc>lel
 nnoremap <leader>U viW<esc>a)<esc>hBi(<esc>lel
+
 
 """ PLUGINS
 
@@ -157,7 +160,7 @@ nmap <Leader>< <Plug>GitGutterNextHunk
 nmap <Leader>> <Plug>GitGutterPrevHunk
 
 " color schemes
-" Plug 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 Plug 'sjl/badwolf'
 
 " async linter
@@ -187,13 +190,13 @@ let g:ansible_unindent_after_newline = 1
 let g:ansible_extra_keywords_highlight = 1
 let g:ansible_name_highlight = 'd'
 let g:ansible_with_keywords_highlight = 'Constant'
-autocmd BufNewFile,BufFilePre,BufRead inventory/* set filetype=ansible_hosts
-autocmd BufNewFile,BufFilePre,BufRead *.yml set filetype=ansible
+autocmd BufNewFile,BufFilePre,BufRead */playbooks/*.yml set filetype=yaml.ansible
 
 Plug 'rhysd/committia.vim'
 let g:committia_use_singlecolumn = 'always'
 
 call plug#end()
+
 
 " auto-install missing plugins
 augroup pluginstall
@@ -211,13 +214,14 @@ try
     set background=dark
 
     " GRUVBOX
-    " colorscheme gruvbox
-    " highlight GruvboxGreenSign ctermbg=NONE guibg=NONE ctermfg=142 guifg=#b8bb26
-    " highlight GruvboxAquaSign ctermfg=108 ctermbg=NONE guifg=#8ec07c guibg=NONE
-    " highlight GruvboxRedSign ctermfg=167 ctermbg=NONE guifg=#fb4934 guibg=NONE
+    let g:gruvbox_italic=1
+    colorscheme gruvbox
+    highlight GruvboxGreenSign ctermbg=NONE guibg=NONE ctermfg=142 guifg=#b8bb26
+    highlight GruvboxAquaSign ctermfg=108 ctermbg=NONE guifg=#8ec07c guibg=NONE
+    highlight GruvboxRedSign ctermfg=167 ctermbg=NONE guifg=#fb4934 guibg=NONE
 
     " BADWOLF
-    colorscheme badwolf
+    " colorscheme badwolf
 catch
     colorscheme pablo
     highlight StatusLine term=bold,reverse ctermfg=11 ctermbg=242 guifg=yellow guibg=DarkGray
@@ -237,8 +241,8 @@ highlight LineNr ctermfg=241 guifg=#555555
 highlight NonText ctermfg=241 guifg=#555555
 
 " make VIM background like terminal/gui background
-highlight NonText guibg=#282a36 ctermbg=none
-highlight Normal guibg=#282a36 ctermbg=NONE
-highlight SignColumn guibg=#282a36 ctermbg=NONE
-highlight LineNr guibg=#282a36 ctermbg=NONE
+" highlight NonText guibg=#282a36 ctermbg=none
+" highlight Normal guibg=#282a36 ctermbg=NONE
+" highlight SignColumn guibg=#282a36 ctermbg=NONE
+" highlight LineNr guibg=#282a36 ctermbg=NONE
 
