@@ -26,16 +26,22 @@ rotate() {
     mv -v "$1" "$outname" && bzip2 -v "$outname"
 }
 
-if [[ "$commands[termite]" ]]; then
-    toggle-termite() {
-        if [[ $(readlink -f ~/.config/termite/config) == *_light ]]; then
-            ln -sfrv ~/.dotfiles/config/termite/config ~/.config/termite/config
-        else
-            ln -sfrv ~/.dotfiles/config/termite/config_light ~/.config/termite/config
-        fi
-        killall -USR1 termite 2> /dev/null
-    }
-fi
+toggle-scheme() {
+    # Termite
+    if [[ $(readlink -f ~/.config/termite/config) == */config_light ]]; then
+        ln -sfv ~/.dotfiles/config/termite/config ~/.config/termite/config
+    elif [[ $(readlink -f ~/.config/termite/config) == */config ]]; then
+        ln -sfv ~/.dotfiles/config/termite/config_light ~/.config/termite/config
+    fi
+    killall -USR1 termite 2> /dev/null
+
+    # VIM
+    if grep -q 'set background=dark' ~/.vimrc; then
+        sed --follow-symlinks -i 's/set background=dark/set background=light/g' ~/.vimrc
+    elif grep -q 'set background=light' ~/.vimrc; then
+        sed --follow-symlinks -i 's/set background=light/set background=dark/g' ~/.vimrc
+    fi
+}
 
 each-file() {
     for f in *(.); do
