@@ -19,3 +19,5 @@ GitHub.sublime-settings
 **/SublimeLinter/*.tmTheme
 
 vim/autoload/plug.vim.old
+
+fonts/**/.uuid
