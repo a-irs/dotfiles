@@ -1,7 +1,9 @@
 TODO_FILES=(
     ~/.todo
-    ~/Documents/todo.md
+    ~/doc/todo.taskpaper
+    ~/doc/todo.md
     ~/Documents/todo.taskpaper
+    ~/Documents/todo.md
 )
 
 for f in ${TODO_FILES[@]}; do

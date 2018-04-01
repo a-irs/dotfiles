@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+TRIES_MAX=240
+SLEEP=0.5
+
 REACHABLE_HOST="$1"
 shift
 cmd=$*
@@ -7,13 +10,13 @@ cmd=$*
 TRIES=0
 while true; do
     let TRIES++
-    if ((TRIES>120)); then
+    if ((TRIES>TRIES_MAX)); then
         echo "Maximum tries reached, aborting."
         notify-send "\"$REACHABLE_HOST\" not reachable." "Command: $cmd" --icon=dialog-error
         exit 1
     fi
 
-    echo "Waiting for host at \"$REACHABLE_HOST\". Attempt Number "$TRIES"."
+    echo "Waiting for host at \"$REACHABLE_HOST\". Attempt number $TRIES / $TRIES_MAX."
 
     ping -W 1 -c 1 $REACHABLE_HOST &> /dev/null
     if [ $? -eq 0 ]; then
@@ -24,7 +27,6 @@ while true; do
         echo "\"$REACHABLE_HOST\" not reachable."
     fi
 
-    sleep 1
+    sleep "$SLEEP"
 done
-
 
