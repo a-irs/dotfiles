@@ -2,6 +2,7 @@ path+=("$ZSHINE_DIR/plugins/fzf/bin")
 if [[ ! $commands[fzf] ]]; then
     "$ZSHINE_DIR/plugins/fzf/install" --bin
 fi
+[[ $commands[fzf] ]] || return
 
 manpath+=("$ZSHINE_DIR/plugins/fzf/man")
 source "$ZSHINE_DIR/plugins/fzf/shell/key-bindings.zsh"
