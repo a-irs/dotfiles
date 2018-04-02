@@ -36,7 +36,7 @@ keepassxc &
 if [[ $HOSTNAME == desk ]]; then
     numlockx &
     bash -c "$HOME/.bin/wait-for-host spotify.com && exo-open /usr/share/applications/spotify.desktop && wmctrl -a KeePassXC" &
-    bash -c "$HOME/.bin/wait-for-host srv && sudo mount /media/data && docker start cm_plex_1" &
+    bash -c "$HOME/.bin/wait-for-host srv.home && sudo mount /media/data && docker start cm_plex_1" &
 fi
 
 session=${1:-awesome}

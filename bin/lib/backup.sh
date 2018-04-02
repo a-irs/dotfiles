@@ -7,7 +7,7 @@ set -uo pipefail
 
 TOPDIR=/media/crypto/borg
 TARGET=$TOPDIR/$HOSTNAME
-USER_HOST=root@srv
+USER_HOST=root@srv.home
 
 if ! ssh $USER_HOST test -d "$TOPDIR"; then
     echo "$USER_HOST:$TOPDIR does not exist"
