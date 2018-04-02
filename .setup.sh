@@ -5,41 +5,39 @@ all=0
 [[ "$1" == rm ]] && rm=1
 [[ "$1" == all ]] && all=1
 
-os="$(uname)"
-
 print_error() { echo -e "\033[1;31m[ERROR] $*\033[0m"; }
 print_skip() { echo -e "\033[34m[SKIP] $*\033[0m"; }
 print_remove() { echo -e "\033[35m[REMOVE] $*\033[0m"; }
 print_install() { echo -e "\033[33m[INSTALL] $*\033[0m"; }
 
-if [[ "$os" = Darwin ]]; then
+if [[ "$(uname)" = Darwin ]]; then
     this_dir="$(dirname "$(greadlink -f "$0")")"
 else
     this_dir="$(dirname "$(readlink -f "$0")")"
 fi
 
 rmlink() {
-    dest=~/.$1
+    local dest=~/.$1
     [[ -L "$dest" ]] && rm -f "$dest" && print_remove "${dest/$HOME/\~}"
     rmdir -p --ignore-fail-on-non-empty "$(dirname "$dest")" 2> /dev/null
 }
 
 mklink() {
-    dest=~/.$1
+    local dest=~/.$1
+
     if [[ -L "$dest" ]]; then
         if [[ "$(readlink "$dest")" = "$this_dir/$1" ]]; then
             # print_skip "[SKIP] ${dest/$HOME/\~}"
             return
         fi
     elif [[ -e "$dest" ]]; then
-        [[ "$(basename "$dest")" == .bashrc ]] && rm -f "$dest" && return
         print_error "${dest/$HOME/\~} already exists and is no symlink!"
         return
     fi
 
     mkdir -p "$(dirname "$dest")"
 
-    if [[ "$os" = Darwin ]]; then
+    if [[ "$(uname)" = Darwin ]]; then
         gln --force --symbolic --no-target-directory --no-dereference "$this_dir/$1" "$dest"
     else
         ln --force --symbolic --no-target-directory --no-dereference "$this_dir/$1" "$dest"

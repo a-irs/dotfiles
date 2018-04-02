@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-eval $(ssh-agent) > /dev/null
-
 HISTSIZE=100000
 HISTFILESIZE=100000
 HISTCONTROL=ignoreboth:erasedups  # don't put duplicate lines or lines starting with whitespace in history
@@ -10,12 +8,9 @@ shopt -s histappend  # append history instead of overwrite
 
 is_cmd() { command -v "$1" > /dev/null 2>&1; }
 
-is_cmd nano && export EDITOR=nano
 is_cmd vi   && export EDITOR=vi
 is_cmd vim  && export EDITOR=vim
-
 is_cmd gls  && ls() { gls "$@"; }
-
 is_cmd dircolors && eval "$(dircolors -b)"
 
 PROMPT_COMMAND=_prompt
@@ -65,11 +60,9 @@ alias la='ls -FhlA --color=auto'
 alias ll='ls -Fhl  --color=auto'
 alias rd='rmdir'
 alias mkdir='mkdir -p'
-alias glog='git log --color --patch --stat --decorate --date=relative --all --abbrev-commit'
 alias f='find . -name'
 alias fd='find . -type d -name'
 alias ff='find . -type f -name'
-alias e='$EDITOR'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
