@@ -4,12 +4,21 @@ snippet task "Task" b
     ${3:arg}: ${4:value}
 endsnippet
 
+snippet "pkg|install" "Ansible Package" br
+- name: ${1:taskname}
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ${2:item_a}
+    - ${3:item_b}
+endsnippet
+
 snippet "tpl|templ|template" "Ansible Template" br
 - name: ${1:taskname}
   template:
     src: ${2:src}
     dest: ${3:dest}
-    backup: yes
 endsnippet
 
 snippet role "Role" b
@@ -54,9 +63,8 @@ snippet "lineinfile|line" "Ansible Lineinfile" rb
 - name: ${1:taskname}
   lineinfile:
    dest: $2
-   regexp: ${3:^#?abc}
+   regexp: ${3:^(#)?\s*abc}
    line: $4
-   backup: yes
 endsnippet
 
 snippet file "Ansible File" b
@@ -64,7 +72,6 @@ snippet file "Ansible File" b
   file:
    src: $1
    dest: $2
-   backup: yes
 endsnippet
 
 snippet "dir|mkdir" "Ansible Directory" rb
@@ -80,7 +87,6 @@ snippet copy "Ansible Copy" b
     src: $2
     dest: $3
     validate: '$4 %s'
-    backup: yes
 endsnippet
 
 snippet copyc "Ansible Copy Content" b
@@ -89,6 +95,5 @@ snippet copyc "Ansible Copy Content" b
     content: $2
     dest: $3
     validate: '$4 %s'
-    backup: yes
 endsnippet
 
