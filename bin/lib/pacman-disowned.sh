@@ -13,5 +13,5 @@ find /bin /sbin /usr \
   ! -name lost+found -not -path "*/mime/*" \
   \( -type d -printf '%p/\n' -o -print \) | sort > "$fs"
 
-comm -23 "$fs" "$db"
+comm -23 "$fs" "$db" | grep -vP '.cache$'
 
