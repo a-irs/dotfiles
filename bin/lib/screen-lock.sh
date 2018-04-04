@@ -1,23 +1,11 @@
 #!/usr/bin/env bash
 
-# lock
+if keepassxc; then
+    sleep 0.2
+    xdotool keydown Ctrl key l keyup Ctrl
+fi
 
 killall i3lock
-icon=~/.bin/lib/screen-lock.png
+i3lock --image="$HOME/.bin/lib/screen-lock.png" --tiling --color=263657 --show-failed-attempts --ignore-empty-password
 
-logger "locking screen"
-i3lock --image="$icon" --tiling --color=303E5B --show-failed-attempts --ignore-empty-password
-
-
-(($# == 0)) && exit
-
-# suspend
-
-logger "stopping services"
-mpc pause 2> /dev/null
-dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Pause 2> /dev/null
-killall ncmpcpp 2> /dev/null
-dropbox-cli stop
-
-logger "suspending"
-systemctl suspend
+[[ "$1" == suspend ]] && systemctl suspend

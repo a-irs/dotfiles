@@ -24,6 +24,7 @@ while read -r line; do
             ;;
         *-ethernet) c=$eth_color ;;
     esac
+    suffix_color="#A8F5EF"
     txt+=("<span foreground='$c'><b>${name}</b></span><span foreground='$suffix_color'><b>${suffix}</b></span>")
 done <<< "$active"
 
@@ -34,7 +35,7 @@ if [[ $total == 0 ]]; then
 else
     for item in "${txt[@]}"; do
         printf "%s" "$item"
-        [[ "$count" == "$total" ]] || printf "%s" "+"
+        [[ "$count" == "$total" ]] || printf "%s" " + "
         count=$((count+1))
     done
 fi

@@ -14,9 +14,9 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 # keyboard
-setxkbmap -option caps:escape &
-xset r rate 200 30 &
-[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources &
+setxkbmap -option caps:escape
+xset r rate 200 30
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
 # screen
 xset -dpms &

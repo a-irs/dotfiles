@@ -136,6 +136,9 @@ let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
+Plug 'eiginn/iptables-vim'
+autocmd BufNewFile,BufFilePre,BufRead *.rules set filetype=iptables
+
 " auto-close brackets
 Plug 'raimondi/delimitmate'
 
@@ -189,6 +192,7 @@ Plug 'pearofducks/ansible-vim'
 let g:ansible_unindent_after_newline = 1
 let g:ansible_extra_keywords_highlight = 1
 let g:ansible_with_keywords_highlight = 'Constant'
+let g:ansible_template_syntaxes = { '*.conf.j2': 'conf', '*.rules.j2': 'iptables' }
 autocmd BufNewFile,BufFilePre,BufRead */playbooks/*.yml set filetype=yaml.ansible
 
 Plug 'rhysd/committia.vim'
