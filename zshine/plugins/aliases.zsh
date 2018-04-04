@@ -444,7 +444,7 @@ if [[ "$commands[pacman]" ]]; then
     alias pqi='pacman -Qi'
     alias pqk='sudo pacman -Qk > /dev/null'
     alias pqo='pacman -Qo'
-    alias pql='pacman -Qlq'
+    function pql() { pacman -Qlq "$1" | xargs ls --color -dlh; }
     alias psc='sudo pacman -Sc'
     alias psl='pkgfile -l'
     alias pu='sudo pacman -U'
