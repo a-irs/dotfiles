@@ -2,9 +2,7 @@ local volume     = require 'volume'
 local awful      = require 'awful'
 local rules      = require 'awful.rules'
 local naughty    = require 'naughty'
-local beautiful  = require 'beautiful'
 local gears      = require 'gears'
-
 
 win = "Mod4"
 alt = "Mod1"
@@ -19,50 +17,76 @@ function tag_view_nonempty(direction)
     end
 end
 
+function run_gui(cmd)
+    awful.spawn(cmd, { tag = mouse.screen.selected_tag })
+end
+
+function run(cmd)
+    awful.spawn(cmd, false)
+end
+
+function run_script(script)
+    run(os.getenv("HOME") .. "/.bin/" .. script)
+end
+
+function run_gui_script(script)
+    run_gui(os.getenv("HOME") .. "/.bin/" .. script)
+end
+
+function run_or_raise(cmd, class)
+    local matcher = function(c)
+        return rules.match(c, {class = class})
+    end
+    awful.client.run_or_raise(cmd, matcher)
+end
+
+function focus(direction)
+    awful.client.focus.bydirection(direction)
+    if client.focus then client.focus:raise() end
+end
+
+function view_tag(i)
+    local screen = awful.screen.focused()
+    local tag = screen.tags[i]
+    if tag then
+        tag:view_only()
+    end
+end
+
+function toggle_tag(i)
+    local screen = awful.screen.focused()
+    local tag = screen.tags[i]
+    if tag then
+        awful.tag.viewtoggle(tag)
+    end
+end
+
+function move_client_to_tag(i)
+    if client.focus then
+        local tag = client.focus.screen.tags[i]
+        if tag then
+            client.focus:move_to_tag(tag)
+        end
+    end
+end
+
+
 globalkeys = awful.util.table.join(
 
     -- focus windows
 
-    awful.key({ alt }, "Down",
-        function()
-            awful.client.focus.bydirection("down")
-            if client.focus then client.focus:raise() end
-        end,
-        {description="focus down", group="focus"}),
-    awful.key({ alt }, "Up",
-        function()
-            awful.client.focus.bydirection("up")
-            if client.focus then client.focus:raise() end
-        end,
-        {description="focus up", group="focus"}),
-    awful.key({ alt }, "Left",
-        function()
-            awful.client.focus.bydirection("left")
-            if client.focus then client.focus:raise() end
-        end,
-        {description="focus left", group="focus"}),
-    awful.key({ alt }, "Right",
-        function()
-            awful.client.focus.bydirection("right")
-            if client.focus then client.focus:raise() end
-        end,
-        {description="focus right", group="focus"}),
+    awful.key({ alt }, "Down",  function() focus("down") end),
+    awful.key({ alt }, "Up",    function() focus("up") end),
+    awful.key({ alt }, "Left",  function() focus("left") end),
+    awful.key({ alt }, "Right", function() focus("right") end),
 
     -- switch tags
 
-    awful.key({ win          }, "Right", awful.tag.viewnext,
-        {description="view right tag", group="tags"}),
-    awful.key({ win          }, "Left",  awful.tag.viewprev,
-        {description="view left tag", group="tags"}),
-
-    awful.key({ alt          }, "Tab",   function() tag_view_nonempty( 1) end,
-        {description="view right nonempty tag", group="tags"}),
-
-    awful.key({ alt, "Shift" }, "Tab",   function() tag_view_nonempty(-1) end,
-        {description="view left nonempty tag", group="tags"}),
-
-    awful.key({ win          }, "Tab",   awful.tag.history.restore,
-        {description="toggle history tag", group="tags"}),
+    awful.key({ win          }, "Right", awful.tag.viewnext),
+    awful.key({ win          }, "Left",  awful.tag.viewprev),
+    awful.key({ alt          }, "Tab",   function() tag_view_nonempty( 1) end),
+    awful.key({ alt, "Shift" }, "Tab",   function() tag_view_nonempty(-1) end),
+    awful.key({ win          }, "Tab",   awful.tag.history.restore),
 
     -- modify windows
 
@@ -79,13 +103,10 @@ globalkeys = awful.util.table.join(
         end
     end),
 
-    awful.key({ win }, "#35", function() -- plus +
-        awful.tag.incgap(-1)
-    end, {description="increase useless gap", group="useless"}),
+    -- useless gaps
 
-    awful.key({ win }, "#61", function() -- minus -
-        awful.tag.incgap(1)
-    end, {description="decrease useless gap", group="useless"}),
+    awful.key({ win }, "#35", function() awful.tag.incgap(-1) end), -- plus +
+    awful.key({ win }, "#61", function() awful.tag.incgap( 1) end), -- minus -
 
     awful.key({ win, "Control" }, "Right", function() awful.tag.incmwfact( 0.01) end,
         {description="increase window size", group="window"}),
@@ -120,59 +141,30 @@ globalkeys = awful.util.table.join(
 
     -- switch layouts
 
-    awful.key({ win            }, "space", function() awful.layout.inc(1) end,
-        {description="next layout", group="layout"}),
-
-    awful.key({ win, "Shift"   }, "space", function() awful.layout.inc(-1) end,
-        {description="previous layout", group="layout"}),
+    awful.key({ win            }, "space", function() awful.layout.inc(1) end),
+    awful.key({ win, "Shift"   }, "space", function() awful.layout.inc(-1) end),
 
     -- launch programs
 
-    awful.key({ win }, "r", function () awful.screen.focused().myprompt:run() end,
-        {description = "run prompt", group = "apps"}),
+    awful.key({ win }, "r",          function() awful.screen.focused().myprompt:run() end),
+    awful.key({ alt }, "Return",     function() run("termite") end),
+    awful.key({ alt }, "f",          function() run_gui("thunar") end),
+    awful.key({ alt }, "c",          function() run_gui("firefox") end),
+    awful.key({ alt, "Shift" }, "c", function() run_gui("firefox --private-window") end),
+    awful.key({ alt }, "p",          function() run_script("pick-color.sh") end),
+    awful.key({ alt }, "k",          function() run_or_raise("keepassxc", "keepassxc") end),
+    awful.key({ alt }, "s",          function() run_or_raise("subl3", "Subl3") end),
+    awful.key({ alt }, "o",          function() run_gui_script("mpv-clipboard.sh") end),
 
-    awful.key({ win }, "p", function() awful.spawn("bash -c 'sleep 0.1 && xset dpms force off'") end,
-        {description = "turn off LCD", group = "apps" }),
+    -- displays
 
-    awful.key({ alt }, "Return", function() awful.spawn(user_terminal) end,
-              {description = "run terminal", group = "apps"}),
-    awful.key({ alt }, "f",      function() awful.spawn("thunar") end,
-              {description = "run filemanager", group = "apps"}),
-    awful.key({ alt }, "c",      function() awful.spawn('firefox')
-        end, {description = "run browser", group = "apps"}),
-    awful.key({ alt, "Shift" }, "c", function () awful.spawn("firefox --private-window") end,
-              {description = "run private browser", group = "apps"}),
-    awful.key({ win }, "l",      function () awful.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh", false) end,
-              {description = "lock screen", group = "apps"}),
-    awful.key({ alt }, "p",      function () awful.spawn(os.getenv("HOME") .. "/.bin/pick-color.sh", false) end,
-              {description = "run color picker", group = "apps"}),
-    awful.key({ alt }, "l",      function()
-        local matcher = function(c)
-            return rules.match(c, {class = 'Lampe-gtk'})
-        end
-        awful.client.run_or_raise('lampe-gtk', matcher)
-    end, {description = "run keepass", group = "apps"}),
-    awful.key({ alt }, "k",      function()
-        local matcher = function(c)
-            return rules.match(c, {class = 'keepassxc'})
-        end
-        awful.client.run_or_raise('keepassxc', matcher)
-    end, {description = "run keepass", group = "apps"}),
-    awful.key({ alt }, "s",      function()
-            local matcher = function(c)
-                return rules.match(c, {class = 'Subl3'})
-            end
-            awful.client.run_or_raise('subl3', matcher)
-        end, {description = "run sublime text", group = "apps"}),
-    awful.key({ alt }, "o",      function () awful.spawn(os.getenv("HOME") .. "/.bin/mpv-clipboard.sh", false) end,
-              {description = "run mpv-clipboard.sh", group = "apps"}),
+    awful.key({ win }, "p", function() run("bash -c 'sleep 0.1 && xset dpms force off'") end),
+    awful.key({ "Ctrl", "Shift" }, "dead_circumflex", function() run_script("desk/toggle-display.sh") end),
 
-    awful.key({ "Ctrl", "Shift" }, "dead_circumflex", function() awful.spawn(os.getenv("HOME") .. "/.bin/desk/toggle-display.sh") end,
-              {description = "toggle primary screen", group = "apps"}),
-    awful.key({        }, "Print", function() awful.spawn("mate-screenshot", false) end,
-              {description = "make screenshot", group = "apps"}),
-    awful.key({ "Ctrl" }, "Print", function() awful.spawn("mate-screenshot --area", false) end,
-              {description = "make screenshot", group = "apps"}),
+    -- screenshots
+
+    awful.key({        }, "Print", function() run("flameshot full -p " .. os.getenv("HOME")) end),
+    awful.key({ "Ctrl" }, "Print", function() run("flameshot gui -p "  .. os.getenv("HOME")) end),
 
     -- media keys
 
@@ -206,7 +198,10 @@ globalkeys = awful.util.table.join(
         io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
     end),
 
-    awful.key({}, "XF86PowerOff", function() awful.spawn(os.getenv("HOME") .. "/.bin/screen-lock.sh suspend", false) end),
+    -- suspend, lock
+
+    awful.key({ win }, "l",       function() run_script("screen-lock.sh") end),
+    awful.key({}, "XF86PowerOff", function() run_script("screen-lock.sh suspend") end),
 
     -- restart awesome wm
 
@@ -215,28 +210,27 @@ globalkeys = awful.util.table.join(
     -- show all tags at once
 
     awful.key({ win }, "z",
-              function()
-                  local screen = awful.screen.focused()
-                  local all_tags = screen.tags
-                  local selected_tags = awful.tag.selectedlist(screen)
+    function()
+        local screen = awful.screen.focused()
+        local all_tags = screen.tags
+        local selected_tags = awful.tag.selectedlist(screen)
 
-                  local all_tags_count = 0
-                  for _ in pairs(all_tags) do
-                      all_tags_count = all_tags_count + 1
-                  end
+        local all_tags_count = 0
+        for _ in pairs(all_tags) do
+            all_tags_count = all_tags_count + 1
+        end
 
-                  local selected_tags_count = 0
-                  for _ in pairs(selected_tags) do
-                      selected_tags_count = selected_tags_count + 1
-                  end
+        local selected_tags_count = 0
+        for _ in pairs(selected_tags) do
+            selected_tags_count = selected_tags_count + 1
+        end
 
-                  if all_tags_count == selected_tags_count then
-                      awful.tag.history.restore()
-                  else
-                      awful.tag.viewmore(all_tags, screen)
-                  end
-              end,
-        {description="show all tags", group="tags"}),
+        if all_tags_count == selected_tags_count then
+            awful.tag.history.restore()
+        else
+            awful.tag.viewmore(all_tags, screen)
+        end
+    end),
 
     -- change master/column count
 
@@ -270,6 +264,7 @@ globalkeys = awful.util.table.join(
         {description="decrease # of columns", group="layout"})
 )
 
+
 clientkeys = gears.table.join(
     awful.key({ win }, "f",  function(c)
         c.fullscreen = not c.fullscreen
@@ -279,42 +274,19 @@ clientkeys = gears.table.join(
     awful.key({ win }, "w",  function(c) c:kill() end),
     awful.key({ win }, "q",  function(c) c:kill() end),
     awful.key({ win }, "e",  awful.client.floating.toggle),
-    awful.key({ win }, "m",  awful.titlebar.toggle, { description="toggle active window titlebar", group="bars"}),
-    awful.key({ win }, "Up",  function(c) c.minimized = true end)
+    awful.key({ win }, "m",  awful.titlebar.toggle),
+    awful.key({ win }, "Up", function(c) c.minimized = true end)
 )
 
 for i = 1, 9 do
     globalkeys = awful.util.table.join(globalkeys,
-        -- view tag
-        awful.key({ win }, "#" .. i + 9,
-            function()
-                local screen = awful.screen.focused()
-                local tag = screen.tags[i]
-                if tag then
-                    tag:view_only()
-                end
-            end),
-        -- toggle tag display
-        awful.key({ win, alt }, "#" .. i + 9,
-            function()
-                local screen = awful.screen.focused()
-                local tag = screen.tags[i]
-                if tag then
-                    awful.tag.viewtoggle(tag)
-                end
-            end),
-        -- move client to tag
-        awful.key({ win, "Shift" }, "#" .. i + 9,
-            function()
-                if client.focus then
-                    local tag = client.focus.screen.tags[i]
-                    if tag then
-                        client.focus:move_to_tag(tag)
-                    end
-                end
-            end)
-        )
+        awful.key({ win },          "#" .. i + 9, function() view_tag(i) end),
+        awful.key({ win, alt },     "#" .. i + 9, function() toggle_tag(i) end),
+        awful.key({ win, "Shift" }, "#" .. i + 9, function() move_client_to_tag(i) end)
+    )
 end
+
+-- mouse buttons
 
 clientbuttons = awful.util.table.join(
     awful.button({     }, 1, function(c) client.focus = c; c:raise() end),

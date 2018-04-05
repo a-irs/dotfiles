@@ -14,18 +14,11 @@ function awful.tag.getgap(t, numclients)
     return getgap(t, 42)
 end
 
-user_terminal   = "termite"
 hostname        = io.popen("uname -n"):read()
-
-high_dpi        = xresources.get_dpi() >= 100
+is_high_dpi     = xresources.get_dpi() >= 100
 
 function dpi(value)
     return math.floor(xresources.apply_dpi(value) + 0.5)
-end
-
-function is_empty(tag)
-    if tag == nil then return true end
-    return #tag:clients() == 0
 end
 
 beautiful.init(gears.filesystem.get_configuration_dir () .. "theme.lua")
@@ -69,6 +62,7 @@ require 'awm-bindings'
 require 'awm-statusbar'
 require 'awm-rules'
 
+-- toggle tag1, tag2 on startup (to make initial win+tab possible)
 local tag = awful.tag.gettags(awful.screen.focused())[1]
 local tag2 = awful.tag.gettags(awful.screen.focused())[2]
 if tag2 then awful.tag.viewonly(tag2) end

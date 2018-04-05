@@ -26,7 +26,8 @@ xset s off &
 nitrogen --restore &
 kupfer --no-splash &
 lxpolkit &
-redshift &
+# FIXME: oneshot-mode, because of screen flickering with amdgpu otherwise
+redshift -o
 parcellite --no-icon &
 mkdir -p ~/.thumbnails && ln -sf ~/.thumbnails ~/.cache/thumbnails
 compton &

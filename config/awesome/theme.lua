@@ -1,10 +1,9 @@
 theme                               = {}
 
-local basedir                       = os.getenv("HOME") .. "/.config/awesome"
-if high_dpi then
-    xpm_folder                      = basedir .. "/xpm_175"
+if is_high_dpi then
+    xpm_folder                      = os.getenv("HOME") .. "/.config/awesome/xpm_175"
 else
-    xpm_folder                      = basedir .. "/xpm_100"
+    xpm_folder                      = os.getenv("HOME") .. "/.config/awesome/xpm_100"
 end
 
 theme.statusbar_height              = dpi(16)
@@ -19,9 +18,9 @@ theme.fg_normal                     = "#aaaaaa"
 theme.fg_focus                      = "#ffffff"
 theme.fg_urgent                     = "#ffffff"
 
-theme.border_width                  = 0
+theme.border_width                  = dpi(0)
 theme.border_normal                 = "#3f405f"
-theme.border_focus                  = "#ffffff"
+theme.border_focus                  = "#aae373"
 
 theme.useless_gap                   = 0
 
@@ -52,7 +51,7 @@ theme.show_tag_names                = true
 theme.taglist_empty_tag             = "\28"
 theme.taglist_nonempty_tag          = "\27"
 
-if high_dpi then
+if is_high_dpi then
     theme.font = "Input 7"
     theme.taglist_font = "Input 7"
     theme.taglist_empty_tag = "☐"  -- ○

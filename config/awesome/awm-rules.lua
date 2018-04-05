@@ -1,7 +1,13 @@
 local awful     = require 'awful'
                   require 'awful.autofocus'
 local wibox     = require 'wibox'
+local gears     = require 'gears'
 local naughty   = require 'naughty'
+
+function is_empty(tag)
+    if tag == nil then return true end
+    return #tag:clients() == 0
+end
 
 awful.rules.rules = {
 
@@ -111,6 +117,12 @@ end
 
 -- client appears
 client.connect_signal("manage", function(c)
+
+    -- FIXME: only apply when single window visible
+    -- also: slow rendering
+    -- c.shape = function(cr, w, h)
+    --     gears.shape.rounded_rect(cr, w, h, dpi(16)
+    -- end
 
     if (c.class == "Kupfer.py") then
         return
