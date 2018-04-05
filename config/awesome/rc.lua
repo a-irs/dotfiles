@@ -5,6 +5,8 @@ local lain       = require 'lain'
 local xresources = require('beautiful').xresources
 local beautiful  = require 'beautiful'
 
+awful.spawn("nitrogen --restore", false)
+
 -- revert "Only use useless_gap with multiple tiled clients"
 local getgap = awful.tag.getgap
 function awful.tag.getgap(t, numclients)
