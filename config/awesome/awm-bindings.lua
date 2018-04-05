@@ -4,12 +4,12 @@ local rules      = require 'awful.rules'
 local naughty    = require 'naughty'
 local gears      = require 'gears'
 
-win = "Mod4"
-alt = "Mod1"
+local win = "Mod4"
+local alt = "Mod1"
 
-function tag_view_nonempty(direction)
+local function tag_view_nonempty(direction)
     local s = awful.screen.focused()
-    for i = 1, #awful.tag.gettags(s) do
+    for _, _ in pairs(awful.tag.gettags(s)) do
         awful.tag.viewidx(direction, s)
         if #awful.client.visible(s) > 0 then
             return
@@ -17,56 +17,72 @@ function tag_view_nonempty(direction)
     end
 end
 
-function run_gui(cmd)
+local function run_gui(cmd)
     awful.spawn(cmd, { tag = mouse.screen.selected_tag })
 end
 
-function run(cmd)
+local function run(cmd)
     awful.spawn(cmd, false)
 end
 
-function run_script(script)
+local function run_script(script)
     run(os.getenv("HOME") .. "/.bin/" .. script)
 end
 
-function run_gui_script(script)
+local function run_gui_script(script)
     run_gui(os.getenv("HOME") .. "/.bin/" .. script)
 end
 
-function run_or_raise(cmd, class)
+local function run_or_raise(cmd, class)
     local matcher = function(c)
         return rules.match(c, {class = class})
     end
     awful.client.run_or_raise(cmd, matcher)
 end
 
-function focus(direction)
+local function focus(direction)
     awful.client.focus.bydirection(direction)
     if client.focus then client.focus:raise() end
 end
 
-function view_tag(i)
-    local screen = awful.screen.focused()
-    local tag = screen.tags[i]
+local function swap(direction)
+    awful.client.swap.bydirection(direction)
+    if client.focus then client.focus:raise() end
+end
+
+local function view_tag(i)
+    local tag = awful.screen.focused().tags[i]
     if tag then
         tag:view_only()
     end
 end
 
-function toggle_tag(i)
-    local screen = awful.screen.focused()
-    local tag = screen.tags[i]
+local function toggle_tag(i)
+    local tag = awful.screen.focused().tags[i]
     if tag then
         awful.tag.viewtoggle(tag)
     end
 end
 
-function move_client_to_tag(i)
+local function move_client_to_tag(i)
     if client.focus then
         local tag = client.focus.screen.tags[i]
         if tag then
             client.focus:move_to_tag(tag)
         end
+    end
+end
+
+local function audio(t)
+    if t == "toggle" then
+        io.popen("mpc -q toggle")
+        io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
+    elseif t == "prev" then
+        io.popen("mpc -q prev")
+        io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous")
+    elseif t == "next" then
+        io.popen("mpc -q next")
+        io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next")
     end
 end
 
@@ -108,41 +124,22 @@ globalkeys = awful.util.table.join(
     awful.key({ win }, "#35", function() awful.tag.incgap(-1) end), -- plus +
     awful.key({ win }, "#61", function() awful.tag.incgap( 1) end), -- minus -
 
-    awful.key({ win, "Control" }, "Right", function() awful.tag.incmwfact( 0.01) end,
-        {description="increase window size", group="window"}),
+    -- window size
 
-    awful.key({ win, "Control" }, "Left",  function() awful.tag.incmwfact(-0.01) end,
-        {description="decrease window size", group="window"}),
+    awful.key({ win, "Control" }, "Right", function() awful.tag.incmwfact( 0.01) end),
+    awful.key({ win, "Control" }, "Left",  function() awful.tag.incmwfact(-0.01) end),
 
-    awful.key({ win, "Shift"   }, "Left",
-        function()
-            awful.client.swap.bydirection("left")
-            if client.focus then client.focus:raise() end
-        end,
-        {description="swap with left window", group="window"}),
-    awful.key({ win, "Shift"   }, "Right",
-        function()
-            awful.client.swap.bydirection("right")
-            if client.focus then client.focus:raise() end
-        end,
-        {description="swap with right window", group="window"}),
-    awful.key({ win, "Shift"   }, "Up",
-        function()
-            awful.client.swap.bydirection("up")
-            if client.focus then client.focus:raise() end
-        end,
-        {description="swap with up window", group="window"}),
-    awful.key({ win, "Shift"   }, "Down",
-        function()
-            awful.client.swap.bydirection("down")
-            if client.focus then client.focus:raise() end
-        end,
-        {description="swap with down window", group="window"}),
+    -- swap windows
+
+    awful.key({ win, "Shift" }, "Left", function() swap("left") end),
+    awful.key({ win, "Shift" }, "Right", function() swap("right") end),
+    awful.key({ win, "Shift" }, "Up", function() swap("up") end),
+    awful.key({ win, "Shift" }, "Down", function() swap("down") end),
 
     -- switch layouts
 
-    awful.key({ win            }, "space", function() awful.layout.inc(1) end),
-    awful.key({ win, "Shift"   }, "space", function() awful.layout.inc(-1) end),
+    awful.key({ win          }, "space", function() awful.layout.inc(1) end),
+    awful.key({ win, "Shift" }, "space", function() awful.layout.inc(-1) end),
 
     -- launch programs
 
@@ -172,31 +169,13 @@ globalkeys = awful.util.table.join(
     awful.key({}, "XF86AudioLowerVolume", volume.decrease),
     awful.key({}, "XF86AudioMute",        volume.toggle),
 
-    awful.key({}, "XF86AudioPlay", function()
-        io.popen("mpc -q toggle")
-        io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
-    end),
-    awful.key({}, "XF86AudioPrev", function()
-        io.popen("mpc -q prev")
-        io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous")
-    end),
-    awful.key({}, "XF86AudioNext", function()
-        io.popen("mpc -q next")
-        io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next")
-    end),
+    awful.key({}, "XF86AudioPlay",   function() audio("toggle") end),
+    awful.key({}, "XF86AudioPrev",   function() audio("prev") end),
+    awful.key({}, "XF86AudioNext",   function() audio("next") end),
 
-    awful.key({ alt }, "<", function()
-        io.popen("mpc -q next")
-        io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next")
-    end),
-    awful.key({ alt, "Shift" }, "<", function()
-        io.popen("mpc -q prev")
-        io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous")
-    end),
-    awful.key({ alt }, "y", function()
-        io.popen("mpc -q toggle")
-        io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
-    end),
+    awful.key({ alt }, "y",          function() audio("toggle") end),
+    awful.key({ alt }, "<",          function() audio("next") end),
+    awful.key({ alt, "Shift" }, "<", function() audio("prev") end),
 
     -- suspend, lock
 
@@ -213,19 +192,9 @@ globalkeys = awful.util.table.join(
     function()
         local screen = awful.screen.focused()
         local all_tags = screen.tags
-        local selected_tags = awful.tag.selectedlist(screen)
+        local selected_tags = screen.selected_tags
 
-        local all_tags_count = 0
-        for _ in pairs(all_tags) do
-            all_tags_count = all_tags_count + 1
-        end
-
-        local selected_tags_count = 0
-        for _ in pairs(selected_tags) do
-            selected_tags_count = selected_tags_count + 1
-        end
-
-        if all_tags_count == selected_tags_count then
+        if #all_tags == #selected_tags then
             awful.tag.history.restore()
         else
             awful.tag.viewmore(all_tags, screen)
@@ -234,42 +203,15 @@ globalkeys = awful.util.table.join(
 
     -- change master/column count
 
-    awful.key({ win }, ".",
-        function()
-            awful.tag.incnmaster(1, nil, true)
-            local text = "Number of master windows: " .. awful.tag.getnmaster()
-            naughty.notify({ text = text, timeout = 1 })
-        end,
-        {description="increase # of master windows", group="layout"}),
-    awful.key({ win }, ",",
-        function()
-            awful.tag.incnmaster(-1, nil, true)
-            local text = "Number of master windows: " .. awful.tag.getnmaster()
-            naughty.notify({ text = text, timeout = 1 })
-        end,
-        {description="decrease # of master windows", group="layout"}),
-    awful.key({ win, alt }, ".",
-        function()
-            awful.tag.incncol(1, nil, true)
-            local text = "Number of columns: " .. awful.tag.getncol()
-            naughty.notify({ text = text, timeout = 1 })
-        end,
-        {description="increase # of columns", group="layout"}),
-    awful.key({ win, alt }, ",",
-        function()
-            awful.tag.incncol(-1, nil, true)
-            local text = "Number of columns: " .. awful.tag.getncol()
-            naughty.notify({ text = text, timeout = 1 })
-        end,
-        {description="decrease # of columns", group="layout"})
+    awful.key({ win }, ".", function() awful.tag.incnmaster( 1, nil, true); naughty.notify({ text = "Master: " .. awful.tag.getnmaster(), timeout = 1 }) end),
+    awful.key({ win }, ",", function() awful.tag.incnmaster(-1, nil, true); naughty.notify({ text = "Master: " .. awful.tag.getnmaster(), timeout = 1 }) end),
+    awful.key({ win, alt }, ".", function() awful.tag.incncol( 1, nil, true); naughty.notify({ text = "Columns: " .. awful.tag.getncol(), timeout = 1 }) end),
+    awful.key({ win, alt }, ",", function() awful.tag.incncol(-1, nil, true); naughty.notify({ text = "Columns: " .. awful.tag.getncol(), timeout = 1 }) end)
 )
 
 
 clientkeys = gears.table.join(
-    awful.key({ win }, "f",  function(c)
-        c.fullscreen = not c.fullscreen
-        c:raise()
-    end),
+    awful.key({ win }, "f",  function(c) c.fullscreen = not c.fullscreen; c:raise() end),
     awful.key({ alt }, "F4", function(c) c:kill() end),
     awful.key({ win }, "w",  function(c) c:kill() end),
     awful.key({ win }, "q",  function(c) c:kill() end),

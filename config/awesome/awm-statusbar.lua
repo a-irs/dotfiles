@@ -4,7 +4,9 @@ local wibox   = require 'wibox'
 local lain    = require 'lain'
 local naughty = require 'naughty'
 local volume  = require 'volume'
-markup = lain.util.markup
+local gears   = require 'gears'
+
+local markup = lain.util.markup
 
 
 local function make_widget(widget, left_margin, right_margin, background_color)
@@ -67,7 +69,7 @@ end
 
 if hostname == "dell" then
     netwidget = awful.widget.watch(
-        os.getenv("HOME") .. "/.config/awesome/statusbar/network-info.sh", 2,
+        gears.filesystem.get_configuration_dir() .. "/statusbar/network-info.sh", 2,
         function(widget, stdout)
             widget:set_markup(stdout)
         end
@@ -78,7 +80,7 @@ end
 
 if hostname == "desk" then
     dlwidget = awful.widget.watch(
-        os.getenv("HOME") .. "/.config/awesome/statusbar/dl-status.py", 2,
+        gears.filesystem.get_configuration_dir() .. "/statusbar/dl-status.py", 2,
         function(widget, stdout)
             widget:set_markup(stdout)
         end
@@ -89,7 +91,7 @@ end
 -- MUSIC
 
 musicwidget = awful.widget.watch(
-    os.getenv("HOME") .. "/.config/awesome/statusbar/music.sh " .. theme.widget_music_fg:gsub('#', ''), 2,
+    gears.filesystem.get_configuration_dir() .. "/statusbar/music.sh " .. theme.widget_music_fg:gsub('#', ''), 2,
     function(widget, stdout)
         if stdout == "" then
             widget:set_markup("")

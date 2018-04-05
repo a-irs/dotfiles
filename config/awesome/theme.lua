@@ -1,9 +1,11 @@
+local gears = require("gears")
+
 theme                               = {}
 
 if is_high_dpi then
-    xpm_folder                      = os.getenv("HOME") .. "/.config/awesome/xpm_175"
+    xpm_folder                      = gears.filesystem.get_configuration_dir() .. "/xpm_175"
 else
-    xpm_folder                      = os.getenv("HOME") .. "/.config/awesome/xpm_100"
+    xpm_folder                      = gears.filesystem.get_configuration_dir() .. "/xpm_100"
 end
 
 theme.statusbar_height              = dpi(16)

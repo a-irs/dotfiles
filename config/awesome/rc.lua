@@ -5,9 +5,6 @@ local lain       = require 'lain'
 local xresources = require('beautiful').xresources
 local beautiful  = require 'beautiful'
 
-awful.spawn("nitrogen --restore", false)
-awful.spawn("killall -USR1 termite", false)
-
 -- revert "Only use useless_gap with multiple tiled clients"
 local getgap = awful.tag.getgap
 function awful.tag.getgap(t, numclients)
@@ -24,6 +21,27 @@ end
 beautiful.init(gears.filesystem.get_configuration_dir () .. "theme.lua")
 
 require 'awm-notify-settings'
+
+-- error handling
+if awesome.startup_errors then
+    naughty.notify({ preset = naughty.config.presets.critical,
+                     title = "Errors during startup!",
+                     text = awesome.startup_errors })
+end
+
+do
+    local in_error = false
+    awesome.connect_signal("debug::error", function(err)
+        if in_error then return end
+        in_error = true
+
+        naughty.notify({ preset = naughty.config.presets.critical,
+                         title = "An error happened!",
+                         text = err })
+        in_error = false
+    end)
+end
+
 
 function dbg(text)
     naughty.notify({ text = text, timeout = 0 })
@@ -55,7 +73,6 @@ if hostname == "dell" then
     battimer:start()
 end
 
-require 'awm-error-handling'
 require 'awm-layouts'
 require 'awm-tags'
 require 'awm-bindings'
