@@ -623,13 +623,14 @@ nfo() {
 }
 
 pall() {
+    printf "\n"
     local git_dirs=(
         ~/.dot
         /srv/infra
     )
     for d in "${git_dirs[@]}"; do
         if [[ -d "$d" ]]; then
-            printf "${BLUE}%s${RESET}\n" "$d"
+            printf "${BLUE}%s${RESET}\n" "${d//$HOME/~}"
             git -C "$d" status -sbu
             git -C "$d" pull
             printf "\n"
