@@ -621,3 +621,18 @@ fi
 nfo() {
     iconv -f cp437 -t utf8 "$@" | less -Q
 }
+
+pall() {
+    local git_dirs=(
+        ~/.dot
+        /srv/infra
+    )
+    for d in "${git_dirs[@]}"; do
+        if [[ -d "$d" ]]; then
+            printf "${BLUE}%s${RESET}\n" "$d"
+            git -C "$d" status -sbu
+            git -C "$d" pull
+            printf "\n"
+        fi
+    done
+}
