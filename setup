@@ -5,7 +5,8 @@ import pathlib
 import shutil
 import sys
 
-installs = {
+# 'binary_name': [ 'list', 'of', 'files' ]
+CONFIG = {
     # TODO: 'firefox': ['.mozilla/firefox/*.default/chrome/userChrome.css']
     'awesome': ['.config/awesome'],
     'bash': ['.bashrc', '.bin'],
@@ -28,9 +29,10 @@ installs = {
 }
 
 
-def log(level: str, msg: str) -> None:
-    output_msg = msg.replace(str(pathlib.Path.home()), '~')
-    print(f"{level.upper()}: {output_msg}")
+def log(level: str, msg: str, replace_home=True) -> None:
+    if replace_home:
+        msg = msg.replace(str(pathlib.Path.home()), '~')
+    print(f"{level.upper()}: {msg}")
 
 
 def make_link(src: pathlib.Path, dest: pathlib.Path) -> None:
@@ -68,22 +70,26 @@ def remove_link(link: pathlib.Path) -> None:
         log(f"error", f"{link} is not a symlink!")
 
 
-target_dir = pathlib.Path.home()
-package_dir = pathlib.Path(os.path.dirname(os.path.abspath(__file__)))
+def main() -> None:
+    target_dir = pathlib.Path.home()
+    package_dir = pathlib.Path(os.path.dirname(os.path.abspath(__file__)))
 
-action = 'link'
-if len(sys.argv) > 1 and sys.argv[1] == 'rm':
-    action = 'rm'
+    action = 'link'
+    if len(sys.argv) > 1 and sys.argv[1] == 'rm':
+        action = 'rm'
 
-for package_name, files in installs.items():
-    for f in files:
-        src = package_dir / package_name / pathlib.Path(f)
-        dest = target_dir / pathlib.Path(f)
-        if action == 'rm':
-            remove_link(dest)
-        else:
-            if shutil.which(package_name):
-                make_link(src, dest)
-            else:
+    for package_name, files in CONFIG.items():
+        for f in files:
+            src = package_dir / package_name / pathlib.Path(f)
+            dest = target_dir / pathlib.Path(f)
+            if action == 'rm':
                 remove_link(dest)
+            else:
+                if shutil.which(package_name):
+                    make_link(src, dest)
+                else:
+                    remove_link(dest)
 
+
+if __name__ == "__main__":
+    main()

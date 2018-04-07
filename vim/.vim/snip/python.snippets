@@ -1,0 +1,15 @@
+snippet "main" "main method" br
+
+def main():
+    ${1:${VISUAL}}
+
+
+if __name__ == "__main__":
+    main()
+endsnippet
+
+
+snippet "fordict" "iterate over dict" br
+for key, value in ${1:dict_obj}.items():
+    print(f"{key={value}")
+endsnippet
