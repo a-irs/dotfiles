@@ -10,78 +10,24 @@ installs = {
     #     'bin': 'firefox',
     #     'files': ['.mozilla/firefox/*.default/chrome/userChrome.css']
     # },
-    'ipython': {
-        'bin': 'ipython',
-        'files': ['.ipython/profile_default/ipython_config.py']
-    },
-    'subl3': {
-        'bin': 'subl3',
-        'files': ['.config/sublime-text-3/Packages/User']
-    },
-    'redshift': {
-        'bin': 'redshift',
-        'files': ['.config/redshift.conf']
-    },
-    'compton': {
-        'bin': 'compton',
-        'files': ['.config/compton.conf']
-    },
-    'zathura': {
-        'bin': 'zathura',
-        'files': ['.config/zathura']
-    },
-    'nvim': {
-        'bin': 'nvim',
-        'files': ['.config/nvim/init.vim']
-    },
-    'ranger': {
-        'bin': 'ranger',
-        'files': ['.config/ranger/rc.conf', '.config/ranger/scope.sh']
-    },
-    'mpv': {
-        'bin': 'mpv',
-        'files': ['.config/mpv']
-    },
-    'htop': {
-        'bin': 'htop',
-        'files': ['.config/htop']
-    },
-    'termite': {
-        'bin': 'termite',
-        'files': ['.config/termite']
-    },
-    'awesome': {
-        'bin': 'awesome',
-        'files': ['.config/awesome']
-    },
-    'git': {
-        'bin': 'git',
-        'files': ['.gitconfig']
-    },
-    'bash': {
-        'bin': 'bash',
-        'files': ['.bashrc', '.bin']
-    },
-    'ssh': {
-        'bin': 'ssh',
-        'files': ['.ssh/config', '.hushlogin']
-    },
-    'zsh': {
-        'bin': 'zsh',
-        'files': ['.zprofile', '.zshine', '.zshrc']
-    },
-    'tmux': {
-        'bin': 'tmux',
-        'files': ['.tmux.conf']
-    },
-    'vim': {
-        'bin': 'vim',
-        'files': ['.vim/autoload/plug.vim', '.vim/snip', '.vimrc']
-    },
-    'x11': {
-        'bin': 'xinit',
-        'files': ['.fonts', '.xinitrc', '.Xmodmap', '.gtkrc-2.0', '.fonts', '.config/fontconfig', '.config/gtk-3.0/settings.ini', '.icons/default/index.theme', '.config/user-dirs.dirs']
-    }
+    'X': ['.fonts', '.xinitrc', '.Xmodmap', '.gtkrc-2.0', '.fonts', '.config/fontconfig', '.config/gtk-3.0/settings.ini', '.icons/default/index.theme', '.config/user-dirs.dirs'],
+    'awesome': ['.config/awesome'],
+    'bash': ['.bashrc', '.bin'],
+    'compton': ['.config/compton.conf'],
+    'git': ['.gitconfig'],
+    'htop': ['.config/htop'],
+    'ipython': ['.ipython/profile_default/ipython_config.py'],
+    'mpv': ['.config/mpv'],
+    'nvim': ['.config/nvim/init.vim'],
+    'ranger': ['.config/ranger/rc.conf', '.config/ranger/scope.sh'],
+    'redshift': ['.config/redshift.conf'],
+    'ssh': ['.ssh/config', '.hushlogin'],
+    'subl3': ['.config/sublime-text-3/Packages/User'],
+    'termite': ['.config/termite'],
+    'tmux': ['.tmux.conf'],
+    'vim': ['.vim/autoload/plug.vim', '.vim/snip', '.vimrc'],
+    'zathura': ['.config/zathura'],
+    'zsh': ['.zprofile', '.zshine', '.zshrc'],
 }
 
 target_dir = pathlib.Path.home()
@@ -132,8 +78,8 @@ def remove_link(link: pathlib.Path) -> None:
         log(f"error", f"{link} is not a symlink!")
 
 
-for package_name, props in installs.items():
-    for f in props['files']:
+for package_name, files in installs.items():
+    for f in files:
         src = package_dir / package_name / pathlib.Path(f)
         dest = target_dir / pathlib.Path(f)
         if action == 'rm':

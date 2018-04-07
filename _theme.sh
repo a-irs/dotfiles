@@ -10,11 +10,11 @@ current_color=$(< "$cc_file")
 
 cd "$this_dir"
 sed -i "s|$current_color|$1|g" \
-    "$this_dir/config/awesome/theme.lua" \
-    "$this_dir/config/sublime-text-3/Packages/User/zshine.tmTheme" \
-    "$this_dir/config/sublime-text-3/Packages/User/zshine-desaturated.tmTheme" \
-    "$this_dir/config/termite/config" \
-    "$this_dir/config/zathura/zathurarc" \
+    "$this_dir/awesome/.config/awesome/theme.lua" \
+    "$this_dir/subl3/.config/sublime-text-3/Packages/User/zshine.tmTheme" \
+    "$this_dir/subl3/.config/sublime-text-3/Packages/User/zshine-desaturated.tmTheme" \
+    "$this_dir/termite/.config/termite/config" \
+    "$this_dir/zathura/.config/zathura/zathurarc" \
     "$cc_file"
 
 killall -USR1 termite 2> /dev/null
