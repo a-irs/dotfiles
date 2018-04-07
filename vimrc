@@ -168,13 +168,14 @@ Plug 'sjl/badwolf'
 
 " async linter
 Plug 'w0rp/ale'
-let g:ale_linters = { 'python': ['flake8'] }
+let g:ale_linters = { 'python': ['flake8', 'mypy'] }
 let g:ale_python_flake8_options = '--ignore=E501,W391,E402,E129'
+let g:ale_python_mypy_options = '--cache-dir /tmp/mypy'
 let g:ale_sign_warning = "\u26A0"
 let g:ale_sign_style_warning = "\u26A0"
 let g:ale_sign_error = "\u2717"
 let g:ale_sign_style_error = "\u2717"
-let g:ale_echo_msg_format = '%severity%: %s [%linter%]'
+let g:ale_echo_msg_format = '[%linter%] %severity%: %s'
 highlight ALEWarningSign guibg=NONE guifg=yellow
 highlight ALEErrorSign guibg=NONE guifg=red
 

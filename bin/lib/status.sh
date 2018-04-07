@@ -25,13 +25,15 @@ dstatus() {
 
 
 echo ""
+sstatus cronie.service
+sstatus docker.service
 sstatus media-data.mount
 sstatus media-data1.mount
 sstatus media-data2.mount
 sstatus media-data3.mount
 sstatus media-data4.mount
 echo ""
-pydf | grep -v '/var/lib/docker'
+pydf --mounts <(grep -v '/var/lib/docker' /proc/mounts)
 echo ""
 echo -n "$(tput setaf 1)"
 docker ps -f status=exited | tail +2

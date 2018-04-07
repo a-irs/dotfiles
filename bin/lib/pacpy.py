@@ -52,7 +52,7 @@ class Package(object):
     is_explicit = True
     is_aur = False
 
-    def __init__(self, path):
+    def __init__(self, path: str) -> None:
         """creates a package object from given path,
         e.g. /var/lib/pacman/local/aspell-0.60.6.1-1/desc"""
         f = open(path, 'r')
@@ -77,7 +77,7 @@ class Package(object):
                     self.is_explicit = False
 
 
-def main():
+def main() -> None:
     try:
         opts, args = getopt.getopt(sys.argv[1:], "eadruvsS")
     except getopt.GetoptError as _:
@@ -144,7 +144,7 @@ def print_usage():
     print("   -S: sort by size")
 
 
-def package_info(p):
+def package_info(p: Package) -> str:
     """return package information"""
     prefix = ""
     fmt = Config.FORMAT_TIME
@@ -160,7 +160,7 @@ def package_info(p):
         return prefix + pretty_name(p)
 
 
-def pretty_name(p):
+def pretty_name(p: Package) -> str:
     """returns pretty name of the package: Color as set in the config.
     Bold if package was installed explicitly"""
     color = Config.AUR_COLOR if p.is_aur else Config.PKG_COLOR
@@ -174,22 +174,23 @@ def pretty_name(p):
     return s + Color.RESET
 
 
-def pretty_size(i):
+def pretty_size(i: int) -> str:
     if i < 1024 * 1024:
         return "{:.2f}".format(i / 1024) + " KiB"
     return "{:.2f}".format(i / 1024 / 1024) + " MiB"
 
 
-def pretty_date(p, format):
+def pretty_date(p: Package, format: str) -> str:
     """returns pretty date of the package that was given as seconds"""
     date = datetime.fromtimestamp(p.install_date)
     return Color.BOLD + date.strftime(format) + Color.RESET
 
 
-def pretty_time(p, format):
+def pretty_time(p: Package, format: str) -> str:
     """returns pretty time of the package that was given as seconds"""
     time = datetime.fromtimestamp(p.install_date)
     return Config.TIME_COLOR + time.strftime(format) + Color.RESET
+
 
 if __name__ == '__main__':
     main()
