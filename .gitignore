@@ -20,4 +20,4 @@ GitHub.sublime-settings
 
 vim/autoload/plug.vim.old
 
-fonts/**/.uuid
+x11/.fonts/**/.uuid

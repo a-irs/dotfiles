@@ -1,0 +1,142 @@
+#!/usr/bin/env python3
+
+import pathlib
+import os
+import sys
+
+installs = {
+    # TODO
+    # 'firefox': {
+    #     'bin': 'firefox',
+    #     'files': ['.mozilla/firefox/*.default/chrome/userChrome.css']
+    # },
+    'ipython': {
+        'bin': 'ipython',
+        'files': ['.ipython/profile_default/ipython_config.py']
+    },
+    'subl3': {
+        'bin': 'subl3',
+        'files': ['.config/sublime-text-3/Packages/User']
+    },
+    'redshift': {
+        'bin': 'redshift',
+        'files': ['.config/redshift.conf']
+    },
+    'compton': {
+        'bin': 'compton',
+        'files': ['.config/compton.conf']
+    },
+    'zathura': {
+        'bin': 'zathura',
+        'files': ['.config/zathura']
+    },
+    'nvim': {
+        'bin': 'nvim',
+        'files': ['.config/nvim/init.vim']
+    },
+    'ranger': {
+        'bin': 'ranger',
+        'files': ['.config/ranger/rc.conf', '.config/ranger/scope.sh']
+    },
+    'mpv': {
+        'bin': 'mpv',
+        'files': ['.config/mpv']
+    },
+    'htop': {
+        'bin': 'htop',
+        'files': ['.config/htop']
+    },
+    'termite': {
+        'bin': 'termite',
+        'files': ['.config/termite']
+    },
+    'awesome': {
+        'bin': 'awesome',
+        'files': ['.config/awesome']
+    },
+    'git': {
+        'bin': 'git',
+        'files': ['.gitconfig']
+    },
+    'bash': {
+        'bin': 'bash',
+        'files': ['.bashrc', '.bin']
+    },
+    'ssh': {
+        'bin': 'ssh',
+        'files': ['.ssh/config', '.hushlogin']
+    },
+    'zsh': {
+        'bin': 'zsh',
+        'files': ['.zprofile', '.zshine', '.zshrc']
+    },
+    'tmux': {
+        'bin': 'tmux',
+        'files': ['.tmux.conf']
+    },
+    'vim': {
+        'bin': 'vim',
+        'files': ['.vim/autoload/plug.vim', '.vim/snip', '.vimrc']
+    },
+    'x11': {
+        'bin': 'xinit',
+        'files': ['.fonts', '.xinitrc', '.Xmodmap', '.gtkrc-2.0', '.fonts', '.config/fontconfig', '.config/gtk-3.0/settings.ini', '.icons/default/index.theme', '.config/user-dirs.dirs']
+    }
+}
+
+target_dir = pathlib.Path.home()
+package_dir = pathlib.Path(os.path.dirname(os.path.abspath(__file__)))
+
+action = 'link'
+if len(sys.argv) > 1 and sys.argv[1] == 'rm':
+    action = 'rm'
+
+
+def log(level, msg):
+    output_msg = msg.replace(str(pathlib.Path.home()), '~')
+    print(f"{level.upper()}: {output_msg}")
+
+
+def make_link(src: pathlib.Path, dest: pathlib.Path) -> None:
+    if not src.exists():
+        log("error", f"link target does not exist: {src}")
+        return
+
+    if dest.is_symlink():
+        # symlink -> repoint symlink if different
+        if dest.resolve() != src:
+            old_src = dest.resolve()
+            dest.unlink()
+            dest.symlink_to(src)
+            log("info", f"Changed symlink {old_src} -> {src}")
+    elif dest.exists():
+        log("error", f"{dest} exists and is not a symlink")
+    else:
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.symlink_to(src)
+        log("info", f"Added link {dest} -> {src}")
+
+
+def remove_link(link: pathlib.Path) -> None:
+    if link.is_symlink():
+        link.unlink()
+        log("info", f"Removed symlink {link}")
+
+        for p in link.parents:
+            try:
+                p.rmdir()
+            except OSError:
+                break
+            log("info", f"Removed empty directory {p}")
+    elif link.exists():
+        log(f"error", f"{link} is not a symlink!")
+
+
+for package_name, props in installs.items():
+    for f in props['files']:
+        src = package_dir / package_name / pathlib.Path(f)
+        dest = target_dir / pathlib.Path(f)
+        if action == 'rm':
+            remove_link(dest)
+        else:
+            make_link(src, dest)

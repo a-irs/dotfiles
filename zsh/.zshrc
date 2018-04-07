@@ -1,11 +1,8 @@
 ZSHINE_DIR=~/.zshine
 
 zshine_load=(
-    ~/.zshrc.before
     "$ZSHINE_DIR/init.zsh"
-    ~/.zshrc.append
-    ~/.zshrc.append1
-    ~/.zshrc.append2
+    ~/.zshrc.d/*(N)
 )
 
 if [[ "$ZSHINE_DEBUG" == 1 ]]; then
