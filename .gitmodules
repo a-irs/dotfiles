@@ -10,3 +10,6 @@
 [submodule "zshine/plugins/fast-syntax-highlighting"]
 	path = zshine/plugins/fast-syntax-highlighting
 	url = https://github.com/zdharma/fast-syntax-highlighting
+[submodule "config/awesome/lain"]
+	path = config/awesome/lain
+	url = https://github.com/lcpz/lain
