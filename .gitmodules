@@ -1,0 +1,15 @@
+[submodule "zsh/.zshine/plugins/zshmarks"]
+	path = zsh/.zshine/plugins/zshmarks
+	url = https://github.com/jocelynmallon/zshmarks
+[submodule "zsh/.zshine/plugins/zsh-history-substring-search"]
+	path = zsh/.zshine/plugins/zsh-history-substring-search
+	url = https://github.com/zsh-users/zsh-history-substring-search
+[submodule "zsh/.zshine/plugins/fzf"]
+	path = zsh/.zshine/plugins/fzf
+	url = https://github.com/junegunn/fzf
+[submodule "zsh/.zshine/plugins/fast-syntax-highlighting"]
+	path = zsh/.zshine/plugins/fast-syntax-highlighting
+	url = https://github.com/zdharma/fast-syntax-highlighting
+[submodule "awesome/.config/awesome/lain"]
+	path = awesome/.config/awesome/lain
+	url = https://github.com/lcpz/lain
