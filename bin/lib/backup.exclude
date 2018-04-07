@@ -51,7 +51,7 @@
 **/.texlive
 **/boot/intel-ucode.img
 **/boot/vmlinuz-linux
-**/.dotfiles
+**/.dot
 **/.snapshots
 **/dev/android
 **/dev/virtualbox

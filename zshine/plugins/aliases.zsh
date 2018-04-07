@@ -29,9 +29,9 @@ rotate() {
 toggle-scheme() {
     # Termite
     if [[ $(readlink -f ~/.config/termite/config) == */config_light ]]; then
-        ln -sfv ~/.dotfiles/config/termite/config ~/.config/termite/config
+        ln -sfv ~/.dot/config/termite/config ~/.config/termite/config
     elif [[ $(readlink -f ~/.config/termite/config) == */config ]]; then
-        ln -sfv ~/.dotfiles/config/termite/config_light ~/.config/termite/config
+        ln -sfv ~/.dot/config/termite/config_light ~/.config/termite/config
     fi
     killall -USR1 termite 2> /dev/null
 
@@ -297,12 +297,12 @@ cd() {
     fi
 }
 
-if [[ -d ~/.dotfiles ]]; then
+if [[ -d ~/.dot ]]; then
     dot() {
-        if [[ "$PWD" == ~/.dotfiles ]]; then
+        if [[ "$PWD" == ~/.dot ]]; then
             cdr
         else
-            cd ~/.dotfiles
+            cd ~/.dot
             git status -sb
         fi
 }
@@ -403,9 +403,6 @@ highlight_files() {
 if [[ "$commands[git]" ]]; then
     alias g="git"
     alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white) %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
-    alias glog='git log --color --patch --stat --decorate --date=relative --all --abbrev-commit'
-    alias gpull="builtin cd ~/.dotfiles && git pull"
-    alias gpush="builtin cd ~/.dotfiles && git p"
     clone() {
         git clone --depth 1 "$1" && cd $(basename ${1//.git/})
     }

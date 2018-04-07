@@ -1,10 +1,5 @@
 ```bash
-$ git clone --recursive https://github.com/a-irs/dotfiles ~/.dot
-```
-
-To setup symlinks for installed applications:
-
-```bash
+$ git clone --recursive https://github.com/a-irs/dot ~/.dot
 $ ~/.dot/.setup.sh
 ```
 
