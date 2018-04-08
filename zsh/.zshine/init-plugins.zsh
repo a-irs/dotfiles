@@ -25,6 +25,7 @@ ZSHINE_PLUGINS=(
   cdr # recent dirs command
   python # python dev stuff
   aliases # provides some aliases and functions for daily work
+  nix # nixos, nix package manager
 )
 
 if [[ "$ZSHINE_DEBUG" == 1 ]]; then
