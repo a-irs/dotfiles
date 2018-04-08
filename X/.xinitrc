@@ -30,7 +30,8 @@ lxpolkit &
 redshift -o
 parcellite --no-icon &
 mkdir -p ~/.thumbnails && ln -sf ~/.thumbnails ~/.cache/thumbnails
-compton &
+# fix for mesa 18, see https://github.com/chjj/compton/issues/477
+allow_rgb10_configs=false compton &
 start-pulseaudio-x11 &
 keepassxc &
 
