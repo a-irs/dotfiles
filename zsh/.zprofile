@@ -6,7 +6,7 @@ if [[ -n "$commands[dropbox-cli]" ]]; then
 fi
 
 # start redshift in oneshot DRM mode (works in tty)
-redshift -o -m drm
+[[ "$commands[redshift]" ]] && redshift -o -m drm
 
 if [[ "$HOST" == desk && -n "$commands[startx]" ]]; then
     [[ -z "$DISPLAY" && "$XDG_VTNR" -eq 1 && "$USER" == alex ]] && startx
