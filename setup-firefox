@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+profile=$(sed -ne 's/^.*Path=//p' ~/.mozilla/firefox/profiles.ini)
+chrome_dir="$HOME/.mozilla/firefox/$profile/chrome"
+THIS_DIR=$(dirname "$(readlink -f "$0")")
+
+mkdir -vp "$chrome_dir"
+ln -sfv "$THIS_DIR/firefox/userChrome.css" "$chrome_dir/userChrome.css"
