@@ -179,9 +179,17 @@ let g:ale_echo_msg_format = '[%linter%] %severity%: %s'
 highlight ALEWarningSign guibg=NONE guifg=yellow
 highlight ALEErrorSign guibg=NONE guifg=red
 
-" Plug 'davidoc/taskpaper.vim', { 'for': 'taskpaper' }
-" highlight taskpaperDone ctermfg=243 guifg=#857f78
-" let g:task_paper_styles={ 'crit': 'guibg=#dd5010' }
+Plug 'davidoc/taskpaper.vim', { 'for': 'taskpaper' }
+let g:task_paper_styles={ 'crit': 'guibg=#dd5010' }
+" set toggle-task binding the same as toggle-comment
+function! s:taskpaper_setup()
+    nnoremap <silent> <buffer> <Leader>#
+    \ :call taskpaper#toggle_tag('done', taskpaper#date())<CR>
+endfunction
+augroup vimrc-taskpaper
+    autocmd!
+    autocmd FileType taskpaper call s:taskpaper_setup()
+augroup END
 
 Plug 'ap/vim-buftabline'
 set hidden
