@@ -20,7 +20,7 @@ ZSHINE_PLUGINS=(
   zshmarks # set bookmarks
   todo # show ~/.todo on start
   explain # explain command switches
-  ssh-agent # autostart ssh-agent
+  # ssh-agent # autostart ssh-agent
   homebrew # macos package manager
   cdr # recent dirs command
   python # python dev stuff
