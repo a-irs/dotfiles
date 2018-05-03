@@ -100,3 +100,6 @@
 **/.vim/plugged
 /root/.config/borg/security
 /srv/pwdumps
+**/.local/share/virtualenvs
+/srv/infra/ansible/.ara/venv
+/srv/infra/ansible/.ara/ara.log

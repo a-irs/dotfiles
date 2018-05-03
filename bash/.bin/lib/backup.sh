@@ -8,8 +8,11 @@ set -uo pipefail
 TOPDIR=/media/crypto/borg
 TARGET=$TOPDIR/$HOSTNAME
 USER_HOST=root@srv.home
+SSH_KEY=~alex/.ssh/id_ed25519
 
-if ! ssh $USER_HOST test -d "$TOPDIR"; then
+export BORG_RSH="ssh -i $SSH_KEY"
+
+if ! ssh -i "$SSH_KEY" $USER_HOST test -d "$TOPDIR"; then
     echo "$USER_HOST:$TOPDIR does not exist"
     /home/alex/.bin/pushover bash "ERROR: backup disk not mounted"
     exit 1
