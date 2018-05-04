@@ -37,7 +37,6 @@ _prompt() {
     fi
 }
 
-export GREP_OPTIONS='--color=auto'
 export CLICOLOR='1'
 
 ### color man pages
@@ -67,6 +66,8 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
+
+alias grep='grep --color=auto'
 
 [[ -f ~/.bash_aliases ]] && source ~/.bash_aliases
 

@@ -1,4 +1,9 @@
-[[ -z "$commands[nix]" ]] && return
+if [[ -f ~/.nix-profile/etc/profile.d/nix.sh ]]; then
+    source ~/.nix-profile/etc/profile.d/nix.sh
+fi
+
+
+[[ -z "$commands[nixos-rebuild]" ]] && return
 
 n-sw() {
     local date=$(date +%Y%m%d)

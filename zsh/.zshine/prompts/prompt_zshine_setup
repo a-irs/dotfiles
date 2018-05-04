@@ -126,8 +126,16 @@ _prompt_ranger() {
 }
 
 _prompt_virtualenv() {
-    [[ "$VIRTUAL_ENV" ]] || return
-    prompt_segment 237 $ZSHINE_PATH_BG "${VIRTUAL_ENV##*/}"
+    if [[ "$VIRTUAL_ENV" ]]; then
+        prompt_segment 237 $ZSHINE_PATH_BG "${VIRTUAL_ENV##*/}"
+    fi
+    if [[ "$IN_NIX_SHELL" ]]; then
+        if [[ "$IN_NIX_SHELL" == pure ]]; then
+            prompt_segment 237 $ZSHINE_PATH_BG "nix"
+        else
+            prompt_segment 237 $ZSHINE_PATH_BG "nix:${IN_NIX_SHELL}"
+        fi
+    fi
 }
 
 _prompt_path() {
