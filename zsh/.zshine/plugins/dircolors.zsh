@@ -9,8 +9,4 @@ zmodload -a autocomplete
 zmodload -a complist
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
-if [[ $os == Darwin ]]; then
-    export CLICOLOR=1
-    #export LSCOLORS="Gxfxcxdxbxegedabagacad"
-    zstyle ':completion:*:default' list-colors ''
-fi
+[[ $os == Darwin ]] && export CLICOLOR=1
