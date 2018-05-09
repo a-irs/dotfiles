@@ -80,6 +80,9 @@ let g:markdown_enable_mappings = 0
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_input_abbreviations = 0
 
+if $TERM == 'linux'
+    set term=xterm-256color
+endif
 if (has('termguicolors'))
     set termguicolors
 endif
