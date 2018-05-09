@@ -10,10 +10,14 @@ if [[ $1 == close ]]; then
     umount $MOUNTPOINT
     cryptsetup close $MAPPER_NAME
     rmdir $MOUNTPOINT
+    losetup -d /dev/loop0
     exit
 fi
 
+losetup --partscan --find --show /media/data4/sdc.img
+cryptsetup luksOpen /dev/loop0p1 $MAPPER_NAME
+#cryptsetup luksOpen /dev/disk/by-uuid/$UUID $MAPPER_NAME
+
 mkdir -p $MOUNTPOINT
-cryptsetup luksOpen /dev/disk/by-uuid/$UUID $MAPPER_NAME
 mount /dev/mapper/$MAPPER_NAME $MOUNTPOINT
 cd $MOUNTPOINT
