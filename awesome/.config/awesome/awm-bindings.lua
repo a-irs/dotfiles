@@ -185,7 +185,7 @@ globalkeys = awful.util.table.join(
     -- restart awesome wm
 
     awful.key({ win, "Ctrl"  }, "r", awesome.restart),
-    awful.key({ alt }, "r", function() run("redshift -o") end),
+    awful.key({ alt }, "r", function() run("pkill -USR1 redshift") end),
 
     -- show all tags at once
 
