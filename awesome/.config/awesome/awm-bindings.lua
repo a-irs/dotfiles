@@ -17,12 +17,12 @@ local function tag_view_nonempty(direction)
     end
 end
 
-local function run_gui(cmd)
-    awful.spawn(cmd, { tag = mouse.screen.selected_tag })
-end
-
 local function run(cmd)
     awful.spawn(cmd, false)
+end
+
+local function run_gui(cmd)
+    awful.spawn(cmd, { tag = mouse.screen.selected_tag })
 end
 
 local function run_script(script)
@@ -75,14 +75,14 @@ end
 
 local function audio(t)
     if t == "toggle" then
-        io.popen("mpc -q toggle")
-        io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
+        run("mpc -q toggle")
+        run("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
     elseif t == "prev" then
-        io.popen("mpc -q prev")
-        io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous")
+        run("mpc -q prev")
+        run("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous")
     elseif t == "next" then
-        io.popen("mpc -q next")
-        io.popen("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next")
+        run("mpc -q next")
+        run("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next")
     end
 end
 
@@ -106,7 +106,7 @@ globalkeys = awful.util.table.join(
 
     -- modify windows
 
-    awful.key({ win }, "Down",  function()
+    awful.key({ win }, "Down", function()
         for _, t in ipairs(awful.tag.selectedlist(1)) do
             for _, c in ipairs(t:clients()) do
                 if c.minimized then
@@ -131,10 +131,10 @@ globalkeys = awful.util.table.join(
 
     -- swap windows
 
-    awful.key({ win, "Shift" }, "Left", function() swap("left") end),
+    awful.key({ win, "Shift" }, "Left",  function() swap("left") end),
     awful.key({ win, "Shift" }, "Right", function() swap("right") end),
-    awful.key({ win, "Shift" }, "Up", function() swap("up") end),
-    awful.key({ win, "Shift" }, "Down", function() swap("down") end),
+    awful.key({ win, "Shift" }, "Up",    function() swap("up") end),
+    awful.key({ win, "Shift" }, "Down",  function() swap("down") end),
 
     -- switch layouts
 
@@ -157,6 +157,7 @@ globalkeys = awful.util.table.join(
 
     awful.key({ win }, "p", function() run("bash -c 'sleep 0.1 && xset dpms force off'") end),
     awful.key({ "Ctrl", "Shift" }, "dead_circumflex", function() run_script("desk/toggle-display.sh") end),
+    awful.key({ alt }, "r", function() run("pkill -USR1 redshift") end),
 
     -- screenshots
 
@@ -185,7 +186,6 @@ globalkeys = awful.util.table.join(
     -- restart awesome wm
 
     awful.key({ win, "Ctrl"  }, "r", awesome.restart),
-    awful.key({ alt }, "r", function() run("pkill -USR1 redshift") end),
 
     -- show all tags at once
 
