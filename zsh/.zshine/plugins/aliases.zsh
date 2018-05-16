@@ -21,7 +21,7 @@ tar-lz()  { tar cvaf "$(basename "$PWD")".tar.lzma -- "$@"; }
 tar-zip() { zip -r "$(basename "$PWD")".zip -- "$@"; }
 
 rotate() {
-    [[ ! "$1" ]] && return 1
+    [[ "$1" ]] || return 1
     local outname="$1.$(date +'%F_%T')"
     mv -v "$1" "$outname" && bzip2 -v "$outname"
 }
@@ -139,22 +139,6 @@ dl() {
 calc() { printf "%s\n" "$@" | bc -l; }
 alias calc="noglob calc"
 
-if [[ "$commands[gcalcli]" ]]; then
-    __gcal() {
-        width=$((COLUMNS/7-2))
-        gcalcli --military --monday -w "$width" $*
-    }
-    alias gweek='__gcal calw'
-    alias gmonth='__gcal calm'
-    alias gagenda='__gcal agenda'
-fi
-
-if [[ "$commands[pdfgrep]" ]]; then
-    pdf() {
-        pdfgrep -i "$1" -- *.pdf
-    }
-fi
-
 s() {
     typeset -U files
     [[ "$@" ]] && files=("$@") || files=(*(.))
@@ -202,15 +186,10 @@ p() { for f in "$@"; do printf "\n%s\n\n" "=========== $f" && preview "$f"; done
 [[ "$commands[tree]" ]] && alias tree="tree -F --dirsfirst --noreport"
 [[ "$commands[mc]" ]] && alias mc='mc --nocolor'
 [[ "$commands[iotop]" ]] && alias iotop='sudo iotop -o'
-[[ "$commands[updatedb]" ]] && alias updatedb='sudo updatedb'
 [[ "$commands[ps_mem]" ]] && alias ps_mem='sudo ps_mem'
-[[ "$commands[abs]" ]] && alias abs='sudo abs'
-[[ "$commands[ufw]" ]] && alias ufw='sudo ufw'
-[[ "$commands[lvm]" ]] && alias lvm='sudo lvm'
 [[ "$commands[sudo]" ]] && alias sudo='sudo '
 [[ "$commands[journalctl]" ]] && alias journalctl='sudo journalctl'
 [[ "$commands[pydf]" ]] && alias df='pydf'
-[[ "$commands[colorsvn]" ]] && alias svn='colorsvn'
 alias cp='cp -i'
 alias ln='ln -i'
 alias mv='mv -i'
@@ -237,12 +216,11 @@ alias l.="$ls -lhd .*"
 alias lt="$ls -lhtr"
 alias lS="$ls -lhSr"
 
-[[ "$commands[python]" ]] && alias http-share='python -m http.server 10000'
+[[ "$commands[python]" ]] && alias http-share='python -m http.server'
 [[ "$commands[watch]" ]] && alias ddstatus='sudo watch --interval=1 "pkill -USR1 dd"'
 [[ "$commands[dropbox-cli]" ]] && alias ds='dropbox-cli status'
 [[ "$commands[dropbox-cli]" ]] && alias dstop='dropbox-cli stop'
 [[ "$commands[dropbox-cli]" ]] && alias dstart='dropbox-cli start'
-[[ "$commands[redshift]" ]] && alias toggle-redshift='pkill -USR1 redshift'
 [[ "$commands[nmcli]" ]] && alias n='nmcli con up id'
 
 if [[ "$commands[tmux]" ]]; then
@@ -254,12 +232,9 @@ if [[ "$commands[tmux]" ]]; then
 fi
 
 [[ "$commands[xev]" ]] && capture-keys() { xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'; }
-[[ "$commands[latexmk]" ]] && alias ltx="latexmk -cd -f -pdf -pvc -outdir=/tmp/latexmk"
-[[ "$commands[impressive]" ]] && alias show='impressive -t FadeOutFadeIn --fade --transtime 300 --mousedelay 500 --nologo --nowheel --noclicks'
 [[ "$commands[youtube-dl]" ]] && alias yt-audio='youtube-dl -f bestaudio -x -o "%(title)s.%(ext)s"'
 [[ "$commands[journalctl]" ]] && alias j='sudo journalctl'
 [[ "$commands[docker]" ]] && alias d='docker'
-[[ "$commands[scrot]" ]] && alias shoot="sleep 1 && scrot '%Y-%m-%d_%H-%M-%S.png' -e 'mv \$f ~/media/screenshots/'"
 [[ "$commands[reflector]" ]] && alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose && sudo pacman -Syy"
 
 
@@ -276,11 +251,6 @@ if [[ "$commands[xdg-open]" ]]; then
             nohup xdg-open $* > /dev/null 2>&1 &
         fi
     }
-fi
-
-if [[ "$commands[adb]" ]]; then
-    alias adb-forward='adb forward tcp:2222 tcp:22'
-    alias adb-ssh='ssh root@localhost -p 2222'
 fi
 
 cd() {
@@ -310,23 +280,15 @@ else
    alias dot='jump dot'
 fi
 
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-alias ......='cd ../../../../..'
-alias .......='cd ../../../../../..'
-alias ........='cd ../../../../../../..'
-alias .........='cd ../../../../../../../..'
-alias ..........='cd ../../../../../../../../..'
-alias cd..='cd ..'
+# alias ..=cd ../
+# alias ...=cd ../../
+# ...
+for i in {2..20}; do
+    alias "$(printf '.%.0s' {1..$i})"="cd $(printf '../%.0s' {2..$i})"
+done
+unset i
 
-if [[ "$commands[subl3]" ]]; then
-    alias e='subl3'
-else
-    alias e="\$EDITOR"
-fi
-
+alias e="\$EDITOR"
 alias sudoe="sudoedit"
 
 # ansible role
@@ -386,12 +348,6 @@ extract() {
 }
 alias x=extract
 
-makeimg() {
-    color=$1
-    convert -size 100x100 xc:\#$color $color.png
-}
-alias makeimg='noglob makeimg'
-
 highlight()       {
     grep --color -E "$1|$"
 }
@@ -449,17 +405,6 @@ if [[ "$commands[pacman]" ]]; then
     alias pacdiff='sudo pacdiff'
     alias pacdep='sudo pacman -D --asdeps'
     alias pacexp='sudo pacman -D --asexplicit'
-    if [[ "$commands[pacaur]" ]]; then
-        alias aurupg='pacaur -Syu'
-        alias aursearch='pacaur -Ss'
-        alias aurin='pacaur -S'
-    fi
-    if [[ "$commands[aura]" ]]; then
-        alias ai='sudo aura -Aakx'
-        alias ayu='sudo aura -Akuax'
-        alias as='sudo aura -Asx'
-        alias aura='sudo aura'
-    fi
     if [[ "$commands[yaourt]" ]]; then
         alias y='yaourt'
         alias ys='yaourt -S'
@@ -478,12 +423,6 @@ fonttest() {
         fc-match "$family"
     done | column -t -s '|' | column -t -s ':'
 }
-
-if [[ "$commands[grc]" ]]; then
-    for c in diff ping netstat traceroute dig ps mount ifconfig mtr ; do
-        [[ "$commands[$c]" ]] && alias ${c}="grc -es --colour=auto ${c}"
-    done
-fi
 
 if [[ "$commands[man]" ]]; then
     man() {
@@ -609,13 +548,6 @@ if [[ "$commands[machinectl]" ]]; then
     sudo_commands=(login reboot poweroff kill terminate)
     for c in $user_commands; do; alias mc-$c="machinectl $c"; done
     for c in $sudo_commands; do; alias mc-$c="sudo machinectl $c"; done
-fi
-
-if [[ "$commands[netctl]" ]]; then
-    user_nc_commands=(list status is-enabled)
-    sudo_nc_commands=(start stop stop-all restart switch-to enable disable reenable)
-    for c in $user_nc_commands; do; alias nc-$c="netctl $c"; done
-    for c in $sudo_nc_commands; do; alias nc-$c="sudo netctl $c"; done
 fi
 
 nfo() {
