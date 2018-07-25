@@ -398,7 +398,12 @@ if [[ "$commands[pacman]" ]]; then
     alias pqk='sudo pacman -Qk > /dev/null'
     alias pqo='pacman -Qo'
     function pql() { pacman -Qlq "$1" | xargs ls --color -dlh; }
-    alias psc='sudo paccache --remove --keep 3 -v && sudo paccache --remove --keep 0 -v --uninstalled'
+    psc() {
+        printf "%s\n" "keep 3 installed packages, remove rest"
+        sudo paccache --remove --keep 3 -v
+        printf "%s\n" "keep 1 uninstalled package, remove rest"
+        sudo paccache --remove --keep 1 -v --uninstalled
+    }
     alias psl='pkgfile -l'
     alias pu='sudo pacman -U'
     alias pacorph='sudo pacman -Rns $(pacman -Qttdq)'
