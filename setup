@@ -12,6 +12,7 @@ CONFIG = {
     'bash': ['.bashrc', '.bin'],
     'compton': ['.config/compton.conf'],
     'git': ['.gitconfig'],
+    'gpg': ['.gnupg/gpg.conf'],
     'htop': ['.config/htop'],
     'ipython': ['.ipython/profile_default/ipython_config.py'],
     'mpv': ['.config/mpv'],

@@ -232,9 +232,20 @@ end
 -- mouse buttons
 
 clientbuttons = awful.util.table.join(
-    awful.button({     }, 1, function(c) client.focus = c; c:raise() end),
-    awful.button({ win }, 1, awful.mouse.client.move),
-    awful.button({ win }, 3, awful.mouse.client.resize)
+    awful.button({ }, 1, function(c)
+        client.focus = c;
+        c:raise()
+    end),
+    awful.button({ win }, 1, function(c)
+        client.focus = c
+        c:raise()
+        awful.mouse.client.move(c)
+    end),
+    awful.button({ win }, 3, function(c)
+        client.focus = c
+        c:raise()
+        awful.mouse.client.resize(c)
+    end)
 )
 
 root.keys(globalkeys)
