@@ -18,6 +18,6 @@ client.key
 GitHub.sublime-settings
 **/SublimeLinter/*.tmTheme
 
-vim/autoload/plug.vim.old
+vim/.vim/autoload/plug.vim.old
 
 .uuid

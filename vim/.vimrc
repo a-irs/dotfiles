@@ -204,7 +204,7 @@ Plug 'pearofducks/ansible-vim'
 let g:ansible_unindent_after_newline = 1
 let g:ansible_extra_keywords_highlight = 1
 let g:ansible_with_keywords_highlight = 'Constant'
-let g:ansible_template_syntaxes = { '*.conf.j2': 'conf', '*.rules.j2': 'iptables' }
+let g:ansible_template_syntaxes = { '*.conf.j2': 'conf', '*.rules.j2': 'iptables', '*.xml.j2': 'xml', '*.sh.j2': 'sh', '*.yml.j2': 'yaml.ansible' }
 autocmd BufNewFile,BufFilePre,BufRead */playbooks/*.yml set filetype=yaml.ansible
 
 Plug 'rhysd/committia.vim'
