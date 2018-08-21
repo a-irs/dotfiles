@@ -27,6 +27,7 @@ end
 
 local function run_script(script)
     run(os.getenv("HOME") .. "/.bin/" .. script)
+    run(os.getenv("HOME") .. "/.bin/" .. hostname .. "/" .. script)
 end
 
 local function run_gui_script(script)
@@ -151,6 +152,8 @@ globalkeys = awful.util.table.join(
     awful.key({ alt }, "p",          function() run_script("pick-color.sh") end),
     awful.key({ alt }, "k",          function() run_or_raise("keepassxc", "keepassxc") end),
     awful.key({ alt }, "s",          function() run_or_raise("subl3", "Subl3") end),
+    awful.key({ alt }, "l",          function() run_script("toggle-compton") end),
+    awful.key({ alt }, "d",          function() run_script("toggle-dpi.sh") end),
     awful.key({ alt }, "o",          function() run_gui_script("mpv-clipboard.sh") end),
 
     -- displays
