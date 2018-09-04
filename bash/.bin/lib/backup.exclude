@@ -38,7 +38,6 @@
 **/dolphin/User/Load/Textures
 
 /home/*/.config/VirtualBox/*.iso
-/home/*/.config/mpd/log
 /home/*/.dropbox*
 /home/*/.kodi/addons/packages/*
 /home/*/.kodi/userdata/Database/Textures*.db
@@ -58,6 +57,9 @@
 /home/*/.vim/plugged
 /home/*/.zcompdump
 /home/*/.zsh_recent-dirs
+/root/.vim/plugged
+/root/.zcompdump
+/root/.zsh_recent-dirs
 /home/*/Dropbox
 /home/*/dev/vm
 /home/*/doc
