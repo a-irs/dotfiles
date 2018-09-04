@@ -2,8 +2,8 @@ local gears = require("gears")
 
 theme                               = {}
 
--- theme.master_width_factor           = 0.78
--- theme.master_fill_policy            = "master_width_factor"
+theme.master_width_factor           = 0.78
+theme.master_fill_policy            = "master_width_factor"
 
 if is_high_dpi then
     xpm_folder                      = gears.filesystem.get_configuration_dir() .. "/xpm_175"

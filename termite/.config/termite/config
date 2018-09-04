@@ -26,8 +26,8 @@ background = #263657
 color0   = #505050
 color8   = #6d7367
 # red.
-color1   = #ff7563
-color9   = #ff7563
+color1   = #fa7883
+color9   = #fa7883
 # green.
 color2   = #aae373
 color10  = #aae373
