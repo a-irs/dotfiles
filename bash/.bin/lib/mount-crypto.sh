@@ -2,22 +2,29 @@
 
 set -e
 
-UUID=30e17b83-aaa2-4164-9248-00610b01ffed
+IMG=/media/data4/sdc.img
+# UUID=30e17b83-aaa2-4164-9248-00610b01ffed
+
 MOUNTPOINT=/media/crypto
 MAPPER_NAME=luks
 
-if [[ $1 == close ]]; then
-    umount $MOUNTPOINT
-    cryptsetup close $MAPPER_NAME
-    rmdir $MOUNTPOINT
-    losetup -d /dev/loop0
+if mountpoint -q "$MOUNTPOINT"; then
+    printf '%s\n' "$MOUNTPOINT already mounted"
     exit
 fi
 
-losetup --partscan --find --show /media/data4/sdc.img
-cryptsetup luksOpen /dev/loop0p1 $MAPPER_NAME
+if [[ $1 == close || $1 == umount ]]; then
+    umount "$MOUNTPOINT"
+    cryptsetup close "$MAPPER_NAME"
+    rmdir $MOUNTPOINT
+    losetup -D
+    exit
+fi
+
+LOOP=$(losetup --partscan --find --show "$IMG")
+cryptsetup luksOpen "${LOOP}p1" "$MAPPER_NAME"
 #cryptsetup luksOpen /dev/disk/by-uuid/$UUID $MAPPER_NAME
 
-mkdir -p $MOUNTPOINT
-mount /dev/mapper/$MAPPER_NAME $MOUNTPOINT
-cd $MOUNTPOINT
+mkdir -p "$MOUNTPOINT"
+mount "/dev/mapper/$MAPPER_NAME" "$MOUNTPOINT"
+cd "$MOUNTPOINT"

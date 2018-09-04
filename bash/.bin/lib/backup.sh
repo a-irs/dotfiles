@@ -8,7 +8,12 @@ set -uo pipefail
 TOPDIR=/media/crypto/borg
 TARGET=$TOPDIR/$HOSTNAME
 USER_HOST=root@srv.home
-SSH_KEY=~alex/.ssh/id_ed25519
+
+if [[ -e /home/alex/.ssh/id_ed25519 ]]; then
+    SSH_KEY=/home/alex/.ssh/id_ed25519
+else
+    SSH_KEY=/root/.ssh/id_ed25519
+fi
 
 export BORG_RSH="ssh -i $SSH_KEY"
 
