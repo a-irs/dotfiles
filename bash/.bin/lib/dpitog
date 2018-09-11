@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+
+from pathlib import Path
+import re
+import os
+import sys
+import time
+
+dpis = [96, 144, 192]
+base_dpi = dpis[0]
+
+
+def set_dpi(dpi):
+    factor = dpi / (base_dpi * 1.0)
+    os.system(f"sed --follow-symlinks -i 's|^Xft.dpi: .*|Xft.dpi: {dpi}|' ~/.Xresources")
+    os.system(f"sed -i 's|Exec=spotify .*|Exec=spotify --force-device-scale-factor={factor} %U|' ~/.local/share/applications/spotify.desktop")
+
+    os.system("xrdb -merge ~/.Xresources")
+    os.system("echo 'awesome.restart()' | awesome-client")
+    time.sleep(0.2)
+    os.system(f"notify-send dpitoggler 'switched to {dpi}'")
+
+
+xresource = Path.home() / ".Xresources"
+
+current_dpi = None
+with open(xresource, 'r') as f:
+    match = re.findall(r'^Xft.dpi:\s+(.*)$', f.read(), re.MULTILINE)
+    current_dpi = int(match[0]) if 0 < len(match) else 0
+
+for dpi in sorted(dpis):
+    if dpi > current_dpi:
+        set_dpi(dpi)
+        sys.exit(0)
+set_dpi(base_dpi)
