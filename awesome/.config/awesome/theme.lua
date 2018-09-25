@@ -25,7 +25,7 @@ theme.fg_urgent                     = "#ffffff"
 
 theme.border_width                  = dpi(0)
 theme.border_normal                 = "#3f405f"
-theme.border_focus                  = "#aae373"
+theme.border_focus                  = "#d9304f"
 
 theme.useless_gap                   = 0
 
@@ -34,7 +34,7 @@ theme.useless_gap                   = 0
 theme.naughty_font                  = "Fira Sans Medium 8"
 theme.naughty_padding               = dpi(18)
 theme.naughty_spacing               = dpi(18)
-theme.naughty_border_width          = dpi(4)
+theme.naughty_border_width          = dpi(6)
 theme.naughty_timeout               = 6
 theme.naughty_position              = "top_right"
 
@@ -57,8 +57,8 @@ theme.taglist_empty_tag             = "\28"
 theme.taglist_nonempty_tag          = "\27"
 
 if is_high_dpi then
-    theme.font = "Input 7"
-    theme.taglist_font = "Input 7"
+    theme.font = "Input Bold 7"
+    theme.taglist_font = "Input Bold 7"
     theme.taglist_empty_tag = "☐"  -- ○
     theme.taglist_nonempty_tag = "■"  -- ●
 end
