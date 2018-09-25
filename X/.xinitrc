@@ -18,9 +18,8 @@ setxkbmap -option caps:escape
 xset r rate 200 30
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-# screen
-xset -dpms &
-xset s off &
+# blank screen after 15min
+xset s 900 900 &
 
 # applications
 nitrogen --restore &

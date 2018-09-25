@@ -30,9 +30,8 @@ CONFIG = {
 }
 
 
-def log(level: str, msg: str, replace_home=True) -> None:
-    if replace_home:
-        msg = msg.replace(str(pathlib.Path.home()), '~')
+def log(level: str, msg: str) -> None:
+    msg = msg.replace(str(pathlib.Path.home()), '~')
     print(f"{level.upper()}: {msg}")
 
 

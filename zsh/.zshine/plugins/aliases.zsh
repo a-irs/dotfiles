@@ -390,6 +390,7 @@ if [[ "$commands[pacman]" ]]; then
     alias psyu='sudo pacman -Syu'
     alias psyyu='sudo pacman -Syyu'
     alias pi='sudo pacman -S'
+    alias pid='sudo pacman -S --asdeps'
     alias pr='sudo pacman -Rns'
     alias prc='sudo pacman -Rnsc'
     alias pss='pacman -Ss'
