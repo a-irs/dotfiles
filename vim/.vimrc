@@ -3,15 +3,15 @@ scriptencoding utf-8
 
 filetype plugin on
 syntax on
-" set autoindent  " use indent from current line when making new line
+set autoindent  " use indent from current line when making new line
 set backspace=indent,eol,start  " when at beginning of line, pressing backspace joins with prev line
 set whichwrap+=<,>,[,]  " moves to next line when pressing right at end of line
 set linebreak  " wrap lines at words
 set smarttab
 set laststatus=0  " never show statusbar
 set autoread  " auto reload file when unchanged in vim and changed outside vim
-set history=2000
-set scrolloff=2  " scrolling shows one line extra
+set history=2000  " command history
+set scrolloff=4  " scrolling shows one line extra
 set hlsearch  " highlight search results
 set incsearch  " search during input
 set fillchars+=vert:│  " prettier split separator
@@ -21,7 +21,7 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
-set updatetime=250
+set updatetime=150
 
 " persistent undo
 set undofile
@@ -31,7 +31,7 @@ silent call system('mkdir -p ' . &undodir)
 " make system clipboard and VIM default register the same
 " set clipboard^=unnamed,unnamedplus
 
-" delete single chars without yanking them
+" disable yank for single-char delete
 noremap x "_x
 
 " show relative line numbers, except in current line
@@ -103,11 +103,12 @@ nnoremap <silent> <C-l> :nohl<CR><C-l>
 " toggle line numbers
 nnoremap <silent> <C-n> :set number!<CR>
 
-" buffer on <Leader>1-9
+" last buffer on backspace
 nnoremap <BS> :b#<CR>
+nnoremap <leader><up> :b#<CR>
+" buffer on <Leader>1-9/left/right
 nnoremap <leader><left> :bprev<CR>
 nnoremap <leader><right> :bnext<CR>
-nnoremap <leader><up> :b#<CR>
 nnoremap <leader>1 :buffer 1<CR>
 nnoremap <leader>2 :buffer 2<CR>
 nnoremap <leader>3 :buffer 3<CR>
@@ -147,12 +148,13 @@ Plug 'raimondi/delimitmate'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
 let g:fzf_files_options = '--preview "$HOME/.bin/preview {}" --no-exact --color=16 --cycle --no-mouse'
-let $FZF_DEFAULT_COMMAND = 'ag -g "" --nocolor --nogroup --files-with-matches'
+let $FZF_DEFAULT_COMMAND = 'ag -u -g "" --nocolor --nogroup --files-with-matches'
 let g:fzf_buffers_jump = 1  " jump to existing if possible
 nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>o :Commits<CR>
-nnoremap <silent> - :Files<CR>
-nnoremap <silent> _ :History<CR>
+" only useful with vim-fugitive
+" nnoremap <silent> <leader>o :Commits<CR>
+nnoremap <silent> _ :Files<CR>
+nnoremap <silent> - :History<CR>
 
 " TComment
 Plug 'tomtom/tcomment_vim'
@@ -165,14 +167,13 @@ let g:gitgutter_map_keys = 0
 nmap <Leader>< <Plug>GitGutterNextHunk
 nmap <Leader>> <Plug>GitGutterPrevHunk
 
-" color schemes
-Plug 'morhetz/gruvbox'
-Plug 'sjl/badwolf'
-
 " async linter
 Plug 'w0rp/ale'
 let g:ale_linters = { 'python': ['flake8', 'mypy'] }
-let g:ale_python_flake8_options = '--ignore=E501,W391,E402,E129'
+" E501 = 80 characters
+" W391 = blank line at end of file
+" E129 = https://github.com/PyCQA/pycodestyle/issues/474
+let g:ale_python_flake8_options = '--ignore=E501,W391,E129'
 let g:ale_python_mypy_options = '--cache-dir /tmp/mypy'
 let g:ale_sign_warning = "\u26A0"
 let g:ale_sign_style_warning = "\u26A0"
@@ -207,8 +208,14 @@ let g:ansible_with_keywords_highlight = 'Constant'
 let g:ansible_template_syntaxes = { '*.conf.j2': 'conf', '*.rules.j2': 'iptables', '*.xml.j2': 'xml', '*.sh.j2': 'sh', '*.yml.j2': 'yaml.ansible' }
 autocmd BufNewFile,BufFilePre,BufRead */playbooks/*.yml set filetype=yaml.ansible
 
+" verbose git commit message
 Plug 'rhysd/committia.vim'
 let g:committia_use_singlecolumn = 'always'
+
+
+" color schemes
+Plug 'morhetz/gruvbox'
+Plug 'sjl/badwolf'
 
 call plug#end()
 
