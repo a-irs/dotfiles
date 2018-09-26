@@ -3,34 +3,43 @@
 from pathlib import Path
 import re
 import os
-import sys
 import time
 
-# firefox only supports .5 steps
-DPIS = [96, 144, 192]
+# warning: Mozilla Firefox only supports .5 steps
+DPI_FACTORS = [1.0, 1.5, 2.0, 3.0]
 
 
-def set_dpi(dpi):
+def set_dpi(dpi: int) -> None:
+    factor = round(dpi / 96, 2)
+
     # prepare
     os.system(f"sed --follow-symlinks -i 's|^Xft.dpi: .*|Xft.dpi: {dpi}|' ~/.Xresources")
     os.system("cp /usr/share/applications/spotify.desktop ~/.local/share/applications/")
-    os.system(f"sed -i 's|Exec=spotify .*|Exec=spotify --force-device-scale-factor={dpi/96} %U|' ~/.local/share/applications/spotify.desktop")
+    os.system(f"sed -i 's|Exec=spotify .*|Exec=spotify --force-device-scale-factor={factor} %U|' ~/.local/share/applications/spotify.desktop")
 
     # apply changes
     os.system("xrdb -merge ~/.Xresources")
     os.system("echo 'awesome.restart()' | awesome-client")
     time.sleep(0.2)
-    os.system(f"notify-send dpitog 'switched to DPI = {dpi}'")
+    os.system(f"notify-send dpitog 'switched to DPI = {dpi} (x{factor})'")
 
 
-current_dpi = None
-with open(Path.home() / ".Xresources", 'r') as f:
-    match = re.findall(r'^Xft.dpi:\s+(\d+)$', f.read(), re.MULTILINE)
-    current_dpi = int(match[0]) if 0 < len(match) else 0
+def get_current_dpi() -> int:
+    with open(Path.home() / ".Xresources", 'r') as f:
+        match = re.findall(r'^Xft.dpi:\s+(\d+)$', f.read(), re.MULTILINE)
+        return int(match[0]) if len(match) > 0 else 0
 
-for dpi in sorted(DPIS):
-    if dpi > current_dpi:
-        set_dpi(dpi)
-        sys.exit(0)
 
-set_dpi(DPIS[0])
+def main() -> None:
+    current_dpi = get_current_dpi()
+
+    dpis = [int(i * 96) for i in DPI_FACTORS]
+    for dpi in sorted(dpis):
+        if dpi > current_dpi:
+            set_dpi(dpi)
+            return
+    set_dpi(dpis[0])
+
+
+if __name__ == "__main__":
+    main()
