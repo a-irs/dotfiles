@@ -54,52 +54,63 @@ def create_tracklist(tracks: dict) -> List[Track]:
     return t
 
 
-def create_playlist(user: str, playlist: dict) -> Playlist:
-    results = sp.user_playlist(user, playlist['id'], fields="tracks,next")
+def create_playlist(spot: spotipy.Spotify, user: str, playlist: dict) -> Playlist:
+    results = spot.user_playlist(user, playlist['id'], fields="tracks,next")
     tracks_result = results['tracks']
     tracks = create_tracklist(tracks_result)
     while tracks_result['next']:
-        tracks_result = sp.next(tracks_result)
+        tracks_result = spot.next(tracks_result)
         tracks += create_tracklist(tracks_result)
 
     return Playlist(name=playlist['name'], tracks=tracks)
 
 
-if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
-    exclude_regex = os.environ["SPOT_EXCLUDE"]
+def get_all_playlists(spot: spotipy.Spotify, user: str, exclude_regex: str) -> List[Playlist]:
+    all_playlists = []  # type: List[dict]
+    playlist_result = spot.user_playlists(user)
+    while playlist_result['next']:
+        all_playlists += playlist_result['items']
+        playlist_result = spot.next(playlist_result)
 
-    user = os.environ["SPOT_USER"]
-    token = util.prompt_for_user_token(
-        username=user,
+    logging.info("fetching playlist contents...")
+    # get all self-owned playlists that do not match regex, then sort by name
+    rex = re.compile(exclude_regex)
+    playlists = sorted(
+        filter(lambda p: p['owner']['id'] == user and not re.match(rex, p['name']), all_playlists),
+        key=lambda p: p["name"].lower()
+    )
+
+    result = []
+    total = len(playlists)
+    for i, playlist in enumerate(playlists):
+        logging.info(f"{i+1}/{total} ({playlist['name']})")
+        result.append(create_playlist(spot, user, playlist))
+    return result
+
+
+if __name__ == '__main__':
+    logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s', level=logging.INFO)
+    EXCLUDE_REGEX = os.environ["SPOT_EXCLUDE"]
+
+    USER = os.environ["SPOT_USER"]
+    TOKEN = util.prompt_for_user_token(
+        username=USER,
         scope='user-library-read',
         client_id=os.environ["SPOT_CLIENT_ID"],
         client_secret=os.environ["SPOT_CLIENT_SECRET"],
         redirect_uri="http://localhost/"
     )
-    sp = spotipy.Spotify(auth=token)
+    SPOT = spotipy.Spotify(auth=TOKEN)
 
     logging.info("fetching playlists...")
-    playlists = []  # type: List[dict]
-    playlist_result = sp.user_playlists(user)
-    while playlist_result['next']:
-        playlists += playlist_result['items']
-        playlist_result = sp.next(playlist_result)
-
-    logging.info("fetching playlist contents...")
-    ps = []
-    for i, playlist in enumerate(sorted(playlists, key=lambda x: x["name"].lower())):
-        logging.info(f"{i}")
-        if playlist['owner']['id'] == user and not re.match(exclude_regex, playlist['name']):
-            p = create_playlist(user, playlist)
-            ps.append(p)
+    playlists = get_all_playlists(SPOT, USER, EXCLUDE_REGEX)
 
     logging.info("writing markdown...")
     with open(os.path.expanduser("~/spot/spot.md"), 'w') as f:
-        for p in ps:
+        for p in playlists:
             f.write(p.markdown())
             f.write("\n\n")
 
     logging.info("writing json...")
     with open(os.path.expanduser("~/spot/spot.json"), 'w') as f:
-        f.write(json.dumps([p.dict() for p in ps], indent=2))
+        f.write(json.dumps([p.dict() for p in playlists], indent=2))
