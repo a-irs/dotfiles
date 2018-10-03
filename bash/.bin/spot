@@ -1,0 +1,79 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import json
+
+import spotipy
+import spotipy.util as util
+from typing import List
+
+# TODO: export to md and json
+# TODO: grab more than 50 playlists
+# TODO: git history
+# TODO: exclude certain playlists
+
+
+class Track(object):
+    def __init__(self, artist: str, album: str, name: str, url: str) -> None:
+        self.artist = artist
+        self.album = album
+        self.name = name
+        self.url = url
+
+    def __str__(self) -> str:
+        return f"{self.artist} -- {self.name}"
+
+
+class Playlist(object):
+    def __init__(self, name: str, tracks: List[Track]) -> None:
+        self.name = name
+        self.tracks = tracks
+
+    def __str__(self) -> str:
+        s = f"{self.name}\n"
+        s += '-' * len(self.name) + "\n\n* " + \
+             '\n* '.join([str(t) for t in self.tracks])
+        return s
+
+
+def get_tracks(tracks: dict) -> List[Track]:
+    t = []
+    for i, item in enumerate(tracks['items']):
+        track = Track(
+            artist=', '.join([a["name"] for a in item['track']['artists']]).strip(),
+            album=item['track']['album']['name'].strip(),
+            name=item['track']['name'].strip(),
+            url=item['track']['external_urls'].get("spotify", "").strip()
+        )
+        t.append(track)
+    return t
+
+
+def handle_playlist(user: str, playlist: dict) -> Playlist:
+    results = sp.user_playlist(user, playlist['id'], fields="tracks,next")
+    tracks_result = results['tracks']
+    tracks = get_tracks(tracks_result)
+    while tracks_result['next']:
+        tracks_result = sp.next(tracks_result)
+        tracks += get_tracks(tracks_result)
+
+    return Playlist(name=playlist['name'], tracks=tracks)
+
+
+if __name__ == '__main__':
+    user = os.environ["SPOT_USER"]
+    token = util.prompt_for_user_token(
+        username=user,
+        scope='user-library-read',
+        client_id=os.environ["SPOT_CLIENT_ID"],
+        client_secret=os.environ["SPOT_CLIENT_SECRET"],
+        redirect_uri="http://localhost/"
+    )
+
+    sp = spotipy.Spotify(auth=token)
+    playlists = sp.user_playlists(user)
+    for playlist in playlists['items']:
+        if playlist['owner']['id'] == user:
+            print(handle_playlist(user, playlist))
+            print()
