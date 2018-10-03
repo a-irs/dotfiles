@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 
-import os
-import sys
 import json
+import logging
+import os
 import re
 
 import spotipy
 import spotipy.util as util
 from typing import List
 
-# TODO: export to md and json
 # TODO: git history
 
 
@@ -20,6 +19,9 @@ class Track(object):
         self.name = name
         self.url = url
 
+    def rep(self) -> dict:
+        return self.__dict__
+
     def __str__(self) -> str:
         return f"{self.artist} -- {self.name}"
 
@@ -29,14 +31,20 @@ class Playlist(object):
         self.name = name
         self.tracks = tracks
 
-    def __str__(self) -> str:
+    def dict(self):
+        return dict(
+            name=self.name,
+            tracks=[t.__dict__ for t in self.tracks]
+        )
+
+    def markdown(self) -> str:
         s = f"{self.name}\n"
         s += '-' * len(self.name) + "\n\n* " + \
              '\n* '.join([str(t) for t in self.tracks])
         return s
 
 
-def get_tracks(tracks: dict) -> List[Track]:
+def create_tracklist(tracks: dict) -> List[Track]:
     t = []
     for i, item in enumerate(tracks['items']):
         track = Track(
@@ -49,18 +57,19 @@ def get_tracks(tracks: dict) -> List[Track]:
     return t
 
 
-def handle_playlist(user: str, playlist: dict) -> Playlist:
+def create_playlist(user: str, playlist: dict) -> Playlist:
     results = sp.user_playlist(user, playlist['id'], fields="tracks,next")
     tracks_result = results['tracks']
-    tracks = get_tracks(tracks_result)
+    tracks = create_tracklist(tracks_result)
     while tracks_result['next']:
         tracks_result = sp.next(tracks_result)
-        tracks += get_tracks(tracks_result)
+        tracks += create_tracklist(tracks_result)
 
     return Playlist(name=playlist['name'], tracks=tracks)
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
     exclude_regex = os.environ["SPOT_EXCLUDE"]
 
     user = os.environ["SPOT_USER"]
@@ -73,13 +82,27 @@ if __name__ == '__main__':
     )
     sp = spotipy.Spotify(auth=token)
 
+    logging.info("fetching playlists...")
     playlists = []  # type: List[dict]
     playlist_result = sp.user_playlists(user)
     while playlist_result['next']:
         playlists += playlist_result['items']
         playlist_result = sp.next(playlist_result)
 
-    for playlist in sorted(playlists, key=lambda x: x["name"].lower()):
+    logging.info("fetching playlist contents...")
+    ps = []
+    for i, playlist in enumerate(sorted(playlists, key=lambda x: x["name"].lower())):
+        logging.info(f"{i}")
         if playlist['owner']['id'] == user and not re.match(exclude_regex, playlist['name']):
-            print(handle_playlist(user, playlist))
-            print()
+            p = create_playlist(user, playlist)
+            ps.append(p)
+
+    logging.info("writing markdown...")
+    with open(os.path.expanduser("~/spot/spot.md"), 'w') as f:
+        for p in ps:
+            f.write(p.markdown())
+            f.write("\n\n")
+
+    logging.info("writing json...")
+    with open(os.path.expanduser("~/spot/spot.json"), 'w') as f:
+        f.write(json.dumps([p.dict() for p in ps], indent=2))
