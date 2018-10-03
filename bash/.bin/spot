@@ -3,6 +3,7 @@
 import os
 import sys
 import json
+import re
 
 import spotipy
 import spotipy.util as util
@@ -11,7 +12,6 @@ from typing import List
 # TODO: export to md and json
 # TODO: grab more than 50 playlists
 # TODO: git history
-# TODO: exclude certain playlists
 
 
 class Track(object):
@@ -62,6 +62,8 @@ def handle_playlist(user: str, playlist: dict) -> Playlist:
 
 
 if __name__ == '__main__':
+    exclude_regex = os.environ["SPOT_EXCLUDE"]
+
     user = os.environ["SPOT_USER"]
     token = util.prompt_for_user_token(
         username=user,
@@ -74,6 +76,6 @@ if __name__ == '__main__':
     sp = spotipy.Spotify(auth=token)
     playlists = sp.user_playlists(user)
     for playlist in playlists['items']:
-        if playlist['owner']['id'] == user:
+        if playlist['owner']['id'] == user and not re.match(exclude_regex, playlist['name']):
             print(handle_playlist(user, playlist))
             print()
