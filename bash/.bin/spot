@@ -13,17 +13,14 @@ from typing import List
 
 
 class Track(object):
-    def __init__(self, artist: str, album: str, name: str, url: str) -> None:
+    def __init__(self, artist: str, album: str, title: str, url: str) -> None:
         self.artist = artist
         self.album = album
-        self.name = name
+        self.title = title
         self.url = url
 
-    def rep(self) -> dict:
-        return self.__dict__
-
     def __str__(self) -> str:
-        return f"{self.artist} -- {self.name}"
+        return f"{self.artist} | {self.title}"
 
 
 class Playlist(object):
@@ -50,7 +47,7 @@ def create_tracklist(tracks: dict) -> List[Track]:
         track = Track(
             artist=', '.join([a["name"] for a in item['track']['artists']]).strip(),
             album=item['track']['album']['name'].strip(),
-            name=item['track']['name'].strip(),
+            title=item['track']['name'].strip(),
             url=item['track']['external_urls'].get("spotify", "").strip()
         )
         t.append(track)
