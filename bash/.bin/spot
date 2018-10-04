@@ -43,7 +43,7 @@ class Playlist(object):
 
 def create_tracklist(tracks: dict) -> List[Track]:
     t = []
-    for i, item in enumerate(tracks['items']):
+    for item in tracks['items']:
         track = Track(
             artist=', '.join([a["name"] for a in item['track']['artists']]),
             album=item['track']['album']['name'],

@@ -24,8 +24,6 @@ awful.rules.rules = {
                      maximized_horizontal = false },
       callback = awful.client.setslave },
 
-    { rule = { class = "Pulseeffects" }, properties = { minimized = true } },
-
     { rule = { class = "mpv" }, properties = { size_hints_honor = false } },
 
     { rule = { class = "Kodi" }, properties = { fullscreen = true, placement = awful.placement.restore } },
@@ -81,6 +79,8 @@ local function dynamic_tagging()
                         name = make_name(name, c, "office")
                     elseif c.class == "VirtualBox" and string.find(c.name, 'alpine ') then
                         name = make_name(name, c, "alpine-vm")
+                    elseif c.class == "qemu-system-x86_64" then
+                        name = make_name(name, c, "qemu")
                     elseif c.class == "VirtualBox" and string.find(c.name, 'xp ') then
                         name = make_name(name, c, "xp-vm")
                     elseif c.class == "Subl3" then
