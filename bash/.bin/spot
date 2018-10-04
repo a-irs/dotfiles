@@ -5,11 +5,10 @@ import logging
 import os
 import re
 
+from typing import List
+import git
 import spotipy
 import spotipy.util as util
-from typing import List
-
-# TODO: git history
 
 
 class Track(object):
@@ -89,29 +88,49 @@ def get_all_playlists(spot: spotipy.Spotify, user: str, exclude_regex: str) -> L
     return result
 
 
-if __name__ == '__main__':
-    logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s', level=logging.INFO)
-    EXCLUDE_REGEX = os.environ["SPOT_EXCLUDE"]
+def maintain_git(repo_path: str, playlists: List[Playlist]):
+    repo = git.Repo.init(repo_path)
+    files = {
+        "playlists.md": '\n\n'.join([p.markdown() for p in playlists]),
+        "playlists.json": json.dumps([p.dict() for p in playlists], indent=2)
+    }
 
-    USER = os.environ["SPOT_USER"]
+    for f, value in files.items():
+        logging.info(f"writing {f}...")
+        with open(os.path.expanduser(os.path.join(repo_path, f)), 'w') as fd:
+            fd.write(value)
+
+    logging.info(f"add and commit git...")
+    repo.git.add(*files.keys())
+    try:
+        repo.git.commit(m="update playlists")
+    except git.exc.GitCommandError:
+        logging.info(f"no git changes, doing nothing")
+
+
+def main() -> None:
+    logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s', level=logging.INFO)
+
+    env_exclude_regex = os.environ["SPOT_EXCLUDE"]
+    env_repo_dir = os.environ["SPOT_REPO_DIR"]
+    env_user = os.environ["SPOT_USER"]
+
     TOKEN = util.prompt_for_user_token(
-        username=USER,
+        username=env_user,
         scope='user-library-read',
         client_id=os.environ["SPOT_CLIENT_ID"],
         client_secret=os.environ["SPOT_CLIENT_SECRET"],
         redirect_uri="http://localhost/"
     )
-    SPOT = spotipy.Spotify(auth=TOKEN)
+    spotify = spotipy.Spotify(auth=TOKEN)
 
     logging.info("fetching playlists...")
-    playlists = get_all_playlists(SPOT, USER, EXCLUDE_REGEX)
+    playlists = get_all_playlists(spotify, env_user, env_exclude_regex)
 
-    logging.info("writing markdown...")
-    with open(os.path.expanduser("~/spot/spot.md"), 'w') as f:
-        for p in playlists:
-            f.write(p.markdown())
-            f.write("\n\n")
+    # write files and maintain git repo
+    maintain_git(env_repo_dir, playlists)
 
-    logging.info("writing json...")
-    with open(os.path.expanduser("~/spot/spot.json"), 'w') as f:
-        f.write(json.dumps([p.dict() for p in playlists], indent=2))
+
+if __name__ == '__main__':
+    main()
+
