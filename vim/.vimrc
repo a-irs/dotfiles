@@ -72,6 +72,7 @@ let g:netrw_bufsettings = 'nomodifiable nomodified readonly nobuflisted nowrap'
 map <C-_> :Lexplore<CR>
 
 autocmd BufNewFile,BufFilePre,BufRead Jenkinsfile set filetype=groovy
+autocmd BufNewFile,BufFilePre,BufRead Dockerfile* set filetype=Dockerfile
 
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ini=dosini']
@@ -205,7 +206,7 @@ Plug 'pearofducks/ansible-vim'
 let g:ansible_unindent_after_newline = 1
 let g:ansible_extra_keywords_highlight = 1
 let g:ansible_with_keywords_highlight = 'Constant'
-let g:ansible_template_syntaxes = { '*.conf.j2': 'conf', '*.rules.j2': 'iptables', '*.xml.j2': 'xml', '*.sh.j2': 'sh', '*.yml.j2': 'yaml.ansible' }
+let g:ansible_template_syntaxes = { '*.conf.j2': 'conf', '*.rules.j2': 'iptables', '*.xml.j2': 'xml', '*.sh.j2': 'sh', '*.yml.j2': 'yaml.ansible', '*.py.j2': 'python' }
 autocmd BufNewFile,BufFilePre,BufRead */playbooks/*.yml set filetype=yaml.ansible
 
 " verbose git commit message
