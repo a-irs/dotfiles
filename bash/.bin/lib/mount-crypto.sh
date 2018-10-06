@@ -8,11 +8,6 @@ IMG=/media/data4/sdc.img
 MOUNTPOINT=/media/crypto
 MAPPER_NAME=luks
 
-if mountpoint -q "$MOUNTPOINT"; then
-    printf '%s\n' "$MOUNTPOINT already mounted"
-    exit
-fi
-
 if [[ $1 == close || $1 == umount ]]; then
     umount "$MOUNTPOINT"
     cryptsetup close "$MAPPER_NAME"
@@ -20,6 +15,12 @@ if [[ $1 == close || $1 == umount ]]; then
     losetup -D
     exit
 fi
+
+if mountpoint -q "$MOUNTPOINT"; then
+    printf '%s\n' "$MOUNTPOINT is already mounted"
+    exit
+fi
+
 
 LOOP=$(losetup --partscan --find --show "$IMG")
 cryptsetup luksOpen "${LOOP}p1" "$MAPPER_NAME"

@@ -8,7 +8,7 @@ import re
 from typing import List
 import git
 import spotipy
-import spotipy.util as util
+import spotipy.util
 
 
 class Track(object):
@@ -115,7 +115,10 @@ def main() -> None:
     env_repo_dir = os.environ["SPOT_REPO_DIR"]
     env_user = os.environ["SPOT_USER"]
 
-    TOKEN = util.prompt_for_user_token(
+    # cache_path is not working at the moment for prompt_for_user_token(),
+    # so set pwd to something persistent instead of shell-pwd
+    os.chdir(os.path.expanduser("~/.local/share"))
+    TOKEN = spotipy.util.prompt_for_user_token(
         username=env_user,
         scope='user-library-read',
         client_id=os.environ["SPOT_CLIENT_ID"],
