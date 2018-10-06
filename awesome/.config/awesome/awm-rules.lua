@@ -20,7 +20,8 @@ awful.rules.rules = {
                      raise = true,
                      keys = clientkeys,
                      buttons = clientbuttons,
-                     maximized_vertical   = false,
+                     maximized = false,
+                     maximized_vertical = false,
                      maximized_horizontal = false },
       callback = awful.client.setslave },
 

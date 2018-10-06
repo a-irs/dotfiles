@@ -15,7 +15,9 @@ def set_dpi(dpi: int) -> None:
     # prepare
     os.system(f"sed --follow-symlinks -i 's|^Xft.dpi: .*|Xft.dpi: {dpi}|' ~/.Xresources")
     os.system("cp /usr/share/applications/spotify.desktop ~/.local/share/applications/")
+    os.system("cp /usr/share/applications/steam.desktop ~/.local/share/applications/")
     os.system(f"sed -i 's|Exec=spotify .*|Exec=spotify --force-device-scale-factor={factor} %U|' ~/.local/share/applications/spotify.desktop")
+    os.system(f"sed -i 's|Exec=/usr/bin/steam-runtime .*|Exec=env GDK_SCALE={factor} /usr/bin/steam-runtime %U|' ~/.local/share/applications/steam.desktop")
 
     # apply changes
     os.system("xrdb -merge ~/.Xresources")

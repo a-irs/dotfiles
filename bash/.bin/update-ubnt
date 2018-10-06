@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -eu
+
+if (($# < 2 )); then
+    echo "./$(basename "$0") <hostname> <image URL>"
+    exit 1
+fi
+
+host=$1
+url=$2
+
+ssh -t "$host" -- "vbash -ic \"show system image\""
+ssh -t "$host" -- "vbash -ic \"add system image \"$url\"\""
+ssh -t "$host" -- "vbash -ic \"show system image\""
+ssh -t "$host" -- "vbash -ic reboot"
+
+while ! ping -c 1 "$host"; do
+    sleep 1
+done

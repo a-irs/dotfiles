@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-if [[ $HOSTNAME == desk ]]; then
-    if xrandr | grep "DVI-D-0 connected"; then
-        xrandr --output "DisplayPort-0" --off
-    fi
-fi
-
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
     for f in /etc/X11/xinit/xinitrc.d/*; do
         source "$f"
@@ -30,7 +24,6 @@ parcellite --no-icon &
 mkdir -p ~/.thumbnails && ln -sf ~/.thumbnails ~/.cache/thumbnails
 # fix for mesa 18, see https://github.com/chjj/compton/issues/477
 allow_rgb10_configs=false compton &
-start-pulseaudio-x11 &
 keepassxc &
 
 if [[ $HOSTNAME == desk ]]; then
@@ -42,5 +35,4 @@ if [[ $HOSTNAME == desk ]]; then
     fi
 fi
 
-session=${1:-awesome}
-exec "$session"
+exec awesome
