@@ -159,7 +159,6 @@ globalkeys = awful.util.table.join(
     -- displays
 
     awful.key({ win }, "p", function() run("bash -c 'sleep 0.1 && xset dpms force off'") end),
-    awful.key({ "Ctrl", "Shift" }, "dead_circumflex", function() run_script("desk/toggle-display.sh") end),
     awful.key({ alt }, "r", function() run("pkill -USR1 redshift") end),
 
     -- screenshots
