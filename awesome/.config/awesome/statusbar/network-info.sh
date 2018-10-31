@@ -4,7 +4,7 @@ wifi_color="#ffa200"
 eth_color="#ffa500"
 vpn_color="#ffd700"
 
-out=$(nmcli --wait 1 --terse --colors no --fields name,type,device,state,active connection show)
+out=$(nmcli --wait 1 --terse --colors no --fields name,type,device,state,active connection show | grep -v '^docker0')
 active=$(printf "%s\n" "$out" | awk -F: '$5 == "yes" {print $1":"$2}' | sort -r)
 
 declare -a txt

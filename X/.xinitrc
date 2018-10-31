@@ -25,6 +25,8 @@ mkdir -p ~/.thumbnails && ln -sf ~/.thumbnails ~/.cache/thumbnails
 compton &
 keepassxc &
 
+start-pulseaudio-x11 &
+
 if [[ $HOSTNAME == desk ]]; then
     numlockx &
     pulseeffects --gapplication-service &

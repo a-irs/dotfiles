@@ -221,7 +221,8 @@ alias lS="$ls -lhSr"
 [[ "$commands[dropbox-cli]" ]] && alias ds='dropbox-cli status'
 [[ "$commands[dropbox-cli]" ]] && alias dstop='dropbox-cli stop'
 [[ "$commands[dropbox-cli]" ]] && alias dstart='dropbox-cli start'
-[[ "$commands[nmcli]" ]] && alias n='nmcli con up id'
+[[ "$commands[nmcli]" ]] && alias nu='nmcli connection up'
+[[ "$commands[nmcli]" ]] && alias nd='nmcli connection down'
 
 if [[ "$commands[tmux]" ]]; then
     alias t='tmux'
