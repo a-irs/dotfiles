@@ -22,8 +22,7 @@ lxpolkit &
 redshift &
 parcellite --no-icon &
 mkdir -p ~/.thumbnails && ln -sf ~/.thumbnails ~/.cache/thumbnails
-# fix for mesa 18, see https://github.com/chjj/compton/issues/477
-allow_rgb10_configs=false compton &
+compton &
 keepassxc &
 
 if [[ $HOSTNAME == desk ]]; then
