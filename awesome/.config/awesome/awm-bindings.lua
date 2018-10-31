@@ -168,6 +168,9 @@ globalkeys = awful.util.table.join(
 
     -- media keys
 
+    awful.key({}, "XF86MonBrightnessUp",  function() run_script("bright.sh +") end),
+    awful.key({}, "XF86MonBrightnessDown",  function() run_script("bright.sh -") end),
+
     awful.key({}, "XF86AudioRaiseVolume", volume.increase),
     awful.key({}, "XF86AudioLowerVolume", volume.decrease),
     awful.key({}, "XF86AudioMute",        volume.toggle),
