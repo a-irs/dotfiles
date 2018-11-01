@@ -14,6 +14,7 @@ function awful.tag.getgap(t, numclients)
 end
 
 hostname        = io.popen("uname -n"):read()
+is_mobile       = hostname == "dell" or hostname == "x1"
 is_high_dpi     = xresources.get_dpi() >= 100
 
 function dpi(value)
@@ -69,7 +70,7 @@ local function bat_notification()
         })
     end
 end
-if hostname == "dell" then
+if is_mobile then
     battimer = timer({ timeout = 60 })
     battimer:connect_signal("timeout", bat_notification)
     battimer:start()

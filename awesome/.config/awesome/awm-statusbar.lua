@@ -36,7 +36,7 @@ end
 
 -- BATTERY
 
-if hostname == "dell" then
+if is_mobile then
     batterywidget = lain.widget.bat({
         timeout = 3,
         notify = "off",
@@ -67,7 +67,7 @@ end
 
 -- NETWORK
 
-if hostname == "dell" then
+if is_mobile then
     netwidget = awful.widget.watch(
         gears.filesystem.get_configuration_dir() .. "/statusbar/network-info.sh", 2,
         function(widget, stdout)
@@ -194,7 +194,7 @@ awful.screen.connect_for_each_screen(function(s)
     local layout3 = wibox.layout.fixed.horizontal()
     lay(layout3, wibox.widget.systray())
     lay(layout3, pulsewidget.widget, m)
-    if hostname == "dell" then
+    if is_mobile then
         lay(layout3, netwidget, m)
         lay(layout3, batterywidget.widget, m)
     end
