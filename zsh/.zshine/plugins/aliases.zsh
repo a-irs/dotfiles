@@ -580,3 +580,15 @@ pall() {
         fi
     done
 }
+
+sandbox() {
+    program=$1
+    mkdir -vp "$HOME/sandbox/$program"
+    firejail --read-only=/ --private="$HOME/sandbox/$program" --private-dev --seccomp --caps.drop=all --disable-mnt --noprofile --net=wlan0 --protocol=unix,inet,inet6 $*
+}
+
+sandbox-light() {
+    program=$1
+    mkdir -vp "$HOME/sandbox/$program"
+    firejail --read-only=/ --private="$HOME/sandbox/$program" --noprofile $*
+}

@@ -27,6 +27,10 @@ keepassxc &
 
 start-pulseaudio-x11 &
 
+if [[ $HOSTNAME == x1 ]]; then
+    pulseeffects --gapplication-service &
+fi
+
 if [[ $HOSTNAME == desk ]]; then
     numlockx &
     pulseeffects --gapplication-service &
