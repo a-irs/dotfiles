@@ -12,8 +12,8 @@ setxkbmap -option caps:escape
 xset r rate 200 30
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-# blank screen after 15min
-xset s 900 900 &
+# blank screen after 5min
+xset s 300 300 &
 
 # applications
 nitrogen --restore &
@@ -29,6 +29,8 @@ start-pulseaudio-x11 &
 
 if [[ $HOSTNAME == x1 ]]; then
     pulseeffects --gapplication-service &
+    xset s 300 300 &
+    xautolock -time 2 -locker ~/.bin/lock &
 fi
 
 if [[ $HOSTNAME == desk ]]; then

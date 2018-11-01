@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/bin
+
+if keepassxc; then
+    sleep 0.2
+    xdotool keydown Ctrl key l keyup Ctrl
+fi
+
+killall i3lock
+i3lock --color=263657 --show-failed-attempts --ignore-empty-password
+
+exit 0
