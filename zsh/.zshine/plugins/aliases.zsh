@@ -28,18 +28,22 @@ rotate() {
 
 toggle-scheme() {
     # Termite
-    if [[ $(readlink -f ~/.config/termite/config) == */config_light ]]; then
-        ln -sfv ~/.dot/config/termite/config ~/.config/termite/config
-    elif [[ $(readlink -f ~/.config/termite/config) == */config ]]; then
-        ln -sfv ~/.dot/config/termite/config_light ~/.config/termite/config
+    if [[ $(readlink ~/.config/termite/config) == config_light ]]; then
+        (cd ~/.config/termite && ln -sfv config_dark config)
+    elif [[ $(readlink ~/.config/termite/config) == config_dark ]]; then
+        (cd ~/.config/termite && ln -sfv config_light config)
+    else
+        (cd ~/.config/termite && ln -sfv config_dark config)
     fi
     killall -USR1 termite 2> /dev/null
 
     # VIM
     if grep -q 'set background=dark' ~/.vimrc; then
         sed --follow-symlinks -i 's/set background=dark/set background=light/g' ~/.vimrc
+        echo "sed dark -> light"
     elif grep -q 'set background=light' ~/.vimrc; then
         sed --follow-symlinks -i 's/set background=light/set background=dark/g' ~/.vimrc
+        echo "sed light -> dark"
     fi
 }
 
