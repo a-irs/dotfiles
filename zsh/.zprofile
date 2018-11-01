@@ -1,3 +1,6 @@
+# to make touchscreen scrolling work with firefox
+export MOZ_USE_XINPUT2=1
+
 [[ "$TTY" != /dev/tty*  ]] && return
 
 # wait for internet, then launch dropbox
