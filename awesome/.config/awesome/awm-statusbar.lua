@@ -62,6 +62,17 @@ if is_mobile then
             widget:set_markup(markup.bold(markup(color, p .. charg)))
         end
     })
+    batterywidget_t = awful.tooltip({
+        objects = { batterywidget.widget },
+        timer_function = function()
+            -- TODO: better output (discharge rate?)
+            local handle = io.popen("acpi -b")
+            local result = handle:read("*a")
+            handle:close()
+            return result
+        end,
+        timeout = 2,
+    })
 end
 
 
@@ -74,6 +85,16 @@ if is_mobile then
             widget:set_markup(stdout)
         end
     )
+    netwidget_t = awful.tooltip({
+        objects = { netwidget },
+        timer_function = function()
+            local handle = io.popen(gears.filesystem.get_configuration_dir() .. "/statusbar/network-info-tooltip")
+            local result = handle:read("*a")
+            handle:close()
+            return result
+        end,
+        timeout = 2,
+    })
 end
 
 -- DOWNLOAD STATUS
@@ -107,8 +128,8 @@ musicwidget = awful.widget.watch(
 pulsewidget = lain.widget.pulse({
     timeout = 3,
     settings = function()
-        if volume_now.left == nil or volume_now.right == nil then
-            widget:set_markup("ERROR")
+        if (volume_now.left == nil or volume_now.left == "N/A") or (volume_now.right == nil or volumne_now.right == "N/A") then
+            widget:set_markup("no audio")
             return
         end
         local level = math.floor((volume_now.left + volume_now.right) / 2 / 5 + 0.5) * 5
@@ -139,7 +160,7 @@ pulsewidget.widget:buttons(awful.util.table.join(
 timewidget = wibox.widget.textclock(markup.bold(markup(theme.widget_time_fg, '%H:%M')))
 datewidget = wibox.widget.textclock(markup(theme.widget_date_fg, '%a, %d.%m.'))
 lain.widget.calendar({
-    attach_to = { timewidget },
+    attach_to = { timewidget, datewidget },
     notification_preset = {
         font = "Input 8",
         fg   = theme.fg_focus,

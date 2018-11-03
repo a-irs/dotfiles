@@ -8,14 +8,17 @@ current_brightness() {
 
 if [[ "$1" == + ]]; then
     xbacklight + 5
-    notify-send -t 500 -i brightness "$(current_brightness)"
 elif [[ "$1" == - ]]; then
     xbacklight - 5
-    notify-send -t 500 -i brightness "$(current_brightness)"
 fi
 
+cur=$(current_brightness)
+
 # limit to 1
-if [[ "$(current_brightness)" == 0 ]]; then
+if [[ "$cur" == 0 ]]; then
     xbacklight = 1
+    notify-send -t 500 -- 1
+else
+    notify-send -t 500 -- "$cur"
 fi
 
