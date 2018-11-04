@@ -10,6 +10,7 @@ fi
 # keyboard
 setxkbmap -option caps:escape
 xset r rate 200 30
+
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
 # blank screen after 5min
