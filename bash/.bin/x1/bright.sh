@@ -17,8 +17,8 @@ cur=$(current_brightness)
 # limit to 1
 if [[ "$cur" == 0 ]]; then
     xbacklight = 1
-    notify-send -t 500 -- 1
+    notify-send -t 1000 -i /usr/share/icons/Faba-Mono/48x48/notifications/notification-display-brightness.svg -- 1%
 else
-    notify-send -t 500 -- "$cur"
+    notify-send -t 1000 -i /usr/share/icons/Faba-Mono/48x48/notifications/notification-display-brightness.svg -- "$cur"%
 fi
 

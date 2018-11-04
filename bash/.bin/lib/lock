@@ -2,8 +2,48 @@
 
 PATH=/usr/local/sbin:/usr/local/bin:/usr/bin
 
-killall keepassxc 2> /dev/null
+pre_lock() {
+    killall keepassxc 2> /dev/null
+}
 
-i3lock -n --color=263657 --show-failed-attempts --ignore-empty-password
+post_lock() {
+    keepassxc &
+}
 
-keepassxc &
+image=$(mktemp --suffix=.png)
+trap 'rm -f "$image"' EXIT
+make_screenshot() {
+    hue=(-level "0%,100%,0.85")
+    # effect=(-filter Gaussian -resize 20% -define "filter:sigma=1.5" -resize 500.5%)
+    effect=(-scale 4% -scale 2500%)
+    import -window root "$image"
+
+    # check brightness of image to check if to use dark or light icon
+    brightness=$(convert "$image" -gravity center -crop 100x100+0+0 +repage -colorspace hsb \
+        -resize 1x1 txt:- | awk -F '[%$]' 'NR==2{gsub(",",""); printf "%.0f\n", $(NF-1)}');
+    if ((brightness > 60)); then
+        icon=lock_black.png
+    else
+        icon=lock_white.png
+    fi
+    convert "$image" "${hue[@]}" "${effect[@]}" -gravity center "$HOME/.bin/lib/$icon" -composite "$image"
+    printf '%s\n' "$image"
+}
+
+pre_lock
+
+# inspired by /usr/share/doc/xss-lock/transfer-sleep-lock-i3lock.sh
+if [[ -e /dev/fd/${XSS_SLEEP_LOCK_FD:--1} ]]; then
+    kill_i3lock() { pkill -xu $EUID "$@" i3lock; }
+    trap kill_i3lock TERM INT
+
+    i3lock -i "$(make_screenshot)" --show-failed-attempts --ignore-empty-password {XSS_SLEEP_LOCK_FD}<&-
+    exec {XSS_SLEEP_LOCK_FD}<&-
+    while kill_i3lock -0; do sleep 0.1; done
+
+else
+    trap 'kill %%' TERM INT
+    i3lock -i "$(make_screenshot)" --color=263657 --show-failed-attempts --ignore-empty-password
+fi
+
+post_lock
