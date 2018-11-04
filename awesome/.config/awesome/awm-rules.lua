@@ -120,6 +120,9 @@ end
 
 -- client appears
 client.connect_signal("manage", function(c)
+    c.maximized = false
+    c.maximized_horizontal = false
+    c.maximized_vertical = false
 
     -- FIXME: only apply when single window visible
     -- also: slow rendering
@@ -185,6 +188,7 @@ client.connect_signal("property::floating", function(c)
         c.ontop = true
     else
         awful.titlebar.hide(c)
+        c.ontop = false
     end
 end)
 

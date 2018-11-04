@@ -128,7 +128,7 @@ musicwidget = awful.widget.watch(
 pulsewidget = lain.widget.pulse({
     timeout = 3,
     settings = function()
-        if (volume_now.left == nil or volume_now.left == "N/A") or (volume_now.right == nil or volumne_now.right == "N/A") then
+        if tonumber(volume_now.left) == nil or tonumber(volume_now.right) == nil then
             widget:set_markup("no audio")
             return
         end
