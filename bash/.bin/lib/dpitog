@@ -5,8 +5,14 @@ import re
 import os
 import time
 
-# warning: Mozilla Firefox only supports .5 steps
-DPI_FACTORS = [1.0, 1.5, 2.0, 3.0]
+# warning: Mozilla Firefox only supports .5 steps properly
+# (has to be set in about:config manually otherwise)
+DPI_FACTORS = {
+    "desk": [1.0, 1.5, 2.0, 3.0],
+    "x1": [1.5, 1.75, 2.0]
+}
+
+DPIS = DPI_FACTORS.get(os.uname()[1])
 
 
 def set_dpi(dpi: int) -> None:
@@ -35,7 +41,7 @@ def get_current_dpi() -> int:
 def main() -> None:
     current_dpi = get_current_dpi()
 
-    dpis = [int(i * 96) for i in DPI_FACTORS]
+    dpis = [int(i * 96) for i in DPIS]
     for dpi in sorted(dpis):
         if dpi > current_dpi:
             set_dpi(dpi)

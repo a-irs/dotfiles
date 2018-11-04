@@ -2,12 +2,8 @@
 
 PATH=/usr/local/sbin:/usr/local/bin:/usr/bin
 
-if keepassxc; then
-    sleep 0.2
-    xdotool keydown Ctrl key l keyup Ctrl
-fi
+killall keepassxc 2> /dev/null
 
-killall i3lock
-i3lock --color=263657 --show-failed-attempts --ignore-empty-password
+i3lock -n --color=263657 --show-failed-attempts --ignore-empty-password
 
-exit 0
+keepassxc &
