@@ -13,9 +13,6 @@ post_lock() {
 image=$(mktemp --suffix=.png)
 trap 'rm -f "$image"' EXIT
 make_screenshot() {
-    hue=(-level "0%,100%,0.85")
-    # effect=(-filter Gaussian -resize 20% -define "filter:sigma=1.5" -resize 500.5%)
-    effect=(-scale 4% -scale 2500%)
     import -window root "$image"
 
     # check brightness of image to check if to use dark or light icon
@@ -26,7 +23,11 @@ make_screenshot() {
     else
         icon=lock_white.png
     fi
-    convert "$image" "${hue[@]}" "${effect[@]}" -gravity center "$HOME/.bin/lib/$icon" -composite "$image"
+
+    colors=(-modulate 85,90,100)  # brightness, saturation, hue (in percent)
+    effect=(-scale 4% -scale 2500%)  # first*second has to equal 10000
+
+    convert "$image" "${colors[@]}" "${effect[@]}" -gravity center "$HOME/.bin/lib/$icon" -composite "$image"
     printf '%s\n' "$image"
 }
 
