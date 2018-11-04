@@ -21,16 +21,21 @@ kupfer --no-splash &
 lxpolkit &
 redshift &
 parcellite --no-icon &
-mkdir -p ~/.thumbnails && ln -sf ~/.thumbnails ~/.cache/thumbnails
 compton &
 keepassxc &
 
 start-pulseaudio-x11 &
 
+# wait for internet, then launch dropbox
+if [[ -n "$commands[dropbox-cli]" ]]; then
+    nohup bash -c "$HOME/.bin/wait-for-host dropbox.com && dropbox-cli start" < /dev/null &> /dev/null &
+fi
+
 if [[ $HOSTNAME == x1 ]]; then
     pulseeffects --gapplication-service &
-    xset s 300 300 &
-    xautolock -time 2 -locker ~/.bin/lock &
+    xset s 60 60 &
+    xss-lock -n "notify-send -- locking soon" ~/.bin/lock &
+    ~/.bin/workstats &
 fi
 
 if [[ $HOSTNAME == desk ]]; then

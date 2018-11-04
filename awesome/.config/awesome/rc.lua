@@ -7,12 +7,6 @@ local beautiful  = require 'beautiful'
 
 awful.spawn("nitrogen --restore", false)
 
--- revert "Only use useless_gap with multiple tiled clients"
-local getgap = awful.tag.getgap
-function awful.tag.getgap(t, numclients)
-    return getgap(t, 42)
-end
-
 hostname        = io.popen("uname -n"):read()
 is_mobile       = hostname == "dell" or hostname == "x1"
 is_high_dpi     = xresources.get_dpi() >= 100
