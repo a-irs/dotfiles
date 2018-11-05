@@ -1,0 +1,63 @@
+#!/usr/bin/env python3
+
+import subprocess
+import shlex
+import json
+import datetime
+import time
+
+TERMINAL = "termite"
+SHELL_TITLE = "alex@x1"
+
+
+def parse_app(window_name, window_class):
+    # virtual machines
+    if window_class.lower() == "virtualbox machine":
+        return "VM: " + window_name.split()[0]
+
+    # terminal, sudo
+    if window_class.lower() == TERMINAL and window_name.startswith("{}:".format(SHELL_TITLE)):
+        return window_class.lower()
+    elif window_class.lower() == TERMINAL:
+        s = window_name.split()
+        if len(s) > 1 and s[0] == "sudo":
+            if len(s) > 2 and s[1] == "command":
+                return s[2]
+            else:
+                return s[1]
+        else:
+            return s[0]
+
+    return window_class.lower()
+
+
+def get_current_window():
+    root = subprocess.Popen(shlex.split("bash -c \"xprop -id $(xprop -root 32x '\t$0' _NET_ACTIVE_WINDOW | cut -f 2) _NET_WM_NAME _NET_WM_DESKTOP WM_CLASS\""), stdout=subprocess.PIPE)
+    stdout, stderr = root.communicate()
+
+    lines = stdout.splitlines()
+    if len(lines) < 3:
+        return {
+            "_time": str(datetime.datetime.now()).split('.')[0],
+            "name": "",
+            "desk": "",
+            "app": "",
+        }
+    window_class = ''.join(lines[2].decode().split("=")[1:]).strip().split(',')[-1].replace("\"", "").strip()
+    window_name = ''.join(lines[0].decode().split("=")[1:]).strip()[1:-1].strip()
+    desk = ''.join(lines[1].decode().split("=")[1:]).strip()
+    output = {
+        "_time": datetime.datetime.now().isoformat().split('.')[0],
+        "name": window_name,
+        "desk": desk,
+        "app": parse_app(window_name, window_class)
+    }
+    return output
+
+
+while True:
+    time.sleep(1)
+    today = str(datetime.datetime.now()).split(' ')[0]
+    with open('stats_{}.json'.format(today), 'a', encoding='utf-8') as fd:
+        json.dump(get_current_window(), fd, ensure_ascii=False)
+        fd.write("\n")

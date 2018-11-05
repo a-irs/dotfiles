@@ -4,7 +4,7 @@ wifi_color="#ffa200"
 eth_color="#ffa500"
 vpn_color="#ffd700"
 
-out=$(nmcli --wait 1 --terse --colors no --fields name,type,device,state,active connection show)
+out=$(nmcli --wait 1 --terse --colors no --fields name,type,device,state,active connection show | grep -v '^docker0')
 active=$(printf "%s\n" "$out" | awk -F: '$5 == "yes" {print $1":"$2}' | sort -r)
 
 declare -a txt
@@ -13,19 +13,11 @@ while read -r line; do
     name=${line%%:*}
     case "$type" in
         tun)        continue ;;
-        vpn)        c=$vpn_color; name=vpn ;;
-        *-wireless)
-            c=$wifi_color
-            freq=$(iwgetid -f --raw)
-            [[ $freq == 5* ]] && freq=5
-            [[ $freq == 2* ]] && freq=2.4
-            suffix="(${freq})"
-            suffix_color="#A8F5EF"
-            ;;
+        vpn)        c=$vpn_color ;;
+        *-wireless) c=$wifi_color ;;
         *-ethernet) c=$eth_color ;;
     esac
-    suffix_color="#A8F5EF"
-    txt+=("<span foreground='$c'><b>${name}</b></span><span foreground='$suffix_color'><b>${suffix}</b></span>")
+    txt+=("<span foreground='$c'><b>${name}</b></span>")
 done <<< "$active"
 
 total="${#txt[@]}"

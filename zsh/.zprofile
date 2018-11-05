@@ -1,13 +1,13 @@
-[[ "$TTY" != /dev/tty*  ]] && return
+# to make touchscreen scrolling work with firefox
+export MOZ_USE_XINPUT2=1
 
-# wait for internet, then launch dropbox
-if [[ -n "$commands[dropbox-cli]" ]]; then
-    nohup bash -c "$HOME/.bin/wait-for-host dropbox.com && dropbox-cli start" < /dev/null &> /dev/null &
-fi
+[[ "$TTY" != /dev/tty* ]] && return
 
 # start redshift in oneshot DRM mode (works in tty)
 [[ "$commands[redshift]" ]] && redshift -o -m drm
 
-if [[ "$HOST" == desk && -n "$commands[startx]" ]]; then
-    [[ -z "$DISPLAY" && "$XDG_VTNR" -eq 1 && "$USER" == alex ]] && startx
+if [[ "$HOST" == desk || "$HOST" == x1 ]]; then
+    if [[ -n "$commands[startx]" ]]; then
+        [[ -z "$DISPLAY" && "$XDG_VTNR" == 1 && "$USER" != root ]] && startx
+    fi
 fi

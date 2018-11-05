@@ -10,10 +10,11 @@ fi
 # keyboard
 setxkbmap -option caps:escape
 xset r rate 200 30
+
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-# blank screen after 15min
-xset s 900 900 &
+# blank screen after 5min
+xset s 300 300 &
 
 # applications
 nitrogen --restore &
@@ -21,10 +22,22 @@ kupfer --no-splash &
 lxpolkit &
 redshift &
 parcellite --no-icon &
-mkdir -p ~/.thumbnails && ln -sf ~/.thumbnails ~/.cache/thumbnails
-# fix for mesa 18, see https://github.com/chjj/compton/issues/477
-allow_rgb10_configs=false compton &
+compton &
 keepassxc &
+
+start-pulseaudio-x11 &
+
+# wait for internet, then launch dropbox
+if [[ -n "$commands[dropbox-cli]" ]]; then
+    nohup bash -c "$HOME/.bin/wait-for-host dropbox.com && dropbox-cli start" < /dev/null &> /dev/null &
+fi
+
+if [[ $HOSTNAME == x1 ]]; then
+    pulseeffects --gapplication-service &
+    xset s 60 60 &
+    xss-lock -n "notify-send -- locking soon" ~/.bin/lock &
+    ~/.bin/workstats &
+fi
 
 if [[ $HOSTNAME == desk ]]; then
     numlockx &

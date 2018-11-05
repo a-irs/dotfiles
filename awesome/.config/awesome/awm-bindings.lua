@@ -158,7 +158,7 @@ globalkeys = awful.util.table.join(
 
     -- displays
 
-    awful.key({ win }, "p", function() run("bash -c 'sleep 0.1 && xset dpms force off'") end),
+    awful.key({ win }, "p", function() run("bash -c 'sleep 0.2 && xset dpms force off'") end),
     awful.key({ alt }, "r", function() run("pkill -USR1 redshift") end),
 
     -- screenshots
@@ -167,6 +167,9 @@ globalkeys = awful.util.table.join(
     awful.key({ "Ctrl" }, "Print", function() run("flameshot gui -p "  .. os.getenv("HOME")) end),
 
     -- media keys
+
+    awful.key({}, "XF86MonBrightnessUp",  function() run_script("bright.sh +") end),
+    awful.key({}, "XF86MonBrightnessDown",  function() run_script("bright.sh -") end),
 
     awful.key({}, "XF86AudioRaiseVolume", volume.increase),
     awful.key({}, "XF86AudioLowerVolume", volume.decrease),
@@ -182,8 +185,7 @@ globalkeys = awful.util.table.join(
 
     -- suspend, lock
 
-    awful.key({ win }, "l",       function() run_script("screen-lock.sh") end),
-    awful.key({}, "XF86PowerOff", function() run_script("screen-lock.sh suspend") end),
+    awful.key({ win }, "l",       function() run_script("lock") end),
 
     -- restart awesome wm
 

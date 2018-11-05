@@ -7,13 +7,8 @@ local beautiful  = require 'beautiful'
 
 awful.spawn("nitrogen --restore", false)
 
--- revert "Only use useless_gap with multiple tiled clients"
-local getgap = awful.tag.getgap
-function awful.tag.getgap(t, numclients)
-    return getgap(t, 42)
-end
-
 hostname        = io.popen("uname -n"):read()
+is_mobile       = hostname == "dell" or hostname == "x1"
 is_high_dpi     = xresources.get_dpi() >= 100
 
 function dpi(value)
@@ -69,7 +64,7 @@ local function bat_notification()
         })
     end
 end
-if hostname == "dell" then
+if is_mobile then
     battimer = timer({ timeout = 60 })
     battimer:connect_signal("timeout", bat_notification)
     battimer:start()

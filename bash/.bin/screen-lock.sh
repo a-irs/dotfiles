@@ -1,1 +1,0 @@
-lib/screen-lock.sh

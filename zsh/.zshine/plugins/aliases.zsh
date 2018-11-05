@@ -28,18 +28,22 @@ rotate() {
 
 toggle-scheme() {
     # Termite
-    if [[ $(readlink -f ~/.config/termite/config) == */config_light ]]; then
-        ln -sfv ~/.dot/config/termite/config ~/.config/termite/config
-    elif [[ $(readlink -f ~/.config/termite/config) == */config ]]; then
-        ln -sfv ~/.dot/config/termite/config_light ~/.config/termite/config
+    if [[ $(readlink ~/.config/termite/config) == config_light ]]; then
+        (cd ~/.config/termite && ln -sfv config_dark config)
+    elif [[ $(readlink ~/.config/termite/config) == config_dark ]]; then
+        (cd ~/.config/termite && ln -sfv config_light config)
+    else
+        (cd ~/.config/termite && ln -sfv config_dark config)
     fi
     killall -USR1 termite 2> /dev/null
 
     # VIM
     if grep -q 'set background=dark' ~/.vimrc; then
         sed --follow-symlinks -i 's/set background=dark/set background=light/g' ~/.vimrc
+        echo "sed dark -> light"
     elif grep -q 'set background=light' ~/.vimrc; then
         sed --follow-symlinks -i 's/set background=light/set background=dark/g' ~/.vimrc
+        echo "sed light -> dark"
     fi
 }
 
@@ -221,7 +225,8 @@ alias lS="$ls -lhSr"
 [[ "$commands[dropbox-cli]" ]] && alias ds='dropbox-cli status'
 [[ "$commands[dropbox-cli]" ]] && alias dstop='dropbox-cli stop'
 [[ "$commands[dropbox-cli]" ]] && alias dstart='dropbox-cli start'
-[[ "$commands[nmcli]" ]] && alias n='nmcli con up id'
+[[ "$commands[nmcli]" ]] && alias nu='nmcli connection up'
+[[ "$commands[nmcli]" ]] && alias nd='nmcli connection down'
 
 if [[ "$commands[tmux]" ]]; then
     alias t='tmux'
@@ -574,4 +579,16 @@ pall() {
             printf "\n"
         fi
     done
+}
+
+sandbox() {
+    program=$1
+    mkdir -vp "$HOME/sandbox/$program"
+    firejail --read-only=/ --private="$HOME/sandbox/$program" --private-dev --seccomp --caps.drop=all --disable-mnt --noprofile --net=wlan0 --protocol=unix,inet,inet6 $*
+}
+
+sandbox-light() {
+    program=$1
+    mkdir -vp "$HOME/sandbox/$program"
+    firejail --read-only=/ --private="$HOME/sandbox/$program" --noprofile $*
 }
