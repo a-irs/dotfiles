@@ -13,8 +13,9 @@ xset r rate 200 30
 
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-# blank screen after 5min
-xset s 300 300 &
+xset s 0 0
+# turn off after 10m
+xset dpms 600 600 600
 
 # applications
 nitrogen --restore &
@@ -28,14 +29,17 @@ keepassxc &
 start-pulseaudio-x11 &
 
 # wait for internet, then launch dropbox
-if [[ -n "$commands[dropbox-cli]" ]]; then
-    nohup bash -c "$HOME/.bin/wait-for-host dropbox.com && dropbox-cli start" < /dev/null &> /dev/null &
+nohup bash -c "$HOME/.bin/wait-for-host dropbox.com && dropbox-cli start" < /dev/null &> /dev/null &
+
+if [[ $HOSTNAME == x1 || $HOSTNAME == dell ]]; then
+    xset s 0 0
+    # turn off after 2m
+    xset dpms 120 120 120
+    xss-lock --transfer-sleep-lock -n "notify-send -i /usr/share/icons/Faba/48x48/actions/system-lock-screen.svg -- locking" -- ~/.bin/lock &
 fi
 
 if [[ $HOSTNAME == x1 ]]; then
     pulseeffects --gapplication-service &
-    xset s 60 60 &
-    xss-lock -n "notify-send -- locking soon" ~/.bin/lock &
     ~/.bin/workstats &
 fi
 
