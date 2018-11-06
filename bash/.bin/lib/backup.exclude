@@ -61,8 +61,10 @@
 /root/.zcompdump
 /root/.zsh_recent-dirs
 /home/*/Dropbox
-/home/*/dev/vm
-/home/*/vm
+/home/*/vm/**/*.raw
+/home/*/vm/**/*.qcow2
+/home/*/vm/**/*.vmdk
+/home/*/vm/**/*.vdi
 /home/*/downloads
 /home/*/media
 
