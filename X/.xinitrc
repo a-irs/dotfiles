@@ -33,8 +33,8 @@ nohup bash -c "$HOME/.bin/wait-for-host dropbox.com && dropbox-cli start" < /dev
 
 if [[ $HOSTNAME == x1 || $HOSTNAME == dell ]]; then
     xset s 0 0
-    # turn off after 2m
-    xset dpms 120 120 120
+    # turn off after 5m
+    xset dpms 300 300 300
     xss-lock --transfer-sleep-lock -n "notify-send -i /usr/share/icons/Faba/48x48/actions/system-lock-screen.svg -- locking" -- ~/.bin/lock &
 fi
 

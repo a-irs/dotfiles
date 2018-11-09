@@ -65,13 +65,12 @@ if is_mobile then
     batterywidget_t = awful.tooltip({
         objects = { batterywidget.widget },
         timer_function = function()
-            -- TODO: better output (discharge rate?)
-            local handle = io.popen("acpi -b")
+            local handle = io.popen(gears.filesystem.get_configuration_dir() .. "/statusbar/battery-tooltip")
             local result = handle:read("*a")
             handle:close()
             return result
         end,
-        timeout = 2,
+        timeout = 1,
     })
 end
 
