@@ -195,6 +195,8 @@ awful.screen.connect_for_each_screen(function(s)
     s.myprompt   = awful.widget.prompt()
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, tasklist_buttons, { fg_normal = theme.tasklist_fg, bg_normal = theme.tasklist_bg, font = theme.tasklist_font })
 
+    s.systray = wibox.widget.systray()
+    s.systray.visible = false
 
     -- layouts
 
@@ -212,7 +214,7 @@ awful.screen.connect_for_each_screen(function(s)
     lay(layout2, s.mytaglist)
 
     local layout3 = wibox.layout.fixed.horizontal()
-    lay(layout3, wibox.widget.systray())
+    lay(layout3, s.systray)
     lay(layout3, pulsewidget.widget, m)
     if is_mobile then
         lay(layout3, netwidget, m)
