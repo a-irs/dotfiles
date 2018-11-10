@@ -79,7 +79,7 @@ end
 
 if is_mobile then
     netwidget = awful.widget.watch(
-        gears.filesystem.get_configuration_dir() .. "/statusbar/network-info.sh", 2,
+        gears.filesystem.get_configuration_dir() .. "/statusbar/net", 2,
         function(widget, stdout)
             widget:set_markup(stdout)
         end
@@ -87,7 +87,7 @@ if is_mobile then
     netwidget_t = awful.tooltip({
         objects = { netwidget },
         timer_function = function()
-            local handle = io.popen(gears.filesystem.get_configuration_dir() .. "/statusbar/network-info-tooltip")
+            local handle = io.popen(gears.filesystem.get_configuration_dir() .. "/statusbar/net-tooltip")
             local result = handle:read("*a")
             handle:close()
             return result
