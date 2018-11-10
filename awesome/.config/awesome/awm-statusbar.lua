@@ -200,7 +200,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- layouts
 
-    local m = 3
+    local m = dpi(3)
 
     local layout1 = wibox.layout.fixed.horizontal()
     lay(layout1, musicwidget, 0, 0, theme.bg_focus)
@@ -220,7 +220,7 @@ awful.screen.connect_for_each_screen(function(s)
         lay(layout3, netwidget, m)
         lay(layout3, batterywidget.widget, m)
     end
-    lay(layout3, datewidget, m, 2)
+    lay(layout3, datewidget, m, 0)
     lay(layout3, timewidget, m, m * 2)
 
 
