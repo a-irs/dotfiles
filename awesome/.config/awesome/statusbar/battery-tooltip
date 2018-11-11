@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
 
-discharge=$(</sys/class/power_supply/BAT0/power_now)
-discharge=$(awk -v d="$discharge" 'BEGIN { printf "%.2f", d/1000000 }')
+acpi=$(acpi -b | cut -d: -f 2-)
+if [[ "$acpi" == " Charging"* ]]; then
+    s="Charge"
+else
+    s="Discharge"
+fi
 
-printf '%s\n' "<span foreground='#ffff00'>Battery:</span>$(acpi -b | cut -d: -f 2-)"
-printf '%s\n' "<span foreground='#ffff00'>Discharge:</span> $discharge W"
+change_rate=$(</sys/class/power_supply/BAT0/power_now)
+change_rate=$(awk -v d="$change_rate" 'BEGIN { printf "%.2f", d/1000000 }')
+
+printf '%s\n' "<span foreground='#ffff00'>Battery:</span>$acpi"
+printf '%s\n' "<span foreground='#ffff00'>$s:</span> $change_rate W"

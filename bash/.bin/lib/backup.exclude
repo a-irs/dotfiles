@@ -5,6 +5,8 @@
 **/.fr-*
 **/*.pyc
 **/Cache
+**/ShaderCache
+**/GPUCache
 **/CacheStorage
 **/cache
 **/temp
@@ -67,6 +69,8 @@
 /home/*/vm/**/*.vdi
 /home/*/downloads
 /home/*/media
+/home/*/iphone-backup
+/home/*/iphone-photos
 
 **/Package Control.cache
 
