@@ -1,0 +1,121 @@
+#!/usr/bin/env python3
+
+# assumptions: filenames of pics on iphone are unique!
+
+from typing import List, Dict
+import atexit
+import datetime
+import os
+import pathlib
+import shlex
+import shutil
+import sqlite3
+import subprocess
+import tempfile
+
+PHOTO_DIR = os.path.expanduser("~/iphone-photos")
+
+
+def exiftool(filelist: List[str], destination: str) -> None:
+    with tempfile.NamedTemporaryFile(mode='w') as config_file:
+        config_file.write("""
+%Image::ExifTool::UserDefined = (
+  'Image::ExifTool::Composite' => {
+    OldestDateTime => {
+      PrintConv => '$self->ConvertDateTime($val)',
+      Desire => {
+        0 => 'FileModifyDate',
+        1 => 'MDItemFSContentChangeDate',
+        2 => 'FileCreateDate',
+        3 => 'MDItemFSCreationDate',
+        4 => 'ModifyDate',
+        5 => 'CreateDate',
+        6 => 'DateTimeCreated',
+        7 => 'DateTimeOriginal',
+      },
+      ValueConv => q{
+        my $oldest = undef;
+        for my $date (@val) {
+          if ($date && (!$oldest || $date lt $oldest)) {
+            $oldest = $date;
+          }
+        }
+      return $oldest;
+    },
+  },
+},
+);
+1;
+        """)
+        config_file.seek(0)
+
+        cmd = shlex.split(f"exiftool -config {config_file.name} -m -progress -preserve -r -o . -FileName<OldestDateTime -d '{destination}/%Y/%Y-%m/%Y-%m-%d/%%f.%%e' -@ -")
+        subprocess.run(cmd, text=True, input='\n'.join(filelist))
+
+
+def get_local_files(path: str, exclude='archive') -> Dict[str, str]:
+    all_objects = pathlib.Path(path).glob('**/*')
+    all_files = {x.name: x.absolute().as_posix() for x in all_objects if x.is_file() and not x.as_posix().startswith(path + os.sep + exclude)}
+    return all_files
+
+
+def get_ios_files(mount_path: str) -> Dict[str, str]:
+    db = sqlite3.connect(f'file:{mount_path}/PhotoData/Photos.sqlite?mode=ro', uri=True)
+    result = db.execute('SELECT ZFILENAME, ZDIRECTORY FROM ZGENERICASSET WHERE ZTRASHEDSTATE = 0').fetchall()
+    db.close()
+
+    # DNG files are not in photos db for some reason, so add them first manually
+    files = {p.name: p.absolute().as_posix() for p in pathlib.Path(f"{mount_path}/DCIM/").glob('**/*.dng')}
+
+    for name, directory in result:
+        full_path = f"{mount_path}/{directory}/{name}"
+        full_path_livephoto = full_path.replace('.JPG', '.MOV').replace('.jpg', '.mov')
+        if pathlib.Path(full_path_livephoto).exists():
+            name_livephoto = name.replace('.JPG', '.MOV').replace('.jpg', '.mov')
+            files[name_livephoto] = full_path_livephoto
+        files[name] = full_path
+
+    return files
+
+
+def ios_mount(path: str) -> None:
+    os.mkdir(path)
+    subprocess.check_output(shlex.split(f"ifuse -o ro {path}"))
+
+
+def ios_umount(path: str) -> None:
+    subprocess.run(shlex.split(f"fusermount -u {path}"))
+    os.rmdir(path)
+
+
+def main() -> None:
+    MOUNT_PATH = "/tmp/iPhone"
+
+    atexit.register(ios_umount, MOUNT_PATH)
+    ios_mount(MOUNT_PATH)
+
+    files_ios = get_ios_files(MOUNT_PATH)
+    files_local = get_local_files(PHOTO_DIR)
+
+    # copy missing photos from iPhone -> disk
+    only_ios = {f: path for f, path in files_ios.items() if f not in files_local}
+    if only_ios:
+        exiftool(list(only_ios.values()), PHOTO_DIR)
+    else:
+        print("No new photos found on iOS device.")
+
+    # move non-existing photos to archive
+    only_local = {f: path for f, path in files_local.items() if f not in files_ios}
+    if only_local:
+        now = datetime.datetime.now().strftime("%Y-%m-%d")
+        for f in only_local.values():
+            dest_dir = f"{PHOTO_DIR}/archive/{now}"
+            os.makedirs(dest_dir, exist_ok=True)
+            print(f"moved {f} to {dest_dir}")
+            shutil.move(f, dest_dir)
+    else:
+        print("No abundant files found locally.")
+
+
+if __name__ == "__main__":
+    main()

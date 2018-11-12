@@ -11,7 +11,7 @@ set smarttab
 set laststatus=0  " never show statusbar
 set autoread  " auto reload file when unchanged in vim and changed outside vim
 set history=2000  " command history
-set scrolloff=4  " scrolling shows one line extra
+set scrolloff=1  " scrolling shows one line extra
 set hlsearch  " highlight search results
 set incsearch  " search during input
 set fillchars+=vert:│  " prettier split separator

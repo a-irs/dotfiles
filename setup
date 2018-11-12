@@ -26,7 +26,7 @@ CONFIG = {
     'vim': ['.vim/autoload/plug.vim', '.vim/snip', '.vimrc'],
     'zathura': ['.config/zathura'],
     'zsh': ['.zprofile', '.zshine', '.zshrc'],
-    'X': ['.local/share/fonts', '.xinitrc', '.Xmodmap', '.gtkrc-2.0', '.config/fontconfig', '.config/gtk-3.0/settings.ini', '.icons/default/index.theme', '.config/user-dirs.dirs'],
+    'X': ['.local/share/fonts', '.xinitrc', '.Xmodmap', '.gtkrc-2.0', '.config/fontconfig', '.config/gtk-3.0/settings.ini', '.icons/default/index.theme', '.config/user-dirs.dirs', '.config/x1carbon3rd_notebookcheck.com.icc'],
 }
 
 

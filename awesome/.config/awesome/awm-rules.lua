@@ -185,6 +185,7 @@ client.connect_signal("property::floating", function(c)
     if c.floating and not c.fullscreen then
         awful.titlebar.show(c)
         awful.placement.no_offscreen(c)
+        awful.placement.no_overlap(c)
         c.ontop = true
     else
         awful.titlebar.hide(c)
