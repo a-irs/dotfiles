@@ -17,6 +17,9 @@ convert_colors() {
     "
 }
 
-out=$(nmcli --color=yes -t)
-printf '%s\n' "$out" | head -n -5 | convert_colors
+out_connected=$(nmcli --color=yes -t | sed -n '/connect/,/^$/p' | grep -v 'nmcli connection show')
+out_dns=$(nmcli --color=yes -t | sed -n '/DNS configuration/,/^$/p')
+printf '%s\n' "$out_connected" | convert_colors
+printf '\n'
+printf '%s\n' "$out_dns"
 

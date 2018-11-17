@@ -7,8 +7,6 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
     unset f
 fi
 
-[[ $HOSTNAME == x1 ]] && xcalib ~/.config/x1carbon3rd_notebookcheck.com.icc &
-
 # keyboard
 setxkbmap -option caps:escape
 xset r rate 200 30
@@ -23,10 +21,10 @@ xset dpms 600 600 600
 nitrogen --restore &
 kupfer --no-splash &
 lxpolkit &
-redshift &
 parcellite --no-icon &
 compton &
 keepassxc &
+[[ $HOSTNAME == x1 ]] && xcalib ~/.config/x1carbon3rd_notebookcheck.com.icc &
 
 start-pulseaudio-x11 &
 
@@ -54,4 +52,5 @@ if [[ $HOSTNAME == desk ]]; then
     fi
 fi
 
+redshift &
 exec awesome

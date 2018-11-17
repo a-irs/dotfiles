@@ -233,9 +233,8 @@ augroup END
 """ COLOR SCHEME
 
 " fallback color scheme
+set background=dark
 try
-    set background=dark
-
     " GRUVBOX
     let g:gruvbox_italic=1
     colorscheme gruvbox
@@ -246,7 +245,7 @@ try
     " BADWOLF
     " colorscheme badwolf
 catch
-    colorscheme pablo
+    colorscheme default
     highlight StatusLine term=bold,reverse ctermfg=11 ctermbg=242 guifg=yellow guibg=DarkGray
 endtry
 
