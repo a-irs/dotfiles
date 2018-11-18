@@ -19,7 +19,10 @@ convert_colors() {
 
 out_connected=$(nmcli --color=yes -t | sed -n '/connect/,/^$/p' | grep -v 'nmcli connection show')
 out_dns=$(nmcli --color=yes -t | sed -n '/DNS configuration/,/^$/p')
+out_iw=$(iwconfig wlan0)
 printf '%s\n' "$out_connected" | convert_colors
 printf '\n'
 printf '%s\n' "$out_dns"
+printf '\n'
+printf '%s\n' "$out_iw"
 

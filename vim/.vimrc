@@ -141,6 +141,8 @@ let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
+Plug 'cespare/vim-toml'
+
 Plug 'eiginn/iptables-vim'
 autocmd BufNewFile,BufFilePre,BufRead *.rules set filetype=iptables
 

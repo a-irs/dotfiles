@@ -39,7 +39,6 @@ if [[ $HOSTNAME == x1 || $HOSTNAME == dell ]]; then
 fi
 
 if [[ $HOSTNAME == x1 ]]; then
-    pulseeffects --gapplication-service &
     ~/.bin/workstats &
 fi
 
