@@ -1,11 +1,10 @@
 #!/usr/bin/env zsh
 
 is_git() {
-    [[ "$PWD" == /var/aur* ]] && return 1
-    [[ "$PWD" == ~/net/* ]] && return 1
+    [[ "$PWD" == /mnt/* ]] && return 1
     [[ "$PWD" == /media/* ]] && return 1
     [[ "$PWD" == /run/user/*/gvfs/* ]] && return 1
-    [ -d .git ] && return 0
+    [[ -d .git ]] && return 0
     git rev-parse --is-inside-work-tree &> /dev/null && return 0
 }
 
@@ -15,7 +14,7 @@ git_prompt_info() {
     branch=$(command git symbolic-ref --short HEAD)
     [[ "$branch" = "master" ]] && branch=''
     tag=$(command git describe --tags 2> /dev/null)
-    [[ "$?" -eq 0 ]] && commit="$tag"
+    [[ "$?" -eq 0 ]] && commit="$tag ($commit)"
     url=$(command git ls-remote --get-url 2> /dev/null)
     if [[ $ZSHINE_GIT_SHRINK_URL == 1 ]]; then
         if [[ $url == *'://'* ]]; then
