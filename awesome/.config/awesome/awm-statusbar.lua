@@ -196,7 +196,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, tasklist_buttons, { fg_normal = theme.tasklist_fg, bg_normal = theme.tasklist_bg, font = theme.tasklist_font })
 
     s.systray = wibox.widget.systray()
-    s.systray.visible = false
+    s.systray.visible = true
 
     -- layouts
 

@@ -1,7 +1,7 @@
 [options]
 audible_bell = true
-font = Iosevka Slab 10
-# font = Input 9
+# font = Iosevka Slab 10
+font = Input 9
 scrollback_lines = 100000
 
 [colors]
