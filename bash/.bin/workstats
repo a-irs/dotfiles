@@ -5,9 +5,18 @@ import shlex
 import json
 import datetime
 import time
+import os
 
 TERMINAL = "termite"
-SHELL_TITLE = "alex@x1"
+SHELL_TITLE = f"{os.getlogin()}@{os.uname()[1]}"
+
+
+def parse_name(window_name, window_class):
+    # browser
+    if window_class.lower() == "firefox" and window_name.endswith("(Private Browsing)"):
+        return "(Private Browsing)"
+
+    return window_name
 
 
 def parse_app(window_name, window_class):
@@ -48,7 +57,7 @@ def get_current_window():
     desk = ''.join(lines[1].decode().split("=")[1:]).strip()
     output = {
         "_time": datetime.datetime.now().isoformat().split('.')[0],
-        "name": window_name,
+        "name": parse_name(window_name, window_class),
         "desk": desk,
         "app": parse_app(window_name, window_class)
     }
