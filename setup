@@ -41,12 +41,13 @@ def make_link(src: pathlib.Path, dest: pathlib.Path) -> None:
         return
 
     if dest.is_symlink():
+        rel_src = os.path.relpath(src, dest.parent)
         # symlink -> repoint symlink if different
         if dest.resolve() != src:
             old_src = dest.resolve()
             dest.unlink()
-            dest.symlink_to(src)
-            log("info", f"change {old_src} -> {src}")
+            dest.symlink_to(rel_src)
+            log("info", f"change {old_src} -> {rel_src}")
     elif dest.exists():
         log("error", f"{dest} exists and is not a symlink")
     else:
