@@ -253,7 +253,7 @@ endtry
 
 " show invisible chars
 set list
-set listchars=tab:▸\ ,trail:•,extends:»,precedes:«
+set listchars=tab:▸\ ,extends:»,precedes:«
 highlight SpecialKey ctermfg=240 guifg=#666666
 highlight NonText ctermfg=240 guifg=#666666
 
