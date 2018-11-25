@@ -17,6 +17,7 @@ awful.rules.rules = {
                      focus = awful.client.focus.filter,
                      screen = awful.screen.preferred,
                      placement = awful.placement.no_overlap + awful.placement.no_offscreen + awful.placement.centered,
+                     honor_workarea = true,
                      raise = true,
                      keys = clientkeys,
                      buttons = clientbuttons,
@@ -185,6 +186,7 @@ client.connect_signal("property::floating", function(c)
     if c.floating and not c.fullscreen then
         awful.titlebar.show(c)
         awful.placement.no_offscreen(c)
+        awful.placement.no_overlap(c)
         c.ontop = true
     else
         awful.titlebar.hide(c)

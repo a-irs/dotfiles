@@ -65,13 +65,12 @@ if is_mobile then
     batterywidget_t = awful.tooltip({
         objects = { batterywidget.widget },
         timer_function = function()
-            -- TODO: better output (discharge rate?)
-            local handle = io.popen("acpi -b")
+            local handle = io.popen(gears.filesystem.get_configuration_dir() .. "/statusbar/battery-tooltip")
             local result = handle:read("*a")
             handle:close()
             return result
         end,
-        timeout = 2,
+        timeout = 1,
     })
 end
 
@@ -80,7 +79,7 @@ end
 
 if is_mobile then
     netwidget = awful.widget.watch(
-        gears.filesystem.get_configuration_dir() .. "/statusbar/network-info.sh", 2,
+        gears.filesystem.get_configuration_dir() .. "/statusbar/net", 2,
         function(widget, stdout)
             widget:set_markup(stdout)
         end
@@ -88,7 +87,7 @@ if is_mobile then
     netwidget_t = awful.tooltip({
         objects = { netwidget },
         timer_function = function()
-            local handle = io.popen(gears.filesystem.get_configuration_dir() .. "/statusbar/network-info-tooltip")
+            local handle = io.popen(gears.filesystem.get_configuration_dir() .. "/statusbar/net-tooltip")
             local result = handle:read("*a")
             handle:close()
             return result
@@ -196,10 +195,12 @@ awful.screen.connect_for_each_screen(function(s)
     s.myprompt   = awful.widget.prompt()
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, tasklist_buttons, { fg_normal = theme.tasklist_fg, bg_normal = theme.tasklist_bg, font = theme.tasklist_font })
 
+    s.systray = wibox.widget.systray()
+    s.systray.visible = true
 
     -- layouts
 
-    local m = 3
+    local m = dpi(3)
 
     local layout1 = wibox.layout.fixed.horizontal()
     lay(layout1, musicwidget, 0, 0, theme.bg_focus)
@@ -213,13 +214,13 @@ awful.screen.connect_for_each_screen(function(s)
     lay(layout2, s.mytaglist)
 
     local layout3 = wibox.layout.fixed.horizontal()
-    lay(layout3, wibox.widget.systray())
+    lay(layout3, s.systray)
     lay(layout3, pulsewidget.widget, m)
     if is_mobile then
         lay(layout3, netwidget, m)
         lay(layout3, batterywidget.widget, m)
     end
-    lay(layout3, datewidget, m, 2)
+    lay(layout3, datewidget, m, 0)
     lay(layout3, timewidget, m, m * 2)
 
 

@@ -16,7 +16,8 @@ export FZF_COMPLETION_TRIGGER='#'
 
 if [[ $commands[ag] ]]; then
     _fzf_compgen_path() {
-        ag --hidden -g "" \
+        ag --skip-vcs-ignores -g "" \
+            --ignore __pycache__ \
             --ignore .git \
             --ignore Cache \
             --ignore cache \
@@ -36,3 +37,4 @@ c() {
     done < ~/.zsh_recent-dirs | fzf)
     cd "${dir/\~/$HOME}"
 }
+alias cdr=c

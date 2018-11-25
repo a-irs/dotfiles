@@ -11,7 +11,7 @@ set smarttab
 set laststatus=0  " never show statusbar
 set autoread  " auto reload file when unchanged in vim and changed outside vim
 set history=2000  " command history
-set scrolloff=4  " scrolling shows one line extra
+set scrolloff=1  " scrolling shows one line extra
 set hlsearch  " highlight search results
 set incsearch  " search during input
 set fillchars+=vert:│  " prettier split separator
@@ -141,6 +141,8 @@ let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
+Plug 'cespare/vim-toml'
+
 Plug 'eiginn/iptables-vim'
 autocmd BufNewFile,BufFilePre,BufRead *.rules set filetype=iptables
 
@@ -234,9 +236,8 @@ augroup END
 """ COLOR SCHEME
 
 " fallback color scheme
+set background=dark
 try
-    set background=dark
-
     " GRUVBOX
     let g:gruvbox_italic=1
     colorscheme gruvbox
@@ -247,7 +248,7 @@ try
     " BADWOLF
     " colorscheme badwolf
 catch
-    colorscheme pablo
+    colorscheme default
     highlight StatusLine term=bold,reverse ctermfg=11 ctermbg=242 guifg=yellow guibg=DarkGray
 endtry
 

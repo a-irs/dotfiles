@@ -163,10 +163,14 @@ globalkeys = awful.util.table.join(
 
     -- screenshots
 
-    awful.key({        }, "Print", function() run("flameshot full -p " .. os.getenv("HOME")) end),
-    awful.key({ "Ctrl" }, "Print", function() run("flameshot gui -p "  .. os.getenv("HOME")) end),
+    awful.key({ "Ctrl" },      "Print", function() run("flameshot full -p " .. os.getenv("HOME")) end),
+    awful.key({ "Ctrl", alt }, "Print", function() run("flameshot gui -p "  .. os.getenv("HOME")) end),
 
     -- media keys
+
+    awful.key({}, "XF86PowerOff",  function() run("systemctl suspend") end),
+
+    awful.key({ win }, "n",  function() awful.screen.focused().systray.visible = not awful.screen.focused().systray.visible end),
 
     awful.key({}, "XF86MonBrightnessUp",  function() run_script("bright.sh +") end),
     awful.key({}, "XF86MonBrightnessDown",  function() run_script("bright.sh -") end),

@@ -11,13 +11,13 @@ else
     xpm_folder                      = gears.filesystem.get_configuration_dir() .. "/xpm_100"
 end
 
-theme.statusbar_height              = dpi(16)
+theme.statusbar_height              = dpi(18)
 theme.statusbar_position            = "top"
 
 -- FG, BG COLORS
 
 theme.bg_normal                     = "#263657"
-theme.bg_focus                      = "#304366"
+theme.bg_focus                      = "#364b73"
 theme.bg_urgent                     = "#aa0000"
 theme.fg_normal                     = "#aaaaaa"
 theme.fg_focus                      = "#ffffff"
@@ -69,33 +69,12 @@ theme.tasklist_bg                   = theme.bg_normal
 theme.tasklist_disable_icon         = true
 
 theme.bg_systray                    = theme.bg_normal
+theme.systray_icon_spacing          = dpi(2)
 theme.widget_music_fg               = theme.fg_focus
 theme.widget_date_fg                = "#cccccc"
 theme.widget_time_fg                = "#eeeeee"
 theme.widget_pulse_fg               = "#96b7e2"
 theme.widget_pulse_mute_fg          = "#666666"
-
-theme.widget_speed_down             = "#ff8a5a"
-theme.widget_speed_up               = theme.widget_speed_down
-theme.widget_cpu_fg                 = "#ff6997"
-theme.widget_cpu_graph_fg           = theme.widget_cpu_fg
-theme.widget_cpu_graph_bg           = theme.bg_normal
-theme.widget_cpu_freq_fg            = "#9f96ff"
-theme.widget_mem_fg                 = "#71ee5c"
-theme.widget_load_fg                = "#80d9d8"
-theme.widget_disk_read_fg           = "#ffc350"
-theme.widget_disk_write_fg          = theme.widget_disk_read_fg
-
--- LAYOUT ICONS
-
-theme.layout_tile                   = xpm_folder .. "/layout/tile.xpm"
-theme.layout_tileleft               = xpm_folder .. "/layout/tileleft.xpm"
-theme.layout_tilebottom             = xpm_folder .. "/layout/tilebottom.xpm"
-theme.layout_tiletop                = xpm_folder .. "/layout/tiletop.xpm"
-theme.layout_spiral                 = xpm_folder .. "/layout/spiral.xpm"
-theme.layout_floating               = xpm_folder .. "/layout/floating.xpm"
-theme.layout_fairv                  = xpm_folder .. "/layout/fairv.xpm"
-theme.layout_fairh                  = xpm_folder .. "/layout/fairh.xpm"
 
 -- TITLEBAR
 

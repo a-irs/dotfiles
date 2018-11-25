@@ -7,7 +7,7 @@ local beautiful  = require 'beautiful'
 
 awful.spawn("nitrogen --restore", false)
 
-hostname        = io.popen("uname -n"):read()
+hostname        = awesome.hostname
 is_mobile       = hostname == "dell" or hostname == "x1"
 is_high_dpi     = xresources.get_dpi() >= 100
 

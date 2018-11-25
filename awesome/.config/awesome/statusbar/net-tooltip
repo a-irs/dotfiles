@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -eu
+
+color02=#A9A9A9
+color31=#ff0000
+color32=#00ff00
+color33=#ffff00
+
+convert_colors() {
+    perl -pe "
+    s/\x1b\[31m/<span foreground=\'$color31\'>/g;
+    s/\x1b\[32m/<span foreground=\'$color32\'>/g;
+    s/\x1b\[33m/<span foreground=\'$color33\'>/g;
+    s/\x1b\[2m/<span foreground=\'$color02\'>/g;
+    s/\x1b\[0m/<\/span>/g;
+    "
+}
+
+out_connected=$(nmcli --color=yes -t | sed -n '/connect/,/^$/p' | grep -v 'nmcli connection show')
+out_dns=$(nmcli --color=yes -t | sed -n '/DNS configuration/,/^$/p')
+out_iw=$(iwconfig wlan0)
+printf '%s\n' "$out_connected" | convert_colors
+printf '\n'
+printf '%s\n' "$out_dns"
+printf '\n'
+printf '%s\n' "$out_iw"
+

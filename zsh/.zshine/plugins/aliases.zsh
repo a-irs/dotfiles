@@ -201,7 +201,6 @@ alias mkdir='mkdir -p'
 take() { mkdir -p "$1" && cd "$1"; }
 alias rd='rmdir'
 alias f='noglob find . -name'
-alias fd='noglob find . -type d -name'
 alias ff='noglob find . -type f -name'
 
 alias mmv='noglob zmv -W'
