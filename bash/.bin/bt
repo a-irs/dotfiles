@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+mac=04:5D:4B:72:20:95
+
+set -xuo pipefail
+
+if [[ $1 == on ]]; then
+    pacmd load-module module-switch-on-connect
+
+    if [[ "$(rfkill list bluetooth -o soft -n)" == blocked ]]; then
+        sudo rfkill unblock bluetooth
+    fi
+
+    if ! systemctl is-active --quiet bluetooth; then
+        sudo systemctl start bluetooth
+    fi
+
+    sleep 1
+
+    echo "power on" | bluetoothctl
+
+    while ! echo "info $mac" | bluetoothctl | grep 'Connected: yes' > /dev/null; do
+        sleep 1
+        echo "connect $mac" | bluetoothctl
+    done
+
+    notify-send -i /usr/share/icons/Moka/48x48/apps/preferences-system-bluetooth.png "BT on"
+
+elif [[ $1 == off ]]; then
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Pause
+
+    echo -e "disconnect $mac" | timeout 0.5 bluetoothctl
+
+    echo "power off" | timeout 0.5 bluetoothctl
+
+    if systemctl is-active --quiet bluetooth; then
+        sudo systemctl stop bluetooth
+    fi
+
+    if [[ "$(rfkill list bluetooth -o soft -n)" != blocked ]]; then
+        sudo rfkill block bluetooth
+    fi
+
+    pacmd unload-module module-switch-on-connect
+
+    notify-send -i /usr/share/icons/Moka/48x48/apps/preferences-system-bluetooth-inactive.png "BT off"
+fi
