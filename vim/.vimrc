@@ -188,20 +188,21 @@ highlight ALEErrorSign guibg=NONE guifg=red
 
 Plug 'davidoc/taskpaper.vim', { 'for': 'taskpaper' }
 let g:task_paper_styles={ 'crit': 'guibg=#dd5010' }
+augroup vimrc-taskpaper
+    autocmd!
+    autocmd FileType taskpaper call s:taskpaper_setup()
+augroup END
 " set toggle-task binding the same as toggle-comment
 function! s:taskpaper_setup()
     nnoremap <silent> <buffer> <Leader>#
     \ :call taskpaper#toggle_tag('done', taskpaper#date())<CR>
 endfunction
-augroup vimrc-taskpaper
-    autocmd!
-    autocmd FileType taskpaper call s:taskpaper_setup()
-augroup END
 
 Plug 'ap/vim-buftabline'
 set hidden
 let g:buftabline_show = 1
 
+" show trailing whitespace, except in current line
 Plug 'ntpeters/vim-better-whitespace'
 
 Plug 'pearofducks/ansible-vim'
@@ -253,7 +254,7 @@ endtry
 
 " show invisible chars
 set list
-set listchars=tab:▸\ ,trail:•,extends:»,precedes:«
+set listchars=tab:▸\ ,extends:»,precedes:«
 highlight SpecialKey ctermfg=240 guifg=#666666
 highlight NonText ctermfg=240 guifg=#666666
 
