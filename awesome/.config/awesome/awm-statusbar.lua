@@ -127,6 +127,11 @@ musicwidget = awful.widget.watch(
 pulsewidget = lain.widget.pulse({
     timeout = 3,
     settings = function()
+        local limit = 70
+        if is_mobile then
+            limit = 120
+        end
+
         if tonumber(volume_now.left) == nil or tonumber(volume_now.right) == nil then
             widget:set_markup("no audio")
             return
@@ -134,7 +139,7 @@ pulsewidget = lain.widget.pulse({
         local level = math.floor((volume_now.left + volume_now.right) / 2 / 5 + 0.5) * 5
         if volume_now.muted =="yes" then
             widget:set_markup(markup.bold(markup(theme.widget_pulse_mute_fg, level)))
-        elseif level >= 70 then
+        elseif level >= limit then
             widget:set_markup(markup.bold(markup("#ff3030", level)))
         else
             widget:set_markup(markup.bold(markup(theme.widget_pulse_fg, level)))

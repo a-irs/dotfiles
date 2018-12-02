@@ -23,6 +23,13 @@ set expandtab
 
 set updatetime=150
 
+" gvim
+set guifont=Input\ 9
+" set guioptions-=m  " remove menu bar
+set guioptions-=T  " remove toolbar
+set guioptions-=r  " remove right scroll bar
+set guioptions-=L  " remove left scroll bar
+
 " persistent undo
 set undofile
 set undodir=~/.vim/undo
@@ -204,6 +211,9 @@ let g:buftabline_show = 1
 
 " show trailing whitespace, except in current line
 Plug 'ntpeters/vim-better-whitespace'
+
+Plug 'vim-python/python-syntax'
+let python_highlight_all = 1
 
 Plug 'pearofducks/ansible-vim'
 let g:ansible_unindent_after_newline = 1

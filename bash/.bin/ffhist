@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+
+import sqlite3
+import json
+import shutil
+import tempfile
+import os
+import collections
+from urllib import parse
+
+from typing import Dict, List
+
+
+def setup(profile_name: str) -> tempfile.TemporaryDirectory:
+    firefox_profile = os.path.expanduser(f"~/.mozilla/firefox/{profile_name}")
+    fd = tempfile.TemporaryDirectory(prefix="ffhist_")
+    shutil.copy2(f"{firefox_profile}/places.sqlite", f"{fd.name}/places.sqlite")
+    return fd
+
+
+def write_jsons(history: Dict[str, List[Dict]], output_dir: str) -> None:
+    for day in history.keys():
+        with open(f"{output_dir}/{day}.json", 'w') as fd:
+            for h in history[day]:
+                json.dump(h, fd, ensure_ascii=False)
+                fd.write("\n")
+
+
+def get_history(sqlite_file: str) -> Dict[str, List[Dict]]:
+    db = sqlite3.connect(f'file:{sqlite_file}?mode=ro', uri=True)
+    query = """
+    SELECT
+        datetime(substr(h.visit_date, 0, 11), 'unixepoch', 'localtime'),
+        h.visit_type,
+        p.url,
+        p.title
+    FROM moz_historyvisits AS h, moz_places AS p
+    WHERE h.place_id == p.id
+    """
+    results = db.execute(query).fetchall()
+    db.close()
+
+    data: Dict[str, List[Dict]] = collections.defaultdict(list)
+    for r in results:
+        # https://www.forensicswiki.org/wiki/Mozilla_Firefox_3_History_File_Format
+        transition_type = {
+            1: "link",
+            2: "typed",
+            3: "bookmark",
+            4: "embed",
+            5: "redirect_permanent",
+            6: "redirect_temporary",
+            7: "download"
+        }
+
+        day = r[0].split()[0]
+        data[day].append({
+            "_time": r[0],
+            "type": transition_type.get(r[1]),
+            "subdomain": parse.urlparse(r[2]).netloc,
+            "domain": '.'.join(parse.urlparse(r[2]).netloc.split('.')[-2:]),
+            "url": r[2],
+            "title": r[3]
+        })
+
+    return data
+
+
+if __name__ == "__main__":
+    temp_fd = setup("9h7xvp9g.default")
+    history = get_history(f"{temp_fd.name}/places.sqlite")
+    temp_fd.cleanup()
+    write_jsons(history, "/srv/splunk/input/browser_history")
+

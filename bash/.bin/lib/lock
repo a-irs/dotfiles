@@ -3,11 +3,13 @@
 PATH=/usr/local/sbin:/usr/local/bin:/usr/bin
 
 pre_lock() {
+    logger -t "$(basename "$0")" --id=$$ -- "BAT0 before suspend: $(acpi -b | grep -Po '[0-9]+%')"
     killall keepassxc 2> /dev/null
 }
 
 post_lock() {
     keepassxc &
+    logger -t "$(basename "$0")" --id=$$ -- "BAT0 after suspend: $(acpi -b | grep -Po '[0-9]+%')"
 }
 
 image=$(mktemp --suffix=.png)
@@ -24,7 +26,7 @@ make_screenshot() {
         icon=lock_white.png
     fi
 
-    colors=(-modulate 75,90,100)  # brightness, saturation, hue (in percent)
+    colors=(-modulate 100,90,100)  # brightness, saturation, hue (in percent)
     effect=(-scale 4% -scale 2510%)  # first*second has to equal 10000 (or just over it, to avoid some glitches)
 
     convert "$image" "${colors[@]}" "${effect[@]}" -gravity center "$HOME/.bin/lib/$icon" -composite "$image"

@@ -15,6 +15,9 @@ import tempfile
 
 PHOTO_DIR = os.path.expanduser("~/iphone-photos")
 
+# do not care for these dates in get_local
+EXCLUDE_DATES = ['2016']
+
 
 def exiftool(filelist: List[str], destination: str) -> None:
     with tempfile.NamedTemporaryFile(mode='w') as config_file:
@@ -49,14 +52,25 @@ def exiftool(filelist: List[str], destination: str) -> None:
         """)
         config_file.seek(0)
 
+        # -m ignore warnings
+        # -progress show progress count
+        # -preserve file date/time
+        # -r recurse
         cmd = shlex.split(f"exiftool -config {config_file.name} -m -progress -preserve -r -o . -FileName<OldestDateTime -d '{destination}/%Y/%Y-%m/%Y-%m-%d/%%f.%%e' -@ -")
-        subprocess.run(cmd, text=True, input='\n'.join(filelist))
+        stdin = '\n'.join(filelist)
+        subprocess.run(cmd, text=True, input=stdin)
 
 
-def get_local_files(path: str, exclude='archive') -> Dict[str, str]:
+def get_local_files(path: str) -> Dict[str, str]:
+    excludes = [path + os.sep + x for x in ['archive'] + EXCLUDE_DATES]
+
     all_objects = pathlib.Path(path).glob('**/*')
-    all_files = {x.name: x.absolute().as_posix() for x in all_objects if x.is_file() and not x.as_posix().startswith(path + os.sep + exclude)}
-    return all_files
+    relevant_files = {
+        x.name: x.absolute().as_posix()
+        for x in filter(lambda x: not x.as_posix().startswith(tuple(excludes)), all_objects)
+        if x.is_file()
+    }
+    return relevant_files
 
 
 def get_ios_files(mount_path: str) -> Dict[str, str]:

@@ -51,5 +51,7 @@ if [[ $HOSTNAME == desk ]]; then
     fi
 fi
 
+nohup bash -c "sleep 10; echo 'local awful = require \"awful\"; awful.screen.focused().systray.visible = not awful.screen.focused().systray.visible' | awesome-client" < /dev/null &> /dev/null &
+
 redshift &
 exec awesome

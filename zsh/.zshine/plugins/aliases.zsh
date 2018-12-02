@@ -194,6 +194,7 @@ p() { for f in "$@"; do printf "\n%s\n\n" "=========== $f" && preview "$f"; done
 [[ "$commands[sudo]" ]] && alias sudo='sudo '
 [[ "$commands[journalctl]" ]] && alias journalctl='sudo journalctl'
 [[ "$commands[pydf]" ]] && alias df='pydf'
+[[ "$commands[rg]" ]] && alias rg='rg -uu'
 alias cp='cp -i'
 alias ln='ln -i'
 alias mv='mv -i'
@@ -236,7 +237,8 @@ if [[ "$commands[tmux]" ]]; then
 fi
 
 [[ "$commands[xev]" ]] && capture-keys() { xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'; }
-[[ "$commands[youtube-dl]" ]] && alias yt-audio='youtube-dl -f bestaudio -x -o "%(title)s.%(ext)s"'
+[[ "$commands[youtube-dl]" ]] && alias yt-audio='noglob youtube-dl -f bestaudio -x -o "%(title)s.%(ext)s"'
+[[ "$commands[youtube-dl]" ]] && alias yt='noglob youtube-dl --write-sub --sub-lang en,de --embed-subs --prefer-free-formats --write-info-json -f bestvideo+bestaudio'
 [[ "$commands[journalctl]" ]] && alias j='sudo journalctl'
 [[ "$commands[docker]" ]] && alias d='docker'
 [[ "$commands[reflector]" ]] && alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose && sudo pacman -Syy"
