@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 
-import hashlib
-import sqlite3
-import json
-import shutil
-import tempfile
-import os
-import collections
-from urllib import parse
-
 from typing import Dict, List
+from urllib import parse
+import collections
+import glob
+import hashlib
+import json
+import os
+import shutil
+import sqlite3
+import tempfile
+
+OUTPUT_DIR = "/srv/splunk/input/browser_history"
 
 
-def setup(profile_name: str) -> tempfile.TemporaryDirectory:
-    firefox_profile = os.path.expanduser(f"~/.mozilla/firefox/{profile_name}")
+def get_firefox_sqlite() -> tempfile.TemporaryDirectory:
+    firefox_profile = glob.glob(os.path.expanduser(f"~/.mozilla/firefox/*.default"))[0]
+
     fd = tempfile.TemporaryDirectory(prefix="ffhist_")
     shutil.copy2(f"{firefox_profile}/places.sqlite", f"{fd.name}/places.sqlite")
     print(f"created temp at {fd.name}/places.sqlite")
@@ -92,10 +95,9 @@ def get_history(sqlite_file: str) -> Dict[str, List[Dict]]:
 
 
 def main():
-    temp_fd = setup("9h7xvp9g.default")
-    history = get_history(f"{temp_fd.name}/places.sqlite")
-    temp_fd.cleanup()
-    write_jsons(history, "/srv/splunk/input/browser_history")
+    with get_firefox_sqlite() as temp_fd:
+        history = get_history(f"{temp_fd}/places.sqlite")
+    write_jsons(history, OUTPUT_DIR)
 
 
 if __name__ == "__main__":
