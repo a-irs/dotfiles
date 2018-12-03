@@ -15,15 +15,18 @@ def setup(profile_name: str) -> tempfile.TemporaryDirectory:
     firefox_profile = os.path.expanduser(f"~/.mozilla/firefox/{profile_name}")
     fd = tempfile.TemporaryDirectory(prefix="ffhist_")
     shutil.copy2(f"{firefox_profile}/places.sqlite", f"{fd.name}/places.sqlite")
+    print(f"created temp at {fd.name}/places.sqlite")
     return fd
 
 
 def write_jsons(history: Dict[str, List[Dict]], output_dir: str) -> None:
     for day in history.keys():
-        with open(f"{output_dir}/{day}.json", 'w') as fd:
+        filename = f"{output_dir}/{day}.json"
+        with open(filename, 'w') as fd:
             for h in history[day]:
                 json.dump(h, fd, ensure_ascii=False)
                 fd.write("\n")
+            print(f"wrote {filename}")
 
 
 def get_history(sqlite_file: str) -> Dict[str, List[Dict]]:
@@ -39,6 +42,7 @@ def get_history(sqlite_file: str) -> Dict[str, List[Dict]]:
     """
     results = db.execute(query).fetchall()
     db.close()
+    print(f"fetched results from places.sqlite")
 
     data: Dict[str, List[Dict]] = collections.defaultdict(list)
     for r in results:
@@ -63,6 +67,7 @@ def get_history(sqlite_file: str) -> Dict[str, List[Dict]]:
             "title": r[3]
         })
 
+    print(f"created data from database results")
     return data
 
 
