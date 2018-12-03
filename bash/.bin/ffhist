@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import hashlib
 import sqlite3
 import json
 import shutil
@@ -19,14 +20,33 @@ def setup(profile_name: str) -> tempfile.TemporaryDirectory:
     return fd
 
 
+def filehash(filename: str) -> bytes:
+    algo = hashlib.sha1()
+    try:
+        with open(filename, 'rb') as fd:
+            block = fd.read(65536)
+            while len(block) != 0:
+                algo.update(block)
+                block = fd.read(65536)
+        return algo.digest()
+    except FileNotFoundError:
+        return bytes()
+
+
 def write_jsons(history: Dict[str, List[Dict]], output_dir: str) -> None:
     for day in history.keys():
-        filename = f"{output_dir}/{day}.json"
-        with open(filename, 'w') as fd:
+        with tempfile.NamedTemporaryFile(mode='w', prefix="ffhist_json_") as tmp:
             for h in history[day]:
-                json.dump(h, fd, ensure_ascii=False)
-                fd.write("\n")
-            print(f"wrote {filename}")
+                json.dump(h, tmp, ensure_ascii=False)
+                tmp.write("\n")
+            tmp.flush()
+            tmp_hash = filehash(tmp.name)
+
+            output_file = f"{output_dir}/{day}.json"
+            existing_hash = filehash(output_file)
+            if existing_hash != tmp_hash:
+                shutil.copy(tmp.name, output_file)
+                print(f"updated JSON: {output_file}")
 
 
 def get_history(sqlite_file: str) -> Dict[str, List[Dict]]:
@@ -71,9 +91,13 @@ def get_history(sqlite_file: str) -> Dict[str, List[Dict]]:
     return data
 
 
-if __name__ == "__main__":
+def main():
     temp_fd = setup("9h7xvp9g.default")
     history = get_history(f"{temp_fd.name}/places.sqlite")
     temp_fd.cleanup()
     write_jsons(history, "/srv/splunk/input/browser_history")
+
+
+if __name__ == "__main__":
+    main()
 
