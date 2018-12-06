@@ -10,11 +10,8 @@ is_git() {
 
 git_prompt_info() {
     is_git || return
-    commit=$(command git --no-pager log --pretty=format:'%h' -n 1 2> /dev/null)
-    branch=$(command git symbolic-ref --short HEAD)
-    [[ "$branch" = "master" ]] && branch=''
-    tag=$(command git describe --tags 2> /dev/null)
-    [[ "$?" -eq 0 ]] && commit="$tag ($commit)"
+
+    # remote repo
     url=$(command git ls-remote --get-url 2> /dev/null)
     if [[ $ZSHINE_GIT_SHRINK_URL == 1 ]]; then
         if [[ $url == *'://'* ]]; then
@@ -35,12 +32,28 @@ git_prompt_info() {
         fi
         url="${user}/${repo}"
     fi
-    # [[ "$server" == github.com ]] || prompt_segment "$ZSHINE_GIT_SERVER_BG" "$ZSHINE_GIT_SERVER_FG" "${server}"
-    [[ "$url" == '/' ]] || prompt_segment "$ZSHINE_GIT_PROJECT_BG" "$ZSHINE_GIT_PROJECT_FG" "${url}"
-    prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_COMMIT_FG" "${commit}"
-    [[ "$protocol" == 'ssh' ]] || prompt_segment "$ZSHINE_GIT_PROTOCOL_BG" "$ZSHINE_GIT_PROTOCOL_FG" "${protocol}"
-    [[ "$branch" == '' ]] || prompt_segment "$ZSHINE_GIT_BRANCH_BG" "$ZSHINE_GIT_BRANCH_FG" "${branch}"
-    prompt_segment "$ZSHINE_GIT_DIRTY_BG" "$ZSHINE_GIT_DIRTY_FG" "$(git_remote_state)$(git_dirty)"
+    [[ "$url" != '/' ]] && prompt_segment "$ZSHINE_GIT_PROJECT_BG" "$ZSHINE_GIT_PROJECT_FG" "$url"
+    [[ "$protocol" != 'ssh' ]] && prompt_segment "$ZSHINE_GIT_PROTOCOL_BG" "$ZSHINE_GIT_PROTOCOL_FG" "$protocol"
+
+    # commit/tag
+    commit=$(command git --no-pager log --pretty=format:'%h' -n 1 2> /dev/null)
+    tag=$(command git describe --tags 2> /dev/null)
+    [[ "$?" -eq 0 ]] && commit="$tag ($commit)"
+    prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_COMMIT_FG" "$commit"
+
+    # branch
+    branch=$(command git symbolic-ref --short HEAD)
+    [[ "$branch" == master ]] && branch=''
+    prompt_segment "$ZSHINE_GIT_BRANCH_BG" "$ZSHINE_GIT_BRANCH_FG" "$branch"
+
+    # remote state
+    remote_state="$(git_remote_state)"
+    prompt_segment "$ZSHINE_GIT_DIRTY_BG" "$ZSHINE_GIT_DIRTY_FG" "$(git_remote_state)"
+
+    # dirty
+    dirty="$(git_dirty)"
+    prompt_segment "$ZSHINE_GIT_DIRTY_BG" "$ZSHINE_GIT_DIRTY_FG" "$(git_dirty)"
+
 }
 
 git_dirty() {
@@ -52,18 +65,18 @@ git_dirty() {
 }
 
 git_remote_state() {
-    remote_state=$(git status --ignore-submodules --porcelain -b 2> /dev/null | grep -oh "\[.*\]")
+    remote_state=$(git status --ignore-submodules --porcelain -b 2> /dev/null | grep -o "\[.*\]")
     if [[ "$remote_state" != "" ]]; then
         out=""
         if [[ "$remote_state" == *ahead* ]] && [[ "$remote_state" == *behind* ]]; then
-            behind_num=$(echo "$remote_state" | grep -oh "behind [0-9]*" | grep -oh "[0-9]*$")
-            ahead_num=$(echo "$remote_state" | grep -oh "ahead [0-9]*" | grep -oh "[0-9]*$")
+            behind_num=$(echo "$remote_state" | grep -o "behind [0-9]*" | grep -o "[0-9]*$")
+            ahead_num=$(echo "$remote_state" | grep -o "ahead [0-9]*" | grep -o "[0-9]*$")
             out="-$behind_num,+$ahead_num"
         elif [[ "$remote_state" == *ahead* ]]; then
-            ahead_num=$(echo "$remote_state" | grep -oh "ahead [0-9]*" | grep -oh "[0-9]*$")
+            ahead_num=$(echo "$remote_state" | grep -o "ahead [0-9]*" | grep -o "[0-9]*$")
             out="+$ahead_num"
         elif [[ "$remote_state" == *behind* ]]; then
-            behind_num=$(echo "$remote_state" | grep -oh "behind [0-9]*" | grep -oh "[0-9]*$")
+            behind_num=$(echo "$remote_state" | grep -o "behind [0-9]*" | grep -o "[0-9]*$")
             out="-$behind_num"
         fi
         echo -n "%{%B%F{$ZSHINE_GIT_DIRTY_FG}%}$out"
