@@ -26,7 +26,11 @@ awful.rules.rules = {
                      maximized_horizontal = false },
       callback = awful.client.setslave },
 
-    { rule = { class = "mpv" }, properties = { size_hints_honor = false } },
+    { rule_any = {
+        class = { "mpv", "Emacs" }
+    },
+        properties = { size_hints_honor = false }
+    },
 
     { rule = { class = "Kodi" }, properties = { fullscreen = true, placement = awful.placement.restore } },
 
