@@ -6,8 +6,6 @@ export MOZ_USE_XINPUT2=1
 # start redshift in oneshot DRM mode (works in tty)
 [[ "$commands[redshift]" ]] && redshift -o -m drm
 
-if [[ "$HOST" == desk || "$HOST" == x1 ]]; then
-    if [[ -n "$commands[startx]" ]]; then
-        [[ -z "$DISPLAY" && "$XDG_VTNR" == 1 && "$USER" != root ]] && startx
-    fi
+if [[ -n "$commands[startx]" ]]; then
+    [[ -z "$DISPLAY" && "$XDG_VTNR" == 1 && "$USER" != root ]] && startx
 fi
