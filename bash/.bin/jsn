@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+
+import sys
+import json
+
+
+def flat(data, prefix=''):
+    if isinstance(data, dict):
+        for key, value in sorted(data.items()):
+            for item in flat(value, '.'.join([x for x in [prefix, key] if x])):
+                yield item
+    elif isinstance(data, list):
+        for index, value in enumerate(data):
+            for item in flat(value, f"{prefix}[{index}]"):
+                yield item
+    else:
+        yield (prefix, data)
+
+
+color_palette = {
+    "black": '\033[90m',
+    "blue": '\033[34m',
+    "cyan": '\033[36m',
+    "green": '\033[32m',
+    "magenta": '\033[35m',
+    "red": '\033[31m',
+    "reset": '\033[0m',
+    "yellow": '\033[33m'
+}
+colors = {
+    "prefix": color_palette["green"],
+    None: color_palette["black"],
+    str: '',
+    float: color_palette["cyan"],
+    int: color_palette["blue"],
+    bool: color_palette["magenta"]
+}
+
+
+def main():
+    if len(sys.argv) > 1:
+        with open(sys.argv[1]) as f:
+            data = json.load(f)
+    else:
+        data = json.load(sys.stdin)
+
+    for name, value in flat(data):
+        color = colors.get(type(value), colors.get(None))
+
+        def dye(s, color):
+            return f"{color}{s}{color_palette['reset']}"
+
+        print(dye(name, colors['prefix']) + ": " + dye(json.dumps(value), color))
+
+
+if __name__ == "__main__":
+    main()
