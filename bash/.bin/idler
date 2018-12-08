@@ -5,9 +5,6 @@ set -eu
 is_active_tmux() {
     tmux ls >/dev/null 2>&1
 }
-is_active_ssh() {
-    ss | grep ':ssh\s' > /dev/null
-}
 is_active_x11() {
     idle_milliseconds=$(DISPLAY=:0 xprintidle)
     limit=$((1000 * 60 * 10))  # 10min
@@ -24,7 +21,6 @@ die() {
 
 rc=0
 is_active_tmux && die "tmux"
-is_active_ssh && die "ssh"
 is_active_x11 && die "x11"
 is_active_audio && die "audio"
 
