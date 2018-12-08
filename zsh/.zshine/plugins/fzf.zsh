@@ -11,15 +11,18 @@ source "$ZSHINE_DIR/plugins/fzf/shell/completion.zsh"
 export FZF_DEFAULT_OPTS='--exact --no-mouse --cycle --ansi --color=16'
 export FZF_CTRL_R_OPTS='--exact --height=20'
 
-export FZF_COMPLETION_OPTS='--multi --preview="head -n 20 {}" --height=20 --no-exact'
+export FZF_COMPLETION_OPTS='--multi --preview="preview {}" --height=20 --no-exact'
 export FZF_COMPLETION_TRIGGER='#'
 
 if [[ $commands[fd] ]]; then
     _fzf_compgen_path() {
         fd --hidden --no-ignore --follow --color always \
+            -E .vim/undo \
+            -E .vim/plugged \
             -E .git \
             -E __pycache__ \
             -E Cache \
+            -E .cache \
             -E cache \
             -E .gem \
             -E .npm \

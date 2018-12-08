@@ -143,41 +143,6 @@ dl() {
 calc() { printf "%s\n" "$@" | bc -l; }
 alias calc="noglob calc"
 
-s() {
-    typeset -U files
-    [[ "$@" ]] && files=("$@") || files=(*(.))
-    for f in $files; do
-        if [[ -d "$f" ]] || [[ ! -f "$f" ]]; then
-            continue
-        fi
-
-        if (( #files > 1 )); then
-            LENGTH=${#f}
-            FILL="\${(l.$((COLUMNS/2-LENGTH/2-2))..=.)}"
-            s="${(e)FILL} $f ${(e)FILL}"
-            [[ "${#s}" == $((COLUMNS-1)) ]] && s+="="
-            [[ "${#s}" == $((COLUMNS-2)) ]] && s+="=="
-            printf "\n%s\n\n" "${BOLD_YELLOW}${s}${RESET}"
-        fi
-
-        mime=$(file --mime-encoding -b -- "$f")
-        if [[ $mime == *binary ]]; then
-            if [[ -s "$f" ]]; then
-                echo -e "${RED}BINARY FILE: $(file -b -- "$f")${RESET}"
-                continue
-            else
-                echo -e "${MAGENTA}EMPTY FILE${RESET}"
-                continue
-            fi
-        fi
-
-        if [[ -r "$f" ]]; then
-            command highlight --out-format=ansi "$f" 2> /dev/null || cat "$f"
-        else
-            sudo command highlight --out-format=ansi "$f" 2> /dev/null || cat "$f"
-        fi
-    done
-}
 p() { for f in "$@"; do printf "\n%s\n\n" "=========== $f" && preview "$f"; done }
 
 [[ "$commands[less]" ]] && alias less='less -FXR'
@@ -195,6 +160,7 @@ p() { for f in "$@"; do printf "\n%s\n\n" "=========== $f" && preview "$f"; done
 [[ "$commands[journalctl]" ]] && alias journalctl='sudo journalctl'
 [[ "$commands[pydf]" ]] && alias df='pydf'
 [[ "$commands[rg]" ]] && alias rg='rg -uu'
+[[ "$commands[fd]" ]] && alias fd='fd --hidden --no-ignore'
 alias cp='cp -i'
 alias ln='ln -i'
 alias mv='mv -i'
