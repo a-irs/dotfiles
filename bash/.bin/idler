@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+set -eu
+
+is_active_tmux() {
+    tmux ls >/dev/null 2>&1
+}
+is_active_ssh() {
+    ss | grep ':ssh\s' > /dev/null
+}
+is_active_x11() {
+    idle=$(DISPLAY=:0 xprintidle)
+    # 10min inactive
+    return $((idle < (1000 * 60 * 10)))
+}
+is_active_audio() {
+    pactl list | grep 'State:\s' | grep 'RUNNING' > /dev/null
+}
+
+die() {
+    printf '%s\n' "WARNING: $1 is still active!"
+}
+
+
+rc=0
+is_active_tmux && rc=1 && die "tmux"
+is_active_ssh && rc=1 && die "ssh"
+is_active_x11 && rc=1 && die "x11"
+is_active_audio && rc=1 && die "audio"
+
+if [[ "$rc" == 0 ]]; then
+    echo "suspending..."
+fi
+
+exit "$rc"
