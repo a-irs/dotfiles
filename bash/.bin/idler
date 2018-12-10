@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eu
+set -euo pipefail
 
 is_active_tmux() {
     tmux ls >/dev/null 2>&1

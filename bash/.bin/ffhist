@@ -49,6 +49,7 @@ def write_jsons(history: Dict[str, List[Dict]], output_dir: str) -> None:
             existing_hash = filehash(output_file)
             if existing_hash != tmp_hash:
                 shutil.copy(tmp.name, output_file)
+                os.chmod(output_file, 0o644)
                 print(f"updated JSON: {output_file}")
 
 
