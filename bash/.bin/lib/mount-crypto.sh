@@ -2,7 +2,7 @@
 
 set -e
 
-IMG=/media/data4/sdc.img
+IMG=/media/data4/cryptodisk-sdc.img
 # UUID=30e17b83-aaa2-4164-9248-00610b01ffed
 
 MOUNTPOINT=/media/crypto
