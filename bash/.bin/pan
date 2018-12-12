@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+# ARGS:
+#   -N (number sections)
+#   --toc (add table of contents
+
+# DEPENDENCIES: pandoc texlive-core
+#   for xelatex + custom fonts: texlive-latexextra
+
+# PANDOC MANUAL: http://pandoc.org/MANUAL.html
+# +smart is set by default for markdown and latex, see pandoc --list-extensions=<format>
+
+set -euo pipefail
+
+css_path=~/.local/share/pandoc.css
+
+prepare() {
+    if [[ ! -f "$css_path" ]]; then
+        # see https://gist.github.com/killercup/5917178
+        curl -o "$css_path" -Ls "https://git.io/fpdGP"
+    fi
+}
+prepare
+
+# shellcheck disable=SC2191
+default_args=(
+    # HTML
+    --standalone
+    --self-contained
+    --css="$css_path"
+    --mathml # best for maths in html
+
+    # PDF/LaTeX and HTML
+    --highlight-style pygments # pandoc --list-highlight-styles
+
+    ### PDF/LaTeX
+    -V papersize=a4
+    -V documentclass=article  # or: report
+    # Word 2003 style, see https://en.wikipedia.org/wiki/Margin_(typography)
+    -V margin-top=1in -V margin-bottom=1in -V margin-left=1.25in -V margin-right=1.25in
+    --pdf-engine=pdflatex  # or: xelatex
+    -V linestretch=1.15
+    -V fontfamily=lmodern  # or: mathpazo
+    -V colorlinks
+    -V links-as-notes
+    -V lang=de-AT
+)
+
+pandoc "${default_args[@]}" "$@"

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -uo pipefail
+
+file=$1
+
+while true; do
+    inotifywait -e modify "$file" 2> /dev/null
+    printf '%s' "$(date "+%Y-%m-%d %H:%M:%S") | pan $* | ..."
+    pan --quiet "$@"
+    printf '%s\n' " done"
+done
