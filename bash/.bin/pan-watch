@@ -5,21 +5,22 @@ set -uo pipefail
 file=$1
 cmd="$*"
 
-red=$(tput setaf 1)
+yellow=$(tput setaf 3)
 magenta=$(tput setaf 5)
 green=$(tput setaf 2)
 reset=$(tput sgr0)
+clear_eol=$(tput el)
 
 run() {
     s="$(date "+%Y-%m-%d %H:%M:%S") | pan $cmd"
-    printf "$red%s$reset" "$s | ..."
+    printf '\r%s' "${clear_eol}${yellow}${s}${reset} | ..."
     d_start=$(date +%s.%3N)
     pan --quiet $cmd
     d_end=$(date +%s.%3N)
 
     duration=$(python3 -c "print('{:.3f}s'.format(${d_end} - ${d_start}))")
-    clear_eol=$(tput el)
-    echo -ne "\r${clear_eol}$magenta$s$reset $green| $duration$reset\n"
+    printf '\r%s\n' "${clear_eol}${magenta}${s}${reset} ${green}| ${duration}${reset}"
+    printf '%s' "waiting for changes in '$file' ... "
 }
 
 run
