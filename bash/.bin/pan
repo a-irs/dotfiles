@@ -31,7 +31,7 @@ default_args=(
     --mathml # best for maths in html
 
     # PDF/LaTeX and HTML
-    --highlight-style pygments # pandoc --list-highlight-styles
+    --highlight-style haddock # pandoc --list-highlight-styles
 
     ### PDF/LaTeX
     -V papersize=a4

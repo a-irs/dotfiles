@@ -3,10 +3,27 @@
 set -uo pipefail
 
 file=$1
+cmd="$*"
 
+red=$(tput setaf 1)
+magenta=$(tput setaf 5)
+green=$(tput setaf 2)
+reset=$(tput sgr0)
+
+run() {
+    s="$(date "+%Y-%m-%d %H:%M:%S") | pan $cmd"
+    printf "$red%s$reset" "$s | ..."
+    d_start=$(date +%s.%3N)
+    pan --quiet $cmd
+    d_end=$(date +%s.%3N)
+
+    duration=$(python3 -c "print('{:.3f}s'.format(${d_end} - ${d_start}))")
+    clear_eol=$(tput el)
+    echo -ne "\r${clear_eol}$magenta$s$reset $green| $duration$reset\n"
+}
+
+run
 while true; do
     inotifywait -e modify "$file" 2> /dev/null
-    printf '%s' "$(date "+%Y-%m-%d %H:%M:%S") | pan $* | ..."
-    pan --quiet "$@"
-    printf '%s\n' " done"
+    run
 done
