@@ -15,7 +15,7 @@ run() {
     s="$(date "+%Y-%m-%d %H:%M:%S") | pan $cmd"
     printf '\r%s' "${clear_eol}${yellow}${s}${reset} | ..."
     d_start=$(date +%s.%3N)
-    pan --quiet $cmd
+    pan $cmd
     d_end=$(date +%s.%3N)
 
     duration=$(python3 -c "print('{:.3f}s'.format(${d_end} - ${d_start}))")

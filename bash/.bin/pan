@@ -1,49 +1,99 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
 
-# ARGS:
-#   -N (number sections)
-#   --toc (add table of contents
-
-# DEPENDENCIES: pandoc texlive-core
+# dependencies: pandoc texlive-core
 #   for xelatex + custom fonts: texlive-latexextra
+# https://pandoc.org/MANUAL.html
 
-# PANDOC MANUAL: http://pandoc.org/MANUAL.html
-# +smart is set by default for markdown and latex, see pandoc --list-extensions=<format>
+import sys
+import subprocess
+import shlex
+import os
+import urllib.request
+import tempfile
 
-set -euo pipefail
 
-css_path=~/.local/share/pandoc.css
+def make_header(s: str) -> str:
+    # TODO: how to delete afterwards?
+    tmp = tempfile.NamedTemporaryFile(mode='w', prefix="pan_", delete=False)
+    tmp.write(s)
+    tmp.write("\n")
+    tmp.flush()
+    return tmp.name
 
-prepare() {
-    if [[ ! -f "$css_path" ]]; then
+
+def fetch(url: str, name: str) -> str:
+    local_dir = os.path.expanduser("~/.local/share")
+    file = f"{local_dir}/{name}"
+
+    if not os.path.isfile(file):
+        urllib.request.urlretrieve(url, file)
+        print(f"downloaded {file}")
+    return file
+
+
+CONFIG_BASE = {
+    '.html': [
+        '--standalone',
+        '--self-contained',
+        '--mathml',  # best for maths in html
         # see https://gist.github.com/killercup/5917178
-        curl -o "$css_path" -Ls "https://git.io/fpdGP"
-    fi
+        '--css {}'.format(fetch("https://git.io/fpdGP", "pandoc.css"))
+    ],
+    '.pdf': [
+        '-V papersize=a4',
+        # Word 2003 style, see https://en.wikipedia.org/wiki/Margin_(typography)
+        '-V geometry=top=1in,bottom=1in,left=1.25in,right=1.25in',
+        '--pdf-engine=pdflatex',  # or: xelatex
+        '-V linestretch=1.12',
+        '-V fontfamily=lmodern',  # or: mathpazo
+        '-V colorlinks',
+        '-V links-as-notes',
+        '-V lang=de',
+        '-H {}'.format(make_header("\\usepackage{csquotes}")),  # localized quotation marks
+    ]
 }
-prepare
+CONFIGS = {
+    'base': {
+    },
+    'long': {
+        'all': [
+            '--number-sections',
+            '--toc'
+        ],
+        '.pdf': [
+            '-V documentclass=report'
+        ]
+    },
+    'charter': {
+        '.pdf': [
+            # https://de.overleaf.com/learn/latex/Font_typefaces
+            '-V fontfamily=charter',
+            '-V linestretch=1.2',
+        ]
+    }
+}
 
-# shellcheck disable=SC2191
-default_args=(
-    # HTML
-    --standalone
-    --self-contained
-    --css="$css_path"
-    --mathml # best for maths in html
 
-    # PDF/LaTeX and HTML
-    --highlight-style haddock # pandoc --list-highlight-styles
+def get_style(name: str, dest_format: str) -> str:
+    style_inherit = CONFIG_BASE.get(dest_format, [])
+    style_all = CONFIGS[name].get('all', [])
+    style_ext = CONFIGS[name].get(dest_format, [])
 
-    ### PDF/LaTeX
-    -V papersize=a4
-    -V documentclass=article  # or: report
-    # Word 2003 style, see https://en.wikipedia.org/wiki/Margin_(typography)
-    -V margin-top=1in -V margin-bottom=1in -V margin-left=1.25in -V margin-right=1.25in
-    --pdf-engine=pdflatex  # or: xelatex
-    -V linestretch=1.15
-    -V fontfamily=lmodern  # or: mathpazo
-    -V colorlinks
-    -V links-as-notes
-    -V lang=de-AT
-)
+    return ' '.join(style_inherit + style_all + style_ext)
 
-pandoc "${default_args[@]}" "$@"
+
+if len(sys.argv) < 4:
+    print(f"usage: pan <input> <output> <{'|'.join(CONFIGS)}> [additional pandoc args]")
+    sys.exit(1)
+
+source = sys.argv[1]
+dest = sys.argv[2]
+dest_format = os.path.splitext(dest)[1]
+
+style = get_style(sys.argv[3], dest_format)
+additional_args = ' '.join(sys.argv[4:])
+
+
+cmd = f"pandoc --quiet -i '{source}' -o '{dest}' {style} {additional_args}"
+proc = subprocess.Popen(shlex.split(cmd))
+proc.communicate()
