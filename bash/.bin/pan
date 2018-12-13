@@ -9,16 +9,6 @@ import subprocess
 import shlex
 import os
 import urllib.request
-import tempfile
-
-
-def make_header(s: str) -> str:
-    # TODO: how to delete afterwards?
-    tmp = tempfile.NamedTemporaryFile(mode='w', prefix="pan_", delete=False)
-    tmp.write(s)
-    tmp.write("\n")
-    tmp.flush()
-    return tmp.name
 
 
 def fetch(url: str, name: str) -> str:
@@ -49,7 +39,7 @@ CONFIG_BASE = {
         '-V colorlinks',
         '-V links-as-notes',
         '-V lang=de',
-        '-H {}'.format(make_header("\\usepackage{csquotes}")),  # localized quotation marks
+        '-V header-includes="\\usepackage{csquotes}"',  # localized quotation marks
     ]
 }
 CONFIGS = {
@@ -69,6 +59,15 @@ CONFIGS = {
             # https://de.overleaf.com/learn/latex/Font_typefaces
             '-V fontfamily=charter',
             '-V linestretch=1.2',
+            '-V fontsize=11pt',  # default: 10pt
+        ]
+    },
+    'a5': {
+        '.pdf': [
+            '-V papersize=a5',
+            # FIXME: not overwriting above value
+            # because of "\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}" in template
+            '-V geometry=top=0.5in,bottom=0.5in,left=0.625in,right=0.625in',
         ]
     }
 }
@@ -95,5 +94,6 @@ additional_args = ' '.join(sys.argv[4:])
 
 
 cmd = f"pandoc --quiet -i '{source}' -o '{dest}' {style} {additional_args}"
+print(cmd)
 proc = subprocess.Popen(shlex.split(cmd))
 proc.communicate()
