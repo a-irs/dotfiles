@@ -14,8 +14,8 @@ xset r rate 200 30
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
 xset s 0 0
-# turn off after 10m
-xset dpms 600 600 600
+# turn off after 5m
+xset dpms 300 300 300
 
 # applications
 nitrogen --restore &
