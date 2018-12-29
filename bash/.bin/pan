@@ -10,7 +10,7 @@ import shlex
 import os
 import urllib.request
 
-from typing import Dict
+from typing import List
 
 
 def fetch(url: str, name: str) -> str:
@@ -23,42 +23,34 @@ def fetch(url: str, name: str) -> str:
     return file
 
 
-CONFIG_BASE: Dict[str, list] = {
-    'all': [
-        '--standalone',
-        '--self-contained',
-    ],
-    '.html': [
-        '--mathml',  # best for maths in html
-        # see https://gist.github.com/killercup/5917178
-        '--css {}'.format(fetch("https://git.io/fpdGP", "pandoc.css"))
-    ],
-    '.pdf': [
-        '-V papersize=a4',
-        # Word 2003 style, see https://en.wikipedia.org/wiki/Margin_(typography)
-        '-V geometry=top=1in,bottom=1in,left=1.25in,right=1.25in',
-        '--pdf-engine=pdflatex',  # or: xelatex
-        '-V linestretch=1.12',
-        '-V fontfamily=lmodern',  # or: mathpazo
-        '-V colorlinks',
-        '-V links-as-notes',
-        '-V lang=de',
-        '-V header-includes="\\usepackage{csquotes}"',  # localized quotation marks
-    ]
-}
-CONFIGS: Dict[str, Dict[str, list]] = {
+CONFIG = {
     'base': {
-    },
-    'long': {
-        'all': [
-            '--number-sections',
-            '--toc'
+        'all': ['--standalone', '--self-contained'],
+        '.html': [
+            '--mathml',  # best for maths in html
+            # see https://gist.github.com/killercup/5917178
+            '--css {}'.format(fetch("https://git.io/fpdGP", "pandoc.css"))
         ],
         '.pdf': [
-            '-V documentclass=report'
+            '-V papersize=a4',
+            # Word 2003 style, see https://en.wikipedia.org/wiki/Margin_(typography)
+            '-V geometry=top=1in,bottom=1in,left=1.25in,right=1.25in',
+            '--pdf-engine=pdflatex',  # or: xelatex
+            '-V linestretch=1.12',
+            '-V fontfamily=lmodern',  # or: mathpazo
+            '-V colorlinks',
+            '-V links-as-notes',
+            '-V lang=de',
+            '-V header-includes="\\usepackage{csquotes}"',  # localized quotation marks
         ]
     },
+    'long': {
+        'inherit': ['base'],
+        'all': ['--number-sections', '--toc'],
+        '.pdf': ['-V documentclass=report']
+    },
     'charter': {
+        'inherit': ['base'],
         '.pdf': [
             # https://de.overleaf.com/learn/latex/Font_typefaces
             '-V fontfamily=charter',
@@ -67,6 +59,7 @@ CONFIGS: Dict[str, Dict[str, list]] = {
         ]
     },
     'a5': {
+        'inherit': ['base'],
         '.pdf': [
             '-V papersize=a5',
             # FIXME: not overwriting value set in BASE
@@ -77,26 +70,33 @@ CONFIGS: Dict[str, Dict[str, list]] = {
 }
 
 
-def get_style(name: str, dest_format: str) -> str:
-    style_inherit = CONFIG_BASE.get(dest_format, []) + CONFIG_BASE.get('all', [])
-    style_all = CONFIGS[name].get('all', [])
-    style_ext = CONFIGS[name].get(dest_format, [])
+def get_style(name: str, dest_format: str) -> List[str]:
+    params: List[str] = []
 
-    return ' '.join(style_inherit + style_all + style_ext)
+    for e in CONFIG[name].get('inherit', []):
+        params += get_style(e, dest_format)
+    params += CONFIG[name].get('all', [])
+    params += CONFIG[name].get(dest_format, [])
 
-
-if len(sys.argv) < 4:
-    print(f"usage: pan <input> <output> <{'|'.join(CONFIGS)}> [additional pandoc args]")
-    sys.exit(1)
-
-source = sys.argv[1]
-dest = sys.argv[2]
-dest_format = os.path.splitext(dest)[1]
-
-style = get_style(sys.argv[3], dest_format)
-additional_args = ' '.join(sys.argv[4:])
+    return params
 
 
-cmd = f"pandoc --quiet -i '{source}' -o '{dest}' {style} {additional_args}"
-proc = subprocess.Popen(shlex.split(cmd))
-proc.communicate()
+def main():
+    if len(sys.argv) < 4:
+        print(f"usage: pan <input> <output> <{'|'.join(CONFIG)}> [additional pandoc args]")
+        sys.exit(1)
+
+    source = sys.argv[1]
+    dest = sys.argv[2]
+    dest_format = os.path.splitext(dest)[1]
+
+    style = ' '.join(get_style(sys.argv[3], dest_format))
+    additional_args = ' '.join(sys.argv[4:])
+
+    cmd = f"pandoc --quiet -i '{source}' -o '{dest}' {style} {additional_args}"
+    proc = subprocess.Popen(shlex.split(cmd))
+    proc.communicate()
+
+
+if __name__ == "__main__":
+    main()
