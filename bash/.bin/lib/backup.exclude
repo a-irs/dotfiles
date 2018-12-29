@@ -56,6 +56,8 @@
 /home/*/.mozilla/firefox/*/storage
 /home/*/.mozilla/firefox/*/webappsstore.sqlite
 /home/*/.thumbnails/*
+/home/*/.cargo/registry
+/home/*/.opam
 /home/*/.vim/plugged
 /home/*/.zcompdump
 /home/*/.zsh_recent-dirs

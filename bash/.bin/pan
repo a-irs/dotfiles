@@ -94,6 +94,5 @@ additional_args = ' '.join(sys.argv[4:])
 
 
 cmd = f"pandoc --quiet -i '{source}' -o '{dest}' {style} {additional_args}"
-print(cmd)
 proc = subprocess.Popen(shlex.split(cmd))
 proc.communicate()
