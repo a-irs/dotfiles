@@ -37,7 +37,7 @@ CONFIG = {
             '-V geometry=top=1in,bottom=1in,left=1.25in,right=1.25in',
             '--pdf-engine=pdflatex',  # or: xelatex
             '-V linestretch=1.12',
-            '-V fontfamily=lmodern',  # or: mathpazo
+            '-V fontfamily=lmodern',
             '-V colorlinks',
             '-V links-as-notes',
             '-V lang=de',
