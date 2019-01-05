@@ -42,4 +42,3 @@ c() {
     done < ~/.zsh_recent-dirs | fzf)
     cd "${dir/\~/$HOME}"
 }
-alias cdr=c

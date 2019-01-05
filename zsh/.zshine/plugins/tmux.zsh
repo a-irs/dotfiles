@@ -2,4 +2,4 @@
 
 [[ $SSH_CONNECTION || "$TMUX" || ! "$commands[tmux]" || $- != *i* || "$TERM" == linux ]] && return
 
-exec tmux # new-session -A -s main
+exec tmux new-session
