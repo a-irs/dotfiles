@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
+# deterministic sort
 export LC_ALL=C
 
 out=~/work/filesgit
 
 lsfiles() { find "$1" -type f | sort -hf > "$out/$(basename "$1").txt"; }
-
-lsfiles /media/data1
-lsfiles /media/data2
-lsfiles /media/data3
-lsfiles /media/data4
+for d in /media/data?; do lsfiles "$d"; done
 
 git -C "$out" add -v --all
 git -C "$out" commit -am "[automatic commit]"

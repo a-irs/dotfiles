@@ -3,6 +3,7 @@
 import json
 import logging
 import os
+import glob
 import re
 
 from typing import List
@@ -37,7 +38,7 @@ class Playlist(object):
         s = f"{self.name}\n"
         s += '-' * len(self.name) + "\n\n* " + \
              '\n* '.join([str(t) for t in self.tracks])
-        return s
+        return s + '\n'
 
 
 def create_tracklist(tracks: dict) -> List[Track]:
@@ -90,10 +91,16 @@ def get_all_playlists(spot: spotipy.Spotify, user: str, exclude_regex: str) -> L
 
 def maintain_git(repo_path: str, playlists: List[Playlist]):
     repo = git.Repo.init(repo_path)
-    files = {
-        "playlists.md": '\n\n'.join([p.markdown() for p in playlists]),
-        "playlists.json": json.dumps([p.dict() for p in playlists], indent=2)
-    }
+
+    # cleanup
+    for f in glob.glob(f'{repo_path}/*.json'):
+        os.unlink(f)
+    for f in glob.glob(f'{repo_path}/*.md'):
+        os.unlink(f)
+
+    # prepare markdown + json
+    files = {f"{p.name.replace('/', '-')}.md": p.markdown() for p in playlists}
+    files.update({f"{p.name.replace('/', '-')}.json": json.dumps(p.dict(), indent=2) + '\n' for p in playlists})
 
     for f, value in files.items():
         logging.info(f"writing {f}...")
@@ -101,7 +108,7 @@ def maintain_git(repo_path: str, playlists: List[Playlist]):
             fd.write(value)
 
     logging.info(f"add and commit git...")
-    repo.git.add(*files.keys())
+    repo.git.add('.')
     try:
         repo.git.commit(m="update playlists")
     except git.exc.GitCommandError:
