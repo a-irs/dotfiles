@@ -1,16 +1,22 @@
 #!/usr/bin/env bash
 
-PATH=/usr/bin
+out=/media/data/videos/internet
+urls=~/youtube
+archive=~/youtube.archive
 
-out=/media/data/videos/youtube
+if ! command -v ffmpeg >/dev/null; then
+    echo "ffmpeg needed"
+    exit 1
+fi
 
-args="--write-description"
-playlist_urls=(
-    'https://www.youtube.com/playlist?list=PL7F1D3966ECF3A588'
-    'https://www.youtube.com/playlist?list=PLjpFFKfSIL4LVHgdqn0mjZ1Oany3en7n3'
-    'https://www.youtube.com/playlist?list=PLjpFFKfSIL4J6z3rCS21YJ5JvUyMZ0XNx'
-)
+while read -r line; do
+    url=$(printf "$line" | cut -d '|' -f 2)
+    playlist=$(printf "$line" | cut -d '|' -f 1)
 
-for url in "${playlist_urls[@]}"; do
-    youtube-dl --restrict-filenames $args -o "$out/%(playlist)s/%(title)s - %(id)s.%(ext)s" -- "$url"
-done
+    youtube-dl \
+        --write-sub --sub-lang en,de --embed-subs --prefer-free-formats \
+        --write-info-json -f bestvideo+bestaudio --restrict-filenames \
+        --download-archive "${archive}_$playlist" --ignore-errors \
+        -o "$out/%(playlist)s/%(title)s - %(id)s.%(ext)s" \
+        -- "$url"
+done < "$urls"

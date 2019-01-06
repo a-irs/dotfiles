@@ -27,11 +27,12 @@ dstatus() {
 echo ""
 sstatus cronie.service
 sstatus docker.service
-sstatus media-data.mount
 sstatus media-data1.mount
 sstatus media-data2.mount
 sstatus media-data3.mount
 sstatus media-data4.mount
+sstatus media-data.mount
+sstatus media-crypto.mount
 echo ""
 pydf --mounts <(grep -v '/var/lib/docker' /proc/mounts)
 echo ""

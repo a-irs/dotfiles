@@ -92,6 +92,7 @@ class Parser():
     def get_langs(self, s: str) -> str:
         normalize = {
             r'\.German\.DL\.': "EN,DE",
+            r'\.German\.(DTS|AC3)(D|HD)?\.DL\.': "EN,DE",
             r'\.German\.': "DE",
         }
         for key, val in normalize.items():
@@ -145,8 +146,8 @@ class Mover():
     def move(self) -> None:
         print(f'{C_BLUE}DEST: {C_RESET}{self.dest}\n')
         self.remove_unneeded([
-            "proof", "Proof", "*-proof.*", "*-Proof.*",
-            "sample", "Sample", "*-sample.*", "*-Sample.*",
+            "proof", "Proof", "*-proof.*", "*-Proof.*", "proof.???"
+            "sample", "Sample", "*-sample.*", "*-Sample.*", "sample.???"
             "*.nzb", "*.url", "*.srr", "*.srs", "*.txt"
         ])
         self.move_video(["*.mkv", "*.mp4", "*.avi", "*.m4v"])
@@ -169,21 +170,16 @@ class Mover():
     def remove_unneeded(self, mask: List[str]) -> None:
         files = self._get_glob(mask)
         for f in files:
-            path = pathlib.Path(f)
-            print(f'{C_RED}{path.name}{C_RESET} deleted.')
-            path.unlink()
+            print(f'{C_RED}{f}{C_RESET} deleted.')
+            shutil.rmtree(f)
 
     def move_nfo(self, mask: List[str]) -> None:
         files = self._get_glob(mask)
 
         dest = self.dest / str('#' + self.release_name)
-        if len(files) == 1:
+        if files:
             source = pathlib.Path(files[0])
             self.do_move(source, dest)
-        elif len(files) > 1:
-            print("ERROR: more than one NFO file found")
-            print(files)
-            sys.exit(1)
         else:
             dest.touch()
 
