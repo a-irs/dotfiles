@@ -9,7 +9,13 @@ if __name__ == "__main__":
 endsnippet
 
 
-snippet "fordict" "iterate over dict" br
+snippet "for" "iterate over dict" br
 for key, value in ${1:dict_obj}.items():
     print(f"{key={value}")
+endsnippet
+
+snippet "class" "class" br
+class ${1:ClassName}(object):
+    def __init__(self):
+        pass
 endsnippet
