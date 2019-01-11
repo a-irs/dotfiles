@@ -28,7 +28,9 @@ keepassxc &
 
 start-pulseaudio-x11 &
 
-# wait for internet, then launch dropbox
+~/.bin/workstats &
+
+# # wait for internet, then launch dropbox
 nohup bash -c "$HOME/.bin/wait-for-host dropbox.com && dropbox-cli start" < /dev/null &> /dev/null &
 
 if [[ $HOSTNAME == x1 || $HOSTNAME == dell ]]; then
@@ -36,10 +38,6 @@ if [[ $HOSTNAME == x1 || $HOSTNAME == dell ]]; then
     # turn off after 5m
     xset dpms 300 300 300
     xss-lock --transfer-sleep-lock -n "notify-send -i /usr/share/icons/Faba/48x48/actions/system-lock-screen.svg -- locking" -- ~/.bin/lock &
-fi
-
-if [[ $HOSTNAME == x1 ]]; then
-    ~/.bin/workstats &
 fi
 
 if [[ $HOSTNAME == desk ]]; then
