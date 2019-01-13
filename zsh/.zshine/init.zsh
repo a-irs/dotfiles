@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+setopt nobeep
+
 zmodload zsh/terminfo
 
 os="$(uname)"

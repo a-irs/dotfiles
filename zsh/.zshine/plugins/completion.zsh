@@ -56,8 +56,9 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
 # ... unless we really want to.
 zstyle '*' single-ignored show
 
+# show '...' while autocomplete loads
 expand-or-complete-with-dots() {
-  echo -n "\e[1;31m...\e[0m"
+  echo -n "\e[1;31m…\e[0m"
   zle expand-or-complete
   zle redisplay
 }
