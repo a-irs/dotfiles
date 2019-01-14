@@ -2,7 +2,7 @@
 
 import sys
 from datetime import datetime
-from glob import glob
+import glob
 import getopt
 
 
@@ -44,35 +44,33 @@ class Config(object):
 
 
 class Package(object):
-    path = ""
-    name = ""
-    size = 0
-    version = ""
-    install_date = 0
-    is_explicit = True
-    is_aur = False
-
     def __init__(self, path: str) -> None:
         """creates a package object from given path,
         e.g. /var/lib/pacman/local/aspell-0.60.6.1-1/desc"""
-        f = open(path, 'r')
-        searchlines = f.readlines()
-        f.close()
+        with open(path, 'r') as fd:
+            lines = fd.readlines()
+
+        self.name = ""
+        self.size = 0
+        self.version = ""
+        self.install_date = 0
+        self.is_explicit = True
+        self.is_aur = False
 
         self.path = path
-        for i, line in enumerate(searchlines):
+        for i, line in enumerate(lines):
             if "%NAME%" in line:
-                self.name = searchlines[i:i + 2][1].strip()
+                self.name = lines[i:i + 2][1].strip()
             elif "%VERSION" in line:
-                self.version = searchlines[i:i + 2][1].strip()
+                self.version = lines[i:i + 2][1].strip()
             elif "%SIZE" in line:
-                self.size = int(searchlines[i:i + 2][1].strip())
+                self.size = int(lines[i:i + 2][1].strip())
             elif "%INSTALLDATE%" in line:
-                self.install_date = int(searchlines[i:i + 2][1].strip())
+                self.install_date = int(lines[i:i + 2][1].strip())
             elif "%VALIDATION%" in line:
-                self.is_aur = searchlines[i:i + 2][1].strip() == "none"
+                self.is_aur = lines[i:i + 2][1].strip() == "none"
             elif "%REASON%" in line:
-                reason = int(searchlines[i:i + 2][1].strip())
+                reason = int(lines[i:i + 2][1].strip())
                 if reason == 1:
                     self.is_explicit = False
 
@@ -80,7 +78,7 @@ class Package(object):
 def main() -> None:
     try:
         opts, args = getopt.getopt(sys.argv[1:], "eadruvsS")
-    except getopt.GetoptError as _:
+    except getopt.GetoptError:
         print_usage()
         sys.exit(2)
 
@@ -111,7 +109,7 @@ def main() -> None:
         print("\n-e and -d cannot be used together")
         sys.exit(2)
 
-    files = glob('/var/lib/pacman/local/*/desc')
+    files = glob.glob('/var/lib/pacman/local/*/desc')
     result = [Package(p) for p in files]
 
     if Config.SORT_SIZE:
