@@ -33,6 +33,14 @@ CONFIG = {
 }
 
 
+def firefox() -> None:
+    for profile in glob.glob(str(pathlib.Path.home() / ".mozilla" / "firefox") + "/*.default"):
+        make_link(
+            pathlib.Path(THIS_DIR) / "home" / "firefox.css",
+            pathlib.Path(profile) / "chrome" / "userChrome.css"
+        )
+
+
 def log(level: str, msg: str) -> None:
     msg = msg.replace(str(pathlib.Path.home()), '~')
     print(f"{level.upper()}: {msg}")
@@ -94,6 +102,8 @@ def main() -> None:
                     remove_link(dest)
 
     os.system("./submodules")
+    firefox()
+
 
 if __name__ == "__main__":
     main()
