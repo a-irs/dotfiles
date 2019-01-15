@@ -20,6 +20,7 @@ def set_dpi(dpi: int) -> None:
     factor = round(dpi / 96, 2)
 
     # prepare
+
     os.system(f"sed --follow-symlinks -i 's|^Xft.dpi: .*|Xft.dpi: {dpi}|' ~/.Xresources")
     os.system("cp -f /usr/share/applications/spotify.desktop ~/.local/share/applications/")
     os.system("cp -f /usr/share/applications/steam.desktop ~/.local/share/applications/")
