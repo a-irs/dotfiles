@@ -3,16 +3,21 @@
 THIS_DIR=$(dirname "$(readlink -f "$0")")
 
 clone() {
-    group_name=$(basename "$(dirname "$1")")
-    repo_name=$(basename "$1")
+    commit=$1 && shift
+    url=$1 && shift
+    dest=$1 && shift
+
+    group_name=$(basename "$(dirname "$url")")
+    repo_name=$(basename "$url")
     target="$THIS_DIR/cache/submodules/$group_name/$repo_name"
 
-    git clone --depth=1 "$1" "$target"
-    ln -sfv --relative -T "$target" "$2"
+    git clone "$@" --single-branch "$url" "$target"
+    git -C "$target" checkout "$commit"
+    ln -sfv --relative -T "$target" "$dest"
 }
 
-clone https://github.com/jocelynmallon/zshmarks ~/.zshine/plugins/zshmarks
-clone https://github.com/zsh-users/zsh-history-substring-search ~/.zshine/plugins/zsh-history-substring-search
-clone https://github.com/junegunn/fzf ~/.zshine/plugins/fzf
-clone https://github.com/lcpz/lain ~/.config/awesome/lain
-clone https://github.com/zdharma/fast-syntax-highlighting ~/.zshine/plugins/fast-syntax-highlighting
+clone master https://github.com/jocelynmallon/zshmarks ~/.zshine/plugins/zshmarks
+clone master https://github.com/zsh-users/zsh-history-substring-search ~/.zshine/plugins/zsh-history-substring-search
+clone 0.17.5 https://github.com/junegunn/fzf ~/.zshine/plugins/fzf
+clone master https://github.com/lcpz/lain ~/.config/awesome/lain
+clone v1.24 https://github.com/zdharma/fast-syntax-highlighting ~/.zshine/plugins/fast-syntax-highlighting
