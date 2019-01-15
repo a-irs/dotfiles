@@ -26,7 +26,7 @@ CONFIG = {
     'vim': ['.vim/autoload/plug.vim', '.vim/snip', '.vimrc'],
     'zathura': ['.config/zathura'],
     'zsh': ['.zprofile', '.zshine', '.zshrc'],
-    'X': ['.local/share/fonts', '.xinitrc', '.Xmodmap', '.gtkrc-2.0', '.config/fontconfig', '.config/gtk-3.0/settings.ini', '.config/gtk-3.0/gtk.css', '.icons/default/index.theme', '.config/user-dirs.dirs', '.config/x1carbon3rd_notebookcheck.com.icc'],
+    'Xorg': ['.local/share/fonts', '.xinitrc', '.Xmodmap', '.gtkrc-2.0', '.config/fontconfig', '.config/gtk-3.0/settings.ini', '.config/gtk-3.0/gtk.css', '.icons/default/index.theme', '.config/user-dirs.dirs', '.config/x1carbon3rd_notebookcheck.com.icc'],
 }
 
 
@@ -81,7 +81,7 @@ def main() -> None:
 
     for package_name, files in CONFIG.items():
         for f in files:
-            src = package_dir / package_name / pathlib.Path(f)
+            src = package_dir / "home" / pathlib.Path(f)
             dest = target_dir / pathlib.Path(f)
             if action == 'rm':
                 remove_link(dest)
