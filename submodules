@@ -11,8 +11,8 @@ clone() {
     repo_name=$(basename "$url")
     target="$THIS_DIR/cache/submodules/$group_name/$repo_name"
 
-    git clone "$@" --single-branch "$url" "$target"
-    git -C "$target" checkout "$commit"
+    git clone "$@" --single-branch "$url" "$target" 2>&1 | grep -Ev 'already exists'
+    git -C "$target" checkout "$commit" 2>&1 | grep -Ev '(Already on|is up to date|HEAD is now)'
     ln -sfv --relative -T "$target" "$dest"
 }
 
