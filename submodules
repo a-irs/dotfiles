@@ -20,4 +20,4 @@ clone master https://github.com/jocelynmallon/zshmarks ~/.zshine/plugins/zshmark
 clone master https://github.com/zsh-users/zsh-history-substring-search ~/.zshine/plugins/zsh-history-substring-search
 clone 0.17.5 https://github.com/junegunn/fzf ~/.zshine/plugins/fzf
 clone master https://github.com/lcpz/lain ~/.config/awesome/lain
-clone v1.24 https://github.com/zdharma/fast-syntax-highlighting ~/.zshine/plugins/fast-syntax-highlighting
+clone v1.28 https://github.com/zdharma/fast-syntax-highlighting ~/.zshine/plugins/fast-syntax-highlighting
