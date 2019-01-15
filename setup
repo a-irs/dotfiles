@@ -93,6 +93,7 @@ def main() -> None:
                 else:
                     remove_link(dest)
 
+    os.system("./submodules")
 
 if __name__ == "__main__":
     main()

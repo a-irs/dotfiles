@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+THIS_DIR=$(dirname "$(readlink -f "$0")")
+
+clone() {
+    group_name=$(basename "$(dirname "$1")")
+    repo_name=$(basename "$1")
+    target="$THIS_DIR/cache/submodules/$group_name/$repo_name"
+
+    git clone --depth=1 "$1" "$target"
+    ln -sfv --relative -T "$target" "$2"
+}
+
+clone https://github.com/jocelynmallon/zshmarks ~/.zshine/plugins/zshmarks
+clone https://github.com/zsh-users/zsh-history-substring-search ~/.zshine/plugins/zsh-history-substring-search
+clone https://github.com/junegunn/fzf ~/.zshine/plugins/fzf
+clone https://github.com/lcpz/lain ~/.config/awesome/lain
+clone https://github.com/zdharma/fast-syntax-highlighting ~/.zshine/plugins/fast-syntax-highlighting
