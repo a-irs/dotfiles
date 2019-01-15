@@ -5,9 +5,6 @@
 # - http://www.masterzen.fr/2009/04/19/in-love-with-zsh-part-one/
 # - https://github.com/paulmillr/dotfiles/blob/master/terminal/completion.sh
 
-# autoselect first completion entry
-setopt menu_complete
-
 # disable flow control keys (ctrl+s, ctrl+q)
 unsetopt flowcontrol
 

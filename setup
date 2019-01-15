@@ -4,6 +4,9 @@ import os
 import pathlib
 import shutil
 import sys
+import glob
+
+THIS_DIR = pathlib.Path(os.path.dirname(os.path.abspath(__file__)))
 
 # 'binary_name': [ 'list', 'of', 'files' ]
 CONFIG = {
@@ -73,7 +76,6 @@ def remove_link(link: pathlib.Path) -> None:
 
 def main() -> None:
     target_dir = pathlib.Path.home()
-    package_dir = pathlib.Path(os.path.dirname(os.path.abspath(__file__)))
 
     action = 'link'
     if len(sys.argv) > 1 and sys.argv[1] == 'rm':
@@ -81,7 +83,7 @@ def main() -> None:
 
     for package_name, files in CONFIG.items():
         for f in files:
-            src = package_dir / "home" / pathlib.Path(f)
+            src = THIS_DIR / "home" / pathlib.Path(f)
             dest = target_dir / pathlib.Path(f".{f}")
             if action == 'rm':
                 remove_link(dest)
