@@ -1,47 +1,67 @@
-unsetopt menu_complete   # do not autoselect the first completion entry
+# TODO: revise commented out entries
+
+# links:
+# - http://zsh.sourceforge.net/Doc/Release/Completion-System.html
+# - http://www.masterzen.fr/2009/04/19/in-love-with-zsh-part-one/
+# - https://github.com/paulmillr/dotfiles/blob/master/terminal/completion.sh
+
+# autoselect first completion entry
+setopt menu_complete
+
+# disable flow control keys (ctrl+s, ctrl+q)
 unsetopt flowcontrol
-setopt auto_menu         # show completion menu on succesive tab press
-setopt complete_in_word
-setopt always_to_end
+
+# setopt complete_in_word
+# setopt always_to_end
 
 zmodload -i zsh/complist
 
 fpath+=($ZSHINE_DIR/completion $ZSHINE_DIR/plugins/zshmarks)
 [[ -d ~/Homebrew/share/zsh/site-functions ]] && fpath+=~/Homebrew/share/zsh/site-functions
 
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-zstyle ':completion:*' list-colors ''
+# zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+# zstyle ':completion:*' list-colors ''
 
-# should this be in keybindings?
-bindkey -M menuselect '^o' accept-and-infer-next-history
+# # should this be in keybindings?
+# bindkey -M menuselect '^o' accept-and-infer-next-history
 
-zstyle ':completion:*:*:*:*:*' menu select
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
-zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+# in completion menu, show progress bar on bottom
+zstyle ':completion:*' select-prompt %S%p%s
+
+# show selection menu
+zstyle ':completion:*' menu select
+
+# verbose output when no match found
+zstyle ':completion:*:warnings' format "%B%F{yellow}no match for:%f%b %d"
+
+# separate matches into categories (files, aliases, ...)
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' format '%B%F{magenta}--- %d%f%b'
+
+# show dirs before files (like ls --group-directories-first)
+# not working with ls though it seems
+zstyle ':completion:*' list-dirs-first true
+
+# rm, diff, ...: disable autocompletion of files if they are already in argument list
+zstyle ':completion:*:(rm|kill|diff):*' ignore-line other
+zstyle ':completion:*:rm:*' file-patterns '*:all-files'
+
+# treat foo//bar as foo/bar instead of foo/*/bar when completing
+zstyle ':completion:*' squeeze-slashes true
 
 # disable named-directories autocompletion
-zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
-cdpath=(.)
+# zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
+# cdpath=(.)
 
-# use /etc/hosts and known_hosts for hostname completion
-#[ -r /etc/ssh/ssh_known_hosts ] && _global_ssh_hosts=(${${${${(f)"$(</etc/ssh/ssh_known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _global_ssh_hosts=()
-#[ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
-[ -r ~/.ssh/config ] && _ssh_config=($(cat ~/.ssh/config | sed -ne 's/Host[=\t ]//p')) || _ssh_config=()
-#[ -r /etc/hosts ] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
-hosts=(
-  "$_ssh_config[@]"
-  #"$_global_ssh_hosts[@]"
-  #"$_ssh_hosts[@]"
-  #"$_etc_hosts[@]"
-  #"$HOST"
-  localhost
-)
-zstyle ':completion:*:hosts' hosts $hosts
+# use ssh_config for hostname completion
+[[ -r ~/.ssh/config ]] && _ssh_config=($(cat ~/.ssh/config | sed -ne 's/Host[=\t ]//p')) || _ssh_config=()
+zstyle ':completion:*:hosts' hosts "$_ssh_config[@]"
+
 zstyle ':completion:*' users off
 
-# Use caching so that commands like apt and dpkg complete are useable
-zstyle ':completion::complete:*' use-cache 1
-zstyle ':completion::complete:*' cache-path /tmp
+# not working?
+# # Use caching so that commands like apt and dpkg complete are useable
+zstyle ':completion:*' use-cache true
 
 # Don't complete uninteresting users
 zstyle ':completion:*:*:*:users' ignored-patterns \
