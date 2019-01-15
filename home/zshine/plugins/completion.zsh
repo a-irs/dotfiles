@@ -16,7 +16,7 @@ zmodload -i zsh/complist
 fpath+=($ZSHINE_DIR/completion $ZSHINE_DIR/plugins/zshmarks)
 [[ -d ~/Homebrew/share/zsh/site-functions ]] && fpath+=~/Homebrew/share/zsh/site-functions
 
-# zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 # zstyle ':completion:*' list-colors ''
 
 # # should this be in keybindings?
