@@ -1,23 +1,11 @@
 .DS_Store
 .netrwhist
-Package Control.cache
-Package Control.last-run
-password.txt
-i_opener_history.sublime-settings
-*/*Colorcode*.tmTheme
-*-ca-bundle
-config/sublime-text-3/Packages/User/Color Highlighter
-config/sublime-text-3/Packages/User/oscrypto-ca-bundle.crt
 *.swp
 
 *.py[cod]
 build
 cache
 
-client.key
-GitHub.sublime-settings
-**/SublimeLinter/*.tmTheme
-
-vim/.vim/autoload/plug.vim.old
+plug.vim.old
 
 .uuid

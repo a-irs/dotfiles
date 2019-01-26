@@ -4,31 +4,29 @@ import os
 import pathlib
 import shutil
 import sys
+import glob
+import json
 
-# 'binary_name': [ 'list', 'of', 'files' ]
-CONFIG = {
-    # TODO: 'firefox': ['.mozilla/firefox/*.default/chrome/userChrome.css']
-    'awesome': ['.config/awesome'],
-    'bash': ['.bashrc', '.bin'],
-    'compton': ['.config/compton.conf'],
-    'git': ['.gitconfig'],
-    'gpg': ['.gnupg/gpg.conf'],
-    'htop': ['.config/htop'],
-    'ipython': ['.ipython/profile_default/ipython_config.py'],
-    'mpv': ['.config/mpv'],
-    'nvim': ['.config/nvim/init.vim'],
-    'ranger': ['.config/ranger/rc.conf', '.config/ranger/scope.sh'],
-    'redshift': ['.config/redshift.conf'],
-    'ssh': ['.ssh/config', '.hushlogin'],
-    'subl3': ['.config/sublime-text-3/Packages/User'],
-    'termite': ['.config/termite'],
-    'tmux': ['.tmux.conf'],
-    'vim': ['.vim/autoload/plug.vim', '.vim/snip', '.vimrc'],
-    'zathura': ['.config/zathura'],
-    'zsh': ['.zprofile', '.zshine', '.zshrc'],
-    'X': ['.local/share/fonts', '.xinitrc', '.Xmodmap', '.gtkrc-2.0', '.config/fontconfig', '.config/gtk-3.0/settings.ini', '.config/gtk-3.0/gtk.css', '.icons/default/index.theme', '.config/user-dirs.dirs', '.config/x1carbon3rd_notebookcheck.com.icc'],
-}
+THIS_DIR = pathlib.Path(os.path.dirname(os.path.abspath(__file__)))
+CONFIG = json.loads(open(THIS_DIR / "setup.json").read())
 
+def firefox() -> None:
+    for profile in glob.glob(str(pathlib.Path.home() / ".mozilla" / "firefox") + "/*.default"):
+        make_link(
+            pathlib.Path(THIS_DIR) / "home" / "firefox.css",
+            pathlib.Path(profile) / "chrome" / "userChrome.css"
+        )
+
+def git_clone(url: str, version: str, path: pathlib.Path):
+    group_name = os.path.basename(os.path.dirname(url))
+    repo_name = os.path.basename(url)
+    target = pathlib.Path(THIS_DIR / f"cache/submodules/{group_name}/{repo_name}")
+
+    # TODO: improve
+    os.system(f'git clone --single-branch "{url}" "{target}" 2>&1 | grep -Ev "already exists"')
+    os.system(f'git -C "{target}" checkout "{version}" 2>&1 | grep -Ev "(Already on|is up to date|HEAD is now)"')
+
+    make_link(target, path)
 
 def log(level: str, msg: str) -> None:
     msg = msg.replace(str(pathlib.Path.home()), '~')
@@ -73,16 +71,15 @@ def remove_link(link: pathlib.Path) -> None:
 
 def main() -> None:
     target_dir = pathlib.Path.home()
-    package_dir = pathlib.Path(os.path.dirname(os.path.abspath(__file__)))
 
     action = 'link'
     if len(sys.argv) > 1 and sys.argv[1] == 'rm':
         action = 'rm'
 
-    for package_name, files in CONFIG.items():
+    for package_name, files in CONFIG['files'].items():
         for f in files:
-            src = package_dir / package_name / pathlib.Path(f)
-            dest = target_dir / pathlib.Path(f)
+            src = THIS_DIR / "home" / pathlib.Path(f)
+            dest = target_dir / pathlib.Path(f".{f}")
             if action == 'rm':
                 remove_link(dest)
             else:
@@ -90,6 +87,15 @@ def main() -> None:
                     make_link(src, dest)
                 else:
                     remove_link(dest)
+
+    for url, item in CONFIG['modules'].items():
+        dest = pathlib.Path(os.path.expanduser(item['path']))
+        if action == 'rm':
+            remove_link(dest)
+        else:
+            git_clone(url, item['version'], dest)
+
+    firefox()
 
 
 if __name__ == "__main__":

@@ -1,0 +1,46 @@
+{
+    "files": {
+        "awesome": [ "config/awesome" ],
+        "bash": [ "bashrc", "bin" ],
+        "compton": [ "config/compton.conf" ],
+        "git": [ "gitconfig" ],
+        "gpg": [ "gnupg/gpg.conf" ],
+        "htop": [ "config/htop" ],
+        "ipython": [ "ipython/profile_default/ipython_config.py" ],
+        "mpv": [ "config/mpv" ],
+        "nvim": [ "config/nvim/init.vim" ],
+        "ranger": [ "config/ranger/rc.conf", "config/ranger/scope.sh" ],
+        "redshift": [ "config/redshift.conf" ],
+        "ssh": [ "ssh/config", "hushlogin" ],
+        "subl3": [ "config/sublime-text-3/Packages/User" ],
+        "termite": [ "config/termite" ],
+        "tmux": [ "tmux.conf" ],
+        "vim": [ "vim/autoload/plug.vim", "vim/snip", "vimrc" ],
+        "zathura": [ "config/zathura" ],
+        "zsh": [ "zprofile", "zshine", "zshrc" ],
+        "Xorg": [ "local/share/fonts", "xinitrc", "Xmodmap", "gtkrc-2.0", "config/fontconfig", "config/gtk-3.0/settings.ini", "config/gtk-3.0/gtk.css", "icons/default/index.theme", "config/user-dirs.dirs", "config/x1carbon3rd_notebookcheck.com.icc" ]
+    },
+
+    "modules": {
+        "https://github.com/jocelynmallon/zshmarks": {
+            "version": "master",
+            "path": "~/.zshine/plugins/zshmarks"
+        },
+        "https://github.com/zsh-users/zsh-history-substring-search": {
+            "version": "master",
+            "path": "~/.zshine/plugins/zsh-history-substring-search"
+        },
+        "https://github.com/junegunn/fzf": {
+            "version": "0.17.5",
+            "path": "~/.zshine/plugins/fzf"
+        },
+        "https://github.com/lcpz/lain": {
+            "version": "master",
+            "path": "~/.config/awesome/lain"
+        },
+        "https://github.com/zdharma/fast-syntax-highlighting": {
+            "version": "v1.28",
+            "path": "~/.zshine/plugins/fast-syntax-highlighting"
+        }
+    }
+}

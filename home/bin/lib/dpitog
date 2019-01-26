@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+
+from pathlib import Path
+import re
+import os
+import time
+import math
+
+# warning: Mozilla Firefox only supports .5 steps properly
+# (has to be set in about:config manually otherwise)
+DPI_FACTORS = {
+    "desk": [1.0, 1.5, 2.0, 3.0, 4.0],
+    "x1": [1.5, 1.75, 2.0]
+}
+
+DPIS = DPI_FACTORS.get(os.uname()[1])
+
+
+def set_dpi(dpi: int) -> None:
+    factor = round(dpi / 96, 2)
+
+    # prepare
+
+    os.system(f"sed --follow-symlinks -i 's|^Xft.dpi: .*|Xft.dpi: {dpi}|' ~/.Xresources")
+    os.system("cp -f /usr/share/applications/spotify.desktop ~/.local/share/applications/")
+    os.system("cp -f /usr/share/applications/steam.desktop ~/.local/share/applications/")
+    os.system(f"sed -i 's|Exec=spotify .*|Exec=spotify --force-device-scale-factor={factor} %U|' ~/.local/share/applications/spotify.desktop")
+
+    # steam does only support whole integers, so round up
+    os.system(f"sed -i 's|Exec=/usr/bin/steam-runtime .*|Exec=env GDK_SCALE={math.ceil(factor)} /usr/bin/steam-runtime %U|' ~/.local/share/applications/steam.desktop")
+
+    # apply changes
+    os.system("xrdb -merge ~/.Xresources")
+    os.system("echo 'awesome.restart()' | awesome-client")
+    time.sleep(0.2)
+    os.system(f"notify-send dpitog 'switched to DPI = {dpi} (x{factor})'")
+
+
+def get_current_dpi() -> int:
+    with open(Path.home() / ".Xresources", 'r') as f:
+        match = re.findall(r'^Xft.dpi:\s+(\d+)$', f.read(), re.MULTILINE)
+        return int(match[0]) if len(match) > 0 else 0
+
+
+def main() -> None:
+    current_dpi = get_current_dpi()
+
+    dpis = [int(i * 96) for i in DPIS]
+    for dpi in sorted(dpis):
+        if dpi > current_dpi:
+            set_dpi(dpi)
+            return
+    set_dpi(dpis[0])
+
+
+if __name__ == "__main__":
+    main()
