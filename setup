@@ -17,13 +17,13 @@ def firefox() -> None:
             pathlib.Path(profile) / "chrome" / "userChrome.css"
         )
 
-def git_clone(url: str, version: str, path: pathlib.Path):
-    group_name = os.path.basename(os.path.dirname(url))
-    repo_name = os.path.basename(url)
-    target = pathlib.Path(THIS_DIR / f"cache/submodules/{group_name}/{repo_name}")
+def git_clone(name: str, version: str, path: pathlib.Path, prefix="https://github.com"):
+    group_name = os.path.basename(os.path.dirname(name))
+    repo_name = os.path.basename(name)
+    target = pathlib.Path(THIS_DIR / f"cache/modules/{group_name}/{repo_name}")
 
     # TODO: improve
-    os.system(f'git clone --single-branch "{url}" "{target}" 2>&1 | grep -Ev "already exists"')
+    os.system(f'git clone --single-branch "{prefix}/{name}" "{target}" 2>&1 | grep -Ev "already exists"')
     os.system(f'git -C "{target}" checkout "{version}" 2>&1 | grep -Ev "(Already on|is up to date|HEAD is now)"')
 
     make_link(target, path)
@@ -88,12 +88,19 @@ def main() -> None:
                 else:
                     remove_link(dest)
 
-    for url, item in CONFIG['modules'].items():
-        dest = pathlib.Path(os.path.expanduser(item['path']))
-        if action == 'rm':
-            remove_link(dest)
-        else:
-            git_clone(url, item['version'], dest)
+    for package_name, modules in CONFIG['modules'].items():
+        for key, path in modules.items():
+            url = key.split(':')[0]
+            version = key.split(':')[-1]
+            dest = pathlib.Path(os.path.expanduser(path))
+
+            if shutil.which(package_name):
+                if action == 'rm':
+                    remove_link(dest)
+                else:
+                    git_clone(url, version, dest)
+            else:
+                remove_link(dest)
 
     firefox()
 

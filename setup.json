@@ -22,25 +22,14 @@
     },
 
     "modules": {
-        "https://github.com/jocelynmallon/zshmarks": {
-            "version": "master",
-            "path": "~/.zshine/plugins/zshmarks"
+        "zsh": {
+            "jocelynmallon/zshmarks:master": "~/.zshine/plugins/zshmarks",
+            "zsh-users/zsh-history-substring-search:master": "~/.zshine/plugins/zsh-history-substring-search",
+            "junegunn/fzf:0.17.5": "~/.zshine/plugins/fzf",
+            "zdharma/fast-syntax-highlighting:v1.28": "~/.zshine/plugins/fast-syntax-highlighting"
         },
-        "https://github.com/zsh-users/zsh-history-substring-search": {
-            "version": "master",
-            "path": "~/.zshine/plugins/zsh-history-substring-search"
-        },
-        "https://github.com/junegunn/fzf": {
-            "version": "0.17.5",
-            "path": "~/.zshine/plugins/fzf"
-        },
-        "https://github.com/lcpz/lain": {
-            "version": "master",
-            "path": "~/.config/awesome/lain"
-        },
-        "https://github.com/zdharma/fast-syntax-highlighting": {
-            "version": "v1.28",
-            "path": "~/.zshine/plugins/fast-syntax-highlighting"
+        "awesome": {
+            "lcpz/lain:master": "~/.config/awesome/lain"
         }
     }
 }
