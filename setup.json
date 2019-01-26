@@ -23,13 +23,13 @@
 
     "modules": {
         "zsh": {
-            "jocelynmallon/zshmarks:master": "~/.zshine/plugins/zshmarks",
-            "zsh-users/zsh-history-substring-search:master": "~/.zshine/plugins/zsh-history-substring-search",
-            "junegunn/fzf:0.17.5": "~/.zshine/plugins/fzf",
-            "zdharma/fast-syntax-highlighting:v1.28": "~/.zshine/plugins/fast-syntax-highlighting"
+            "jocelynmallon/zshmarks:master": "zshine/plugins/zshmarks",
+            "zsh-users/zsh-history-substring-search:master": "zshine/plugins/zsh-history-substring-search",
+            "junegunn/fzf:0.17.5": "zshine/plugins/fzf",
+            "zdharma/fast-syntax-highlighting:v1.28": "zshine/plugins/fast-syntax-highlighting"
         },
         "awesome": {
-            "lcpz/lain:master": "~/.config/awesome/lain"
+            "lcpz/lain:master": "config/awesome/lain"
         }
     }
 }
