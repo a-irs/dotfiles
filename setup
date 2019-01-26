@@ -10,7 +10,6 @@ THIS_DIR = pathlib.Path(os.path.dirname(os.path.abspath(__file__)))
 
 # 'binary_name': [ 'list', 'of', 'files' ]
 CONFIG = {
-    # TODO: 'firefox': ['.mozilla/firefox/*.default/chrome/userChrome.css']
     'awesome': ['config/awesome'],
     'bash': ['bashrc', 'bin'],
     'compton': ['config/compton.conf'],
@@ -32,6 +31,28 @@ CONFIG = {
     'Xorg': ['local/share/fonts', 'xinitrc', 'Xmodmap', 'gtkrc-2.0', 'config/fontconfig', 'config/gtk-3.0/settings.ini', 'config/gtk-3.0/gtk.css', 'icons/default/index.theme', 'config/user-dirs.dirs', 'config/x1carbon3rd_notebookcheck.com.icc'],
 }
 
+SUBMODULES = {
+    "https://github.com/jocelynmallon/zshmarks": {
+        "version": "master",
+        "path": "~/.zshine/plugins/zshmarks"
+    },
+    "https://github.com/zsh-users/zsh-history-substring-search": {
+        "version": "master",
+        "path": "~/.zshine/plugins/zsh-history-substring-search"
+    },
+    "https://github.com/junegunn/fzf": {
+        "version": "0.17.5",
+        "path": "~/.zshine/plugins/fzf"
+    },
+    "https://github.com/lcpz/lain": {
+        "version": "master",
+        "path": "~/.config/awesome/lain"
+    },
+    "https://github.com/zdharma/fast-syntax-highlighting": {
+        "version": "v1.28",
+        "path": "~/.zshine/plugins/fast-syntax-highlighting"
+    }
+}
 
 def firefox() -> None:
     for profile in glob.glob(str(pathlib.Path.home() / ".mozilla" / "firefox") + "/*.default"):
@@ -40,6 +61,16 @@ def firefox() -> None:
             pathlib.Path(profile) / "chrome" / "userChrome.css"
         )
 
+def git_clone(url: str, version: str, path: pathlib.Path):
+    group_name = os.path.basename(os.path.dirname(url))
+    repo_name = os.path.basename(url)
+    target = pathlib.Path(THIS_DIR / f"cache/submodules/{group_name}/{repo_name}")
+
+    # TODO: improve
+    os.system(f'git clone --single-branch "{url}" "{target}" 2>&1 | grep -Ev "already exists"')
+    os.system(f'git -C "{target}" checkout "{version}" 2>&1 | grep -Ev "(Already on|is up to date|HEAD is now)"')
+
+    make_link(target, path)
 
 def log(level: str, msg: str) -> None:
     msg = msg.replace(str(pathlib.Path.home()), '~')
@@ -101,7 +132,13 @@ def main() -> None:
                 else:
                     remove_link(dest)
 
-    os.system("./submodules")
+    for url, item in SUBMODULES.items():
+        dest = pathlib.Path(os.path.expanduser(item['path']))
+        if action == 'rm':
+            remove_link(dest)
+        else:
+            git_clone(url, item['version'], dest)
+
     firefox()
 
 

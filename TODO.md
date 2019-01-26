@@ -1,1 +1,0 @@
-- `submodules` as python script

@@ -26,7 +26,7 @@ make_screenshot() {
         icon=lock_white.png
     fi
 
-    colors=(-modulate 50,50,100)  # brightness, saturation, hue (in percent)
+    colors=(-modulate 75,60,100)  # brightness, saturation, hue (in percent)
     effect=(-scale 4% -scale 2510%)  # first*second has to equal 10000 (or just over it, to avoid some glitches)
 
     convert "$image" "${colors[@]}" "${effect[@]}" -gravity center "$HOME/.bin/lib/$icon" -composite "$image"

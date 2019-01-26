@@ -183,13 +183,14 @@ let g:ale_linters = { 'python': ['flake8', 'mypy'] }
 " E501 = 80 characters
 " W391 = blank line at end of file
 " E129 = https://github.com/PyCQA/pycodestyle/issues/474
-let g:ale_python_flake8_options = '--ignore=E501,W391,E129'
+" E302 = expected 2 blank lines, found 1
+let g:ale_python_flake8_options = '--ignore=E501,W391,E129,E302'
 let g:ale_python_mypy_options = '--cache-dir /tmp/mypy'
 let g:ale_sign_warning = "\u26A0"
 let g:ale_sign_style_warning = "\u26A0"
 let g:ale_sign_error = "\u2717"
 let g:ale_sign_style_error = "\u2717"
-let g:ale_echo_msg_format = '[%linter%] %severity%: %s'
+let g:ale_echo_msg_format = '[%linter%] %severity%% code%: %s'
 highlight ALEWarningSign guibg=NONE guifg=yellow
 highlight ALEErrorSign guibg=NONE guifg=red
 
