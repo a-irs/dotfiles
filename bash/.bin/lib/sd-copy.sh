@@ -5,7 +5,7 @@ log() {
 }
 
 SRC=/media/sd-card
-DEST=/media/data/photos
+DEST=/media/data4/photos
 
 log "starting"
 

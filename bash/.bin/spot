@@ -124,7 +124,9 @@ def main() -> None:
 
     # cache_path is not working at the moment for prompt_for_user_token(),
     # so set pwd to something persistent instead of shell-pwd
-    os.chdir(os.path.expanduser("~/.local/share"))
+    # FIXME: not working in cron?
+    # os.chdir(os.path.expanduser("~/.local/share"))
+    os.chdir("/root/.local/share")
     TOKEN = spotipy.util.prompt_for_user_token(
         username=env_user,
         scope='user-library-read',

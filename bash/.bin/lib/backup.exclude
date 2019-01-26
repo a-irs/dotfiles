@@ -86,6 +86,7 @@
 /boot/intel-ucode.img
 /boot/vmlinuz-linux
 
+/srv/docker/grafana/sessions
 /srv/docker/graphite/storage
 /srv/docker/influxdb
 /srv/docker/nzbget/drop
