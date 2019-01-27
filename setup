@@ -17,6 +17,21 @@ def firefox() -> None:
             pathlib.Path(profile) / "chrome" / "userChrome.css"
         )
 
+def template(src, dest):
+    with open(src, 'r') as fd_s:
+        with open(dest, 'w') as fd_d:
+            for l in fd_s.readlines():
+                if l.startswith("||"):
+                    split = l.split("||")
+                    hostname = split[1]
+                    rest = "||".join(split[2:])
+                    if os.uname()[1].lower() == hostname.lower():
+                        fd_d.write(rest)
+                else:
+                    fd_d.write(l)
+    return dest
+
+
 def git_clone(name: str, version: str, path: pathlib.Path, prefix="https://github.com"):
     group_name = os.path.basename(os.path.dirname(name))
     repo_name = os.path.basename(name)
@@ -35,8 +50,14 @@ def log(level: str, msg: str) -> None:
 
 def make_link(src: pathlib.Path, dest: pathlib.Path) -> None:
     if not src.exists():
-        log("error", f"link target does not exist: {src}")
-        return
+        tpl = pathlib.Path(str(src) + ".tpl")
+        if not tpl.exists():
+            log("error", f"link target does not exist: {src}")
+            return
+        else:
+            target = pathlib.Path(THIS_DIR / f"cache/template/{dest.name}")
+            target.parent.mkdir(parents=True, exist_ok=True)
+            src = template(tpl, target)
 
     if dest.is_symlink():
         rel_src = os.path.relpath(src, dest.parent)
