@@ -11,7 +11,7 @@ outdated() {
 [[ -d ~/Documents ]] && alias todo="vim + ~/Documents/todo.taskpaper"
 [[ -d ~/doc ]] && alias todo="vim + ~/doc/todo.taskpaper"
 
-mac() { printf "%s" "$GREEN" && curl -q "http://api.macvendors.com/$1" && printf "\n"; }
+mac() { curl -q "https://api.macvendors.com/${1:0:8}" && printf "\n"; }
 
 tar-tar() { tar cvaf "$(basename "$PWD")".tar -- "$@"; }
 tar-gz()  { tar cvaf "$(basename "$PWD")".tar.gz -- "$@"; }
@@ -20,7 +20,7 @@ tar-bz()  { tar cvaf "$(basename "$PWD")".tar.bz2 -- "$@"; }
 tar-lz()  { tar cvaf "$(basename "$PWD")".tar.lzma -- "$@"; }
 tar-zip() { zip -r "$(basename "$PWD")".zip -- "$@"; }
 
-rotate() {
+rotate-log() {
     [[ "$1" ]] || return 1
     local outname="$1.$(date +'%F_%T')"
     mv -v "$1" "$outname" && bzip2 -v "$outname"
@@ -80,14 +80,6 @@ wait_until_file_does_not_exist() {
         sleep 0.1
     done
     echo "$1 does not exist any more"
-}
-
-count_files() {
-    find "$@" -maxdepth 1 -type f | wc -l
-}
-
-count_files_rec() {
-    find "$@" -type f | wc -l
 }
 
 dl() {
@@ -159,7 +151,6 @@ p() { for f in "$@"; do printf "\n%s\n\n" "=========== $f" && preview "$f"; done
 [[ "$commands[sudo]" ]] && alias sudo='sudo '
 [[ "$commands[journalctl]" ]] && alias journalctl='sudo journalctl'
 [[ "$commands[pydf]" ]] && alias df='pydf'
-[[ "$commands[rg]" ]] && alias rg='rg -uu'
 [[ "$commands[fd]" ]] && alias fd='fd --hidden --no-ignore'
 alias cp='cp -i'
 alias ln='ln -i'
@@ -187,7 +178,6 @@ alias lt="$ls -lhtr"
 alias lS="$ls -lhSr"
 
 [[ "$commands[python]" ]] && alias http-share='python -m http.server'
-[[ "$commands[watch]" ]] && alias ddstatus='sudo watch --interval=1 "pkill -USR1 dd"'
 [[ "$commands[dropbox-cli]" ]] && alias ds='dropbox-cli status'
 [[ "$commands[dropbox-cli]" ]] && alias dstop='dropbox-cli stop'
 [[ "$commands[dropbox-cli]" ]] && alias dstart='dropbox-cli start'
@@ -206,7 +196,6 @@ fi
 [[ "$commands[youtube-dl]" ]] && alias yt-audio='noglob youtube-dl -f bestaudio -x -o "%(title)s.%(ext)s"'
 [[ "$commands[youtube-dl]" ]] && alias yt='noglob youtube-dl --write-sub --sub-lang en,de --embed-subs --prefer-free-formats --write-info-json -f bestvideo+bestaudio'
 [[ "$commands[journalctl]" ]] && alias j='sudo journalctl'
-[[ "$commands[docker]" ]] && alias d='docker'
 [[ "$commands[reflector]" ]] && alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose && sudo pacman -Syy"
 
 
