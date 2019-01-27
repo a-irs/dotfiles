@@ -15,12 +15,15 @@ def log(level: str, msg: str) -> None:
     print(f"{level.upper()}: {msg}")
 
 
-def handle_firefox(path) -> None:
+def handle_firefox(path, remove=False) -> None:
     for profile in glob.glob(str(Path.home() / ".mozilla" / "firefox") + "/*.default"):
-        make_link(
-            Path(THIS_DIR) / path,
-            Path(profile) / "chrome" / "userChrome.css"
-        )
+        if remove:
+            remove_link(Path(profile) / "chrome" / "userChrome.css")
+        else:
+            make_link(
+                Path(THIS_DIR) / path,
+                Path(profile) / "chrome" / "userChrome.css"
+            )
 
 
 def handle_module(name: str, version: str, path: Path, prefix="https://github.com"):
@@ -76,6 +79,7 @@ def main() -> None:
     if len(sys.argv) > 1 and sys.argv[1] == 'rm':
         action = 'rm'
 
+    # HOME FILES
     for package_name, files in CONFIG['files'].items():
         for f in files:
             src = THIS_DIR / "home" / Path(f)
@@ -88,6 +92,7 @@ def main() -> None:
                 else:
                     remove_link(dest)
 
+    # MODULES
     for package_name, modules in CONFIG['modules'].items():
         for key, path in modules.items():
             if shutil.which(package_name):
@@ -97,7 +102,11 @@ def main() -> None:
                     dest = THIS_DIR / "home" / Path(os.path.expanduser(path))
                     handle_module(url, version, dest)
 
-    handle_firefox("home/firefox.css")
+    # FIREFOX
+    if action == 'link':
+        handle_firefox("home/firefox.css")
+    elif action == 'rm':
+        handle_firefox("home/firefox.css", remove=True)
 
 
 if __name__ == "__main__":
