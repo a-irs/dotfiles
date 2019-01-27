@@ -5,10 +5,9 @@ from pathlib import Path
 import shutil
 import sys
 import glob
-import json
+import configparser
 
 THIS_DIR = Path(os.path.dirname(os.path.abspath(__file__)))
-CONFIG = json.loads(open(THIS_DIR / "setup.json").read())
 
 def log(level: str, msg: str) -> None:
     msg = msg.replace(str(Path.home()), '~')
@@ -100,9 +99,12 @@ def main() -> None:
     if len(sys.argv) > 1 and sys.argv[1] == 'rm':
         action = 'rm'
 
+    config = configparser.ConfigParser()
+    config.read(THIS_DIR / "setup.conf")
+
     # HOME FILES
-    for package_name, files in CONFIG['files'].items():
-        for f in files:
+    for package_name, files in config['files'].items():
+        for f in files.split(', '):
             src = THIS_DIR / "home" / Path(f)
             dest = Path.home() / Path(f".{f}")
             if action == 'rm':
@@ -114,12 +116,16 @@ def main() -> None:
                     remove_link(dest)
 
     # MODULES
-    for package_name, modules in CONFIG['modules'].items():
-        for key, path in modules.items():
+    for section in [s for s in config.sections() if s.startswith("modules.")]:
+        package_name = '.'.join(section.split('.')[1:])
+        for key, path in config[section].items():
             if shutil.which(package_name):
                 if action == 'link':
-                    url = key.split(':')[0]
-                    version = key.split(':')[-1]
+                    split = key.split('@')
+                    url = key.split('@')[0]
+                    version = 'master'
+                    if len(split) > 1:
+                        version = key.split('@')[-1]
                     dest = THIS_DIR / "home" / Path(os.path.expanduser(path))
                     handle_module(url, version, dest)
 
