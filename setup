@@ -1,21 +1,30 @@
 #!/usr/bin/env python3
 
 import os
-import pathlib
+from pathlib import Path
 import shutil
 import sys
 import glob
 import json
 
-THIS_DIR = pathlib.Path(os.path.dirname(os.path.abspath(__file__)))
+THIS_DIR = Path(os.path.dirname(os.path.abspath(__file__)))
 CONFIG = json.loads(open(THIS_DIR / "setup.json").read())
 
-def firefox() -> None:
-    for profile in glob.glob(str(pathlib.Path.home() / ".mozilla" / "firefox") + "/*.default"):
-        make_link(
-            pathlib.Path(THIS_DIR) / "home" / "firefox.css",
-            pathlib.Path(profile) / "chrome" / "userChrome.css"
-        )
+def log(level: str, msg: str) -> None:
+    msg = msg.replace(str(Path.home()), '~')
+    print(f"{level.upper()}: {msg}")
+
+
+def handle_firefox(path, remove=False) -> None:
+    for profile in glob.glob(str(Path.home() / ".mozilla" / "firefox") + "/*.default"):
+        if remove:
+            remove_link(Path(profile) / "chrome" / "userChrome.css")
+        else:
+            make_link(
+                Path(THIS_DIR) / path,
+                Path(profile) / "chrome" / "userChrome.css"
+            )
+
 
 def template(src, dest):
     with open(src, 'r') as fd_s:
@@ -32,10 +41,10 @@ def template(src, dest):
     return dest
 
 
-def git_clone(name: str, version: str, path: pathlib.Path, prefix="https://github.com"):
+def handle_module(name: str, version: str, path: Path, prefix="https://github.com"):
     group_name = os.path.basename(os.path.dirname(name))
     repo_name = os.path.basename(name)
-    target = pathlib.Path(THIS_DIR / f"cache/modules/{group_name}/{repo_name}")
+    target = Path(THIS_DIR / f"cache/modules/{group_name}/{repo_name}")
 
     # TODO: improve
     os.system(f'git clone --single-branch "{prefix}/{name}" "{target}" 2>&1 | grep -Ev "already exists"')
@@ -43,19 +52,15 @@ def git_clone(name: str, version: str, path: pathlib.Path, prefix="https://githu
 
     make_link(target, path)
 
-def log(level: str, msg: str) -> None:
-    msg = msg.replace(str(pathlib.Path.home()), '~')
-    print(f"{level.upper()}: {msg}")
 
-
-def make_link(src: pathlib.Path, dest: pathlib.Path) -> None:
+def make_link(src: Path, dest: Path) -> None:
     if not src.exists():
-        tpl = pathlib.Path(str(src) + ".tpl")
+        tpl = Path(str(src) + ".tpl")
         if not tpl.exists():
             log("error", f"link target does not exist: {src}")
             return
         else:
-            target = pathlib.Path(THIS_DIR / f"cache/template/{dest.name}")
+            target = Path(THIS_DIR / f"cache/template/{dest.name}")
             target.parent.mkdir(parents=True, exist_ok=True)
             src = template(tpl, target)
 
@@ -75,7 +80,7 @@ def make_link(src: pathlib.Path, dest: pathlib.Path) -> None:
         log("info", f"link {dest} -> {src}")
 
 
-def remove_link(link: pathlib.Path) -> None:
+def remove_link(link: Path) -> None:
     if link.is_symlink():
         link.unlink()
         log("info", f"remove link {link}")
@@ -95,10 +100,11 @@ def main() -> None:
     if len(sys.argv) > 1 and sys.argv[1] == 'rm':
         action = 'rm'
 
+    # HOME FILES
     for package_name, files in CONFIG['files'].items():
         for f in files:
-            src = THIS_DIR / "home" / pathlib.Path(f)
-            dest = pathlib.Path.home() / pathlib.Path(f".{f}")
+            src = THIS_DIR / "home" / Path(f)
+            dest = Path.home() / Path(f".{f}")
             if action == 'rm':
                 remove_link(dest)
             else:
@@ -107,16 +113,21 @@ def main() -> None:
                 else:
                     remove_link(dest)
 
+    # MODULES
     for package_name, modules in CONFIG['modules'].items():
         for key, path in modules.items():
             if shutil.which(package_name):
                 if action == 'link':
                     url = key.split(':')[0]
                     version = key.split(':')[-1]
-                    dest = THIS_DIR / "home" / pathlib.Path(os.path.expanduser(path))
-                    git_clone(url, version, dest)
+                    dest = THIS_DIR / "home" / Path(os.path.expanduser(path))
+                    handle_module(url, version, dest)
 
-    firefox()
+    # FIREFOX
+    if action == 'link':
+        handle_firefox("home/firefox.css")
+    elif action == 'rm':
+        handle_firefox("home/firefox.css", remove=True)
 
 
 if __name__ == "__main__":
