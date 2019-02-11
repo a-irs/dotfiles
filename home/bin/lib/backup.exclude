@@ -74,6 +74,8 @@
 /home/*/videos
 /home/*/iphone-backup
 /home/*/iphone-photos
+/home/*/switch/sd
+/home/*/switch/tmp
 
 **/Package Control.cache
 

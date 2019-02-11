@@ -22,7 +22,7 @@ shadow-exclude = [
  "_GTK_FRAME_EXTENTS@:c"
 ];
 ||DESK||shadow-exclude-reg = "x15+0+0";
-||X1||shadow-exclude-reg = "x26+0+0";
+||X1||shadow-exclude-reg = "x30+0+0";
 
 # Opacity
 #menu-opacity = 1.0;            # The opacity for menus. (default 1.0)
