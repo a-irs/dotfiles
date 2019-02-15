@@ -3,6 +3,7 @@ set background=dark
 try
     " GRUVBOX
     let g:gruvbox_italic=1
+    let g:gruvbox_invert_selection=0
     colorscheme gruvbox
     highlight GruvboxGreenSign ctermbg=NONE guibg=NONE ctermfg=142 guifg=#b8bb26
     highlight GruvboxAquaSign ctermfg=108 ctermbg=NONE guifg=#8ec07c guibg=NONE
