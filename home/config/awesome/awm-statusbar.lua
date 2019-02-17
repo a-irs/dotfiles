@@ -185,20 +185,34 @@ local tasklist_buttons = awful.util.table.join(
         if c == client.focus then
             c.minimized = true
         else
-            c.minimized = false
-            if not c:isvisible() and c.first_tag then
-                c.first_tag:view_only()
-            end
-            client.focus = c
-            c:raise()
+            c:emit_signal(
+                "request::activate",
+                "tasklist",
+                {raise = true}
+            )
         end
 end))
 
 awful.screen.connect_for_each_screen(function(s)
-    s.mytaglist  = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
     s.mywibox    = awful.wibox({ position = theme.statusbar_position, screen = s, height = theme.statusbar_height })
     s.myprompt   = awful.widget.prompt()
-    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, tasklist_buttons, { fg_normal = theme.tasklist_fg, bg_normal = theme.tasklist_bg, font = theme.tasklist_font })
+
+    s.mytasklist = awful.widget.tasklist {
+        screen = s,
+        filter = awful.widget.tasklist.filter.minimizedcurrenttags,
+        buttons = tasklist_buttons,
+        style = {
+            fg_normal = theme.tasklist_fg,
+            bg_normal = theme.tasklist_bg,
+            font = theme.tasklist_font
+        }
+    }
+
+    s.mytaglist  = awful.widget.taglist {
+        screen = s,
+        filter = awful.widget.taglist.filter.all,
+        buttons = taglist_buttons
+    }
 
     s.systray = wibox.widget.systray()
     s.systray.visible = true

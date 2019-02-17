@@ -49,6 +49,7 @@ let g:ale_sign_style_warning = "\u26A0"
 let g:ale_sign_error = "\u2717"
 let g:ale_sign_style_error = "\u2717"
 let g:ale_echo_msg_format = '[%linter%] %severity%% code%: %s'
+let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
 highlight ALEWarningSign guibg=NONE guifg=yellow
 highlight ALEErrorSign guibg=NONE guifg=red
 

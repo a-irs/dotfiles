@@ -144,13 +144,11 @@ client.connect_signal("manage", function(c)
     if c.type == "normal" or c.type == "dialog" then
         local buttons = awful.util.table.join(
                 awful.button({ }, 1, function()
-                    client.focus = c
-                    c:raise()
+                    c:emit_signal("request::activate", "titlebar", {raise = true})
                     awful.mouse.client.move(c)
                 end),
                 awful.button({ }, 3, function()
-                    client.focus = c
-                    c:raise()
+                    c:emit_signal("request::activate", "titlebar", {raise = true})
                     awful.mouse.client.resize(c)
                 end)
         )
@@ -181,9 +179,7 @@ end)
 
 -- sloppy focus
 client.connect_signal("mouse::enter", function(c)
-    if awful.client.focus.filter(c) then
-        client.focus = c
-    end
+    c:emit_signal("request::activate", "mouse_enter", {raise = false})
 end)
 
 client.connect_signal("property::floating", function(c)
