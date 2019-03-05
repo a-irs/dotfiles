@@ -9,6 +9,7 @@
 **/GPUCache
 **/CacheStorage
 **/cache
+**/http-cache
 **/temp
 **/.cache/*
 
@@ -76,6 +77,7 @@
 /home/*/iphone-photos
 /home/*/switch/sd
 /home/*/switch/tmp
+/home/*/.rustup/toolchains
 
 **/Package Control.cache
 

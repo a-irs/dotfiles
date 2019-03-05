@@ -26,9 +26,12 @@ compton &
 keepassxc &
 [[ $HOSTNAME == x1 ]] && xcalib ~/.config/x1carbon3rd_notebookcheck.com.icc &
 
-start-pulseaudio-x11 &
-
 ~/.bin/workstats &
+
+# reset audio
+start-pulseaudio-x11 &
+pactl set-sink-volume @DEFAULT_SINK@ 50%
+pactl set-sink-mute @DEFAULT_SINK@ off
 
 # # wait for internet, then launch dropbox
 nohup bash -c "$HOME/.bin/wait-for-host dropbox.com && dropbox-cli start" < /dev/null &> /dev/null &

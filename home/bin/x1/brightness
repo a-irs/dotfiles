@@ -4,6 +4,8 @@ set -eu
 
 action=$1
 
+STEP=3
+
 get_current_brightness() {
     a=$(xbacklight -get | cut -d . -f 1)
     # # round to fives
@@ -20,9 +22,9 @@ backlight() {
 }
 
 if [[ "$action" == + ]]; then
-    backlight -inc 5
+    backlight -inc "$STEP"
 elif [[ "$action" == - ]]; then
-    backlight -dec 5
+    backlight -dec "$STEP"
 fi
 
 current=$(get_current_brightness)
