@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PATH=/usr/local/sbin:/usr/local/bin:/usr/bin
+PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/bin
 
 pre_lock() {
     logger -t "$(basename "$0")" --id=$$ -- "BAT0 before suspend: $(acpi -b | grep -Po '[0-9]+%')"
@@ -8,7 +8,6 @@ pre_lock() {
 }
 
 post_lock() {
-    keepassxc &
     logger -t "$(basename "$0")" --id=$$ -- "BAT0 after suspend: $(acpi -b | grep -Po '[0-9]+%')"
 }
 

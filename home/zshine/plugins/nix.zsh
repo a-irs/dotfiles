@@ -5,16 +5,17 @@ fi
 
 [[ -z "$commands[nixos-rebuild]" ]] && return
 
-n-sw() {
-    local date=$(date +%Y%m%d)
-    local branch=$(git -C /etc/nixos branch 2>/dev/null | sed -n '/^\* / { s|^\* ||; p; }')
-    local rev=$(git -C /etc/nixos rev-parse HEAD)
-
-    local NIXOS_LABEL="$date-$branch-${rev:0:7}"
-    echo "$NIXOS_LABEL"
-    sudo NIXOS_LABEL=$NIXOS_LABEL nixos-rebuild switch "$@"
+nxsw() {
+    # local now=$(date +%F_%H-%M)
+    # sudo NIXOS_LABEL="$now" nixos-rebuild switch "$@"
+    sudo nixos-rebuild switch "$@"
 }
 
-n-test() {
+nxtest() {
     sudo nixos-rebuild dry-activate
 }
+
+for p in ${(z)NIX_PROFILES}; do
+    fpath+=($p/share/zsh/site-functions $p/share/zsh/$ZSH_VERSION/functions $p/share/zsh/vendor-completions)
+done
+

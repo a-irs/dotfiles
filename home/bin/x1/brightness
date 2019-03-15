@@ -2,38 +2,19 @@
 
 set -eu
 
+STEP=2
+
 action=$1
-
-STEP=3
-
-get_current_brightness() {
-    a=$(xbacklight -get | cut -d . -f 1)
-    # # round to fives
-    printf '%s\n' $((5*(a/5)))
-}
-
-notify() {
-    icon=/usr/share/icons/Faba-Mono/48x48/notifications/notification-display-brightness.svg
-    notify-send -t 1000 -i "$icon" -- "Light" "$@"
-}
-
-backlight() {
-    xbacklight -time 100 "$@"
-}
+b() { xbacklight -time 100 "$@"; }
 
 if [[ "$action" == + ]]; then
-    backlight -inc "$STEP"
+    b -inc "$STEP"
 elif [[ "$action" == - ]]; then
-    backlight -dec "$STEP"
+    b -dec "$STEP"
 fi
 
-current=$(get_current_brightness)
-
 # limit to 1
-if [[ "$current" == 0 ]]; then
-    backlight -set 1
-    notify 1%
-else
-    notify "$current"%
+if [[ "$(xbacklight -get | cut -d . -f 1)" == 0 ]]; then
+    b -set 1
 fi
 
