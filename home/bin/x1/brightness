@@ -1,20 +1,26 @@
 #!/usr/bin/env bash
 
-set -eu
+# adjust brightness with:
+# - xbacklight (arch)
+# - light (nixos)
+
+set -euo pipefail
 
 STEP=2
-
 action=$1
-b() { xbacklight -time 100 "$@"; }
+
+b_plus() { xbacklight -time 100 -inc "$1" || light -A "$1"; }
+b_minus() { xbacklight -time 100 -dec "$1" || light -U "$1"; }
+b_set() { xbacklight -time 100 -set "$1" || light -S "$1"; }
+b_get() { xbacklight -get | cut -d . -f 1 || light -G | cut -d . -f 1; }
 
 if [[ "$action" == + ]]; then
-    b -inc "$STEP"
+    b_plus "$STEP"
 elif [[ "$action" == - ]]; then
-    b -dec "$STEP"
+    b_minus "$STEP"
 fi
 
 # limit to 1
-if [[ "$(xbacklight -get | cut -d . -f 1)" == 0 ]]; then
-    b -set 1
+if [[ "$(b_get)" -le 0 ]]; then
+    b_set 1
 fi
-

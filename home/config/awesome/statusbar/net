@@ -5,7 +5,7 @@ eth_color="#ffa500"
 vpn_color="#ffd700"
 
 out=$(nmcli --wait 1 --terse --colors no --fields name,type,device,state,active connection show)
-active=$(printf '%s\n' "$out" | awk -F: '$5 == "yes" {print $1":"$2}' | sort -r)
+active=$(printf '%s\n' "$out" | grep -v '^docker0' | awk -F: '$5 == "yes" {print $1":"$2}' | sort -r)
 
 txt=()
 while read -r line; do
