@@ -139,6 +139,7 @@ globalkeys = awful.util.table.join(
 
     awful.key({ win          }, "space", function() awful.layout.inc(1) end),
     awful.key({ win, "Shift" }, "space", function() awful.layout.inc(-1) end),
+    awful.key({ "Ctrl", "Shift" }, "space", function() run("bash -c 'pkill redshift; xcalib -invert -alter; redshift'") end),
 
     -- launch programs
 

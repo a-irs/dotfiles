@@ -34,7 +34,7 @@ pactl set-sink-volume @DEFAULT_SINK@ 50%
 pactl set-sink-mute @DEFAULT_SINK@ off
 
 # # wait for internet, then launch dropbox
-nohup bash -c "$HOME/.bin/wait-for-host dropbox.com && dropbox-cli start" < /dev/null &> /dev/null &
+nohup bash -c "if $HOME/.bin/wait-for-host dropbox.com; then dropbox-cli start || dropbox start; fi" < /dev/null &> /dev/null &
 
 if [[ $HOSTNAME == x1 || $HOSTNAME == dell ]]; then
     xset s 0 0
