@@ -51,10 +51,13 @@ zstyle ':completion:*' squeeze-slashes true
 # cdpath=(.)
 
 # use ssh_config for hostname completion
-[[ -r ~/.ssh/config ]] && _ssh_config=($(cat ~/.ssh/config; cat ~/.ssh/conf.d/* 2>/dev/null | sed -ne 's/Host[=\t ]//p')) || _ssh_config=()
-zstyle ':completion:*:hosts' hosts "$_ssh_config[@]"
+[[ -r ~/.ssh/config ]] && _ssh_hosts+=($(cat ~/.ssh/config | sed -ne 's/Host[=\t ]//p'))
+[[ -d ~/.ssh/conf.d ]] && _ssh_hosts+=($(cat ~/.ssh/conf.d/* | sed -ne 's/Host[=\t ]//p'))
+zstyle ':completion:*:ssh:*' hosts "$_ssh_hosts[@]"
 
-zstyle ':completion:*' users off
+# Prevent autocompletion of user names
+zstyle ':completion:*:rsync:*' users
+zstyle ':completion:*:ssh:*' users
 
 # not working?
 # # Use caching so that commands like apt and dpkg complete are useable
