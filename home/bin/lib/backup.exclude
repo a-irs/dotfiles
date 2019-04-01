@@ -89,6 +89,7 @@
 /boot/initramfs*.img
 /boot/intel-ucode.img
 /boot/vmlinuz-linux
+/boot/kernels/*
 
 /srv/docker/grafana/sessions
 /srv/docker/graphite/storage

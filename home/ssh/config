@@ -1,21 +1,26 @@
 Host x1 x1.home
     HostName x1.home
+    IdentityFile ~/.ssh/id_ed25519
     User alex
 
 Host srv srv.home
     HostName srv.home
+    IdentityFile ~/.ssh/id_ed25519
     User root
 
 Host erx erx.home
     HostName erx.home
+    IdentityFile ~/.ssh/id_ed25519
     User ubnt
 
 Host desk desk.home
     HostName desk.home
+    IdentityFile ~/.ssh/id_ed25519
     User alex
 
 Host dell dell.home
     HostName dell.home
+    IdentityFile ~/.ssh/id_ed25519
     User alex
 
 Host tpl tpl.home

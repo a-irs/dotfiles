@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -uo pipefail
+set -euo pipefail
 
 [[ $UID != 0 ]] && { echo "run as root"; exit 1; }
 (( $# < 1 )) && { echo "$(basename "$0") start|mount|list|check"; exit 2; }
@@ -95,8 +95,8 @@ for dev in /dev/disk/by-uuid/*; do
     fi
 done
 
-header 2 "INIT REPOSITORY"
-borg init --verbose --encryption none "$REPO" || true
+# header 2 "INIT REPOSITORY"
+# borg init --verbose --encryption none "$REPO" || true
 
 header 2 "BACKING UP ${BACKUP[*]}"
 borg create \
