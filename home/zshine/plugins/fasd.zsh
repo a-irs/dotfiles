@@ -6,13 +6,15 @@
 # $ mv index.html d,www<Tab>
 # $ mv index.html /var/www/
 
+export _FASD_IGNORE="fasd ls echo rm rmdir touch"
+
 fasd_cache="$HOME/.cache/fasd.zsh"
 if [[ "$commands[fasd]" -nt "$fasd_cache" || ! -s "$fasd_cache" ]]; then
-  fasd --init \
-    zsh-hook \
-    zsh-wcomp \
-    zsh-wcomp-install \
-    >| "$fasd_cache"
+    fasd --init \
+        zsh-hook \
+        zsh-wcomp \
+        zsh-wcomp-install \
+        >| "$fasd_cache"
 fi
 source "$fasd_cache"
 unset fasd_cache
