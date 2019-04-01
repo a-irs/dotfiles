@@ -1,5 +1,5 @@
 snippet "EOF|EOL|HERE|HEREDOC" "heredoc" br
-cat << EOF > ${1:${VISUAL:filename}}
+cat << EOF | sed 's/foo/bar' > ${1:${VISUAL:filename}}
 ${0:${VISUAL:text}}
 EOF
 endsnippet
@@ -123,7 +123,7 @@ endsnippet
 
 snippet "read|readline|readfile" "read line for line" br
 while read -r line; do
-    printf "%s\n" "$line"
+    printf '%s\n' "$line"
 done < ${0:file}
 endsnippet
 
