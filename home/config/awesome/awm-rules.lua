@@ -197,7 +197,7 @@ end)
 -- client exits
 client.connect_signal("unmanage", function(c)
 
-    if (c.class == "Kupfer.py") then
+    if (c.class == "Kupfer.py") or (c.class == "Steam") then
         return
     end
 

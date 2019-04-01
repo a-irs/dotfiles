@@ -26,6 +26,7 @@ ZSHINE_PLUGINS=(
   python # python dev stuff
   aliases # provides some aliases and functions for daily work
   nix # nixos, nix package manager
+  fasd # autocomplete paths
 )
 
 if [[ "$ZSHINE_DEBUG" == 1 ]]; then

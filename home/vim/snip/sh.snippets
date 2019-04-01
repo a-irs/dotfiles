@@ -1,5 +1,11 @@
+snippet "EOF|EOL|HERE|HEREDOC" "heredoc" br
+cat << EOF > ${1:${VISUAL:filename}}
+${0:${VISUAL:text}}
+EOF
+endsnippet
+
 snippet "pr|printf" "Printf" br
-printf "%s\n" "$1"
+printf '%s\n' "$1"
 endsnippet
 
 snippet color "Color" b
