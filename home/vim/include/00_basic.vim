@@ -135,6 +135,8 @@ nnoremap <silent> <Leader>, :execute 's/^\(\s*[-+*]\?\s*\)\[ \]/\1[x]/'<cr>
 nnoremap <silent> <Leader>. :execute 's/^\(\s*[-+*]\?\s*\)\[x]/\1[ ]/'<cr>
 
 " surround with something
+nnoremap <leader>t viw<esc>a'<esc>hbi'<esc>lel
+nnoremap <leader>T viW<esc>a'<esc>hBi'<esc>lel
 nnoremap <leader>z viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>Z viW<esc>a"<esc>hBi"<esc>lel
 nnoremap <leader>u viw<esc>a)<esc>hbi(<esc>lel

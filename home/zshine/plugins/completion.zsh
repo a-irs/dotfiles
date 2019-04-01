@@ -51,7 +51,7 @@ zstyle ':completion:*' squeeze-slashes true
 # cdpath=(.)
 
 # use ssh_config for hostname completion
-[[ -r ~/.ssh/config ]] && _ssh_config=($(cat ~/.ssh/config | sed -ne 's/Host[=\t ]//p')) || _ssh_config=()
+[[ -r ~/.ssh/config ]] && _ssh_config=($(cat ~/.ssh/config; cat ~/.ssh/conf.d/* 2>/dev/null | sed -ne 's/Host[=\t ]//p')) || _ssh_config=()
 zstyle ':completion:*:hosts' hosts "$_ssh_config[@]"
 
 zstyle ':completion:*' users off

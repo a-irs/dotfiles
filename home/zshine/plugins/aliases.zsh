@@ -320,8 +320,25 @@ highlight_files() {
 if [[ "$commands[git]" ]]; then
     alias g="git"
     alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white) %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
+
     clone() {
         git clone --depth 1 "$1" && cd $(basename ${1//.git/})
+    }
+
+    gop() {
+        # change protocol to https, remove port, remove .git
+        url=$(git config remote.origin.url | perl -pe 's/^ssh:\/\/.*@/https:\/\//; s/:[0-9]+\//\//g; s/\.git$//')
+        if [[ -n "$1" ]]; then
+            branch=$(git rev-parse --abbrev-ref HEAD)
+            url="$url/tree/$branch/$@"
+        fi
+
+        printf '%s\n' "opening: $url"
+        if [[ "$os" == Darwin ]]; then
+            open "$url"
+        else
+            xdg-open "$url"
+        fi
     }
 fi
 
