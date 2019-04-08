@@ -219,7 +219,7 @@ cd() {
         printf "${YELLOW}%s${RESET}\n\n" "cd: correcting $1 to ${1:h}"
         builtin cd "${1:h}"
     else
-        builtin cd "$1"
+        builtin cd "$@"
     fi
 }
 
