@@ -1,5 +1,9 @@
 source "$ZSHINE_DIR/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 
+# man/whatis is slow otherwise
+unset "FAST_HIGHLIGHT[chroma-man]"
+unset "FAST_HIGHLIGTH[chroma-whatis]"
+
 FAST_HIGHLIGHT_STYLES[alias]='fg=magenta,bold'
 FAST_HIGHLIGHT_STYLES[assign]='fg=white,bold'
 FAST_HIGHLIGHT_STYLES[back-dollar-quoted-argument]='fg=cyan'

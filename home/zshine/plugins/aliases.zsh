@@ -215,13 +215,8 @@ if [[ "$commands[xdg-open]" ]]; then
 fi
 
 cd() {
-    setopt localoptions
-    setopt extendedglob
-    [[ "${#*}" != 1 ]] && builtin cd "$@" && return
-    if [[ ! -e "$1" ]]; then
-        print "'$1' not found"
-    elif [[ -f "$1" ]]; then
-        printf "${YELLOW}%s${RESET}\n\n" "correcting $1 to ${1:h}"
+    if [[ -f "$1" ]]; then
+        printf "${YELLOW}%s${RESET}\n\n" "cd: correcting $1 to ${1:h}"
         builtin cd "${1:h}"
     else
         builtin cd "$1"
@@ -248,22 +243,6 @@ for i in {2..20}; do
     alias "$(printf '.%.0s' {1..$i})"="cd $(printf '../%.0s' {2..$i})"
 done
 unset i
-
-alias e="\$EDITOR"
-alias sudoe="sudoedit"
-
-# ansible role
-ansrole() {
-    if [[ ! "$1" ]]; then
-        printf "%s\n" "missing role name"
-        return 1
-    fi
-    if [[ -d roles ]]; then
-        mkdir -vp roles/$1/{handlers,tasks,templates,files,defaults}
-    else
-        mkdir -vp $1/{handlers,tasks,templates,files,defaults}
-    fi
-}
 
 extract() {
     while (( $# > 0 )); do
@@ -525,13 +504,6 @@ if [[ "$commands[systemctl]" ]]; then
         link load cancel set-environment unset-environment)
     for c in $user_commands; do; alias sc-$c="systemctl $c"; done
     for c in $sudo_commands; do; alias sc-$c="sudo systemctl $c"; done
-fi
-
-if [[ "$commands[machinectl]" ]]; then
-    user_commands=(list status show)
-    sudo_commands=(login reboot poweroff kill terminate)
-    for c in $user_commands; do; alias mc-$c="machinectl $c"; done
-    for c in $sudo_commands; do; alias mc-$c="sudo machinectl $c"; done
 fi
 
 nfo() {

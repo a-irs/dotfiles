@@ -4,7 +4,6 @@ if [[ ! $commands[fzf] ]]; then
 fi
 [[ $commands[fzf] ]] || return
 
-manpath+=("$ZSHINE_DIR/plugins/fzf/man")
 source "$ZSHINE_DIR/plugins/fzf/shell/key-bindings.zsh"
 source "$ZSHINE_DIR/plugins/fzf/shell/completion.zsh"
 
