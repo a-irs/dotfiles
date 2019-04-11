@@ -3,7 +3,7 @@
 set -euo pipefail
 
 [[ $UID != 0 ]] && { echo "run as root"; exit 1; }
-(( $# < 1 )) && { echo "$(basename "$0") start|mount|list|check"; exit 2; }
+(( $# < 1 )) && { echo "$(basename "$0") start|mount|list|check|info"; exit 2; }
 
 TOPDIR=/media/crypto/borg
 TARGET=$TOPDIR/$HOSTNAME
@@ -23,17 +23,14 @@ if ! ssh -i "$SSH_KEY" $USER_HOST test -d "$TOPDIR"; then
     exit 1
 fi
 
-t=/0-info
-
 REPO=$USER_HOST:$TARGET
 DATE=$(date +%Y-%m-%d_%H-%M-%S)
-BACKUP=( $t )
-[[ -d /home ]]           && BACKUP+=( /home )
-[[ -d /etc ]]            && BACKUP+=( /etc )
-[[ -d /root ]]           && BACKUP+=( /root )
-[[ -d /srv ]]            && BACKUP+=( /srv )
-[[ -d /boot ]]           && BACKUP+=( /boot )
-[[ -d /var/spool/cron ]] && BACKUP+=( /var/spool/cron )
+
+t=/0-info
+BACKUP=("$t")
+for dir in /home /etc /root /srv /boot /var/spool/cron; do
+    [[ -d "$dir" ]] && BACKUP+=("$dir")
+done
 
 header() {
     d=$(date +'%F %T')
@@ -44,23 +41,18 @@ header() {
     fi
 }
 
-finish() {
-    header 2 "CLEANING UP BACKUP INFO FILES in $t"
-    rm -rfv "$t"
-}
-trap finish EXIT
-
 export BORG_CACHE_DIR=/var/tmp/borg
 
 case $1 in
     mount|mnt)
-        header 3 "MOUNT $REPO to $2"
-        borg mount "$REPO" "$2" -o allow_other
+        dest=$2 && shift && shift
+        header 3 "MOUNT $REPO to $dest"
+        borg mount "$REPO" "$dest" -o allow_other,ro
         exit
         ;;
     check|chk)
         header 3 "CHECK $REPO"
-        borg check "$REPO"
+        borg check --verbose --info "$REPO"
         exit
         ;;
     list|ls)
@@ -68,11 +60,22 @@ case $1 in
         borg list --verbose "$REPO"
         exit
         ;;
+    info)
+        header 3 "INFO $REPO"
+        borg info "$REPO"
+        exit
+        ;;
     start)
         ;;
     *)
         exit
 esac
+
+finish() {
+    header 2 "CLEANING UP BACKUP INFO FILES in $t"
+    rm -rfv "$t"
+}
+trap finish EXIT
 
 header 2 "STARTING BACKUP. INFORMATION ABOUT BACKUP"
 header 2 "TARGET: $REPO"
@@ -87,16 +90,20 @@ echo "  - PARTITION LAYOUT OF $root_disk → disk-fdisk-rootdisk.txt"
 LC_ALL=C fdisk -l "$root_disk" > "$t/disk-fdisk-rootdisk.txt"
 for dev in /dev/disk/by-uuid/*; do
     if cryptsetup isLuks "$dev"; then
-        name=$(basename $dev)
+        name=$(basename "$dev")
         echo "  - LUKS DUMP OF $dev → disk-luks-$name.txt"
-        LC_ALL=C cryptsetup luksDump $dev > "$t/disk-luks-$name.txt"
+        LC_ALL=C cryptsetup luksDump "$dev" > "$t/disk-luks-$name.txt"
         echo "  - LUKS HEADER BACKUP OF $dev → disk-luks-header-$name.img"
-        cryptsetup luksHeaderBackup $dev --header-backup-file "$t/disk-luks-header-$name.img"
+        cryptsetup luksHeaderBackup "$dev" --header-backup-file "$t/disk-luks-header-$name.img"
     fi
 done
 
-# header 2 "INIT REPOSITORY"
-# borg init --verbose --encryption none "$REPO" || true
+if ssh -i "$SSH_KEY" $USER_HOST test -f "$TARGET/README"; then
+    header 2 "REPO ALREADY EXISTS, SKIPPING CREATION"
+else
+    header 2 "INIT REPOSITORY"
+    borg init --verbose --encryption none "$REPO"
+fi
 
 header 2 "BACKING UP ${BACKUP[*]}"
 borg create \
@@ -109,5 +116,3 @@ borg create \
 header 2 "PRUNING BACKUPS OLDER THAN 6 MONTHS AND >5"
 borg prune --verbose --stats --list --keep-within 6m "$REPO" --keep-last 5
 
-# header 2 "CHECKING ARCHIVES"
-# borg check --verbose --info --archives-only "$REPO"
