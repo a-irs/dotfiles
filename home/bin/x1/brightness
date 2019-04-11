@@ -18,6 +18,8 @@ if [[ "$action" == + ]]; then
     b_plus "$STEP"
 elif [[ "$action" == - ]]; then
     b_minus "$STEP"
+else
+    b_set "$action"
 fi
 
 # limit to 1

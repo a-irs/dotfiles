@@ -23,7 +23,6 @@ kupfer --no-splash &
 lxpolkit &
 parcellite --no-icon &
 compton &
-keepassxc &
 [[ $HOSTNAME == x1 ]] && xcalib ~/.config/x1carbon3rd_notebookcheck.com.icc &
 
 ~/.bin/workstats &
