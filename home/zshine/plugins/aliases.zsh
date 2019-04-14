@@ -163,11 +163,11 @@ alias ff='noglob find . -type f -name'
 
 alias mmv='noglob zmv -W'
 
-ls="command ls -F --literal --color=auto --group-directories-first"
+ls="\ls -F --literal --color=auto --group-directories-first"
 if [[ "$os" == Darwin ]]; then
-    ls="command ls -F"
+    ls="\ls -F"
     [[ "$commands[gls]" ]] && ls="gls -F --literal --color=auto"
-    alias lo="command ls -lhGF -O@"
+    alias lo="\ls -lhGF -O@"
 fi
 alias l="$ls"
 alias ls="$ls -lh"
@@ -203,7 +203,7 @@ if [[ "$commands[xdg-open]" ]]; then
     os() {
         [[ -z "$1" || ! -e "$1" ]] && return 1
         mimeopen --ask-default "$1"
-        command cp -f ~/.local/share/applications/defaults.list ~/.local/share/applications/mimeapps.list
+        cp -f ~/.local/share/applications/defaults.list ~/.local/share/applications/mimeapps.list
     }
     o() {
         if [[ ! "$1" ]]; then
