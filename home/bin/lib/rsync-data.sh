@@ -18,6 +18,7 @@ control_c() {
 trap control_c SIGINT
 
 BACKUP=(
+	/media/data/switch
 	/media/data/photos
 	/media/data/apps
 	/media/data/books

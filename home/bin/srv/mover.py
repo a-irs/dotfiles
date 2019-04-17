@@ -6,7 +6,7 @@ import os
 import glob
 import pathlib
 import shutil
-from typing import Callable, List
+from typing import Callable, List, Optional
 
 C_BLUE = '\033[94m'
 C_GREEN = '\033[92m'
@@ -25,11 +25,11 @@ class Parser():
         print(f'{C_GREEN}{"-" * len(release_name)}{C_RESET}')
 
         # try to extract all attributes, prompt for manual entry when empty
-        self.title = self.ask_or_set(self.get_title, 'TITLE')
-        self.year = self.ask_or_set(self.get_year, 'YEAR')
-        self.video_size = self.ask_or_set(self.get_video_size, 'VIDEO')
-        self.source = self.ask_or_set(self.get_source, 'SOURCE')
-        self.langs = self.ask_or_set(self.get_langs, 'LANGS')
+        self.title = self.ask_or_set(self.get_title, 'TITLE', r'\w+')
+        self.year = self.ask_or_set(self.get_year, 'YEAR', r'\d\d\d\d')
+        self.video_size = self.ask_or_set(self.get_video_size, 'VIDEO', r'\w+')
+        self.source = self.ask_or_set(self.get_source, 'SOURCE', r'\w+')
+        self.langs = self.ask_or_set(self.get_langs, 'LANGS', r'[A-Z,]+')
 
         # put prefixes to the back of the title
         title_prefixes = ['Der', 'Die', 'Das', 'Ein', 'Eine', 'The', 'A', 'An']
@@ -38,11 +38,11 @@ class Parser():
                 self.title = self.title[len(p + ' '):] + ', ' + p
                 break
 
-    def ask_or_set(self, get_function: Callable[[str], str], key: str) -> str:
-        value = get_function(self.release_name)
+    def ask_or_set(self, get_func: Callable[[str], Optional[str]], key: str, rex=False) -> str:
+        value = get_func(self.release_name)
 
         was_prompted = False
-        while not value:
+        while not value or (rex and not re.match(rex, value)):
             was_prompted = True
             value = input(f'{C_BLUE}{key}{C_YELLOW} ')
         if not was_prompted:
@@ -50,7 +50,7 @@ class Parser():
 
         return value
 
-    def get_year(self, s: str) -> str:
+    def get_year(self, s: str) -> Optional[str]:
         # FIXME: reverse, to get the last match. better option?
         rex = r'\.([0-9][0-9](91|02))\.'
         m = re.search(rex, s[::-1])
@@ -58,21 +58,21 @@ class Parser():
             return m.group(1)[::-1]
         return None
 
-    def get_title(self, s: str) -> str:
+    def get_title(self, s: str) -> Optional[str]:
         rex = r'^(.*)\.(19|20)[0-9][0-9]'
         m = re.search(rex, s)
         if m:
             return m.group(1).replace('.', ' ')
         return None
 
-    def get_video_size(self, s: str) -> str:
+    def get_video_size(self, s: str) -> Optional[str]:
         rex = r'\.(240(p|i)|360(p|i)|480(p|i)|720(p|i)|1080(p|i))\.'
         m = re.search(rex, s, flags=re.IGNORECASE)
         if m:
             return m.group(1)
         return None
 
-    def get_source(self, s: str) -> str:
+    def get_source(self, s: str) -> Optional[str]:
         normalize = {
             r'\.bd-?rip\.': "BDRip",
             r'\.br-?rip\.': "BRRip",
@@ -87,9 +87,9 @@ class Parser():
         for key, val in normalize.items():
             if re.search(key, s, flags=re.IGNORECASE):
                 return val
-        return ""
+        return None
 
-    def get_langs(self, s: str) -> str:
+    def get_langs(self, s: str, default="EN") -> str:
         normalize = {
             r'\.German\.DL\.': "EN,DE",
             r'\.German\.(DTS|AC3)(D|HD)?\.DL\.': "EN,DE",
@@ -99,7 +99,7 @@ class Parser():
             if re.search(key, s):
                 return val
         else:
-            return 'EN'
+            return default
 
 
 class MovieParser(Parser):
@@ -110,24 +110,24 @@ class TvParser(Parser):
 
     def __init__(self, release_name: str) -> None:
         super().__init__(release_name)
-        self.season = self.ask_or_set(self.get_season, 'SEASON')
-        self.episode = self.ask_or_set(self.get_episode, 'EPISODE')
+        self.season = self.ask_or_set(self.get_season, 'SEASON', r'S[0-9][0-9]')
+        self.episode = self.ask_or_set(self.get_episode, 'EPISODE', r'E[0-9][0-9]')
 
-    def get_title(self, s: str) -> str:
+    def get_title(self, s: str) -> Optional[str]:
         rex = r'^(.*)\.S[0-9][0-9]E[0-9][0-9]'
         m = re.search(rex, s)
         if m:
             return m.group(1).replace('.', ' ')
         return None
 
-    def get_season(self, s: str) -> str:
+    def get_season(self, s: str) -> Optional[str]:
         rex = r'\.(S[0-9][0-9])(E[0-9][0-9]|\.)'
         m = re.search(rex, s)
         if m:
             return m.group(1)
         return None
 
-    def get_episode(self, s: str) -> str:
+    def get_episode(self, s: str) -> Optional[str]:
         rex = r'\.S[0-9][0-9](E[0-9][0-9])\.'
         m = re.search(rex, s)
         if m:
@@ -171,7 +171,10 @@ class Mover():
         files = self._get_glob(mask)
         for f in files:
             print(f'{C_RED}{f}{C_RESET} deleted.')
-            shutil.rmtree(f)
+            if pathlib.Path(f).is_dir():
+                shutil.rmtree(f)
+            else:
+                os.unlink(f)
 
     def move_nfo(self, mask: List[str]) -> None:
         files = self._get_glob(mask)
@@ -198,8 +201,7 @@ class Mover():
             dest = self.dest / str(self.title + source.suffix)
             self.do_move(source, dest)
         elif len(files) > 1:
-            print("ERROR: more than one video file found")
-            print(files)
+            print("ERROR: more than one video file found: {}".format(files))
             sys.exit(1)
         else:
             print("ERROR: no video file found")
