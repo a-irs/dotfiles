@@ -15,11 +15,11 @@ from typing import List
 
 def fetch(url: str, name: str) -> str:
     local_dir = os.path.expanduser("~/.local/share")
-    file = f"{local_dir}/{name}"
+    file = "{}/{}".format(local_dir, name)
 
     if not os.path.isfile(file):
         urllib.request.urlretrieve(url, file)
-        print(f"downloaded {file}")
+        print("downloaded {}".format(file))
     return file
 
 
@@ -96,7 +96,7 @@ def get_style(name: str, dest_format: str) -> List[str]:
 
 def main():
     if len(sys.argv) < 4:
-        print(f"usage: pan <input> <output> <{'|'.join(CONFIG)}> [additional pandoc args]")
+        print("usage: pan <input> <output> <{}> [additional pandoc args]".format('|'.join(CONFIG)))
         sys.exit(1)
 
     source = sys.argv[1]
@@ -106,7 +106,7 @@ def main():
     style = ' '.join(get_style(sys.argv[3], dest_format))
     additional_args = ' '.join(sys.argv[4:])
 
-    cmd = f"pandoc -i '{source}' -o '{dest}' {style} {additional_args}"
+    cmd = "pandoc -i '{}' -o '{}' {} {}".format(source, dest, style, additional_args)
     print(cmd)
     proc = subprocess.Popen(shlex.split(cmd))
     proc.communicate()
