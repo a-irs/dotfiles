@@ -6,13 +6,24 @@ let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
-Plug 'cespare/vim-toml'
-
 Plug 'eiginn/iptables-vim'
 autocmd BufNewFile,BufFilePre,BufRead *.rules set filetype=iptables
 
 " auto-close brackets
 Plug 'raimondi/delimitmate'
+
+Plug 'jaxbot/semantic-highlight.vim'
+let g:semanticTermColors = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+let semanticEnableFileTypes = ['python', 'lua']
+" re-highlight on save
+augroup SemanticHL
+    autocmd FileType python,lua
+        \ autocmd! SemanticHL BufWritePost <buffer> :SemanticHighlight
+augroup END
+
+Plug 'chrisbra/Colorizer'
+let g:colorizer_auto_filetype='css,html,conf,lua'
+let g:colorizer_colornames = 0  "do not colorize simple 'red', 'yellow', ...
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
 let g:fzf_files_options = '--preview "$HOME/.bin/preview {}" --no-exact --color=16 --cycle --no-mouse'
@@ -35,7 +46,7 @@ let g:gitgutter_map_keys = 0
 nmap <Leader>< <Plug>GitGutterNextHunk
 nmap <Leader>> <Plug>GitGutterPrevHunk
 
-" async linter
+" ALE async linter
 Plug 'w0rp/ale'
 " E501 = 80 characters
 " W391 = blank line at end of file
@@ -43,6 +54,8 @@ Plug 'w0rp/ale'
 " E302 = expected 2 blank lines, found 1
 let g:ale_python_flake8_options = '--ignore=E501,W391,E129,E302'
 let g:ale_python_mypy_options = '--cache-dir /tmp/mypy'
+
+" ALE appearance
 let g:ale_sign_warning = "\u26A0"
 let g:ale_sign_style_warning = "\u26A0"
 let g:ale_sign_error = "\u2717"
@@ -71,7 +84,7 @@ let g:buftabline_show = 1
 " show trailing whitespace, except in current line
 Plug 'ntpeters/vim-better-whitespace'
 
-Plug 'vim-python/python-syntax'
+Plug 'vim-python/python-syntax', { 'for': 'python' }
 let python_highlight_all = 1
 
 Plug 'pearofducks/ansible-vim'
@@ -88,7 +101,7 @@ let g:committia_use_singlecolumn = 'always'
 
 " color schemes
 Plug 'morhetz/gruvbox'
-Plug 'sjl/badwolf'
+" Plug 'sjl/badwolf'
 
 call plug#end()
 
