@@ -37,7 +37,6 @@ nmap <Leader>> <Plug>GitGutterPrevHunk
 
 " async linter
 Plug 'w0rp/ale'
-let g:ale_linters = { 'python': ['flake8', 'mypy'] }
 " E501 = 80 characters
 " W391 = blank line at end of file
 " E129 = https://github.com/PyCQA/pycodestyle/issues/474
