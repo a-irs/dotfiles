@@ -27,10 +27,7 @@ compton &
 
 ~/.bin/workstats &
 
-# reset audio
 start-pulseaudio-x11 &
-pactl set-sink-volume @DEFAULT_SINK@ 50%
-pactl set-sink-mute @DEFAULT_SINK@ off
 
 # # wait for internet, then launch dropbox
 nohup bash -c "if $HOME/.bin/wait-for-host dropbox.com; then dropbox-cli start || dropbox start; fi" < /dev/null &> /dev/null &

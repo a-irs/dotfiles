@@ -1,5 +1,10 @@
 #!/usr/bin/env zsh
 
+alias vpn-up="sudo wg-quick up wg0"
+alias vpn-start=vpn-up
+alias vpn-down="sudo wg-quick down wg0"
+alias vpn-stop=vpn-down
+
 for c in find ftp locate rake rsync scp sftp wcalc; do
     [[ "$commands[$c]" ]] && alias $c="noglob $c"
 done
