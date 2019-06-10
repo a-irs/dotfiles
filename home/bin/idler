@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# dependencies: xprintidle
+
 set -euo pipefail
 
 is_active_tmux() {
@@ -7,8 +9,14 @@ is_active_tmux() {
 }
 is_active_x11() {
     idle_milliseconds=$(DISPLAY=:0 xprintidle)
-    limit=$((1000 * 60 * 10))  # 10min
-    [[ "$idle_milliseconds" -lt "$limit" ]]
+    limit=$((1000 * $1))
+
+    if [[ "$idle_milliseconds" -lt "$limit" ]]; then
+        printf '%s\n' "Active: $((idle_milliseconds / 1000))s < ${1}s"; true
+    else
+        printf '%s\n' "Idle! $((idle_milliseconds / 1000))s > ${1}s"; false
+    fi
+
 }
 is_active_audio() {
     pactl list | grep 'State:\s' | grep 'RUNNING' > /dev/null
@@ -19,13 +27,16 @@ die() {
     rc=1
 }
 
-rc=0
-is_active_tmux && die "tmux"
-is_active_x11 && die "x11"
-is_active_audio && die "audio"
+while true; do
+    rc=0
+    is_active_tmux && die "tmux"
+    is_active_x11 60 && die "x11"
+    is_active_audio && die "audio"
 
-if [[ "$rc" == 0 ]]; then
-    systemctl suspend
-fi
+    if [[ "$rc" == 0 ]]; then
+        systemctl suspend
+    fi
 
-exit 0
+    sleep 10
+    echo ""
+done
