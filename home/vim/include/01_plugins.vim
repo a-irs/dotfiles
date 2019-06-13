@@ -40,11 +40,11 @@ Plug 'tomtom/tcomment_vim'
 nnoremap <silent> <leader># :TComment<CR>
 vnoremap <silent> <leader># :TComment<CR>
 
-" gitgutter
-Plug 'airblade/vim-gitgutter'
-let g:gitgutter_map_keys = 0
-nmap <Leader>< <Plug>GitGutterNextHunk
-nmap <Leader>> <Plug>GitGutterPrevHunk
+Plug 'mhinz/vim-signify'
+let g:signify_vcs_list = ['git']
+let g:signify_sign_show_count = 0
+nmap <leader>< <plug>(signify-next-hunk)
+nmap <leader>> <plug>(signify-prev-hunk)
 
 " ALE async linter
 Plug 'w0rp/ale'

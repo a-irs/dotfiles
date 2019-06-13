@@ -16,14 +16,19 @@ catch
     highlight StatusLine term=bold,reverse ctermfg=11 ctermbg=242 guifg=yellow guibg=DarkGray
 endtry
 
+" git gutter
+highlight SignifySignAdd    ctermbg=NONE  ctermfg=2
+highlight SignifySignDelete ctermbg=NONE  ctermfg=1
+highlight SignifySignChange ctermbg=NONE  ctermfg=3
+
+" clear gutter background
+highlight clear SignColumn
+
 " show invisible chars
 set list
 set listchars=tab:▸\ ,extends:»,precedes:«
 highlight SpecialKey ctermfg=240 guifg=#666666
 highlight NonText ctermfg=240 guifg=#666666
-
-" do not colorize gutter
-highlight clear SignColumn
 
 " dark line numbers and tilde symbols after EOF
 highlight LineNr ctermfg=241 guifg=#555555
