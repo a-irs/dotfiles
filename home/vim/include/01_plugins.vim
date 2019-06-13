@@ -100,8 +100,12 @@ let g:committia_use_singlecolumn = 'always'
 
 
 " color schemes
-Plug 'morhetz/gruvbox'
+" Plug 'morhetz/gruvbox'
 " Plug 'sjl/badwolf'
+Plug 'rhysd/vim-color-spring-night'
+
+" shortly highlight yanked lines
+Plug 'machakann/vim-highlightedyank'
 
 call plug#end()
 
