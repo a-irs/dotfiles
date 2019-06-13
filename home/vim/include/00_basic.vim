@@ -3,7 +3,6 @@ scriptencoding utf-8
 
 filetype plugin on
 syntax on
-set autoindent  " use indent from current line when making new line
 set backspace=indent,eol,start  " when at beginning of line, pressing backspace joins with prev line
 set whichwrap+=<,>,[,]  " moves to next line when pressing right at end of line
 set linebreak  " wrap lines at words
