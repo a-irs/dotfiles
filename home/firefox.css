@@ -22,26 +22,6 @@
         box-shadow: none !important;
         background: transparent !important; }
 
-    /* HIDE ADDRESS BAR PLUGIN ICON */
-    #notification-popup-box { display: none }
-    #notification-popup-box:not([hidden]) + #identity-box { -moz-padding-start: 4px }
-
-    /* HIDE ADDRESS BAR DROP MARKER */
-    .urlbar-history-dropmarker { display: none }
-    #star-button {
-        padding-right: 5px;
-        opacity: 0.65; }
-
-    /* HIDE SSL NAME */
-    /* #identity-icon-labels { display: none } */
-
-    /* CHANGE ADRESS BAR HEIGHT */
-    /* #nav-bar { min-height: 32px } */
-
-    /* CHANGE TABBAR BACKGROUND */
-    /* #tabbrowser-tabs { background-color: #303e5b !important; } */
-    /* .tab-background { background-color: #C7C7C7 !important; } */
-
     /* PRIVATE TAB ADDON */
     /* .tabbrowser-tab[privateTab-isPrivate], */
     /* .tabbrowser-tab[privateTab-isPrivate] .tab-content { */
@@ -52,14 +32,9 @@
     /*     background: #BBD7F3 !important; */
     /* } */
 
-    /* Remove Back button when there’s nothing to go Back to */
-    /* #back-button[disabled="true"] { display: none; } */
-    /* #forward-button[disabled="true"] { display: none; } */
-
     /* Remove the Close Button from the Tab Bar */
-    .tab-close-button {
-        display: none;
-    }
+    .tab-close-button { display: none; }
+
 
     /* tree style tabls customizing */
     #main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #TabsToolbar {
