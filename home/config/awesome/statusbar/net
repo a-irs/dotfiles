@@ -12,9 +12,10 @@ while read -r line; do
     type=${line##*:}
     name=${line%%:*}
     case "$type" in
-        vpn)        c=$vpn_color ;;
+        vpn|wireguard) c=$vpn_color ;;
         *-wireless) c=$wifi_color ;;
         *-ethernet) c=$eth_color ;;
+        *) continue ;;
     esac
     txt+=("<span foreground='$c'><b>${name}</b></span>")
 done <<< "$active"

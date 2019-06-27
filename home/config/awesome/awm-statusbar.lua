@@ -79,7 +79,7 @@ end
 
 if is_mobile then
     netwidget = awful.widget.watch(
-        gears.filesystem.get_configuration_dir() .. "/statusbar/net", 2,
+        gears.filesystem.get_configuration_dir() .. "/statusbar/net", 5,
         function(widget, stdout)
             widget:set_markup(stdout)
         end
