@@ -1,3 +1,7 @@
+if has('termguicolors')
+    set termguicolors
+endif
+
 " fallback color scheme
 set background=dark
 try
