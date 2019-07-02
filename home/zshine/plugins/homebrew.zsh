@@ -14,4 +14,4 @@ bup-check() {
         printf "\n$BOLD_MAGENTA%s$RESET\n" "Homebrew not updated for more than ${days}d, please run bup."
     fi
 }
-bup-check 1
+bup-check 7
