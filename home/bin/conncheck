@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+set -u
+
+default_gateway=$(ip -4 route show 0/0 | grep -oP 'via \S+' | grep -oP '[\d\.]+')
+ping_output=$(ping -w 3 -c 1 "$default_gateway")
+ping_rc=$?
+
+ok() {
+    echo "$1: $(tput setaf 2)$2$(tput sgr0)"
+}
+die() {
+    echo "$1: $(tput setaf 1)$2$(tput sgr0)"
+}
+
+if [[ "$ping_rc" != 0 ]]; then
+    die "PING default GW $default_gateway" "FAILED"
+else
+    ok "PING default GW $default_gateway" "$(echo "$ping_output" | grep -oP 'time=\S+' | grep -oP '\d+' | head -1) ms"
+fi
+
+
+dig_output=$(dig +noall +stats +timeout=3 google.com)
+dig_rc=$?
+
+dig_time=$(echo "$dig_output" | grep -oP 'Query time: \d+' | grep -oP '\d+')
+dig_server=$(echo "$dig_output" | grep -oP 'SERVER: [\d\.\#]+' | sed 's/SERVER: //')
+if [[ "$dig_rc" != 0 ]]; then
+    die "DNS resolve google.com" "FAILED"
+else
+    ok "DNS resolve google.com" "$dig_server - ${dig_time} ms"
+fi
+
+
+curl_output=$(curl --connect-timeout 3 -I -o /dev/null -s -w '%{time_connect}s' https://google.com)
+curl_rc=$?
+if [[ "$curl_rc" != 0 ]]; then
+    die "HTTP GET https://google.com" "FAILED"
+else
+    ok "HTTP GET https://google.com" "${curl_output}"
+fi
