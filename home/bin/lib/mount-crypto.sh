@@ -9,6 +9,7 @@ MOUNTPOINT=/media/crypto
 MAPPER_NAME=luks
 
 if [[ $1 == close || $1 == umount ]]; then
+    set +e
     umount "$MOUNTPOINT"
     cryptsetup close "$MAPPER_NAME"
     rmdir $MOUNTPOINT

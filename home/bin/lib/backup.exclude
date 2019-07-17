@@ -92,13 +92,6 @@
 /boot/kernels/*
 
 /srv/docker/grafana/sessions
-/srv/docker/graphite/storage
-/srv/docker/influxdb
 /srv/docker/nzbget/drop
-/srv/docker/plex
-/srv/docker/prometheus
-/srv/docker/splunk
-/srv/infra/ansible/.ara/ara.log
-/srv/infra/ansible/.ara/venv
 /srv/pwdumps
 /srv/vuls-database/db
