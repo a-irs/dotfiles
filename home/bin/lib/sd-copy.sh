@@ -1,36 +1,21 @@
 #!/usr/bin/env bash
 
-log() {
-    printf "%s\n" "$(date +'%F %T') $1"
-}
+set -ux
 
-SRC=/media/sd-card
+SRC=/dev/disk/by-id/usb-Multiple_Card_Reader_058F63666433-0:0-part1
 DEST=/media/data4/photos
 
-log "starting"
-
-cleanup() {
-    log "starting cleanup"
-    sync
-    umount -lf "$SRC"
-    sync
-    log "finished cleanup, exiting"
+MNT=$(mktemp -d)
+die() {
+    sync && sync
+    umount -qlf "$MNT"
+    rmdir "$MNT"
     exit $?
 }
-trap cleanup INT TERM EXIT
+trap die INT TERM EXIT
 
-delay=0.3
-log "mounting $SRC"
-mount "$SRC"
-if [ $? -eq 0 ]; then
-        echo -e '\a' > /dev/console
-        log "starting copy"
-        /root/.bin/camcopy.py "$SRC" "$DEST"
-        log "finished copy"
-        echo -e '\a' > /dev/console ; sleep $delay
-        echo -e '\a' > /dev/console
-else
-        echo -e '\a' > /dev/console ; sleep $delay
-        echo -e '\a' > /dev/console ; sleep $delay
-        echo -e '\a' > /dev/console
+if [[ ! -e "$SRC" ]]; then
+    echo "SD partition not found"
+    exit 1
 fi
+mount "$SRC" "$MNT" && /usr/bin/vendor_perl/exiftool -v0 -r -o . -FileName<DateTimeOriginal -ext+ AVI -ext+ MP4 -d "$DEST" /%Y/%Y-%m/%Y-%m-%d/%Y%m%d_%H%M%S_%%f.%%ue "$MNT"
