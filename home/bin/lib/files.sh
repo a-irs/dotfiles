@@ -10,4 +10,4 @@ lsfiles() { find "$1" -type f | sort -hf > "$out/$(basename "$1").txt"; }
 for d in /media/data?; do lsfiles "$d"; done
 
 git -C "$out" add -v --all
-git -C "$out" commit -am "[automatic commit]"
+git -C "$out" commit -am "[automatic commit]" || true

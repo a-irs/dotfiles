@@ -18,4 +18,4 @@ if [[ ! -e "$SRC" ]]; then
     echo "SD partition not found"
     exit 1
 fi
-mount "$SRC" "$MNT" && /usr/bin/vendor_perl/exiftool -v0 -r -o . -FileName<DateTimeOriginal -ext+ AVI -ext+ MP4 -d "$DEST" /%Y/%Y-%m/%Y-%m-%d/%Y%m%d_%H%M%S_%%f.%%ue "$MNT"
+mount "$SRC" "$MNT" && /usr/bin/vendor_perl/exiftool -v0 -r -o . '-FileName<DateTimeOriginal' -ext+ AVI -ext+ MP4 -d "$DEST/%Y/%Y-%m/%Y-%m-%d/%Y%m%d_%H%M%S_%%f.%%le" "$MNT/DCIM"
