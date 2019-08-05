@@ -15,7 +15,7 @@ export FZF_COMPLETION_TRIGGER='#'
 
 if [[ $commands[fd] ]]; then
     _fzf_compgen_path() {
-        fd --hidden --no-ignore --follow --color always \
+        fd --hidden --no-ignore --color always \
             -E .vim/undo \
             -E .vim/plugged \
             -E .git \
@@ -25,9 +25,11 @@ if [[ $commands[fd] ]]; then
             -E cache \
             -E .gem \
             -E .npm \
+            -E .thumbnails \
+            -E .steam \
             . "$1"
     }
-    export FZF_DEFAULT_COMMAND='fd --type file --hidden --no-ignore --follow --color always'
+    export FZF_DEFAULT_COMMAND='fd --type file --hidden --no-ignore --color always'
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
 
