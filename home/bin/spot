@@ -5,6 +5,7 @@ import logging
 import os
 import glob
 import re
+import time
 
 from typing import List
 import git
@@ -115,6 +116,12 @@ def maintain_git(repo_path: str, playlists: List[Playlist]):
         logging.info(f"no git changes, doing nothing")
 
 
+def refresh_token(spotify):
+    refresh_token = spotify.get_cached_token()['refresh_token']
+    new_token = spotify.refresh_access_token(refresh_token)
+    return spotipy.spotify(auth=new_token['access_token'])
+
+
 def main() -> None:
     logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s', level=logging.INFO)
 
@@ -137,7 +144,13 @@ def main() -> None:
     spotify = spotipy.Spotify(auth=TOKEN)
 
     logging.info("fetching playlists...")
-    playlists = get_all_playlists(spotify, env_user, env_exclude_regex)
+    try:
+        playlists = get_all_playlists(spotify, env_user, env_exclude_regex)
+    except spotipy.client.SpotifyException as e:
+        logging.warn(f"waiting, then refreshing token... ({e})")
+        time.sleep(300)
+        spotify = refresh_token(spotify)
+        playlists = get_all_playlists(spotify, env_user, env_exclude_regex)
 
     # write files and maintain git repo
     maintain_git(env_repo_dir, playlists)
