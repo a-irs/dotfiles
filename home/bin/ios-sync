@@ -16,7 +16,7 @@ import tempfile
 PHOTO_DIR = os.path.expanduser("~/iphone-photos")
 
 # do not care for these dates in get_local
-EXCLUDE_DATES = ['2016']
+EXCLUDE_DATES = ['2016', '2017']
 
 
 def exiftool(filelist: List[str], destination: str) -> None:

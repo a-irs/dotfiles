@@ -16,6 +16,7 @@
 # logs
 **/nzbget.log
 
+**/.semantic-highlight-cache
 **/.cache.json
 **/.cache.json
 **/.config/.fzf/bin
