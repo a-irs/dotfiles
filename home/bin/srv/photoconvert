@@ -43,7 +43,9 @@ convert_file() {
             # -y overwrite, -nostdin to not cause weird issues https://www.igorkromin.net/index.php/2016/12/23/prevent-errors-during-ffmpeg-execution-in-a-loop/
             ffmpeg -nostdin -y \
                 -i "$in" \
-                -c:v libx264 -preset medium -crf 25 -tune film -filter:v scale=1280:-1 \
+                -c:v libx264 -preset medium -crf 25 -tune film \
+                -filter:v scale=1280:-1 \
+                -profile:v high -level 4.0 \
                 -c:a aac -b:a 128k \
                 "$tmp" > /dev/null 2>&1
             mv "$tmp" "$out"
