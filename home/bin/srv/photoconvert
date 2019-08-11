@@ -2,6 +2,8 @@
 
 set -eu
 
+# TODO: psd files
+
 SRC_DIR=/media/data/photos
 DST_DIR=/root/pics_test
 
@@ -11,7 +13,7 @@ convert_dir() {
     local size=$3
     local quality=$4
 
-    find "$in_dir" -type f -iname "*.jpg" -or -iname "*.psd" -or -iname "*.tif" -or -iname "*.tiff" -or -iname "*.mp4" | sort | grep -Ev '/pano_[0-9_]+/' | while read f; do
+    find "$in_dir" -type f -iname "*.jpg" -or -iname "*.psd" -or -iname "*.tif" -or -iname "*.tiff" -or -iname "*.mp4" -or -iname "*.avi" | sort | grep -Ev '/pano_[0-9_]+/' | while read f; do
         convert_file "$f" "$out_dir/$size/$(basename "$f")" "$size" "$quality"
     done
 }
@@ -28,7 +30,7 @@ convert_file() {
     mkdir -vp "$(dirname "$out")"
 
     printf "%s" "$size :: ${out##*/} "
-    if [[ "$in" == *.mp4 ]]; then
+    if [[ "$in" == *.mp4 || "$in" == *.MP4 || "$in" == *.avi || "$in" == *.AVI ]]; then
 
         # check if existing in other dirs
         other=$(find "$DST_DIR" -name "${in##*/}")
@@ -42,7 +44,8 @@ convert_file() {
             ffmpeg -nostdin -y \
                 -i "$in" \
                 -c:v libx264 -preset medium -crf 25 -tune film -filter:v scale=1280:-1 \
-                -c:a copy "$tmp" > /dev/null 2>&1
+                -c:a aac -b:a 128k \
+                "$tmp" > /dev/null 2>&1
             mv "$tmp" "$out"
         fi
     else
