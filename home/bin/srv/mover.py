@@ -8,6 +8,8 @@ import pathlib
 import shutil
 from typing import Callable, List, Optional
 
+import argparse
+
 C_BLUE = '\033[94m'
 C_GREEN = '\033[92m'
 C_YELLOW = '\033[93m'
@@ -254,27 +256,25 @@ CONFIG = {
 
 
 def main():
-    if len(sys.argv) < 2:
-        print('usage: mover.py [category] [dir1] [dir2] [dir3] [...]')
+    available_categories = ', '.join(CONFIG['categories'].keys())
+
+    parser = argparse.ArgumentParser(description='Moves and sorts video files.')
+    parser.add_argument('category', type=str, help=available_categories)
+    parser.add_argument('dirs', type=str, nargs=argparse.ONE_OR_MORE)
+    parser.add_argument('--year', type=int)
+    args = parser.parse_args()
+
+    if args.category not in CONFIG['categories'].keys():
+        print('ERROR: first arg has to be one of: {}'.format(available_categories))
         sys.exit(1)
 
-    CATEGORY = sys.argv[1]
-    DIRS = sys.argv[2:]
-
-    if CATEGORY not in CONFIG['categories'].keys():
-        print('ERROR: first arg has to be one of: {}'.format(', '.join(CONFIG['categories'].keys())))
-        sys.exit(1)
-    if not DIRS:
-        print('ERROR: no directories given.')
-        sys.exit(1)
-
-    for d in DIRS:
+    for d in args.dirs:
         if not os.path.isdir(d):
             print(f"Error with argument '{d}': Can only handle directories.")
             sys.exit(1)
 
-    config = CONFIG['categories'].get(CATEGORY)
-    for source_dir in DIRS:
+    config = CONFIG['categories'].get(args.category)
+    for source_dir in args.dirs:
         print()
 
         # parse, set additional keys
