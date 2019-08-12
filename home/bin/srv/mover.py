@@ -19,17 +19,26 @@ C_RESET = '\033[0m'
 
 class Parser():
 
-    def __init__(self, release_name: str, interactive=True) -> None:
+    def __init__(self, release_name: str, preset: dict, interactive=True) -> None:
         # clean release name
         self.release_name = release_name.replace(' ', '.').strip()
 
         # FIXME: hide for tests
-        # print(f'{C_GREEN}{release_name}{C_RESET}')
-        # print(f'{C_GREEN}{"-" * len(release_name)}{C_RESET}')
+        print(f'{C_GREEN}{release_name}{C_RESET}')
+        print(f'{C_GREEN}{"-" * len(release_name)}{C_RESET}')
+
+        # set all values from preset (usually command line arguments
+        for key, value in preset.items():
+            if value:
+                setattr(self, key, value)
 
         # try to extract all attributes, prompt for manual entry when empty
         self.title = self.ask_or_set(self.get_title, 'TITLE', r'\w+', interactive=interactive)
-        self.year = self.ask_or_set(self.get_year, 'YEAR', r'\d\d\d\d', interactive=interactive)
+        if not hasattr(self, 'year'):
+            self.year = self.ask_or_set(self.get_year, 'YEAR', r'\d\d\d\d', interactive=interactive)
+        else:
+            # TODO: implement for all other possible presets
+            print(f'{C_BLUE}YEAR{C_RESET} {self.year}')
         self.video_size = self.ask_or_set(self.get_video_size, 'VIDEO', r'\w+', interactive=interactive)
         self.source = self.ask_or_set(self.get_source, 'SOURCE', r'\w+', interactive=interactive)
         self.langs = self.ask_or_set(self.get_langs, 'LANGS', r'[A-Z,]+', interactive=interactive)
@@ -56,8 +65,7 @@ class Parser():
             value = input(f'{C_BLUE}{key}{C_YELLOW} ')
         if not was_prompted:
             # FIXME: hide for tests
-            # print(f'{C_BLUE}{key}{C_RESET} {value}')
-            pass
+            print(f'{C_BLUE}{key}{C_RESET} {value}')
 
         return value
 
@@ -119,8 +127,8 @@ class MovieParser(Parser):
 
 class TvParser(Parser):
 
-    def __init__(self, release_name: str, interactive=True) -> None:
-        super().__init__(release_name, interactive)
+    def __init__(self, release_name: str, preset: dict, interactive=True) -> None:
+        super().__init__(release_name, preset, interactive)
         self.season = self.ask_or_set(self.get_season, 'SEASON', r'S[0-9][0-9]')
         self.episode = self.ask_or_set(self.get_episode, 'EPISODE', r'E[0-9][0-9]')
 
@@ -263,6 +271,9 @@ def main():
     parser.add_argument('dirs', type=str, nargs=argparse.ONE_OR_MORE)
     parser.add_argument('--year', type=int)
     args = parser.parse_args()
+    preset = {
+        'year': args.year
+    }
 
     if args.category not in CONFIG['categories'].keys():
         print('ERROR: first arg has to be one of: {}'.format(available_categories))
@@ -278,7 +289,7 @@ def main():
         print()
 
         # parse, set additional keys
-        parsed = config['parser_class'](release_name=os.path.basename(source_dir))
+        parsed = config['parser_class'](release_name=os.path.basename(source_dir), preset=preset)
         additional_keys = {
             'first_letter': '0' if parsed.title[0] in '0123456789' else parsed.title[0].upper(),
             # 'xxx': "abc"
