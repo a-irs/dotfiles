@@ -17,19 +17,20 @@ C_RESET = '\033[0m'
 
 class Parser():
 
-    def __init__(self, release_name: str) -> None:
+    def __init__(self, release_name: str, interactive=True) -> None:
         # clean release name
         self.release_name = release_name.replace(' ', '.').strip()
 
-        print(f'{C_GREEN}{release_name}{C_RESET}')
-        print(f'{C_GREEN}{"-" * len(release_name)}{C_RESET}')
+        # FIXME: hide for tests
+        # print(f'{C_GREEN}{release_name}{C_RESET}')
+        # print(f'{C_GREEN}{"-" * len(release_name)}{C_RESET}')
 
         # try to extract all attributes, prompt for manual entry when empty
-        self.title = self.ask_or_set(self.get_title, 'TITLE', r'\w+')
-        self.year = self.ask_or_set(self.get_year, 'YEAR', r'\d\d\d\d')
-        self.video_size = self.ask_or_set(self.get_video_size, 'VIDEO', r'\w+')
-        self.source = self.ask_or_set(self.get_source, 'SOURCE', r'\w+')
-        self.langs = self.ask_or_set(self.get_langs, 'LANGS', r'[A-Z,]+')
+        self.title = self.ask_or_set(self.get_title, 'TITLE', r'\w+', interactive=interactive)
+        self.year = self.ask_or_set(self.get_year, 'YEAR', r'\d\d\d\d', interactive=interactive)
+        self.video_size = self.ask_or_set(self.get_video_size, 'VIDEO', r'\w+', interactive=interactive)
+        self.source = self.ask_or_set(self.get_source, 'SOURCE', r'\w+', interactive=interactive)
+        self.langs = self.ask_or_set(self.get_langs, 'LANGS', r'[A-Z,]+', interactive=interactive)
 
         # put prefixes to the back of the title
         title_prefixes = ['Der', 'Die', 'Das', 'Ein', 'Eine', 'The', 'A', 'An']
@@ -38,15 +39,23 @@ class Parser():
                 self.title = self.title[len(p + ' '):] + ', ' + p
                 break
 
-    def ask_or_set(self, get_func: Callable[[str], Optional[str]], key: str, rex=False) -> str:
+    def ask_or_set(self, get_func: Callable[[str], Optional[str]], key: str, rex=False, interactive=True) -> str:
         value = get_func(self.release_name)
 
         was_prompted = False
+        if not interactive:
+            if value:
+                return value
+            else:
+                return "FIXME"
+
         while not value or (rex and not re.match(rex, value)):
             was_prompted = True
             value = input(f'{C_BLUE}{key}{C_YELLOW} ')
         if not was_prompted:
-            print(f'{C_BLUE}{key}{C_RESET} {value}')
+            # FIXME: hide for tests
+            # print(f'{C_BLUE}{key}{C_RESET} {value}')
+            pass
 
         return value
 
@@ -69,7 +78,7 @@ class Parser():
         rex = r'\.(240(p|i)|360(p|i)|480(p|i)|720(p|i)|1080(p|i))\.'
         m = re.search(rex, s, flags=re.IGNORECASE)
         if m:
-            return m.group(1)
+            return m.group(1).lower()
         return None
 
     def get_source(self, s: str) -> Optional[str]:
@@ -96,7 +105,7 @@ class Parser():
             r'\.German\.': "DE",
         }
         for key, val in normalize.items():
-            if re.search(key, s):
+            if re.search(key, s, flags=re.IGNORECASE):
                 return val
         else:
             return default
@@ -108,8 +117,8 @@ class MovieParser(Parser):
 
 class TvParser(Parser):
 
-    def __init__(self, release_name: str) -> None:
-        super().__init__(release_name)
+    def __init__(self, release_name: str, interactive=True) -> None:
+        super().__init__(release_name, interactive)
         self.season = self.ask_or_set(self.get_season, 'SEASON', r'S[0-9][0-9]')
         self.episode = self.ask_or_set(self.get_episode, 'EPISODE', r'E[0-9][0-9]')
 
@@ -146,8 +155,8 @@ class Mover():
     def move(self) -> None:
         print(f'{C_BLUE}DEST: {C_RESET}{self.dest}\n')
         self.remove_unneeded([
-            "proof", "Proof", "*-proof.*", "*-Proof.*", "proof.???"
-            "sample", "Sample", "*-sample.*", "*-Sample.*", "sample.???"
+            "proof", "Proof", "*-proof.*", "*-Proof.*", "proof.???", "*.proof.???"
+            "sample", "Sample", "*-sample.*", "*-Sample.*", "sample.???",
             "*.nzb", "*.url", "*.srr", "*.srs", "*.txt"
         ])
         self.move_video(["*.mkv", "*.mp4", "*.avi", "*.m4v"])
