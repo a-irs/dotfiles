@@ -94,5 +94,6 @@
 
 /srv/docker/grafana/sessions
 /srv/docker/nzbget/drop
+/srv/docker/nzbget/queue
 /srv/pwdumps
 /srv/vuls-database/db
