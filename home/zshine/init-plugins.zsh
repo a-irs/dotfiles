@@ -17,12 +17,12 @@ ZSHINE_PLUGINS=(
   bd # move back in current directory tree (breadcrumb-style)
   auto-ls # launch "ls" when entering directory
   fzf # CTRL+T for fuzzy-search of files
+  cdr # recent dirs command
   zshmarks # set bookmarks
   todo # show ~/.todo on start
   explain # explain command switches
   # ssh-agent # autostart ssh-agent
   homebrew # macos package manager
-  cdr # recent dirs command
   python # python dev stuff
   aliases # provides some aliases and functions for daily work
   nix # nixos, nix package manager

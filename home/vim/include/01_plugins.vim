@@ -56,6 +56,7 @@ let g:ale_python_flake8_options = '--ignore=E501,W391,E129,E302'
 let g:ale_python_mypy_options = '--cache-dir /tmp/mypy'
 " https://github.com/koalaman/shellcheck/wiki/SC2119
 let g:ale_sh_shellcheck_exclusions = 'SC2119'
+let g:ale_yaml_yamllint_options='-d "{extends: default, rules: {line-length: disable}}"'
 
 " ALE appearance
 let g:ale_sign_warning = "\u26A0"
@@ -89,6 +90,8 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'vim-python/python-syntax', { 'for': 'python' }
 let python_highlight_all = 1
 
+Plug 'cespare/vim-toml', { 'for': 'toml' }
+
 Plug 'pearofducks/ansible-vim'
 let g:ansible_unindent_after_newline = 1
 let g:ansible_extra_keywords_highlight = 1
@@ -105,9 +108,6 @@ let g:committia_use_singlecolumn = 'always'
 " Plug 'morhetz/gruvbox'
 " Plug 'sjl/badwolf'
 Plug 'rhysd/vim-color-spring-night'
-
-" shortly highlight yanked lines
-Plug 'machakann/vim-highlightedyank'
 
 call plug#end()
 
