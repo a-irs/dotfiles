@@ -1,0 +1,100 @@
+#!/usr/bin/env ruby
+
+require 'open3'
+require 'yaml'
+require 'json'
+require 'ostruct'
+require 'tmpdir'
+
+CONF = JSON.parse(YAML::load(File.open('config.yml')).to_json, object_class: OpenStruct)
+
+def cmd(s)
+  puts s
+  Open3.popen3(s) do |stdin, stdout, stderr, wait_thr|
+      puts stdout.read
+      puts stderr.read
+      if not wait_thr.value.success? then
+        raise "CmdException rc=#{wait_thr.value}"
+      end
+  end
+end
+
+def prepare(conf)
+  cmd("sgdisk -Z #{conf.dest.device}")
+  cmd("sgdisk -og #{conf.dest.device}")
+  cmd("sgdisk -n 1:0:+#{conf.src.slash_boot.size} -c 1:\"EFI System Partition\" -t 1:ef00 #{conf.dest.device}")
+  cmd("sgdisk -n 2:0:+#{conf.src.slash.size} -c 2:\"Linux LUKS\" -t 2:8309 #{conf.dest.device}")
+
+  cmd("partprobe #{conf.dest.device}")
+  cmd("partprobe #{conf.dest.device}")
+  cmd("partprobe #{conf.dest.device}")
+
+  cmd("mkfs.fat -F32 -n EXTSYS_BOOT #{conf.dest.device}-part1")
+
+  cmd("vgchange -a n vg_extsys")
+  cmd("pvscan --cache")
+
+  cmd("pvcreate -y -ff #{conf.dest.device}-part2")
+  cmd("vgcreate -y vg_extsys #{conf.dest.device}-part2")
+  cmd("lvcreate -y -n extsys_slash -l 100%FREE vg_extsys")
+  cmd("mkfs.ext4 -L extsys_slash /dev/vg_extsys/extsys_slash")
+
+  cmd("gdisk -l #{conf.dest.device}")
+end
+
+def rsync(conf, mount)
+  rsync_command = "rsync -aHx --delete -v"
+  conf.exclude.each do |item|
+    rsync_command = rsync_command + " --exclude #{item}"
+  end
+
+  cmd(rsync_command + " / #{mount}/")
+  cmd(rsync_command + " /home/ #{mount}/home")
+  cmd(rsync_command + " /boot/ #{mount}/boot")
+end
+
+def fstab(conf, mount)
+  s = %{
+/dev/vg_extsys/extsys_slash / ext4 defaults 0 1
+LABEL=EXTSYS_BOOT /boot vfat defaults 0 2
+}
+  File.write("#{mount}/etc/fstab", s)
+end
+
+def hostname(conf, mount)
+  File.write("#{mount}/etc/hostname", "EXTSYS")
+end
+
+def grub(conf, mount)
+  cmd("grub-install --target=x86_64-efi --recheck --removable --efi-directory=#{mount}/boot --boot-directory=#{mount}/boot")
+  s = %{
+  menuentry 'EXTSYS' {
+    gfxmode text
+    insmod gzio
+    insmod part_gpt
+    insmod fat
+    set root='hd0,gpt1'
+    search --no-floppy --label --set=root EXTSYS_BOOT
+    linux /vmlinuz-linux root=/dev/vg_extsys/extsys_slash rw ipv6.disable=1 kvm.ignore_msrs=1 intel_iommu=off quiet loglevel=3 udev.log_priority=5 i915.fastboot=1
+    initrd /initramfs-linux-fallback.img
+}
+}
+  File.write("#{mount}/boot/grub/grub.cfg", s)
+end
+
+
+# prepare(CONF)
+
+Dir.mktmpdir do |mount|
+  cmd("mount /dev/vg_extsys/extsys_slash #{mount}")
+  cmd("mkdir -p #{mount}/boot")
+  cmd("mount /dev/disk/by-label/EXTSYS_BOOT #{mount}/boot")
+
+  rsync(CONF, mount)
+  fstab(CONF, mount)
+  hostname(CONF, mount)
+  grub(CONF, mount)
+
+  cmd("umount #{mount}/boot")
+  cmd("umount #{mount}")
+end
