@@ -304,8 +304,9 @@ highlight_files() {
 }
 
 if [[ "$commands[git]" ]]; then
-    alias g="git"
     alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white) %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
+    alias gc="git a"
+    alias gp="git push"
 
     clone() {
         git clone --depth 1 "$1" && cd $(basename ${1//.git/})
