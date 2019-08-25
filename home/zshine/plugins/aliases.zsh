@@ -7,13 +7,9 @@ alias vpn-stop=vpn-down
 
 alias rg="rg --case-sensitive --hidden --no-ignore --no-ignore-global"
 
-for c in find ftp locate rake rsync scp sftp wcalc; do
+for c in find ftp locate rake rsync wcalc; do
     [[ "$commands[$c]" ]] && alias $c="noglob $c"
 done
-
-outdated() {
-    sudo lsof +c 0 -a +L1 / 2> /dev/null | awk '{print $1}' | tail +2 | sort -u | python -c "import sys; print(', '.join([x.strip() for x in sys.stdin.readlines()]))"
-}
 
 [[ -d ~/Documents ]] && alias todo="vim + ~/Documents/todo.taskpaper"
 [[ -d ~/doc ]] && alias todo="vim + ~/doc/todo.taskpaper"
@@ -203,8 +199,6 @@ fi
 [[ "$commands[youtube-dl]" ]] && alias yt-audio='noglob youtube-dl -f bestaudio -x -o "%(title)s.%(ext)s"'
 [[ "$commands[youtube-dl]" ]] && alias yt='noglob youtube-dl --write-sub --sub-lang en,de --embed-subs --prefer-free-formats --write-info-json -f bestvideo+bestaudio'
 [[ "$commands[journalctl]" ]] && alias j='sudo journalctl'
-[[ "$commands[reflector]" ]] && alias mirrors="sudo reflector -c Germany -c Netherlands -c Austria -c Belgium -c France -c Poland -c Denmark -c Switzerland -c 'United Kingdom' -l 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose && sudo pacman -Syy"
-
 
 if [[ "$commands[xdg-open]" ]]; then
     os() {
@@ -382,9 +376,10 @@ if [[ "$commands[pacman]" ]]; then
         alias ysua='yaourt -Syua'
     fi
 elif [[ "$commands[apt-get]" ]]; then
-    alias aptupg="sudo apt-get update && sudo apt-get -V upgrade && sudo apt-get -V dist-upgrade"
+    alias aptupg="sudo apt-get update && sudo apt-get -V dist-upgrade"
     alias aptin="sudo apt-get -V install"
     alias aptrem="sudo apt-get -V purge"
+    alias aptauto="sudo apt-get -V autoremove --purge"
     alias aptsearch="apt-cache search"
 fi
 
@@ -513,6 +508,7 @@ if [[ "$commands[systemctl]" ]]; then
     for c in $user_commands; do; alias sc-$c="systemctl $c"; done
     for c in $sudo_commands; do; alias sc-$c="sudo systemctl $c"; done
 fi
+unset sudo_commands user_commands
 
 nfo() {
     iconv -f cp437 -t utf8 "$@" | less -Q
@@ -522,7 +518,9 @@ pall() {
     printf "\n"
     local git_dirs=(
         ~/.dot
+        ~/git/a-irs/dot
         /srv/infra
+        ~/git/a-irs/infra
     )
     for d in "${git_dirs[@]}"; do
         if [[ -d "$d" ]]; then

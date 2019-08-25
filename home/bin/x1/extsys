@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+# TODO: luks
+# TODO: put config in git
+
 require 'open3'
 require 'yaml'
 require 'json'
@@ -20,19 +23,25 @@ def cmd(s)
 end
 
 def prepare(conf)
+  # cmd("vgchange -a n vg_extsys || true")
+  # cmd("pvscan --cache")
+
+  # cmd("partprobe #{conf.dest.device}")
+  # cmd("wipefs --all #{conf.dest.device}")
+  # cmd("partprobe #{conf.dest.device}")
   cmd("sgdisk -Z #{conf.dest.device}")
   cmd("sgdisk -og #{conf.dest.device}")
-  cmd("sgdisk -n 1:0:+#{conf.src.slash_boot.size} -c 1:\"EFI System Partition\" -t 1:ef00 #{conf.dest.device}")
-  cmd("sgdisk -n 2:0:+#{conf.src.slash.size} -c 2:\"Linux LUKS\" -t 2:8309 #{conf.dest.device}")
+  cmd("partprobe #{conf.dest.device}")
+  cmd("sgdisk -n 1:#{conf.src.slash_boot.start}:+#{conf.src.slash_boot.end} -c 1:\"EFI System Partition\" -t 1:ef00 #{conf.dest.device}")
+  cmd("partprobe #{conf.dest.device}")
+  cmd("sgdisk -n 2:#{conf.src.slash.start}:+#{conf.src.slash.end} -c 2:\"Linux LUKS\" -t 2:8309 #{conf.dest.device}")
+  cmd("partprobe #{conf.dest.device}")
 
   cmd("partprobe #{conf.dest.device}")
   cmd("partprobe #{conf.dest.device}")
   cmd("partprobe #{conf.dest.device}")
 
   cmd("mkfs.fat -F32 -n EXTSYS_BOOT #{conf.dest.device}-part1")
-
-  cmd("vgchange -a n vg_extsys")
-  cmd("pvscan --cache")
 
   cmd("pvcreate -y -ff #{conf.dest.device}-part2")
   cmd("vgcreate -y vg_extsys #{conf.dest.device}-part2")
@@ -43,14 +52,15 @@ def prepare(conf)
 end
 
 def rsync(conf, mount)
-  rsync_command = "rsync -aHx --delete -v"
-  conf.exclude.each do |item|
-    rsync_command = rsync_command + " --exclude #{item}"
-  end
+  conf.copy.each do |item|
+    rsync_command = "rsync -aHx --delete -v"
+    item.exclude.each do |ex|
+      rsync_command = rsync_command + " --exclude #{ex}"
+    end
+    rsync_command = "#{rsync_command} #{item.src}/ #{mount}/#{item.dest}"
 
-  cmd(rsync_command + " / #{mount}/")
-  cmd(rsync_command + " /home/ #{mount}/home")
-  cmd(rsync_command + " /boot/ #{mount}/boot")
+    cmd(rsync_command)
+  end
 end
 
 def fstab(conf, mount)
@@ -83,11 +93,12 @@ def grub(conf, mount)
 end
 
 
-# prepare(CONF)
+prepare(CONF)
 
 Dir.mktmpdir do |mount|
   cmd("mount /dev/vg_extsys/extsys_slash #{mount}")
   cmd("mkdir -p #{mount}/boot")
+  cmd("mkdir -p #{mount}/home")
   cmd("mount /dev/disk/by-label/EXTSYS_BOOT #{mount}/boot")
 
   rsync(CONF, mount)
@@ -95,6 +106,6 @@ Dir.mktmpdir do |mount|
   hostname(CONF, mount)
   grub(CONF, mount)
 
-  cmd("umount #{mount}/boot")
-  cmd("umount #{mount}")
+  cmd("umount -l #{mount}/boot")
+  cmd("umount -l #{mount}")
 end
