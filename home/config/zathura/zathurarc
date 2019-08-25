@@ -1,8 +1,8 @@
 set guioptions vh
 set statusbar-home-tilde true
-set statusbar-bg "#263657"
+set statusbar-bg "#233657"
 set statusbar-fg "#ffffff"
-set inputbar-bg "#263657"
+set inputbar-bg "#233657"
 set inputbar-fg "#ffffff"
 set page-padding 5
 set zoom-step 5
@@ -28,4 +28,4 @@ map              e adjust_window best-fit
 map [fullscreen] e adjust_window best-fit
 
 set recolor-darkcolor  "#dddddd"
-set recolor-lightcolor "#263657"
+set recolor-lightcolor "#233657"
