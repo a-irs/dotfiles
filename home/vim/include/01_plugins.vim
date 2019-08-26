@@ -30,8 +30,6 @@ let g:fzf_files_options = '--preview "$HOME/.bin/preview {}" --no-exact --color=
 let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --no-ignore --follow --color always -E .vim/undo -E .vim/plugged -E .git -E __pycache__ -E Cache -E cache -E .gem -E .npm'
 let g:fzf_buffers_jump = 1  " jump to existing if possible
 nnoremap <silent> <leader>b :Buffers<CR>
-" only useful with vim-fugitive
-" nnoremap <silent> <leader>o :Commits<CR>
 nnoremap <silent> _ :Files<CR>
 nnoremap <silent> - :History<CR>
 

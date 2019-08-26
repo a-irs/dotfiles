@@ -5,7 +5,7 @@ alias vpn-start=vpn-up
 alias vpn-down="sudo wg-quick down wg0"
 alias vpn-stop=vpn-down
 
-alias rg="rg --case-sensitive --hidden --no-ignore --no-ignore-global"
+alias rg="rg --case-sensitive --hidden"
 
 for c in find ftp locate rake rsync scp sftp wcalc; do
     [[ "$commands[$c]" ]] && alias $c="noglob $c"
