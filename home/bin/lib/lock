@@ -45,7 +45,7 @@ if [[ -e /dev/fd/${XSS_SLEEP_LOCK_FD:--1} ]]; then
 
 else
     trap 'kill %%' TERM INT
-    i3lock -i "$(make_screenshot)" --color=263657 --show-failed-attempts --ignore-empty-password
+    i3lock -i "$(make_screenshot)" --color=233657 --show-failed-attempts --ignore-empty-password
 fi
 
 post_lock

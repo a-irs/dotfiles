@@ -2,40 +2,63 @@
 
 set -u
 
-default_gateway=$(ip -4 route show 0/0 | grep -oP 'via \S+' | grep -oP '[\d\.]+')
-ping_output=$(ping -w 3 -c 1 "$default_gateway")
-ping_rc=$?
+TIMEOUT=${1:-2}
 
-ok() {
-    echo "$1: $(tput setaf 2)$2$(tput sgr0)"
+ok() { echo "$1: $(tput setaf 2)$2$(tput sgr0)"; }
+die() { echo "$1: $(tput setaf 1)$2$(tput sgr0)"; }
+
+check_icmp() {
+    local default_gateway ping_output ping_rc
+    default_gateway=$(ip -4 route show 0/0 | grep -oP 'via \S+' | grep -oP '[\d\.]+')
+    ping_output=$(ping -w "$TIMEOUT" -c 1 "$default_gateway")
+    ping_rc=$?
+
+    if [[ "$ping_rc" != 0 ]]; then
+        die "PING default GW $default_gateway" "FAILED"
+    else
+        ok "PING default GW $default_gateway" "$(echo "$ping_output" | grep -oP 'time=\S+' | grep -oP '\d+' | head -1) ms"
+    fi
 }
-die() {
-    echo "$1: $(tput setaf 1)$2$(tput sgr0)"
+
+check_traceroute() {
+    local dest=$1
+
+    sudo traceroute -q 1 -M tcp -4 "$dest"
 }
 
-if [[ "$ping_rc" != 0 ]]; then
-    die "PING default GW $default_gateway" "FAILED"
-else
-    ok "PING default GW $default_gateway" "$(echo "$ping_output" | grep -oP 'time=\S+' | grep -oP '\d+' | head -1) ms"
-fi
+check_dns() {
+    local domain=$1
 
+    local dig_output dig_time dig_server dig_rc
+    dig_output=$(dig +noall +stats +timeout="$TIMEOUT" "$domain")
+    dig_rc=$?
 
-dig_output=$(dig +noall +stats +timeout=3 google.com)
-dig_rc=$?
+    dig_time=$(echo "$dig_output" | grep -oP 'Query time: \d+' | grep -oP '\d+')
+    dig_server=$(echo "$dig_output" | grep -oP 'SERVER: [\d\.\#]+' | sed 's/SERVER: //')
+    if [[ "$dig_rc" != 0 ]]; then
+        die "DNS resolve $domain" "FAILED"
+    else
+        ok "DNS resolve $domain" "$dig_server - ${dig_time} ms"
+    fi
+}
 
-dig_time=$(echo "$dig_output" | grep -oP 'Query time: \d+' | grep -oP '\d+')
-dig_server=$(echo "$dig_output" | grep -oP 'SERVER: [\d\.\#]+' | sed 's/SERVER: //')
-if [[ "$dig_rc" != 0 ]]; then
-    die "DNS resolve google.com" "FAILED"
-else
-    ok "DNS resolve google.com" "$dig_server - ${dig_time} ms"
-fi
+check_http() {
+    local url="$1"
 
+    local curl_output curl_rc
+    curl_output=$(curl --connect-timeout "$TIMEOUT" -I -o /dev/null -s -w '%{time_connect}s' "$url")
+    curl_rc=$?
+    if [[ "$curl_rc" != 0 ]]; then
+        die "HTTP GET $url" "FAILED"
+    else
+        ok "HTTP GET $url" "${curl_output}"
+    fi
+}
 
-curl_output=$(curl --connect-timeout 3 -I -o /dev/null -s -w '%{time_connect}s' https://google.com)
-curl_rc=$?
-if [[ "$curl_rc" != 0 ]]; then
-    die "HTTP GET https://google.com" "FAILED"
-else
-    ok "HTTP GET https://google.com" "${curl_output}"
-fi
+check_icmp
+check_dns example.com
+check_http http://1.1.1.1
+check_http https://8.8.8.8
+echo ""
+check_traceroute 1.1.1.1
+

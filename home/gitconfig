@@ -1,20 +1,16 @@
 [user]
     email = alexirsi@gmail.com
     name = a-irs
-[push]
-    default = simple
+[color]
+    ui = 1
 [alias]
     subup = submodule update --remote --merge
-    up = !git pull --rebase --prune $@ && git submodule update --init --recursive
     p = !git add -A && git commit && git push origin master
     clone1 = clone --depth=1
     i = icdiff
-    d = diff
+    d = !git add --intent-to-add -A && git diff $@
     co = checkout
     cm = commit
-    pu = push origin master
     l = log
     s = status -sbu
-    a = add -p
-[color]
-    ui = 1
+    a = !git add --intent-to-add -A && git add --patch && git commit
