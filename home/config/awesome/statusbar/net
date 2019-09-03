@@ -30,13 +30,13 @@ else
         [[ "$count" == "$total" ]] || printf "%s" " + "
         count=$((count+1))
     done
-fi
 
-ping=$(ping -c 1 -w 3 1.1.1.1)
-ping_rc=$?
-if [[ "$ping_rc" != 0 ]]; then
-    printf '%s' " <span foreground='#ff0000'><b>[>3000ms]</b></span>"
-else
-    ms=$(printf '%s' "$ping" | grep -oP "time=\S+" | grep -oP "\d+" | head -1)
-    printf '%s' " [${ms}ms]"
+    ping=$(ping -c 1 -w 3 1.1.1.1)
+    ping_rc=$?
+    if [[ "$ping_rc" != 0 ]]; then
+        printf '%s' " <span foreground='#ff0000'><b>[>3000ms]</b></span>"
+    else
+        ms=$(printf '%s' "$ping" | grep -oP "time=\S+" | grep -oP "\d+" | head -1)
+        printf '%s' " [${ms}ms]"
+    fi
 fi
