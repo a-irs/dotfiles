@@ -2,6 +2,7 @@
 
 # TODO: luks
 # TODO: put config in git
+# install arch-chroot
 
 require 'open3'
 require 'yaml'
@@ -29,33 +30,26 @@ def prepare(conf)
   # cmd("partprobe #{conf.dest.device}")
   # cmd("wipefs --all #{conf.dest.device}")
   # cmd("partprobe #{conf.dest.device}")
+
+  # wipe disk
   cmd("sgdisk -Z #{conf.dest.device}")
   cmd("sgdisk -og #{conf.dest.device}")
   cmd("partprobe #{conf.dest.device}")
-  cmd("sgdisk -n 1:#{conf.src.slash_boot.start}:+#{conf.src.slash_boot.end} -c 1:\"EFI System Partition\" -t 1:ef00 #{conf.dest.device}")
-  cmd("partprobe #{conf.dest.device}")
-  cmd("sgdisk -n 2:#{conf.src.slash.start}:+#{conf.src.slash.end} -c 2:\"Linux LUKS\" -t 2:8309 #{conf.dest.device}")
-  cmd("partprobe #{conf.dest.device}")
 
-  cmd("partprobe #{conf.dest.device}")
-  cmd("partprobe #{conf.dest.device}")
-  cmd("partprobe #{conf.dest.device}")
+  # create partitions
+  cmd("sgdisk -n 1:0:+100MB -c 1:\"EFI System Partition\" -t 1:ef00 #{conf.dest.device}")
+  cmd("sgdisk -n 2:0:+0 -c 2:\"Linux LUKS\" -t 2:8309 #{conf.dest.device}")
 
+  # format file systems
   cmd("mkfs.fat -F32 -n EXTSYS_BOOT #{conf.dest.device}-part1")
-
-  cmd("pvcreate -y -ff #{conf.dest.device}-part2")
-  cmd("vgcreate -y vg_extsys #{conf.dest.device}-part2")
-  cmd("lvcreate -y -n extsys_slash -l 100%FREE vg_extsys")
-  cmd("mkfs.ext4 -L extsys_slash /dev/vg_extsys/extsys_slash")
-
-  cmd("gdisk -l #{conf.dest.device}")
+  cmd("mkfs.ext4 -L EXTSYS #{conf.dest.device}-part2")
 end
 
 def rsync(conf, mount)
   conf.copy.each do |item|
     rsync_command = "rsync -aHx --delete -v"
-    item.exclude.each do |ex|
-      rsync_command = rsync_command + " --exclude #{ex}"
+    item.exclude.each do |exclude|
+      rsync_command = rsync_command + " --exclude #{exclude}"
     end
     rsync_command = "#{rsync_command} #{item.src}/ #{mount}/#{item.dest}"
 
@@ -63,20 +57,21 @@ def rsync(conf, mount)
   end
 end
 
-def fstab(conf, mount)
+def write_fstab(conf, mount)
   s = %{
-/dev/vg_extsys/extsys_slash / ext4 defaults 0 1
+LABEL=EXTSYS / ext4 defaults 0 1
 LABEL=EXTSYS_BOOT /boot vfat defaults 0 2
 }
   File.write("#{mount}/etc/fstab", s)
 end
 
-def hostname(conf, mount)
+def write_hostname(conf, mount)
   File.write("#{mount}/etc/hostname", "EXTSYS")
 end
 
-def grub(conf, mount)
+def write_grub(conf, mount)
   cmd("grub-install --target=x86_64-efi --recheck --removable --efi-directory=#{mount}/boot --boot-directory=#{mount}/boot")
+
   s = %{
   menuentry 'EXTSYS' {
     gfxmode text
@@ -85,9 +80,9 @@ def grub(conf, mount)
     insmod fat
     set root='hd0,gpt1'
     search --no-floppy --label --set=root EXTSYS_BOOT
-    linux /vmlinuz-linux root=/dev/vg_extsys/extsys_slash rw ipv6.disable=1 kvm.ignore_msrs=1 intel_iommu=off quiet loglevel=3 udev.log_priority=5 i915.fastboot=1
+    linux /vmlinuz-linux root=LABEL=EXTSYS rw ipv6.disable=1
     initrd /initramfs-linux-fallback.img
-}
+  }
 }
   File.write("#{mount}/boot/grub/grub.cfg", s)
 end
@@ -96,16 +91,17 @@ end
 prepare(CONF)
 
 Dir.mktmpdir do |mount|
-  cmd("mount /dev/vg_extsys/extsys_slash #{mount}")
+  cmd("mount /dev/disk/by-label/EXTSYS #{mount}")
   cmd("mkdir -p #{mount}/boot")
   cmd("mkdir -p #{mount}/home")
   cmd("mount /dev/disk/by-label/EXTSYS_BOOT #{mount}/boot")
 
   rsync(CONF, mount)
-  fstab(CONF, mount)
-  hostname(CONF, mount)
-  grub(CONF, mount)
+  write_fstab(CONF, mount)
+  write_hostname(CONF, mount)
+  write_grub(CONF, mount)
 
   cmd("umount -l #{mount}/boot")
   cmd("umount -l #{mount}")
 end
+

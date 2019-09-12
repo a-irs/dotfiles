@@ -87,7 +87,7 @@ done
 endsnippet
 
 snippet "forin|each|foreach|fore" "for .. in .." br
-for ${1:i}${2/.+/ in /}${2:words}; do
+for ${1:i}${2/.+/ in /}${2:"${array[@]}"}; do
     ${0:${VISUAL:# TODO}}
 done
 endsnippet

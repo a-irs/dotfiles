@@ -7,6 +7,31 @@ TIMEOUT=${1:-2}
 ok() { echo "$1: $(tput setaf 2)$2$(tput sgr0)"; }
 die() { echo "$1: $(tput setaf 1)$2$(tput sgr0)"; }
 
+check_ip() {
+    local interfaces is_set is_interface
+    interfaces=(eth0 wlan0)
+    is_set=1
+    is_interface=""
+
+    for int in "${interfaces[@]}"; do
+        output=$(ip addr show dev "$int" | grep -oP 'inet [^/]+')
+        output_rc=$?
+        if [[ "$output_rc" == 0 ]]; then
+            is_set=0
+            is_interface="$int"
+            output=$(echo "$output" | cut -d ' ' -f 2)
+            break
+        fi
+    done
+
+    if [[ "$is_set" -eq 0 ]]; then
+        ok "IP address" "set for $is_interface: $output"
+    else
+        die "IP address" "not set for any interface"
+        exit 1
+    fi
+}
+
 check_icmp() {
     local default_gateway ping_output ping_rc
     default_gateway=$(ip -4 route show 0/0 | grep -oP 'via \S+' | grep -oP '[\d\.]+')
@@ -55,6 +80,7 @@ check_http() {
     fi
 }
 
+check_ip
 check_icmp
 check_dns example.com
 check_http http://1.1.1.1
