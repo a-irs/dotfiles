@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -u
-
 TIMEOUT=${1:-2}
 
 ok() { echo "$1: $(tput setaf 2)$2$(tput sgr0)"; }
@@ -53,9 +51,14 @@ check_traceroute() {
 
 check_dns() {
     local domain=$1
+    local nameserver=$2
 
     local dig_output dig_time dig_server dig_rc
-    dig_output=$(dig +noall +stats +timeout="$TIMEOUT" "$domain")
+    if [[ -z "$nameserver" ]]; then
+        dig_output=$(dig +noall +stats +timeout="$TIMEOUT" "$domain")
+    else
+        dig_output=$(dig @"$nameserver" +noall +stats +timeout="$TIMEOUT" "$domain")
+    fi
     dig_rc=$?
 
     dig_time=$(echo "$dig_output" | grep -oP 'Query time: \d+' | grep -oP '\d+')
@@ -80,11 +83,17 @@ check_http() {
     fi
 }
 
+echo ""
 check_ip
 check_icmp
+echo ""
 check_dns example.com
+check_dns google.at 1.1.1.1
+check_dns mozilla.org 8.8.8.8
+echo ""
 check_http http://1.1.1.1
 check_http https://8.8.8.8
 echo ""
 check_traceroute 1.1.1.1
+echo ""
 

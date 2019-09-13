@@ -5,7 +5,7 @@
     ui = 1
 [alias]
     subup = submodule update --remote --merge
-    p = !git add -A && git commit && git push origin master
+    p = !git add -A && git commit && git push
     clone1 = clone --depth=1
     i = icdiff
     d = !git add --intent-to-add -A && git diff $@

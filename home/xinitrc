@@ -27,6 +27,7 @@ compton &
 keepassxc &
 
 mkdir -p ~/.local/share/thumbnails && ln -sfn ~/.local/share/thumbnails ~/.cache/thumbnails
+mkdir -p ~/.local/share/thumbnails/darktable && ln -sfn ~/.local/share/thumbnails/darktable ~/.cache/darktable
 
 ~/.bin/workstats &
 

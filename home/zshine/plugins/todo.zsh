@@ -1,26 +1,14 @@
-TODO_FILES_GLOBAL=(
-    ~/.todo
-    ~/doc/todo.taskpaper
-    ~/doc/todo.md
-    ~/Documents/todo.taskpaper
-    ~/Documents/todo.md
-)
+#!/usr/bin/env bash
 
-TODO_FILES=(
-    ~/doc/todo_$HOST.taskpaper
-    ~/doc/todo_$HOST.md
-)
+showtodo() {
+    local todo_files=(~/.todo ~/{doc,Documents}/todo.{taskpaper,md})
 
-for f in ${TODO_FILES[@]}; do
-    [[ -s "$f" ]] || continue
-    content=$(cat "$f" | grep -v '@done' | grep '\S*- ' | sed 's/- /• /' | perl -pe 's/\t/    /g')
-    echo "$content" | grep --color -E '@.*|$'
-done
-unset f
+    for file in "${todo_files[@]}"; do
+        [[ -s "$file" ]] || continue
+        content=$(grep -v '@done' "$file" | sed 's/- /• /' | perl -pe 's/\t/    /g')
+        echo "$content" | grep --color -E '@.*|$'
+    done
+    unset file
+}
 
-for f in ${TODO_FILES_GLOBAL[@]}; do
-    [[ -s "$f" ]] || continue
-    content=$(cat "$f" | grep -v '@done' | grep '\S*- ' | sed 's/- /• /' | perl -pe 's/\t/    /g')
-    echo "$content" | grep --color -E '@.*|$'
-done
-unset f
+showtodo
