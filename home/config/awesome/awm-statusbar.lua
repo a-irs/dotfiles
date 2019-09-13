@@ -45,11 +45,11 @@ if is_mobile then
             if p > 100 then
                 p = 100
             end
-            if p <= 15 then
+            if p <= 10 then
                 color = "#db3131"
-            elseif p <= 40 then
+            elseif p <= 30 then
                 color = "#ffff00"
-            elseif p <= 70 then
+            elseif p <= 60 then
                 color = "#ffffff"
             else
                 color = "#90ee90"
@@ -59,7 +59,9 @@ if is_mobile then
             if bat_now.status == "Full" or bat_now.status == "Charging" then
                 charg = markup("#ffff00", ' +')
             end
-            widget:set_markup(markup.bold(markup(color, p .. charg)))
+            widget:set_markup(markup.bold(
+                markup(color, p .. charg)) .. " " .. bat_now.time
+            )
         end
     })
     batterywidget_t = awful.tooltip({
