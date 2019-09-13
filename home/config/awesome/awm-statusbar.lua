@@ -46,7 +46,7 @@ if is_mobile then
                 p = 100
             end
             if p <= 10 then
-                color = "#db3131"
+                color = "#fa7883"
             elseif p <= 30 then
                 color = "#ffff00"
             elseif p <= 60 then
@@ -81,7 +81,8 @@ end
 
 if is_mobile then
     netwidget = awful.widget.watch(
-        gears.filesystem.get_configuration_dir() .. "/statusbar/net", 5,
+        gears.filesystem.get_configuration_dir() .. "/statusbar/net",
+        5,
         function(widget, stdout)
             widget:set_markup(stdout)
         end
@@ -221,7 +222,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- layouts
 
-    local m = dpi(3)
+    local m = dpi(5)
 
     local layout1 = wibox.layout.fixed.horizontal()
     lay(layout1, musicwidget, 0, 0, theme.bg_focus)
@@ -238,11 +239,11 @@ awful.screen.connect_for_each_screen(function(s)
     lay(layout3, s.systray)
     lay(layout3, pulsewidget.widget, m)
     if is_mobile then
+        lay(layout3, batterywidget.widget, m, nil, theme.bg_focus)
         lay(layout3, netwidget, m)
-        lay(layout3, batterywidget.widget, m)
     end
-    lay(layout3, datewidget, m, 0)
-    lay(layout3, timewidget, m, m * 2)
+    lay(layout3, datewidget, m, 0, theme.bg_focus)
+    lay(layout3, timewidget, m, m, theme.bg_focus)
 
 
     -- build status bar
