@@ -146,7 +146,7 @@ pulsewidget = lain.widget.pulse({
         if volume_now.muted =="yes" then
             widget:set_markup(markup.bold(markup(theme.widget_pulse_mute_fg, level)))
         elseif level >= limit then
-            widget:set_markup(markup.bold(markup("#ff3030", level)))
+            widget:set_markup(markup.bold(markup("#fa7883", level)))
         else
             widget:set_markup(markup.bold(markup(theme.widget_pulse_fg, level)))
         end
