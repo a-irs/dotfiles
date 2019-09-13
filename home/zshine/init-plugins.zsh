@@ -40,7 +40,7 @@ if [[ "$ZSHINE_DEBUG" == 1 ]]; then
     done
 else
     for z in $ZSHINE_PLUGINS; do
-        source "$ZSHINE_DIR/plugins/$z.zsh"
+        source "$ZSHINE_DIR/plugins/$z"
     done
 fi
 unset z

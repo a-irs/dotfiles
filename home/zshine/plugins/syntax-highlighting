@@ -1,4 +1,4 @@
-source "$ZSHINE_DIR/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+source "$ZSHINE_DIR/plugins/fast-syntax-highlighting.plugin/fast-syntax-highlighting.plugin.zsh"
 
 # man/whatis is slow otherwise
 unset "FAST_HIGHLIGHT[chroma-man]"
