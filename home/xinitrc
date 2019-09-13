@@ -26,6 +26,8 @@ compton &
 [[ $HOSTNAME == x1 ]] && xcalib ~/.config/x1carbon3rd_notebookcheck.com.icc &
 keepassxc &
 
+mkdir -p ~/.local/share/thumbnails && ln -sfn ~/.local/share/thumbnails ~/.cache/thumbnails
+
 ~/.bin/workstats &
 
 start-pulseaudio-x11 &

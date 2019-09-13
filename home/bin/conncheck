@@ -14,7 +14,7 @@ check_ip() {
     is_interface=""
 
     for int in "${interfaces[@]}"; do
-        output=$(ip addr show dev "$int" | grep -oP 'inet [^/]+')
+        output=$(ip addr show dev "$int" | grep -oP 'inet [^\s]+')
         output_rc=$?
         if [[ "$output_rc" == 0 ]]; then
             is_set=0
@@ -25,7 +25,7 @@ check_ip() {
     done
 
     if [[ "$is_set" -eq 0 ]]; then
-        ok "IP address" "set for $is_interface: $output"
+        ok "IP address" "set for $is_interface ($output)"
     else
         die "IP address" "not set for any interface"
         exit 1
@@ -34,7 +34,7 @@ check_ip() {
 
 check_icmp() {
     local default_gateway ping_output ping_rc
-    default_gateway=$(ip -4 route show 0/0 | grep -oP 'via \S+' | grep -oP '[\d\.]+')
+    default_gateway=$(ip -4 route show 0/0 | grep -oP 'via \S+' | grep -oP '[\d\.]+' | tail -1)
     ping_output=$(ping -w "$TIMEOUT" -c 1 "$default_gateway")
     ping_rc=$?
 
