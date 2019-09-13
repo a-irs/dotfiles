@@ -302,6 +302,7 @@ if [[ "$commands[git]" ]]; then
     alias gc="git a"
     alias gp="git push"
     alias gs="git s"
+    alias gd="git diff"
 
     clone() {
         git clone --depth 1 "$1" && cd $(basename ${1//.git/})
