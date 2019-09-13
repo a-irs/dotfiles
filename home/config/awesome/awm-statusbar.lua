@@ -41,15 +41,15 @@ if is_mobile then
         timeout = 3,
         notify = "off",
         settings = function()
-            p = tonumber(bat_now.perc)
-            if p > 100 then
-                p = 100
+            perc = tonumber(bat_now.perc)
+            if perc > 100 then
+                perc = 100
             end
-            if p <= 10 then
+            if perc <= 10 then
                 color = "#fa7883"
-            elseif p <= 30 then
+            elseif perc <= 30 then
                 color = "#ffff00"
-            elseif p <= 60 then
+            elseif perc <= 60 then
                 color = "#ffffff"
             else
                 color = "#90ee90"
@@ -59,9 +59,12 @@ if is_mobile then
             if bat_now.status == "Full" or bat_now.status == "Charging" then
                 charg = markup("#ffff00", ' +')
             end
-            widget:set_markup(markup.bold(
-                markup(color, p .. charg)) .. " " .. bat_now.time
-            )
+
+            if bat_now.status == "Full" then
+                widget:set_markup(markup.bold(markup(color, perc .. charg)))
+            else
+                widget:set_markup(markup.bold(markup(color, perc .. charg)) .. " " .. bat_now.time)
+            end
         end
     })
     batterywidget_t = awful.tooltip({
@@ -222,7 +225,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- layouts
 
-    local m = dpi(5)
+    local m = dpi(6)
 
     local layout1 = wibox.layout.fixed.horizontal()
     lay(layout1, musicwidget, 0, 0, theme.bg_focus)
@@ -236,14 +239,14 @@ awful.screen.connect_for_each_screen(function(s)
     lay(layout2, s.mytaglist)
 
     local layout3 = wibox.layout.fixed.horizontal()
-    lay(layout3, s.systray)
-    lay(layout3, pulsewidget.widget, m)
+    lay(layout3, s.systray, m)
+    lay(layout3, pulsewidget.widget, m, nil, theme.bg_focus)
     if is_mobile then
-        lay(layout3, batterywidget.widget, m, nil, theme.bg_focus)
-        lay(layout3, netwidget, m)
+        lay(layout3, batterywidget.widget, m)
+        lay(layout3, netwidget, m, nil, theme.bg_focus)
     end
-    lay(layout3, datewidget, m, 0, theme.bg_focus)
-    lay(layout3, timewidget, m, m, theme.bg_focus)
+    lay(layout3, datewidget, m, 0)
+    lay(layout3, timewidget, m, m)
 
 
     -- build status bar
