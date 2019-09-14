@@ -13,4 +13,5 @@
     cm = commit
     l = log
     s = status -sbu
-    a = !git add --intent-to-add -A && git add --patch && git commit
+    c = !git add --intent-to-add -A && git add --patch && git commit
+    ca = !git add --intent-to-add -A && git add --patch && git commit --amend

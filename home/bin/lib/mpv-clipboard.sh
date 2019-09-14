@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-if which xclip &> /dev/null; then
+if command -v xclip &> /dev/null; then
     clip=$(xclip -o -selection clipboard)
     [[ -z "$clip" ]] && clip=$(xclip -o -selection primary)
     [[ -z "$clip" ]] && clip=$(xclip -o -selection secondary)
-elif which xsel &> /dev/null; then
+elif command -v xsel &> /dev/null; then
     clip=$(xsel --clipboard --output)
     [[ -z "$clip" ]] && clip=$(xsel --primary --output)
     [[ -z "$clip" ]] && clip=$(xsel --secondary --output)

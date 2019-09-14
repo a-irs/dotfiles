@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-REPOS=( "$HOME/.dotfiles" /srv/infra )
+REPOS=(~/.dot /srv/infra)
 
 show_header() {
     echo -e "\n\033[1;33m$*\033[0m\n"

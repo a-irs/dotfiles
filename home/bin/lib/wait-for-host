@@ -18,8 +18,7 @@ while true; do
 
     echo "Waiting for host at \"$REACHABLE_HOST\". Attempt number $TRIES / $TRIES_MAX."
 
-    ping -W 1 -c 1 $REACHABLE_HOST &> /dev/null
-    if [ $? -eq 0 ]; then
+    if ping -W 1 -c 1 "$REACHABLE_HOST" &> /dev/null; then
         echo "Host now reachable, executing \"$cmd\""
         $cmd
         exit
