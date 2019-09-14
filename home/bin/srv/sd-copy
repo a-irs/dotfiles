@@ -2,8 +2,8 @@
 
 set -ux
 
+DEST=$1
 SRC=/dev/disk/by-id/usb-Multiple_Card_Reader_058F63666433-0:0-part1
-DEST=/media/data4/photos
 
 MNT=$(mktemp -d)
 die() {
