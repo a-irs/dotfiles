@@ -40,7 +40,7 @@ convert_file() {
         local name="${name%.*}"
         local other=$(find "$DST_DIR" -name "$name.*" -type f)
         if [[ -n "$other" ]]; then
-            ln -s "$other" "$out"
+            ln -s --relative "$other" "$out"
         else
             local tmp="$(mktemp -t tmp.XXXXX.mp4)"
             trap "rm -f "$tmp"" INT TERM EXIT
