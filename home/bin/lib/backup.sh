@@ -113,6 +113,10 @@ borg create \
     "$REPO"::"$DATE" \
     "${BACKUP[@]}"
 
-header 2 "PRUNING BACKUPS OLDER THAN 6 MONTHS AND >5"
-borg prune --verbose --stats --list --keep-within 6m "$REPO" --keep-last 5
+header 2 "PRUNING BACKUPS OLDER THAN 12 MONTHS AND >10"
+borg prune --verbose --stats --list --keep-within 12m "$REPO" --keep-last 10
 
+if [[ "$HOSTNAME" == x1 ]]; then
+    header 2 "RSYNC IPHONE PHOTOS"
+    rsync --progress -avz -e "$BORG_RSH" --delete /home/alex/iphone-photos/ srv.home:/media/data/photos/iphone
+fi
