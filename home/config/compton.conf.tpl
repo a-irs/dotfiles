@@ -1,5 +1,4 @@
 backend = "glx";
-paint-on-overlay = true;
 glx-no-stencil = true;
 glx-no-rebind-pixmap = true;
 vsync = "opengl-swc";
@@ -8,19 +7,11 @@ vsync = "opengl-swc";
 shadow = true;          # Enabled client-side shadows on windows.
 no-dock-shadow = false;     # Avoid drawing shadows on dock/panel windows.
 no-dnd-shadow = true;       # Don't draw shadows on DND windows.
-clear-shadow = true;        # Zero the part of the shadow's mask behind the window (experimental).
 shadow-radius = 12;     # The blur radius for shadows. (default 12)
 shadow-offset-x = -15;      # The left offset for shadows. (default -15)
 shadow-offset-y = -15;      # The top offset for shadows. (default -15)
 shadow-opacity = 0.5;       # The translucency for shadows. (default .75)
 shadow-ignore-shaped = true;
-shadow-exclude = [
- "n:e:Plank",
- "g:e:Synapse",
- "g:e:Launchy",
- "g:e:Conky",
- "_GTK_FRAME_EXTENTS@:c"
-];
 ||DESK||shadow-exclude-reg = "x15+0+0";
 ||X1||shadow-exclude-reg = "x30+0+0";
 
@@ -42,9 +33,3 @@ inactive-dim = 0.25;        # Dim inactive windows. (0.0 - 1.0, defaults to 0).
 mark-wmwin-focused = true;  # Try to detect WM windows and mark them as active.
 mark-ovredir-focused = true;
 detect-rounded-corners = true;
-
-# Window type settings
-wintypes:
-{
-  #tooltip = { fade = true; shadow = true; opacity = 0.75; };
-  };
