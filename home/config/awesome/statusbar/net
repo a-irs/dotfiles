@@ -3,6 +3,7 @@
 wifi_color="#ffa200"
 eth_color="#ffa500"
 vpn_color="#ffd700"
+error_color="#fa7883"
 
 out=$(nmcli --wait 1 --terse --colors no --fields name,type,device,state,active connection show)
 active=$(printf '%s\n' "$out" | grep -v '^docker0' | awk -F: '$5 == "yes" {print $1":"$2}' | sort -r | sort -t : -k 2)
@@ -23,7 +24,7 @@ done <<< "$active"
 total="${#txt[@]}"
 count=1
 if [[ $total == 0 ]]; then
-    printf "%s" "<b>disconnected</b>"
+    printf '%s' "<span foreground='$error_color'><b>N/A</b></span>"
 else
     for item in "${txt[@]}"; do
         printf "%s" "$item"
@@ -34,7 +35,7 @@ else
     ping=$(ping -c 1 -w 3 1.1.1.1)
     ping_rc=$?
     if [[ "$ping_rc" != 0 ]]; then
-        printf '%s' " <span foreground='#ff0000'><b>[>3000ms]</b></span>"
+        printf '%s' " <span foreground='$error_color'><b>[>3000ms]</b></span>"
     else
         ms=$(printf '%s' "$ping" | grep -oP "time=\S+" | grep -oP "\d+" | head -1)
         printf '%s' " ${ms}ms"

@@ -22,7 +22,7 @@ augroup SemanticHL
 augroup END
 
 Plug 'chrisbra/Colorizer'
-let g:colorizer_auto_filetype='css,html,conf,lua'
+let g:colorizer_auto_filetype='css,html,conf,lua,sh'
 let g:colorizer_colornames = 0  "do not colorize simple 'red', 'yellow', ...
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
