@@ -224,18 +224,9 @@ cd() {
     fi
 }
 
-if [[ -d ~/.dot ]]; then
-    dot() {
-        if [[ "$PWD" == ~/.dot ]]; then
-            cdr
-        else
-            cd ~/.dot
-            git status -sb
-        fi
-}
-else
-   alias dot='jump dot'
-fi
+[[ -d ~/.dot ]] && dot() { cd ~/.dot; git status -sb; }
+[[ -d ~/git/a-irs/dot ]] && dot() { cd ~/git/a-irs/dot; git status -sb; }
+[[ -d /srv/infra ]] && infra() { cd /srv/infra; git status -sb; }
 
 # alias ..=cd ../
 # alias ...=cd ../../
