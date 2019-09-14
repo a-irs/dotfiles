@@ -5,8 +5,8 @@ set -eu
 # TODO: psd files
 # TODO: python rewrite
 
-SRC_DIR=/media/data/photos
-DST_DIR=/root/pics_test
+SRC_DIR=$1
+DST_DIR=$2
 
 convert_dir() {
     local in=$1
@@ -14,7 +14,7 @@ convert_dir() {
     local size=$3
     local quality=$4
 
-    find "$in_dir" -type f -iname "*.jpg" -or -iname "*.psd" -or -iname "*.tif" -or -iname "*.tiff" -or -iname "*.mp4" -or -iname "*.avi" | sort | grep -Ev '/pano_[0-9_]+/' | while read f; do
+    find "$in_dir" -type f -iname "*.jpg" -or -iname "*.psd" -or -iname "*.tif" -or -iname "*.tiff" -or -iname "*.mp4" -or -iname "*.avi" | sort | grep -Ev '/pano_[0-9_]+/' | while read -r f; do
         convert_file "$f" "$out_dir/$size/$(basename "$f")" "$size" "$quality"
     done
 }

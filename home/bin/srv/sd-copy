@@ -21,5 +21,5 @@ fi
 
 if mount "$SRC" "$MNT"; then
     /usr/bin/vendor_perl/exiftool -v0 -r -o . '-FileName<DateTimeOriginal' -ext+ AVI -ext+ MP4 -d "$DEST/%Y/%Y-%m/%Y-%m-%d/%Y%m%d_%H%M%S_%%f.%%le" "$MNT/DCIM"
-    photoconvert
+    photoconvert "$DEST" "${DEST}_export"
 fi
