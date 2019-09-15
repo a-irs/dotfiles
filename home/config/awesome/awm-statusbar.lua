@@ -8,31 +8,18 @@ local gears   = require 'gears'
 
 local markup = lain.util.markup
 
-
-local function make_widget(widget, left_margin, right_margin, background_color)
-    if left_margin and not right_margin then
-        right_margin = left_margin
-    end
-
-    if right_margin or left_margin then
-        widget = wibox.layout.margin(widget, left_margin, right_margin, 0, 0)
-    end
-
-    if background_color then
-        widget = wibox.widget.background(widget)
-        widget:set_bg(background_color)
-    end
-
-    return widget
+local function bg_wrap(widget, color, left, right)
+    return wibox.widget {
+        {
+            widget,
+            left   = left,
+            right  = right,
+            widget = wibox.container.margin
+        },
+        bg         = color,
+        widget     = wibox.container.background
+    }
 end
-
-
-local function lay(layout, widget, left, right, background_color)
-    if widget then
-        layout:add(make_widget(widget, left, right, background_color))
-    end
-end
-
 
 -- BATTERY
 
@@ -104,7 +91,7 @@ end
 
 -- DOWNLOAD STATUS
 
-if hostname == "desk" then
+if not is_mobile then
     dlwidget = awful.widget.watch(
         gears.filesystem.get_configuration_dir() .. "/statusbar/dl-status.py", 2,
         function(widget, stdout)
@@ -116,7 +103,7 @@ end
 
 -- MUSIC
 
-musicwidget = awful.widget.watch(
+local musicwidget = awful.widget.watch(
     gears.filesystem.get_configuration_dir() .. "/statusbar/music.sh " .. theme.widget_music_fg:gsub('#', ''), 2,
     function(widget, stdout)
         if stdout == "" then
@@ -126,6 +113,7 @@ musicwidget = awful.widget.watch(
         end
     end
 )
+musicwidget_wrap = bg_wrap(musicwidget, theme.widget_music_bg, 0, 0)
 
 
 -- VOLUME
@@ -143,13 +131,24 @@ pulsewidget = lain.widget.pulse({
             return
         end
         local level = math.floor((volume_now.left + volume_now.right) / 2 / 5 + 0.5) * 5
+        local color_fg = theme.widget_pulse_fg
+        local color_bg = theme.widget_pulse_bg
+
         if volume_now.muted =="yes" then
-            widget:set_markup(markup.bold(markup(theme.widget_pulse_mute_fg, level)))
+            if level >= limit then
+                color_fg = theme.widget_pulse_fg_mute
+                color_bg = theme.widget_pulse_bg_crit
+            else
+                color_fg = theme.widget_pulse_fg_mute
+                color_bg = theme.widget_pulse_bg_mute
+            end
         elseif level >= limit then
-            widget:set_markup(markup.bold(markup("#fa7883", level)))
-        else
-            widget:set_markup(markup.bold(markup(theme.widget_pulse_fg, level)))
+            color_fg = theme.widget_pulse_fg_crit
+            color_bg = theme.widget_pulse_bg_crit
         end
+
+        widget:set_markup(markup.bold(markup(color_fg, level)))
+        pulsewidget_wrap:set_bg(color_bg)
     end
 })
 pulsewidget.widget:buttons(awful.util.table.join(
@@ -164,11 +163,12 @@ pulsewidget.widget:buttons(awful.util.table.join(
     end)
 ))
 
+pulsewidget_wrap = bg_wrap(pulsewidget.widget, theme.widget_pulse_bg, theme.statusbar_margin, theme.statusbar_margin)
 
 -- DATE, TIME
 
-timewidget = wibox.widget.textclock(markup.bold(markup(theme.widget_time_fg, '%H:%M')))
 datewidget = wibox.widget.textclock(markup(theme.widget_date_fg, '%a, %d.%m.'))
+timewidget = wibox.widget.textclock(markup.bold(markup(theme.widget_time_fg, '%H:%M')))
 lain.widget.cal({
     attach_to = { timewidget, datewidget },
     notification_preset = {
@@ -177,6 +177,8 @@ lain.widget.cal({
         bg   = theme.bg_focus
     }
 })
+datewidget_wrap = bg_wrap(datewidget, theme.widget_pulse_bg, theme.statusbar_margin, 0)
+timewidget_wrap = bg_wrap(timewidget, theme.widget_pulse_bg, theme.statusbar_margin, theme.statusbar_margin)
 
 
 local taglist_buttons = awful.util.table.join(
@@ -200,8 +202,9 @@ local tasklist_buttons = awful.util.table.join(
 end))
 
 awful.screen.connect_for_each_screen(function(s)
-    s.mywibox    = awful.wibox({ position = theme.statusbar_position, screen = s, height = theme.statusbar_height })
-    s.myprompt   = awful.widget.prompt()
+    s.mywibox = awful.wibox({ position = "top", screen = s, height = theme.statusbar_height })
+    s.myprompt = awful.widget.prompt()
+    s.myprompt_wrap = bg_wrap(s.myprompt, nil, theme.statusbar_margin, theme.statusbar_margin)
 
     s.mytasklist = awful.widget.tasklist {
         screen = s,
@@ -220,33 +223,30 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = taglist_buttons
     }
 
-    s.systray = wibox.widget.systray()
-    s.systray.visible = true
+    systray_wrap = bg_wrap(wibox.widget.systray(), nil, theme.statusbar_margin, theme.statusbar_margin)
 
     -- layouts
 
-    local m = dpi(6)
-
     local layout1 = wibox.layout.fixed.horizontal()
-    lay(layout1, musicwidget, 0, 0, theme.bg_focus)
-    lay(layout1, s.mytasklist)
-    lay(layout1, s.myprompt)
-    if hostname == "desk" then
-        lay(layout1, dlwidget)
+    layout1:add(musicwidget_wrap)
+    layout1:add(s.mytasklist)
+    layout1:add(s.myprompt_wrap)
+    if not is_mobile then
+        layout1:add(dlwidget)
     end
 
     local layout2 = wibox.layout.fixed.horizontal()
-    lay(layout2, s.mytaglist)
+    layout2:add(s.mytaglist)
 
     local layout3 = wibox.layout.fixed.horizontal()
-    lay(layout3, s.systray, m)
-    lay(layout3, pulsewidget.widget, m, nil, theme.bg_focus)
+    layout3:add(systray_wrap)
+    layout3:add(pulsewidget_wrap)
     if is_mobile then
-        lay(layout3, batterywidget.widget, m)
-        lay(layout3, netwidget, m, nil, theme.bg_focus)
+        layout3:add(batterywidget.widget)
+        layout3:add(netwidget)
     end
-    lay(layout3, datewidget, m, 0)
-    lay(layout3, timewidget, m, m)
+    layout3:add(datewidget_wrap)
+    layout3:add(timewidget_wrap)
 
 
     -- build status bar

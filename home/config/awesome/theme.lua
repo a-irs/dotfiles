@@ -2,8 +2,7 @@ local gears = require("gears")
 
 theme                               = {}
 
--- theme.master_width_factor           = 0.78
--- theme.master_fill_policy            = "master_width_factor"
+theme.master_width_factor           = 0.62
 
 if is_high_dpi then
     xpm_folder                      = gears.filesystem.get_configuration_dir() .. "/xpm_175"
@@ -12,13 +11,12 @@ else
 end
 
 theme.statusbar_height              = dpi(18)
-theme.statusbar_position            = "top"
 
 -- FG, BG COLORS
 
 theme.bg_normal                     = "#233657"
 theme.bg_focus                      = "#364b73"
-theme.bg_urgent                     = "#aa0000"
+theme.bg_urgent                     = "#fa7883"
 theme.fg_normal                     = "#aaaaaa"
 theme.fg_focus                      = "#ffffff"
 theme.fg_urgent                     = "#ffffff"
@@ -31,7 +29,7 @@ theme.useless_gap                   = 0
 
 -- NOTIFICATIONS (NAUGHTY)
 
-theme.naughty_font                  = "Fira Sans Medium 8"
+theme.naughty_font                  = "Sans Medium 8"
 theme.naughty_padding               = dpi(18)
 theme.naughty_spacing               = dpi(18)
 theme.naughty_border_width          = dpi(6)
@@ -43,7 +41,7 @@ theme.naughty_defaults_bg           = theme.bg_focus
 theme.naughty_defaults_border_color = theme.naughty_defaults_bg
 
 theme.naughty_critical_fg           = '#ffffff'
-theme.naughty_critical_bg           = '#F05F4D'
+theme.naughty_critical_bg           = '#fa7883'
 theme.naughty_critical_border_color = theme.naughty_critical_bg
 
 
@@ -68,18 +66,25 @@ theme.tasklist_fg                   = theme.fg_focus
 theme.tasklist_bg                   = theme.bg_normal
 theme.tasklist_disable_icon         = true
 
+theme.statusbar_margin              = dpi(6)
 theme.bg_systray                    = theme.bg_normal
-theme.systray_icon_spacing          = dpi(2)
+theme.systray_icon_spacing          = dpi(4)
 theme.widget_music_fg               = theme.fg_focus
+theme.widget_music_bg               = theme.bg_focus
 theme.widget_date_fg                = "#cccccc"
 theme.widget_time_fg                = "#eeeeee"
+
+theme.widget_pulse_bg               = theme.bg_normal
 theme.widget_pulse_fg               = "#96b7e2"
-theme.widget_pulse_mute_fg          = "#666666"
+theme.widget_pulse_bg_crit          = "#fa7883"
+theme.widget_pulse_fg_crit          = "#000000"
+theme.widget_pulse_bg_mute          = theme.bg_normal
+theme.widget_pulse_fg_mute          = "#666666"
 
 -- TITLEBAR
 
-theme.titlebar_height                          = dpi(24)
-theme.titlebar_font                            = "Fira Sans Medium 8"
+theme.titlebar_height                          = dpi(20)
+theme.titlebar_font                            = "Sans Medium 8"
 
 theme.titlebar_fg_normal                       = theme.fg_normal
 theme.titlebar_fg_focus                        = theme.fg_focus
