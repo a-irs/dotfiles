@@ -71,10 +71,15 @@ theme.bg_systray                    = theme.bg_normal
 theme.systray_icon_spacing          = dpi(4)
 theme.widget_music_fg               = theme.fg_focus
 theme.widget_music_bg               = theme.bg_focus
-theme.widget_date_fg                = "#cccccc"
-theme.widget_time_fg                = "#eeeeee"
 
-theme.widget_pulse_bg               = theme.bg_normal
+theme.widget_date_fg                = "#cccccc"
+theme.widget_date_bg                = theme.bg_normal
+theme.widget_time_fg                = "#eeeeee"
+theme.widget_time_bg                = theme.bg_normal
+
+theme.widget_battery_bg             = theme.bg_normal
+
+theme.widget_pulse_bg               = theme.bg_focus
 theme.widget_pulse_fg               = "#96b7e2"
 theme.widget_pulse_bg_crit          = "#fa7883"
 theme.widget_pulse_fg_crit          = "#000000"

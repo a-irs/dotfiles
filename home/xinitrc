@@ -25,6 +25,7 @@ parcellite --no-icon &
 compton &
 [[ $HOSTNAME == x1 ]] && xcalib ~/.config/x1carbon3rd_notebookcheck.com.icc &
 keepassxc &
+thunar --daemon &
 
 mkdir -p ~/.local/share/thumbnails && ln -sfn ~/.local/share/thumbnails ~/.cache/thumbnails
 mkdir -p ~/.local/share/thumbnails/darktable && ln -sfn ~/.local/share/thumbnails/darktable ~/.cache/darktable
