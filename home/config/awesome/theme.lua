@@ -16,7 +16,7 @@ theme.statusbar_height              = dpi(18)
 
 theme.bg_normal                     = "#233657"
 theme.bg_focus                      = "#364b73"
-theme.bg_urgent                     = "#fa7883"
+theme.bg_urgent                     = "#d9304f"
 theme.fg_normal                     = "#aaaaaa"
 theme.fg_focus                      = "#ffffff"
 theme.fg_urgent                     = "#ffffff"
@@ -41,7 +41,7 @@ theme.naughty_defaults_bg           = theme.bg_focus
 theme.naughty_defaults_border_color = theme.naughty_defaults_bg
 
 theme.naughty_critical_fg           = '#ffffff'
-theme.naughty_critical_bg           = '#fa7883'
+theme.naughty_critical_bg           = '#d9304f'
 theme.naughty_critical_border_color = theme.naughty_critical_bg
 
 
@@ -66,9 +66,10 @@ theme.tasklist_fg                   = theme.fg_focus
 theme.tasklist_bg                   = theme.bg_normal
 theme.tasklist_disable_icon         = true
 
-theme.statusbar_margin              = dpi(6)
+theme.statusbar_margin              = dpi(5)
 theme.bg_systray                    = theme.bg_normal
 theme.systray_icon_spacing          = dpi(4)
+
 theme.widget_music_fg               = theme.fg_focus
 theme.widget_music_bg               = theme.bg_focus
 
@@ -81,10 +82,10 @@ theme.widget_battery_bg             = theme.bg_normal
 
 theme.widget_pulse_bg               = theme.bg_focus
 theme.widget_pulse_fg               = "#96b7e2"
-theme.widget_pulse_bg_crit          = "#fa7883"
-theme.widget_pulse_fg_crit          = "#000000"
+theme.widget_pulse_bg_crit          = theme.bg_urgent
+theme.widget_pulse_fg_crit          = "#ffffff"
 theme.widget_pulse_bg_mute          = theme.bg_normal
-theme.widget_pulse_fg_mute          = "#666666"
+theme.widget_pulse_fg_mute          = "#aaaaaa"
 
 -- TITLEBAR
 
