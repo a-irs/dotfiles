@@ -26,7 +26,7 @@ convert_file() {
     local quality=$4
 
     # skip if existing an non-empty
-    [[ -s "$out" || -s "${out%.*}.mp4" ]] && return
+    [[ -s "$out" || -e "${out%.*}.mp4" ]] && return
 
     mkdir -vp "$(dirname "$out")"
 

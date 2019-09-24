@@ -41,6 +41,7 @@ if mount "$TARGET"; then
         date=$(date +%Y-%m-%d)_$(date +%H-%M-%S)
         rsync $* -av -h --delete --stats \
                 --log-file="/mnt/crypto.log" \
+                --exclude="0-archive/" --exclude="borg/" \
                 --backup --backup-dir="/mnt/0-archive/$date/" \
                 /media/crypto/ /mnt
         umount /mnt
