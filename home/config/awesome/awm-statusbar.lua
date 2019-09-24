@@ -64,6 +64,7 @@ if is_mobile then
         end,
         timeout = 1,
     })
+    batterywidget_wrap = bg_wrap(batterywidget.widget, theme.widget_battery_bg, theme.statusbar_margin, theme.statusbar_margin)
 end
 
 
@@ -87,6 +88,7 @@ if is_mobile then
         end,
         timeout = 2,
     })
+    netwidget_wrap = bg_wrap(netwidget, theme.widget_music_bg, theme.statusbar_margin, theme.statusbar_margin)
 end
 
 -- DOWNLOAD STATUS
@@ -162,7 +164,6 @@ pulsewidget.widget:buttons(awful.util.table.join(
         awful.client.run_or_raise('pavucontrol', matcher)
     end)
 ))
-
 pulsewidget_wrap = bg_wrap(pulsewidget.widget, theme.widget_pulse_bg, theme.statusbar_margin, theme.statusbar_margin)
 
 -- DATE, TIME
@@ -177,8 +178,8 @@ lain.widget.cal({
         bg   = theme.bg_focus
     }
 })
-datewidget_wrap = bg_wrap(datewidget, theme.widget_pulse_bg, theme.statusbar_margin, 0)
-timewidget_wrap = bg_wrap(timewidget, theme.widget_pulse_bg, theme.statusbar_margin, theme.statusbar_margin)
+datewidget_wrap = bg_wrap(datewidget, theme.widget_date_bg, theme.statusbar_margin, 0)
+timewidget_wrap = bg_wrap(timewidget, theme.widget_time_bg, theme.statusbar_margin, theme.statusbar_margin)
 
 
 local taglist_buttons = awful.util.table.join(
@@ -242,8 +243,8 @@ awful.screen.connect_for_each_screen(function(s)
     layout3:add(systray_wrap)
     layout3:add(pulsewidget_wrap)
     if is_mobile then
-        layout3:add(batterywidget.widget)
-        layout3:add(netwidget)
+        layout3:add(batterywidget_wrap)
+        layout3:add(netwidget_wrap)
     end
     layout3:add(datewidget_wrap)
     layout3:add(timewidget_wrap)
