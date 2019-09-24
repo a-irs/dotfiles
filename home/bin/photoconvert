@@ -7,14 +7,7 @@ import typing
 
 # TODO:
 # delete files that have no source any more
-
-DIR_IN = Path(sys.argv[1])
-DIR_OUT = Path(sys.argv[2])
-TYPES = {
-    "photo": [".jpg", ".jpeg", ".psd", ".tif", ".tiff"],
-    "video": [".mp4", ".avi"]
-}
-
+# make atomic
 
 def run(command: str) -> subprocess.CompletedProcess:
     return subprocess.run(command, check=True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -68,39 +61,44 @@ def convert_video(src_file: Path, dest_file: Path, size: int, quality: int) -> t
 
 def find(dir: Path, extensions: typing.List[str]) -> typing.List[Path]:
     files: typing.List[Path] = []
-    for f in sorted(Path(dir).glob('2019/*/*/*'), reverse=True):
+    for f in sorted(Path(dir).glob('20[0-9][0-9]/*/*/*'), reverse=True):
         if any([f.suffix.lower().endswith(ext) for ext in extensions]):
             files.append(f)
     return files
 
 
-def main() -> None:
-    photo_files_todo = []
-    for f in find(DIR_IN, TYPES["photo"]):
-        for (size, quality) in [(1280, 60), (2560, 70)]:
-            dest_file = get_dest(f, DIR_IN, DIR_OUT / str(size), ".jpg")
+# mapping: subdir -> (size, quality)
+def handle(src, dest, extensions, mapping, func, dest_ext):
+    pipeline = []
+    for f in find(src, extensions):
+        for subdir, (size, quality) in mapping.items():
+            dest_file = get_dest(f, src, dest / subdir, dest_ext)
             if not (dest_file.is_file() and dest_file.stat().st_size > 0):
-                photo_files_todo.append((f, dest_file, size, quality))
+                pipeline.append((f, dest_file, size, quality))
 
-    photo_files_todo_len = len(photo_files_todo)
-    for (i, (src_file, dest_file, size, quality)) in enumerate(photo_files_todo):
-        print("{}/{} ({}%) - {} - {}".format(i + 1, photo_files_todo_len, round((i + 1) / photo_files_todo_len * 100, 1), size, src_file))
-        convert_photo(src_file=src_file, dest_file=dest_file, size=size, quality=quality)
+    pipeline_total = len(pipeline)
+    for (i, (src_file, dest_file, size, quality)) in enumerate(pipeline):
+        print("{}/{} ({}%) - {} - {}".format(i + 1, pipeline_total, round((i + 1) / pipeline_total * 100, 1), size, src_file))
+        func(src_file=src_file, dest_file=dest_file, size=size, quality=quality)
 
-    video_files_todo = []
-    for f in find(DIR_IN, TYPES["video"]):
-        dest_file = get_dest(f, DIR_IN, DIR_OUT / "1280", ".mp4")
-        if not (dest_file.is_file() and dest_file.stat().st_size > 0):
-            video_files_todo.append((f, dest_file, 854, 25))
 
-        dest_file = get_dest(f, DIR_IN, DIR_OUT / "2560", ".mp4")
-        if not (dest_file.is_file() and dest_file.stat().st_size > 0):
-            video_files_todo.append((f, dest_file, 1280, 25))
+def main() -> None:
+    src_dir = Path(sys.argv[1])
+    dest_dir = Path(sys.argv[2])
 
-    video_files_todo_len = len(video_files_todo)
-    for (i, (src_file, dest_file, size, quality)) in enumerate(video_files_todo):
-        print("{}/{} ({}%) - {} - {}".format(i + 1, video_files_todo_len, round((i + 1) / video_files_todo_len * 100, 1), size, src_file))
-        convert_video(src_file=src_file, dest_file=dest_file, size=size, quality=quality)
+    handle(
+        src=src_dir, dest=dest_dir,
+        extensions=[".mp4", ".avi"],
+        func=convert_video, dest_ext=".mp4",
+        mapping={"1280": (854, 26), "2560": (1280, 25)},
+    )
+
+    handle(
+        src=src_dir, dest=dest_dir,
+        extensions=[".jpg", ".jpeg", ".psd", ".tif", ".tiff"],
+        func=convert_photo, dest_ext=".jpg",
+        mapping={"1280": (1280, 60), "2560": (2560, 70)},
+    )
 
 
 if __name__ == "__main__":
