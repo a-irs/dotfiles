@@ -21,8 +21,9 @@ def run(command: str) -> subprocess.CompletedProcess:
 
 
 def prepare(input_dir: Path, input_file: Path, output_base_dir: Path, extension: str) -> Path:
-    original_extension = input_file.suffix
-    if original_extension != extension:
+    # e.g. when called with extension=mp4 and input_file=...avi, write output as .avi.mp4
+    original_extension = input_file.suffix.lower()
+    if original_extension != extension.lower():
         extension = original_extension.lower() + extension
 
     # recreate directory structure
@@ -78,10 +79,9 @@ def handle_video(input_dir: Path, input_file: Path, output_base_dir: Path, size:
 
 def find(dir: Path, extensions: typing.List[str]) -> typing.List[Path]:
     files: typing.List[Path] = []
-    for glob_result in [Path(dir).glob('*/*/*/*{}'.format(ext)) for ext in extensions]:
-        files.extend(glob_result)
-    for glob_result in [Path(dir).glob('*/*/*/*{}'.format(ext.upper())) for ext in extensions]:
-        files.extend(glob_result)
+    for f in sorted(Path(dir).glob('20[0-9][0-9]/*/*/*'), reverse=True):
+        if any([f.suffix.lower().endswith(ext) for ext in extensions]):
+            files.append(f)
     return files
 
 
