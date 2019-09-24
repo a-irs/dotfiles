@@ -1,94 +1,115 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
 
-set -eu
+import sys
+from pathlib import Path
+import subprocess
+import typing
 
-# TODO: psd files
-# TODO: python rewrite
+# TODO:
+# delete files that have no source any more
 
-SRC_DIR=$1
-DST_DIR=$2
-
-convert_dir() {
-    local in=$1
-    local out=$2
-    local size=$3
-    local quality=$4
-
-    find "$in_dir" -type f -iname "*.jpg" -or -iname "*.psd" -or -iname "*.tif" -or -iname "*.tiff" -or -iname "*.mp4" -or -iname "*.avi" | sort | grep -Ev '/pano_[0-9_]+/' | while read -r f; do
-        convert_file "$f" "$out_dir/$size/$(basename "$f")" "$size" "$quality"
-    done
+DIR_IN = Path(sys.argv[1])
+DIR_OUT = Path(sys.argv[2])
+TYPES = {
+    "photo": [".jpg", ".jpeg", ".psd", ".tif", ".tiff"],
+    "video": [".mp4", ".avi"]
 }
 
-convert_file() {
-    local in=$1
-    local out=$2
-    local size=$3
-    local quality=$4
 
-    # skip if existing an non-empty
-    [[ -s "$out" || -e "${out%.*}.mp4" ]] && return
+def run(command: str) -> subprocess.CompletedProcess:
+    return subprocess.run(command, check=True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-    mkdir -vp "$(dirname "$out")"
 
-    printf "%s" "$size :: ${out##*/} "
-    if [[ "$in" == *.mp4 || "$in" == *.MP4 || "$in" == *.avi || "$in" == *.AVI ]]; then
-        out=${out//.avi/.mp4}
-        out=${out//.AVI/.mp4}
+def prepare(input_dir: Path, input_file: Path, output_base_dir: Path, extension: str) -> Path:
+    original_extension = input_file.suffix
+    if original_extension != extension:
+        extension = original_extension.lower() + extension
 
-        # check if existing in other dirs
-        local name="${in##*/}"
-        local name="${name%.*}"
-        local other=$(find "$DST_DIR" -name "$name.*" -type f)
-        if [[ -n "$other" ]]; then
-            ln -s --relative "$other" "$out"
-        else
-            local tmp="$(mktemp -t tmp.XXXXX.mp4)"
-            trap "rm -f "$tmp"" INT TERM EXIT
+    # recreate directory structure
+    structure = Path(str(input_file).replace(str(input_dir) + "/", "", 1)).parent
+    output_dir = output_base_dir / structure
 
-            # -y overwrite, -nostdin to not cause weird issues https://www.igorkromin.net/index.php/2016/12/23/prevent-errors-during-ffmpeg-execution-in-a-loop/
-            ffmpeg -nostdin -y \
-                -i "$in" \
-                -c:v libx264 -preset medium -crf 25 -tune film \
-                -filter:v scale=1280:-1 \
-                -profile:v high -level 4.0 \
-                -pix_fmt yuv420p \
-                -c:a aac -b:a 128k \
-                -movflags +write_colr \
-                "$tmp" > /dev/null 2>&1
-            mv "$tmp" "$out"
-        fi
-    else
-        convert "$in" -auto-orient -quality "$quality" -resize "${size}x${size}>" "$out"
-    fi
+    output_file = output_dir / Path(input_file.name).with_suffix(extension)
+    output_file.parent.mkdir(parents=True, exist_ok=True)
 
-    # remove all metadata
-    exiftool -overwrite_original -all= -ifd1:all= -previewimage= -thumbnailimage= "$out" > /dev/null
+    return output_file
 
-    if [[ -L "$out" ]]; then
-        printf "%s\n" ":: link"
-    else
-        local size_after=$(stat -c %s "$out")
-        printf "%s\n" ":: $(( size_after/1024 )) KB"
-    fi
-}
 
-main() {
-    for date in \
-        2015/2015-01 2015/2015-02 2015/2015-03 2015/2015-04 2015/2015-05 2015/2015-06 2015/2015-07 2015/2015-08 2015/2015-09 2015/2015-10 2015/2015-11 2015/2015-12 \
-        2016/2016-01 2016/2016-02 2016/2016-03 2016/2016-04 2016/2016-05 2016/2016-06 2016/2016-07 2016/2016-08 2016/2016-09 2016/2016-10 2016/2016-11 2016/2016-12 \
-        2017/2017-01 2017/2017-02 2017/2017-03 2017/2017-04 2017/2017-05 2017/2017-06 2017/2017-07 2017/2017-08 2017/2017-09 2017/2017-10 2017/2017-11 2017/2017-12 \
-        2018/2018-01 2018/2018-02 2018/2018-03 2018/2018-04 2018/2018-05 2018/2018-06 2018/2018-07 2018/2018-08 2018/2018-09 2018/2018-10 2018/2018-11 2018/2018-12 \
-        2019/2019-01 2019/2019-02 2019/2019-03 2019/2019-04 2019/2019-05 2019/2019-06 2019/2019-07 2019/2019-08 2019/2019-09 2019/2019-10 2019/2019-11 2019/2019-12 \
-        2020/2020-01 2020/2020-02 2020/2020-03 2020/2020-04 2020/2020-05 2020/2020-06 2020/2020-07 2020/2020-08 2020/2020-09 2020/2020-10 2020/2020-11 2020/2020-12 \
-        ; do
-        in_dir="$SRC_DIR/$date"
-        out_dir="$DST_DIR/$date"
-        [[ ! -d "$in_dir" ]] && continue
+def handle_photo(input_dir: Path, input_file: Path, output_base_dir: Path, size: int, quality: int) -> typing.Optional[Path]:
+    output_file = prepare(input_dir, input_file, output_base_dir, ".jpg")
 
-        echo "------------------------ $date"
-        convert_dir "$in_dir" "$out_dir" 1280 60
-        convert_dir "$in_dir" "$out_dir" 2560 70
-    done
-}
+    # skip if already existing
+    if output_file.is_file() and output_file.stat().st_size > 0:
+        return None
 
-main
+    # do business
+    command = f'convert "{input_file}" -flatten -auto-orient -quality {quality} -resize {size}x{size}\\> "{output_file}"'
+    command2 = f'exiftool -overwrite_original -all= -ifd1:all= -previewimage= -thumbnailimage= "{output_file}"'
+    run(command)
+    run(command2)
+
+    return output_file
+
+
+def handle_video(input_dir: Path, input_file: Path, output_base_dir: Path, size: int, quality: int) -> typing.Optional[Path]:
+    output_file = prepare(input_dir, input_file, output_base_dir, ".mp4")
+
+    # skip if already existing
+    if output_file.is_file() and output_file.stat().st_size > 0:
+        return None
+
+    # -y overwrite, -nostdin to not cause weird issues https://www.igorkromin.net/index.php/2016/12/23/prevent-errors-during-ffmpeg-execution-in-a-loop/
+    command = f"""
+      ffmpeg -nostdin -y
+        -i "{input_file}"
+        -c:v libx264 -preset medium -crf "{quality}" -tune film
+        -filter:v scale="{size}":-1
+        -profile:v high -level 4.0
+        -pix_fmt yuv420p
+        -c:a aac -b:a 128k
+        -movflags +write_colr
+        "{output_file}"
+    """
+    exec = ' '.join([l.strip() for l in command.splitlines() if l])
+    run(exec)
+
+    return output_file
+
+
+def find(dir: Path, extensions: typing.List[str]) -> typing.List[Path]:
+    files: typing.List[Path] = []
+    for glob_result in [Path(dir).glob('*/*/*/*{}'.format(ext)) for ext in extensions]:
+        files.extend(glob_result)
+    for glob_result in [Path(dir).glob('*/*/*/*{}'.format(ext.upper())) for ext in extensions]:
+        files.extend(glob_result)
+    return files
+
+
+def main() -> None:
+    photo_files = find(DIR_IN, TYPES["photo"])
+    photo_files_total = len(photo_files)
+    for i, f in enumerate(photo_files):
+        print("{}/{} ({}%) - {}".format(i + 1, photo_files_total, int((i + 1) / photo_files_total * 100), f))
+        for output in [
+            handle_photo(DIR_IN, f, DIR_OUT / "1280", 1280, 60),
+            handle_photo(DIR_IN, f, DIR_OUT / "2560", 2560, 70)
+        ]:
+            if output:
+                print(output)
+        print()
+
+    video_files = find(DIR_IN, TYPES["video"])
+    video_files_total = len(video_files)
+    for i, f in enumerate(video_files):
+        print("{}/{} ({}%) - {}".format(i + 1, video_files_total, int((i + 1) / video_files_total * 100), f))
+        for output in [
+            handle_video(DIR_IN, f, DIR_OUT / "1280", 854, 25),
+            handle_video(DIR_IN, f, DIR_OUT / "2560", 1280, 25)
+        ]:
+            if output:
+                print(output)
+        print()
+
+
+if __name__ == "__main__":
+    main()
