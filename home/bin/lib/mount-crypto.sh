@@ -2,8 +2,7 @@
 
 set -e
 
-IMG=/media/data4/cryptodisk-sdc.img
-# UUID=30e17b83-aaa2-4164-9248-00610b01ffed
+IMG=/media/data/cryptodisk-sdc.img
 
 MOUNTPOINT=/media/crypto
 MAPPER_NAME=luks
@@ -25,7 +24,6 @@ fi
 
 LOOP=$(losetup --partscan --find --show "$IMG")
 cryptsetup luksOpen "${LOOP}p1" "$MAPPER_NAME"
-#cryptsetup luksOpen /dev/disk/by-uuid/$UUID $MAPPER_NAME
 
 mkdir -p "$MOUNTPOINT"
 mount "/dev/mapper/$MAPPER_NAME" "$MOUNTPOINT"
