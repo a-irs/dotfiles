@@ -88,16 +88,15 @@ def main() -> None:
 
     handle(
         src=src_dir, dest=dest_dir,
-        extensions=[".mp4", ".avi"],
-        func=convert_video, dest_ext=".mp4",
-        mapping={"1280": (854, 26), "2560": (1280, 25)},
-    )
-
-    handle(
-        src=src_dir, dest=dest_dir,
         extensions=[".jpg", ".jpeg", ".psd", ".tif", ".tiff"],
         func=convert_photo, dest_ext=".jpg",
         mapping={"1280": (1280, 60), "2560": (2560, 70)},
+    )
+    handle(
+        src=src_dir, dest=dest_dir,
+        extensions=[".mp4", ".avi"],
+        func=convert_video, dest_ext=".mp4",
+        mapping={"1280": (854, 26), "2560": (1280, 25)},
     )
 
 
