@@ -1,13 +1,7 @@
 #!/usr/bin/env zsh
 
-path+=("$ZSHINE_DIR/plugins/fzf.plugin/bin")
-if [[ ! $commands[fzf] ]]; then
-    "$ZSHINE_DIR/plugins/fzf.plugin/install" --bin
-fi
-[[ $commands[fzf] ]] || return
-
-source "$ZSHINE_DIR/plugins/fzf.plugin/shell/key-bindings.zsh"
-source "$ZSHINE_DIR/plugins/fzf.plugin/shell/completion.zsh"
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
 
 export FZF_DEFAULT_OPTS='--exact --no-mouse --cycle --ansi --color=16'
 export FZF_CTRL_R_OPTS='--exact --height=20'
