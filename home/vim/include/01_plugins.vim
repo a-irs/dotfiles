@@ -54,7 +54,7 @@ let g:ale_python_flake8_options = '--ignore=E501,W391,E129,E302'
 let g:ale_python_mypy_options = '--cache-dir /tmp/mypy'
 " https://github.com/koalaman/shellcheck/wiki/SC2119
 let g:ale_sh_shellcheck_exclusions = 'SC2119'
-let g:ale_yaml_yamllint_options='-d "{extends: default, rules: {line-length: disable}}"'
+let g:ale_yaml_yamllint_options='-d "{extends: default, rules: {line-length: disable, document-start: disable}}"'
 
 " ALE appearance
 let g:ale_sign_warning = "\u26A0"
