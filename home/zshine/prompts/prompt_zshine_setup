@@ -10,6 +10,7 @@ case $HOST in
 esac
 
 ZSHINE_PROMPT_SYMBOL='❯'
+ZSHINE_PROMPT_COLOR=231
 
 ZSHINE_GIT=1
 ZSHINE_GIT_SIMPLE_DIRTY=0
@@ -31,7 +32,7 @@ ZSHINE_BATTERY_COLOR_HIGH='green'
 ZSHINE_BATTERY_COLOR_MED='white'
 
 ZSHINE_JOBS=1
-ZSHINE_JOBS_COLOR='214'
+ZSHINE_JOBS_COLOR=magenta
 
 ZSHINE_ERROR_COLOR='red'
 
@@ -206,7 +207,7 @@ _rprompt_jobs() {
         [[ -n "$ret" ]] && ret="${ret}|"
         ret="${ret}${stopped}${m_stop}"
     fi
-    [[ -n "$ret" ]] && rprompt_segment 237 "$ZSHINE_JOBS_COLOR" "$ret"
+    [[ -n "$ret" ]] && echo -n "%{%F{$ZSHINE_JOBS_COLOR}%}$ret %{%f%}"
 }
 
 _rprompt_virtualenv() {
@@ -243,11 +244,11 @@ _build_right() {
     # _rprompt_date
     # _rprompt_virtualenv
     # _rprompt_userhost
-    _rprompt_jobs
+    # _rprompt_jobs
 }
 
 prompt_zshine_setup() {
-    PROMPT=$'\n%{%f%b%k%}$(_build_left) %{%f%k%b%}\n$ZSHINE_PROMPT_SYMBOL '
+    PROMPT=$'\n%{%f%b%k%}$(_build_left) %{%f%k%b%}\n$(_rprompt_jobs)%{%F{$ZSHINE_PROMPT_COLOR}%}$ZSHINE_PROMPT_SYMBOL%{%f%} '
     RPROMPT='%{%f%b%k%}$(_build_right)%{%f%k%b%}'
 }
 
