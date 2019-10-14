@@ -1,0 +1,18 @@
+# rofi config
+
+rofi.show-icons: true
+rofi.font: Input 12
+rofi.modi: drun,run
+rofi.width: 600
+rofi.lines: 3
+rofi.dpi: 168
+rofi.terminal: termite
+rofi.drun-match-fields: name
+rofi.drun-display-format: {name}
+rofi.scroll-method: 1
+rofi.theme: DarkBlue
+
+# deprecated
+rofi.line-padding: 10
+rofi.hide-scrollbar: true
+

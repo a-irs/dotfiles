@@ -19,7 +19,6 @@ xset dpms 300 300 300
 
 # applications
 nitrogen --restore &
-kupfer --no-splash &
 lxpolkit &
 parcellite --no-icon &
 compton &

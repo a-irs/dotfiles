@@ -144,6 +144,7 @@ globalkeys = awful.util.table.join(
     -- launch programs
 
     awful.key({ win }, "r",          function() awful.screen.focused().myprompt:run() end),
+    awful.key({ alt }, "space",      function() run("rofi -show drun") end),
     awful.key({ alt }, "Return",     function() run("termite") end),
     awful.key({ alt }, "f",          function() run_gui("thunar") end),
     awful.key({ alt }, "c",          function() run_gui("firefox") end),
