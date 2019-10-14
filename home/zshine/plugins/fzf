@@ -1,36 +1,43 @@
 #!/usr/bin/env zsh
 
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
-
-export FZF_DEFAULT_OPTS='--exact --no-mouse --cycle --ansi --color=16'
-export FZF_CTRL_R_OPTS='--exact --height=20'
-
-export FZF_COMPLETION_OPTS='--multi --preview="preview {}" --height=20 --no-exact'
-export FZF_COMPLETION_TRIGGER='#'
-
 if [[ $commands[fd] ]]; then
     _fzf_compgen_path() {
         fd --hidden --no-ignore --color always \
-            -E .vim/undo \
-            -E .vim/plugged \
-            -E .git \
-            -E __pycache__ \
-            -E Cache \
-            -E .cache \
-            -E cache \
-            -E .gem \
-            -E .npm \
+            -E .vim/undo -E .vim/plugged \
+            -E __pycache__ -E Cache -E .cache -E cache \
+            -E .gem -E .npm \
             -E .thumbnails \
-            -E .steam \
+            -E .steam -E .local/share/Steam \
+            -E .git \
             . "$1"
     }
-    export FZF_DEFAULT_COMMAND='fd --type file --hidden --no-ignore --color always'
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    _fzf_compgen_dir() {
+        fd --hidden --no-ignore --color always \
+            --type directory \
+            -E .vim/undo -E .vim/plugged \
+            -E __pycache__ -E Cache -E .cache -E cache \
+            -E .gem -E .npm \
+            -E .thumbnails \
+            -E .steam -E .local/share/Steam \
+            -E .git \
+            . "$1"
+    }
 fi
 
-FZF_ALT_C_OPTS='--height=20 --preview="gls -1 --color=always --group-directories-first -F -- {}"'
+source /usr/share/fzf/key-bindings.zsh
 bindkey '^f' fzf-cd-widget
+
+source /usr/share/fzf/completion.zsh
+
+export FZF_DEFAULT_OPTS='--no-mouse --cycle --ansi --color=16 --tiebreak=end,begin,length --inline-info'
+
+export FZF_CTRL_R_OPTS='--height 70% --exact'
+export FZF_ALT_C_OPTS='--height 70% --preview="preview {}"'
+export FZF_CTRL_T_OPTS='--height 70% --preview="preview {}"'
+
+export FZF_COMPLETION_TRIGGER='#'
+export FZF_COMPLETION_OPTS='--multi --preview="preview {}" --height 70%'
+
 
 c() {
     dir=$(while read -r line; do
