@@ -78,7 +78,10 @@ let g:netrw_list_hide='.*\.swp$,\.DS_Store'
 let g:netrw_sort_sequence='[\/]$'  " directories first
 let g:netrw_sort_options='i'  " ignore case
 let g:netrw_bufsettings = 'nomodifiable nomodified readonly nobuflisted nowrap'
-map <C-_> :Lexplore<CR>
+let g:netrw_browse_split=4  " open files in previous window
+let g:netrw_banner=0  " hide header
+let g:netrw_winsize=25  " 25% width
+let g:netrw_altv=1  " show on left side
 
 autocmd BufNewFile,BufFilePre,BufRead Jenkinsfile set filetype=groovy
 autocmd BufNewFile,BufFilePre,BufRead Dockerfile* set filetype=Dockerfile
