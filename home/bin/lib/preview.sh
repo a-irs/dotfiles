@@ -46,6 +46,10 @@ extension="${filename##*.}"
 # echo "$extension"
 # echo "-----------------------------"
 
+if [[ -d "$path" ]]; then
+    ls -lF --literal --group-directories-first -h --color=always "$path" && exit
+fi
+
 case "$extension" in
     bz|bz2|gz|lz|lzh|lzma|lzo|tar|tbz|tbz2|tgz|tlz|txz|xz)
         preview_tar && exit ;;

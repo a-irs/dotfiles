@@ -1,29 +1,50 @@
+Host gitlab.com github.com
+    IdentityFile ~/.ssh/id_ed25519
+    PubkeyAuthentication yes
+
+###
+
 Host x1 x1.home
     HostName x1.home
-    IdentityFile ~/.ssh/id_ed25519
     User alex
+    IdentityFile ~/.ssh/id_ed25519
+    PubkeyAuthentication yes
 
 Host srv srv.home
     HostName srv.home
-    IdentityFile ~/.ssh/id_ed25519
     User root
+    IdentityFile ~/.ssh/id_ed25519
+    PubkeyAuthentication yes
 
 Host erx erx.home
     HostName erx.home
-    IdentityFile ~/.ssh/id_ed25519
     User ubnt
+    IdentityFile ~/.ssh/id_ed25519
+    PubkeyAuthentication yes
 
 Host desk desk.home
     HostName desk.home
-    IdentityFile ~/.ssh/id_ed25519
     User alex
+    IdentityFile ~/.ssh/id_ed25519
+    PubkeyAuthentication yes
 
 Host dell dell.home
     HostName dell.home
-    IdentityFile ~/.ssh/id_ed25519
     User alex
+    IdentityFile ~/.ssh/id_ed25519
+    PubkeyAuthentication yes
 
 Host tpl tpl.home
     HostName tpl.home
-    IdentityFile ~/.ssh/openwrt
     User root
+    IdentityFile ~/.ssh/openwrt
+    PubkeyAuthentication yes
+
+
+# avoid pubkey fingerprinting/tracking/..., see e.g.
+# - https://news.ycombinator.com/item?id=10006516
+# - https://utcc.utoronto.ca/~cks/space/blog/sysadmin/SSHIdentitiesOffered
+Host *
+    IdentitiesOnly yes
+    PubkeyAuthentication no
+

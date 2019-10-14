@@ -156,7 +156,8 @@ class TvParser(Parser):
 
 class Mover():
 
-    def __init__(self, source: str, dest: str, title: str, release_name: str) -> None:
+    def __init__(self, run: bool, source: str, dest: str, title: str, release_name: str) -> None:
+        self.run = run
         self.source = pathlib.Path(source)
         self.dest = pathlib.Path(dest)
         self.title = title
@@ -184,16 +185,22 @@ class Mover():
         directories = [e[0] for e in os.walk(self.source)]
         for d in reversed(directories):
             if not os.listdir(d):
-                os.rmdir(d)
+                if self.run:
+                    os.rmdir(d)
+                else:
+                    print("DRY RUN remove_empty_folders")
 
     def remove_unneeded(self, mask: List[str]) -> None:
         files = self._get_glob(mask)
         for f in files:
             print(f'{C_RED}{f}{C_RESET} deleted.')
-            if pathlib.Path(f).is_dir():
-                shutil.rmtree(f)
+            if self.run:
+                if pathlib.Path(f).is_dir():
+                    shutil.rmtree(f)
+                else:
+                    os.unlink(f)
             else:
-                os.unlink(f)
+                print("DRY RUN remove_unneeded")
 
     def move_nfo(self, mask: List[str]) -> None:
         files = self._get_glob(mask)
@@ -203,7 +210,10 @@ class Mover():
             source = pathlib.Path(files[0])
             self.do_move(source, dest)
         else:
-            dest.touch()
+            if self.run:
+                dest.touch()
+            else:
+                print("DRY RUN move_nfo")
 
     def move_subtitles(self, mask: List[str]) -> None:
         pass
@@ -234,7 +244,10 @@ class Mover():
         if dest.exists():
             print(f'ERROR: {C_RED}{dest}{C_RESET} already exists.')
         else:
-            shutil.move(source, dest)
+            if self.run:
+                shutil.move(source, dest)
+            else:
+                print("DRY RUN do_move")
 
 
 CONFIG = {
@@ -270,6 +283,8 @@ def main():
     parser.add_argument('category', type=str, help=available_categories)
     parser.add_argument('dirs', type=str, nargs=argparse.ONE_OR_MORE)
     parser.add_argument('--year', type=int)
+    parser.add_argument('--run', default=False, action='store_true')
+
     args = parser.parse_args()
     preset = {
         'year': args.year
@@ -298,7 +313,7 @@ def main():
         # move
         dest_dir = config['dest'].format(**vars(parsed), **additional_keys)
         title = config['title'].format(**vars(parsed), **additional_keys)
-        m = Mover(source_dir, dest_dir, title, parsed.release_name)
+        m = Mover(run=args.run, source=source_dir, dest=dest_dir, title=title, release_name=parsed.release_name)
         m.move()
 
 

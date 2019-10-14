@@ -25,14 +25,6 @@ Plug 'chrisbra/Colorizer'
 let g:colorizer_auto_filetype='css,html,conf,lua,sh'
 let g:colorizer_colornames = 0  "do not colorize simple 'red', 'yellow', ...
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
-let g:fzf_files_options = '--preview "$HOME/.bin/preview {}" --no-exact --color=16 --cycle --no-mouse'
-let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --no-ignore --follow --color always -E .vim/undo -E .vim/plugged -E .git -E __pycache__ -E Cache -E cache -E .gem -E .npm'
-let g:fzf_buffers_jump = 1  " jump to existing if possible
-nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> _ :Files<CR>
-nnoremap <silent> - :History<CR>
-
 " TComment
 Plug 'tomtom/tcomment_vim'
 nnoremap <silent> <leader># :TComment<CR>
@@ -54,7 +46,7 @@ let g:ale_python_flake8_options = '--ignore=E501,W391,E129,E302'
 let g:ale_python_mypy_options = '--cache-dir /tmp/mypy'
 " https://github.com/koalaman/shellcheck/wiki/SC2119
 let g:ale_sh_shellcheck_exclusions = 'SC2119'
-let g:ale_yaml_yamllint_options='-d "{extends: default, rules: {line-length: disable}}"'
+let g:ale_yaml_yamllint_options='-d "{extends: default, rules: {line-length: disable, document-start: disable}}"'
 
 " ALE appearance
 let g:ale_sign_warning = "\u26A0"

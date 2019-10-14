@@ -294,7 +294,7 @@ if [[ "$commands[git]" ]]; then
     alias gca="git ca"
     alias gp="git push"
     alias gs="git s"
-    alias gd="git diff"
+    alias gd="git d"
 
     clone() {
         git clone --depth 1 "$1" && cd $(basename ${1//.git/})
