@@ -47,7 +47,7 @@ if is_mobile then
                 charg = markup("#ffff00", ' +')
             end
 
-            if bat_now.status == "Full" then
+            if bat_now.status == "Full" or bat_now.time == "00:00" then
                 widget:set_markup(markup.bold(markup(color, perc .. charg)))
             else
                 widget:set_markup(markup.bold(markup(color, perc .. charg)) .. " " .. bat_now.time)

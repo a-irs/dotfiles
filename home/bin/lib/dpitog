@@ -5,6 +5,7 @@ import re
 import os
 import time
 import math
+import sys
 
 # warning: Mozilla Firefox only supports .5 steps properly
 # (has to be set in about:config manually otherwise as layout.css.devPixelsPerPx)
@@ -13,7 +14,10 @@ DPI_FACTORS = {
     "x1": [1.75, 2.0, 2.5]
 }
 
-DPIS = DPI_FACTORS.get(os.uname()[1])
+if len(sys.argv) > 1:
+    DPIS = [float(sys.argv[1])]
+else:
+    DPIS = DPI_FACTORS.get(os.uname()[1])
 
 
 def set_dpi(dpi: int) -> None:

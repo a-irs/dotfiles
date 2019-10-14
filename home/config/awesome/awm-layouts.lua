@@ -2,8 +2,8 @@ local awful = require 'awful'
 
 awful.layout.layouts = {
     awful.layout.suit.spiral,
-    awful.layout.suit.tile.left,
     awful.layout.suit.tile.right,
+    awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
     awful.layout.suit.fair,
