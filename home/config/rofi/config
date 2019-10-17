@@ -12,3 +12,4 @@ rofi.drun-display-format: {name}
 rofi.scroll-method: 1
 rofi.theme: DarkBlue
 rofi.cache-dir: .local/share/rofi
+rofi.display-drun: run
