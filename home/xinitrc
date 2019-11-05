@@ -26,6 +26,7 @@ compton &
 keepassxc &
 thunar --daemon &
 
+mkdir -p ~/.local/share/yay && ln -sfn ~/.local/share/yay ~/.cache/yay
 mkdir -p ~/.local/share/thumbnails && ln -sfn ~/.local/share/thumbnails ~/.cache/thumbnails
 mkdir -p ~/.local/share/thumbnails/darktable && ln -sfn ~/.local/share/thumbnails/darktable ~/.cache/darktable
 
