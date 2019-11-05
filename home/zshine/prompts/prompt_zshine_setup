@@ -192,11 +192,10 @@ _rprompt_jobs() {
     [[ $ZSHINE_JOBS == 1 ]] || return
     local m_stop="j"
     local m_run="&"
-    local m_tmux=""
     local ret
-    local -i detached=0
-    detached+=$(tmux list-sessions 2> /dev/null | grep -cv 'attached')
-    (( detached > 0 )) && ret="${ret}${detached}${m_tmux}"
+    local -i detached_tmux=0
+    detached_tmux+=$(tmux list-sessions 2> /dev/null | grep -cv 'attached')
+    (( detached_tmux > 0 )) && ret="${ret}${detached_tmux}"
     local running=$(( $(jobs -r | wc -l) ))
     if [[ $running != 0 ]] ; then
         [[ -n "$ret" ]] && ret="${ret}|"
