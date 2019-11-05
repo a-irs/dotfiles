@@ -48,6 +48,9 @@
 /home/*/.kodi/userdata/Thumbnails/*
 /home/*/.local/share/Steam
 /home/*/.local/share/Trash
+/home/*/.local/share/yay/**/*.deb
+/home/*/.local/share/yay/**/*.tar
+/home/*/.local/share/yay/**/*.tar.*
 /home/*/.local/share/gvfs-metadata/*
 /home/*/.local/share/virtualenvs
 /home/*/.local/share/xorg/*.old

@@ -84,7 +84,7 @@ git_remote_state() {
 }
 
 _git_dirty_simple() {
-    if [[ -n $(git status --ignore-submodules --porcelain 2> /dev/null) ]]; then
+    if ! git diff --quiet --ignore-submodules HEAD; then
         echo -n "%{%B%F{$ZSHINE_GIT_DIRTY_FG}%}$ZSHINE_GIT_SYMBOL_SIMPLE"
     fi
 }
