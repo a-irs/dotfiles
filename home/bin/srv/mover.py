@@ -237,14 +237,13 @@ class Mover():
             sys.exit(1)
 
     def do_move(self, source: pathlib.Path, dest: pathlib.Path) -> None:
-        dest.parent.mkdir(parents=True, exist_ok=True)
-
         print(f'{source.name} --> {C_YELLOW}{dest.name}{C_RESET}')
 
         if dest.exists():
             print(f'ERROR: {C_RED}{dest}{C_RESET} already exists.')
         else:
             if self.run:
+                dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.move(source, dest)
             else:
                 print("DRY RUN do_move")
