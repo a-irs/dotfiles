@@ -7,8 +7,6 @@ rofi.width: 600
 rofi.lines: 5
 rofi.dpi: 168
 rofi.terminal: termite
-rofi.drun-match-fields: name
-rofi.drun-display-format: {name}
 rofi.scroll-method: 1
 rofi.theme: DarkBlue
 rofi.cache-dir: .local/share/rofi
