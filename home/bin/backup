@@ -34,7 +34,7 @@ case $1 in
     *) exit
 esac
 
-if ! ssh -i "$SSH_KEY" $USER_HOST test -f "$MAIN_DIR/README"; then
+if ! ssh -i "$SSH_KEY" $USER_HOST test -f "$MAIN_DIR/$HOSTNAME/README"; then
     borg init --verbose --encryption none
 fi
 

@@ -5,6 +5,7 @@
 **/.fr-*
 **/*.pyc
 **/Cache
+**/Caches
 **/ShaderCache
 **/GPUCache
 **/CacheStorage
@@ -103,3 +104,4 @@
 /srv/vuls-database/db
 
 /var/log/journal
+/var/lib/docker/*
