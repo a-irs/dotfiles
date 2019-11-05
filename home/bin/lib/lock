@@ -1,14 +1,49 @@
 #!/usr/bin/env bash
 
-# dependencies: scrot (faster than imagemagicks "import"), imagemagick
+# dependencies:
+# - scrot (faster than imagemagick's "import")
+# - imagemagick (for pixelating)
+# - i3lock-color (instead of i3lock: can handle jpgs -> faster conversion, supports additional configs)
 
 PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/bin
-image=$(mktemp --suffix=.png)
+
+image=$(mktemp --suffix=.jpg)
 trap 'rm -f "$image"' EXIT
 
 pre_lock() {
     logger -t "$(basename "$0")" --id=$$ -- "BAT0 before suspend: $(acpi -b | grep -Po '[0-9]+%')"
     killall keepassxc 2> /dev/null
+}
+
+do_lock() {
+    local color_white=ffffffff
+    local color_red=d23c3dff
+    local color_trans=00000000
+    local font="input"
+    i3lock -i "$(make_screenshot)" --show-failed-attempts --ignore-empty-password \
+    --pass-media-keys --force-clock \
+    --timepos='x+140:h-30' \
+    --clock --datestr "" \
+    --insidecolor=$color_trans --ringcolor=$color_white --line-uses-inside \
+    --keyhlcolor=$color_red --bshlcolor=$color_red \
+    --insidevercolor=$color_trans --insidewrongcolor=$color_red \
+    --ringvercolor=$color_white --ringwrongcolor=$color_white --indpos='w/2:h/2+7' \
+    --radius=100 --ring-width=10 \
+    --verifcolor="$color_white" --timecolor="$color_white" \
+    --time-font="$font" --timesize=50 --date-font="$font" --layout-font="$font" --verif-font="$font" --wrong-font="$font"
+
+    do_sound
+}
+
+do_sound() {
+    export XDG_RUNTIME_DIR=/run/user/1000
+
+    was_muted=$(pacmd list-sinks | awk '/muted/ { print $2 }')
+    pactl set-sink-mute 0 false
+    paplay /usr/share/sounds/freedesktop/stereo/bell.oga
+    if [[ "$was_muted" == yes ]]; then
+        pactl set-sink-mute 0 true
+    fi
 }
 
 lock() {
@@ -17,13 +52,13 @@ lock() {
         kill_i3lock() { pkill -xu $EUID "$@" i3lock; }
         trap kill_i3lock TERM INT
 
-        i3lock -i "$(make_screenshot)" --show-failed-attempts --ignore-empty-password {XSS_SLEEP_LOCK_FD}<&-
+        do_lock {XSS_SLEEP_LOCK_FD}<&-
         exec {XSS_SLEEP_LOCK_FD}<&-
         while kill_i3lock -0; do sleep 0.1; done
 
     else
         trap 'kill %%' TERM INT
-        i3lock -i "$(make_screenshot)" --show-failed-attempts --ignore-empty-password
+        do_lock
     fi
 }
 
@@ -42,14 +77,16 @@ make_screenshot() {
         icon=lock_white.png
     fi
 
-    colors=(-modulate 60,75,100)  # brightness, saturation, hue (in percent)
+    # shellcheck disable=SC2054
+    colors=(-modulate 80,60,100)  # brightness, saturation, hue (in percent)
     effect=(-scale 4% -scale 2510%)  # first*second has to equal 1 (or just over it, to avoid some glitches)
+    overlay=(-gravity center "$HOME/.bin/lib/$icon")
 
-    convert "$image" "${colors[@]}" "${effect[@]}" -gravity center "$HOME/.bin/lib/$icon" -composite "$image"
+    convert "$image" "${colors[@]}" "${effect[@]}" "${overlay[@]}" -composite "$image"
+
     printf '%s' "$image"
 }
 
-# make_screenshot
 pre_lock
 lock
 post_lock
