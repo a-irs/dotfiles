@@ -17,9 +17,10 @@ if [[ $commands[fd] ]]; then
             __fzf_compgen_generic . "$1"
     }
     _fzf_compgen_dir() {
-            __fzf_compgen_generic --type directory "$1"
+            __fzf_compgen_generic --type directory . "$1"
     }
 fi
+# note: 'rg --files --hidden --no-ignore' is equally fast (benchmarked with hyperfine
 
 source /usr/share/fzf/key-bindings.zsh
 bindkey '^f' fzf-cd-widget
