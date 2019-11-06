@@ -295,7 +295,7 @@ if [[ "$commands[git]" ]]; then
     alias gp="git push"
     alias gs="git s"
     alias gd="git d"
-    alias ge="git ls-files -mo --exclude-standard -z | fzf --multi --preview='preview {}' --exit-0 --read0 --print0 --height=70% | xargs --no-run-if-empty -0 -o vim -o"
+    alias ge="git ls-files -mo --exclude-standard -z | fzf --multi --preview='preview {}' --exit-0 --read0 --print0 --height=70% --reverse | xargs --no-run-if-empty -0 -o vim -o"
 
     clone() {
         git clone --depth 1 "$1" && cd $(basename ${1//.git/})
@@ -365,10 +365,10 @@ if [[ "$commands[pacman]" ]]; then
     alias pacdiff='sudo pacdiff'
     alias pacdep='sudo pacman -D --asdeps'
     alias pacexp='sudo pacman -D --asexplicit'
-    if [[ "$commands[yaourt]" ]]; then
-        alias y='yaourt'
-        alias ys='yaourt -S'
-        alias ysua='yaourt -Syua'
+    if [[ "$commands[yay]" ]]; then
+        if [[ $USER == root ]]; then
+            alias yay="sudo -u makepkg yay"
+        fi
     fi
 elif [[ "$commands[apt-get]" ]]; then
     alias aptupg="sudo apt-get update && sudo apt-get -V dist-upgrade"
