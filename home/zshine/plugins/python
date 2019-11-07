@@ -12,3 +12,14 @@ venv() {
         source venv/bin/activate
     fi
 }
+
+venv2() {
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        deactivate
+    elif [[ -d venv ]]; then
+        source venv/bin/activate
+    else
+        virtualenv --no-download -p python2 venv
+        source venv/bin/activate
+    fi
+}

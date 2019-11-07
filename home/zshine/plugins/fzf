@@ -22,10 +22,12 @@ if [[ $commands[fd] ]]; then
 fi
 # note: 'rg --files --hidden --no-ignore' is equally fast (benchmarked with hyperfine
 
-source /usr/share/fzf/key-bindings.zsh
-bindkey '^f' fzf-cd-widget
+for x in /usr/local/opt/fzf/shell/{key-bindings,completion}.zsh /usr/share/fzf/{key-bindings,completion}.zsh; do
+    [[ -f "$x" ]] && source "$x"
+done
+unset x
 
-source /usr/share/fzf/completion.zsh
+bindkey '^f' fzf-cd-widget
 
 export FZF_DEFAULT_OPTS='--no-mouse --cycle --ansi --color=16 --tiebreak=end,begin,length --inline-info'
 
