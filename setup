@@ -15,15 +15,20 @@ def log(level: str, msg: str) -> None:
     print(f"{level.upper()}: {msg}")
 
 
-def handle_firefox(path, remove=False) -> None:
-    for profile in glob.glob(str(Path.home() / ".mozilla" / "firefox") + "/*.default"):
-        if remove:
-            remove_link(Path(profile) / "chrome" / "userChrome.css")
-        else:
-            make_link(
-                Path(THIS_DIR) / path,
-                Path(profile) / "chrome" / "userChrome.css"
-            )
+def handle_firefox(file_path, remove=False) -> None:
+    paths = [
+        ".mozilla/firefox",
+        "Library/Application Support/Firefox/Profiles"
+    ]
+    for p in paths:
+        for profile in glob.glob(str(Path.home() / Path(p)) + "/*.default"):
+            if remove:
+                remove_link(Path(profile) / "chrome" / "userChrome.css")
+            else:
+                make_link(
+                    Path(THIS_DIR) / file_path,
+                    Path(profile) / "chrome" / "userChrome.css"
+                )
 
 
 def render_template(template, dest):
