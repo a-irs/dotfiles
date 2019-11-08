@@ -55,7 +55,7 @@ def handle_module(name: str, version: str, path: Path, prefix="https://github.co
     target = Path(THIS_DIR / f"cache/modules/{group_name}/{repo_name}")
 
     # TODO: improve
-    os.system(f'git clone --single-branch "{prefix}/{name}" "{target}" 2>&1 | grep -Ev "already exists"')
+    os.system(f'git clone "{prefix}/{name}" "{target}" 2>&1 | grep -Ev "already exists"')
     os.system(f'git -C "{target}" checkout "{version}" 2>&1 | grep -Ev "(Already on|is up to date|HEAD is now)"')
 
     make_link(target, path)
