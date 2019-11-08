@@ -9,3 +9,6 @@ cache
 plug.vim.old
 
 .uuid
+
+home/emacs.d/*
+!home/emacs.d/init.el

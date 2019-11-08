@@ -111,19 +111,6 @@ def main() -> None:
     config = configparser.ConfigParser()
     config.read(THIS_DIR / "setup.conf")
 
-    # HOME FILES
-    for package_name, files in config['files'].items():
-        for f in files.split(', '):
-            src = THIS_DIR / "home" / Path(f)
-            dest = Path.home() / Path(f".{f}")
-            if action == 'rm':
-                remove_link(dest)
-            else:
-                if shutil.which(package_name):
-                    make_link(src, dest)
-                else:
-                    remove_link(dest)
-
     # MODULES
     for section in [s for s in config.sections() if s.startswith("modules.")]:
         package_name = '.'.join(section.split('.')[1:])
@@ -137,6 +124,19 @@ def main() -> None:
                         version = key.split('@')[-1]
                     dest = THIS_DIR / "home" / Path(os.path.expanduser(path))
                     handle_module(url, version, dest)
+
+    # HOME FILES
+    for package_name, files in config['files'].items():
+        for f in files.split(', '):
+            src = THIS_DIR / "home" / Path(f)
+            dest = Path.home() / Path(f".{f}")
+            if action == 'rm':
+                remove_link(dest)
+            else:
+                if shutil.which(package_name):
+                    make_link(src, dest)
+                else:
+                    remove_link(dest)
 
     # FIREFOX
     if action == 'link':
