@@ -33,11 +33,13 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-    ;; http://develop.spacemacs.org/layers/LAYERS.html
+     ;; http://develop.spacemacs.org/layers/LAYERS.html
 
+     ;; files
      vimscript
      markdown
      python
+     emacs-lisp
 
      ;; checkers
      syntax-checking
@@ -49,9 +51,8 @@ This function should only modify configuration layer settings."
 
      ;; emacs
      org
-
-     emacs-lisp
      git
+
      )
 
    ;; List of additional packages that will be installed without being
@@ -157,7 +158,7 @@ It should only modify the values of Spacemacs settings."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner nil
 
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
@@ -165,7 +166,7 @@ It should only modify the values of Spacemacs settings."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'.
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((recents . 5)
+   dotspacemacs-startup-lists '((recents . 10)
                                 (projects . 7))
 
    ;; True if the home buffer should respond to resize events. (default t)
@@ -332,7 +333,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil unicode symbols are displayed in the mode line.
    ;; If you use Emacs as a daemon and wants unicode characters only in GUI set
    ;; the value to quoted `display-graphic-p'. (default t)
-   dotspacemacs-mode-line-unicode-symbols t
+   dotspacemacs-mode-line-unicode-symbols nil
 
    ;; If non-nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters point
@@ -414,7 +415,7 @@ It should only modify the values of Spacemacs settings."
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%I@%S"
+   dotspacemacs-frame-title-format "%a - %I"
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
@@ -450,9 +451,9 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
+
   ;; imitates vim's whichwrap to cross newlines with left/right
   (setq evil-cross-lines t)
-  (setq exec-path-from-shell-check-startup-files nil)
   )
 
 (defun dotspacemacs/user-load ()
@@ -471,5 +472,23 @@ before packages are loaded."
   (load-theme 'kaolin-ocean)
   )
 
+
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("7d4340a89c1f576d1b5dec57635ab93cdc006524bda486b66d01a6f70cffb08e" default)))
+ '(package-selected-packages
+   (quote
+    (yasnippet-snippets yapfify ws-butler writeroom-mode visual-fill-column winum volatile-highlights vimrc-mode vi-tilde-fringe uuidgen treemacs-magit toc-org symon symbol-overlay string-inflection spaceline-all-the-icons spaceline powerline smeargle restart-emacs rainbow-delimiters pytest pyenv-mode py-isort popwin pippel pipenv pyvenv pip-requirements persp-mode password-generator paradox spinner orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-cliplink org-bullets org-brain open-junk-file nord-theme move-text mmm-mode markdown-toc markdown-mode magit-svn magit-gitflow magit-popup lorem-ipsum live-py-mode link-hint kaolin-themes autothemer indent-guide importmagic epc ctable concurrent deferred hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-pydoc helm-purpose window-purpose imenu-list helm-org-rifle helm-org helm-gitignore request helm-git-grep helm-company helm-c-yasnippet google-translate golden-ratio gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-magit magit transient git-commit with-editor evil-lisp-state evil-lion evil-indent-plus evil-iedit-state iedit evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens smartparens paredit evil-args evil-anzu anzu eval-sexp-fu editorconfig dumb-jump doom-modeline shrink-path all-the-icons memoize devdocs define-word dactyl-mode cython-mode company-statistics company-anaconda company column-enforce-mode clean-aindent-mode centered-cursor-mode blacken auto-yasnippet yasnippet auto-highlight-symbol anaconda-mode pythonic aggressive-indent ace-link ac-ispell auto-complete org-plus-contrib font-lock+ which-key use-package treemacs-projectile treemacs-evil pcre2el overseer nameless macrostep hybrid-mode helm-xref helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag flycheck-package evil-mc elisp-slime-nav dotenv-mode diminish bind-map auto-compile ace-jump-helm-line))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
