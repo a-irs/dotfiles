@@ -71,7 +71,7 @@
 /root/.vim/plugged
 /root/.zcompdump
 /root/.zsh_recent-dirs
-/home/*/Dropbox
+/home/*/Dropbox/*
 /home/*/vm/**/*.raw
 /home/*/vm/**/*.qcow2
 /home/*/vm/**/*.vmdk
