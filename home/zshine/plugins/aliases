@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
-# alias emacs="emacsclient -c --alternate-editor='' -t"
-alias emacs="emacsclient -c --alternate-editor='' -n"
+alias et="emacsclient -c --alternate-editor='' -t"
+alias e="emacsclient -c --alternate-editor='' -n"
 
 alias vpn-up="sudo wg-quick up wg0"
 alias vpn-start=vpn-up

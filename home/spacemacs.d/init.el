@@ -41,6 +41,7 @@ This function should only modify configuration layer settings."
      python
      emacs-lisp
      yaml
+     shell-scripts
 
      ;; checkers
      syntax-checking
@@ -51,6 +52,7 @@ This function should only modify configuration layer settings."
      spacemacs-completion
 
      ;; emacs
+     (shell :variables shell-default-term-shell "/bin/bash")
      org
      git
      (version-control :variables
@@ -68,7 +70,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(kaolin-themes nord-theme)
+   dotspacemacs-additional-packages '(kaolin-themes nord-theme gruvbox-theme dracula-theme monokai-pro-theme flatland-theme)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -193,8 +195,14 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light)
+   dotspacemacs-themes '(
+                         dracula
+                         monokai-pro
+                         kaolin-galaxy
+                         flatland
+                         gruvbox
+                         nord
+                         )
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
@@ -471,10 +479,21 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (load-theme 'kaolin-ocean)
+
+  ;; yaml: use yamllint instead of ruby builtin checker
+  (setq-default flycheck-disabled-checkers '(yaml-ruby))
 
   ;; highlight changes on the fly (without saving)
   (diff-hl-flydiff-mode '(:global t))
+
+  ;; use theme in emacsclient
+  (defun ag/new-frame-init (frame)
+    (run-at-time
+     "0.002 sec" nil
+     (lambda ()
+       (enable-theme spacemacs--cur-theme))))
+  (with-eval-after-load 'core-themes-support
+    (add-hook 'after-make-frame-functions 'ag/new-frame-init))
   )
 
 
