@@ -23,7 +23,6 @@ lxpolkit &
 parcellite --no-icon &
 compton &
 [[ $HOSTNAME == x1 ]] && xcalib ~/.config/x1carbon3rd_notebookcheck.com.icc &
-keepassxc &
 thunar --daemon &
 
 mkdir -p ~/.local/share/yay && ln -sfn ~/.local/share/yay ~/.cache/yay
