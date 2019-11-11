@@ -480,6 +480,17 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+   ;; hide modeline by default (bring back with SPC t m T)
+  (define-global-minor-mode global-hidden-mode-line-mode
+    hidden-mode-line-mode ;; mode to be enabled
+    (lambda () (hidden-mode-line-mode) ;; function to enable mode
+      ))
+  (global-hidden-mode-line-mode)
+
+  ;; behave like vim's scrolloff=1
+  (setq scroll-margin 1)
+  (setq smooth-scroll-margin 1)
+
   ;; yaml: use yamllint instead of ruby builtin checker
   (setq-default flycheck-disabled-checkers '(yaml-ruby))
 
@@ -494,49 +505,4 @@ before packages are loaded."
        (enable-theme spacemacs--cur-theme))))
   (with-eval-after-load 'core-themes-support
     (add-hook 'after-make-frame-functions 'ag/new-frame-init))
-  )
-
-
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("7d4340a89c1f576d1b5dec57635ab93cdc006524bda486b66d01a6f70cffb08e" default)))
- '(package-selected-packages
-   (quote
-    (yasnippet-snippets yapfify ws-butler writeroom-mode visual-fill-column winum volatile-highlights vimrc-mode vi-tilde-fringe uuidgen treemacs-magit toc-org symon symbol-overlay string-inflection spaceline-all-the-icons spaceline powerline smeargle restart-emacs rainbow-delimiters pytest pyenv-mode py-isort popwin pippel pipenv pyvenv pip-requirements persp-mode password-generator paradox spinner orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-cliplink org-bullets org-brain open-junk-file nord-theme move-text mmm-mode markdown-toc markdown-mode magit-svn magit-gitflow magit-popup lorem-ipsum live-py-mode link-hint kaolin-themes autothemer indent-guide importmagic epc ctable concurrent deferred hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-pydoc helm-purpose window-purpose imenu-list helm-org-rifle helm-org helm-gitignore request helm-git-grep helm-company helm-c-yasnippet google-translate golden-ratio gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-magit magit transient git-commit with-editor evil-lisp-state evil-lion evil-indent-plus evil-iedit-state iedit evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens smartparens paredit evil-args evil-anzu anzu eval-sexp-fu editorconfig dumb-jump doom-modeline shrink-path all-the-icons memoize devdocs define-word dactyl-mode cython-mode company-statistics company-anaconda company column-enforce-mode clean-aindent-mode centered-cursor-mode blacken auto-yasnippet yasnippet auto-highlight-symbol anaconda-mode pythonic aggressive-indent ace-link ac-ispell auto-complete org-plus-contrib font-lock+ which-key use-package treemacs-projectile treemacs-evil pcre2el overseer nameless macrostep hybrid-mode helm-xref helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag flycheck-package evil-mc elisp-slime-nav dotenv-mode diminish bind-map auto-compile ace-jump-helm-line))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-(defun dotspacemacs/emacs-custom-settings ()
-  "Emacs custom settings.
-This is an auto-generated function, do not modify its content directly, use
-Emacs customize menu instead.
-This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("7d4340a89c1f576d1b5dec57635ab93cdc006524bda486b66d01a6f70cffb08e" default)))
- '(evil-want-Y-yank-to-eol nil)
- '(package-selected-packages
-   (quote
-    (yaml-mode yasnippet-snippets yapfify ws-butler writeroom-mode visual-fill-column winum volatile-highlights vimrc-mode vi-tilde-fringe uuidgen treemacs-magit toc-org symon symbol-overlay string-inflection spaceline-all-the-icons spaceline powerline smeargle restart-emacs rainbow-delimiters pytest pyenv-mode py-isort popwin pippel pipenv pyvenv pip-requirements persp-mode password-generator paradox spinner orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-cliplink org-bullets org-brain open-junk-file nord-theme move-text mmm-mode markdown-toc markdown-mode magit-svn magit-gitflow magit-popup lorem-ipsum live-py-mode link-hint kaolin-themes autothemer indent-guide importmagic epc ctable concurrent deferred hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-pydoc helm-purpose window-purpose imenu-list helm-org-rifle helm-org helm-gitignore request helm-git-grep helm-company helm-c-yasnippet google-translate golden-ratio gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-magit magit transient git-commit with-editor evil-lisp-state evil-lion evil-indent-plus evil-iedit-state iedit evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens smartparens paredit evil-args evil-anzu anzu eval-sexp-fu editorconfig dumb-jump doom-modeline shrink-path all-the-icons memoize devdocs define-word dactyl-mode cython-mode company-statistics company-anaconda company column-enforce-mode clean-aindent-mode centered-cursor-mode blacken auto-yasnippet yasnippet auto-highlight-symbol anaconda-mode pythonic aggressive-indent ace-link ac-ispell auto-complete org-plus-contrib font-lock+ which-key use-package treemacs-projectile treemacs-evil pcre2el overseer nameless macrostep hybrid-mode helm-xref helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag flycheck-package evil-mc elisp-slime-nav dotenv-mode diminish bind-map auto-compile ace-jump-helm-line))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 )
