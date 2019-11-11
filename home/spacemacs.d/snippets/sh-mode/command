@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: check if command is in $PATH
+# key: command
+# --
+if ! command -v $1 > /dev/null 2>&1; then
+    exit 1
+fi

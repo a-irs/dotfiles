@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: read file line for line
+# key: readfile
+# --
+while read -r line; do
+    printf '%s\n' "$line"
+done < ${0:filename}

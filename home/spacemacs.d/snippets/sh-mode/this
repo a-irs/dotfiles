@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: make variable to current resolved dir
+# key: this
+# --
+THIS_DIR=$(dirname "$(readlink -f "$0")")

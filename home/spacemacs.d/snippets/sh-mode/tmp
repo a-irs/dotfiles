@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: set up temporary directory and trap
+# key: tmp
+# --
+TMP_DIR="$(mktemp -d)"
+trap "rm -rf "$TMP_DIR"" EXIT

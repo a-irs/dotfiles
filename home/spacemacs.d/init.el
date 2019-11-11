@@ -48,7 +48,18 @@ This function should only modify configuration layer settings."
 
      ;; completion
      helm
-     auto-completion
+     (auto-completion :variables
+                      ;; replace TAB with hippie-expand
+                      auto-completion-tab-key-behavior nil
+
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-help-tooltip t
+
+                      auto-completion-enable-sort-by-usage t
+
+                      ;; default: 0.2
+                      auto-completion-idle-delay 0.1
+                      )
      spacemacs-completion
 
      ;; emacs
@@ -479,6 +490,9 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+
+  ;; autocomplete with TAB
+  (global-set-key (kbd "TAB") 'hippie-expand)
 
    ;; hide modeline by default (bring back with SPC t m T)
   (define-global-minor-mode global-hidden-mode-line-mode

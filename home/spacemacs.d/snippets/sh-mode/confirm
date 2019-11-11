@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: show yes/no confirmation
+# key: confirm
+# --
+read -r -p "Are you sure? (y/N) " -n1
+if ! [[ $REPLY =~ ^[Yy]$ ]]; then
+    exit 1
+fi
