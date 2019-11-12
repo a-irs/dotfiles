@@ -494,12 +494,15 @@ before packages are loaded."
   ;; autocomplete with TAB
   (global-set-key (kbd "TAB") 'hippie-expand)
 
-   ;; hide modeline by default (bring back with SPC t m T)
-  (define-global-minor-mode global-hidden-mode-line-mode
-    hidden-mode-line-mode ;; mode to be enabled
-    (lambda () (hidden-mode-line-mode) ;; function to enable mode
-      ))
-  (global-hidden-mode-line-mode)
+  ;; cleanup mode line (https://github.com/TheBB/spaceline#turning-segments-on-and-off)
+  (spaceline-toggle-minor-modes-off)
+  (spaceline-toggle-major-mode-off)
+  (spaceline-toggle-buffer-size-off)
+  (spaceline-toggle-buffer-position-off)
+  (spaceline-toggle-buffer-encoding-abbrev-off)
+  (spaceline-toggle-buffer-encoding-abbrev-off)
+  (spaceline-toggle-purpose-off)
+  (spaceline-toggle-version-control-off)
 
   ;; behave like vim's scrolloff=1
   (setq scroll-margin 1)

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: EOF/EOL HEREDOC
+# key: eof
+# --
+cat << EOF | sed 's/foo/bar' > ${1:filename}
+${0:text}
+EOF
