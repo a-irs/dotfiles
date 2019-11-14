@@ -52,5 +52,6 @@ if [[ $HOSTNAME == desk ]]; then
     fi
 fi
 
+emacs --daemon &
 redshift &
 exec awesome

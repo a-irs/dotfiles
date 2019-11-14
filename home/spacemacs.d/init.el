@@ -50,13 +50,8 @@ This function should only modify configuration layer settings."
      ;; completion
      helm
      (auto-completion :variables
-                      ;; replace TAB with hippie-expand
-                      auto-completion-tab-key-behavior nil
-
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-enable-help-tooltip t
-
-                      auto-completion-enable-sort-by-usage t
 
                       ;; default: 0.2
                       auto-completion-idle-delay 0.1
@@ -65,6 +60,12 @@ This function should only modify configuration layer settings."
 
      ;; emacs
      (shell :variables shell-default-term-shell "/bin/bash")
+     ;; TODO: set per-theme? https://github.com/syl20bnr/spacemacs/blob/develop/layers/%2Bthemes/colors/config.el
+     (colors :variables
+             colors-default-rainbow-identifiers-sat 25
+             colors-default-rainbow-identifiers-light 75
+             colors-colorize-identifiers 'variables
+             )
      osx
      org
      git
@@ -83,7 +84,15 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(kaolin-themes nord-theme gruvbox-theme dracula-theme monokai-pro-theme flatland-theme)
+
+    dotspacemacs-additional-packages '(
+      kaolin-themes
+      nord-theme
+      gruvbox-theme
+      dracula-theme
+      monokai-pro-theme
+      flatland-theme
+    )
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -480,14 +489,14 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   ;; imitates vim's whichwrap to cross newlines with left/right
   (setq evil-cross-lines t)
-  )
+)
 
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
 dump."
-  )
+)
 
 (defun dotspacemacs/user-config ()
   "Configuration for user code:
@@ -496,8 +505,14 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
-  ;; autocomplete with TAB
-  (global-set-key (kbd "TAB") 'hippie-expand)
+  ;; fringe only half sized
+  (fringe-mode '(4 . 4))
+
+  ;; highlight git changes on the fly (without saving)
+  (diff-hl-flydiff-mode '(:global t))
+
+  ;; use emacs builtin tooltips/popups beacause they scale with dpi
+  (setq x-gtk-use-system-tooltips nil)
 
   ;; cleanup mode line (https://github.com/TheBB/spaceline#turning-segments-on-and-off)
   ;; (spaceline-toggle-minor-modes-off)
@@ -509,20 +524,37 @@ before packages are loaded."
   (spaceline-toggle-purpose-off)
   (spaceline-toggle-version-control-off)
 
-  (setq writeroom-width 0.8)
-  (setq writeroom-fullscreen-effect "Maximized")
-  (setq writeroom-fringes-outside-margins nil)
+  ;; show menu bar (to learn commands)
+  (menu-bar-mode t)
+
+  ;; distraction-free mode
   (spacemacs/set-leader-keys "ESC" 'writeroom-mode)
+  (spacemacs/set-leader-keys "<escape>" 'writeroom-mode)
+  (setq writeroom-width 0.7)
+  (setq writeroom-fullscreen-effect 'maximized)
+  (setq writeroom-fringes-outside-margins nil)
+
+  ;; scale font with +/-
+  (global-set-key (kbd "C-+") 'text-scale-increase)
+  (global-set-key (kbd "C--") 'text-scale-decrease)
 
   ;; behave like vim's scrolloff=1
-  (setq scroll-margin 1)
-  (setq smooth-scroll-margin 1)
+  (setq scroll-margin 3)
+  (setq smooth-scroll-margin 3)
+
+  ;; --- syntax checking
 
   ;; yaml: use yamllint instead of ruby builtin checker
   (setq-default flycheck-disabled-checkers '(yaml-ruby))
 
-  ;; highlight changes on the fly (without saving)
-  (diff-hl-flydiff-mode '(:global t))
+  (setq flycheck-display-errors-delay 0.1)  ;; default: 0.9 (too slow!)
+  (setq flycheck-idle-change-delay 2.0)  ;; default: 0.5 (too fast!)
+
+  ;; SPC q q: only kill frame instead of entire daemon (also applies to :q)
+  (evil-leader/set-key "q q" 'spacemacs/frame-killer)
+  (evil-leader/set-key "q Q" 'spacemacs/prompt-kill-emacs)
+
+  (setq-default yas-snippet-dirs '("~/.spacemacs.d/snippets"))
 
   ;; use theme in emacsclient
   (defun ag/new-frame-init (frame)
