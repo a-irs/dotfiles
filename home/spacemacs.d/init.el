@@ -500,14 +500,19 @@ before packages are loaded."
   (global-set-key (kbd "TAB") 'hippie-expand)
 
   ;; cleanup mode line (https://github.com/TheBB/spaceline#turning-segments-on-and-off)
-  (spaceline-toggle-minor-modes-off)
-  (spaceline-toggle-major-mode-off)
+  ;; (spaceline-toggle-minor-modes-off)
+  ;; (spaceline-toggle-major-mode-off)
   (spaceline-toggle-buffer-size-off)
   (spaceline-toggle-buffer-position-off)
   (spaceline-toggle-buffer-encoding-abbrev-off)
   (spaceline-toggle-buffer-encoding-abbrev-off)
   (spaceline-toggle-purpose-off)
   (spaceline-toggle-version-control-off)
+
+  (setq writeroom-width 0.8)
+  (setq writeroom-fullscreen-effect "Maximized")
+  (setq writeroom-fringes-outside-margins nil)
+  (spacemacs/set-leader-keys "ESC" 'writeroom-mode)
 
   ;; behave like vim's scrolloff=1
   (setq scroll-margin 1)
