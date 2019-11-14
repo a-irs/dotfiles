@@ -103,12 +103,12 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
     dotspacemacs-additional-packages '(
-      kaolin-themes
-      nord-theme
+      base16-theme
       gruvbox-theme
       dracula-theme
       monokai-pro-theme
-      flatland-theme
+      ;; flatland-theme
+      ;; nord-theme
     )
 
    ;; A list of packages that cannot be updated.
@@ -237,10 +237,10 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-themes '(
                          dracula
                          monokai-pro
-                         kaolin-galaxy
-                         flatland
+                         base16-oceanicnext
+                         base16-solarflare
+                         base16-tomorrow-night
                          gruvbox
-                         nord
                          )
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
