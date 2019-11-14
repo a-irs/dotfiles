@@ -36,24 +36,24 @@ This function should only modify configuration layer settings."
      ;; http://develop.spacemacs.org/layers/LAYERS.html
 
      ;; not needed. included in spacemacs but not in spacemacs-base
-      ;; treemacs
-      ;; spacemacs-editing
-      ;; spacemacs-language
-      ;; spacemacs-misc
+     ;; treemacs
+     ;; spacemacs-editing
+     ;; spacemacs-language
+     ;; spacemacs-misc
 
-      ;; missing from spacemacs-base and needed:
-      spacemacs-completion
-      spacemacs-editing-visual
-      spacemacs-evil
-      spacemacs-visual
-      spacemacs-navigation
-      spacemacs-org
-      spacemacs-purpose
-      spacemacs-modeline
-      spacemacs-layouts
-      spacemacs-project
+     ;; missing from spacemacs-base and needed:
+     spacemacs-completion
+     spacemacs-editing-visual
+     spacemacs-evil
+     spacemacs-visual
+     spacemacs-navigation
+     spacemacs-org
+     spacemacs-purpose
+     spacemacs-modeline
+     spacemacs-layouts
+     spacemacs-project
 
-      spacemacs-defaults
+     spacemacs-defaults
 
      ;; files
      vimscript
@@ -104,9 +104,9 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
     dotspacemacs-additional-packages '(
       base16-theme
-      gruvbox-theme
       dracula-theme
       monokai-pro-theme
+      ;; gruvbox-theme
       ;; flatland-theme
       ;; nord-theme
     )
@@ -115,7 +115,11 @@ This function should only modify configuration layer settings."
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(overseer yasnippet-snippets spaceline-all-the-icons)
+   dotspacemacs-excluded-packages '(
+                                    overseer
+                                    yasnippet-snippets
+                                    spaceline-all-the-icons
+                                    )
 
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -240,7 +244,6 @@ It should only modify the values of Spacemacs settings."
                          base16-oceanicnext
                          base16-solarflare
                          base16-tomorrow-night
-                         gruvbox
                          )
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
@@ -531,16 +534,6 @@ before packages are loaded."
   ;; use emacs builtin tooltips/popups beacause they scale with dpi
   (setq x-gtk-use-system-tooltips nil)
 
-  ;; cleanup mode line (https://github.com/TheBB/spaceline#turning-segments-on-and-off)
-  ;; (spaceline-toggle-minor-modes-off)
-  ;; (spaceline-toggle-major-mode-off)
-  ;; (spaceline-toggle-buffer-size-off)
-  ;; (spaceline-toggle-buffer-position-off)
-  ;; (spaceline-toggle-buffer-encoding-abbrev-off)
-  ;; (spaceline-toggle-buffer-encoding-abbrev-off)
-  ;; (spaceline-toggle-purpose-off)
-  ;; (spaceline-toggle-version-control-off)
-
   ;; show menu bar (to learn commands)
   (menu-bar-mode t)
 
@@ -559,6 +552,7 @@ before packages are loaded."
   (setq scroll-margin 3)
   (setq smooth-scroll-margin 3)
 
+
   ;; --- syntax checking
 
   ;; yaml: use yamllint instead of ruby builtin checker
@@ -571,7 +565,11 @@ before packages are loaded."
   (evil-leader/set-key "q q" 'spacemacs/frame-killer)
   (evil-leader/set-key "q Q" 'spacemacs/prompt-kill-emacs)
 
-  (setq-default yas-snippet-dirs '("~/.spacemacs.d/snippets"))
+  ;; comment toggle
+  (evil-leader/set-key "#" 'evilnc-comment-or-uncomment-lines)
+
+
+  ;; --- mode line
 
   (setq doom-modeline-project-detection 'project)
   (setq doom-modeline-buffer-file-name-style 'relative-to-project)
@@ -583,6 +581,9 @@ before packages are loaded."
   (setq doom-modeline-height 1)
   (set-face-attribute 'mode-line nil :height 100)
   (set-face-attribute 'mode-line-inactive nil :height 100)
+
+
+  (setq-default yas-snippet-dirs '("~/.spacemacs.d/snippets"))
 
   ;; use theme in emacsclient
   (defun ag/new-frame-init (frame)
