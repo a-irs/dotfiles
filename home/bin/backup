@@ -3,7 +3,7 @@
 set -euo pipefail
 
 [[ $UID != 0 ]] && { echo "run as root"; exit 1; }
-(( $# < 1 )) && { echo "$(basename "$0") start|mount|list|check|info"; exit 2; }
+(( $# < 1 )) && { echo "$(basename "$0") sh|start|mount|list|check|info"; exit 2; }
 
 MAIN_DIR=/media/crypto/borg
 USER_HOST=root@srv.home
@@ -23,15 +23,16 @@ fi
 
 
 export BORG_RSH="ssh -i $SSH_KEY"
-export BORG_CACHE_DIR=/var/tmp/borg
+export BORG_CACHE_DIR=/var/cache/borg
 
 case $1 in
     mount|mnt) borg mount :: "$2" -o allow_other,ro; exit ;;
     check) borg check --verbose --info; exit ;;
     list|ls) borg list --verbose; exit ;;
     info) borg info; exit ;;
+    sh) bash -c "env | grep ^BORG; bash"; exit ;;
     start) ;;
-    *) exit
+    *) exit 2
 esac
 
 if ! ssh -i "$SSH_KEY" $USER_HOST test -f "$MAIN_DIR/$HOSTNAME/README"; then
