@@ -9,7 +9,7 @@ This function should only modify configuration layer settings."
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
    ;; or `spacemacs'. (default 'spacemacs)
-   dotspacemacs-distribution 'spacemacs
+   dotspacemacs-distribution 'spacemacs-base
 
    ;; Lazy installation of layers (i.e. layers are installed only when a file
    ;; with a supported type is opened). Possible values are `all', `unused'
@@ -35,6 +35,26 @@ This function should only modify configuration layer settings."
    '(
      ;; http://develop.spacemacs.org/layers/LAYERS.html
 
+     ;; not needed. included in spacemacs but not in spacemacs-base
+      ;; treemacs
+      ;; spacemacs-editing
+      ;; spacemacs-language
+      ;; spacemacs-misc
+
+      ;; missing from spacemacs-base and needed:
+      spacemacs-completion
+      spacemacs-editing-visual
+      spacemacs-evil
+      spacemacs-visual
+      spacemacs-navigation
+      spacemacs-org
+      spacemacs-purpose
+      spacemacs-modeline
+      spacemacs-layouts
+      spacemacs-project
+
+      spacemacs-defaults
+
      ;; files
      vimscript
      markdown
@@ -56,11 +76,9 @@ This function should only modify configuration layer settings."
                       ;; default: 0.2
                       auto-completion-idle-delay 0.1
                       )
-     spacemacs-completion
 
      ;; emacs
      (shell :variables shell-default-term-shell "/bin/bash")
-     ;; TODO: set per-theme? https://github.com/syl20bnr/spacemacs/blob/develop/layers/%2Bthemes/colors/config.el
      (colors :variables
              colors-default-rainbow-identifiers-sat 25
              colors-default-rainbow-identifiers-light 75
@@ -84,7 +102,6 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-
     dotspacemacs-additional-packages '(
       kaolin-themes
       nord-theme
@@ -98,7 +115,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(overseer yasnippet-snippets spaceline-all-the-icons)
 
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -233,7 +250,7 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator nil)
+   dotspacemacs-mode-line-theme '(doom)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -406,7 +423,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
    ;; over any automatically added closing parenthesis, bracket, quote, etc...
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
-   dotspacemacs-smart-closing-parenthesis nil
+   dotspacemacs-smart-closing-parenthesis t
 
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
@@ -517,12 +534,12 @@ before packages are loaded."
   ;; cleanup mode line (https://github.com/TheBB/spaceline#turning-segments-on-and-off)
   ;; (spaceline-toggle-minor-modes-off)
   ;; (spaceline-toggle-major-mode-off)
-  (spaceline-toggle-buffer-size-off)
-  (spaceline-toggle-buffer-position-off)
-  (spaceline-toggle-buffer-encoding-abbrev-off)
-  (spaceline-toggle-buffer-encoding-abbrev-off)
-  (spaceline-toggle-purpose-off)
-  (spaceline-toggle-version-control-off)
+  ;; (spaceline-toggle-buffer-size-off)
+  ;; (spaceline-toggle-buffer-position-off)
+  ;; (spaceline-toggle-buffer-encoding-abbrev-off)
+  ;; (spaceline-toggle-buffer-encoding-abbrev-off)
+  ;; (spaceline-toggle-purpose-off)
+  ;; (spaceline-toggle-version-control-off)
 
   ;; show menu bar (to learn commands)
   (menu-bar-mode t)
@@ -555,6 +572,17 @@ before packages are loaded."
   (evil-leader/set-key "q Q" 'spacemacs/prompt-kill-emacs)
 
   (setq-default yas-snippet-dirs '("~/.spacemacs.d/snippets"))
+
+  (setq doom-modeline-project-detection 'project)
+  (setq doom-modeline-buffer-file-name-style 'relative-to-project)
+
+  (setq doom-modeline-icon nil)
+  (setq doom-modeline-buffer-encoding nil)
+  (setq doom-modeline-env-version nil)
+
+  (setq doom-modeline-height 1)
+  (set-face-attribute 'mode-line nil :height 100)
+  (set-face-attribute 'mode-line-inactive nil :height 100)
 
   ;; use theme in emacsclient
   (defun ag/new-frame-init (frame)
