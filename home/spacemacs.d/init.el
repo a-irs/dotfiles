@@ -42,6 +42,7 @@ This function should only modify configuration layer settings."
      emacs-lisp
      yaml
      shell-scripts
+     ansible
 
      ;; checkers
      syntax-checking
@@ -64,6 +65,7 @@ This function should only modify configuration layer settings."
 
      ;; emacs
      (shell :variables shell-default-term-shell "/bin/bash")
+     osx
      org
      git
      (version-control :variables
@@ -229,7 +231,10 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-colorize-cursor-according-to-state t
 
    ;; Default font or prioritized list of fonts.
-   dotspacemacs-default-font '("Input")
+   dotspacemacs-default-font '(
+                               ("Input")
+                               ("Meslo LG M DZ for Powerline")
+                               )
 
    ;; The leader key (default "SPC")
    dotspacemacs-leader-key "SPC"
