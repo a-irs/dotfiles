@@ -145,15 +145,7 @@ p() { for f in "$@"; do printf "\n%s\n\n" "=========== $f" && preview "$f"; done
 [[ "$commands[lsblk]" ]] && alias lsblk='lsblk -o NAME,LABEL,TYPE,FSTYPE,SIZE,MOUNTPOINT,UUID -p'
 [[ "$commands[grep]" ]] && alias grep='grep --color=auto'
 [[ "$commands[dmesg]" ]] && alias dmesg='dmesg -T --color=auto'
-[[ "$commands[make]" ]] && alias make="LC_ALL=C make"
-[[ "$commands[gcc]" ]]  && alias  gcc="LC_ALL=C gcc"
-[[ "$commands[g++]" ]]  && alias  g++="LC_ALL=C g++"
-[[ "$commands[tree]" ]] && alias tree="tree -F --dirsfirst --noreport"
-[[ "$commands[mc]" ]] && alias mc='mc --nocolor'
-[[ "$commands[iotop]" ]] && alias iotop='sudo iotop -o'
-[[ "$commands[ps_mem]" ]] && alias ps_mem='sudo ps_mem'
 [[ "$commands[sudo]" ]] && alias sudo='sudo '
-[[ "$commands[journalctl]" ]] && alias journalctl='sudo journalctl'
 [[ "$commands[pydf]" ]] && alias df='pydf'
 
 [[ "$commands[fd]" ]] && alias fd='fd --hidden --no-ignore'

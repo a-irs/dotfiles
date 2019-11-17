@@ -32,14 +32,12 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(lua
      ;; http://develop.spacemacs.org/layers/LAYERS.html
 
      ;; not needed. included in spacemacs but not in spacemacs-base
      ;; treemacs
-     ;; spacemacs-editing
      ;; spacemacs-language
-     ;; spacemacs-misc
 
      ;; missing from spacemacs-base and needed:
      spacemacs-completion
@@ -52,6 +50,8 @@ This function should only modify configuration layer settings."
      spacemacs-modeline
      spacemacs-layouts
      spacemacs-project
+     spacemacs-editing  ; avy jump
+     spacemacs-misc  ; dumb-jump
 
      spacemacs-defaults
 
@@ -109,6 +109,8 @@ This function should only modify configuration layer settings."
       ;; gruvbox-theme
       ;; flatland-theme
       ;; nord-theme
+
+      dockerfile-mode
     )
 
    ;; A list of packages that cannot be updated.
