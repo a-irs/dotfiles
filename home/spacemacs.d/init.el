@@ -40,10 +40,23 @@ This function should only modify configuration layer settings."
      ;; spacemacs-language
 
      ;; missing from spacemacs-base and needed:
-     spacemacs-completion
-     spacemacs-editing-visual
-     spacemacs-evil
-     spacemacs-visual
+     (spacemacs-completion :packages (not flx-ido ido ido-vertical-mode))
+     (spacemacs-editing-visual :packages (not highlight-indentation column-enforce-mode ))
+     (spacemacs-evil :packages (not
+                     evil-tutor
+                     evil-goggles
+                     evil-escape
+                     evil-unimpaired
+                     evil-lion
+                     evil-lisp-state
+                     evil-surround
+                     vi-tilde-fringe
+                     linum-relative
+                     ))
+     (spacemacs-visual :packages (not
+                                  desktop
+                                  fill-column-indicator
+                            ))
      spacemacs-navigation
      spacemacs-org
      spacemacs-purpose
@@ -527,6 +540,15 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+  ;; only use own snippets
+  (setq-default yas-snippet-dirs '("~/.spacemacs.d/snippets"))
+
+  ;; always show indent guides
+  (indent-guide-global-mode)
+  (setq indent-guide-delay nil)
+  (setq indent-guide-char "▏")
+  (setq indent-guide-threshold 1)  ; do not show left-most indent
+
   ;; fringe only half sized
   (fringe-mode '(4 . 4))
 
@@ -535,9 +557,6 @@ before packages are loaded."
 
   ;; use emacs builtin tooltips/popups beacause they scale with dpi
   (setq x-gtk-use-system-tooltips nil)
-
-  ;; show menu bar (to learn commands)
-  (menu-bar-mode t)
 
   ;; distraction-free mode
   (spacemacs/set-leader-keys "ESC" 'writeroom-mode)
@@ -570,7 +589,6 @@ before packages are loaded."
   ;; comment toggle
   (evil-leader/set-key "#" 'evilnc-comment-or-uncomment-lines)
 
-
   ;; --- mode line
 
   (setq doom-modeline-project-detection 'project)
@@ -579,11 +597,4 @@ before packages are loaded."
   (setq doom-modeline-icon nil)
   (setq doom-modeline-buffer-encoding nil)
   (setq doom-modeline-env-version nil)
-
-  (setq doom-modeline-height 1)
-  (set-face-attribute 'mode-line nil :height 100)
-  (set-face-attribute 'mode-line-inactive nil :height 100)
-
-
-  (setq-default yas-snippet-dirs '("~/.spacemacs.d/snippets"))
 )
