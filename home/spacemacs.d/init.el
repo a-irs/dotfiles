@@ -543,7 +543,7 @@ before packages are loaded."
   (spacemacs/set-leader-keys "ESC" 'writeroom-mode)
   (spacemacs/set-leader-keys "<escape>" 'writeroom-mode)
   (setq writeroom-width 0.7)
-  (setq writeroom-fullscreen-effect 'maximized)
+  (setq writeroom-fullscreen-effect nil)
   (setq writeroom-fringes-outside-margins nil)
 
   ;; scale font with +/-

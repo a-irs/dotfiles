@@ -69,14 +69,10 @@ local function dynamic_tagging()
             else
                 local name = ""
                 for _, c in ipairs(t:clients()) do
-                    if c.class == "Kupfer.py" then
-                        break
-                    elseif c.name and string.find(c.name, '(Private Browsing)') then
+                    if c.name and string.find(c.name, '(Private Browsing)') then
                         name = make_name(name, c, "web[*]")
                     elseif c.name and c.name == "Grafana - dash" then
                         name = "dashboard"
-                    elseif c.instance == "play.google.com__music_listen" or (c.name and string.find(c.name, 'ncmpcpp')) then
-                        name = make_name(name, c, "music")
                     elseif c.name and string.find(c.name, 'ssh ') then
                         name = make_name(name, c, "ssh")
                     elseif c.class == "firefox" or c.class == "Firefox" or c.class == "Chrome" or c.class == "Chromium" then
@@ -89,8 +85,6 @@ local function dynamic_tagging()
                         name = make_name(name, c, "qemu")
                     elseif c.class == "VirtualBox" and string.find(c.name, 'xp ') then
                         name = make_name(name, c, "xp-vm")
-                    elseif c.class == "Subl3" then
-                        name = make_name(name, c, "sublime")
                     elseif c.class == "Thunar" or c.class == "Pcmanfm" then
                         name = make_name(name, c, "files")
                     elseif c.class == "Gimp-2.8" then
@@ -132,12 +126,8 @@ client.connect_signal("manage", function(c)
     -- FIXME: only apply when single window visible
     -- also: slow rendering
     -- c.shape = function(cr, w, h)
-    --     gears.shape.rounded_rect(cr, w, h, dpi(16)
+    --     gears.shape.rounded_rect(cr, w, h, dpi(14))
     -- end
-
-    if (c.class == "Kupfer.py") then
-        return
-    end
 
     -- titlebar
 
@@ -197,18 +187,17 @@ end)
 -- client exits
 client.connect_signal("unmanage", function(c)
 
-    if (c.class == "Kupfer.py") or (c.class == "Steam") then
+    if c.class == "Steam" then
         return
     end
 
     -- return to last tag and reset settings when last window is closed
     if is_empty(awful.tag.selected()) then
-        if c.class ~= "Kupfer.py" then
-            awful.tag.setmwfact(0.5)
-            awful.tag.setnmaster(1)
-            awful.tag.setncol(1)
-            awful.tag.history.restore()
-        end
+        awful.tag.setmwfact(0.5)
+        awful.tag.setnmaster(1)
+        awful.tag.setncol(1)
+        awful.tag.history.restore()
+
         -- return to last non-empty tag
         i = 2
         while is_empty(awful.tag.selected()) and i <= 4 do

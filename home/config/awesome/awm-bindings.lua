@@ -76,13 +76,10 @@ end
 
 local function audio(t)
     if t == "toggle" then
-        run("mpc -q toggle")
         run("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
     elseif t == "prev" then
-        run("mpc -q prev")
         run("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous")
     elseif t == "next" then
-        run("mpc -q next")
         run("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next")
     end
 end
@@ -220,7 +217,13 @@ globalkeys = awful.util.table.join(
 
 
 clientkeys = gears.table.join(
-    awful.key({ win }, "f",  function(c) c.fullscreen = not c.fullscreen; c:raise() end),
+    awful.key({ win }, "f",  function(c)
+        c.fullscreen = not c.fullscreen
+        c.maximized_vertical = false
+        c.maximized_horizontal = false
+        c.maximized = false
+        c:raise()
+    end),
     awful.key({ alt }, "F4", function(c) c:kill() end),
     awful.key({ win }, "w",  function(c) c:kill() end),
     awful.key({ win }, "q",  function(c) c:kill() end),
