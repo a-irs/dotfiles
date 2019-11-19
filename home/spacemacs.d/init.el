@@ -586,13 +586,4 @@ before packages are loaded."
 
 
   (setq-default yas-snippet-dirs '("~/.spacemacs.d/snippets"))
-
-  ;; use theme in emacsclient
-  (defun ag/new-frame-init (frame)
-    (run-at-time
-     "0.002 sec" nil
-     (lambda ()
-       (enable-theme spacemacs--cur-theme))))
-  (with-eval-after-load 'core-themes-support
-    (add-hook 'after-make-frame-functions 'ag/new-frame-init))
 )
