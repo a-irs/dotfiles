@@ -206,6 +206,7 @@ EXEC 01 # This is for files with execute permission
 *README.txt      33
 *readme.txt      33
 .md              33
+.org             33
 .m3u             33
 *README.markdown 33
 .ini             33
@@ -216,7 +217,6 @@ EXEC 01 # This is for files with execute permission
 .cpp             33
 .cc              33
 .markdown		 33
-.nzb			 33
 .ini			 33
 .cfg			 33
 .txt             33
