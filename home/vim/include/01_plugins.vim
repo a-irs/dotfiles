@@ -1,5 +1,7 @@
 call plug#begin()
 
+Plug 'tpope/vim-speeddating' | Plug 'jceb/vim-orgmode'
+
 Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
 let g:UltiSnipsSnippetDirectories = ['snip']
 let g:UltiSnipsExpandTrigger = '<tab>'

@@ -97,8 +97,12 @@ This function should only modify configuration layer settings."
              colors-default-rainbow-identifiers-light 75
              colors-colorize-identifiers 'variables
              )
-     osx
-     org
+
+     (osx :variables osx-option-as 'none
+          :packages (not launchctl exec-path-from-shell osx-dictionary)
+     )
+
+     (org :packages (not org-projective org-journal org-brain org-present gnuplot))
      git
      (version-control :variables
                       version-control-diff-tool 'diff-hl
