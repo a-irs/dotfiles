@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+name=${0/$HOME/\~}
+
+pids=$(pidof picom)
+if [[ $? -eq 1 ]]; then
+    picom &
+    notify-send "$name" "picom enabled"
+else
+    kill $pids
+    notify-send "$name" "picom disabled"
+fi

@@ -21,7 +21,7 @@ xset dpms 300 300 300
 nitrogen --restore &
 lxpolkit &
 parcellite --no-icon &
-compton &
+picom &
 [[ $HOSTNAME == x1 ]] && xcalib ~/.config/x1carbon3rd_notebookcheck.com.icc &
 thunar --daemon &
 

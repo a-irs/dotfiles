@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-killall compton &> /dev/null
+killall picom &> /dev/null
 gpick
-compton
+picom

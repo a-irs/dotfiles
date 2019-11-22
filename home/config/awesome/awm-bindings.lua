@@ -149,7 +149,7 @@ globalkeys = awful.util.table.join(
     awful.key({ alt }, "p",          function() run_script("pick-color.sh") end),
     awful.key({ alt }, "k",          function() run_or_raise("keepassxc", "keepassxc") end),
     awful.key({ alt }, "s",          function() run_or_raise("emacsclient -c -a=''", "Emacs") end),
-    awful.key({ alt }, "l",          function() run_script("toggle-compton") end),
+    awful.key({ alt }, "l",          function() run_script("toggle-picom") end),
     awful.key({ alt }, "d",          function() run_script("dpitog") end),
     awful.key({ alt }, "o",          function() run_gui_script("mpv-clipboard.sh") end),
 
