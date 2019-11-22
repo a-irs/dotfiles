@@ -57,7 +57,14 @@ This function should only modify configuration layer settings."
                                   desktop
                                   fill-column-indicator
                             ))
-     spacemacs-navigation
+     (spacemacs-navigation :packages (not
+                                      centered-cursor-mode
+                                      auto-highlight-symbol
+                                      paradox
+                                      golden-ratio
+                                      open-junk-file
+                                      winum
+                                      ))
      spacemacs-org
      spacemacs-purpose
      spacemacs-modeline
@@ -592,6 +599,10 @@ before packages are loaded."
 
   ;; comment toggle
   (evil-leader/set-key "#" 'evilnc-comment-or-uncomment-lines)
+
+  (setq symbol-overlay-idle-time 0.1)
+  (add-hook 'prog-mode-hook #'symbol-overlay-mode)
+  (setq symbol-overlay-faces '(symbol-overlay-face-3))
 
   ;; --- mode line
 
