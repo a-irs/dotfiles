@@ -66,8 +66,8 @@ This function should only modify configuration layer settings."
                                       winum
                                       ))
      spacemacs-org
-     spacemacs-purpose
-     spacemacs-modeline
+     (spacemacs-purpose :packages (not eyebrowse))
+     (spacemacs-modeline :packages (anzu doom-modeline))
      spacemacs-layouts
      spacemacs-project
      spacemacs-editing  ; avy jump
