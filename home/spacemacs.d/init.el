@@ -558,7 +558,7 @@ before packages are loaded."
   (indent-guide-global-mode)
   (setq indent-guide-delay nil)
   (setq indent-guide-char "▏")
-  (setq indent-guide-threshold 1)  ; do not show left-most indent
+  (setq indent-guide-threshold 2)  ; do not show 2 left-most indent
 
   ;; fringe only half sized
   (fringe-mode '(4 . 4))
@@ -581,8 +581,8 @@ before packages are loaded."
   (global-set-key (kbd "C--") 'text-scale-decrease)
 
   ;; behave like vim's scrolloff=1
-  (setq scroll-margin 3)
-  (setq smooth-scroll-margin 3)
+  (setq scroll-margin 1)
+  (setq smooth-scroll-margin 1)
 
 
   ;; --- syntax checking
@@ -602,7 +602,7 @@ before packages are loaded."
 
   (setq symbol-overlay-idle-time 0.1)
   (add-hook 'prog-mode-hook #'symbol-overlay-mode)
-  (setq symbol-overlay-faces '(symbol-overlay-face-3))
+
 
   ;; --- mode line
 
