@@ -32,11 +32,11 @@ bindkey '^f' fzf-cd-widget
 export FZF_DEFAULT_OPTS='--no-mouse --cycle --ansi --color=16 --tiebreak=end,begin,length --inline-info'
 
 export FZF_CTRL_R_OPTS='--height 70% --exact'
-export FZF_ALT_C_OPTS='--height 70% --preview="preview {}"'
-export FZF_CTRL_T_OPTS='--height 70% --preview="preview {}"'
+export FZF_ALT_C_OPTS='--height 70% --preview="show {}"'
+export FZF_CTRL_T_OPTS='--height 70% --preview="show {}"'
 
 export FZF_COMPLETION_TRIGGER='#'
-export FZF_COMPLETION_OPTS='--multi --preview="preview {}" --height 70%'
+export FZF_COMPLETION_OPTS='--multi --preview="show {}" --height 70%'
 
 
 c() {
