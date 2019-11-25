@@ -30,7 +30,7 @@ preview_htm() { elinks -dump 1 -dump-color-mode 1 "$path" | remove_blank | remov
 preview_pdf() { pdftotext -l 10 -nopgbrk -q "$path" - | remove_blank | remove_double_blank | trim | wrap; }
 preview_txt() { cat "$path" | remove_blank | remove_double_blank | trim | wrap; }
 preview_med() { mediainfo "$path" | remove_blank | remove_double_blank | trim | sed 's/  \+:/ --/;' | wrap; }
-preview_json() { jq -C . "$path" | trim; }
+preview_json() { jsn "$path" | trim; }
 preview_sshkey() { file -Lb -- "$path"; ssh-keygen -l -f "$path"; echo ""; cat "$path" | trim; }
 preview_plist() { temp=$(mktemp); plutil -convert xml1 -o "$temp" -- "$path"; cat "$temp" | trim | wrap; rm -f "$temp"; }
 preview_cert() { openssl x509 -noout -text -in "$path" | cleanup_openssl | trim | wrap; }
