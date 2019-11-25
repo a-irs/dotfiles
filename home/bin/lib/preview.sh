@@ -8,15 +8,19 @@ height="${3:-$(tput lines)}"
 
 filename="${path##*/}"
 
-trim() { head -n "$height"; }
-if [[ "$(uname)" = Darwin ]]; then
+if [[ -e /usr/local/bin/gfmt ]]; then
     wrap() { gfmt -s -t -w "$width"; }
 else
     wrap() { fmt -s -t -w "$width"; }
 fi
+
+[[ -e /usr/local/bin/gls ]] && ls() { gls "$@"; }
+
+trim() { head -n "$height"; }
 remove_blank() { sed '/./,$!d'; } # remove blank lines at top of file
 remove_double_blank() { cat -s; } # remove multiple blank lines
 highlight_dirs() { GREP_COLOR='1;33' grep -E --color=always '(.)*/|$'; } # TODO: not working in ranger
+cleanup_openssl() { perl -pe 's/\S+([0-9a-z][0-9a-z]:){14}$/XXXXXXXXXX/g' | grep -v 'XXXXXXXXXX$'; }
 
 showbin() { zcat "$path" 2> /dev/null || cat "$path" | xxd | trim | wrap; }
 
@@ -29,7 +33,8 @@ preview_med() { mediainfo "$path" | remove_blank | remove_double_blank | trim | 
 preview_json() { jq -C . "$path" | trim; }
 preview_sshkey() { file -Lb -- "$path"; ssh-keygen -l -f "$path"; echo ""; cat "$path" | trim; }
 preview_plist() { temp=$(mktemp); plutil -convert xml1 -o "$temp" -- "$path"; cat "$temp" | trim | wrap; rm -f "$temp"; }
-preview_cert() { openssl x509 -noout -text -in "$path" | perl -pe 's/\S+([0-9a-z][0-9a-z]:){14}$/XXXXXXXXXX/g' | grep -v 'XXXXXXXXXX$' | trim | wrap; }
+preview_cert() { openssl x509 -noout -text -in "$path" | cleanup_openssl | trim | wrap; }
+preview_csr() { openssl req -in "$path" -noout -text | cleanup_openssl | trim | wrap; }
 
 file_type=$(file -Lb -- "$path")
 
@@ -39,13 +44,14 @@ printf '%s\n' "================"
 tput sgr0
 
 if [[ -d "$path" ]]; then
-    ls -lhF "$path"; exit
+    ls -lhF --color=always "$path"; exit
 fi
 
 case "$file_type" in
     *" private key") preview_sshkey; exit ;;
     *" public key") preview_sshkey; exit ;;
-    "PEM certificate") preview_cert; exit ;;
+    *" certificate") preview_cert; exit ;;
+    *" certificate request") preview_csr; exit ;;
 esac
 
 extension="${filename##*.}"
@@ -78,5 +84,4 @@ case "$mime_type" in
 esac
 
 
-#showbin_compressed "$path" 2> /dev/null
 showbin
