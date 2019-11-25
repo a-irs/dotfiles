@@ -84,6 +84,8 @@ This function should only modify configuration layer settings."
      shell-scripts
      ansible
 
+     theming
+
      ;; checkers
      syntax-checking
 
@@ -535,6 +537,16 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   ;; imitates vim's whichwrap to cross newlines with left/right
   (setq evil-cross-lines t)
+
+  ; stop org-level headers from increasing in height
+  (setq theming-modifications
+        '((dracula
+           (org-level-1 :height 1.0)
+           (org-level-2 :height 1.0)
+           (org-level-3 :height 1.0)
+           (org-level-4 :height 1.0)
+           (org-level-5 :height 1.0))))
+
 )
 
 (defun dotspacemacs/user-load ()
@@ -559,6 +571,15 @@ before packages are loaded."
   (setq indent-guide-delay nil)
   (setq indent-guide-char "▏")
   (setq indent-guide-threshold 2)  ; do not show 2 left-most indent
+
+  ;; ORG mode
+  (setq org-bullets-bullet-list '("●" "○" "•" "◦"))
+  (setq org-startup-folded nil)
+
+
+
+  (xterm-mouse-mode -1)
+
 
   ;; fringe only half sized
   (fringe-mode '(4 . 4))
