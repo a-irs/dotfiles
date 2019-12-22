@@ -20,7 +20,6 @@ xset dpms 300 300 300
 # applications
 nitrogen --restore &
 lxpolkit &
-parcellite --no-icon &
 picom &
 [[ $HOSTNAME == x1 ]] && xcalib ~/.config/x1carbon3rd_notebookcheck.com.icc &
 thunar --daemon &
@@ -52,6 +51,5 @@ if [[ $HOSTNAME == desk ]]; then
     fi
 fi
 
-emacs --daemon &
 redshift &
 exec awesome
