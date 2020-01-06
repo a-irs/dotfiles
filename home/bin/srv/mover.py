@@ -153,7 +153,7 @@ class Mover():
         self.release_name = release_name
 
     def move(self) -> None:
-        print(f'{C_BLUE}RESULT: {C_RESET}{self.dest}/{self.title}\n')
+        print(f'{C_BLUE}{self.dest}/{self.title}{C_RESET}')
         self.remove_unneeded([
             "proof", "Proof", "*-proof.*", "*-Proof.*", "proof.???", "*.proof.???"
             "sample", "Sample", "*-sample.*", "*-Sample.*", "sample.???",
@@ -176,20 +176,16 @@ class Mover():
             if not os.listdir(d):
                 if self.run:
                     os.rmdir(d)
-                else:
-                    print("DRY RUN remove_empty_folders")
 
     def remove_unneeded(self, mask: List[str]) -> None:
         files = self._get_glob(mask)
         for f in files:
-            print(f'{C_RED}{f}{C_RESET} deleted.')
+            # print(f'{C_RED}{f}{C_RESET} deleted.')
             if self.run:
                 if pathlib.Path(f).is_dir():
                     shutil.rmtree(f)
                 else:
                     os.unlink(f)
-            else:
-                print("DRY RUN remove_unneeded")
 
     def move_nfo(self, mask: List[str]) -> None:
         files = self._get_glob(mask)
@@ -201,8 +197,6 @@ class Mover():
         else:
             if self.run:
                 dest.touch()
-            else:
-                print("DRY RUN move_nfo")
 
     def move_subtitles(self, mask: List[str]) -> None:
         pass
@@ -226,7 +220,7 @@ class Mover():
             sys.exit(1)
 
     def do_move(self, source: pathlib.Path, dest: pathlib.Path) -> None:
-        print(f'{source.name} --> {C_YELLOW}{dest.name}{C_RESET}')
+        # print(f'Video: {source.name} --> {C_YELLOW}{dest.name}{C_RESET}')
 
         if dest.exists():
             print(f'ERROR: {C_RED}{dest}{C_RESET} already exists.')
@@ -234,8 +228,6 @@ class Mover():
             if self.run:
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.move(source, dest)
-            else:
-                print("DRY RUN do_move")
 
 
 CONFIG = {
