@@ -19,29 +19,29 @@ C_RESET = '\033[0m'
 
 class Parser():
 
-    def __init__(self, release_name: str, preset: dict, interactive=True) -> None:
+    def __init__(self, release_name: str, preset: dict) -> None:
         # clean release name
         self.release_name = release_name.replace(' ', '.').strip()
 
         # FIXME: hide for tests
         print(f'{C_GREEN}{release_name}{C_RESET}')
-        print(f'{C_GREEN}{"-" * len(release_name)}{C_RESET}')
 
         # set all values from preset (usually command line arguments
         for key, value in preset.items():
             if value:
                 setattr(self, key, value)
 
-        # try to extract all attributes, prompt for manual entry when empty
-        self.title = self.ask_or_set(self.get_title, 'TITLE', r'\w+', interactive=interactive)
+        # try to extract all attributes
+        if not hasattr(self, 'title'):
+            self.title = self.set(self.get_title)
         if not hasattr(self, 'year'):
-            self.year = self.ask_or_set(self.get_year, 'YEAR', r'\d\d\d\d', interactive=interactive)
-        else:
-            # TODO: implement for all other possible presets
-            print(f'{C_BLUE}YEAR{C_RESET} {self.year}')
-        self.video_size = self.ask_or_set(self.get_video_size, 'VIDEO', r'\w+', interactive=interactive)
-        self.source = self.ask_or_set(self.get_source, 'SOURCE', r'\w+', interactive=interactive)
-        self.langs = self.ask_or_set(self.get_langs, 'LANGS', r'[A-Z,]+', interactive=interactive)
+            self.year = self.set(self.get_year)
+        if not hasattr(self, 'video_size'):
+            self.video_size = self.set(self.get_video_size)
+        if not hasattr(self, 'source'):
+            self.source = self.set(self.get_source)
+        if not hasattr(self, 'langs'):
+            self.langs = self.set(self.get_langs)
 
         # put prefixes to the back of the title
         title_prefixes = ['Der', 'Die', 'Das', 'Ein', 'Eine', 'The', 'A', 'An']
@@ -50,27 +50,15 @@ class Parser():
                 self.title = self.title[len(p + ' '):] + ', ' + p
                 break
 
-    def ask_or_set(self, get_func: Callable[[str], Optional[str]], key: str, rex=False, interactive=True) -> str:
+    def set(self, get_func: Callable[[str], Optional[str]]) -> str:
         value = get_func(self.release_name)
 
-        was_prompted = False
-        if not interactive:
-            if value:
-                return value
-            else:
-                return "FIXME"
-
-        while not value or (rex and not re.match(rex, value)):
-            was_prompted = True
-            value = input(f'{C_BLUE}{key}{C_YELLOW} ')
-        if not was_prompted:
-            # FIXME: hide for tests
-            print(f'{C_BLUE}{key}{C_RESET} {value}')
-
-        return value
+        if value:
+            return value
+        else:
+            raise Exception(f"Could not extract value with {get_func}")
 
     def get_year(self, s: str) -> Optional[str]:
-        # FIXME: reverse, to get the last match. better option?
         rex = r'\.([0-9][0-9](91|02))\.'
         m = re.search(rex, s[::-1])
         if m:
@@ -101,6 +89,7 @@ class Parser():
             r'\.hd-?rip\.': "HDRip",
             r'\.hd-?tv\.': "HDTV",
             r'\.web-?dl\.': "WEB-DL",
+            r'\.web\.dl\.': "WEB-DL",
             r'\.web-?rip\.': "WEBRip",
         }
         for key, val in normalize.items():
@@ -127,10 +116,10 @@ class MovieParser(Parser):
 
 class TvParser(Parser):
 
-    def __init__(self, release_name: str, preset: dict, interactive=True) -> None:
-        super().__init__(release_name, preset, interactive)
-        self.season = self.ask_or_set(self.get_season, 'SEASON', r'S[0-9][0-9]')
-        self.episode = self.ask_or_set(self.get_episode, 'EPISODE', r'E[0-9][0-9]')
+    def __init__(self, release_name: str, preset: dict) -> None:
+        super().__init__(release_name, preset)
+        self.season = self.set(self.get_season)
+        self.episode = self.set(self.get_episode)
 
     def get_title(self, s: str) -> Optional[str]:
         rex = r'^(.*)\.S[0-9][0-9]E[0-9][0-9]'
@@ -164,7 +153,7 @@ class Mover():
         self.release_name = release_name
 
     def move(self) -> None:
-        print(f'{C_BLUE}DEST: {C_RESET}{self.dest}\n')
+        print(f'{C_BLUE}RESULT: {C_RESET}{self.dest}/{self.title}\n')
         self.remove_unneeded([
             "proof", "Proof", "*-proof.*", "*-Proof.*", "proof.???", "*.proof.???"
             "sample", "Sample", "*-sample.*", "*-Sample.*", "sample.???",

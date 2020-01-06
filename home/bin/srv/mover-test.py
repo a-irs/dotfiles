@@ -78,7 +78,7 @@ class TestParser(unittest.TestCase):
 
     def test_movies(self):
         for release_name, v in self.MOVIES.items():
-            parser = mover.MovieParser(release_name, preset=v['preset'], interactive=False)
+            parser = mover.MovieParser(release_name, preset=v['preset'])
             self.assertEqual(parser.title, v['expect']['title'])
             self.assertEqual(parser.year, v['expect']['year'])
             self.assertEqual(parser.video_size, v['expect']['video_size'])
@@ -87,7 +87,7 @@ class TestParser(unittest.TestCase):
 
     def test_tv(self):
         for release_name, v in self.TV.items():
-            parser = mover.TvParser(release_name, preset=v['preset'], interactive=False)
+            parser = mover.TvParser(release_name, preset=v['preset'])
             self.assertEqual(parser.title, v['expect']['title'])
             self.assertEqual(parser.video_size, v['expect']['video_size'])
             self.assertEqual(parser.source, v['expect']['source'])
