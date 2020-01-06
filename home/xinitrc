@@ -33,7 +33,7 @@ mkdir -p ~/.local/share/thumbnails/darktable && ln -sfn ~/.local/share/thumbnail
 start-pulseaudio-x11 &
 
 # # wait for internet, then launch dropbox
-nohup bash -c "if $HOME/.bin/wait-for-host dropbox.com; then dropbox-cli start || dropbox start; fi" < /dev/null &> /dev/null &
+nohup bash -c "if $HOME/.bin/wait-for-host dropbox.com; then dropbox; fi" < /dev/null &> /dev/null &
 
 if [[ $HOSTNAME == x1 || $HOSTNAME == dell ]]; then
     xset s 120 120

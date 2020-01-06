@@ -17,6 +17,7 @@
 # logs
 **/nzbget.log
 
+**/.vagrant.d/boxes
 **/.semantic-highlight-cache
 **/.cache.json
 **/.cache.json
@@ -71,7 +72,7 @@
 /root/.vim/plugged
 /root/.zcompdump
 /root/.zsh_recent-dirs
-/home/*/Dropbox/*
+/home/*/Dropbox/media/wallpapers
 /home/*/vm/**/*.raw
 /home/*/vm/**/*.qcow2
 /home/*/vm/**/*.vmdk
