@@ -155,7 +155,6 @@ globalkeys = awful.util.table.join(
 
     -- displays
 
-    awful.key({ win }, "p", function() run("bash -c 'sleep 0.2 && xset dpms force off'") end),
     awful.key({ alt }, "r", function() run("pkill -USR1 redshift") end),
 
     -- screenshots

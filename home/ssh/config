@@ -39,12 +39,3 @@ Host tpl tpl.home
     User root
     IdentityFile ~/.ssh/openwrt
     PubkeyAuthentication yes
-
-
-# avoid pubkey fingerprinting/tracking/..., see e.g.
-# - https://news.ycombinator.com/item?id=10006516
-# - https://utcc.utoronto.ca/~cks/space/blog/sysadmin/SSHIdentitiesOffered
-Host *
-    IdentitiesOnly yes
-    PubkeyAuthentication no
-

@@ -8,14 +8,14 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 # keyboard
-setxkbmap -option caps:escape
-xset r rate 200 30
+setxkbmap -option caps:escape &
+xset r rate 200 30 &
 
-[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources &
 
-xset s 0 0
+xset s 0 0 &
 # turn off after 5m
-xset dpms 300 300 300
+xset dpms 300 300 300 &
 
 # applications
 nitrogen --restore &
@@ -23,6 +23,7 @@ lxpolkit &
 picom &
 [[ $HOSTNAME == x1 ]] && xcalib ~/.config/x1carbon3rd_notebookcheck.com.icc &
 thunar --daemon &
+redshift &
 
 mkdir -p ~/.local/share/yay && ln -sfn ~/.local/share/yay ~/.cache/yay
 mkdir -p ~/.local/share/thumbnails && ln -sfn ~/.local/share/thumbnails ~/.cache/thumbnails
@@ -32,24 +33,23 @@ mkdir -p ~/.local/share/thumbnails/darktable && ln -sfn ~/.local/share/thumbnail
 
 start-pulseaudio-x11 &
 
-# # wait for internet, then launch dropbox
+# wait for internet, then launch dropbox
 nohup bash -c "if $HOME/.bin/wait-for-host dropbox.com; then dropbox; fi" < /dev/null &> /dev/null &
 
 if [[ $HOSTNAME == x1 || $HOSTNAME == dell ]]; then
-    xset s 120 120
+    xset s 120 120 &
     # turn off after 5m
-    xset dpms 300 300 300
+    xset dpms 300 300 300 &
     xss-lock --transfer-sleep-lock -n "notify-send -i /usr/share/icons/Faba/48x48/actions/system-lock-screen.svg -- locking" -- ~/.bin/lock &
 fi
 
 if [[ $HOSTNAME == desk ]]; then
     numlockx &
     pulseeffects --gapplication-service &
-    bash -c "$HOME/.bin/wait-for-host spotify.com && exo-open $HOME/.local/share/applications/spotify.desktop && wmctrl -a KeePassXC" &
+    bash -c "$HOME/.bin/wait-for-host spotify.com && exo-open $HOME/.local/share/applications/spotify.desktop" &
     if ! mount | grep -q "root@srv.home:/media/data"; then
-        bash -c "$HOME/.bin/wait-for-host srv.home && sshfs root@srv.home:/media/data /media/data -o reconnect -o BatchMode=yes -o allow_other && docker restart cm_plex_1" &
+        bash -c "$HOME/.bin/wait-for-host srv.home && sshfs root@srv.home:/media/data /media/data -o reconnect -o BatchMode=yes -o allow_other" &
     fi
 fi
 
-redshift &
 exec awesome
