@@ -5,7 +5,7 @@
 case $HOST in
     dell ) ZSHINE_HOST_COLOR='green' ;;
     desk ) ZSHINE_HOST_COLOR='yellow' ;;
-    srv  ) ZSHINE_HOST_COLOR='magenta' ;;
+    srv1 ) ZSHINE_HOST_COLOR='magenta' ;;
     *)     ZSHINE_HOST_COLOR='cyan' ;;
 esac
 

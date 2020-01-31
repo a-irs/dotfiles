@@ -10,8 +10,8 @@ Host x1 x1.home
     IdentityFile ~/.ssh/id_ed25519
     PubkeyAuthentication yes
 
-Host srv srv.home
-    HostName srv.home
+Host srv1 srv1.home
+    HostName srv1.home
     User root
     IdentityFile ~/.ssh/id_ed25519
     PubkeyAuthentication yes

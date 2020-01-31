@@ -23,7 +23,6 @@ class Parser():
         # clean release name
         self.release_name = release_name.replace(' ', '.').strip()
 
-        # FIXME: hide for tests
         print(f'{C_GREEN}{release_name}{C_RESET}')
 
         # set all values from preset (usually command line arguments
@@ -31,7 +30,7 @@ class Parser():
             if value:
                 setattr(self, key, value)
 
-        # try to extract all attributes
+        # try to extract all missing attributes
         if not hasattr(self, 'title'):
             self.title = self.set(self.get_title)
         if not hasattr(self, 'year'):
@@ -255,6 +254,11 @@ CONFIG = {
     }
 }
 
+def write_test(parser, preset):
+    d = dict(preset=preset, expect={})
+    for k, v in parser.__dict__.items():
+        d["expect"][k] = v
+    return d
 
 def main():
     available_categories = ', '.join(CONFIG['categories'].keys())
@@ -280,6 +284,7 @@ def main():
             sys.exit(1)
 
     config = CONFIG['categories'].get(args.category)
+    tests = {}
     for source_dir in args.dirs:
         print()
 
@@ -290,11 +295,21 @@ def main():
             # 'xxx': "abc"
         }
 
+        tests[parsed.release_name] = write_test(parsed, preset)
+
         # move
         dest_dir = config['dest'].format(**vars(parsed), **additional_keys)
         title = config['title'].format(**vars(parsed), **additional_keys)
         m = Mover(run=args.run, source=source_dir, dest=dest_dir, title=title, release_name=parsed.release_name)
         m.move()
+
+    if not args.run:
+        # print tests
+        for k, v in tests.items():
+            print(f"""        '{k}': {{
+                'preset': {v["preset"]},
+                'expect': {v["expect"]},
+            }},""")
 
 
 if __name__ == "__main__":

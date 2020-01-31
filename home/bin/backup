@@ -6,7 +6,7 @@ set -euo pipefail
 (( $# < 1 )) && { echo "$(basename "$0") sh|start|mount|list|check|info"; exit 2; }
 
 MAIN_DIR=/media/crypto/borg
-USER_HOST=root@srv.home
+USER_HOST=root@srv1.home
 export BORG_REPO=$USER_HOST:$MAIN_DIR/$HOSTNAME
 
 if [[ -e /home/alex/.ssh/id_ed25519 ]]; then
