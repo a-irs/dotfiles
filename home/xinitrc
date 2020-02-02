@@ -46,10 +46,25 @@ fi
 if [[ $HOSTNAME == desk ]]; then
     numlockx &
     pulseeffects --gapplication-service &
-    bash -c "$HOME/.bin/wait-for-host spotify.com && exo-open $HOME/.local/share/applications/spotify.desktop" &
+
+    cat << 'EOF' | bash &
+    set -e
+
+    PATH=$HOME/.bin:$PATH
+
+    wait-for-host spotify.com
+    pidof spotify || exo-open "$HOME/.local/share/applications/spotify.desktop"
+    xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --name "^Spotify Premium$")" 5
+
+    wait-for-host srv1.home
+    pidof kodi-x11 || exo-open "/usr/share/applications/kodi.desktop"
+    xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --class "kodi")" 6
+EOF
+
     if ! mount | grep -q "root@srv1.home:/media/data"; then
         bash -c "$HOME/.bin/wait-for-host srv1.home && sshfs root@srv1.home:/media/data /media/data -o reconnect -o BatchMode=yes -o allow_other" &
     fi
+
 fi
 
 exec awesome
