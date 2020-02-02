@@ -16,6 +16,12 @@ Host srv1 srv1.home
     IdentityFile ~/.ssh/id_ed25519
     PubkeyAuthentication yes
 
+Host srv2 srv2.home
+    HostName srv2.home
+    User root
+    IdentityFile ~/.ssh/id_ed25519
+    PubkeyAuthentication yes
+
 Host erx erx.home
     HostName erx.home
     User ubnt
@@ -38,4 +44,16 @@ Host tpl tpl.home
     HostName tpl.home
     User root
     IdentityFile ~/.ssh/openwrt
+    PubkeyAuthentication yes
+
+Host mox1 mox1.home
+    HostName mox1.home
+    User root
+    IdentityFile ~/.ssh/id_ed25519
+    PubkeyAuthentication yes
+
+Host mox2 mox2.home
+    HostName mox2.home
+    User root
+    IdentityFile ~/.ssh/id_ed25519
     PubkeyAuthentication yes
