@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
-[[ $UID != 0 ]] && { echo "run as root"; exit 1; }
+[[ $EUID != 0 ]] && { exec sudo "$0" "$@"; }
 (( $# < 1 )) && { echo "$(basename "$0") sh|start|mount|list|check|info"; exit 2; }
+
+set -euo pipefail
 
 MAIN_DIR=/media/crypto/borg
 USER_HOST=root@srv1.home
@@ -45,7 +45,7 @@ borg create \
     --exclude-from "$0.exclude" --exclude-caches --one-file-system \
     --compression auto,lz4 \
     "::${date}" \
-    / /home /boot
+    /etc /home /srv
 
 borg prune --show-rc --stats --list \
     --keep-within 12m
