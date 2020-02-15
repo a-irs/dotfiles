@@ -39,13 +39,27 @@ if ! ssh -i "$SSH_KEY" $USER_HOST test -f "$MAIN_DIR/$HOSTNAME/README"; then
     borg init --verbose --encryption none
 fi
 
+umask 077
+mkdir -p /sysinfo
+set +e
+pacman -Qne > /sysinfo/pacman.txt
+pacman -Qme > /sysinfo/pacman-aur.txt
+ln -sf ../etc/lvm /sysinfo/lvm
+blkid > /sysinfo/blkid
+lsblk -f > /sysinfo/lsblk-f
+lsblk > /sysinfo/lsblk
+fdisk -l > /sysinfo/fdisk
+luks_dev=$(lsblk -l -p -f | grep crypto_LUKS | head -1 | awk '{print $1}')
+cryptsetup luksDump "$luks_dev" > /sysinfo/luksDump
+set -e
+
 date=$(date +%Y-%m-%d_%H-%M-%S)
 borg create \
     --show-rc --list --filter=AME --stats --verbose \
     --exclude-from "$0.exclude" --exclude-caches --one-file-system \
     --compression auto,lz4 \
     "::${date}" \
-    /etc /home /srv
+    /etc /home /srv /sysinfo
 
 borg prune --show-rc --stats --list \
     --keep-within 12m
