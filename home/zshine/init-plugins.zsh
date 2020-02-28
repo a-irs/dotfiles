@@ -11,6 +11,8 @@ ZSHINE_PLUGINS=(
   # magic-paste # auto-quote URLs on paste
   term-title # sets terminal/tab title
 
+  infra # custom
+
   # pwd-hell # show warning message when [[ pwd != readlink -f ./ ]]
   # tmux # autostart tmux
   # notify # notify-send after long command has been completed
