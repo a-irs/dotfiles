@@ -86,6 +86,8 @@ let g:netrw_altv=1  " show on left side
 autocmd BufNewFile,BufFilePre,BufRead Jenkinsfile set filetype=groovy
 autocmd BufNewFile,BufFilePre,BufRead Dockerfile* set filetype=Dockerfile
 
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ini=dosini', 'ocaml', 'rust']
 let g:markdown_syntax_conceal = 0

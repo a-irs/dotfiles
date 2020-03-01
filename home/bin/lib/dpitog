@@ -11,7 +11,7 @@ import sys
 # (has to be set in about:config manually otherwise as layout.css.devPixelsPerPx)
 DPI_FACTORS = {
     "desk": [1.5, 2.0, 3.0],
-    "x1": [1.75, 2.0, 2.5]
+    "x1": [1.5, 1.75, 2.0]
 }
 
 if len(sys.argv) > 1:
