@@ -90,6 +90,7 @@ class Parser():
             r'\.web-?dl\.': "WEB-DL",
             r'\.web\.dl\.': "WEB-DL",
             r'\.web-?rip\.': "WEBRip",
+            r'\.web\.': "WEB-DL",
         }
         for key, val in normalize.items():
             if re.search(key, s, flags=re.IGNORECASE):

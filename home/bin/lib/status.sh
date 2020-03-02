@@ -27,6 +27,7 @@ dstatus() {
 echo ""
 sstatus cronie.service
 sstatus docker.service
+sstatus qemu-ga.service
 sstatus media-data1.mount
 sstatus media-data2.mount
 sstatus media-data3.mount
