@@ -32,6 +32,6 @@ ZSHINE_PLUGINS=(
 )
 
 for _loadx in $ZSHINE_PLUGINS; do
-    source "$ZSHINE_DIR/plugins/$_loadx"
+    source "$ZSHINE_DIR/plugins/$_loadx.zsh"
 done
 unset _loadx
