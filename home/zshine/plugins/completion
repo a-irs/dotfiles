@@ -14,7 +14,6 @@ unsetopt flowcontrol
 zmodload -i zsh/complist
 
 fpath+=($ZSHINE_DIR/completion $ZSHINE_DIR/plugins/zshmarks)
-[[ -d ~/Homebrew/share/zsh/site-functions ]] && fpath+=~/Homebrew/share/zsh/site-functions
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 # zstyle ':completion:*' list-colors ''
@@ -85,6 +84,11 @@ expand-or-complete-with-dots() {
 zle -N expand-or-complete-with-dots
 bindkey "^I" expand-or-complete-with-dots
 
-autoload -U compinit && compinit -u
-
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==02=01}:${(s.:.)LS_COLORS}")'
+
+# https://htr3n.github.io/2018/07/faster-zsh/
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+    compinit
+done
+compinit -C

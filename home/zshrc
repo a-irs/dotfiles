@@ -6,18 +6,29 @@ zshine_load=(
     ~/.zshrc.d/post/*(N)
 )
 
-if [[ "$ZSHINE_DEBUG" == 1 ]]; then
-    zmodload zsh/datetime
-    prof_last=$((EPOCHREALTIME * 1000))
-    for fx in ${zshine_load[@]}; do
-        [[ -f "$fx" ]] && source "$fx"
-        prof_now=$((EPOCHREALTIME * 1000))
-        printf "%3d %s -- %s\n" "$((prof_now - prof_last))" "ms" "$fx"
-        prof_last=$prof_now
+for _load in ${zshine_load[@]}; do
+    source "$_load"
+done
+unset _load
+
+
+# https://github.com/htr3n/zsh-config/blob/master/zlogin
+# Execute code in the background to not affect the current session
+(
+    setopt LOCAL_OPTIONS EXTENDED_GLOB
+    autoload -U zrecompile
+
+    # Compile zcompdump, if modified, to increase startup speed.
+    zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+    if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
+        zrecompile -pq "$zcompdump"
+    fi
+    # zcompile .zshrc
+    zrecompile -pq ${ZDOTDIR:-${HOME}}/.zshrc
+    zrecompile -pq ${ZDOTDIR:-${HOME}}/.zprofile
+    zrecompile -pq ${ZDOTDIR:-${HOME}}/.zshenv
+    # recompile all zsh or sh
+    for f in $ZSHINE_DIR/**/*.*sh; do
+        zrecompile -pq "$f"
     done
-else
-    for fx in ${zshine_load[@]}; do
-        [[ -f "$fx" ]] && source "$fx"
-    done
-fi
-unset fx
+) &!

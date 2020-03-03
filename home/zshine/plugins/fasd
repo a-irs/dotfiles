@@ -6,6 +6,8 @@
 # $ mv index.html d,www<Tab>
 # $ mv index.html /var/www/
 
+[[ $commands[fasd] ]] || return
+
 export _FASD_IGNORE="fasd ls echo rm rmdir touch"
 
 fasd_cache="$HOME/.cache/fasd.zsh"
