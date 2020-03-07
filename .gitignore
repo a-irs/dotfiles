@@ -2,6 +2,7 @@
 .netrwhist
 *.swp
 *.zwc
+*.zwc.old
 
 *.py[cod]
 build

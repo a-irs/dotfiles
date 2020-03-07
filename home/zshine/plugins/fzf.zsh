@@ -4,7 +4,7 @@ if [[ $commands[fd] ]]; then
     __fzf_compgen_generic() {
         # internal function to avoid code duplication
         local fzf_color=never  # because it is around 10% as slow
-        fd --hidden --no-ignore --color "$fzf_color" \
+        command fd --hidden --no-ignore --color "$fzf_color" \
             -E .vim/undo -E .vim/plugged \
             -E __pycache__ -E Cache -E .cache -E cache \
             -E .gem -E .npm \
