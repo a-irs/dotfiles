@@ -1,5 +1,7 @@
 # temporary files
 *.swp
+*.zwc
+*.zwc.old
 *~
 **/tmp
 **/.fr-*
