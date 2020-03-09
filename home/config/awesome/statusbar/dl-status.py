@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from xmlrpc import client
-import pprint
 import math
 import sys
 
@@ -24,8 +23,6 @@ download = l[0] if l else None
 
 if not download:
     sys.exit(0)
-# pprint.pprint(status)
-# pprint.pprint(download)
 
 s = {}
 s['Rate'] = str(convert_size(status['DownloadRate']) + "/s")
@@ -34,8 +31,11 @@ s['Name'] = download['NZBName']
 s['SizeTotal'] = download['FileSizeMB']
 s['SizeDL'] = download['DownloadedSizeMB']
 
-out = "{} - {} ({}/{} MB)".format(s['Name'], s['Rate'], s['SizeDL'], s['SizeTotal'])
-if s['Status'] not in ["DOWNLOADING", "EXECUTING_SCRIPT"]:
-    out = out + ' -- ' + s['Status']
+if s['Status'] in ["DOWNLOADING", "EXECUTING_SCRIPT"]:
+    out = f"{s['SizeDL']}/{s['SizeTotal']} ({s['Rate']})"
+else:
+    out = f"{s['Status']}"
+
+out = out + f" -- {s['Name']}"
 
 print(out)

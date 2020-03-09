@@ -93,14 +93,14 @@ end
 
 -- DOWNLOAD STATUS
 
-if not is_mobile then
-    dlwidget = awful.widget.watch(
-        gears.filesystem.get_configuration_dir() .. "/statusbar/dl-status.py", 2,
-        function(widget, stdout)
-            widget:set_markup(stdout)
-        end
-    )
-end
+-- if not is_mobile then
+--     dlwidget = awful.widget.watch(
+--         gears.filesystem.get_configuration_dir() .. "/statusbar/dl-status.py", 2,
+--         function(widget, stdout)
+--             widget:set_markup(stdout)
+--         end
+--     )
+-- end
 
 
 -- MUSIC
@@ -232,9 +232,9 @@ awful.screen.connect_for_each_screen(function(s)
     layout1:add(musicwidget_wrap)
     layout1:add(s.mytasklist)
     layout1:add(s.myprompt_wrap)
-    if not is_mobile then
-        layout1:add(dlwidget)
-    end
+    -- if not is_mobile then
+    --     layout1:add(dlwidget)
+    -- end
 
     local layout2 = wibox.layout.fixed.horizontal()
     layout2:add(s.mytaglist)

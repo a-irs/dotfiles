@@ -1,6 +1,10 @@
 pcall(require, "luarocks.loader")
 
+-- do not use dbus interface for notifications (using other notification daemon)
+local _dbus = dbus; dbus = nil
 local naughty    = require 'naughty'
+dbus = _dbus
+
 local awful      = require 'awful'
 local gears      = require 'gears'
 local lain       = require 'lain'

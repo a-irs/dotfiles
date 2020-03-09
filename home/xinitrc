@@ -67,4 +67,5 @@ EOF
 
 fi
 
+dunst &
 exec awesome
