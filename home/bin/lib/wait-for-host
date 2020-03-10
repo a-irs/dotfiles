@@ -12,7 +12,7 @@ while true; do
     let TRIES++
     if ((TRIES>TRIES_MAX)); then
         echo "Maximum tries reached, aborting."
-        notify-send "\"$REACHABLE_HOST\" not reachable." "Command: $cmd" --icon=dialog-error
+        notify-send -u critical "\"$REACHABLE_HOST\" not reachable." "Command: $cmd"
         exit 1
     fi
 

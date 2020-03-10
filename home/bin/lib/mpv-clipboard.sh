@@ -12,12 +12,12 @@ fi
 
 clip=$(echo "$clip" | tr '\n' ' ')
 
-[[ -z "$clip" ]] && { notify-send -u critical "EMPTY"; exit 1; }
+[[ -z "$clip" ]] && { notify-send -i error "EMPTY"; exit 1; }
 
-notify-send "$clip"
-mpv "$clip"
+notify-send "MPV: $clip" &
+out=$(mpv "$clip" 2>&1)
 
 if [[ $? -ne 0 ]]; then
-    notify-send -u critical "$clip"
+    notify-send -i error "MPV: $clip" "$out"
     exit 1
 fi
