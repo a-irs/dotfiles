@@ -5,7 +5,7 @@ TIMEOUT=${1:-2}
 ok() { echo "$1: $(tput setaf 2)$2$(tput sgr0)"; }
 die() { echo "$1: $(tput setaf 1)$2$(tput sgr0)"; }
 
-check_ip() {
+check_ip_set() {
     local interfaces is_set is_interface
     interfaces=(eth0 wlan0)
     is_set=1
@@ -30,7 +30,7 @@ check_ip() {
     fi
 }
 
-check_icmp() {
+check_ping_gateway() {
     local default_gateway ping_output ping_rc
     default_gateway=$(ip -4 route show 0/0 | grep -oP 'via \S+' | grep -oP '[\d\.]+' | tail -1)
     ping_output=$(ping -w "$TIMEOUT" -c 1 "$default_gateway")
@@ -84,16 +84,16 @@ check_http() {
 }
 
 echo ""
-check_ip
-check_icmp
+check_ip_set
+check_ping_gateway
 echo ""
 check_dns example.com
-check_dns google.at 1.1.1.1
+check_dns google.at 1.0.0.1
 check_dns mozilla.org 8.8.8.8
 echo ""
-check_http http://1.1.1.1
+check_http http://1.0.0.1
 check_http https://8.8.8.8
 echo ""
-check_traceroute 1.1.1.1
+check_traceroute 1.0.0.1
 echo ""
 
