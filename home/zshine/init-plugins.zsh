@@ -11,11 +11,8 @@ ZSHINE_PLUGINS=(
   # magic-paste # auto-quote URLs on paste
   term-title # sets terminal/tab title
 
-  infra # custom
-
   # pwd-hell # show warning message when [[ pwd != readlink -f ./ ]]
   # tmux # autostart tmux
-  notify # notify-send after long command has been completed
   bd # move back in current directory tree (breadcrumb-style)
   auto-ls # launch "ls" when entering directory
   fzf # CTRL+T for fuzzy-search of files
@@ -29,6 +26,8 @@ ZSHINE_PLUGINS=(
   aliases # provides some aliases and functions for daily work
   nix # nixos, nix package manager
   fasd # autocomplete paths
+
+  infra # custom
 )
 
 for _loadx in $ZSHINE_PLUGINS; do
