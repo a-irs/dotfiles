@@ -14,7 +14,7 @@ theme.statusbar_height              = dpi(18)
 
 -- FG, BG COLORS
 
-theme.bg_normal                     = "#233657"
+theme.bg_normal                     = "#1b2c49"
 theme.bg_focus                      = "#364b73"
 theme.bg_urgent                     = "#d9304f"
 theme.fg_normal                     = "#aaaaaa"

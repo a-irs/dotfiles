@@ -7,7 +7,7 @@ scrollback_lines = 100000
 cursor = #ffc646
 foreground = #ffffff
 foreground_bold = #ffffff
-background = #233657
+background = #1b2c49
 
 # black.
 color0   = #505050
@@ -38,3 +38,17 @@ color214 = #fbdc74
 color237 = #314366
 color238 = #3b507a
 
+### from dracula theme
+
+# red
+color1  = #ff5555
+color9  = #ff6e67
+# green
+color2  = #50fa7b
+color10 = #5af78e
+# yellow
+color3  = #f1fa8c
+color11 = #f4f99d
+# magenta
+color5  = #ff79c6
+color13 = #ff92d0
