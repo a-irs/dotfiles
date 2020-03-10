@@ -6,19 +6,26 @@
 
 set -euo pipefail
 
-STEP=2
 action=$1
 
 b_plus() { xbacklight -time 100 -inc "$1" || sudo light -A "$1"; }
 b_minus() { xbacklight -time 100 -dec "$1" || sudo light -U "$1"; }
 b_set() { xbacklight -time 100 -set "$1" || sudo light -S "$1"; }
 b_get() { xbacklight -get | cut -d . -f 1 || light -G | cut -d . -f 1; }
-notify() { dunstify -t 1500 -r 123 -i /usr/share/icons/Faba/48x48/notifications/$1 "$2"; }
 
-if [[ "$action" == + ]]; then
+notify() { dunstify -t 1500 -r 123 -i "/usr/share/icons/Faba/48x48/notifications/$1" "$2"; }
+
+case $action in
+    +) STEP=2;;
+    ++) STEP=10;;
+    -) STEP=2;;
+    --) STEP=10;;
+esac
+
+if [[ "$action" == +* ]]; then
     b_plus "$STEP"
     notify notification-display-brightness.svg "$(b_get)%"
-elif [[ "$action" == - ]]; then
+elif [[ "$action" == -* ]]; then
     b_minus "$STEP"
     notify notification-keyboard-brightness.svg "$(b_get)%"
 else
