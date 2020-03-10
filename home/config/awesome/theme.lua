@@ -16,6 +16,7 @@ theme.statusbar_height              = dpi(18)
 
 theme.bg_normal                     = "#1b2c49"
 theme.bg_focus                      = "#364b73"
+theme.bg_focus2                     = "#2F4163"
 theme.bg_urgent                     = "#d9304f"
 theme.fg_normal                     = "#aaaaaa"
 theme.fg_focus                      = "#ffffff"
@@ -71,7 +72,7 @@ theme.bg_systray                    = theme.bg_normal
 theme.systray_icon_spacing          = dpi(4)
 
 theme.widget_music_fg               = theme.fg_focus
-theme.widget_music_bg               = theme.bg_focus
+theme.widget_music_bg               = theme.bg_focus2
 
 theme.widget_date_fg                = "#cccccc"
 theme.widget_date_bg                = theme.bg_normal
@@ -80,7 +81,7 @@ theme.widget_time_bg                = theme.bg_normal
 
 theme.widget_battery_bg             = theme.bg_normal
 
-theme.widget_pulse_bg               = theme.bg_focus
+theme.widget_pulse_bg               = theme.bg_focus2
 theme.widget_pulse_fg               = "#96b7e2"
 theme.widget_pulse_bg_crit          = theme.bg_urgent
 theme.widget_pulse_fg_crit          = "#ffffff"
