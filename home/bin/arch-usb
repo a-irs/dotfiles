@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+disk=$1
+version=2020.03.01
+
+###
+
+iso=https://mirror.rackspace.com/archlinux/iso/$version/archlinux-$version-x86_64.iso
+
+size=$(curl -sI "$iso" | grep -i Content-Length | awk '{print $2}' | tr -d '\r')
+curl -sL "$iso" -o - | pv -W -s "$size" -cN write | dd of="$disk" bs=4M status=none oflag=sync
+
+sha1_expected=$(curl -s https://www.archlinux.org/download/ | grep -P 'SHA1:' | sed 's/.*SHA1:.* \(\w*\).*/\1/')
+sha1=$(dd if="$disk" iflag=count_bytes count="$size" status=none | pv -s "$size" -cN sha1sum | sha1sum | cut -d ' ' -f 1)
+if [[ "$sha1" != "$sha1_expected" ]]; then
+    echo "ERROR, DO NOT USE!"
+    echo "sha1 expected: $sha1_expected"
+    echo "sha1:          $sha1"
+    exit 1
+fi
+
+echo ""
+echo "OK."
+echo ""
+
+sync "$disk"
