@@ -6,12 +6,20 @@ notify-preexec-hook() {
 }
 
 notify-precmd-hook() {
+    local rc=$?
     local time_taken
 
     if [[ "${zsh_notifier_cmd}" != "" ]]; then
         time_taken=$(( SECONDS - zsh_notifier_time ))
         if (( time_taken > REPORTTIME )); then
-            notify-send "'$zsh_notifier_cmd' finished" "exited after $time_taken seconds."
+            if [[ "$rc" -ne 0 ]]; then
+                icon=error
+                text=Failed
+            else
+                icon=info
+                text=Finished
+            fi
+            notify-send -i "$icon" "$zsh_notifier_cmd" "$text after ${time_taken}s."
         fi
     fi
     zsh_notifier_cmd=

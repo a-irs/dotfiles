@@ -15,7 +15,7 @@ ZSHINE_PLUGINS=(
 
   # pwd-hell # show warning message when [[ pwd != readlink -f ./ ]]
   # tmux # autostart tmux
-  # notify # notify-send after long command has been completed
+  notify # notify-send after long command has been completed
   bd # move back in current directory tree (breadcrumb-style)
   auto-ls # launch "ls" when entering directory
   fzf # CTRL+T for fuzzy-search of files
