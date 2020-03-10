@@ -1,5 +1,10 @@
 ZSHINE_DIR=~/.zshine
 
+# switch to 256color if termite is not found
+if [[ $TERM == xterm-termite && ! -e /usr/share/terminfo/x/xterm-termite ]]; then
+    export TERM=xterm-256color
+fi
+
 zshine_load=(
     ~/.zshrc.d/pre/*(N)
     "$ZSHINE_DIR/init.zsh"
