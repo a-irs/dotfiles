@@ -1,7 +1,7 @@
 [redshift]
 temp-night=3500
 adjustment-method=randr
-transition=0
+fade=1
 location-provider=manual
 ||DESK||gamma=0.96:0.96:0.96
 
