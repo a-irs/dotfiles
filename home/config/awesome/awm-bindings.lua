@@ -174,7 +174,9 @@ globalkeys = awful.util.table.join(
     awful.key({"Ctrl"},  "XF86MonBrightnessDown", function() run_script("brightness 1") end),
 
     awful.key({}, "XF86AudioRaiseVolume", volume.increase),
+    awful.key({"Shift"}, "XF86AudioRaiseVolume", volume.increase_10),
     awful.key({}, "XF86AudioLowerVolume", volume.decrease),
+    awful.key({"Shift"}, "XF86AudioLowerVolume", volume.decrease_10),
     awful.key({}, "XF86AudioMute",        volume.toggle),
 
     awful.key({}, "XF86AudioPlay",   function() audio("toggle") end),

@@ -10,8 +10,18 @@ function volume.increase()
     pulsewidget.update()
 end
 
+function volume.increase_10()
+    os.execute 'pactl set-sink-volume @DEFAULT_SINK@ +10%; dunstify -r 20 -t 1500 "Volume +++" -i /usr/share/icons/Faba/48x48/notifications/notification-audio-volume-high.svg'
+    pulsewidget.update()
+end
+
 function volume.decrease()
     os.execute 'pactl set-sink-volume @DEFAULT_SINK@ -1%; dunstify -r 20 -t 1500 "Volume -" -i /usr/share/icons/Faba/48x48/notifications/notification-audio-volume-low.svg'
+    pulsewidget.update()
+end
+
+function volume.decrease_10()
+    os.execute 'pactl set-sink-volume @DEFAULT_SINK@ -10%; dunstify -r 20 -t 1500 "Volume ---" -i /usr/share/icons/Faba/48x48/notifications/notification-audio-volume-low.svg'
     pulsewidget.update()
 end
 
