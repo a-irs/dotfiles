@@ -86,9 +86,13 @@ bindkey "^I" expand-or-complete-with-dots
 
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==02=01}:${(s.:.)LS_COLORS}")'
 
-# https://htr3n.github.io/2018/07/faster-zsh/
+# https://htr3n.github.io/2018/07/faster-zsh/ / https://gist.github.com/ctechols/ca1035271ad134841284#gistcomment-3109177
 autoload -Uz compinit
-for dump in ~/.zcompdump(N.mh+24); do
-    compinit
-done
-compinit -C
+() {
+  if [[ $# -gt 0 ]]; then
+    # -u skips "compinit: insecure directories and files, run compaudit for list"
+    compinit -u
+  else
+    compinit -C
+  fi
+} ${ZDOTDIR:-$HOME}/.zcompdump(N.mh+24)

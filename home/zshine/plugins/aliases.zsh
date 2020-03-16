@@ -8,6 +8,16 @@ alias vpn-start=vpn-up
 alias vpn-down="sudo wg-quick down wg0"
 alias vpn-stop=vpn-down
 
+es() {
+    local query=$1
+    local line=$(command rg -n --color=always "$query" | fzf --height=50% --reverse)
+
+    local filename=$(printf '%s' "$line" | awk -F ':' '{print $1}')
+    local linenumber=$(printf '%s' "$line" | awk -F ':' '{print $2}')
+
+    vim "+$linenumber" -c "silent! /$query" "$filename"
+}
+
 for c in find ftp locate rake rsync wcalc; do
     [[ "$commands[$c]" ]] && alias $c="noglob $c"
 done
@@ -16,6 +26,8 @@ done
 [[ -d ~/doc ]] && alias todo="vim + ~/doc/todo.taskpaper"
 
 mac() { curl -q "https://api.macvendors.com/${1:0:8}" && printf "\n"; }
+
+cht() { curl "https://cht.sh/$1"; }
 
 tar-tar() { tar cvaf "$(basename "$PWD")".tar -- "$@"; }
 tar-gz()  { tar cvaf "$(basename "$PWD")".tar.gz -- "$@"; }
