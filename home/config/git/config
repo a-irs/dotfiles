@@ -5,6 +5,7 @@
     ui = 1
 [alias]
     subup = submodule update --remote --merge
+    r = reset
     p = !git add -A && git commit && git push
     clone1 = clone --depth=1
     i = icdiff
