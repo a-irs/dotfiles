@@ -22,7 +22,6 @@ nitrogen --restore &
 lxpolkit &
 picom &
 [[ $HOSTNAME == x1 ]] && xcalib ~/.config/x1carbon3rd_notebookcheck.com.icc &
-thunar --daemon &
 redshift &
 
 mkdir -p ~/.local/share/yay && ln -sfn ~/.local/share/yay ~/.cache/yay

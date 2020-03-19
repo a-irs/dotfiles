@@ -3,10 +3,11 @@
 # ± ➤ → ⚡ ● » α λ ϟ ✯ ★ ➜ ↪ ▶ ► ↦ ⇆ φ └ > ★ ❯ ❱ ❩
 
 case $HOST in
-    dell ) ZSHINE_HOST_COLOR='green' ;;
-    desk ) ZSHINE_HOST_COLOR='yellow' ;;
-    srv1 ) ZSHINE_HOST_COLOR='magenta' ;;
-    *)     ZSHINE_HOST_COLOR='cyan' ;;
+    x1  ) ZSHINE_HOST_COLOR='green' ;;
+    desk) ZSHINE_HOST_COLOR='yellow' ;;
+    srv1) ZSHINE_HOST_COLOR='magenta' ;;
+    srv2) ZSHINE_HOST_COLOR='blue' ;;
+    *)    ZSHINE_HOST_COLOR='cyan' ;;
 esac
 
 ZSHINE_PROMPT_SYMBOL='❯'
@@ -36,26 +37,28 @@ ZSHINE_JOBS_COLOR=magenta
 
 ZSHINE_ERROR_COLOR='red'
 
-ZSHINE_SSH_FG='255'
+ZSHINE_SSH_FG='231'
 ZSHINE_SSH_BG='red'
 ZSHINE_USER_FG='blue'
-ZSHINE_USER_BG='240'
-ZSHINE_PATH_FG='235'
-ZSHINE_PATH_BG='214'
+ZSHINE_USER_BG='237'
+ZSHINE_PATH_FG=231
+ZSHINE_PATH_BG='238'
 ZSHINE_PATH_FG_RO='232'
 ZSHINE_PATH_BG_RO='cyan'
 ZSHINE_GIT_SERVER_FG='yellow'
-ZSHINE_GIT_SERVER_BG='237'
+ZSHINE_GIT_SERVER_BG='238'
 ZSHINE_GIT_PROJECT_FG='magenta'
-ZSHINE_GIT_PROJECT_BG='238'
+ZSHINE_GIT_PROJECT_BG='237'
 ZSHINE_GIT_COMMIT_FG='green'
-ZSHINE_GIT_COMMIT_BG='237'
+ZSHINE_GIT_COMMIT_BG='238'
 ZSHINE_GIT_PROTOCOL_FG='cyan'
-ZSHINE_GIT_PROTOCOL_BG='238'
+ZSHINE_GIT_PROTOCOL_BG='237'
 ZSHINE_GIT_BRANCH_FG='cyan'
-ZSHINE_GIT_BRANCH_BG='238'
+ZSHINE_GIT_BRANCH_BG='237'
 ZSHINE_GIT_DIRTY_FG='red'
-ZSHINE_GIT_DIRTY_BG='238'
+ZSHINE_GIT_DIRTY_BG='237'
+ZSHINE_VIRTUALENV_BG=214
+ZSHINE_VIRTUALENV_FG=232
 ZSHINE_SEGMENT_SYMBOL=''
 ZSHINE_SEGMENT_RSYMBOL=''
 ZSHINE_SEGMENT_RSEPARATOR=' '
@@ -67,7 +70,7 @@ if [[ "$TERM" == "linux" ]]; then
     ZSHINE_BATTERY=1
     ZSHINE_DATE=1
     ZSHINE_SEGMENT_RSEPARATOR=' '
-    ZSHINE_PATH_FG='yellow'
+    ZSHINE_PATH_FG=231
     ZSHINE_PROMPT_SYMBOL='>'
 fi
 
@@ -122,19 +125,15 @@ _prompt_ssh() {
     prompt_segment $ZSHINE_SSH_BG $ZSHINE_SSH_FG "SSH"
 }
 
-_prompt_ranger() {
-    [[ -n "$RANGER_LEVEL" ]] && prompt_segment white 16 "RANGER"
-}
-
 _prompt_virtualenv() {
     if [[ "$VIRTUAL_ENV" ]]; then
-        prompt_segment 237 $ZSHINE_PATH_BG "${VIRTUAL_ENV##*/}"
+        prompt_segment "$ZSHINE_VIRTUALENV_BG" "$ZSHINE_VIRTUALENV_FG" "${VIRTUAL_ENV##*/}"
     fi
     if [[ "$IN_NIX_SHELL" ]]; then
         if [[ "$IN_NIX_SHELL" == pure ]]; then
-            prompt_segment 237 $ZSHINE_PATH_BG "nix"
+            prompt_segment "$ZSHINE_VIRTUALENV_BG" "$ZSHINE_VIRTUALENV_FG" "nix"
         else
-            prompt_segment 237 $ZSHINE_PATH_BG "nix:${IN_NIX_SHELL}"
+            prompt_segment "$ZSHINE_VIRTUALENV_BG" "$ZSHINE_VIRTUALENV_FG" "nix:${IN_NIX_SHELL}"
         fi
     fi
 }
@@ -214,10 +213,6 @@ _rprompt_virtualenv() {
     rprompt_segment 237 $ZSHINE_HOST_COLOR "${VIRTUAL_ENV##*/}"
 }
 
-_rprompt_userhost() {
-    rprompt_segment 238 white '%n@%M'
-}
-
 _rprompt_date() {
     [[ "$ZSHINE_DATE" == 0 ]] && return
     rprompt_segment 238 white '%D{%H:%M}'
@@ -233,7 +228,6 @@ _build_left() {
     _prompt_virtualenv
     _prompt_path
     _prompt_git
-    _prompt_ranger
     _prompt_end
 }
 
@@ -242,7 +236,6 @@ _build_right() {
     _rprompt_battery
     # _rprompt_date
     # _rprompt_virtualenv
-    # _rprompt_userhost
     # _rprompt_jobs
 }
 
