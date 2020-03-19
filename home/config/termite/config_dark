@@ -52,3 +52,6 @@ color11 = #f4f99d
 # magenta
 color5  = #ff79c6
 color13 = #ff92d0
+
+### override
+color1  = #fb6666
