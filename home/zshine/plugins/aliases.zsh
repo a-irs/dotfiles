@@ -3,11 +3,6 @@
 alias et="emacsclient -c --alternate-editor='' -t"
 alias e="emacsclient -c --alternate-editor='' -n"
 
-alias vpn-up="sudo wg-quick up wg0"
-alias vpn-start=vpn-up
-alias vpn-down="sudo wg-quick down wg0"
-alias vpn-stop=vpn-down
-
 es() {
     local query=$1
     local line=$(command rg -n --color=always "$query" | fzf --height=50% --reverse)
