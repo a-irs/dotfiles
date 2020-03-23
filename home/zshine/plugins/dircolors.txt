@@ -62,7 +62,8 @@ TERM xterm-termite
 NORMAL 0 # no color code at all
 FILE 0 # regular file: use no color at all
 RESET 0 # reset to "normal" color
-DIR 01;34 # directory
+
+DIR 01;32 # directory
 OTHER_WRITABLE 01;34 # dir that is other-writable (o+w) and not sticky
 STICKY 30;44 # dir with the sticky bit set (+t) and not other-writable
 STICKY_OTHER_WRITABLE 38;5;232;42 # dir that is sticky and other-writable (+t,o+w)
@@ -125,6 +126,11 @@ EXEC 01 # This is for files with execute permission
 .cab 32
 .iso 32
 .img 32
+.zst 32
+
+*.part 3
+*.cache 3
+
 ###################### media
 .jpg 35
 .JPG 35
@@ -189,34 +195,70 @@ EXEC 01 # This is for files with execute permission
 .ra 35
 .wav 35
 ###################### text
-.tex             33
-.rdf             33
-.owl             33
-.n3              33
-.ttl             33
-.nt              33
-.torrent         33
-.xml             33
-*Makefile        33
-*Rakefile        33
-*build.xml       33
-*rc              33
-.nfo             33
-*README          33
-*README.txt      33
-*readme.txt      33
-.md              33
-.org             33
-.m3u             33
-*README.markdown 33
-.ini             33
-.yml             33
-.cfg             33
-.conf            33
-.c               33
-.cpp             33
-.cc              33
-.markdown		 33
-.ini			 33
-.cfg			 33
-.txt             33
+.nfo             34
+*README          34
+*TODO            34
+.md              34
+.org             34
+.m3u             34
+.markdown		 34
+.txt             34
+.csv             34
+.asciidoc 34
+.commonmark 34
+.changelog 34
+*CHANGELOG 34
+*LICENSE 34
+*NOTICE 34
+*CODEOWNERS 34
+.snippets 34
+
+###### programming
+*Gemfile 34
+.yml             36
+.xml             34
+*rc              34
+.yaml            36
+.cfg             36
+.conf            36
+.ini             36
+.json 36
+.js 36
+.html 36
+.css 36
+.tex 36
+.c 36
+.cpp 36
+*MIB 36
+.cc 36
+*Makefile 36
+*Rakefile 36
+*Dockerfile 36
+.py 36
+.icc 36
+.icm 36
+.cat 36
+.inf 36
+*config 36
+.rb 36
+.epp 36
+.pp 36
+.vim 36
+.zsh 36
+.sh 36
+.el 36
+.tpl 36
+.lua 36
+
+##################### documents
+.doc 33
+.docx 33
+.pdf 33
+.epub 33
+.mobi 33
+.xls 33
+.xlsm 33
+.xlsx 33
+
+############### others
+.exe 31

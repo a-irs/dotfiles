@@ -169,7 +169,7 @@ pulsewidget_wrap = bg_wrap(pulsewidget.widget, theme.widget_pulse_bg, theme.stat
 -- DATE, TIME
 
 datewidget = wibox.widget.textclock(markup(theme.widget_date_fg, '%a, %d.%m.'))
-timewidget = wibox.widget.textclock(markup.bold(markup(theme.widget_time_fg, '%H:%M')))
+timewidget = wibox.widget.textclock(markup.bold(markup(theme.widget_time_fg, '%H:%M')), 10)
 lain.widget.cal({
     attach_to = { timewidget, datewidget },
     notification_preset = {
