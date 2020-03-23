@@ -86,6 +86,8 @@ let g:netrw_altv=1  " show on left side
 autocmd BufNewFile,BufFilePre,BufRead Jenkinsfile set filetype=groovy
 autocmd BufNewFile,BufFilePre,BufRead Dockerfile* set filetype=Dockerfile
 
+autocmd BufNewFile,BufFilePre,BufRead dircolors* set filetype=dircolors
+
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
