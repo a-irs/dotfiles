@@ -59,6 +59,7 @@ EXEC 01 # This is for files with execute permission
 .arj 32
 .taz 32
 .lha 32
+.mozlz4 32
 .lz4 32
 .lzh 32
 .lzma 32
@@ -95,14 +96,22 @@ EXEC 01 # This is for files with execute permission
 .rz 32
 .cab 32
 .iso 32
-.img 32
 .zst 32
 .kdbx 32
 
+.img 3;32
+.vdi 3;32
+.qcow2 3;32
+
 ###### temp
-*.part 3
-*.cache 3
-*.pyc 3
+*.part 1;30
+*.cache 1;30
+*.pyc 1;30
+*.temp 1;30
+*.tmp 1;30
+*.zwc 1;30
+*.old 1;30
+*.corrupt 1;30
 
 ###################### media
 .jpg 35
@@ -228,6 +237,8 @@ EXEC 01 # This is for files with execute permission
 .tpl 36
 .lua 36
 .toml 36
+.vmx 36
+.vbox 36
 
 ##################### documents
 .doc 33
@@ -240,9 +251,16 @@ EXEC 01 # This is for files with execute permission
 .xlsx 33
 .ods 33
 .odt 33
+.sqlite 33
+.sqlite-wal 33
+.sqlite-shm 33
+.db 33
 
-############### others
+############### others, binary
 .exe 31
 .o 31
 .so 31
 *a.out 31
+.bin 31
+.nro 31
+.nsp 31
