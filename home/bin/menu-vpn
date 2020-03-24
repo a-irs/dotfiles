@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+vpn_all=$(nmcli --wait 1 --terse --colors no --fields name,type,device,state,active connection show | grep -E ":(vpn|wireguard):")
+
+vpn_on=$(printf '%s\n' "$vpn_all" | awk -F: '$5 == "yes" {print $1}')
+vpn_off=$(printf '%s\n' "$vpn_all" | awk -F: '$5 == "no" {print $1}')
+vpn=$(
+for i in ${vpn_on}; do
+    echo "<span color='#ffd700'>[ON]</span>  $i"
+done
+for j in ${vpn_off}; do
+    echo "<span color='#fa7883'>[OFF]</span> $j"
+done
+)
+
+lines=$(printf '%s' "$vpn" | wc -l)
+selected=$(echo -e "$vpn" | rofi -dmenu -p "" -no-show-icons -lines "$((lines+1))" -width 10 -markup -markup-rows)
+
+status=$(printf '%s' "$selected" | grep -oP '\[\w+\]')
+name=$(printf '%s' "$selected" | awk '{print $3}')
+if [[ "$status" == "[ON]" ]]; then
+    nmcli connection down "$name"
+else
+    nmcli connection up "$name"
+fi

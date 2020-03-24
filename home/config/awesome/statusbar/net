@@ -32,10 +32,10 @@ else
         count=$((count+1))
     done
 
-    ping=$(ping -c 1 -w 3 1.0.0.1)
+    ping=$(ping -c 1 -w 2 1.0.0.1)
     ping_rc=$?
     if [[ "$ping_rc" != 0 ]]; then
-        printf '%s' " <span foreground='$error_color'><b>[>3000ms]</b></span>"
+        printf '%s' " <span foreground='$error_color'><b>[>2000ms]</b></span>"
     else
         ms=$(printf '%s' "$ping" | grep -oP "time=\S+" | grep -oP "\d+" | head -1)
         printf '%s' " ${ms}ms"

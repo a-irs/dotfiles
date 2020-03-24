@@ -73,7 +73,7 @@ end
 if is_mobile then
     netwidget = awful.widget.watch(
         gears.filesystem.get_configuration_dir() .. "/statusbar/net",
-        5,
+        3,
         function(widget, stdout)
             widget:set_markup(stdout)
         end
@@ -88,6 +88,11 @@ if is_mobile then
         end,
         timeout = 2,
     })
+    netwidget:buttons(awful.util.table.join(
+        awful.button({ }, 1, function()
+            awful.spawn(os.getenv("HOME") .. "/.bin/menu-vpn", false)
+        end)
+    ))
     netwidget_wrap = bg_wrap(netwidget, theme.widget_music_bg, theme.statusbar_margin, theme.statusbar_margin)
 end
 
