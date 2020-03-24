@@ -8,6 +8,6 @@ rofi.lines: 5
 rofi.dpi: 168
 rofi.terminal: termite
 rofi.scroll-method: 1
-rofi.theme: DarkBlue
+rofi.theme: android_notification
 rofi.cache-dir: .local/share/rofi
 rofi.display-drun: run
