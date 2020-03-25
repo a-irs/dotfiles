@@ -6,27 +6,23 @@ ok() { echo "$1: $(tput setaf 2)$2$(tput sgr0)"; }
 die() { echo "$1: $(tput setaf 1)$2$(tput sgr0)"; }
 
 check_ip_set() {
-    local interfaces is_set is_interface
-    interfaces=(eth0 wlan0)
+    local interface is_set is_interface
+    interface=$1
     is_set=1
     is_interface=""
 
-    for int in "${interfaces[@]}"; do
-        output=$(ip addr show dev "$int" | grep -oP 'inet [^\s]+')
-        output_rc=$?
-        if [[ "$output_rc" == 0 ]]; then
-            is_set=0
-            is_interface="$int"
-            output=$(echo "$output" | cut -d ' ' -f 2)
-            break
-        fi
-    done
+    output=$(ip addr show dev "$interface" 2>/dev/null | grep -oP 'inet [^\s]+')
+    output_rc=$?
+    if [[ "$output_rc" == 0 ]]; then
+        is_set=0
+        is_interface="$interface"
+        output=$(echo "$output" | cut -d ' ' -f 2)
+    fi
 
     if [[ "$is_set" -eq 0 ]]; then
         ok "IP address" "set for $is_interface ($output)"
     else
-        die "IP address" "not set for any interface"
-        exit 1
+        die "IP address" "not set for $interface"
     fi
 }
 
@@ -83,8 +79,21 @@ check_http() {
     fi
 }
 
+get_ip_whois() {
+    local ip
+    ip=$1
+
+    ext_ip_name=$(dig +short -x "$ip" | rev | cut -d. -f -3 | rev | sed -E 's/^(.*)\.$/\1/')
+    ext_whois=$(whois "$ext_ip_name" | grep 'organization:' | awk '{$1=""; print $0}' | xargs)
+    echo "$ip ($ext_ip_name, $ext_whois)"
+}
+
+command -v nmcli > /dev/null 2>&1 && echo ""; nmcli -c yes dev status | grep -v 'unmanaged'
 echo ""
-check_ip_set
+check_ip_set wg0
+check_ip_set wlan0
+check_ip_set eth0
+echo ""
 check_ping_gateway
 echo ""
 check_dns example.com
@@ -94,6 +103,7 @@ echo ""
 check_http http://1.0.0.1
 check_http https://8.8.8.8
 echo ""
-check_traceroute 1.0.0.1
+echo "External IP: $(get_ip_whois "$(curl -s icanhazip.com)")"
+echo "External DNS IP: $(get_ip_whois "$(dig +short whoami.akamai.net)")"
 echo ""
-
+check_traceroute 1.0.0.1
