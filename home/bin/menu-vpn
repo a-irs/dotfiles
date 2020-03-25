@@ -6,7 +6,7 @@ vpn_on=$(printf '%s\n' "$output" | awk -F: '$5 == "yes" {print $1}')
 vpn_off=$(printf '%s\n' "$output" | awk -F: '$5 == "no" {print $1}')
 vpn=$(
     for i in ${vpn_on}; do
-        echo "<span>[ON]</span>  $i"
+        echo "<span>[ON]</span> $i"
     done
     for j in ${vpn_off}; do
         echo "<span color='#fa7883'>[OFF]</span> $j"
@@ -14,7 +14,7 @@ vpn=$(
 )
 
 lines=$(printf '%s\n' "$vpn" | wc -l)
-selected=$(echo -e "$vpn" | rofi -dmenu -p "VPN" -no-show-icons -lines "$lines" -width 10 -markup -markup-rows)
+selected=$(echo -e "$vpn" | rofi -dmenu -p "VPN" -no-show-icons -lines "$lines" -markup -markup-rows)
 
 status=$(printf '%s' "$selected" | grep -oP '\[\w+\]')
 name=$(printf '%s' "$selected" | sed -E 's/^.*> (.*?)$/\1/')

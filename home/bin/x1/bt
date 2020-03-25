@@ -7,13 +7,8 @@ set -xuo pipefail
 if [[ $1 == on ]]; then
     pacmd load-module module-switch-on-connect
 
-    if [[ "$(rfkill list bluetooth -o soft -n)" == blocked ]]; then
-        sudo rfkill unblock bluetooth
-    fi
-
-    if ! systemctl is-active --quiet bluetooth; then
-        sudo systemctl start bluetooth
-    fi
+    [[ "$(rfkill list bluetooth -o soft -n)" == blocked ]] && sudo rfkill unblock bluetooth
+    systemctl is-active --quiet bluetooth || sudo systemctl start bluetooth
 
     sleep 1
 
@@ -33,13 +28,8 @@ elif [[ $1 == off ]]; then
 
     echo "power off" | timeout 0.5 bluetoothctl
 
-    if systemctl is-active --quiet bluetooth; then
-        sudo systemctl stop bluetooth
-    fi
-
-    if [[ "$(rfkill list bluetooth -o soft -n)" != blocked ]]; then
-        sudo rfkill block bluetooth
-    fi
+    systemctl is-active --quiet bluetooth && sudo systemctl stop bluetooth
+    [[ "$(rfkill list bluetooth -o soft -n)" != blocked ]] && sudo rfkill block bluetooth
 
     pacmd unload-module module-switch-on-connect
 
