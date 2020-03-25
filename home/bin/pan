@@ -12,15 +12,7 @@ import urllib.request
 
 from typing import List
 
-
-def fetch(url: str, name: str) -> str:
-    local_dir = os.path.expanduser("~/.local/share")
-    file = "{}/{}".format(local_dir, name)
-
-    if not os.path.isfile(file):
-        urllib.request.urlretrieve(url, file)
-        print("downloaded {}".format(file))
-    return file
+SCRIPT_DIR = os.path.dirname(os.path.realpath(sys.argv[0]))
 
 
 CONFIG = {
@@ -43,12 +35,11 @@ CONFIG = {
         ]
     },
 
-    'offline': {
+    'html-sans': {
         'inherit': ['base'],
-        'all': ['--self-contained'],
         '.html': [
-            # see https://gist.github.com/killercup/5917178
-            '--css {}'.format(fetch("https://git.io/fpdGP", "pandoc.css"))
+            '--self-contained',
+            '--css {}/{}'.format(SCRIPT_DIR, "pan.css"),
         ],
     },
 
@@ -92,6 +83,16 @@ def get_style(name: str, dest_format: str) -> List[str]:
     params += CONFIG[name].get(dest_format, [])
 
     return params
+
+
+def fetch(url: str, name: str) -> str:
+    local_dir = os.path.expanduser("~/.local/share")
+    file = "{}/{}".format(local_dir, name)
+
+    if not os.path.isfile(file):
+        urllib.request.urlretrieve(url, file)
+        print("downloaded {}".format(file))
+    return file
 
 
 def main():

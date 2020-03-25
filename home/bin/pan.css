@@ -1,0 +1,192 @@
+body {
+  color: #333;
+
+  margin: auto;
+  padding: 1.2rem;
+  background: #fff;
+
+  line-height: 1.65em;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  max-width: 72ch;
+  font-size: 1em;
+}
+
+
+/* LINKS */
+
+a {
+  color: rgb(65, 131, 196);
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* HEADERS */
+
+h1, h2, h3, h4 {
+  font-weight: bold;
+}
+
+h1 {
+  border-bottom: 1px solid #eee;
+  font-size: 2.4em;
+  line-height: 1.2em;
+}
+
+h2 {
+  border-bottom: 1px solid #eee;
+  font-size: 1.6em;
+  line-height: 1.5em;
+}
+
+h3 {
+  font-size: 1.4em;
+}
+
+h4 {
+  font-size: 1.2em;
+}
+
+
+blockquote {
+  color: #666;
+  margin: 0;
+  padding-left: 2em;
+  border-left: 0.5em #eee solid;
+}
+
+hr {
+  display: block;
+  height: 2px;
+  border: 0;
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #eee;
+  margin: 1em 0;
+  padding: 0;
+}
+
+code:not(.sourceCode) {
+    background-color: #f4f6f6;
+    padding: 0 2px 0 2px;
+    border: 1px solid #e7eaed;
+    border-radius: 3px;
+}
+
+pre {
+    background-color: #f4f6f6;
+    border: 1px solid #e7eaed;
+    border-radius: 3px;
+    padding: 4px 8px 4px 8px;
+    line-height: 1.5em;
+
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+
+
+/* pre, code, kbd, samp { */
+/* } */
+
+/* pre { */
+/* } */
+
+b, strong {
+  font-weight: bold;
+}
+
+dfn {
+  font-style: italic;
+}
+
+ins {
+  background: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+
+mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+
+/* LISTS */
+
+ul, ol {
+  padding: 0 0 0 1.5em;
+}
+
+li p:last-child {
+  margin-bottom: 0;
+}
+
+ul ul, ol ol, ol ul, ul ol {
+  margin: 0.3em 0;
+}
+
+
+img {
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+  vertical-align: middle;
+}
+
+figure {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+figure img {
+  border: none;
+  margin: 0 auto;
+}
+
+figcaption {
+  font-size: 0.8em;
+  font-style: italic;
+  margin: 0 0 .8em;
+}
+
+table {
+  margin-bottom: 2em;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+table th {
+  padding: .2em 1em;
+  background-color: #eee;
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+}
+
+table td {
+  padding: .2em 1em;
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  vertical-align: top;
+}

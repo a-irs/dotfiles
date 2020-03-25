@@ -264,3 +264,5 @@ EXEC 01 # This is for files with execute permission
 .bin 31
 .nro 31
 .nsp 31
+.pak 31
+.dat 31
