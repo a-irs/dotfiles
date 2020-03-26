@@ -12,9 +12,6 @@ import urllib.request
 
 from typing import List
 
-SCRIPT_DIR = os.path.dirname(os.path.realpath(sys.argv[0]))
-
-
 CONFIG = {
     'base': {
         'all': ['--standalone'],
@@ -39,7 +36,7 @@ CONFIG = {
         'inherit': ['base'],
         '.html': [
             '--self-contained',
-            '--css {}/{}'.format(SCRIPT_DIR, "pan.css"),
+            '--css {}'.format("sans.css"),
         ],
     },
 
@@ -107,7 +104,8 @@ def main():
     style = ' '.join(get_style(sys.argv[3], dest_format))
     additional_args = ' '.join(sys.argv[4:])
 
-    cmd = "pandoc -i '{}' -o '{}' --lua-filter=always-compact-list.lua {} {}".format(source, dest, style, additional_args)
+    resource_path = ".:{}".format(os.path.expanduser("~/.local/share/pandoc"))
+    cmd = "pandoc -i '{}' -o '{}' --resource-path={} --lua-filter=always-compact-list.lua {} {}".format(source, dest, resource_path, style, additional_args)
     print(cmd)
     proc = subprocess.Popen(shlex.split(cmd))
     proc.communicate()
