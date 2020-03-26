@@ -11,19 +11,14 @@ body {
   font-size: 1em;
 }
 
-
-/* LINKS */
-
 a {
-  color: rgb(65, 131, 196);
+  color: hsl(210, 53%, 48%);
   text-decoration: none;
 }
 
 img {
   max-width: 100%;
 }
-
-/* HEADERS */
 
 h1, h2, h3, h4 {
   font-weight: 500;
@@ -53,60 +48,43 @@ h4 {
 
 
 blockquote {
-  color: #666;
+  background-color: hsl(0,0%,97%);
+  color: hsl(0,0%,45%);
   margin: 0;
-  padding-left: 2em;
+  padding-left: 1.55em;
   border-left: 0.5em #eee solid;
 }
 
 hr {
   display: block;
-  height: 2px;
+  height: 1px;
   border: 0;
-  border-top: 1px solid #aaa;
+  border-top: 1px solid #bbb;
   border-bottom: 1px solid #eee;
-  margin: 1em 0;
+  margin: 2em 0;
   padding: 0;
 }
 
-code:not(.sourceCode) {
-    background-color: #f4f6f6;
-    padding: 0 2px 0 2px;
-    border: 1px solid #e7eaed;
+p code {
+    background-color: hsl(0,0%,96%);
     border-radius: 3px;
+    border: 1px solid #e7eaed;
+    padding: 0 2px 0 2px;
 }
 
 pre {
-    background-color: #f4f6f6;
-    border: 1px solid #e7eaed;
+    background-color: hsl(0,0%,96%);
     border-radius: 3px;
+    border: 1px solid #e7eaed;
     padding: 4px 8px 4px 8px;
-    line-height: 1.5em;
 
+    line-height: 1.55em;
     white-space: pre;
     white-space: pre-wrap;
     word-wrap: break-word;
 }
 
-
 b, strong {
-  font-weight: bold;
-}
-
-dfn {
-  font-style: italic;
-}
-
-ins {
-  background: #ff9;
-  color: #000;
-  text-decoration: none;
-}
-
-mark {
-  background: #ff0;
-  color: #000;
-  font-style: italic;
   font-weight: bold;
 }
 
@@ -118,17 +96,15 @@ sub, sup {
 }
 
 sup {
-  top: -0.5em;
+  top: -0.4em;
 }
 
 sub {
-  bottom: -0.25em;
+  bottom: -0.3em;
 }
 
-
-/* LISTS */
-
 ul, ol {
+  line-height: 1.75em;
   padding: 0 0 0 1.5em;
 }
 
@@ -174,7 +150,7 @@ table {
 
 table th {
   padding: .2em 1em;
-  background-color: #eee;
+  background-color: hsl(0,0%,96%);
   border-top: 1px solid #ddd;
   border-left: 1px solid #ddd;
 }
@@ -184,4 +160,8 @@ table td {
   border-top: 1px solid #ddd;
   border-left: 1px solid #ddd;
   vertical-align: top;
+}
+
+dl dt {
+    font-weight: bold;
 }

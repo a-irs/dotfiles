@@ -50,7 +50,7 @@ CONFIG = {
         'inherit': ['long'],
         'all': ['-V lang=en'],
         '.html': [
-            '--css {}'.format("style.css"),
+            '--css {}'.format("sans.css"),
         ],
         '.pdf': [
             '-V fontfamily=charter',
@@ -62,6 +62,7 @@ CONFIG = {
     'charter': {
         'inherit': ['base'],
         '.pdf': [
+            # FIXME: needs extra/texlive-fontsextra
             # https://de.overleaf.com/learn/latex/Font_typefaces
             '-V fontfamily=charter',
             '-V linestretch=1.2',
@@ -105,10 +106,13 @@ def main():
     additional_args = ' '.join(sys.argv[4:])
 
     resource_path = ".:{}".format(os.path.expanduser("~/.local/share/pandoc"))
-    cmd = "pandoc -i '{}' -o '{}' --resource-path={} --lua-filter=always-compact-list.lua {} {}".format(source, dest, resource_path, style, additional_args)
-    print(cmd)
+    # autolink http urls
+    cmd = "pandoc -i '{}' -o '{}' -f markdown+autolink_bare_uris -f markdown+emoji --resource-path={} --lua-filter=always-compact-list.lua {} {}".format(source, dest, resource_path, style, additional_args)
+    # print(cmd)
     proc = subprocess.Popen(shlex.split(cmd))
     proc.communicate()
+
+    sys.exit(proc.returncode)
 
 
 if __name__ == "__main__":

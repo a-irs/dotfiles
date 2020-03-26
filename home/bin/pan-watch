@@ -13,18 +13,22 @@ clear_eol=$(tput el)
 
 run() {
     s="$(date "+%Y-%m-%d %H:%M:%S") | pan $cmd"
-    printf '\r%s' "${clear_eol}${yellow}${s}${reset} | ..."
+    printf '\r%s' "${clear_eol}${yellow}${s}${reset} | ... "
     d_start=$(date +%s.%3N)
-    pan $cmd
-    d_end=$(date +%s.%3N)
+    if pan $cmd; then
+        d_end=$(date +%s.%3N)
 
-    duration=$(python3 -c "print('{:.3f}s'.format(${d_end} - ${d_start}))")
-    printf '\r%s\n' "${clear_eol}${magenta}${s}${reset} ${green}| ${duration}${reset}"
-    printf '%s' "waiting for changes in '$file' ... "
+        duration=$(python3 -c "print('{:.3f}s'.format(${d_end} - ${d_start}))")
+        printf '\r%s\n' "${clear_eol}${magenta}${s}${reset} ${green}| ${duration}${reset}"
+        printf '%s' "waiting for changes in '$file' or ~/.local/share/pandoc ... "
+    else
+        echo "ERROR"
+        sleep 1
+    fi
 }
 
 run
 while true; do
-    inotifywait -e modify "$file" 2> /dev/null
+    inotifywait -r -e modify "$file" ~/.local/share/pandoc 2> /dev/null
     run
 done
