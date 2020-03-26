@@ -107,7 +107,7 @@ def main():
     style = ' '.join(get_style(sys.argv[3], dest_format))
     additional_args = ' '.join(sys.argv[4:])
 
-    cmd = "pandoc -i '{}' -o '{}' {} {}".format(source, dest, style, additional_args)
+    cmd = "pandoc -i '{}' -o '{}' --lua-filter=always-compact-list.lua {} {}".format(source, dest, style, additional_args)
     print(cmd)
     proc = subprocess.Popen(shlex.split(cmd))
     proc.communicate()
