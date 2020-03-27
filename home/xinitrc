@@ -28,6 +28,10 @@ mkdir -p ~/.local/share/yay && ln -sfn ~/.local/share/yay ~/.cache/yay
 mkdir -p ~/.local/share/thumbnails && ln -sfn ~/.local/share/thumbnails ~/.cache/thumbnails
 mkdir -p ~/.local/share/thumbnails/darktable && ln -sfn ~/.local/share/thumbnails/darktable ~/.cache/darktable
 
+# the location ~/.local/share/applications is deprecated for mimeapps.list but it gets still used sometimes, so make sure they are the same
+ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
+ln -sf ~/.config/mimeapps.list ~/.local/share/applications/defaults.list
+
 ~/.bin/workstats &
 
 start-pulseaudio-x11 &

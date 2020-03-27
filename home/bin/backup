@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
+[[ $1 == help ]] && { echo "$(basename "$0") sh|start|mount|list|check|info"; exit 2; }
 [[ $EUID != 0 ]] && { exec sudo "$0" "$@"; }
-(( $# < 1 )) && { echo "$(basename "$0") sh|start|mount|list|check|info"; exit 2; }
 
-set -euo pipefail
+set -eo pipefail
 
 MAIN_DIR=/media/crypto/borg
 USER_HOST=root@srv1.home
@@ -31,8 +31,7 @@ case $1 in
     list|ls) borg list --verbose; exit ;;
     info) borg info; exit ;;
     sh) bash -c "env | grep ^BORG; bash"; exit ;;
-    start) ;;
-    *) exit 2
+    *) ;;  # continue
 esac
 
 if ! ssh -i "$SSH_KEY" $USER_HOST test -f "$MAIN_DIR/$HOSTNAME/README"; then

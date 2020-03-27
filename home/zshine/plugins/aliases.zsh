@@ -208,13 +208,12 @@ if [[ "$commands[xdg-open]" ]]; then
     os() {
         [[ -z "$1" || ! -e "$1" ]] && return 1
         mimeopen --ask-default "$1"
-        cp -f ~/.local/share/applications/defaults.list ~/.local/share/applications/mimeapps.list
     }
     o() {
         if [[ ! "$1" ]]; then
-            nohup xdg-open . > /dev/null 2>&1 &
+            nohup xdg-open . < /dev/null &> /dev/null &
         else
-            nohup xdg-open $* > /dev/null 2>&1 &
+            nohup xdg-open $* < /dev/null &> /dev/null &
         fi
     }
 fi
