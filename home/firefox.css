@@ -1,3 +1,5 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
 /* HIGHLIGHT PENDING, UNREAD, CHANGED TABS */
 .tabbrowser-tab[pending] .tab-content > * {
   opacity: 0.5 !important;
