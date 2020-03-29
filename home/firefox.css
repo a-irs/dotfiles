@@ -18,21 +18,12 @@
         box-shadow: none !important;
         background: transparent !important; }
 
-    /* PRIVATE TAB ADDON */
-    /* .tabbrowser-tab[privateTab-isPrivate], */
-    /* .tabbrowser-tab[privateTab-isPrivate] .tab-content { */
-    /*     background: #93AFCC !important; */
-    /* } */
-    /* .tabbrowser-tab[privateTab-isPrivate][selected], */
-    /* .tabbrowser-tab[privateTab-isPrivate][selected] .tab-content { */
-    /*     background: #BBD7F3 !important; */
-    /* } */
-
     /* Remove the Close Button from the Tab Bar */
     .tab-close-button { display: none; }
 
 
-    /* tree style tabls customizing */
+    /* TREE STYLE TABS */
+
     #main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #TabsToolbar {
         opacity: 0;
         pointer-events: none;
@@ -44,3 +35,22 @@
     #sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar-header {
         display: none;
     }
+
+    #sidebar-splitter {
+        width: 0px !important;
+    }
+
+/* collapse in default state and add transition, expand on hover */
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] {
+  transition: all 0.1s ease-in;
+  overflow: hidden;
+  min-width: 200px;
+  max-width: 200px;
+  z-index: 2;
+}
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"]:hover,
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar {
+  min-width: 460px !important;
+  max-width: 460px !important;
+  z-index: 1;
+}
