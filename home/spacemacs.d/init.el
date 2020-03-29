@@ -289,7 +289,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font or prioritized list of fonts.
    dotspacemacs-default-font '(
-                               ("Input")
+                               ("Iosevka Fixed Semibold 8")
                                ("Meslo LG M DZ for Powerline")
                                )
 
@@ -537,6 +537,9 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   ;; imitates vim's whichwrap to cross newlines with left/right
   (setq evil-cross-lines t)
+
+  ;; add more line height (for iosevka font!)
+  (setq-default line-spacing 0.1)
 
   ; stop org-level headers from increasing in height
   (setq theming-modifications
