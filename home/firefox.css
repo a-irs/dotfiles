@@ -1,44 +1,51 @@
-    /* HIGHLIGHT PENDING, UNREAD, CHANGED TABS */
-    .tabbrowser-tab[pending] .tab-content > * { opacity: .5 !important; }
-    .tabbrowser-tab[unread]  .tab-content > * { opacity: .5 !important; }
-    .tabbrowser-tab[titlechanged] .tab-content {
-        background-image: -moz-linear-gradient(transparent 70%, rgba(255, 255, 255, 0.5)), -moz-linear-gradient(rgba(200,0,0,0.05),rgba(255,0,0,0.15) 100%) !important;
-        background-clip: border-box !important;
-    }
+/* HIGHLIGHT PENDING, UNREAD, CHANGED TABS */
+.tabbrowser-tab[pending] .tab-content > * {
+  opacity: 0.5 !important;
+}
+.tabbrowser-tab[unread] .tab-content > * {
+  opacity: 0.5 !important;
+}
+.tabbrowser-tab[titlechanged] .tab-content {
+  background-image: -moz-linear-gradient(transparent 70%, rgba(255, 255, 255, 0.5)), -moz-linear-gradient(rgba(200, 0, 0, 0.05), rgba(255, 0, 0, 0.15) 100%) !important;
+  background-clip: border-box !important;
+}
 
-    /* SEMI-TRANSPARENT BOOKMARKS */
-    .bookmark-item {
-        /* grayscale */
-        filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-        opacity: 0.8;
-        border-color: transparent !important; }
-    .bookmark-item:hover:not(:active):not([open]) {
-        filter: none;
-        opacity: 1;
-        box-shadow: none !important;
-        background: transparent !important; }
+/* SEMI-TRANSPARENT BOOKMARKS */
+.bookmark-item {
+  /* grayscale */
+  filter: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='grayscale'><feColorMatrix type='matrix' values='0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0'/></filter></svg>#grayscale");
+  opacity: 0.8;
+  border-color: transparent !important;
+}
+.bookmark-item:hover:not(:active):not([open]) {
+  filter: none;
+  opacity: 1;
+  box-shadow: none !important;
+  background: transparent !important;
+}
 
-    /* Remove the Close Button from the Tab Bar */
-    .tab-close-button { display: none; }
+/* Remove the Close Button from the Tab Bar */
+.tab-close-button {
+  display: none;
+}
 
+/* TREE STYLE TABS */
 
-    /* TREE STYLE TABS */
+#main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #TabsToolbar {
+  opacity: 0;
+  pointer-events: none;
+}
+#main-window:not([tabsintitlebar="true"]) #TabsToolbar {
+  visibility: collapse !important;
+}
 
-    #main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #TabsToolbar {
-        opacity: 0;
-        pointer-events: none;
-    }
-    #main-window:not([tabsintitlebar="true"]) #TabsToolbar {
-        visibility: collapse !important;
-    }
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar-header {
+  display: none;
+}
 
-    #sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar-header {
-        display: none;
-    }
-
-    #sidebar-splitter {
-        width: 0px !important;
-    }
+#sidebar-splitter {
+  width: 0px !important;
+}
 
 /* collapse in default state and add transition, expand on hover */
 #sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] {
