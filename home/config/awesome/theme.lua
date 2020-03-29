@@ -56,8 +56,8 @@ theme.taglist_empty_tag             = "\28"
 theme.taglist_nonempty_tag          = "\27"
 
 if is_high_dpi then
-    theme.font = "Input Bold 7"
-    theme.taglist_font = "Input Bold 7"
+    theme.font = "Iosevka Fixed Bold 7"
+    theme.taglist_font = "Iosevka Fixed Bold 7"
     theme.taglist_empty_tag = "☐"  -- ○
     theme.taglist_nonempty_tag = "■"  -- ●
 end

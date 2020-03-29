@@ -1,7 +1,15 @@
 [options]
 audible_bell = true
-font = Input 9
-scrollback_lines = 100000
+scrollback_lines = -1
+
+# INPUT
+# font = Input Regular 9
+# font = Input Medium 8
+
+# IOSEVKA
+# font = Iosevka Fixed Medium 9
+font = Iosevka Fixed Semibold 8
+cell_height_scale = 1.1
 
 [colors]
 cursor = #ffc646

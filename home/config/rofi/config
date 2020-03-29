@@ -1,7 +1,7 @@
 # rofi config
 
 rofi.show-icons: true
-rofi.font: Input 12
+rofi.font: Iosevka Fixed Medium 12
 rofi.modi: drun,run
 rofi.width: 600
 rofi.lines: 5
