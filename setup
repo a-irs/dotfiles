@@ -8,6 +8,8 @@ import glob
 import configparser
 import tempfile
 
+import urllib.request
+
 THIS_DIR = Path(os.path.dirname(os.path.abspath(__file__)))
 
 def log(level: str, msg: str) -> None:
@@ -49,7 +51,7 @@ def render_template(template, dest):
     return dest
 
 
-def handle_module(name: str, version: str, path: Path, prefix="https://github.com"):
+def handle_clone(name: str, version: str, path: Path, prefix="https://github.com"):
     group_name = os.path.basename(os.path.dirname(name))
     repo_name = os.path.basename(name)
     target = Path(THIS_DIR / f"cache/modules/{group_name}/{repo_name}")
@@ -59,6 +61,20 @@ def handle_module(name: str, version: str, path: Path, prefix="https://github.co
     os.system(f'git -C "{target}" checkout "{version}" 2>&1 | grep -Ev "(Already on|is up to date|HEAD is now)"')
 
     make_link(target, path)
+
+def handle_extract(url: str, subfolder: str, dest: Path, prefix="https://github.com"):
+    file_name = os.path.basename(url)
+    target = Path(THIS_DIR / f"cache/modules/{file_name}")
+    if not target.is_file():
+        log("info", f'downloading {prefix}/{url}')
+        urllib.request.urlretrieve(f'{prefix}/{url}', target)
+
+    unpack_dir = Path(os.path.splitext(target)[0])
+    if not unpack_dir.is_dir():
+        log("info", f"unpacking to {unpack_dir}")
+        shutil.unpack_archive(target, os.path.splitext(target)[0])
+
+    make_link(unpack_dir / subfolder, dest)
 
 
 def make_link(src: Path, dest: Path) -> None:
@@ -111,19 +127,28 @@ def main() -> None:
     config = configparser.ConfigParser()
     config.read(THIS_DIR / "setup.conf")
 
-    # MODULES
+    # MODULES (clone / download+extract)
     for section in [s for s in config.sections() if s.startswith("modules.")]:
         package_name = '.'.join(section.split('.')[1:])
         for key, path in config[section].items():
             if shutil.which(package_name):
                 if action == 'link':
-                    split = key.split('@')
-                    url = key.split('@')[0]
-                    version = 'master'
-                    if len(split) > 1:
-                        version = key.split('@')[-1]
-                    dest = THIS_DIR / "home" / Path(os.path.expanduser(path))
-                    handle_module(url, version, dest)
+                    module_action = key.split('!')[0]
+                    key = ''.join(key.split('!')[1:])
+                    if module_action == "clone":
+                        split = key.split('@')
+                        url = key.split('@')[0]
+                        if len(split) > 1:
+                            version = key.split('@')[-1]
+                        else:
+                            version = 'master'
+                        dest = THIS_DIR / "home" / Path(os.path.expanduser(path))
+                        handle_clone(url, version, dest)
+                    elif module_action == "extract":
+                        split = key.split('@')
+                        url, subfolder = split[0], split[1]
+                        dest = THIS_DIR / "home" / Path(os.path.expanduser(path))
+                        handle_extract(url, subfolder, dest)
 
     # HOME FILES
     for package_name, files in config['files'].items():
