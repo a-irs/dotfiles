@@ -28,17 +28,23 @@ echo ""
 echo -n "load "
 awk '{print $1 " " $2 " " $3}' /proc/loadavg
 echo ""
-sstatus cronie.service
-sstatus docker.service
-sstatus qemu-ga.service
-sstatus media-data1.mount
-sstatus media-data2.mount
-sstatus media-data3.mount
-sstatus media-data4.mount
-sstatus media-data.mount
-sstatus media-crypto.mount
+if [[ $HOSTNAME == srv1 ]]; then
+    sstatus cronie.service
+    sstatus docker.service
+    sstatus qemu-ga.service
+    sstatus media-data1.mount
+    sstatus media-data2.mount
+    sstatus media-data3.mount
+    sstatus media-data4.mount
+    sstatus media-data.mount
+    sstatus media-crypto.mount
+elif [[ %$HOSTNAME == srv2 ]]; then
+    sstatus cron.service
+    sstatus docker.service
+    sstatus qemu-guest-agent.service
+fi
 echo ""
-pydf --mounts <(grep -v '/var/lib/docker' /proc/mounts)
+pydf --mounts <(grep -v '/var/lib/docker' /proc/mounts) || df -h | grep -v /var/lib/docker
 echo ""
 echo -n "$(tput setaf 1)"
 docker ps -f status=exited | tail +2
