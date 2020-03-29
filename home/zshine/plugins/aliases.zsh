@@ -170,7 +170,7 @@ alias ff='noglob find . -type f -name'
 
 alias mmv='noglob zmv -W'
 
-ls="\ls -F --literal --color=auto --group-directories-first"
+ls="\lsd -F --date relative --group-dirs first"
 if [[ "$os" == Darwin ]]; then
     ls="\ls -F"
     [[ "$commands[gls]" ]] && ls="gls -F --literal --color=auto"

@@ -14,7 +14,6 @@ ZSHINE_PLUGINS=(
   # pwd-hell # show warning message when [[ pwd != readlink -f ./ ]]
   # tmux # autostart tmux
   bd # move back in current directory tree (breadcrumb-style)
-  auto-ls # launch "ls" when entering directory
   fzf # CTRL+T for fuzzy-search of files
   cdr # recent dirs command
   zshmarks # set bookmarks
@@ -24,6 +23,7 @@ ZSHINE_PLUGINS=(
   homebrew # macos package manager
   python # python dev stuff
   aliases # provides some aliases and functions for daily work
+  auto-ls # launch "ls" when entering directory
   nix # nixos, nix package manager
   fasd # autocomplete paths
 

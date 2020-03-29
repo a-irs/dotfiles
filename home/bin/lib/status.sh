@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-green() { echo -en "\e[1;32m$@\e[0m"; }
+green() { echo -en "\e[1;32m$*\e[0m"; }
 
-red() { echo -en "\e[1;31m$@\e[0m"; }
+red() { echo -en "\e[1;31m$*\e[0m"; }
 
 sstatus() {
     status=$(systemctl show "$1" | grep ActiveState | cut -d= -f 2)
@@ -16,7 +16,8 @@ sstatus() {
 docker_active=$(docker ps | tail -n +2 | awk '{print $NF}')
 docker_inactive=$(docker ps -a -f="status=exited" | tail -n +2)
 dstatus() {
-    if echo "$docker_active" | grep -q $1; then
+    name=$1
+    if echo "$docker_active" | grep -q "$name"; then
         green "$1.docker\n"
     else
         red "$1.docker\n"
@@ -32,6 +33,8 @@ if [[ $HOSTNAME == srv1 ]]; then
     sstatus cronie.service
     sstatus docker.service
     sstatus qemu-ga.service
+    sstatus sshd.service
+    echo ""
     sstatus media-data1.mount
     sstatus media-data2.mount
     sstatus media-data3.mount
@@ -41,7 +44,18 @@ if [[ $HOSTNAME == srv1 ]]; then
 elif [[ $HOSTNAME == srv2 ]]; then
     sstatus cron.service
     sstatus docker.service
+    sstatus sshd.service
     sstatus qemu-guest-agent.service
+elif [[ $HOSTNAME == desk ]]; then
+    sstatus cronie.service
+    sstatus dhcpcd@eth0.service
+    sstatus docker.service
+    sstatus hd-idle.service
+    sstatus iptables.service
+    sstatus sshd.service
+    echo ""
+    sstatus media-HDD_GAMES.mount
+    sstatus media-data.mount
 fi
 echo ""
 pydf --mounts <(grep -v '/var/lib/docker' /proc/mounts) || df -h | grep -v /var/lib/docker
