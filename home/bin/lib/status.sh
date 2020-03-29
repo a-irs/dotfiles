@@ -25,6 +25,9 @@ dstatus() {
 
 
 echo ""
+echo -n "load "
+awk '{print $1 " " $2 " " $3}' /proc/loadavg
+echo ""
 sstatus cronie.service
 sstatus docker.service
 sstatus qemu-ga.service

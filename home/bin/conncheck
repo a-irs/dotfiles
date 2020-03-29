@@ -88,7 +88,7 @@ get_ip_whois() {
     echo "$ip ($ext_ip_name, $ext_whois)"
 }
 
-command -v nmcli > /dev/null 2>&1 && echo ""; nmcli -c yes dev status | grep -v 'unmanaged'
+command -v nmcli > /dev/null 2>&1 && { echo ""; nmcli -c yes dev status | grep -v 'unmanaged'; }
 echo ""
 check_ip_set wg0
 check_ip_set wlan0
