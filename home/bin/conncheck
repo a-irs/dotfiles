@@ -70,7 +70,7 @@ check_http() {
     local url="$1"
 
     local curl_output curl_rc
-    curl_output=$(curl --connect-timeout "$TIMEOUT" -I -o /dev/null -s -w '%{time_connect}s' "$url")
+    curl_output=$(curl --connect-timeout "$TIMEOUT" -o /dev/null -s -w '%{time_total}s' "$url")
     curl_rc=$?
     if [[ "$curl_rc" != 0 ]]; then
         die "HTTP GET $url" "FAILED"
@@ -102,6 +102,8 @@ check_dns mozilla.org 8.8.8.8
 echo ""
 check_http http://1.0.0.1
 check_http https://8.8.8.8
+check_http https://www.reddit.com/
+check_http https://www.nytimes.com/
 echo ""
 echo "External IP: $(get_ip_whois "$(curl -s icanhazip.com)")"
 echo "External DNS IP: $(get_ip_whois "$(dig +short whoami.akamai.net)")"
