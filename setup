@@ -51,30 +51,27 @@ def render_template(template, dest):
     return dest
 
 
-def handle_clone(name: str, version: str, path: Path, prefix="https://github.com"):
-    group_name = os.path.basename(os.path.dirname(name))
-    repo_name = os.path.basename(name)
-    target = Path(THIS_DIR / f"cache/modules/{group_name}/{repo_name}")
+def handle_clone(url: str, version: str, path: Path):
+    target = Path(THIS_DIR / f"cache/modules/{os.path.basename(url)}")
 
     # TODO: improve
-    os.system(f'git clone "{prefix}/{name}" "{target}" 2>&1 | grep -Ev "already exists"')
+    os.system(f'git clone "{url}" "{target}" 2>&1 | grep -Ev "already exists"')
     os.system(f'git -C "{target}" checkout "{version}" 2>&1 | grep -Ev "(Already on|is up to date|HEAD is now)"')
 
     make_link(target, path)
 
-def handle_extract(url: str, subfolder: str, dest: Path, prefix="https://github.com"):
-    file_name = os.path.basename(url)
-    target = Path(THIS_DIR / f"cache/modules/{file_name}")
+def handle_extract(url: str, subfolder: str, path: Path):
+    target = Path(THIS_DIR / f"cache/modules/{os.path.basename(url)}")
     if not target.is_file():
-        log("info", f'downloading {prefix}/{url}')
-        urllib.request.urlretrieve(f'{prefix}/{url}', target)
+        log("info", f'downloading {url} ...')
+        urllib.request.urlretrieve(url, target)
 
     unpack_dir = Path(os.path.splitext(target)[0])
     if not unpack_dir.is_dir():
-        log("info", f"unpacking to {unpack_dir}")
+        log("info", f"unpacking to {unpack_dir} ...")
         shutil.unpack_archive(target, os.path.splitext(target)[0])
 
-    make_link(unpack_dir / subfolder, dest)
+    make_link(unpack_dir / subfolder, path)
 
 
 def make_link(src: Path, dest: Path) -> None:
@@ -124,7 +121,7 @@ def main() -> None:
     if len(sys.argv) > 1 and sys.argv[1] == 'rm':
         action = 'rm'
 
-    config = configparser.ConfigParser()
+    config = configparser.ConfigParser(delimiters=('='))
     config.read(THIS_DIR / "setup.conf")
 
     # MODULES (clone / download+extract)
