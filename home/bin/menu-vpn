@@ -1,25 +1,55 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
 
-output=$(nmcli --terse --fields name,type,device,state,active connection show | grep -E ":(vpn|wireguard):")
+import subprocess
+import sys
 
-vpn_on=$(printf '%s\n' "$output" | awk -F: '$5 == "yes" {print $1}')
-vpn_off=$(printf '%s\n' "$output" | awk -F: '$5 == "no" {print $1}')
-vpn=$(
-    for i in ${vpn_on}; do
-        echo "<span>[ON]</span> $i"
-    done
-    for j in ${vpn_off}; do
-        echo "<span color='#fa7883'>[OFF]</span> $j"
-    done
-)
+# use this config dict to filter (key) and show pretty descriptions (value)
+TYPES = {
+    'vpn': "OpenVPN",
+    'wireguard': "Wireguard",
+    # '802-11-wireless': "Wifi",
+    # '802-3-ethernet': "LAN",
+}
 
-lines=$(printf '%s\n' "$vpn" | wc -l)
-selected=$(echo -e "$vpn" | rofi -dmenu -p "VPN" -no-show-icons -lines "$lines" -markup -markup-rows)
+def get_connections() -> list:
+    fields = ["name", "type", "device", "state", "active"]
+    proc = subprocess.run(["nmcli", "--terse", "--fields", ','.join(fields), "connection", "show"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding='utf8')
 
-status=$(printf '%s' "$selected" | grep -oP '\[\w+\]')
-name=$(printf '%s' "$selected" | sed -E 's/^.*> (.*?)$/\1/')
-if [[ "$status" == "[ON]" ]]; then
-    nmcli connection down "$name"
-else
-    nmcli connection up "$name"
-fi
+    if proc.returncode == 0:
+        connections = [dict(zip(fields, line.split(":"))) for line in proc.stdout.split("\n") if line]
+
+    return connections
+
+def get_rofi_lines(connections: list) -> str:
+    lines = []
+    for c in connections:
+        if c.get("active") == "yes":
+            lines.append(f"[ON] {c['name']} ({TYPES.get(c['type'])})")
+        else:
+            lines.append(f"<span color='#fa7883'>[OFF]</span> {c['name']} ({TYPES.get(c['type'])})")
+
+    return '\n'.join(lines)
+
+def run(connections: list) -> int:
+    rofi_cmd = "rofi -dmenu -format p -i -no-show-icons -lines {} -markup -markup-rows -p VPN".format(len(connections))
+    proc = subprocess.run(rofi_cmd.split(" "), input=get_rofi_lines(connections), stdout=subprocess.PIPE, encoding='utf8')
+
+    if proc.returncode == 0:
+        connection_name = proc.stdout.split(" ")[-2:-1][0]
+        if "[ON]" in proc.stdout:
+            nmcli_command = "down"
+        else:
+            nmcli_command = "up"
+        subprocess.run(["nmcli", "connection", nmcli_command, connection_name])
+
+    return proc.returncode
+
+def main() -> None:
+    vpn_connections = list(filter(lambda x: x["type"] in TYPES, get_connections()))
+    rc = run(vpn_connections)
+
+    sys.exit(rc)
+
+
+if __name__ == "__main__":
+    main()
