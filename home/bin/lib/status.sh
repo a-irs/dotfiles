@@ -38,7 +38,7 @@ if [[ $HOSTNAME == srv1 ]]; then
     sstatus media-data4.mount
     sstatus media-data.mount
     sstatus media-crypto.mount
-elif [[ %$HOSTNAME == srv2 ]]; then
+elif [[ $HOSTNAME == srv2 ]]; then
     sstatus cron.service
     sstatus docker.service
     sstatus qemu-guest-agent.service
