@@ -11,8 +11,13 @@ image=$(mktemp --suffix=.jpg)
 trap 'rm -f "$image"' EXIT
 
 pre_lock() {
+    if pidof i3lock; then
+        printf '%s\n' "Already locked."
+        exit 1
+    fi
     logger -t "$(basename "$0")" --id=$$ -- "BAT0 before suspend: $(acpi -b | grep -Po '[0-9]+%')"
     killall keepassxc 2> /dev/null
+    ssh-add -D 2> /dev/null
 }
 
 do_lock() {
@@ -46,22 +51,6 @@ do_sound() {
     fi
 }
 
-lock() {
-    # inspired by /usr/share/doc/xss-lock/transfer-sleep-lock-i3lock.sh
-    if [[ -e /dev/fd/${XSS_SLEEP_LOCK_FD:--1} ]]; then
-        kill_i3lock() { pkill -xu $EUID "$@" i3lock; }
-        trap kill_i3lock TERM INT
-
-        do_lock {XSS_SLEEP_LOCK_FD}<&-
-        exec {XSS_SLEEP_LOCK_FD}<&-
-        while kill_i3lock -0; do sleep 0.1; done
-
-    else
-        trap 'kill %%' TERM INT
-        do_lock
-    fi
-}
-
 post_lock() {
     logger -t "$(basename "$0")" --id=$$ -- "BAT0 after suspend: $(acpi -b | grep -Po '[0-9]+%')"
 }
@@ -88,5 +77,5 @@ make_screenshot() {
 }
 
 pre_lock
-lock
+do_lock
 post_lock

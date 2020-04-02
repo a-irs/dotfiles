@@ -40,10 +40,13 @@ start-pulseaudio-x11 &
 nohup bash -c "if $HOME/.bin/wait-for-host dropbox.com; then dropbox; fi" < /dev/null &> /dev/null &
 
 if [[ $HOSTNAME == x1 || $HOSTNAME == dell ]]; then
-    xset s 120 120 &
-    # turn off after 5m
+    # dim after 50s, lock after 60s
+    xset s 50 10 &
+
+    # turn off display after 5m
     xset dpms 300 300 300 &
-    xss-lock --transfer-sleep-lock -n "notify-send -i /usr/share/icons/Faba/48x48/actions/system-lock-screen.svg -- locking" -- ~/.bin/lock &
+
+    xss-lock -l -n ~/.bin/dim -- ~/.bin/lock &
 fi
 
 if [[ $HOSTNAME == desk ]]; then
