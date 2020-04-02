@@ -96,6 +96,8 @@ check_ip_set eth0
 echo ""
 check_ping_gateway
 echo ""
+check_traceroute 1.0.0.1
+echo ""
 check_dns example.com
 check_dns google.at 1.0.0.1
 check_dns mozilla.org 8.8.8.8
@@ -107,5 +109,3 @@ check_http https://www.nytimes.com/
 echo ""
 echo "External IP: $(get_ip_whois "$(curl -s icanhazip.com)")"
 echo "External DNS IP: $(get_ip_whois "$(dig +short whoami.akamai.net)")"
-echo ""
-check_traceroute 1.0.0.1

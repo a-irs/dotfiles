@@ -56,8 +56,8 @@ EOF
 parcellite --no-icon &
 
 if [[ $HOSTNAME == x1 || $HOSTNAME == dell ]]; then
-    # dim after 50s, lock after 60s
-    xset s 50 10 &
+    # dim after 1min, lock after 2min
+    xset s 60 60 &
 
     # turn off display after 5m
     xset dpms 300 300 300 &
@@ -66,6 +66,15 @@ if [[ $HOSTNAME == x1 || $HOSTNAME == dell ]]; then
 fi
 
 if [[ $HOSTNAME == desk ]]; then
+    # dim after 2min, lock after 3min
+    xset s 120 60 &
+
+    # turn off display after 5m
+    xset dpms 300 300 300 &
+
+    xss-lock -l -n ~/.bin/dim -- ~/.bin/lock soft &
+
+
     numlockx &
     pulseeffects --gapplication-service &
 
