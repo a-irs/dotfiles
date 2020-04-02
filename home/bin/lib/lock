@@ -15,33 +15,33 @@ pre_lock() {
         printf '%s\n' "Already locked."
         exit 1
     fi
-    logger -t "$(basename "$0")" --id=$$ -- "BAT0 before suspend: $(acpi -b | grep -Po '[0-9]+%')"
     killall keepassxc 2> /dev/null
     ssh-add -D 2> /dev/null
 }
 
 do_lock() {
+    screenshot="$(make_screenshot)"
+
     local color_white=ffffffff
     local color_red=d23c3dff
     local color_trans=00000000
     local font="input"
-    i3lock -i "$(make_screenshot)" --show-failed-attempts --ignore-empty-password \
-    --pass-media-keys --force-clock \
-    --timepos='x+140:h-30' \
-    --clock --datestr "" \
-    --insidecolor=$color_trans --ringcolor=$color_white --line-uses-inside \
-    --keyhlcolor=$color_red --bshlcolor=$color_red \
-    --insidevercolor=$color_trans --insidewrongcolor=$color_red \
-    --ringvercolor=$color_white --ringwrongcolor=$color_white --indpos='w/2:h/2+7' \
-    --radius=100 --ring-width=10 \
-    --verifcolor="$color_white" --timecolor="$color_white" \
-    --time-font="$font" --timesize=50 --date-font="$font" --layout-font="$font" --verif-font="$font" --wrong-font="$font"
+    i3lock \
+        -i "$screenshot" --show-failed-attempts --ignore-empty-password \
+        --pass-media-keys \
+        --insidecolor=$color_trans --ringcolor=$color_white --line-uses-inside \
+        --keyhlcolor=$color_red --bshlcolor=$color_red \
+        --insidevercolor=$color_trans --insidewrongcolor=$color_red \
+        --ringvercolor=$color_white --ringwrongcolor=$color_white --indpos='w/2:h/2+7' \
+        --radius=60 --ring-width=5 \
+        --verifcolor="$color_white" \
+        --layout-font="$font" --verif-font="$font" --wrong-font="$font"
 
     do_sound
 }
 
 do_sound() {
-    export XDG_RUNTIME_DIR=/run/user/1000
+    export XDG_RUNTIME_DIR=/run/user/$UID
 
     was_muted=$(pacmd list-sinks | awk '/muted/ { print $2 }')
     pactl set-sink-mute 0 false
@@ -49,10 +49,6 @@ do_sound() {
     if [[ "$was_muted" == yes ]]; then
         pactl set-sink-mute 0 true
     fi
-}
-
-post_lock() {
-    logger -t "$(basename "$0")" --id=$$ -- "BAT0 after suspend: $(acpi -b | grep -Po '[0-9]+%')"
 }
 
 make_screenshot() {
@@ -76,14 +72,17 @@ make_screenshot() {
     printf '%s' "$image"
 }
 
-action=${1:-lock}
+main() {
+    action=${1:-lock}
 
-if [[ "$action" == lock ]]; then
-    pre_lock
-    do_lock
-    post_lock
-fi
+    if [[ "$action" == lock ]]; then
+        pre_lock
+        do_lock
+    fi
 
-if [[ "$action" == soft ]]; then
-    pre_lock
-fi
+    if [[ "$action" == soft ]]; then
+        pre_lock
+    fi
+}
+
+main "$@"
