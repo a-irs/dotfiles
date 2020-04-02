@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-min_brightness=30
+min_brightness=20
 fade_step_time=0.01
 sysfs_path=/sys/class/backlight/intel_backlight/brightness
 
