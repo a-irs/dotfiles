@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+min_brightness=30
+fade_step_time=0.01
+sysfs_path=/sys/class/backlight/intel_backlight/brightness
+
+get_brightness() {
+    cat $sysfs_path
+}
+
+set_brightness() {
+    echo "$1" | sudo tee $sysfs_path > /dev/null
+}
+
+fade_brightness() {
+    local level
+    for level in $(eval echo {$(get_brightness)..$1}); do
+        set_brightness "$level"
+        sleep $fade_step_time
+    done
+}
+
+trap 'exit 0' TERM INT
+trap "set_brightness $(get_brightness); kill %%" EXIT
+fade_brightness $min_brightness
+sleep 2147483647 &
+wait
