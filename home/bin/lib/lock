@@ -76,6 +76,14 @@ make_screenshot() {
     printf '%s' "$image"
 }
 
-pre_lock
-do_lock
-post_lock
+action=${1:-lock}
+
+if [[ "$action" == lock ]]; then
+    pre_lock
+    do_lock
+    post_lock
+fi
+
+if [[ "$action" == soft ]]; then
+    pre_lock
+fi
