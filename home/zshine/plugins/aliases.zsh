@@ -3,6 +3,12 @@
 alias et="emacsclient -c --alternate-editor='' -t"
 alias e="emacsclient -c --alternate-editor='' -n"
 
+tmpdir() {
+    local t=$(mktemp -d)
+    trap "rm -rfv "$t"" EXIT
+    cd "$t"
+}
+
 es() {
     local query=$1
     local line=$(command rg -n --color=always "$query" | fzf --height=50% --reverse)
@@ -173,7 +179,7 @@ alias mmv='noglob zmv -W'
 ls="\lsd -F --date relative --group-dirs first"
 if [[ "$os" == Darwin ]]; then
     ls="\ls -F"
-    [[ "$commands[gls]" ]] && ls="gls -F --literal --color=auto"
+    [[ "$commands[gls]" ]] && ls="gls -F --literal --color=auto --group-directories-first"
     alias lo="\ls -lhGF -O@"
 fi
 alias l="$ls"
