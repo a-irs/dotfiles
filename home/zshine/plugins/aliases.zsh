@@ -313,15 +313,17 @@ if [[ "$commands[git]" ]]; then
 
     gop() {
         # change protocol to https, remove port, remove .git
-        url=$(git config remote.origin.url | perl -pe 's/^ssh:\/\/.*@/https:\/\//; s/:[0-9]+\//\//g; s/\.git$//')
+        local repo_url=$(git config remote.origin.url | perl -pe 's/^ssh:\/\/.*@/https:\/\//; s/:[0-9]+\//\//g; s/\.git$//')
         if [[ -n "$1" ]]; then
-            branch=$(git rev-parse --abbrev-ref HEAD)
-            url="$url/tree/$branch/$@"
+            local branch=$(git rev-parse --abbrev-ref HEAD)
+            local path=$(git rev-parse --show-prefix "$@" | tr '\n' '/')
+            # TODO: resolve links/.. etc.
+            local url="$repo_url/tree/$branch/$path"
         fi
 
         printf '%s\n' "opening: $url"
         if [[ "$os" == Darwin ]]; then
-            open "$url"
+            /usr/bin/open "$url"
         else
             xdg-open "$url"
         fi
