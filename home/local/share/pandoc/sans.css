@@ -1,14 +1,18 @@
 body {
-  color: #333;
+  color: hsl(0, 0%, 20%);
 
   margin: auto;
   padding: 1.2rem;
-  background: #fff;
+  background: hsl(0, 0%, 100%);
 
   line-height: 1.65em;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   max-width: 72ch;
   font-size: 1em;
+}
+
+nav[role="doc-toc"] {
+  border-bottom: 1px solid #ebebeb;
 }
 
 a {
@@ -24,32 +28,35 @@ h1, h2, h3, h4 {
   font-weight: 500;
 }
 
-h1, h2 {
-  border-bottom: 1px solid #ebebeb;
+h1.title {
+  font-weight: bold;
+  font-size: 2.5em;
+  line-height: 1.5em;
 }
 
 h1 {
-  font-size: 2.4em;
-  line-height: 1.2em;
+  font-size: 2.0em;
+  line-height: 1.5em;
+  border-bottom: 1px solid #ebebeb;
 }
 
 h2 {
-  font-size: 1.6em;
+  font-size: 1.5em;
   line-height: 1.5em;
 }
 
 h3 {
-  font-size: 1.4em;
+  font-size: 1.3em;
 }
 
 h4 {
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
 
 blockquote {
-  background-color: hsl(0,0%,97%);
-  color: hsl(0,0%,45%);
+  background-color: hsl(0 ,0% ,97%);
+  color: hsl(0, 0%, 45%);
   margin: 0;
   padding-left: 1.55em;
   border-left: 0.5em #eee solid;
