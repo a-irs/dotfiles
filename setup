@@ -23,7 +23,7 @@ def handle_firefox(file_path, remove=False) -> None:
         "Library/Application Support/Firefox/Profiles"
     ]
     for p in paths:
-        for profile in glob.glob(str(Path.home() / Path(p)) + "/*.default"):
+        for profile in glob.glob(str(Path.home() / Path(p)) + "/*.default*"):
             if remove:
                 remove_link(Path(profile) / "chrome" / "userChrome.css")
             else:
