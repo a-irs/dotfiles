@@ -29,13 +29,14 @@ CONFIG = {
             # '--mathjax',  # 2nd best alternative, more compatible but embeds huge JS (800KB) when used with --self-contained
         ],
         '.pdf': [
-            '-V papersize=a4',
-            '-V geometry=top=1in,bottom=1in,left=1.25in,right=1.25in',  # Word 2003 style, see https://en.wikipedia.org/wiki/Margin_(typography)
+            '-V header-includes="\\usepackage{csquotes}"',  # localized quotation marks
             '--pdf-engine=pdflatex',  # or: xelatex
             '-V colorlinks',
             '-V links-as-notes',
-            '-V header-includes="\\usepackage{csquotes}"',  # localized quotation marks
-            '-V linestretch=1.2',
+
+            '-V papersize=a4',
+            '-V geometry=top=1in,bottom=1in,left=1in,right=1in',  # Word 2007 style, see https://en.wikipedia.org/wiki/Margin_(typography)
+            '-V linestretch=1.25',
             '-V fontsize=11pt',  # default: 10
         ]
     },
@@ -47,7 +48,7 @@ CONFIG = {
             '--css {}'.format("sans.css"),
         ],
         '.pdf': [
-            '-V fontfamily=charter',
+            '-V fontfamily=utopia',  # good fonts: charter (sans), utopia (sans), palatino (serif)
         ]
     },
 
