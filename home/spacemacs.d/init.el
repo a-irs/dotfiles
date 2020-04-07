@@ -32,7 +32,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(lua
+   '(
      ;; http://develop.spacemacs.org/layers/LAYERS.html
 
      ;; not needed. included in spacemacs but not in spacemacs-base
@@ -83,6 +83,9 @@ This function should only modify configuration layer settings."
      yaml
      shell-scripts
      ansible
+     lua
+     html
+     systemd
 
      theming
 

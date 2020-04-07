@@ -11,12 +11,15 @@ let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 Plug 'eiginn/iptables-vim'
 autocmd BufNewFile,BufFilePre,BufRead *.rules set filetype=iptables
 
+" better ft=sh, see https://www.reddit.com/r/vim/comments/c6supj/vimsh_better_syntax_highlighting_for_shell_scripts/
+Plug 'arzg/vim-sh'
+
 " auto-close brackets
 Plug 'raimondi/delimitmate'
 
 Plug 'jaxbot/semantic-highlight.vim'
 let g:semanticTermColors = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-let semanticEnableFileTypes = ['python', 'lua']
+let semanticEnableFileTypes = {'python': 'python', 'lua': 'lua'}
 " re-highlight on save
 augroup SemanticHL
     autocmd FileType python,lua

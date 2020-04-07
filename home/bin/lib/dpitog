@@ -12,7 +12,7 @@ DPI_FACTORS = {
     "desk": [1.5, 2.0, 3.0],
     "x1": [1.5, 1.75, 2.0]
 }
-DPIS = DPI_FACTORS.get(os.uname()[1])
+DPIS = DPI_FACTORS.get(os.uname()[1], [])
 
 
 def set_dpi(dpi: int) -> None:
