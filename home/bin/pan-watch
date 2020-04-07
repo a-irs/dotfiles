@@ -29,6 +29,6 @@ run() {
 run
 while true; do
     inotifywait -r -e modify "$file" ~/.local/share/pandoc "$pan_path" > /dev/null 2>&1
-    sleep 0.2  # wait a moment for file to be written
+    sleep 0.3  # wait a moment for file to be written
     run
 done
