@@ -25,7 +25,7 @@ def set_dpi(dpi: int) -> None:
 
     # prepare
 
-    os.system(f"sed --follow-symlinks -i 's|^Xft.dpi: .*|Xft.dpi: {dpi}|' ~/.Xresources.d/dpi")
+    os.system(f"sed --follow-symlinks -i -E 's|^\\*.dpi: .*|*.dpi: {dpi}|' ~/.Xresources.d/dpi")
     os.system("cp -f /usr/share/applications/spotify.desktop ~/.local/share/applications/")
     os.system("cp -f /usr/share/applications/steam.desktop ~/.local/share/applications/")
     os.system(f"sed -i 's|Exec=spotify .*|Exec=spotify --force-device-scale-factor={factor} %U|' ~/.local/share/applications/spotify.desktop")
@@ -43,7 +43,7 @@ def set_dpi(dpi: int) -> None:
 
 def get_current_dpi() -> int:
     with open(Path.home() / ".Xresources.d/dpi", 'r') as f:
-        match = re.findall(r'^Xft.dpi:\s+(\d+)$', f.read(), re.MULTILINE)
+        match = re.findall(r'^\*.dpi:\s+(\d+)$', f.read(), re.MULTILINE)
         return int(match[0]) if len(match) > 0 else 0
 
 
