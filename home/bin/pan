@@ -24,7 +24,8 @@ CONFIG = {
             '--lua-filter=promote-headers.lua'  # use first header as title
         ],
         '.html': [
-            '--mathml',  # best for maths in html
+            '--mathml',  # best for maths in html, only for firefox+safari
+            # '--mathjax',  # 2nd best alternative, more compatible but embeds huge JS (800KB) when used with --self-contained
         ],
         '.pdf': [
             '-V papersize=a4',

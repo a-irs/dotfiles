@@ -2,13 +2,16 @@ body {
   color: hsl(0, 0%, 20%);
 
   margin: auto;
-  padding: 1.2rem;
+  padding: 1.15rem;
   background: hsl(0, 0%, 100%);
 
   line-height: 1.65em;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   max-width: 72ch;
   font-size: 1em;
+
+  /* wrap long words instead of writing outside container*/
+  overflow-wrap: break-word;
 }
 
 nav[role="doc-toc"] {
@@ -28,16 +31,17 @@ h1, h2, h3, h4 {
   font-weight: 500;
 }
 
-h1.title {
-  font-weight: bold;
-  font-size: 2.5em;
-  line-height: 1.5em;
-}
-
 h1 {
+  padding-top: 0.2em;
   font-size: 2.0em;
   line-height: 1.5em;
   border-bottom: 1px solid #ebebeb;
+}
+
+h1.title {
+  padding-top: 0;
+  font-weight: bold;
+  font-size: 2.5em;
 }
 
 h2 {
@@ -46,20 +50,24 @@ h2 {
 }
 
 h3 {
-  font-size: 1.3em;
+  font-weight: bold;
+  font-size: 1.15em;
+  line-height: 1.15em;
 }
 
 h4 {
-  font-size: 1.1em;
+  font-weight: bold;
 }
 
 
 blockquote {
-  background-color: hsl(0 ,0% ,97%);
-  color: hsl(0, 0%, 45%);
+  background-color: hsla(210, 53%, 48%, 10%);
+  color: hsl(0, 0%, 25%);
   margin: 0;
   padding-left: 1.55em;
-  border-left: 0.5em #eee solid;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-left: 0.5em hsla(210, 53%, 48%, 15%) solid;
 }
 
 hr {
@@ -153,6 +161,12 @@ table {
   border-right: 1px solid #ddd;
   border-spacing: 0;
   border-collapse: collapse;
+}
+
+table > caption {
+  font-size: 0.95em;
+  font-style: italic;
+  margin: 0 0 0.75em;
 }
 
 table th {
