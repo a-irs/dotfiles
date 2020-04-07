@@ -103,7 +103,6 @@ def main():
 
     resource_path = ".:{}".format(os.path.expanduser("~/.local/share/pandoc"))
     cmd = "pandoc -i '{}' -o '{}' --resource-path={} {} {}".format(source, dest, resource_path, style, additional_args)
-    print(cmd)
     proc = subprocess.Popen(shlex.split(cmd))
     proc.communicate()
 
