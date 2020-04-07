@@ -3,7 +3,7 @@
 rofi.show-icons: true
 rofi.font: Input 12
 rofi.modi: drun,run
-rofi.width: 600
+rofi.width: -50
 rofi.lines: 5
 rofi.terminal: termite
 rofi.scroll-method: 1

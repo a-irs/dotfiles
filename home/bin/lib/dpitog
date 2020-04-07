@@ -5,7 +5,6 @@ import re
 import os
 import time
 import math
-import sys
 
 # warning: Mozilla Firefox only supports .5 steps properly
 # (has to be set in about:config manually otherwise as layout.css.devPixelsPerPx)
@@ -13,23 +12,18 @@ DPI_FACTORS = {
     "desk": [1.5, 2.0, 3.0],
     "x1": [1.5, 1.75, 2.0]
 }
-
-if len(sys.argv) > 1:
-    DPIS = [float(sys.argv[1])]
-else:
-    DPIS = DPI_FACTORS.get(os.uname()[1])
+DPIS = DPI_FACTORS.get(os.uname()[1])
 
 
 def set_dpi(dpi: int) -> None:
     factor = round(dpi / 96, 2)
 
     # prepare
-
-    os.system(f"sed --follow-symlinks -i -E 's|^\\*.dpi: .*|*.dpi: {dpi}|' ~/.Xresources.d/dpi")
     os.system("cp -f /usr/share/applications/spotify.desktop ~/.local/share/applications/")
     os.system("cp -f /usr/share/applications/steam.desktop ~/.local/share/applications/")
-    os.system(f"sed -i 's|Exec=spotify .*|Exec=spotify --force-device-scale-factor={factor} %U|' ~/.local/share/applications/spotify.desktop")
 
+    os.system(f"echo 'Xft.dpi: {dpi}\n*.dpi: {dpi}' > ~/.Xresources.d/dpi")
+    os.system(f"sed -i 's|Exec=spotify .*|Exec=spotify --force-device-scale-factor={factor} %U|' ~/.local/share/applications/spotify.desktop")
     # steam does only support whole integers, so round up
     os.system(f"sed -i 's|Exec=/usr/bin/steam-runtime .*|Exec=env GDK_SCALE={math.ceil(factor)} /usr/bin/steam-runtime %U|' ~/.local/share/applications/steam.desktop")
 
@@ -42,9 +36,12 @@ def set_dpi(dpi: int) -> None:
 
 
 def get_current_dpi() -> int:
-    with open(Path.home() / ".Xresources.d/dpi", 'r') as f:
-        match = re.findall(r'^\*.dpi:\s+(\d+)$', f.read(), re.MULTILINE)
-        return int(match[0]) if len(match) > 0 else 0
+    try:
+        with open(Path.home() / ".Xresources.d/dpi", 'r') as f:
+            match = re.findall(r'^.*.dpi:\s+(\d+)$', f.read(), re.MULTILINE)
+            return int(match[0]) if len(match) > 0 else 0
+    except FileNotFoundError:
+        return 0
 
 
 def main() -> None:
