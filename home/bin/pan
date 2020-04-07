@@ -54,7 +54,7 @@ CONFIG = {
 
     'sans-long': {
         'inherit': ['sans'],
-        '.html': [
+        'all': [
             '--number-sections',
             '--toc',
         ],
