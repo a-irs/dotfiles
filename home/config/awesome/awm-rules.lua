@@ -35,7 +35,7 @@ awful.rules.rules = {
     { rule = { class = "Kodi" }, properties = { fullscreen = true, placement = awful.placement.restore } },
 
     { rule_any = {
-        class = { "Arandr", "Gpick", "pinentry", "Lampe-gtk", "keepassxc" },
+        class = { "Arandr", "Gpick", "pinentry", "Lampe-gtk", "KeePassXC" },
         role = { "AlarmWindow", "pop-up" }
         }, properties = { floating = true }
     },

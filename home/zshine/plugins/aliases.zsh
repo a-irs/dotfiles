@@ -540,13 +540,15 @@ pall() {
 }
 
 sandbox() {
+    [[ -z "$1" ]] && return
     program=$1
-    mkdir -vp "$HOME/sandbox/$program"
-    firejail --read-only=/ --private="$HOME/sandbox/$program" --private-dev --seccomp --caps.drop=all --disable-mnt --noprofile --net=wlan0 --protocol=unix,inet,inet6 $*
+    mkdir -p "$HOME/sandbox/$program"
+    firejail --private="$HOME/sandbox/$program" --private-dev --private-tmp --caps.drop=all --disable-mnt --noprofile --net=wlan0 --protocol=unix,inet,inet6 "$@"
 }
 
 sandbox-light() {
+    [[ -z "$1" ]] && return
     program=$1
-    mkdir -vp "$HOME/sandbox/$program"
-    firejail --read-only=/ --private="$HOME/sandbox/$program" --noprofile $*
+    mkdir -p "$HOME/sandbox/$program"
+    firejail --private="$HOME/sandbox/$program" --noprofile "$@"
 }
