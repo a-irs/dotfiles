@@ -3,13 +3,17 @@ audible_bell = true
 scrollback_lines = -1
 
 # INPUT
-# font = Input Regular 9
-# font = Input Medium 8
+# font = Input 8
+font = Input 9
+
+# JetBrains Mono
+# font = JetBrains Mono Medium 8
+# cell_height_scale = 1.1
 
 # IOSEVKA
 # font = Iosevka Fixed Medium 9
-font = Iosevka Fixed Semibold 8
-cell_height_scale = 1.1
+# font = Iosevka Fixed Semibold 8
+# cell_height_scale = 1.1
 
 [colors]
 cursor = #ffc646
