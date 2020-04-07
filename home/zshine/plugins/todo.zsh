@@ -1,8 +1,21 @@
 #!/usr/bin/env bash
 
-showtodo() {
-    local todo_files=(~/.todo ~/{doc,Documents}/todo.{taskpaper,md})
+todo_files=(
+    ~/.todo
+    ~/{doc,Documents}/todo.{taskpaper,md}
+)
 
+todo() {
+    for file in "${todo_files[@]}"; do
+        if [[ -f "$file" ]]; then
+            vim + "$file"
+            return
+        fi
+    done
+    echo "No todo files found: $todo_files"
+}
+
+_show_todos() {
     for file in "${todo_files[@]}"; do
         [[ -s "$file" ]] || continue
         content=$(grep -v '@done' "$file" | sed 's/- /• /' | perl -pe 's/\t/    /g')
@@ -10,5 +23,4 @@ showtodo() {
     done
     unset file
 }
-
-showtodo
+_show_todos

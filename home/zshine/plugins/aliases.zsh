@@ -11,20 +11,17 @@ tmpdir() {
 
 es() {
     local query=$1
-    local line=$(command rg -n --color=always "$query" | fzf --height=50% --reverse)
+    local line=$(command rg -n --color=always "$query" | fzf --reverse)
 
     local filename=$(printf '%s' "$line" | awk -F ':' '{print $1}')
     local linenumber=$(printf '%s' "$line" | awk -F ':' '{print $2}')
 
-    vim "+$linenumber" -c "silent! /$query" "$filename"
+    [[ -n "$filename" ]] && vim "+$linenumber" -c "silent! /$query" "$filename"
 }
 
-for c in find ftp locate rake rsync wcalc; do
+for c in find ftp locate rake rsync wcalc scp; do
     [[ "$commands[$c]" ]] && alias $c="noglob $c"
 done
-
-[[ -d ~/Documents ]] && alias todo="vim + ~/Documents/todo.taskpaper"
-[[ -d ~/doc ]] && alias todo="vim + ~/doc/todo.taskpaper"
 
 mac() { curl -q "https://api.macvendors.com/${1:0:8}" && printf "\n"; }
 
@@ -515,12 +512,14 @@ colortest() {
 
 if [[ "$commands[systemctl]" ]]; then
     user_commands=(
-        list-units is-active status show help list-unit-files
-        is-enabled list-jobs show-environment)
+        list-units is-active status show help list-unit-files is-enabled
+        list-jobs show-environment suspend suspend-then-hibernate hibernate
+    )
     sudo_commands=(
         start stop reload restart try-restart isolate kill daemon-reload
         reset-failed enable disable reenable preset mask unmask
-        link load cancel set-environment unset-environment)
+        link load cancel set-environment unset-environment
+    )
     for c in $user_commands; do; alias sc-$c="systemctl $c"; done
     for c in $sudo_commands; do; alias sc-$c="sudo systemctl $c"; done
 fi
