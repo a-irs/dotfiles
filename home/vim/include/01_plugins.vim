@@ -95,6 +95,10 @@ autocmd BufNewFile,BufFilePre,BufRead */playbooks/*.yml set filetype=yaml.ansibl
 Plug 'rhysd/committia.vim'
 let g:committia_use_singlecolumn = 'always'
 
+" highlight word under cursor
+hi link illuminatedWord Visual
+let g:Illuminate_delay = 100  " default: 250
+Plug 'RRethy/vim-illuminate'
 
 " color schemes
 " Plug 'morhetz/gruvbox'

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# TODO: use/improve https://github.com/witchard/mog ?
+
 set -uo pipefail
 
 path=$1

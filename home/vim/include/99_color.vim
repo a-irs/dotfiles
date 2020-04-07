@@ -16,7 +16,6 @@ try
     " BADWOLF
     " colorscheme badwolf
 
-    " let g:spring_night_high_contrast=0
     colorscheme spring-night
 catch
     colorscheme default
@@ -24,8 +23,8 @@ catch
 endtry
 
 " git gutter
-highlight SignifySignAdd    ctermbg=NONE  ctermfg=2
 highlight SignifySignDelete ctermbg=NONE  ctermfg=1
+highlight SignifySignAdd    ctermbg=NONE  ctermfg=2
 highlight SignifySignChange ctermbg=NONE  ctermfg=3
 
 " clear gutter background
@@ -37,13 +36,8 @@ set listchars=tab:▸\ ,extends:»,precedes:«
 highlight SpecialKey ctermfg=240 guifg=#666666
 highlight NonText ctermfg=240 guifg=#666666
 
-" dark line numbers and tilde symbols after EOF
-highlight LineNr ctermfg=241 guifg=#555555
-highlight NonText ctermfg=241 guifg=#555555
-
-" make VIM background like terminal/gui background
-" highlight NonText guibg=#282a36 ctermbg=none
-" highlight Normal guibg=#282a36 ctermbg=NONE
-" highlight SignColumn guibg=#282a36 ctermbg=NONE
-" highlight LineNr guibg=#282a36 ctermbg=NONE
-
+" change VIM background to terminal background
+" highlight NonText guibg=NONE ctermbg=NONE
+" highlight Normal guibg=NONE ctermbg=NONE
+" highlight SignColumn guibg=NONE ctermbg=NONE
+" highlight LineNr guibg=NONE ctermbg=NONE

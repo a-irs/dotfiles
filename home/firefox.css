@@ -52,8 +52,8 @@
 :root {
   --sidebar-min-width: 180px;
   --sidebar-visible-width: 360px;
-  --sidebar-animation-delay: 0.1s;
-  --sidebar-animation-duration: 0.1s;
+  --sidebar-animation-delay: 0s;
+  --sidebar-animation-duration: 0.05s;
 }
 #sidebar, #sidebar-header {
   position: relative !important;
