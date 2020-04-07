@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-t=$(< /sys/class/drm/card0/device/hwmon/hwmon1/temp1_input)
+t=$(< /sys/class/drm/card0/device/hwmon/hwmon0/temp1_input)
 temp=$((t/1000))
 echo "$temp°C"
 
@@ -13,5 +13,5 @@ elif [[ $1 && $1 -ge 0 && $1 -le 100 ]]; then
     echo "$s" | sudo tee /sys/class/drm/card0/device/hwmon/hwmon0/pwm1 > /dev/null
 fi
 
-speed=$(< /sys/class/drm/card0/device/hwmon/hwmon1/pwm1)
+speed=$(< /sys/class/drm/card0/device/hwmon/hwmon0/pwm1)
 echo "fan speed: $speed/255"

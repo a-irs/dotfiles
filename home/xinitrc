@@ -7,14 +7,10 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
     unset f
 fi
 
-[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources &
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-setxkbmap -option caps:escape &  # remap caps to escape
-xset r rate 200 40 &  # faster keyboard repeat
-
-# turn off display after 5m, disable xset standby
-xset dpms 300 300 300 &
-xset s 0 0 &
+setxkbmap -option caps:escape  # remap caps to escape
+xset r rate 200 30  # faster keyboard repeat
 
 # make some cache persistent, some in tmpfs
 rm -f ~/.cache && ln -s /tmp ~/.cache
@@ -29,6 +25,7 @@ ln -sf ~/.config/mimeapps.list ~/.local/share/applications/defaults.list
 
 
 # applications
+window_manager=awesome
 nitrogen --restore &
 lxpolkit &
 picom &
@@ -37,8 +34,7 @@ redshift &
 dunst &
 ~/.bin/workstats &
 start-pulseaudio-x11 &
-nohup bash -c "if $HOME/.bin/wait-for-host dropbox.com; then dropbox; fi" < /dev/null &> /dev/null &
-window_manager=awesome
+bash -c "if $HOME/.bin/wait-for-host dropbox.com; then dropbox; fi" &
 
 # parcellite simple mode: do not do anything except keep clipboard of closed applications (no history etc.)
 mkdir -p ~/.config/parcellite
@@ -57,23 +53,27 @@ parcellite --no-icon &
 
 if [[ $HOSTNAME == x1 || $HOSTNAME == dell ]]; then
     # dim after 1min, lock after 2min
-    xset s 60 60 &
+    xset s 60 60
     xss-lock -l -n ~/.bin/dim -- ~/.bin/lock &
 
     # turn off display after 5m
-    xset dpms 300 300 300 &
+    xset dpms 300 300 300
 fi
 
 if [[ $HOSTNAME == desk ]]; then
     # dim (n/a) after 2min, soft-lock (close keepass etc.) after 3min
-    xset s 180 &
+    xset s 180
     xss-lock -l -- ~/.bin/lock soft &
 
-    # turn off display after 5m
-    xset dpms 300 300 300 &
+    # turn off display after 30m
+    xset dpms 1800 1800 1800
 
-    numlockx &
+    numlockx on &
     pulseeffects --gapplication-service &
+
+    if ! mount | grep -q "root@srv1.home:/media/data"; then
+        bash -c "$HOME/.bin/wait-for-host srv1.home && sshfs root@srv1.home:/media/data /media/data -o reconnect -o BatchMode=yes -o allow_other" &
+    fi
 
     cat << 'EOF' | bash &
     set -e
@@ -88,10 +88,6 @@ if [[ $HOSTNAME == desk ]]; then
     pidof kodi-x11 || exo-open "/usr/share/applications/kodi.desktop"
     xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --class "kodi")" 6
 EOF
-
-    if ! mount | grep -q "root@srv1.home:/media/data"; then
-        bash -c "$HOME/.bin/wait-for-host srv1.home && sshfs root@srv1.home:/media/data /media/data -o reconnect -o BatchMode=yes -o allow_other" &
-    fi
 
 fi
 
