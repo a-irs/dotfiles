@@ -2,6 +2,7 @@
 
 # dependencies: pandoc texlive-core
 #   for xelatex + custom fonts: texlive-latexextra
+#
 # https://pandoc.org/MANUAL.html
 
 import sys
@@ -35,8 +36,8 @@ CONFIG = {
             '-V links-as-notes',
 
             '-V papersize=a4',
-            '-V geometry=top=1in,bottom=1in,left=1in,right=1in',  # Word 2007 style, see https://en.wikipedia.org/wiki/Margin_(typography)
-            '-V linestretch=1.25',
+            '-V geometry=top=3cm,bottom=3cm,left=2.5cm,right=2.5cm',  # tweaked Word 2007 style (2.5cm on any side)
+            '-V linestretch=1.2',
             '-V fontsize=11pt',  # default: 10
         ]
     },
