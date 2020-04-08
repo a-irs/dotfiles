@@ -80,17 +80,17 @@ hr {
   padding: 0;
 }
 
-p code {
+p code, a code {
     background-color: hsl(0,0%,96%);
     border-radius: 3px;
-    border: 1px solid #e7eaed;
+    border: 1px solid hsl(210, 14%, 92%);
     padding: 0 2px 0 2px;
 }
 
 pre {
     background-color: hsl(0,0%,96%);
     border-radius: 3px;
-    border: 1px solid #e7eaed;
+    border: 1px solid hsl(210, 14%, 92%);
     padding: 4px 8px 4px 8px;
 
     line-height: 1.55em;
