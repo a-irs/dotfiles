@@ -92,7 +92,7 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
 
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ini=dosini', 'ocaml', 'rust', 'css', 'c', 'cpp']
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ini=dosini', 'ocaml', 'rust', 'css', 'c', 'cpp', 'dockerfile']
 let g:markdown_syntax_conceal = 0
 let g:markdown_enable_mappings = 0
 let g:markdown_enable_spell_checking = 0
@@ -135,6 +135,8 @@ nnoremap <silent> <Leader>, :execute 's/^\(\s*[-+*]\?\s*\)\[ \]/\1[x]/'<cr>
 nnoremap <silent> <Leader>. :execute 's/^\(\s*[-+*]\?\s*\)\[x]/\1[ ]/'<cr>
 
 " surround with quotes/brackets
+nnoremap <leader>*         viw<esc>a*<esc>hbi*<esc>lel
+nnoremap <leader><leader>* viW<esc>a*<esc>hBi*<esc>lel
 nnoremap <leader>'         viw<esc>a'<esc>hbi'<esc>lel
 nnoremap <leader><leader>' viW<esc>a'<esc>hBi'<esc>lel
 nnoremap <leader>"         viw<esc>a"<esc>hbi"<esc>lel
