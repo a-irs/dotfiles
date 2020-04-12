@@ -9,17 +9,20 @@ import sys
 import subprocess
 import shlex
 import os
-import urllib.request
+import argparse
+import logging
 
 from typing import List
 
-# FIXME: how to automatically use these extensions when using markdown:?
+# FIXME: how to automatically use these extensions when using markdown as input?
 # '-f markdown+autolink_bare_uris',  # autolink URLs
 # '-f markdown+emoji',
 
 # replace "!include:<filename>" with content of file
 # much simpler than lua/python/haskell filter
 PREPROCESS = ["perl", "-ne", "s/^\\!include:(.+).*$/`cat $1`/e;print"]
+
+CONFIG_DEFAULT = 'sans'
 
 CONFIG = {
     'base': {
@@ -81,16 +84,6 @@ def get_style(name: str, dest_format: str) -> List[str]:
     return params
 
 
-def fetch(url: str, name: str) -> str:
-    local_dir = os.path.expanduser("~/.local/share")
-    file = "{}/{}".format(local_dir, name)
-
-    if not os.path.isfile(file):
-        urllib.request.urlretrieve(url, file)
-        print("downloaded {}".format(file))
-    return file
-
-
 def preprocess(file: str) -> str:
     dest = "processed." + file
 
@@ -104,29 +97,51 @@ def preprocess(file: str) -> str:
         fw.write(cmd.stderr)
         fw.flush()
 
+    logging.debug("preprocessed %s in %s", file, dest)
+
     return dest
 
-def main():
-    if len(sys.argv) < 4:
-        print("usage: pan <input> <output> <{}> [additional pandoc args]".format('|'.join(CONFIG)))
-        sys.exit(1)
 
-    source = sys.argv[1]
-    dest = sys.argv[2]
-    dest_format = os.path.splitext(dest)[1]
+def pandoc(input_file: str, output_file: str, style: str, args: List[str]) -> int:
+    output_ext = os.path.splitext(output_file)[1]
+    output_style = ' '.join(get_style(style, output_ext))
 
-    style = ' '.join(get_style(sys.argv[3], dest_format))
-    additional_args = ' '.join(sys.argv[4:])
-
-    preprocessed_source = preprocess(source)
+    preprocessed_input = preprocess(input_file)
 
     resource_path = ".:{}".format(os.path.expanduser("~/.local/share/pandoc"))
-    cmd = "pandoc -i '{}' -o '{}' --resource-path={} {} {}".format(preprocessed_source, dest, resource_path, style, additional_args)
-    proc = subprocess.Popen(shlex.split(cmd))
+    cmd = shlex.split(f"pandoc -i {preprocessed_input} -o {output_file} --resource-path={resource_path} " + output_style) + args
+
+    logging.debug("command line: %s", cmd)
+    proc = subprocess.Popen(cmd)
     proc.communicate()
 
-    os.unlink(preprocessed_source)
-    sys.exit(proc.returncode)
+    os.unlink(preprocessed_input)
+    return proc.returncode
+
+
+def main() -> None:
+    logging.basicConfig(format='%(funcName)s: %(message)s')
+
+    # argument parsing
+    parser = argparse.ArgumentParser(description="wrapper for pandoc")
+    parser.add_argument('input', help="input file")
+    parser.add_argument('output', nargs='?', help="output file")
+    parser.add_argument('style', nargs='?', help=" | ".join(CONFIG), default=CONFIG_DEFAULT, choices=CONFIG)
+    parser.add_argument('-v', '--verbose', action='store_true', default=False)
+    args, additional_args = parser.parse_known_args()
+
+    if args.verbose:
+        logging.getLogger().setLevel(logging.DEBUG)
+
+    if not args.output:
+        args.output = os.path.splitext(args.input)[0] + ".html"
+
+    logging.debug("internal arguments: %s", vars(args))
+    logging.debug("pandoc arguments: %s", additional_args)
+
+    # pandoc
+    rc = pandoc(args.input, args.output, args.style, additional_args)
+    parser.exit(status=rc)
 
 
 if __name__ == "__main__":
