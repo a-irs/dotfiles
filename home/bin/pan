@@ -98,6 +98,10 @@ def preprocess(file: str) -> str:
 
     with open(dest, 'wb') as fw:
         fw.write(cmd.stdout)
+        if cmd.stderr:
+            print("stderr from preprocessor: {}".format(cmd.stderr.decode()))
+            sys.exit(1)
+        fw.write(cmd.stderr)
         fw.flush()
 
     return dest
