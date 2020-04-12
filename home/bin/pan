@@ -125,16 +125,21 @@ def main() -> None:
     # argument parsing
     parser = argparse.ArgumentParser(description="wrapper for pandoc")
     parser.add_argument('input', help="input file")
-    parser.add_argument('output', nargs='?', help="output file")
-    parser.add_argument('style', nargs='?', help=" | ".join(CONFIG), default=CONFIG_DEFAULT, choices=CONFIG)
+    parser.add_argument('output', nargs='?', help="output filename or pandoc-supported file type")
+    parser.add_argument('style', metavar='style', nargs='?', help=" | ".join(CONFIG), default=CONFIG_DEFAULT, choices=CONFIG.keys())
     parser.add_argument('-v', '--verbose', action='store_true', default=False)
     args, additional_args = parser.parse_known_args()
 
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
+    # by default, write to <filename>.html
     if not args.output:
         args.output = os.path.splitext(args.input)[0] + ".html"
+
+    # when only ext is chosen, set filename automatically (<filename>.<ext>)
+    if not os.path.splitext(args.output)[1]:
+        args.output = os.path.splitext(args.input)[0] + "." + args.output
 
     logging.debug("internal arguments: %s", vars(args))
     logging.debug("pandoc arguments: %s", additional_args)
