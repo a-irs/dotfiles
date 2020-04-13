@@ -5,12 +5,12 @@ body {
   padding: 1.15rem;
   background: hsl(0, 0%, 100%);
 
-  line-height: 1.65em;
+  line-height: 1.6em;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   max-width: 72ch;
-  font-size: 1em;
+  font-size: 0.9em;
 
-  /* wrap long words instead of writing outside container*/
+  /* wrap long words instead of writing outside container */
   overflow-wrap: break-word;
 }
 
@@ -120,7 +120,6 @@ sub {
 }
 
 ul, ol {
-  line-height: 1.75em;
   padding: 0 0 0 1.5em;
 }
 

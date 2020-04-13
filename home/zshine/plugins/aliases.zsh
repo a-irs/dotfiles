@@ -3,6 +3,16 @@
 alias et="emacsclient -c --alternate-editor='' -t"
 alias e="emacsclient -c --alternate-editor='' -n"
 
+kali() {
+    local d=~/doc/ctf
+    if [[ "$1" == build ]]; then
+        shift
+        (cd "$d" && docker build "$@" -t kali .)
+        shift 999
+    fi
+    docker run -h kali -it --rm -w /work -v "$d:/work" "$@" kali
+}
+
 tmpdir() {
     local t=$(mktemp -d)
     trap "rm -rfv "$t"" EXIT
