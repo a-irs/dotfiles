@@ -8,7 +8,7 @@ kali() {
     if [[ "$1" == build ]]; then
         shift
         (cd "$d" && docker build "$@" -t kali .)
-        shift 999
+        shift $#
     fi
     docker run -h kali -it --rm -w /work -v "$d:/work" "$@" kali
 }

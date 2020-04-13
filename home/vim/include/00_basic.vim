@@ -84,7 +84,7 @@ let g:netrw_winsize=25  " 25% width
 let g:netrw_altv=1  " show on left side
 
 autocmd BufNewFile,BufFilePre,BufRead Jenkinsfile set filetype=groovy
-autocmd BufNewFile,BufFilePre,BufRead Dockerfile* set filetype=Dockerfile
+autocmd BufNewFile,BufFilePre,BufRead Dockerfile* set filetype=dockerfile
 autocmd BufNewFile,BufFilePre,BufRead dircolors* set filetype=dircolors
 autocmd BufNewFile,BufFilePre,BufRead */.dot/setup.conf set filetype=dosini
 
