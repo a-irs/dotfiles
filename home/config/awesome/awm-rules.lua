@@ -40,6 +40,11 @@ awful.rules.rules = {
         }, properties = { floating = true }
     },
 
+    { rule_any =
+        { class = { "firefox", "Chromium" } },
+        properties = { maximized = false, maximized_vertical = false, maximized_horizontal = false, floating = false }
+    },
+
 }
 
 local function make_name(existing_clients, client, wanted_name)

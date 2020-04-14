@@ -3,12 +3,21 @@
 alias et="emacsclient -c --alternate-editor='' -t"
 alias e="emacsclient -c --alternate-editor='' -n"
 
+# open e.g. html file in temporary browser in app mode
+web() {
+    local t f
+    f=$1
+    t=$(mktemp -d)
+
+    bash -c "chromium --user-data-dir=\"$t\" --app=\"file://\$(readlink -f \"$f\")\" &> /dev/null; rm -rf \"$t\"" &
+}
+
 kali() {
     local d=~/doc/ctf
     if [[ "$1" == build ]]; then
         shift
         (cd "$d" && docker build "$@" -t kali .)
-        shift $#
+        return
     fi
     docker run -h kali -it --rm -w /work -v "$d:/work" "$@" kali
 }

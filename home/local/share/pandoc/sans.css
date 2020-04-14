@@ -63,10 +63,11 @@ h4 {
 blockquote {
   background-color: hsla(210, 53%, 48%, 10%);
   color: hsl(0, 0%, 25%);
-  margin: 0;
-  padding-left: 1.55em;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 1.5em;
+  padding-top: 1px;
+  padding-bottom: 1px;
   border-left: 0.5em hsla(210, 53%, 48%, 15%) solid;
 }
 
