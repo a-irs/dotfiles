@@ -14,12 +14,13 @@ web() {
 
 kali() {
     local d=~/doc/ctf
+    touch "$d/Dockerfile.history"
     if [[ "$1" == build ]]; then
         shift
         (cd "$d" && docker build "$@" -t kali .)
         return
     fi
-    docker run -h kali -it --rm -w /work -v "$d:/work" "$@" kali
+    docker run -h kali -it --rm -w /work -v "$d:/work" -v "$d/Dockerfile.history:/root/.bash_history" "$@" kali
 }
 
 tmpdir() {

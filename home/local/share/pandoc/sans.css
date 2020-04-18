@@ -89,7 +89,6 @@ hr {
 }
 
 pre {
-    font-size: 0.95em;
     background-color: hsl(0,0%,96%);
     border-radius: 3px;
     border: 1px solid hsl(210, 14%, 92%);

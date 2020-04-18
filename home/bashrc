@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
+HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
 HISTSIZE=100000
 HISTFILESIZE=100000
 HISTCONTROL=ignoreboth:erasedups  # don't put duplicate lines or lines starting with whitespace in history
-shopt -s globstar 2> /dev/null  # ** to glob recursive
 shopt -s histappend  # append history instead of overwrite
+shopt -s cmdhist  # store multiline commands in a single entry
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"  # write history immediately
+
+shopt -s globstar 2> /dev/null  # ** to glob recursive
 
 is_cmd() { command -v "$1" > /dev/null 2>&1; }
 
