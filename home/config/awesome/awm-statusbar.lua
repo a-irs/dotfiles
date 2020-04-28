@@ -128,7 +128,7 @@ musicwidget_wrap = bg_wrap(musicwidget, theme.widget_music_bg, 0, 0)
 pulsewidget = lain.widget.pulse({
     timeout = 3,
     settings = function()
-        local limit = 70
+        local limit = 80
         if is_mobile then
             limit = 120
         end
