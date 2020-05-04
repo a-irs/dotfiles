@@ -27,7 +27,7 @@ awful.rules.rules = {
       callback = awful.client.setslave },
 
     { rule_any = {
-        class = { "mpv", "Emacs" }
+        class = { "mpv", "Emacs", "Solaar" }
     },
         properties = { size_hints_honor = false }
     },
