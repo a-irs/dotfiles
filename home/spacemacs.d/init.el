@@ -117,7 +117,7 @@ This function should only modify configuration layer settings."
      (org :packages (not org-projective org-journal org-brain org-present gnuplot))
      git
 
-     ;; https://github.com/syl20bnr/spacemacs/tree/develop/layers/%2Bspacemacs/spacemacs-layouts
+     ;; https://github.com/syl20bnr/spacemacs/tree/develop/layers/%2Bsource-control/version-control
      (version-control :variables
                       version-control-diff-tool 'diff-hl
                       version-control-global-margin t
@@ -142,6 +142,7 @@ This function should only modify configuration layer settings."
       ;; nord-theme
 
       dockerfile-mode
+      centaur-tabs
     )
 
    ;; A list of packages that cannot be updated.
@@ -549,6 +550,10 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
+  ;; startup window size
+  (add-to-list 'default-frame-alist '(width . 140))
+  (add-to-list 'default-frame-alist '(height . 40))
+
   ;; imitates vim's whichwrap to cross newlines with left/right
   (setq evil-cross-lines t)
 
@@ -593,14 +598,8 @@ before packages are loaded."
   (setq org-bullets-bullet-list '("●" "○" "•" "◦"))
   (setq org-startup-folded nil)
 
-
   ;; disable mouse mode in terminal
   (xterm-mouse-mode -1)
-
-  ;; startup window size
-  (add-to-list 'default-frame-alist '(width . 180))
-  (add-to-list 'default-frame-alist '(height . 60))
-
 
   ;; fringe only half sized
   (fringe-mode '(4 . 4))
@@ -612,11 +611,40 @@ before packages are loaded."
   (setq x-gtk-use-system-tooltips nil)
 
   ;; distraction-free mode
-  (spacemacs/set-leader-keys "ESC" 'writeroom-mode)
+  (spacemacs/set-leader-keys "RET" 'writeroom-mode)
   (spacemacs/set-leader-keys "<escape>" 'writeroom-mode)
   (setq writeroom-width 0.7)
   (setq writeroom-fullscreen-effect nil)
   (setq writeroom-fringes-outside-margins nil)
+
+
+  (setq centaur-tabs-style "bar")
+  (spacemacs/set-leader-keys "<right>" 'centaur-tabs-forward)
+  (spacemacs/set-leader-keys "<left>" 'centaur-tabs-backward)
+  (setq centaur-tabs-set-bar 'over)
+  (setq centaur-tabs-set-close-button nil)
+  (setq centaur-tabs-set-modified-marker t)
+  (setq centaur-tabs-modified-marker "▪")
+  (centaur-tabs-mode t)
+  (defun centaur-tabs-buffer-groups ()
+    "Return the list of group names the current buffer belongs to.
+This function is a custom function for tabbar-mode's tabbar-buffer-groups.
+This function group all buffers into 3 groups:
+Those Dired, those user buffer, and those emacs buffer.
+Emacs buffer are those starting with “*”."
+    (list
+     (cond
+      ((string-equal "*" (substring (buffer-name) 0 1))
+       "internal"
+       )
+      ((eq major-mode 'dired-mode)
+       "dired"
+       )
+      (t
+       "user"
+       )
+      ))) 
+
 
   ;; scale font with +/-
   (global-set-key (kbd "C-+") 'text-scale-increase)
