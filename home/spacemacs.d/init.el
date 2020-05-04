@@ -68,7 +68,7 @@ This function should only modify configuration layer settings."
      spacemacs-org
      (spacemacs-purpose :packages (not eyebrowse))
      (spacemacs-modeline :packages (anzu doom-modeline))
-     spacemacs-layouts
+     (spacemacs-layouts :packages (not eyebrowse))
      spacemacs-project
      spacemacs-editing  ; avy jump
      spacemacs-misc  ; dumb-jump
@@ -116,6 +116,8 @@ This function should only modify configuration layer settings."
 
      (org :packages (not org-projective org-journal org-brain org-present gnuplot))
      git
+
+     ;; https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Bsource-control/version-control
      (version-control :variables
                       version-control-diff-tool 'diff-hl
                       version-control-global-margin t
@@ -583,8 +585,12 @@ before packages are loaded."
   (setq org-startup-folded nil)
 
 
-
+  ;; disable mouse mode in terminal
   (xterm-mouse-mode -1)
+
+  ;; startup window size
+  (add-to-list 'default-frame-alist '(width . 180))
+  (add-to-list 'default-frame-alist '(height . 60))
 
 
   ;; fringe only half sized
@@ -593,7 +599,7 @@ before packages are loaded."
   ;; highlight git changes on the fly (without saving)
   (diff-hl-flydiff-mode '(:global t))
 
-  ;; use emacs builtin tooltips/popups beacause they scale with dpi
+  ;; use emacs builtin tooltips/popups (beacause they scale with dpi)
   (setq x-gtk-use-system-tooltips nil)
 
   ;; distraction-free mode
@@ -627,6 +633,7 @@ before packages are loaded."
   ;; comment toggle
   (evil-leader/set-key "#" 'evilnc-comment-or-uncomment-lines)
 
+  ;; selected string is shown everywhere in buffer
   (setq symbol-overlay-idle-time 0.1)
   (add-hook 'prog-mode-hook #'symbol-overlay-mode)
 
