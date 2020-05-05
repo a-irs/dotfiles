@@ -559,16 +559,6 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   ;; add more line height (for iosevka font!)
   (setq-default line-spacing 0.1)
-
-  ; stop org-level headers from increasing in height
-  (setq theming-modifications
-        '((dracula
-           (org-level-1 :height 1.0)
-           (org-level-2 :height 1.0)
-           (org-level-3 :height 1.0)
-           (org-level-4 :height 1.0)
-           (org-level-5 :height 1.0))))
-
   )
 
 (defun dotspacemacs/user-load ()
@@ -654,6 +644,30 @@ Emacs buffer are those starting with “*”."
   (setq scroll-margin 1)
   (setq smooth-scroll-margin 1)
 
+  (defun my/org-mode-hook ()
+    "Stop the org-level headers from increasing in height relative to the other text."
+    (dolist (face '(org-level-1
+                    org-level-2
+                    org-level-3
+                    org-level-4
+                    org-level-5
+                    org-level-6
+                    org-level-7
+                    org-level-8))
+      (set-face-attribute face nil :height 1.0)))
+  (add-hook 'org-mode-hook 'my/org-mode-hook)
+
+  (defun my/markdown-mode-hook ()
+    "Stop the markdown-level headers from increasing in height relative to the other text."
+    (dolist (face '(markdown-header-face-1
+                    markdown-header-face-2
+                    markdown-header-face-3
+                    markdown-header-face-4
+                    markdown-header-face-5
+                    markdown-header-face-6))
+      (set-face-attribute face nil :height 1.0)))
+  (add-hook 'markdown-mode-hook 'my/markdown-mode-hook)
+
 
   ;; --- syntax checking
 
@@ -687,3 +701,22 @@ Emacs buffer are those starting with “*”."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(centaur-tabs-modified-marker-selected ((t (:inherit centaur-tabs-selected :foreground "cyan1"))))
+ '(symbol-overlay-default-face ((t (:background "dark slate gray")))))
+)
