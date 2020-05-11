@@ -87,8 +87,6 @@ This function should only modify configuration layer settings."
      html
      systemd
 
-     theming
-
      ;; checkers
      syntax-checking
 
@@ -295,7 +293,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font or prioritized list of fonts.
    dotspacemacs-default-font '(
-                               ("Input")
+                               ("Input" :size 22)
                                ("Meslo LG M DZ for Powerline")
                                )
 
@@ -557,8 +555,6 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;; imitates vim's whichwrap to cross newlines with left/right
   (setq evil-cross-lines t)
 
-  ;; add more line height (for iosevka font!)
-  (setq-default line-spacing 0.1)
   )
 
 (defun dotspacemacs/user-load ()
@@ -634,10 +630,10 @@ Emacs buffer are those starting with “*”."
       (t
        "user"
        )
-      ))) 
+      )))
 
 
-  ;; scale font with +/-
+  ;; scale font bindings
   (global-set-key (kbd "C-+") 'text-scale-increase)
   (global-set-key (kbd "C--") 'text-scale-decrease)
 
@@ -698,6 +694,13 @@ Emacs buffer are those starting with “*”."
   (setq doom-modeline-icon nil)
   (setq doom-modeline-buffer-encoding nil)
   (setq doom-modeline-env-version nil)
+
+  (setq undo-tree-auto-save-history t
+        undo-tree-history-directory-alist
+        `(("." . ,(concat spacemacs-cache-directory "undo"))))
+  (unless (file-exists-p (concat spacemacs-cache-directory "undo"))
+    (make-directory (concat spacemacs-cache-directory "undo")))
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
