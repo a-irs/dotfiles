@@ -724,5 +724,5 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(centaur-tabs-modified-marker-selected ((t (:inherit centaur-tabs-selected :foreground "cyan1"))))
- '(symbol-overlay-default-face ((t (:background "dark slate gray")))))
+ '(symbol-overlay-default-face ((t (:background "gray25")))))
 )
