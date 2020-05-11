@@ -10,7 +10,7 @@ else
     xpm_folder                      = gears.filesystem.get_configuration_dir() .. "/xpm_100"
 end
 
-theme.statusbar_height              = dpi(18)
+theme.statusbar_height              = dpi(22)
 
 -- FG, BG COLORS
 

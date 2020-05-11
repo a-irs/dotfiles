@@ -102,9 +102,11 @@ This function should only modify configuration layer settings."
 
      ;; emacs
      (shell :variables shell-default-term-shell "/bin/bash")
+
+     ;; https://github.com/syl20bnr/spacemacs/tree/develop/layers/%2Bthemes/colors
      (colors :variables
-             colors-default-rainbow-identifiers-sat 25
-             colors-default-rainbow-identifiers-light 75
+             colors-default-rainbow-identifiers-sat 30
+             colors-default-rainbow-identifiers-light 85
              colors-colorize-identifiers 'variables
              )
 
