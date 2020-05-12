@@ -208,7 +208,6 @@ local tasklist_buttons = awful.util.table.join(
 end))
 
 awful.screen.connect_for_each_screen(function(s)
-    s.mywibox = awful.wibox({ position = "top", screen = s, height = theme.statusbar_height })
     s.myprompt = awful.widget.prompt()
     s.myprompt_wrap = bg_wrap(s.myprompt, nil, theme.statusbar_margin, theme.statusbar_margin)
 
@@ -263,5 +262,8 @@ awful.screen.connect_for_each_screen(function(s)
     layout:set_middle(layout2)
     layout:set_right(layout3)
 
+    s.margin = awful.wibar({ position = "top", screen = s, height = 1, bg = theme.statusbar_top_pixel })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = theme.statusbar_height })
+    s.margin = awful.wibar({ position = "top", screen = s, height = 1, bg = theme.statusbar_bottom_pixel })
     s.mywibox:set_widget(layout)
 end)

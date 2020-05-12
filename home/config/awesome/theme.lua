@@ -10,7 +10,10 @@ else
     xpm_folder                      = gears.filesystem.get_configuration_dir() .. "/xpm_100"
 end
 
-theme.statusbar_height              = dpi(22)
+theme.statusbar_height              = dpi(20)
+theme.statusbar_top_pixel           = "#586779"
+theme.statusbar_bottom_pixel        = "#3A4859"
+
 
 -- FG, BG COLORS
 
@@ -27,6 +30,7 @@ theme.border_normal                 = "#3f405f"
 theme.border_focus                  = "#d9304f"
 
 theme.useless_gap                   = 0
+
 
 -- NOTIFICATIONS (NAUGHTY)
 
@@ -50,8 +54,6 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 
 theme.font                          = "cure.se 8"
 theme.taglist_font                  = "cure.se 6"
-theme.show_tag_names                = true
--- theme.taglist_squares_unsel         = xpm_folder .. "/indicator.xpm"
 theme.taglist_empty_tag             = "\28"
 theme.taglist_nonempty_tag          = "\27"
 
@@ -67,7 +69,7 @@ theme.tasklist_fg                   = theme.fg_focus
 theme.tasklist_bg                   = theme.bg_normal
 theme.tasklist_disable_icon         = true
 
-theme.statusbar_margin              = dpi(5)
+theme.statusbar_margin              = dpi(8)
 theme.bg_systray                    = theme.bg_normal
 theme.systray_icon_spacing          = dpi(4)
 
@@ -90,7 +92,7 @@ theme.widget_pulse_fg_mute          = "#aaaaaa"
 
 -- TITLEBAR
 
-theme.titlebar_height                          = dpi(20)
+theme.titlebar_height                          = dpi(22)
 theme.titlebar_font                            = "Sans Medium 8"
 
 theme.titlebar_fg_normal                       = theme.fg_normal
