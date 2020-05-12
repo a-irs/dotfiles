@@ -432,6 +432,8 @@ fonttest() {
         echo -n "$family | "
         fc-match "$family"
     done | column -t -s '|' | column -t -s ':'
+    echo ""
+    echo "🥯 🦆 🦉 🥓 🦄 🦀 🖕 🍣 🍤 🍥 🍡 🥃 🥞 🤯 🤪 🤬 🤮 🤫 🤭 🧐 🐕 🦖"
 }
 
 if [[ "$commands[man]" ]]; then
