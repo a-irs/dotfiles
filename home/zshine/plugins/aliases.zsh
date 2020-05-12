@@ -342,7 +342,7 @@ if [[ "$commands[git]" ]]; then
     alias gp="git push"
     alias gs="git s"
     alias gd="git d"
-    alias ge="git ls-files -mo --exclude-standard -z | fzf --multi --preview='show {}' --exit-0 --read0 --print0 --height=70% --reverse | xargs --no-run-if-empty -0 -o vim -o"
+    alias ge="git ls-files -mo --exclude-standard -z | fzf --multi --preview='show {}' --exit-0 --read0 --print0 --height=70% --reverse --select-1 | xargs --no-run-if-empty -0 -o vim -o"
 
     clone() {
         git clone --depth 1 "$1" && cd $(basename ${1//.git/})

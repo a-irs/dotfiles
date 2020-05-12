@@ -25,9 +25,9 @@ theme.fg_normal                     = "#aaaaaa"
 theme.fg_focus                      = "#ffffff"
 theme.fg_urgent                     = "#ffffff"
 
-theme.border_width                  = dpi(0)
-theme.border_normal                 = "#3f405f"
-theme.border_focus                  = "#d9304f"
+theme.border_width                  = 1
+theme.border_focus                  = theme.statusbar_bottom_pixel
+theme.border_normal                 = theme.statusbar_bottom_pixel
 
 theme.useless_gap                   = 0
 
