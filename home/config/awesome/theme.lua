@@ -4,12 +4,6 @@ theme                               = {}
 
 theme.master_width_factor           = 0.62
 
-if is_high_dpi then
-    xpm_folder                      = gears.filesystem.get_configuration_dir() .. "/xpm_175"
-else
-    xpm_folder                      = gears.filesystem.get_configuration_dir() .. "/xpm_100"
-end
-
 theme.statusbar_height              = dpi(20)
 theme.statusbar_top_pixel           = "#586779"
 theme.statusbar_bottom_pixel        = "#3A4859"
@@ -52,17 +46,10 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 
 -- WIDGETS
 
-theme.font                          = "cure.se 8"
-theme.taglist_font                  = "cure.se 6"
-theme.taglist_empty_tag             = "\28"
-theme.taglist_nonempty_tag          = "\27"
-
-if is_high_dpi then
-    theme.font = "Input Bold 7"
-    theme.taglist_font = "Input Bold 7"
-    theme.taglist_empty_tag = "☐"  -- ○
-    theme.taglist_nonempty_tag = "■"  -- ●
-end
+theme.font = "Input Bold 7"
+theme.taglist_font = "Input Bold 7"
+theme.taglist_empty_tag = "☐"  -- ○
+theme.taglist_nonempty_tag = "■"  -- ●
 
 theme.tasklist_font                 = theme.font
 theme.tasklist_fg                   = theme.fg_focus
@@ -100,19 +87,20 @@ theme.titlebar_fg_focus                        = theme.fg_focus
 theme.titlebar_bg_normal                       = theme.bg_normal
 theme.titlebar_bg_focus                        = theme.bg_normal
 
-theme.titlebar_close_button_focus              = xpm_folder .. "/titlebar/close.xpm"
-theme.titlebar_close_button_normal             = xpm_folder .. "/titlebar/unfocused_inactive.xpm"
-theme.titlebar_ontop_button_focus_inactive     = xpm_folder .. "/titlebar/ontop_inactive.xpm"
-theme.titlebar_ontop_button_focus_active       = xpm_folder .. "/titlebar/ontop_active.xpm"
-theme.titlebar_ontop_button_normal_inactive    = xpm_folder .. "/titlebar/ontop_inactive.xpm"
-theme.titlebar_ontop_button_normal_active      = xpm_folder .. "/titlebar/ontop_unfocused.xpm"
-theme.titlebar_sticky_button_focus_inactive    = xpm_folder .. "/titlebar/sticky_inactive.xpm"
-theme.titlebar_sticky_button_focus_active      = xpm_folder .. "/titlebar/sticky_active.xpm"
-theme.titlebar_sticky_button_normal_inactive   = xpm_folder .. "/titlebar/unfocused_inactive.xpm"
-theme.titlebar_sticky_button_normal_active     = xpm_folder .. "/titlebar/unfocused_active.xpm"
-theme.titlebar_floating_button_focus_inactive  = xpm_folder .. "/titlebar/floating_inactive.xpm"
-theme.titlebar_floating_button_focus_active    = xpm_folder .. "/titlebar/floating_active.xpm"
-theme.titlebar_floating_button_normal_inactive = xpm_folder .. "/titlebar/unfocused_inactive.xpm"
-theme.titlebar_floating_button_normal_active   = xpm_folder .. "/titlebar/unfocused_active.xpm"
+resource_folder                                = gears.filesystem.get_configuration_dir() .. "/resource"
+theme.titlebar_close_button_focus              = resource_folder .. "/titlebar/close.xpm"
+theme.titlebar_close_button_normal             = resource_folder .. "/titlebar/unfocused_inactive.xpm"
+theme.titlebar_ontop_button_focus_inactive     = resource_folder .. "/titlebar/ontop_inactive.xpm"
+theme.titlebar_ontop_button_focus_active       = resource_folder .. "/titlebar/ontop_active.xpm"
+theme.titlebar_ontop_button_normal_inactive    = resource_folder .. "/titlebar/ontop_inactive.xpm"
+theme.titlebar_ontop_button_normal_active      = resource_folder .. "/titlebar/ontop_unfocused.xpm"
+theme.titlebar_sticky_button_focus_inactive    = resource_folder .. "/titlebar/sticky_inactive.xpm"
+theme.titlebar_sticky_button_focus_active      = resource_folder .. "/titlebar/sticky_active.xpm"
+theme.titlebar_sticky_button_normal_inactive   = resource_folder .. "/titlebar/unfocused_inactive.xpm"
+theme.titlebar_sticky_button_normal_active     = resource_folder .. "/titlebar/unfocused_active.xpm"
+theme.titlebar_floating_button_focus_inactive  = resource_folder .. "/titlebar/floating_inactive.xpm"
+theme.titlebar_floating_button_focus_active    = resource_folder .. "/titlebar/floating_active.xpm"
+theme.titlebar_floating_button_normal_inactive = resource_folder .. "/titlebar/unfocused_inactive.xpm"
+theme.titlebar_floating_button_normal_active   = resource_folder .. "/titlebar/unfocused_active.xpm"
 
 return theme

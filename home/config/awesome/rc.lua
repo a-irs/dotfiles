@@ -15,7 +15,6 @@ awful.spawn("nitrogen --restore", false)
 
 hostname        = awesome.hostname
 is_mobile       = hostname == "dell" or hostname == "x1"
-is_high_dpi     = xresources.get_dpi() >= 100
 
 function dpi(value)
     return math.floor(xresources.apply_dpi(value) + 0.5)

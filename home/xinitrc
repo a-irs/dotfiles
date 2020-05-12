@@ -61,7 +61,7 @@ if [[ $HOSTNAME == x1 || $HOSTNAME == dell ]]; then
 fi
 
 if [[ $HOSTNAME == desk ]]; then
-    # dim (n/a) after 2min, soft-lock (close keepass etc.) after 3min
+    # soft-lock (close keepass etc.) after 3min
     xset s 180
     xss-lock -l -- ~/.bin/lock soft &
 
