@@ -3,8 +3,8 @@ audible_bell = true
 scrollback_lines = -1
 
 # INPUT
-# font = Input 8
-font = Input 9
+# font = InputMonoCondensed 8
+font = InputMonoCondensed 9
 
 # JetBrains Mono
 # font = JetBrains Mono Medium 8

@@ -1,7 +1,7 @@
 # rofi config
 
 rofi.show-icons: true
-rofi.font: Input 12
+rofi.font: InputMonoCondensed 12
 rofi.modi: drun,run
 rofi.width: -50
 rofi.lines: 5

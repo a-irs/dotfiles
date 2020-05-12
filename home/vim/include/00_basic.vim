@@ -23,7 +23,7 @@ set expandtab
 set updatetime=150
 
 " gvim
-set guifont=Input\ 9
+set guifont=InputMonoCondensed\ 9
 " set guioptions-=m  " remove menu bar
 set guioptions-=T  " remove toolbar
 set guioptions-=r  " remove right scroll bar

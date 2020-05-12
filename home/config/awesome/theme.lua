@@ -46,8 +46,8 @@ theme.naughty_critical_border_color = theme.naughty_critical_bg
 
 -- WIDGETS
 
-theme.font = "Input Bold 7"
-theme.taglist_font = "Input Bold 7"
+theme.font = "InputMonoCondensed Bold 7"
+theme.taglist_font = "InputMonoCondensed Bold 7"
 theme.taglist_empty_tag = "☐"  -- ○
 theme.taglist_nonempty_tag = "■"  -- ●
 

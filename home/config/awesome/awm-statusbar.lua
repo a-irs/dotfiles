@@ -178,7 +178,7 @@ timewidget = wibox.widget.textclock(markup.bold(markup(theme.widget_time_fg, '%H
 lain.widget.cal({
     attach_to = { timewidget, datewidget },
     notification_preset = {
-        font = "Input 8",
+        font = "InputMonoCondensed 8",
         fg   = theme.fg_focus,
         bg   = theme.bg_focus
     }

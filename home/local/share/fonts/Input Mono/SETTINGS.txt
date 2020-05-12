@@ -1,1 +1,0 @@
-./inputCustomize.py InputMonoCondensed/InputMonoCondensed-Regular.ttf InputMonoCondensed/InputMonoCondensed-Italic.ttf InputMonoCondensed/InputMonoCondensed-Medium.ttf InputMonoCondensed/InputMonoCondensed-Italic.ttf --lineHeight=1.4 --g=ss --l=serifs_round --zero=slash --asterisk=height

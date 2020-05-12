@@ -89,7 +89,7 @@
 		"classes",
 		".texpadtmp"
 	],
-	"font_face": "Input",
+	"font_face": "InputMonoCondensed",
 	"font_size": 9,
 	"gutter": true,
 	"highlight_line": true,
