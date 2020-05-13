@@ -37,12 +37,8 @@ awful.rules.rules = {
     { rule_any = {
         class = { "Arandr", "Gpick", "pinentry", "Lampe-gtk", "KeePassXC" },
         role = { "AlarmWindow", "pop-up" }
-        }, properties = { floating = true }
     },
-
-    { rule_any =
-        { class = { "firefox", "Chromium" } },
-        properties = { maximized = false, maximized_vertical = false, maximized_horizontal = false, floating = false }
+        properties = { floating = true }
     },
 
 }
@@ -50,6 +46,8 @@ awful.rules.rules = {
 local function make_name(existing_clients, client, wanted_name)
     if client.minimized then
         wanted_name = "[" .. wanted_name .. "]"
+    elseif client.floating then
+        wanted_name = "(" .. wanted_name .. ")"
     elseif client.fullscreen then
         wanted_name = wanted_name .. "^"
     end
@@ -68,16 +66,13 @@ end
 local function dynamic_tagging()
     awful.screen.connect_for_each_screen(function(s)
         for _, t in ipairs(awful.tag.gettags(s)) do
-            append = ""
             if is_empty(t) then
-                t.name = " " .. theme.taglist_empty_tag .. " " .. append
+                t.name = " " .. theme.taglist_empty_tag .. " "
             else
                 local name = ""
                 for _, c in ipairs(t:clients()) do
                     if c.name and string.find(c.name, '(Private Browsing)') then
                         name = make_name(name, c, "web[*]")
-                    elseif c.name and c.name == "Grafana - dash" then
-                        name = "dashboard"
                     elseif c.name and string.find(c.name, 'ssh ') then
                         name = make_name(name, c, "ssh")
                     elseif c.class == "firefox" or c.class == "Firefox" or c.class == "Chrome" or c.class == "Chromium" then
@@ -116,7 +111,7 @@ local function dynamic_tagging()
                         end
                     end
                 end
-                t.name = " " .. theme.taglist_nonempty_tag .. " " .. name .. " " .. append
+                t.name = " " .. theme.taglist_nonempty_tag .. " " .. name .. " "
             end
         end
     end)
@@ -197,21 +192,21 @@ client.connect_signal("unmanage", function(c)
     end
 
     -- return to last tag and reset settings when last window is closed
-    if is_empty(awful.tag.selected()) then
-        awful.tag.setmwfact(0.5)
+    selected_tag = awful.screen.focused().selected_tag
+    if is_empty(selected_tag) then
+        awful.tag.setmwfact(theme.master_width_factor)
         awful.tag.setnmaster(1)
         awful.tag.setncol(1)
-        awful.tag.history.restore()
 
         -- return to last non-empty tag
-        i = 2
-        while is_empty(awful.tag.selected()) and i <= 4 do
+        i = 1
+        while is_empty(awful.screen.focused().selected_tag) and i <= 10 do
             awful.tag.history.restore(nil, i)
             i = i + 1
         end
 
         -- if still empty, return to first
-        if is_empty(awful.tag.selected()) then
+        if is_empty(awful.screen.focused().selected_tag) then
             local tag = awful.tag.gettags(awful.screen.focused())[1]
             if tag then awful.tag.viewonly(tag) end
         end

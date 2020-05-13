@@ -6,6 +6,7 @@ local gears      = require 'gears'
 
 local win = "Mod4"
 local alt = "Mod1"
+local ctrl = "Ctrl"
 
 local function tag_view_nonempty(direction)
     local s = awful.screen.focused()
@@ -152,6 +153,12 @@ globalkeys = awful.util.table.join(
     awful.key({ alt }, "s",          function() run_or_raise("emacsclient -c -a=''", "Emacs") end),
     awful.key({ alt }, "l",          function() run_script("toggle-picom") end),
     awful.key({ alt }, "d",          function() run_script("dpitog") end),
+    awful.key({ alt, ctrl }, "1",    function() run_script("dpitog 1") end),
+    awful.key({ alt, ctrl }, "2",    function() run_script("dpitog 2") end),
+    awful.key({ alt, ctrl }, "3",    function() run_script("dpitog 3") end),
+    awful.key({ alt, ctrl }, "4",    function() run_script("dpitog 4") end),
+    awful.key({ alt, ctrl }, "5",    function() run_script("dpitog 5") end),
+    awful.key({ alt, ctrl }, "6",    function() run_script("dpitog 6") end),
     awful.key({ alt }, "o",          function() run_gui_script("mpv-clipboard.sh") end),
 
     -- displays
@@ -174,19 +181,15 @@ globalkeys = awful.util.table.join(
     awful.key({"Shift"}, "XF86MonBrightnessDown", function() run_script("brightness --") end),
     awful.key({"Ctrl"},  "XF86MonBrightnessDown", function() run_script("brightness 1") end),
 
-    awful.key({}, "XF86AudioRaiseVolume", volume.increase),
+    awful.key({},        "XF86AudioRaiseVolume", volume.increase),
     awful.key({"Shift"}, "XF86AudioRaiseVolume", volume.increase_10),
-    awful.key({}, "XF86AudioLowerVolume", volume.decrease),
+    awful.key({},        "XF86AudioLowerVolume", volume.decrease),
     awful.key({"Shift"}, "XF86AudioLowerVolume", volume.decrease_10),
-    awful.key({}, "XF86AudioMute",        volume.toggle),
+    awful.key({},        "XF86AudioMute",        volume.toggle),
 
     awful.key({}, "XF86AudioPlay",   function() audio("toggle") end),
     awful.key({}, "XF86AudioPrev",   function() audio("prev") end),
     awful.key({}, "XF86AudioNext",   function() audio("next") end),
-
-    awful.key({ alt }, "y",          function() audio("toggle") end),
-    awful.key({ alt }, "<",          function() audio("next") end),
-    awful.key({ alt, "Shift" }, "<", function() audio("prev") end),
 
     -- suspend, lock
 
@@ -195,21 +198,6 @@ globalkeys = awful.util.table.join(
     -- restart awesome wm
 
     awful.key({ win, "Ctrl"  }, "r", awesome.restart),
-
-    -- show all tags at once
-
-    awful.key({ win }, "z",
-    function()
-        local screen = awful.screen.focused()
-        local all_tags = screen.tags
-        local selected_tags = screen.selected_tags
-
-        if #all_tags == #selected_tags then
-            awful.tag.history.restore()
-        else
-            awful.tag.viewmore(all_tags, screen)
-        end
-    end),
 
     -- change master/column count
 
