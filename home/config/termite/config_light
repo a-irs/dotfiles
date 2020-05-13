@@ -1,20 +1,19 @@
 [options]
-scroll_on_output = false
-scroll_on_keystroke = true
 audible_bell = true
-mouse_autohide = false
-allow_bold = true
-dynamic_title = true
-urgent_on_bell = true
-clickable_url = true
-font = Input 9
-scrollback_lines = 100000
-search_wrap = true
-icon_name = terminal
-cursor_blink = on
-cursor_shape = block
-browser = firefox
-size_hints = false
+scrollback_lines = -1
+
+# INPUT
+# font = InputMonoCondensed 8
+font = InputMonoCondensed 9
+
+# JetBrains Mono
+# font = JetBrains Mono Medium 8
+# cell_height_scale = 1.1
+
+# IOSEVKA
+# font = Iosevka Fixed Medium 9
+# font = Iosevka Fixed Semibold 8
+# cell_height_scale = 1.1
 
 [colors]
 cursor = #315f81
@@ -50,16 +49,3 @@ color15  = #5d6981
 color214 = #face6d
 color237 = #fcdd99
 color238 = #fcd682
-
-##########################
-
-[hints]
-#font = Monospace 12
-#foreground = #dcdccc
-#background = #3f3f3f
-#active_foreground = #e68080
-#active_background = #3f3f3f
-#padding = 2
-#border = #3f3f3f
-#border_width = 0.5
-#roundness = 2.0

@@ -32,7 +32,11 @@ awful.rules.rules = {
         properties = { size_hints_honor = false }
     },
 
-    { rule = { class = "Kodi" }, properties = { fullscreen = true, placement = awful.placement.restore } },
+    { rule_any = {
+        class = { "Kodi" }
+    },
+        properties = { fullscreen = true, placement = awful.placement.restore }
+    },
 
     { rule_any = {
         class = { "Arandr", "Gpick", "pinentry", "Lampe-gtk", "KeePassXC" },
@@ -41,15 +45,21 @@ awful.rules.rules = {
         properties = { floating = true }
     },
 
+    -- { rule_any = {
+    --     class = { "firefox", "Chromium" }
+    -- },
+    --     properties = { maximized = false, maximized_vertical = false, maximized_horizontal = false, floating = false }
+    -- },
+    --
 }
 
 local function make_name(existing_clients, client, wanted_name)
     if client.minimized then
         wanted_name = "[" .. wanted_name .. "]"
-    elseif client.floating then
-        wanted_name = "(" .. wanted_name .. ")"
     elseif client.fullscreen then
         wanted_name = wanted_name .. "^"
+    elseif client.floating then
+        wanted_name = "(" + wanted_name .. ")"
     end
 
     if client.machine and client.machine ~= hostname then
