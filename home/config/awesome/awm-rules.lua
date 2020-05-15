@@ -59,7 +59,7 @@ local function make_name(existing_clients, client, wanted_name)
     elseif client.fullscreen then
         wanted_name = wanted_name .. "^"
     elseif client.floating then
-        wanted_name = "(" + wanted_name .. ")"
+        wanted_name = "(" .. wanted_name .. ")"
     end
 
     if client.machine and client.machine ~= hostname then
