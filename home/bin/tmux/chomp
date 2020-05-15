@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -uo pipefail
+
+# remove newline if one sentence
+newline_count=$(tmux show-buffer | hexdump | grep -cE '[[:space:]](0[ad]|0d0a)[[:space:]]?')
+if [[ $newline_count -eq 1 || $newline_count -eq 0 ]]; then
+    tmux show-buffer | tr -d '\n' | tmux load-buffer -
+fi
+
+if tmux show-buffer | hexdump | grep -qE '[[:space:]](0[ad]|0d0a)[[:space:]]?'; then
+    tmux confirm-before -p "Includes newlines. Paste? (y/n)" "run-shell 'tmux paste-buffer'"
+else
+    tmux paste-buffer
+fi
