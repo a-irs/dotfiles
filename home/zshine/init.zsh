@@ -29,6 +29,7 @@ export REPORTTIME=5
 [[ $commands[less] ]] && export PAGER=less
 [[ $commands[vi] ]]   && export EDITOR=vi
 [[ $commands[vim] ]]  && export EDITOR=vim
+[[ $commands[nvim] ]] && export EDITOR=nvim
 
 HISTSIZE=10000000
 SAVEHIST=10000000

@@ -3,6 +3,8 @@
 alias et="emacsclient -c --alternate-editor='' -t"
 alias e="emacsclient -c --alternate-editor='' -n"
 
+[[ "$commands[nvim]" ]] && alias vim='nvim'
+
 # open e.g. html file in temporary browser in app mode
 web() {
     local t f

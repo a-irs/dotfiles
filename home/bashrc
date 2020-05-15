@@ -12,8 +12,11 @@ shopt -s globstar 2> /dev/null  # ** to glob recursive
 
 is_cmd() { command -v "$1" > /dev/null 2>&1; }
 
-is_cmd vi   && export EDITOR=vi
-is_cmd vim  && export EDITOR=vim
+is_cmd nvim && alias vim=nvim
+
+is_cmd vi    && export EDITOR=vi
+is_cmd vim   && export EDITOR=vim
+is_cmd nvim  && export EDITOR=nvim
 is_cmd gls  && ls() { gls "$@"; }
 is_cmd dircolors && eval "$(dircolors -b)"
 
