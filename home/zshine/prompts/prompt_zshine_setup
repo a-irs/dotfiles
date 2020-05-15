@@ -157,7 +157,7 @@ _prompt_user_host() {
 # right prompt functions               #
 #######################################
 
-_rprompt_error() {
+_prompt_error() {
     echo -n "%{%B%F{$ZSHINE_ERROR_COLOR}%}%(?..%? )"
 }
 
@@ -187,7 +187,7 @@ _rprompt_battery() {
     fi
 }
 
-_rprompt_jobs() {
+_prompt_jobs() {
     [[ $ZSHINE_JOBS == 1 ]] || return
     local m_stop="j"
     local m_run="&"
@@ -208,21 +208,21 @@ _rprompt_jobs() {
     [[ -n "$ret" ]] && echo -n "%{%F{$ZSHINE_JOBS_COLOR}%}$ret %{%f%}"
 }
 
-_rprompt_virtualenv() {
-    [[ "$VIRTUAL_ENV" ]] || return
-    rprompt_segment 237 $ZSHINE_HOST_COLOR "${VIRTUAL_ENV##*/}"
-}
-
 _rprompt_date() {
     [[ "$ZSHINE_DATE" == 0 ]] && return
     rprompt_segment 238 white '%D{%H:%M}'
 }
 
+_prompt() {
+    echo -n "%{%F{$ZSHINE_PROMPT_COLOR}%}$ZSHINE_PROMPT_SYMBOL%{%f%} "
+}
+
+
 #######################################
 # init functions                      #
 #######################################
 
-_build_left() {
+_build_left_1() {
     _prompt_ssh
     _prompt_user_host
     _prompt_virtualenv
@@ -231,16 +231,21 @@ _build_left() {
     _prompt_end
 }
 
+_build_left_2() {
+    _prompt_error
+    _prompt_jobs
+    _prompt
+}
+
 _build_right() {
-    _rprompt_error
     _rprompt_battery
-    # _rprompt_date
-    # _rprompt_virtualenv
-    # _rprompt_jobs
+    _rprompt_date
 }
 
 prompt_zshine_setup() {
-    PROMPT=$'\n%{%f%b%k%}$(_build_left) %{%f%k%b%}\n$(_rprompt_jobs)%{%F{$ZSHINE_PROMPT_COLOR}%}$ZSHINE_PROMPT_SYMBOL%{%f%} '
+    PROMPT=$''
+    PROMPT+=$'\n%{%f%b%k%}$(_build_left_1)%{%f%k%b%} '
+    PROMPT+=$'\n%{%f%b%k%}$(_build_left_2)%{%f%k%b%}'
     RPROMPT='%{%f%b%k%}$(_build_right)%{%f%k%b%}'
 }
 
