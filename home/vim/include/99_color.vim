@@ -2,7 +2,6 @@ if has('termguicolors')
     set termguicolors
 endif
 
-" fallback color scheme
 set background=dark
 try
     " GRUVBOX
@@ -18,6 +17,7 @@ try
 
     colorscheme spring-night
 catch
+    " fallback color scheme
     colorscheme default
     highlight StatusLine term=bold,reverse ctermfg=11 ctermbg=242 guifg=yellow guibg=DarkGray
 endtry

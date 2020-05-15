@@ -104,8 +104,8 @@ let g:Illuminate_ftblacklist = ['gitcommit']
 Plug 'RRethy/vim-illuminate'
 
 " color schemes
-" Plug 'morhetz/gruvbox'
-" Plug 'sjl/badwolf'
+Plug 'morhetz/gruvbox'
+Plug 'sjl/badwolf'
 Plug 'rhysd/vim-color-spring-night'
 
 call plug#end()
