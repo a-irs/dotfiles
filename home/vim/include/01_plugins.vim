@@ -107,6 +107,8 @@ Plug 'RRethy/vim-illuminate'
 Plug 'morhetz/gruvbox'
 Plug 'sjl/badwolf'
 Plug 'rhysd/vim-color-spring-night'
+Plug 'sainnhe/sonokai'
+Plug 'sainnhe/gruvbox-material'
 
 call plug#end()
 

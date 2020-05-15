@@ -5,17 +5,28 @@ endif
 set background=dark
 try
     " GRUVBOX
-    " let g:gruvbox_italic=1
-    " let g:gruvbox_invert_selection=0
+    " let g:gruvbox_italic = 1
+    " let g:gruvbox_invert_selection = 0
     " colorscheme gruvbox
     " highlight GruvboxGreenSign ctermbg=NONE guibg=NONE ctermfg=142 guifg=#b8bb26
     " highlight GruvboxAquaSign ctermfg=108 ctermbg=NONE guifg=#8ec07c guibg=NONE
     " highlight GruvboxRedSign ctermfg=167 ctermbg=NONE guifg=#fb4934 guibg=NONE
 
+    " GRUVBOX MATERIAL
+    let g:gruvbox_material_enable_italic = 1
+    let g:gruvbox_material_background = 'hard'
+    colorscheme gruvbox-material
+
     " BADWOLF
     " colorscheme badwolf
 
-    colorscheme spring-night
+    " SPRINGNIGHT
+    " colorscheme spring-night
+
+    " SONOKAI
+    " let g:sonokai_style = 'atlantis'
+    " let g:sonokai_enable_italic = 1
+    " colorscheme sonokai
 catch
     " fallback color scheme
     colorscheme default
