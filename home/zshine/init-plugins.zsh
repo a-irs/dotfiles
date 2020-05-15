@@ -17,7 +17,6 @@ ZSHINE_PLUGINS=(
   fzf # CTRL+T for fuzzy-search of files
   cdr # recent dirs command
   zshmarks # set bookmarks
-  todo # show ~/.todo on start
   explain # explain command switches
   # ssh-agent # autostart ssh-agent
   homebrew # macos package manager
@@ -26,6 +25,7 @@ ZSHINE_PLUGINS=(
   auto-ls # launch "ls" when entering directory
   nix # nixos, nix package manager
   fasd # autocomplete paths
+  todo # show ~/.todo on start
 
   infra # custom
 )
