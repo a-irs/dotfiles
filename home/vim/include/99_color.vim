@@ -13,9 +13,9 @@ try
     " highlight GruvboxRedSign ctermfg=167 ctermbg=NONE guifg=#fb4934 guibg=NONE
 
     " GRUVBOX MATERIAL
-    let g:gruvbox_material_enable_italic = 1
-    let g:gruvbox_material_background = 'hard'
-    colorscheme gruvbox-material
+    " let g:gruvbox_material_enable_italic = 1
+    " let g:gruvbox_material_background = 'hard'
+    " colorscheme gruvbox-material
 
     " BADWOLF
     " colorscheme badwolf
@@ -24,9 +24,9 @@ try
     " colorscheme spring-night
 
     " SONOKAI
-    " let g:sonokai_style = 'atlantis'
-    " let g:sonokai_enable_italic = 1
-    " colorscheme sonokai
+    let g:sonokai_style = 'atlantis'
+    let g:sonokai_enable_italic = 1
+    colorscheme sonokai
 catch
     " fallback color scheme
     colorscheme default
