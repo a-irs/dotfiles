@@ -36,15 +36,15 @@ def handle_firefox(file_path, remove=False) -> None:
 def render_template(template, dest):
     with open(template, 'r') as fd_src:
         with tempfile.NamedTemporaryFile(mode='w+') as fd_tmp:
-            for l in fd_src.readlines():
-                if l.startswith("||"):
-                    split = l.split("||")
+            for line in fd_src.readlines():
+                if line.startswith("||"):
+                    split = line.split("||")
                     hostname = split[1]
                     rest = "||".join(split[2:])
                     if os.uname()[1].lower() == hostname.lower():
                         fd_tmp.write(rest)
                 else:
-                    fd_tmp.write(l)
+                    fd_tmp.write(line)
             fd_tmp.flush()
 
             shutil.copy(fd_tmp.name, dest)
@@ -113,7 +113,7 @@ def remove_link(link: Path) -> None:
                 break
             log("info", f"remove dir {p}")
     elif link.exists():
-        log(f"error", f"{link} is not a symlink!")
+        log("error", f"{link} is not a symlink!")
 
 
 def main() -> None:
@@ -156,7 +156,8 @@ def main() -> None:
             if action == 'rm':
                 remove_link(dest)
             else:
-                if shutil.which(package_name):
+                packages = package_name.split('|')
+                if any([shutil.which(p) for p in packages]):
                     make_link(src, dest)
                 else:
                     remove_link(dest)
