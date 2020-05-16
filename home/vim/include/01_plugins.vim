@@ -1,7 +1,5 @@
 call plug#begin()
 
-Plug 'tpope/vim-speeddating' | Plug 'jceb/vim-orgmode'
-
 Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
 let g:UltiSnipsSnippetDirectories = ['snip']
 let g:UltiSnipsExpandTrigger = '<tab>'
@@ -13,6 +11,18 @@ autocmd BufNewFile,BufFilePre,BufRead *.rules set filetype=iptables
 
 " better ft=sh, see https://www.reddit.com/r/vim/comments/c6supj/vimsh_better_syntax_highlighting_for_shell_scripts/
 Plug 'arzg/vim-sh'
+
+" increase/decrease/toggle everything with ctrl+a/ctrl+x
+Plug 'Konfekt/vim-CtrlXA'
+augroup VimAfter
+    autocmd!
+    autocmd VimEnter let g:CtrlXA_Toggles = [
+    \ ['sweet', 'bitter'],
+    \ ] + g:CtrlXA_Toggles
+augroup END
+
+" emacs org mode support
+Plug 'jceb/vim-orgmode'
 
 " auto-close brackets
 Plug 'raimondi/delimitmate'
