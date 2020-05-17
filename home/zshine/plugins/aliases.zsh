@@ -1,9 +1,14 @@
 #!/usr/bin/env zsh
 
+if [[ "$commands[nvim]" ]]; then
+    alias vim='nvim'
+    vim=nvim
+else
+    vim=vim
+fi
+
 alias et="emacsclient -c --alternate-editor='' -t"
 alias e="emacsclient -c --alternate-editor='' -n"
-
-[[ "$commands[nvim]" ]] && alias vim='nvim'
 
 # open e.g. html file in temporary browser in app mode
 web() {
@@ -49,7 +54,7 @@ es() {
     local filename=$(printf '%s' "$line" | awk -F ':' '{print $1}')
     local linenumber=$(printf '%s' "$line" | awk -F ':' '{print $2}')
 
-    [[ -n "$filename" ]] && vim "+$linenumber" -c "silent! /$query" "$filename"
+    [[ -n "$filename" ]] && $vim "+$linenumber" -c "silent! /$query" "$filename"
 }
 
 for c in find ftp locate rake rsync wcalc scp; do
@@ -344,7 +349,7 @@ if [[ "$commands[git]" ]]; then
     alias gp="git push"
     alias gs="git s"
     alias gd="git d"
-    alias ge="git ls-files -mo --exclude-standard -z | fzf --multi --preview='show {}' --exit-0 --read0 --print0 --height=70% --reverse --select-1 | xargs --no-run-if-empty -0 -o vim -o"
+    alias ge="git ls-files -mo --exclude-standard -z | fzf --multi --preview='show {}' --exit-0 --read0 --print0 --height=70% --reverse --select-1 | xargs --no-run-if-empty -0 -o $vim -o"
 
     clone() {
         git clone --depth 1 "$1" && cd $(basename ${1//.git/})
