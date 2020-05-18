@@ -114,9 +114,6 @@ nnoremap <silent> <C-l> :nohl<CR><C-l>
 " toggle line numbers
 nnoremap <silent> <C-n> :set number!<CR>
 
-" last buffer on backspace
-nnoremap <BS> :b#<CR>
-nnoremap <leader><up> :b#<CR>
 " buffer on <Leader>1-9/left/right
 nnoremap <leader><left> :bprev<CR>
 nnoremap <leader><right> :bnext<CR>

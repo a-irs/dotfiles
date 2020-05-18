@@ -1,5 +1,12 @@
 call plug#begin()
 
+Plug 'junegunn/fzf' | Plug 'junegunn/fzf.vim'
+let g:fzf_buffers_jump = 1  " jump to existing if possible
+nnoremap <silent> _ :Files<CR>
+nnoremap <silent> - :History<CR>
+nnoremap <silent> + :Lines<CR>
+nnoremap <silent> <Leader>: :Commands<CR>
+
 Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
 let g:UltiSnipsSnippetDirectories = ['snip']
 let g:UltiSnipsExpandTrigger = '<tab>'
@@ -14,12 +21,6 @@ Plug 'arzg/vim-sh'
 
 " increase/decrease/toggle everything with ctrl+a/ctrl+x
 Plug 'Konfekt/vim-CtrlXA'
-augroup VimAfter
-    autocmd!
-    autocmd VimEnter let g:CtrlXA_Toggles = [
-    \ ['sweet', 'bitter'],
-    \ ] + g:CtrlXA_Toggles
-augroup END
 
 " emacs org mode support
 Plug 'jceb/vim-orgmode'
