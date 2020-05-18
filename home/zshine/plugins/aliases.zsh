@@ -286,7 +286,7 @@ cd() {
 # alias ...=cd ../../
 # ...
 for i in {2..20}; do
-    alias "$(printf '.%.0s' {1..$i})"="cd $(printf '../%.0s' {2..$i})"
+    alias "$(printf '.%.0s' {1..$i})"=cd $(printf '../%.0s' {2..$i})
 done
 unset i
 

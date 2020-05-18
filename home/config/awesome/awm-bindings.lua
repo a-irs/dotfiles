@@ -145,6 +145,7 @@ globalkeys = awful.util.table.join(
     awful.key({ alt }, "space",      function() run("rofi -show drun") end),
     awful.key({ "Ctrl" }, "space",   function() run_script("menu-vpn") end),
     awful.key({ alt }, "Return",     function() run("termite") end),
+    awful.key({ alt, ctrl }, "Return",function() run("termite -e bash") end),
     awful.key({ alt }, "f",          function() run_gui("thunar") end),
     awful.key({ alt }, "c",          function() run_or_raise("firefox", "firefox") end),
     awful.key({ alt, "Shift" }, "c", function() run_gui("firefox --private-window") end),
