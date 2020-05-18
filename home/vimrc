@@ -1,1 +1,1 @@
-runtime! include/*.vim
+runtime! conf.d/*.vim

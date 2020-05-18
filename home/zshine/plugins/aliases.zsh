@@ -198,7 +198,7 @@ p() { for f in "$@"; do printf "\n%s\n\n" "=========== $f" && show "$f"; done }
 
 [[ "$commands[fd]" ]] && alias fd='fd --hidden --no-ignore'
 [[ "$commands[fdfind]" ]] && alias fd='fdfind --hidden --no-ignore'
-[[ "$commands[rg]" ]] && alias rg='rg --case-sensitive -uu'
+[[ "$commands[rg]" ]] && alias rg='rg --case-sensitive'
 
 alias cp='cp -i'
 alias ln='ln -i'
