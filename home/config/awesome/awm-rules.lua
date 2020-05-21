@@ -184,11 +184,17 @@ end)
 
 client.connect_signal("property::floating", function(c)
     if c.floating and not c.fullscreen then
+        if c.class == "mpv" then
+            c.size_hints_honor = true
+        end
         awful.titlebar.show(c)
         awful.placement.no_offscreen(c)
         awful.placement.no_overlap(c)
         c.ontop = true
     else
+        if c.class == "mpv" then
+            c.size_hints_honor = false
+        end
         awful.titlebar.hide(c)
         c.ontop = false
     end

@@ -248,6 +248,15 @@ if [[ "$commands[tmux]" ]]; then
     alias tn='tmux new-session -s'
     alias tk='tmux kill-session -t'
     alias tl='tmux list-sessions'
+
+    # capture tmux pane and edit in vim
+    tc() {
+        # http://man7.org/linux/man-pages/man1/tmux.1.html
+        tmux capture-pane -pCS - \
+            | sed '$!N; /^\(.*\)\n\1$/!P; D' \
+            | sed 's/❯/$/g;s//>/g' \
+            | $vim -
+    }
 fi
 
 [[ "$commands[xev]" ]] && capture-keys() { xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'; }
@@ -282,13 +291,12 @@ cd() {
 [[ -d ~/git/a-irs/dot ]] && dot() { cd ~/git/a-irs/dot; git status -sb; }
 [[ -d /srv/infra ]] && infra() { cd /srv/infra; git status -sb; }
 
-# alias ..=cd ../
-# alias ...=cd ../../
-# ...
-for i in {2..20}; do
-    alias "$(printf '.%.0s' {1..$i})"=cd $(printf '../%.0s' {2..$i})
-done
-unset i
+alias ..=cd ..
+alias ...=cd ../..
+alias ....=cd ../../..
+alias .....=cd ../../../..
+alias ......=cd ../../../../..
+alias .......=cd ../../../../../..
 
 extract() {
     while (( $# > 0 )); do
