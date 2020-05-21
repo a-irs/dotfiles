@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
-[[ $SSH_CONNECTION || "$VIM" || "$EMACS" || "$INSIDE_EMACS" || "$TMUX" || ! "$commands[tmux]" || $- != *i* ]] && return
+[[ ! "$commands[tmux]" ]] && return
+
+[[ "$VIM" || "$EMACS" || "$INSIDE_EMACS" || "$TMUX" || $- != *i* ]] && return
 
 exec tmux new-session
