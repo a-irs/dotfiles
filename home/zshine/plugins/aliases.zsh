@@ -291,12 +291,12 @@ cd() {
 [[ -d ~/git/a-irs/dot ]] && dot() { cd ~/git/a-irs/dot; git status -sb; }
 [[ -d /srv/infra ]] && infra() { cd /srv/infra; git status -sb; }
 
-alias ..=cd ..
-alias ...=cd ../..
-alias ....=cd ../../..
-alias .....=cd ../../../..
-alias ......=cd ../../../../..
-alias .......=cd ../../../../../..
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
+alias .......="cd ../../../../../.."
 
 extract() {
     while (( $# > 0 )); do

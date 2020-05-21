@@ -147,7 +147,7 @@ def main() -> None:
     try:
         playlists = get_all_playlists(spotify, env_user, env_exclude_regex)
     except spotipy.client.SpotifyException as e:
-        logging.warn(f"waiting, then refreshing token... ({e})")
+        logging.warning(f"waiting, then refreshing token... ({e})")
         time.sleep(300)
         spotify = refresh_token(spotify)
         playlists = get_all_playlists(spotify, env_user, env_exclude_regex)

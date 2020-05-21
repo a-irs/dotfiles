@@ -2,6 +2,6 @@
 
 [[ ! "$commands[tmux]" ]] && return
 
-[[ "$VIM" || "$EMACS" || "$INSIDE_EMACS" || "$TMUX" || $- != *i* ]] && return
+[[ "$SSH_CONNECTION" || "$VIM" || "$EMACS" || "$INSIDE_EMACS" || "$TMUX" || $- != *i* ]] && return
 
 exec tmux new-session
