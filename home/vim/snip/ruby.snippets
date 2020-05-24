@@ -1,0 +1,11 @@
+snippet "for" "for .. in .." br
+for ${1:item}${2/.+/ in /}${2:list}
+  ${0:${VISUAL:# TODO}}
+end
+endsnippet
+
+snippet "map" "map" br
+${1:list}.map do ${2:|item|}
+  ${0:${VISUAL:# TODO}}
+end
+endsnippet

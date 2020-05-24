@@ -1,0 +1,112 @@
+#!/usr/bin/env ruby
+
+# TODO:
+# - replace '/bin/sh' in templates with $SHELL$
+# - setup listener with --listen argument
+
+require 'yaml'
+require 'json'
+require 'socket'
+
+NAME = 'revshell'
+
+class String
+  def colorize(color_code) "\e[#{color_code}m#{self}\e[0m" end
+
+  def bold() "\e[1m#{self}\e[22m" end
+  def red() colorize(31) end
+  def green() colorize(32) end
+  def yellow() colorize(33) end
+  def blue() colorize(34) end
+  def magenta() colorize(35) end
+  def cyan() colorize(36) end
+  def black() colorize(30) end
+end
+
+def get_interfaces(exclude: ['docker0', 'br-233da8d5390c'])
+  interfaces = {}
+  Socket.getifaddrs.map do |item|
+    if item.addr and item.addr.ipv4_private?
+      if not exclude.include?(item.name)
+        interfaces[item.name] = item.addr.ip_address
+      end
+    end
+  end
+  return interfaces
+end
+
+def get_term_width()
+  `stty size`.scan(/\d+/).map { |s| s.to_i }.reverse[0]
+end
+
+def help_shells(config)
+  puts "SHELLS\n".magenta.bold
+
+  term_width = get_term_width
+  config.keys.map do |binary|
+    help_shell(config, binary, short=false, term_width=term_width)
+  end
+end
+
+def help_shell(config, binary, short=true, term_width=nil)
+  if not term_width
+    term_width = get_term_width
+  end
+
+  config[binary].keys.map do |name|
+    term_avail = term_width - name.length - binary.length - 3
+    s = "%s %s" % [name.blue, config[binary][name][0..term_avail].gsub("\n", " ").strip.black.bold]
+    if short == true
+      puts "%s" % s
+    else
+      puts "%s %s" % [binary.yellow, s]
+    end
+  end
+end
+
+def help_interfaces(config)
+  puts "INTERFACES\n".magenta.bold
+  get_interfaces.sort.to_h.each do |key, value|
+    puts "%s %s" % [key.green.bold, value.black.bold]
+  end
+end
+
+def help_usage()
+  puts "Usage: %s <interface> <port> <binary> <name>" % NAME
+end
+
+def help(config)
+  help_usage()
+  puts "\n"
+  help_interfaces(config)
+  puts "\n"
+  help_shells(config)
+end
+
+def gen_shell(shell_template, host='[HOST]', port='[PORT]')
+  return shell_template.gsub('$HOST$', host).gsub('$PORT$', port.to_s).gsub(/^$\n/, '')
+end
+
+def main()
+  config = JSON.parse(YAML::load(File.open(__dir__ + '/%s.yml' % NAME)).to_json)
+
+  interface, port, binary, name = ARGV[0], ARGV[1], ARGV[2], ARGV[3]
+  if not interface or not port
+    help(config)
+    exit
+  end
+
+  if not binary
+    help_shells(config)
+    exit
+  end
+
+  if not name
+    help_shell(config, binary)
+    exit
+  end
+
+  puts gen_shell(config[binary][name], get_interfaces()[interface], port)
+end
+
+main

