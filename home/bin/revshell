@@ -7,6 +7,7 @@
 require 'yaml'
 require 'json'
 require 'socket'
+require 'open3'
 
 NAME = 'revshell'
 
@@ -23,11 +24,11 @@ class String
   def black() colorize(30) end
 end
 
-def get_interfaces(exclude: ['docker0', 'br-233da8d5390c'])
+def get_interfaces(exclude: ['docker.', 'br-.+'])
   interfaces = {}
-  Socket.getifaddrs.map do |item|
+  Socket.getifaddrs.each do |item|
     if item.addr and item.addr.ipv4_private?
-      if not exclude.include?(item.name)
+      if not exclude.map {|rex| item.name.match(/#{rex}/)}.any?
         interfaces[item.name] = item.addr.ip_address
       end
     end
@@ -87,6 +88,19 @@ def gen_shell(shell_template, host='[HOST]', port='[PORT]')
   return shell_template.gsub('$HOST$', host).gsub('$PORT$', port.to_s).gsub(/^$\n/, '')
 end
 
+def cmd(command, input=nil)
+  Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
+    if input
+      stdin.puts input.strip
+      stdin.close
+    end
+    if not wait_thr.value.success? then
+      raise "CmdException rc=#{wait_thr.value}"
+    end
+  end
+end
+
+
 def main()
   config = JSON.parse(YAML::load(File.open(__dir__ + '/%s.yml' % NAME)).to_json)
 
@@ -106,7 +120,10 @@ def main()
     exit
   end
 
-  puts gen_shell(config[binary][name], get_interfaces()[interface], port)
+  # print to stdout and send to clipboard
+  code = gen_shell(config[binary][name], get_interfaces()[interface], port)
+  cmd('xclip -r -selection clipboard', input=code)
+  puts code
 end
 
 main
