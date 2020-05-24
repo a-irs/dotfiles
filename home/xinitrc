@@ -68,6 +68,7 @@ if [[ $HOSTNAME == desk ]]; then
     # turn off display after 30m
     xset dpms 1800 1800 1800
 
+    solaar --restart-on-wake-up --window hide &
     numlockx on &
     pulseeffects --gapplication-service &
 
