@@ -3,7 +3,8 @@
 # ref: https://github.com/rebootuser/LinEnum/blob/master/LinEnum.sh#L485
 
 if [ "$1" = base64 ]; then
-    echo "sh -c 'echo $(base64 < "$0") | base64 -d | sh'"
+    echo "sh -c 'echo $(base64 < "$0") | base64 -d | sh'" | tr -d '\n'
+    printf '\n'
     exit
 fi
 
@@ -47,6 +48,7 @@ done
 
 # SUID
 find / -perm -4000 \
+	! -path "/snap/*" \
 	! -path "*bin/firejail" \
 	! -path "*bin/chage" \
 	! -path "*bin/expiry" \
@@ -64,7 +66,9 @@ find / -perm -4000 \
 	! -path "*bin/newgrp" \
 	! -path "*bin/passwd" \
 	! -path "*bin/sudo" \
-    ! -path "/usr/lib/ssh/ssh-keysign" \
+	! -path "*bin/ping" \
+	! -path "*bin/at" \
+    ! -path "/usr/lib/*ssh/ssh-keysign" \
     ! -path "/usr/lib/chromium/chrome-sandbox" \
     ! -path "/usr/lib/virtualbox/*" \
     ! -path "/usr/lib/qemu/qemu-bridge-helper" \
@@ -111,7 +115,7 @@ find /var/mail -type f
 
 # jump, find creds, ...
 # -name "known_hosts" -o \
-#     *sh_history
+#     *_history
 #
 # interesting
 # /etc/ssh/sshd_config
