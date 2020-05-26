@@ -1,0 +1,83 @@
+#!/bin/sh
+
+# ref: https://github.com/rebootuser/LinEnum/blob/master/LinEnum.sh#L485
+
+if [ "$1" = base64 ]; then
+    echo "sh -c 'echo $(base64 < "$0") | base64 -d | sh'"
+    exit
+fi
+
+set -x
+
+w
+id
+uname -a
+cat /proc/version
+cat /etc/*-release
+cat /proc/cmdline
+lastlog
+for i in $(cut -d: -f1 /etc/passwd); do
+    id "$i"
+    # interesting groups: adm, wheel, sudo, ...
+done
+env
+
+echo ''
+
+find / -perm -4000 \
+	! -path /bin/mount \
+	! -path /bin/su \
+	! -path /bin/umount \
+	! -path /usr/bin/chfn \
+	! -path /usr/bin/chsh \
+	! -path /usr/bin/gpasswd \
+	! -path /usr/bin/newgrp \
+	! -path /usr/bin/passwd \
+	! -path /usr/bin/sudo \
+	-ls 2>/dev/null
+echo ''
+
+# cron
+find /etc /var -type f -name "*cron*" 2>/dev/null
+systemctl list-timers --all
+
+# look for writable files (note: does not show if writable by non-primary group)
+find / -writable ! -type l \
+	! -path "/proc/*" \
+	! -path /dev/full \
+	! -path /dev/mqueue \
+	! -path /dev/null \
+	! -path /dev/pts/ptmx \
+	! -path /dev/random \
+	! -path /dev/shm \
+	! -path /dev/tty \
+	! -path /dev/urandom \
+	! -path /dev/zero \
+	-ls 2>/dev/null
+echo ''
+
+find / \( \
+	-name "id_dsa*" -o \
+	-name "id_rsa*" -o \
+	-name "id_ecdsa*" -o \
+	-name "id_ed25519*" -o \
+	-name "known_hosts" -o \
+	-name "authorized_hosts" -o \
+	-name "authorized_keys" \
+	\) -ls 2>/dev/null
+echo ''
+
+for x in /etc/shadow /etc/master.passwd /etc/sudoers /etc/sudoers.d/... /etc/... /home/... /root /etc/ssh/sshd_config; do
+    test -r "$x" && echo "$x"
+done
+find /var/mail -type f
+
+for x in $(echo "$PATH" | tr ":" " "); do
+    test -w "$x" && echo "$x"
+done
+
+#sudo -l
+# try sudo without password
+echo '' | sudo -S -l -k 2>/dev/null
+
+# https://gtfobins.github.io
