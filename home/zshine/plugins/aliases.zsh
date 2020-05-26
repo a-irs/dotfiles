@@ -217,7 +217,7 @@ if [[ "$commands[lsd]" ]]; then
 elif [[ "$commands[gls]" ]]; then
     ls="\gls -F --literal --color=auto --group-directories-first"
 else
-    if [[ "$os" == Darwin ]]; then
+    if [[ "$os" == darwin* ]]; then
         ls="\ls -F"
         alias lo="\ls -lhGF -O@"
     else
@@ -374,7 +374,7 @@ if [[ "$commands[git]" ]]; then
         fi
 
         printf '%s\n' "opening: $url"
-        if [[ "$os" == Darwin ]]; then
+        if [[ "$os" == darwin* ]]; then
             /usr/bin/open "$url"
         else
             xdg-open "$url"

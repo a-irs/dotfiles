@@ -1,23 +1,13 @@
 #!/usr/bin/env zsh
 
 if [[ $commands[fd] ]]; then
-    __fzf_compgen_generic() {
-        # internal function to avoid code duplication
-        local fzf_color=never  # because it is around 10% as slow
-        command fd --hidden --no-ignore --color "$fzf_color" \
-            -E .vim/undo -E .vim/plugged \
-            -E __pycache__ -E Cache -E .cache -E cache \
-            -E .gem -E .npm \
-            -E .thumbnails \
-            -E .steam -E .local/share/Steam \
-            -E .git \
-            "$@"
-    }
+    export FZF_DEFAULT_COMMAND="fd --hidden --no-ignore --color never -E .vim/undo -E .vim/plugged -E __pycache__ -E Cache -E .cache -E cache -E .gem -E .npm -E .thumbnails -E .steam -E .local/share/Steam -E .git"
+
     _fzf_compgen_path() {
-            __fzf_compgen_generic . "$1"
+        eval $FZF_DEFAULT_COMMAND . "$@"
     }
     _fzf_compgen_dir() {
-            __fzf_compgen_generic --type directory . "$1"
+        eval $FZF_DEFAULT_COMMAND --type directory . "$@"
     }
 fi
 # note: 'rg --files --hidden --no-ignore' is equally fast (benchmarked with hyperfine

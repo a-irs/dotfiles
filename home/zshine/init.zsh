@@ -4,7 +4,7 @@ setopt nobeep
 
 zmodload zsh/terminfo
 
-os="$(uname)"
+os="$OSTYPE"
 
 # no duplicate entries for path arrays
 typeset -gU cdpath fpath mailpath path

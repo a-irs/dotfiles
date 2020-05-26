@@ -2,6 +2,7 @@ call plug#begin()
 
 Plug 'junegunn/fzf' | Plug 'junegunn/fzf.vim'
 let g:fzf_buffers_jump = 1  " jump to existing if possible
+" uses $FZF_DEFAULT_COMMAND
 nnoremap <silent> _ :Files<CR>
 nnoremap <silent> - :History<CR>
 nnoremap <silent> + :Lines<CR>
