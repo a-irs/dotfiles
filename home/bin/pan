@@ -23,6 +23,7 @@ from typing import List
 PREPROCESS = ["perl", "-ne", "s/^\\!include:(.+).*$/`cat $1`/e;print"]
 
 CONFIG_DEFAULT = 'sans-short'
+CONFIG_DEFAULT_OUTPUT = '.html'
 
 CONFIG = {
     'base': {
@@ -134,17 +135,17 @@ def main() -> None:
     parser.add_argument('input', help="input file")
     parser.add_argument('output', nargs='?', help="output filename or pandoc-supported file type")
     parser.add_argument('style', metavar='style', nargs='?', help=" | ".join(CONFIG), default=CONFIG_DEFAULT, choices=CONFIG.keys())
-    parser.add_argument('-v', '--verbose', action='store_true', default=False)
+    parser.add_argument('-v', '--verbose', action='store_true', default=False, help="set verbose log level")
     args, additional_args = parser.parse_known_args()
 
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    # by default, write to <filename>.html
+    # if no output is given, write to <input_filename>.html
     if not args.output:
-        args.output = os.path.splitext(args.input)[0] + ".html"
+        args.output = os.path.splitext(args.input)[0] + CONFIG_DEFAULT_OUTPUT
 
-    # when only ext is chosen, set filename automatically (<filename>.<ext>)
+    # when only ext is chosen, set filename automatically (<input_filename>.<ext>)
     if not os.path.splitext(args.output)[1]:
         args.output = os.path.splitext(args.input)[0] + "." + args.output
 
