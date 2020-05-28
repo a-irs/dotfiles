@@ -19,3 +19,13 @@ class ${1:ClassName}(object):
     def __init__(self):
         pass
 endsnippet
+
+snippet "jsonr" "json read" br
+with open('${1:file}', 'r') as fd:
+    data = json.load(fd)
+endsnippet
+
+snippet "jsonw" "json write" br
+with open('${1:file}', 'w') as fd:
+    json.dump(data, fd)
+endsnippet
