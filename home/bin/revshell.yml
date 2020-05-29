@@ -2,6 +2,7 @@
 # - https://gtfobins.github.io/#+reverse%20shell
 # - https://medium.com/@honze_net/reverse-shell-and-some-magic-39629ccd0e5c
 # - https://github.com/rapid7/metasploit-framework/wiki/Meterpreter-Paranoid-Mode
+# - msfvenom
 #
 # catch:
 # - rlwrap ncat -C -v -4 -l -p $PORT$ -k

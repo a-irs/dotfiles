@@ -3,6 +3,7 @@
 # TODO:
 # - replace '/bin/sh' in templates with $SHELL$
 # - setup listener with --listen argument
+# - base64 conversion
 
 require 'yaml'
 require 'json'
