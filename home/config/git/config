@@ -7,6 +7,7 @@
     subup = submodule update --remote --merge
     r = reset
     p = !git add -A && git commit && git push
+    ppp = !git add -A && git commit -m 'none' && git push
     clone1 = clone --depth=1
     i = icdiff
     d = !git add --intent-to-add -A && git diff $@
@@ -16,3 +17,9 @@
     s = status -sbu
     c = !git add --intent-to-add -A && git add --patch && git commit
     ca = !git add --intent-to-add -A && git add --patch && git commit --amend
+
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+[mergetool]
+    prompt = false

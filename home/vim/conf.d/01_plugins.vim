@@ -20,6 +20,8 @@ autocmd BufNewFile,BufFilePre,BufRead *.rules set filetype=iptables
 " better ft=sh, see https://www.reddit.com/r/vim/comments/c6supj/vimsh_better_syntax_highlighting_for_shell_scripts/
 Plug 'arzg/vim-sh'
 
+Plug 'PProvost/vim-ps1'
+
 " increase/decrease/toggle everything with ctrl+a/ctrl+x
 Plug 'Konfekt/vim-CtrlXA'
 
