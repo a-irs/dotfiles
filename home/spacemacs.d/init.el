@@ -295,7 +295,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font or prioritized list of fonts.
    dotspacemacs-default-font '(
-                               ("InputMonoCondensed" :size 22)
+                               ("InputMonoCondensed")
                                ("Meslo LG M DZ for Powerline")
                                )
 
