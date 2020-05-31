@@ -83,6 +83,8 @@ local function dynamic_tagging()
                 for _, c in ipairs(t:clients()) do
                     if c.name and string.find(c.name, '(Private Browsing)') then
                         name = make_name(name, c, "web[*]")
+                    elseif c.name and string.find(c.name, ".mosh. ") then
+                        name = make_name(name, c, "mosh")
                     elseif c.name and string.find(c.name, 'ssh ') then
                         name = make_name(name, c, "ssh")
                     elseif c.class == "firefox" or c.class == "Firefox" or c.class == "Chrome" or c.class == "Chromium" then

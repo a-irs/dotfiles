@@ -2,7 +2,7 @@ local gears = require("gears")
 
 theme                               = {}
 
-theme.master_width_factor           = 0.62
+theme.master_width_factor           = 0.6
 
 theme.statusbar_height              = dpi(20)
 theme.statusbar_top_pixel           = "#586779"

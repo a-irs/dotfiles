@@ -54,7 +54,10 @@ es() {
     local filename=$(printf '%s' "$line" | awk -F ':' '{print $1}')
     local linenumber=$(printf '%s' "$line" | awk -F ':' '{print $2}')
 
-    [[ -n "$filename" ]] && $vim "+$linenumber" -c "silent! /$query" "$filename"
+    if [[ -n "$filename" ]]; then
+        echo $vim "+$linenumber" -c "silent! /$query" "$filename"
+        $vim "+$linenumber" -c "silent! /$query" "$filename"
+    fi
 }
 
 for c in find ftp locate rake rsync wcalc scp; do

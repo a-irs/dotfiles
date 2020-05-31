@@ -19,3 +19,5 @@ while ! ping -c 1 "$host"; do
     sleep 1
 done
 ssh -t "$host" -- "vbash -ic \"show system image\""
+
+echo "RUN: /config/scripts/post-config.d/wireguard.sh install"

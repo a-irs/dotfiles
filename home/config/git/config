@@ -11,6 +11,7 @@
     clone1 = clone --depth=1
     i = icdiff
     d = !git add --intent-to-add -A && git diff $@
+    wdiff = diff --word-diff=color
     co = checkout
     cm = commit
     l = log
