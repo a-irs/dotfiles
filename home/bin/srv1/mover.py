@@ -122,7 +122,7 @@ class TvParser(Parser):
         self.episode = self.set(self.get_episode)
 
     def get_title(self, s: str) -> Optional[str]:
-        rex = r'^(.*)\.S[0-9][0-9]E[0-9][0-9]'
+        rex = r'^(.+?)((\.|\s)(20|19)[0-9][0-9])?\.S[0-9][0-9]E[0-9][0-9]'
         m = re.search(rex, s)
         if m:
             return m.group(1).replace('.', ' ')
