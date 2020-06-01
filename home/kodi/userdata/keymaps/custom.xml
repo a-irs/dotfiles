@@ -1,0 +1,12 @@
+<keymap>
+  <FullscreenVideo>
+    <keyboard>
+      <a>AudioNextLanguage</a>
+    </keyboard>
+  </FullscreenVideo>
+  <VideoMenu>
+    <keyboard>
+      <a>AudioNextLanguage</a>
+    </keyboard>
+  </VideoMenu>
+</keymap>
