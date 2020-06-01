@@ -12,7 +12,6 @@ ZSHINE_PLUGINS=(
   term-title # sets terminal/tab title
 
   # pwd-hell # show warning message when [[ pwd != readlink -f ./ ]]
-  tmux # autostart tmux
   bd # move back in current directory tree (breadcrumb-style)
   fzf # CTRL+T for fuzzy-search of files
   cdr # recent dirs command
@@ -28,6 +27,7 @@ ZSHINE_PLUGINS=(
   todo # show ~/.todo on start
 
   infra # custom
+  tmux # autostart tmux
 )
 
 for _loadx in $ZSHINE_PLUGINS; do
