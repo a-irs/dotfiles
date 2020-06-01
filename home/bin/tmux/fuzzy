@@ -4,13 +4,13 @@ set -uo pipefail
 
 selected=$(tmux capture-pane -pJS - |
     rg -o '\S{5,}' |  # > 5 chars
-    tac | # show last entries first in fzf
-    awk '{ if (!seen[$0]++) print }' | # dedup
+    tac |  # show last entries first in fzf
+    awk '{ if (!seen[$0]++) print }' |  # dedup
     sed -E 's/<(http.+)>/\1/g' |  # <http://example.com> --> http://example.com
     fzf-tmux -- --no-sort)
 
 if [[ -n "$selected" ]]; then
-    echo "$selected" | tr -d '\n' | tmux load-buffer -
+    echo -n "$selected " | tmux load-buffer -
     tmux paste-buffer
 fi
 
