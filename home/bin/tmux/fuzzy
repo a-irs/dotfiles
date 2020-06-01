@@ -2,11 +2,17 @@
 
 set -uo pipefail
 
+type=${1:-default}
+
+case $type in
+    all) rex=(rg -o '\S{5,}') ;;  # anything with len>5
+    default) rex=(rg -o '[a-zA-Z0-9-_\.:/]{5,}') ;;  # names with len>5
+esac
+
 selected=$(tmux capture-pane -pJS - |
-    rg -o '\S{5,}' |  # > 5 chars
+    "${rex[@]}" |
     tac |  # show last entries first in fzf
     awk '{ if (!seen[$0]++) print }' |  # dedup
-    sed -E 's/<(http.+)>/\1/g' |  # <http://example.com> --> http://example.com
     fzf-tmux -- --no-sort)
 
 if [[ -n "$selected" ]]; then
