@@ -6,7 +6,7 @@ type=${1:-default}
 
 case $type in
     all) rex=(rg -o '\S{5,}') ;;  # anything with len>5
-    default) rex=(rg -o '[a-zA-Z0-9-_\.:/]{5,}') ;;  # names with len>5
+    default) rex=(rg -o '[a-zA-Z0-9-_\.\$:/~]{5,}') ;;  # names with len>5
 esac
 
 selected=$(tmux capture-pane -pJS - |
