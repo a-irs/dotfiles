@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+sleep() { command sleep 0.2; }
+
+tmux send-keys " python -c 'import pty; pty.spawn(\"/bin/bash\")' || script /dev/null" Enter && sleep
+tmux send-keys C-z && sleep
+tmux send-keys " stty raw -echo" Enter && sleep
+tmux send-keys " fg" Enter && sleep
+tmux send-keys " reset" Enter && sleep
+eval "$(tmux list-panes -F "tmux send-keys \" export SHELL=bash; export TERM=$TERM; stty rows #{pane_height} cols #{pane_width} && clear\" Enter")"
