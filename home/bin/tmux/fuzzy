@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -uo pipefail
+
+selected=$(tmux capture-pane -pJS - |
+    rg -o '\S{5,}' |  # > 5 chars
+    awk '{ if (!seen[$0]++) print }' | # dedup
+    sed -E 's/<(http.+)>/\1/g' |  # <http://example.com> --> http://example.com
+    fzf-tmux -- --no-sort)
+
+if [[ -n "$selected" ]]; then
+    echo "$selected" | tr -d '\n' | tmux load-buffer -
+    tmux paste-buffer
+fi
+
+exit 0

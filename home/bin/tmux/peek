@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-tmux show-buffer
+tmux show-buffer 2>&1
+
+exit 0
