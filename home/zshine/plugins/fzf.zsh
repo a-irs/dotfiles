@@ -22,8 +22,6 @@ for x in \
 done
 unset x
 
-bindkey '^f' fzf-cd-widget
-
 export FZF_DEFAULT_OPTS='--no-mouse --cycle --ansi --color=16 --tiebreak=end,begin,length --inline-info --tiebreak=length'
 
 export FZF_CTRL_R_OPTS='--height 70% --exact'
