@@ -578,7 +578,7 @@ before packages are loaded."
 
   ;; always show indent guides
   (indent-guide-global-mode)
-  (setq indent-guide-delay nil)
+  (setq indent-guide-delay 0.3)
   (setq indent-guide-char "▏")
   (setq indent-guide-threshold 2)  ; do not show 2 left-most indent
 
@@ -684,8 +684,13 @@ Emacs buffer are those starting with “*”."
   (evil-leader/set-key "#" 'evilnc-comment-or-uncomment-lines)
 
   ;; selected string is shown everywhere in buffer
-  (setq symbol-overlay-idle-time 0.1)
+  (setq symbol-overlay-idle-time 0.2)
   (add-hook 'prog-mode-hook #'symbol-overlay-mode)
+
+
+  ;; shortcuts
+  (spacemacs/set-leader-keys "<" 'spacemacs/vcs-next-hunk)
+  (spacemacs/set-leader-keys ">" 'spacemacs/vcs-previous-hunk)
 
 
   ;; --- mode line

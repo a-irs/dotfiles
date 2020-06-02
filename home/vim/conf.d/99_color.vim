@@ -1,11 +1,13 @@
 if has('termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set t_Co=256
     set termguicolors
 endif
 
 set background=dark
 try
     " GRUVBOX
-    " let g:gruvbox_italic = 1
     " let g:gruvbox_invert_selection = 0
     " colorscheme gruvbox
     " highlight GruvboxGreenSign ctermbg=NONE guibg=NONE ctermfg=142 guifg=#b8bb26
@@ -14,6 +16,7 @@ try
 
     " GRUVBOX MATERIAL
     " let g:gruvbox_material_background = 'hard'
+    " let g:gruvbox_material_disable_italic_comment = 1
     " colorscheme gruvbox-material
 
     " BADWOLF
@@ -24,6 +27,7 @@ try
 
     " SONOKAI
     " let g:sonokai_style = 'atlantis'
+    " let g:sonokai_disable_italic_comment = 1
     " colorscheme sonokai
 catch
     " fallback color scheme
