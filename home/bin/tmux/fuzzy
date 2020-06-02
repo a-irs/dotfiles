@@ -13,7 +13,7 @@ selected=$(tmux capture-pane -pJS - |
     "${rex[@]}" |
     tac |  # show last entries first in fzf
     awk '{ if (!seen[$0]++) print }' |  # dedup
-    fzf-tmux -- --no-sort --no-mouse --cycle --ansi --color=16 --tiebreak=end,begin,length --inline-info --tiebreak=length)
+    fzf-tmux -u 20% -- --no-sort --no-mouse --cycle --ansi --color=16 --tiebreak=end,begin,length --inline-info --tiebreak=length)
 
 if [[ -n "$selected" ]]; then
     echo -n "$selected " | tmux load-buffer -
