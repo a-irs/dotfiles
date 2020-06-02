@@ -24,3 +24,6 @@
     conflictstyle = diff3
 [mergetool]
     prompt = false
+[pull]
+    # only pull if fast-forward possible
+    ff = only
