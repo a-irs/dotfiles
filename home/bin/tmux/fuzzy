@@ -2,11 +2,21 @@
 
 set -uo pipefail
 
-type=${1:-default}
+type=$1
 
 case $type in
-    all) rex=(rg -o '\S{5,}') ;;  # anything with len>5
-    default) rex=(rg -o '[a-zA-Z0-9-_\.\$\\:/~\(\)]{5,}') ;;  # names with len>5
+    all)
+        rex=(rg -o '\S{5,}')  # anything with len>5
+        action() { echo -n "$1 " | tmux load-buffer -; tmux paste-buffer; }
+        ;;
+    url)
+        rex=(rg -o 'https?://[a-zA-Z0-9./?=_-]+')
+        action() { echo -n "\"$1\" " | tmux load-buffer -; tmux paste-buffer; }
+        ;;
+    default)
+        rex=(rg -o '[a-zA-Z0-9-_\.\$\\:/~\(\)]{5,}')  # names with len>5
+        action() { echo -n "$1 " | tmux load-buffer -; tmux paste-buffer; }
+        ;;
 esac
 
 selected=$(tmux capture-pane -pJS - |
@@ -16,8 +26,7 @@ selected=$(tmux capture-pane -pJS - |
     fzf-tmux -u 20% -- --no-sort --no-mouse --cycle --ansi --color=16 --tiebreak=end,begin,length --inline-info --tiebreak=length)
 
 if [[ -n "$selected" ]]; then
-    echo -n "$selected " | tmux load-buffer -
-    tmux paste-buffer
+    action "$selected"
 fi
 
 exit 0
