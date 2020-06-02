@@ -4,6 +4,11 @@
 #   for xelatex + custom fonts: texlive-latexextra
 #
 # https://pandoc.org/MANUAL.html
+#
+# TODO:
+# - preprocess in temp file?
+# - multiple preprocess
+# - process multiple files at once
 
 import sys
 import subprocess

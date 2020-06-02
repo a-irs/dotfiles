@@ -1,4 +1,5 @@
 ZSHINE_PLUGINS=(
+  tmux # autostart tmux
   completion # tweaks for TAB-completion
   keys # bind keys for delete, history-search etc.
 
@@ -27,7 +28,6 @@ ZSHINE_PLUGINS=(
   todo # show ~/.todo on start
 
   infra # custom
-  tmux # autostart tmux
 )
 
 for _loadx in $ZSHINE_PLUGINS; do
