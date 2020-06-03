@@ -281,6 +281,8 @@ if [[ "$commands[xdg-open]" ]]; then
     }
 fi
 
+[[ "$commands[open]" ]] && alias o=open
+
 cd() {
     if [[ -f "$1" ]]; then
         printf "${YELLOW}%s${RESET}\n\n" "cd: correcting $1 to ${1:h}"

@@ -14,7 +14,7 @@ case $type in
         action() { echo -n "\"$1\" " | tmux load-buffer -; tmux paste-buffer; }
         ;;
     default)
-        rex=(rg -o '[a-zA-Z0-9-_\.\$\\:/~\(\)]{5,}')  # names with len>5
+        rex=(rg -o '[a-zA-Z0-9-_@\.\$\\:/~\(\)]{5,}')  # names with len>5
         action() { echo -n "$1 " | tmux load-buffer -; tmux paste-buffer; }
         ;;
 esac

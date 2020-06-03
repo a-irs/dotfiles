@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
-ssl=/usr/bin/openssl
+
+ssl=${OPENSSL:-/usr/bin/openssl}
 
 action=$1
 file=$2
@@ -9,11 +10,18 @@ file=$2
 extract-private() { $ssl pkey -in "$file"; }
 extract-public() { $ssl x509 -pubkey -noout -in "$file"; }
 extract-certificates() { $ssl crl2pkcs7 -nocrl -certfile "$file" | $ssl pkcs7 -print_certs; }
-show-info() { $ssl x509 -noout -text -in "$file" | less; }
+show-info() { $ssl x509 -noout -text -in "$file"; }
 fingerprints() {
     $ssl x509 -noout -fingerprint -md5 -in "$file"
     $ssl x509 -noout -fingerprint -sha1 -in "$file"
     $ssl x509 -noout -fingerprint -sha256 -in "$file"
+}
+s_client() {
+    host=$1
+    echo | $ssl s_client -servername "$host" -showcerts -connect "$host:443"
+}
+s_client_cert() {
+    s_client "$1" 2>/dev/null | $ssl x509 -text
 }
 
 dump-certificate() {
@@ -32,11 +40,15 @@ case "$action" in
     certificates|cachain|chain|certs|cert|ca|c)
         extract-certificates ;;
     information|info|i)
-        show-info ;;
+        show-info | less ;;
     dump|asn1|dumpasn1)
         dump-certificate ;;
     finger*)
         fingerprints ;;
+    connect)
+        s_client "$file" | less ;;
+    connect_cert)
+        s_client_cert "$file" | less ;;
     *)
         printf "%s\n" "$(tput setaf 1)unknown command$(tput sgr0)"
         $ssl version
