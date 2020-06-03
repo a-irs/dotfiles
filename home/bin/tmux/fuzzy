@@ -6,21 +6,26 @@ type=$1
 
 case $type in
     all)
-        rex=(rg -o '\S{5,}')  # anything with len>5
+        pipe1=(rg -o '\S{5,}')  # anything with len>5
+        pipe2=(cat)
         action() { echo -n "$1 " | tmux load-buffer -; tmux paste-buffer; }
         ;;
     url)
-        rex=(rg -o 'https?://[a-zA-Z0-9./?=_-]+')
+        pipe1=(rg -o 'https?://[a-zA-Z0-9./\?=_-%&]+')
+        pipe2=(cat)
         action() { echo -n "\"$1\" " | tmux load-buffer -; tmux paste-buffer; }
         ;;
     default)
-        rex=(rg -o '[a-zA-Z0-9-_@\.\$\\:/~\(\)]{5,}')  # names with len>5
+        pipe1=(rg -o '[a-zA-Z0-9-=&_@\.\$\\:/~\(\)]{5,}')  # names with len>5
+        pipe2=(sed -E 's/([\.:\)@]){1,2}$//g;s/^\(//g')  # remove special chars at the beginning and end
         action() { echo -n "$1 " | tmux load-buffer -; tmux paste-buffer; }
         ;;
 esac
 
+# TODO: add new mode to 'capture-pane -t <pane>' for another pane (+ list panes with preview?) or all panes
 selected=$(tmux capture-pane -pJS - |
-    "${rex[@]}" |
+    "${pipe1[@]}" | "${pipe2[@]}" |
+    awk 'length($0) >= 5' |  # make sure entries are still long enough after going through the pipeline
     tac |  # show last entries first in fzf
     awk '{ if (!seen[$0]++) print }' |  # dedup
     fzf-tmux -u 20% -- --no-sort --no-mouse --cycle --ansi --color=16 --tiebreak=end,begin,length --inline-info --tiebreak=length)
