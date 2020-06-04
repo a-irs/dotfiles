@@ -22,6 +22,11 @@ set expandtab
 
 set updatetime=150
 
+" set cursor
+let &t_SI = "\<Esc>[6 q"  " insert mode: ibeam
+let &t_SR = "\<Esc>[4 q"  " replace mode: underline
+let &t_EI = "\<Esc>[2 q"  " normal mode: block
+
 " gvim
 set guifont=InputMonoCondensed\ 9
 " set guioptions-=m  " remove menu bar
