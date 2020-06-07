@@ -1,5 +1,5 @@
 #!/bin/sh
-# ref: https://github.com/rebootuser/LinEnum/blob/master/LinEnum.sh#L485
+# ref: https://github.com/rebootuser/LinEnum/blob/master/LinEnum.sh#L485, https://gtfobins.github.io
 
 # minify (remove comments, remove blank lines, remove whitespace at beginning of line), then base64 and print deploy string
 if [ "$1" = base64 ]; then
@@ -50,31 +50,41 @@ main() {
 
     # SUID
     find / -perm -4000 \
-        ! -path "/snap/*" \
-        ! -path "*bin/firejail" \
+        ! -path "*bin/at" \
         ! -path "*bin/chage" \
-        ! -path "*bin/expiry" \
-        ! -path "*bin/pkexec" \
-        ! -path "*bin/mount" \
-        ! -path "*bin/mount" \
-        ! -path "*bin/ksu" \
-        ! -path "*bin/fusermount" \
-        ! -path "*bin/fusermount3" \
-        ! -path "*bin/su" \
-        ! -path "*bin/umount" \
         ! -path "*bin/chfn" \
         ! -path "*bin/chsh" \
+        ! -path "*bin/expiry" \
+        ! -path "*bin/firejail" \
+        ! -path "*bin/fusermount" \
+        ! -path "*bin/fusermount3" \
         ! -path "*bin/gpasswd" \
+        ! -path "*bin/ksu" \
+        ! -path "*bin/mount" \
+        ! -path "*bin/mount" \
+        ! -path "*bin/newgidmap" \
         ! -path "*bin/newgrp" \
+        ! -path "*bin/newuidmap" \
         ! -path "*bin/passwd" \
-        ! -path "*bin/sudo" \
         ! -path "*bin/ping" \
-        ! -path "*bin/at" \
-        ! -path "/usr/lib/*ssh/ssh-keysign" \
-        ! -path "/usr/lib/chromium/chrome-sandbox" \
-        ! -path "/usr/lib/virtualbox/*" \
-        ! -path "/usr/lib/qemu/qemu-bridge-helper" \
-        ! -path "/usr/lib/Xorg.wrap" \
+        ! -path "*bin/pkexec" \
+        ! -path "*bin/su" \
+        ! -path "*bin/sudo" \
+        ! -path "*bin/traceroute6.iputils" \
+        ! -path "*bin/umount" \
+        ! -path "*bin/vmware-user-suid-wrapper" \
+        ! -path "*lib/*ssh/ssh-keysign" \
+        ! -path "*lib/Xorg.wrap" \
+        ! -path "*lib/chromium/chrome-sandbox" \
+        ! -path "*lib/dbus-1.0/dbus-daemon-launch-helper" \
+        ! -path "*lib/eject/dmcrypt-get-device" \
+        ! -path "*lib/policykit-1/polkit-agent-helper-1" \
+        ! -path "*lib/qemu/qemu-bridge-helper" \
+        ! -path "*lib/snapd/snap-confine" \
+        ! -path "*lib/virtualbox/*" \
+        ! -path "*lib/x86_64-linux-gnu/lxc/lxc-user-nic" \
+        ! -path "*lib/xorg/Xorg.wrap" \
+        ! -path "/snap/*" \
         -ls 2>/dev/null
     echo ''
 
@@ -105,9 +115,14 @@ main() {
         -name "id_ecdsa*" -o \
         -name "id_ed25519*" -o \
         -name "authorized_hosts" -o \
-        -name "authorized_keys" \
+        -name "authorized_keys" -o \
+        -name "db.php" -o \
+        -name "config.php" -o \
+        -name "users.php" \
         \) -ls 2>/dev/null
     echo ''
+
+    # /usr/local/bin /usr/local/sbin
 
     # readable sensitive files #2
     for x in /etc/shadow /etc/sudoers* /home/* /root /var/mail/*; do
@@ -134,7 +149,6 @@ main() {
     #sudo -l
     # try sudo without password
     echo '' | sudo -S -l -k 2>/dev/null
-
-    # https://gtfobins.github.io
+    sudo -l
 }
 main
