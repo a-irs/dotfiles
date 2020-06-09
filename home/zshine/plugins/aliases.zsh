@@ -1,5 +1,9 @@
 #!/usr/bin/env zsh
 
+hex() {
+    xxd "$1" | vim +'set ft=xxd' -
+}
+
 if [[ "$commands[nvim]" ]]; then
     alias vim='nvim'
     vim=nvim

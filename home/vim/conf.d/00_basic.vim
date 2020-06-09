@@ -22,6 +22,9 @@ set expandtab
 
 set updatetime=150
 
+" no delay on entering normal mode
+set ttimeoutlen=0
+
 " set cursor
 let &t_SI = "\<Esc>[6 q"  " insert mode: ibeam
 let &t_SR = "\<Esc>[4 q"  " replace mode: underline
