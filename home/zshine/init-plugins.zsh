@@ -1,5 +1,4 @@
 ZSHINE_PLUGINS=(
-  tmux # autostart tmux
   completion # tweaks for TAB-completion
   keys # bind keys for delete, history-search etc.
 
