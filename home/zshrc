@@ -1,8 +1,7 @@
 ZSHINE_DIR=~/.zshine
 
 # autostart tmux if available
-if [[ ! "$commands[tmux]" ]]; then
-    [[ "$VIM" || "$EMACS" || "$INSIDE_EMACS" || "$TMUX" || $- != *i* ]] && return
+if [[ "$commands[tmux]" && -z "$VIM" && -z "$EMACS" && -z "$INSIDE_EMACS" && -z "$TMUX" && $- == *i* ]]; then
 
     # attach to latest detached session if available
     detached_session=$(tmux list-session -F '#{session_name}:#{session_attached}' | grep ':0' | tail -1)
