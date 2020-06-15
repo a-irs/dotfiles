@@ -4,7 +4,6 @@
 # minify (remove comment lines, remove blank lines, remove whitespace at beginning of line), then base64 and print deploy string
 if [ "$1" = base64 ]; then
     echo "sh -c 'echo $(tail -n +10 "$0" | sed -E '/^[ ]*#/d' | sed -E '/^$/d' | sed -E 's/^[ ]*//' | base64) | base64 -d | sh'" | tr -d '\n'
-    printf '\n'
     exit
 fi
 ###################################################################
@@ -15,29 +14,42 @@ log() {
     printf '\n%s\n\n' "$(tput setaf "$color")############# $text$(tput sgr0)"
 }
 
+logs() {
+    color=$1 && shift
+    text=$*
+    printf '\n%s\n' "$(tput setaf "$color")$text$(tput sgr0)"
+}
+
 main() {
     uid=$(id -u)
 
     log 2 "system info"
 
-    w
-    id
+    logs 3 "user/groups info"
+    w && echo
+    id && echo
+    for i in $(cut -d: -f1 /etc/passwd); do
+        id "$i"
+        # TODO interesting groups: adm, wheel, sudo, ...
+    done
+
+    logs 3 "environment"
+    env | grep -vE '^(LS_COLORS)'
+
+    logs 3 "OS info"
     uname -a
     cat /proc/version
     cat /etc/*-release
-    cat /proc/cmdline
     lastlog | grep -v "Never logged in"
-    for i in $(cut -d: -f1 /etc/passwd); do
-        id "$i"
-        # interesting groups: adm, wheel, sudo, ...
-    done
-    env
+    cat /proc/cmdline
 
-    echo ''
+    log 2 "\$HOME"
+    find "$HOME" -ls 2>/dev/null
 
     log 2 "files or directories owned by my groups"
     for g in $(groups); do
         find / -group "$g" ! -type l \
+        ! -path "$HOME" \
         ! -path "$HOME/*" \
         ! -path "/run/user/$uid/*" \
         ! -path "/sys/fs/cgroup/systemd/user.slice/user-$uid.slice/*" \
@@ -94,11 +106,11 @@ main() {
         ! -path "*lib/xorg/Xorg.wrap" \
         ! -path "/snap/*" \
         -ls 2>/dev/null
-    echo ''
 
-    log 1 "writable files outside of \$HOME"
+    log 2 "writable files outside of \$HOME"
     find / -writable ! -type l \
         ! -path "$HOME/*" \
+        ! -path "$HOME" \
         ! -path "/run/user/$uid/*" \
         ! -path "/sys/fs/cgroup/systemd/user.slice/user-$uid.slice/*" \
         ! -path "/sys/fs/cgroup/unified/user.slice/user-$uid.slice/*" \
@@ -114,25 +126,28 @@ main() {
         ! -path /dev/urandom \
         ! -path /dev/zero \
         -ls 2>/dev/null
-    echo ''
 
-    # log 1 "sensitive files outside of \$HOME"
-    # find / \( \
-    #     -name "id_dsa*" -o \
-    #     -name "id_rsa*" -o \
-    #     -name "id_ecdsa*" -o \
-    #     -name "id_ed25519*" -o \
-    #     -name "authorized_hosts" -o \
-    #     -name "authorized_keys" -o \
-    #     -name "db.php" -o \
-    #     -name "config.php" -o \
-    #     -name "users.php" \) \
-    #     -ls 2>/dev/null
-    # echo ''
+    log 2 "sensitive files outside of \$HOME"
+    find / ! -path "$HOME" ! -path "$HOME/*" \( \
+        -name "id_dsa*" -o \
+        -name "id_rsa*" -o \
+        -name "id_ecdsa*" -o \
+        -name "id_ed25519*" -o \
+        -name "authorized_hosts" -o \
+        -name "authorized_keys" -o \
+        -name "db.php" -o \
+        -name "config.php" -o \
+        -name "users.php" -o \
+        -path "/home/*" \
+        \) -ls 2>/dev/null
 
-    log 1 "readable sensitive files (outside of \$HOME)"
-    for x in /etc/shadow /etc/sudoers* /home/* /root /var/mail/* $(find /var/mail -type f); do
-        test -r "$x" && echo "$x"
+    log 2 "readable sensitive paths (outside of \$HOME)"
+    for x in /etc/shadow /etc/sudoers /etc/sudoers.d/* /home/* /root /var/mail/* $(find /var/mail -type f); do
+        case $x in
+            $HOME) continue ;;
+            $HOME/*) continue ;;
+        esac
+        test -r "$x" && ls -l "$x"
     done
 
     # files in /usr/local/bin /usr/local/sbin
@@ -147,12 +162,12 @@ main() {
     # find /etc /var -name "anacron*" -ls 2>/dev/null
     # systemctl list-timers --all
 
-    log 1 "writeable \$PATHs"
+    log 2 "writeable \$PATHs"
     for x in $(echo "$PATH" | tr ":" " "); do
         test -w "$x" && echo "$x"
     done
 
-    log 1 "sudo"
+    log 2 "sudo"
     echo '' | sudo -S -l -k 2>/dev/null
     sudo -l
 }
