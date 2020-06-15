@@ -8,7 +8,7 @@ if [[ "$commands[tmux]" && -z "$VIM" && -z "$EMACS" && -z "$INSIDE_EMACS" && -z 
     if [[ -n "$detached_session" ]]; then
         exec tmux attach-session -t "${detached_session%:*}" \; display "re-attached session"
     else
-        exec tmux new-session
+        exec tmux -u new-session
     fi
 fi
 
