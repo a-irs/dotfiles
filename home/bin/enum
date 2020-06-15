@@ -1,17 +1,25 @@
 #!/bin/sh
 # ref: https://github.com/rebootuser/LinEnum/blob/master/LinEnum.sh#L485, https://gtfobins.github.io
 
-# minify (remove comments, remove blank lines, remove whitespace at beginning of line), then base64 and print deploy string
+# minify (remove comment lines, remove blank lines, remove whitespace at beginning of line), then base64 and print deploy string
 if [ "$1" = base64 ]; then
-    echo "sh -c 'echo $(tail -n +10 "$0" | sed -e '/^[ \t]*#/d' | sed '/^$/d' | sed -e 's/^[ \t]*//' | base64) | base64 -d | sh'" | tr -d '\n'
+    echo "sh -c 'echo $(tail -n +10 "$0" | sed -E '/^[ ]*#/d' | sed -E '/^$/d' | sed -E 's/^[ ]*//' | base64) | base64 -d | sh'" | tr -d '\n'
     printf '\n'
     exit
 fi
 ###################################################################
 
-set -x
+log() {
+    color=$1 && shift
+    text=$*
+    printf '\n%s\n\n' "$(tput setaf "$color")############# $text$(tput sgr0)"
+}
 
 main() {
+    uid=$(id -u)
+
+    log 2 "system info"
+
     w
     id
     uname -a
@@ -27,13 +35,13 @@ main() {
 
     echo ''
 
-    # owned by any of my groups
+    log 2 "files or directories owned by my groups"
     for g in $(groups); do
         find / -group "$g" ! -type l \
         ! -path "$HOME/*" \
-        ! -path "/run/user/$(id -u)/*" \
-        ! -path "/sys/fs/cgroup/systemd/user.slice/user-$(id -u).slice/*" \
-        ! -path "/sys/fs/cgroup/unified/user.slice/user-$(id -u).slice/*" \
+        ! -path "/run/user/$uid/*" \
+        ! -path "/sys/fs/cgroup/systemd/user.slice/user-$uid.slice/*" \
+        ! -path "/sys/fs/cgroup/unified/user.slice/user-$uid.slice/*" \
         ! -path "/proc/*" \
         ! -path "/sys/fs/cgroup/memory/*" \
         ! -path /dev/full \
@@ -48,7 +56,7 @@ main() {
         -ls 2>/dev/null
     done
 
-    # SUID
+    log 2 "SUID"
     find / -perm -4000 \
         ! -path "*bin/at" \
         ! -path "*bin/chage" \
@@ -88,12 +96,12 @@ main() {
         -ls 2>/dev/null
     echo ''
 
-    # writable files outside of home
+    log 1 "writable files outside of \$HOME"
     find / -writable ! -type l \
         ! -path "$HOME/*" \
-        ! -path "/run/user/$(id -u)/*" \
-        ! -path "/sys/fs/cgroup/systemd/user.slice/user-$(id -u).slice/*" \
-        ! -path "/sys/fs/cgroup/unified/user.slice/user-$(id -u).slice/*" \
+        ! -path "/run/user/$uid/*" \
+        ! -path "/sys/fs/cgroup/systemd/user.slice/user-$uid.slice/*" \
+        ! -path "/sys/fs/cgroup/unified/user.slice/user-$uid.slice/*" \
         ! -path "/proc/*" \
         ! -path "/sys/fs/cgroup/memory/*" \
         ! -path /dev/full \
@@ -108,28 +116,26 @@ main() {
         -ls 2>/dev/null
     echo ''
 
-    # readable sensitive files (outside of home) #1
-    find / \( \
-        -name "id_dsa*" -o \
-        -name "id_rsa*" -o \
-        -name "id_ecdsa*" -o \
-        -name "id_ed25519*" -o \
-        -name "authorized_hosts" -o \
-        -name "authorized_keys" -o \
-        -name "db.php" -o \
-        -name "config.php" -o \
-        -name "users.php" \
-        \) -ls 2>/dev/null
-    echo ''
+    # log 1 "sensitive files outside of \$HOME"
+    # find / \( \
+    #     -name "id_dsa*" -o \
+    #     -name "id_rsa*" -o \
+    #     -name "id_ecdsa*" -o \
+    #     -name "id_ed25519*" -o \
+    #     -name "authorized_hosts" -o \
+    #     -name "authorized_keys" -o \
+    #     -name "db.php" -o \
+    #     -name "config.php" -o \
+    #     -name "users.php" \) \
+    #     -ls 2>/dev/null
+    # echo ''
 
-    # /usr/local/bin /usr/local/sbin
-
-    # readable sensitive files #2
-    for x in /etc/shadow /etc/sudoers* /home/* /root /var/mail/*; do
+    log 1 "readable sensitive files (outside of \$HOME)"
+    for x in /etc/shadow /etc/sudoers* /home/* /root /var/mail/* $(find /var/mail -type f); do
         test -r "$x" && echo "$x"
     done
-    find /var/mail -type f
 
+    # files in /usr/local/bin /usr/local/sbin
     # jump, find creds, ...
     # -name "known_hosts" -o \
     #     *_history
@@ -141,14 +147,14 @@ main() {
     # find /etc /var -name "anacron*" -ls 2>/dev/null
     # systemctl list-timers --all
 
-    # writeable PATHs
+    log 1 "writeable \$PATHs"
     for x in $(echo "$PATH" | tr ":" " "); do
         test -w "$x" && echo "$x"
     done
 
-    #sudo -l
-    # try sudo without password
+    log 1 "sudo"
     echo '' | sudo -S -l -k 2>/dev/null
     sudo -l
 }
+
 main

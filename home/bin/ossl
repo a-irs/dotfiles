@@ -4,51 +4,55 @@ set -euo pipefail
 
 ssl=${OPENSSL:-/usr/bin/openssl}
 
-action=$1
-file=$2
+action=$1 && shift
+file=$1 && shift
 
-extract-private() { $ssl pkey -in "$file"; }
-extract-public() { $ssl x509 -pubkey -noout -in "$file"; }
-extract-certificates() { $ssl crl2pkcs7 -nocrl -certfile "$file" | $ssl pkcs7 -print_certs; }
-show-info() { $ssl x509 -noout -text -in "$file"; }
+cmd() {
+    echo "$@"
+    eval "$@"
+}
+extract-private() { $ssl pkey -in "$file" "$@"; }
+extract-public() { $ssl x509 -pubkey -noout -in "$file" "$@"; }
+extract-certificates() { $ssl crl2pkcs7 -nocrl -certfile "$file" "$@" | $ssl pkcs7 -print_certs; }
+show-info() { $ssl x509 -noout -text -in "$file" "$@"; }
 fingerprints() {
-    $ssl x509 -noout -fingerprint -md5 -in "$file"
-    $ssl x509 -noout -fingerprint -sha1 -in "$file"
-    $ssl x509 -noout -fingerprint -sha256 -in "$file"
+    $ssl x509 -noout -fingerprint -md5 -in "$file" "$@"
+    $ssl x509 -noout -fingerprint -sha1 -in "$file" "$@"
+    $ssl x509 -noout -fingerprint -sha256 -in "$file" "$@"
 }
 s_client() {
-    host=$1
-    echo | $ssl s_client -servername "$host" -showcerts -connect "$host:443"
+    host=$1 && shift
+    echo | cmd "$ssl" s_client -servername "$host" -showcerts -connect "$host:443" "$@"
 }
 s_client_cert() {
-    s_client "$1" 2>/dev/null | $ssl x509 -text
+    s_client "$@" 2>/dev/null | $ssl x509 -text
 }
 
 dump-certificate() {
     tmp=$(mktemp)
     trap "rm -f $tmp" EXIT
 
-    $ssl x509 -in "$file" -outform der -out "$tmp"
+    $ssl x509 -in "$file" -outform der -out "$tmp" "$@"
     dumpasn1 -dpvz "$tmp"
 }
 
 case "$action" in
     privatekey|private-key|private|priv|secretkey|secret-key|secret|sec)
-        extract-private ;;
+        extract-private "$@" ;;
     publickey|public-key|public|pub)
-        extract-public ;;
+        extract-public "$@" ;;
     certificates|cachain|chain|certs|cert|ca|c)
-        extract-certificates ;;
+        extract-certificates "$@" ;;
     information|info|i)
-        show-info | less ;;
+        show-info "$@" | less ;;
     dump|asn1|dumpasn1)
-        dump-certificate ;;
+        dump-certificate "$@" ;;
     finger*)
-        fingerprints ;;
+        fingerprints "$@" ;;
     connect)
-        s_client "$file" | less ;;
+        s_client "$file" "$@" | less ;;
     connect_cert)
-        s_client_cert "$file" | less ;;
+        s_client_cert "$file" "$@" | less ;;
     *)
         printf "%s\n" "$(tput setaf 1)unknown command$(tput sgr0)"
         $ssl version
