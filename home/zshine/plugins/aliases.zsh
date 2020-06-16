@@ -1,9 +1,5 @@
 #!/usr/bin/env zsh
 
-hex() {
-    xxd "$1" | vim +'set ft=xxd' -
-}
-
 if [[ "$commands[nvim]" ]]; then
     alias vim='nvim'
     vim=nvim
@@ -13,6 +9,8 @@ fi
 
 alias et="emacsclient -c --alternate-editor='' -t"
 alias e="emacsclient -c --alternate-editor='' -n"
+
+hex() { xxd "$1" | $vim +'set ft=xxd' -; }
 
 # open e.g. html file in temporary browser in app mode
 web() {
@@ -45,12 +43,6 @@ _kali() {
     fi
 }
 
-tmpdir() {
-    local t=$(mktemp -d)
-    trap "rm -rfv "$t"" EXIT
-    cd "$t"
-}
-
 es() {
     local query=$1
     local line=$(command rg -n --color=always "$query" | fzf --reverse)
@@ -79,8 +71,8 @@ tar-bz()  { tar cvaf "$(basename "$PWD")".tar.bz2 -- "$@"; }
 tar-lz()  { tar cvaf "$(basename "$PWD")".tar.lzma -- "$@"; }
 tar-zip() { zip -r "$(basename "$PWD")".zip -- "$@"; }
 
-rotate-log() {
-    [[ "$1" ]] || return 1
+rotate() {
+    [[ -z "$1" || ! -f "$1" ]] && return 1
     local outname="$1.$(date +'%F_%T')"
     mv -v "$1" "$outname" && bzip2 -v "$outname"
 }
