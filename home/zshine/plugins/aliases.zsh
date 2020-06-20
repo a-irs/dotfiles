@@ -1,5 +1,10 @@
 #!/usr/bin/env zsh
 
+clip() {
+    xclip -r -selection clipboard
+    xclip -o -selection clipboard
+}
+
 if [[ "$commands[nvim]" ]]; then
     alias vim='nvim'
     vim=nvim
