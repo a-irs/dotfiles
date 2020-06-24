@@ -188,9 +188,6 @@ dl() {
     echo "${RESET}"
 }
 
-calc() { printf "%s\n" "$@" | bc -l; }
-alias calc="noglob calc"
-
 p() { for f in "$@"; do printf "\n%s\n\n" "=========== $f" && show "$f"; done }
 
 [[ "$commands[less]" ]] && alias less='less -FXR'
