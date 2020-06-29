@@ -1,6 +1,7 @@
 [flake8]
-# E501 = 80 characters
-# W391 = blank line at end of file
 # E129 = https://github.com/PyCQA/pycodestyle/issues/474
 # E302 = expected 2 blank lines, found 1
-ignore = E501,W391,E129,E302
+# E501 = 80 characters
+# E731 = do not assign a lambda expression
+# W391 = blank line at end of file
+ignore = E129,E302,E501,E731,W391
