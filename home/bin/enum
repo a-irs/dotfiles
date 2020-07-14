@@ -113,6 +113,8 @@ main() {
         ! -path "$HOME/*" \
         ! -path "$HOME" \
         ! -path "/run/user/$uid/*" \
+        ! -path "/var/lib/lxcfs/cgroup/name=systemd/user.slice/user-$uid.slice/*" \
+        ! -path "/sys/fs/cgroup/unified/user.slice/user-$uid.slice/*" \
         ! -path "/sys/fs/cgroup/systemd/user.slice/user-$uid.slice/*" \
         ! -path "/sys/fs/cgroup/unified/user.slice/user-$uid.slice/*" \
         ! -path "/proc/*" \
