@@ -1,10 +1,13 @@
 [[ -z "$LANG" ]] && export LANG=en_US.UTF-8
 [[ -z "$LC_ALL" ]] && export LC_ALL=en_US.UTF-8
 
-ZSHINE_DIR=~/.zshine
+# from /etc/zprofile
+if [[ -x /usr/libexec/path_helper ]]; then
+    eval $(/usr/libexec/path_helper -s)
+fi
 
 # autostart tmux if available
-if [[ "$commands[tmux]" && -z "$VIM" && -z "$EMACS" && -z "$INSIDE_EMACS" && -z "$TMUX" && $- == *i* ]]; then
+if [[ "$commands[tmux]" && -z "$VIM" && -z "$EMACS" && -z "$INSIDE_EMACS" && -z "$TMUX" ]]; then
 
     # attach to latest detached session if available
     detached_session=$(tmux list-session -F '#{session_name}:#{session_attached}' | grep ':0' | tail -1)
@@ -19,6 +22,8 @@ fi
 if [[ $TERM == xterm-termite && ! -e /usr/share/terminfo/x/xterm-termite ]]; then
     export TERM=xterm-256color
 fi
+
+ZSHINE_DIR=~/.zshine
 
 zshine_load=(
     ~/.zshrc.d/pre/*(N)
