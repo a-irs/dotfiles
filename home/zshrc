@@ -48,10 +48,11 @@ unset _load
     if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
         zrecompile -pq "$zcompdump"
     fi
-    # zcompile .zshrc
+
     zrecompile -pq ${ZDOTDIR:-${HOME}}/.zshrc
     zrecompile -pq ${ZDOTDIR:-${HOME}}/.zprofile
     zrecompile -pq ${ZDOTDIR:-${HOME}}/.zshenv
+
     # recompile all zsh or sh
     for f in $ZSHINE_DIR/**/*.*sh; do
         zrecompile -pq "$f"

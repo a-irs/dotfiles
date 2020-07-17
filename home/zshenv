@@ -1,2 +1,8 @@
 # Skip global compinit on ubuntu systems.
 skip_global_compinit=true
+
+# to make touchscreen scrolling work with firefox
+export MOZ_USE_XINPUT2=1
+
+# https://wiki.archlinux.org/index.php/Firefox/Tweaks#Enable_WebRender
+export MOZ_WEBRENDER=1
