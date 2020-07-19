@@ -144,7 +144,7 @@ globalkeys = awful.util.table.join(
     awful.key({ win }, "r",          function() awful.screen.focused().myprompt:run() end),
     awful.key({ alt }, "space",      function() run("rofi -show drun") end),
     awful.key({ "Ctrl" }, "space",   function() run_script("menu-vpn") end),
-    awful.key({ alt }, "Return",     function() run("termite") end),
+    awful.key({ alt }, "Return",     function() run("termite -e tmux") end),
     awful.key({ alt, ctrl }, "Return",function() run("termite -e bash") end),
     awful.key({ alt }, "f",          function() run_gui("thunar") end),
     awful.key({ alt }, "c",          function() run_or_raise("firefox", "firefox") end),

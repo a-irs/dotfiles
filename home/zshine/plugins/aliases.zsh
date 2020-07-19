@@ -601,13 +601,13 @@ pall() {
 sandbox() {
     [[ -z "$1" ]] && return
     program=$1
-    mkdir -p "$HOME/sandbox/$program"
-    firejail --private="$HOME/sandbox/$program" --private-dev --private-tmp --caps.drop=all --disable-mnt --noprofile --net=wlan0 --protocol=unix,inet,inet6 "$@"
+    mkdir -p "$HOME/tmp/sandbox/$program"
+    firejail --private="$HOME/tmp/sandbox/$program" --private-dev --private-tmp --caps.drop=all --disable-mnt --noprofile --net=wlan0 --protocol=unix,inet,inet6 "$@"
 }
 
 sandbox-light() {
     [[ -z "$1" ]] && return
     program=$1
-    mkdir -p "$HOME/sandbox/$program"
-    firejail --private="$HOME/sandbox/$program" --noprofile "$@"
+    mkdir -p "$HOME/tmp/sandbox/$program"
+    firejail --private="$HOME/tmp/sandbox/$program" --noprofile "$@"
 }
