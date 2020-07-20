@@ -12,6 +12,8 @@ else
     vim=vim
 fi
 
+alias vi="vim -N -u $HOME/.vimrc.minimal"
+
 alias et="emacsclient -c --alternate-editor='' -t"
 alias e="emacsclient -c --alternate-editor='' -n"
 

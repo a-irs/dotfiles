@@ -1,0 +1,2 @@
+runtime! conf.d/00_basic.vim
+runtime! conf.d/99_post.vim
