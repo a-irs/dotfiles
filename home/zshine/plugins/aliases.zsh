@@ -1,8 +1,23 @@
 #!/usr/bin/env zsh
 
 clip() {
-    xclip -r -selection clipboard
-    xclip -o -selection clipboard
+    if [[ "$commands[xclip]" ]]; then
+        if [[ -t 0 ]]; then
+            xclip -o -selection clipboard
+        elif [[ -n "$1" ]]; then
+            xclip -r -selection clipboard < "$1"
+        else
+            xclip -r -selection clipboard
+        fi
+    elif [[ "$commands[pbcopy]" ]]; then
+        if [[ -t 0 ]]; then
+            pbpaste
+        elif [[ -n "$1" ]]; then
+            pbcopy < "$1"
+        else
+            pbcopy
+        fi
+    fi
 }
 
 if [[ "$commands[nvim]" ]]; then
