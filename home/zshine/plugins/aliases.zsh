@@ -602,6 +602,8 @@ pall() {
     local git_dirs=(
         ~/.dot
         ~/git/a-irs/dot
+        ~/.doc
+        ~/git/a-irs/doc
         /srv/infra
         ~/git/a-irs/infra
     )

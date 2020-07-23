@@ -20,13 +20,8 @@ autocmd BufNewFile,BufFilePre,BufRead *.rules set filetype=iptables
 " better ft=sh, see https://www.reddit.com/r/vim/comments/c6supj/vimsh_better_syntax_highlighting_for_shell_scripts/
 Plug 'arzg/vim-sh'
 
-Plug 'PProvost/vim-ps1'
-
 " increase/decrease/toggle everything with ctrl+a/ctrl+x
 Plug 'Konfekt/vim-CtrlXA'
-
-" emacs org mode support
-Plug 'jceb/vim-orgmode'
 
 " auto-close brackets
 Plug 'raimondi/delimitmate'
@@ -118,11 +113,11 @@ let g:Illuminate_ftblacklist = ['gitcommit']
 Plug 'RRethy/vim-illuminate'
 
 " color schemes
-Plug 'morhetz/gruvbox'
-Plug 'sjl/badwolf'
+" Plug 'morhetz/gruvbox'
+" Plug 'sjl/badwolf'
 Plug 'rhysd/vim-color-spring-night'
-Plug 'sainnhe/sonokai'
-Plug 'sainnhe/gruvbox-material'
+" Plug 'sainnhe/sonokai'
+" Plug 'sainnhe/gruvbox-material'
 
 call plug#end()
 
