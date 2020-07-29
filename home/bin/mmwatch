@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 # source: https://github.com/cloudflare/cloudflare-blog/tree/master/2017-06-29-ssdp
 
@@ -31,7 +31,7 @@ def main(cmd):
 
     while True:
         t0 = datetime.datetime.now()
-        out = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).communicate()[0]
+        out = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).communicate()[0].decode()
 
         p = digits_re.split(out)
 

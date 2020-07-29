@@ -262,7 +262,7 @@ alias lS="$ls -lhSr"
 
 if [[ "$commands[tmux]" ]]; then
     alias t='tmux'
-    alias ta='tmux attach -t'
+    alias ta='TMUX= tmux attach -t'
     alias tn='tmux new-session -s'
     alias tk='tmux kill-session -t'
     alias tl='tmux list-sessions'

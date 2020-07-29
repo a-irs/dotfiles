@@ -133,7 +133,6 @@ def main()
       cmd("mount /dev/disk/by-label/EXTSYS_BOOT #{mount}/boot")
       cmd("sleep 2")  # FIXME
 
-
       rsync(CONF, mount)
       write_fstab(CONF, mount)
       write_hostname(CONF, mount)
