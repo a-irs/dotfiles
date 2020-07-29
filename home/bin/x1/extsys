@@ -71,7 +71,7 @@ def rsync(conf, mount)
     item.exclude.each do |exclude|
       rsync_command = rsync_command + " --exclude '#{exclude}'"
     end
-    rsync_command = "#{rsync_command} #{item.name}/ #{mount}/#{item.name}"
+    rsync_command = "#{rsync_command} #{item.path}/ #{mount}/#{item.path}"
 
     cmd(rsync_command)
   end
@@ -119,7 +119,9 @@ def write_boot(conf, mount)
 end
 
 def main()
+  # TODO
   # prepare(CONF)
+
   Dir.mktmpdir do |mount|
     begin
       cmd("cryptsetup open #{CONF.dest.device}-part2 EXTSYS_CRYPTO", interactive: true)
