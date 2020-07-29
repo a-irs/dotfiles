@@ -21,11 +21,14 @@ def cmd(s, interactive: false)
     puts
   else
     Open3.popen3(s) do |stdin, stdout, stderr, wait_thr|
-      puts stdout.read
-      puts stderr.read
+      so = stdout.read.chomp
+      se = stderr.read.chomp
+      puts so
+      puts se
       if not wait_thr.value.success? then
         raise "CmdException rc=#{wait_thr.value}"
       end
+      return so
     end
   end
 end
@@ -40,8 +43,8 @@ def prepare(conf)
   cmd("partprobe #{conf.dest.device}; sleep 2")
 
   # create partitions
-  cmd("sgdisk -n 1:0:+100MB -c 1:\"EFI System Partition\" -t 1:ef00 #{conf.dest.device}")
-  cmd("sgdisk -n 2:0:+0 -c 2:\"Linux LUKS\" -t 2:8309 #{conf.dest.device}")
+  cmd("sgdisk -n 1:0:+#{conf.dest.sizes.boot} -c 1:\"EFI System Partition\" -t 1:ef00 #{conf.dest.device}")
+  cmd("sgdisk -n 2:0:+#{conf.dest.sizes.luks} -c 2:\"Linux LUKS\" -t 2:8309 #{conf.dest.device}")
 
   cmd("partprobe #{conf.dest.device}; sleep 2")
 
@@ -63,11 +66,12 @@ end
 
 def rsync(conf, mount)
   conf.copy.each do |item|
-    rsync_command = "rsync -aHx --delete"
+    # FIXME: --delete does not make sense because we're copying separate partitions (/ and /home) to a single one
+    rsync_command = "rsync -aH --one-file-system"
     item.exclude.each do |exclude|
-      rsync_command = rsync_command + " --exclude #{exclude}"
+      rsync_command = rsync_command + " --exclude '#{exclude}'"
     end
-    rsync_command = "#{rsync_command} #{item.src}/ #{mount}/#{item.dest}"
+    rsync_command = "#{rsync_command} #{item.name}/ #{mount}/#{item.name}"
 
     cmd(rsync_command)
   end
@@ -88,7 +92,8 @@ end
 def write_boot(conf, mount)
   cmd("grub-install --target=x86_64-efi --recheck --removable --efi-directory=#{mount}/boot --boot-directory=#{mount}/boot")
 
-  uuid = cmd("sleep 2; blkid -o value -s UUID #{conf.dest.device}-part2")
+  cmd("sleep 1")
+  uuid = cmd("blkid -c /dev/null -o value -s UUID #{conf.dest.device}-part2")
   s = %{
   insmod part_gpt
   insmod part_msdos
@@ -114,30 +119,38 @@ def write_boot(conf, mount)
 end
 
 def main()
-  prepare(CONF)
-
+  # prepare(CONF)
   Dir.mktmpdir do |mount|
-    cmd("mount /dev/disk/by-label/EXTSYS #{mount}")
-    cmd("mkdir -p #{mount}/boot")
-    cmd("mkdir -p #{mount}/home")
-    cmd("mount /dev/disk/by-label/EXTSYS_BOOT #{mount}/boot")
+    begin
+      cmd("cryptsetup open #{CONF.dest.device}-part2 EXTSYS_CRYPTO", interactive: true)
+      cmd("partprobe #{CONF.dest.device}; sleep 2")
 
-    rsync(CONF, mount)
-    write_fstab(CONF, mount)
-    write_hostname(CONF, mount)
-    write_boot(CONF, mount)
+      cmd("mount /dev/disk/by-label/EXTSYS #{mount}")
+      cmd("mkdir -p #{mount}/boot")
+      cmd("mkdir -p #{mount}/home")
+      cmd("mount /dev/disk/by-label/EXTSYS_BOOT #{mount}/boot")
+      cmd("sleep 2")  # FIXME
 
-    cmd("rm -f #{mount}/usr/lib/systemd/system/tlp.service")
-    cmd("rm -f #{mount}/home/*/.zprofile*")  # disable auto-startx
 
-    # cleanup
-    cmd("umount -l #{mount}/boot")
-    cmd("umount -l #{mount}")
+      rsync(CONF, mount)
+      write_fstab(CONF, mount)
+      write_hostname(CONF, mount)
+      write_boot(CONF, mount)
+
+      CONF.postcommands.each do |postcommand|
+        cmd(postcommand.gsub(/\$MOUNT\$/, mount))
+      end
+
+    ensure
+      # cleanup
+      cmd("umount -l #{mount}/boot")
+      cmd("umount -l #{mount}")
+      cmd("vgchange -a n vg_extsys || true")
+      cmd("cryptsetup close EXTSYS_CRYPTO")
+      cmd("pvscan --cache")
+    end
   end
 
-  cmd("vgchange -a n vg_extsys || true")
-  cmd("cryptsetup close EXTSYS_CRYPTO")
-  cmd("pvscan --cache")
 end
 
 main
