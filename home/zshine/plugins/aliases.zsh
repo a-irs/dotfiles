@@ -2,20 +2,20 @@
 
 clip() {
     if [[ "$commands[xclip]" ]]; then
-        if [[ -t 0 ]]; then
-            xclip -o -selection clipboard
-        elif [[ -n "$1" ]]; then
+        if [[ -n "$1" ]]; then
             xclip -r -selection clipboard < "$1"
+        elif [[ -t 0 ]]; then
+            xclip -o -selection clipboard
         else
             xclip -r -selection clipboard
         fi
     elif [[ "$commands[pbcopy]" ]]; then
-        if [[ -t 0 ]]; then
-            pbpaste
-        elif [[ -n "$1" ]]; then
+        if [[ -n "$1" ]]; then
             pbcopy < "$1"
-        else
+        elif [[ -t 0 ]]; then
             pbcopy
+        else
+            pbpaste
         fi
     fi
 }

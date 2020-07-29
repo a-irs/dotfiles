@@ -9,7 +9,7 @@ get_brightness() {
 }
 
 set_brightness() {
-    echo "$1" | sudo tee $sysfs_path > /dev/null
+    echo "$1" | tee $sysfs_path > /dev/null
 }
 
 fade_brightness() {
