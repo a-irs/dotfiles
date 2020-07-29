@@ -34,20 +34,24 @@ def prepare(conf)
   # wipe disk
   cmd("sgdisk -Z #{conf.dest.device}")
   cmd("sgdisk -og #{conf.dest.device}")
-  cmd("partprobe #{conf.dest.device}")
+  cmd("partprobe #{conf.dest.device}; sleep 2")
 
   # create partitions
   cmd("sgdisk -n 1:0:+100MB -c 1:\"EFI System Partition\" -t 1:ef00 #{conf.dest.device}")
   cmd("sgdisk -n 2:0:+0 -c 2:\"Linux LUKS\" -t 2:8309 #{conf.dest.device}")
 
+  cmd("partprobe #{conf.dest.device}; sleep 2")
+
   # format file systems
   cmd("mkfs.fat -F32 -n EXTSYS_BOOT #{conf.dest.device}-part1")
   cmd("mkfs.ext4 -L EXTSYS #{conf.dest.device}-part2")
+
+  cmd("partprobe #{conf.dest.device}; sleep 2")
 end
 
 def rsync(conf, mount)
   conf.copy.each do |item|
-    rsync_command = "rsync -aHx --delete -v"
+    rsync_command = "rsync -aHx --delete"
     item.exclude.each do |exclude|
       rsync_command = rsync_command + " --exclude #{exclude}"
     end
@@ -69,7 +73,7 @@ def write_hostname(conf, mount)
   File.write("#{mount}/etc/hostname", "EXTSYS")
 end
 
-def write_grub(conf, mount)
+def write_boot(conf, mount)
   cmd("grub-install --target=x86_64-efi --recheck --removable --efi-directory=#{mount}/boot --boot-directory=#{mount}/boot")
 
   s = %{
@@ -85,6 +89,8 @@ def write_grub(conf, mount)
   }
 }
   File.write("#{mount}/boot/grub/grub.cfg", s)
+
+  cmd("mkinitcpio -g #{mount}/boot/initramfs-linux-fallback.img -S autodetect")
 end
 
 
@@ -99,7 +105,7 @@ Dir.mktmpdir do |mount|
   rsync(CONF, mount)
   write_fstab(CONF, mount)
   write_hostname(CONF, mount)
-  write_grub(CONF, mount)
+  write_boot(CONF, mount)
 
   cmd("umount -l #{mount}/boot")
   cmd("umount -l #{mount}")
