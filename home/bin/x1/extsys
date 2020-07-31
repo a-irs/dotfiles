@@ -4,6 +4,7 @@
 # - put config in git
 # - install arch-chroot
 # - rsync-only mode (without formatting etc.)
+# - port back to bash?
 
 require 'open3'
 require 'yaml'
@@ -45,6 +46,7 @@ def prepare(conf)
   # create partitions
   cmd("sgdisk -n 1:0:+#{conf.dest.sizes.boot} -c 1:\"EFI System Partition\" -t 1:ef00 #{conf.dest.device}")
   cmd("sgdisk -n 2:0:+#{conf.dest.sizes.luks} -c 2:\"Linux LUKS\" -t 2:8309 #{conf.dest.device}")
+  cmd("sgdisk -n 3:0:+0 -c 3:USB_DATA -t 3:0700 #{conf.dest.device}")  # rest: unencrypted data
 
   cmd("partprobe #{conf.dest.device}; sleep 2")
 
@@ -60,14 +62,14 @@ def prepare(conf)
   # format file systems
   cmd("mkfs.fat -F32 -n EXTSYS_BOOT #{conf.dest.device}-part1")
   cmd("mkfs.ext4 -L EXTSYS /dev/vg_extsys/lv_extsys")
+  cmd("mkexfatfs -n USB_DATA #{conf.dest.device}-part3")
 
   cmd("partprobe #{conf.dest.device}; sleep 2")
 end
 
 def rsync(conf, mount)
   conf.copy.each do |item|
-    # FIXME: --delete does not make sense because we're copying separate partitions (/ and /home) to a single one
-    rsync_command = "rsync -aH --one-file-system"
+    rsync_command = "rsync -aH --one-file-system -v --delete"
     item.exclude.each do |exclude|
       rsync_command = rsync_command + " --exclude '#{exclude}'"
     end
@@ -86,14 +88,17 @@ LABEL=EXTSYS_BOOT /boot vfat defaults 0 2
 end
 
 def write_hostname(conf, mount)
-  File.write("#{mount}/etc/hostname", "EXTSYS")
+  timestamp = cmd("date +%F")
+  File.write("#{mount}/etc/hostname", "EXTSYS-#{timestamp}")
 end
 
 def write_boot(conf, mount)
   cmd("grub-install --target=x86_64-efi --recheck --removable --efi-directory=#{mount}/boot --boot-directory=#{mount}/boot")
 
   cmd("sleep 1")
+
   uuid = cmd("blkid -c /dev/null -o value -s UUID #{conf.dest.device}-part2")
+  timestamp = cmd("date +%F")
   s = %{
   insmod part_gpt
   insmod part_msdos
@@ -103,7 +108,9 @@ def write_boot(conf, mount)
   load_video
   insmod gfxterm
 
-  menuentry 'EXTSYS' {
+  set timeout=1
+
+  menuentry 'EXTSYS_#{timestamp}' {
     set gfxpayload=keep
     insmod gzio
     insmod part_gpt
