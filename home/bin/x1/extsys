@@ -1,9 +1,8 @@
 #!/usr/bin/env ruby
 
 # TODO:
-# - put config in git
 # - install arch-chroot
-# - rsync-only mode (without formatting etc.)
+# - rsync-only mode (without partitioning etc.)
 # - port back to bash?
 
 require 'open3'
@@ -11,8 +10,6 @@ require 'yaml'
 require 'json'
 require 'ostruct'
 require 'tmpdir'
-
-CONF = JSON.parse(YAML::load(File.open('extsys.yml')).to_json, object_class: OpenStruct)
 
 def cmd(s, interactive: false)
   puts s
@@ -79,6 +76,25 @@ def rsync(conf, mount)
   end
 end
 
+def mount(conf, mount)
+  cmd("cryptsetup open #{conf.dest.device}-part2 EXTSYS_CRYPTO", interactive: true)
+  cmd("partprobe #{conf.dest.device}; sleep 2")
+
+  cmd("mount /dev/disk/by-label/EXTSYS #{mount}")
+  cmd("mkdir -p #{mount}/boot")
+  cmd("mkdir -p #{mount}/home")
+  cmd("mount /dev/disk/by-label/EXTSYS_BOOT #{mount}/boot")
+  cmd("sleep 2")  # FIXME
+end
+
+def umount(conf, mount)
+  cmd("umount -l #{mount}/boot || true")
+  cmd("umount -l #{mount} || true")
+  cmd("vgchange -a n vg_extsys || true")
+  cmd("cryptsetup close EXTSYS_CRYPTO || true")
+  cmd("pvscan --cache || true")
+end
+
 def write_fstab(conf, mount)
   s = %{
 LABEL=EXTSYS / ext4 defaults 0 1
@@ -126,36 +142,26 @@ def write_boot(conf, mount)
 end
 
 def main()
+  conf = JSON.parse(YAML::load(File.open(__dir__ + '/extsys.yml')).to_json, object_class: OpenStruct)
+  conf.dest.device = Dir.glob(conf.dest.device)[0]
+
   # TODO
-  # prepare(CONF)
+  # prepare(conf)
 
   Dir.mktmpdir do |mount|
     begin
-      cmd("cryptsetup open #{CONF.dest.device}-part2 EXTSYS_CRYPTO", interactive: true)
-      cmd("partprobe #{CONF.dest.device}; sleep 2")
+      mount(conf, mount)
+      rsync(conf, mount)
+      write_fstab(conf, mount)
+      write_hostname(conf, mount)
+      write_boot(conf, mount)
 
-      cmd("mount /dev/disk/by-label/EXTSYS #{mount}")
-      cmd("mkdir -p #{mount}/boot")
-      cmd("mkdir -p #{mount}/home")
-      cmd("mount /dev/disk/by-label/EXTSYS_BOOT #{mount}/boot")
-      cmd("sleep 2")  # FIXME
-
-      rsync(CONF, mount)
-      write_fstab(CONF, mount)
-      write_hostname(CONF, mount)
-      write_boot(CONF, mount)
-
-      CONF.postcommands.each do |postcommand|
+      conf.postcommands.each do |postcommand|
         cmd(postcommand.gsub(/\$MOUNT\$/, mount))
       end
 
     ensure
-      # cleanup
-      cmd("umount -l #{mount}/boot")
-      cmd("umount -l #{mount}")
-      cmd("vgchange -a n vg_extsys || true")
-      cmd("cryptsetup close EXTSYS_CRYPTO")
-      cmd("pvscan --cache")
+      umount(conf, mount)
     end
   end
 
