@@ -64,4 +64,5 @@ echo -n "$(tput setaf 1)"
 docker ps -f status=exited | tail +2
 docker ps -f health=unhealthy | tail +2
 docker ps -f status=dead | tail +2
+docker ps -f status=restarting | tail +2
 echo -n "$(tput sgr0)"

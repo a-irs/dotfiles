@@ -20,12 +20,13 @@ trap control_c SIGINT
 BACKUP=(
 	/media/data/switch
 	/media/data/photos
+	/media/data/photos_google
+	/media/data/photos_print
 	/media/data/apps
 	/media/data/books
 	/media/data/games
 	/media/data/music
 	/media/data/videos/kids
-	/media/data/virtualbox
 )
 
 delay=0.3

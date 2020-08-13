@@ -2,7 +2,7 @@
 
 set -e
 
-IMG=/media/data/cryptodisk-sdc.img
+IMG=/media/data4/cryptodisk-sdc.img
 
 MOUNTPOINT=/media/crypto
 MAPPER_NAME=luks
