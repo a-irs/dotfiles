@@ -1,0 +1,52 @@
+dest:
+  device: /dev/disk/by-id/usb-SanDisk_Ultra_Fit_*-0:0
+  sizes:
+    boot: 256MB
+    luks: 16GB
+
+postcommands:
+  # disable auto-xinit (TTY only)
+  - rm -f $MOUNT$/home/*/.zprofile*
+
+  # disable dropbox autostart
+  - sed -i -E '/.*dropbox.*/d' $MOUNT$/home/*/.xinitrc
+
+  # avoid hardware dependencies
+  - sed -i -E '/^FONT=.*/d' $MOUNT$/etc/vconsole.conf
+  - rm -f $MOUNT$/etc/systemd/system/multi-user.target.wants/tlp.service
+  - rm -f $MOUNT$/etc/systemd/system/timers.target.wants/fstrim.timer
+
+copy:
+  - path: /
+    exclude:
+      - "*/.cache/*"
+      - "*/cache/*"
+      - home/*
+      - srv/splunk
+      - usr/share/doc/*
+      - usr/share/gtk-doc/*
+      - usr/share/icons
+      - usr/share/texmf-dist
+      - var/cache/*
+      - var/lib/docker/*
+      - var/lib/pacman/sync/*
+      - var/lib/texmf/*
+      - var/log/*
+      - var/tmp/*
+  - path: /boot
+    exclude:
+      - kernels/
+  - path: /home
+    exclude:
+      - "*/.dropbox"
+      - "*/.local/share/Steam"
+      - "*/.local/share/Trash/*"
+      - "*/.local/share/thumbnails/*"
+      - "*/Dropbox/media"
+      - "*/downloads/*"
+      - "*/iphone-photos"
+      - "*/photos"
+      - "*/switch"
+      - "*/tmp"
+      - "*/videos"
+      - "*/vm"
