@@ -6,7 +6,7 @@ import sys
 # use this config dict to filter (key) and show pretty descriptions (value)
 TYPES = {
     'vpn': "OpenVPN",
-    'wireguard': "Wireguard",
+    'wireguard': "WireGuard",
     # '802-11-wireless': "Wifi",
     # '802-3-ethernet': "LAN",
 }
