@@ -15,6 +15,7 @@ xset r rate 200 30  # faster keyboard repeat
 # make some cache persistent, some in tmpfs
 rm -f ~/.cache && ln -s /tmp ~/.cache
 mkdir -p ~/.local/share/yay && ln -sfn ~/.local/share/yay ~/.cache/yay
+mkdir -p ~/.local/share/keepassxc && ln -sfn ~/.local/share/keepassxc ~/.cache/keepassxc
 mkdir -p ~/.local/share/thumbnails && ln -sfn ~/.local/share/thumbnails ~/.cache/thumbnails
 mkdir -p ~/.local/share/thumbnails/darktable && ln -sfn ~/.local/share/thumbnails/darktable ~/.cache/darktable
 
