@@ -5,9 +5,6 @@ dest:
     luks: 16GB
 
 postcommands:
-  # disable auto-xinit (TTY only)
-  - rm -f $MOUNT$/home/*/.zprofile*
-
   # disable dropbox autostart
   - sed -i -E '/.*dropbox.*/d' $MOUNT$/home/*/.xinitrc
 
@@ -38,12 +35,14 @@ copy:
       - kernels/
   - path: /home
     exclude:
+      - "*/.cache/*"
       - "*/.dropbox"
       - "*/.local/share/Steam"
       - "*/.local/share/Trash/*"
       - "*/.local/share/thumbnails/*"
       - "*/Dropbox/media"
       - "*/downloads/*"
+      - "*/cache/morgue/*"
       - "*/iphone-photos"
       - "*/photos"
       - "*/switch"
