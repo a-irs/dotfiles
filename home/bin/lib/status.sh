@@ -52,7 +52,7 @@ elif [[ $HOSTNAME =~ srv(2|3) ]]; then
     sstatus qemu-guest-agent.service
     sstatus rsyslog.service
     sstatus sshd.service
-    sstatus unattended-upgrades
+    sstatus unattended-upgrades.service
     exclude_df='(/var/lib/docker|/media/data)'
 elif [[ $HOSTNAME == desk ]]; then
     sstatus cronie.service
