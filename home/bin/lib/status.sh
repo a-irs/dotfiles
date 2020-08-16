@@ -44,11 +44,13 @@ if [[ $HOSTNAME == srv1 ]]; then
     sstatus media-data4.mount
     sstatus media-data.mount
     sstatus media-crypto.mount
+    exclude_df='(/var/lib/docker|/srv/sftp)'
 elif [[ $HOSTNAME =~ srv(2|3) ]]; then
     sstatus cron.service
     sstatus docker.service
     sstatus sshd.service
     sstatus qemu-guest-agent.service
+    exclude_df='(/var/lib/docker|/media/data)'
 elif [[ $HOSTNAME == desk ]]; then
     sstatus cronie.service
     sstatus dhcpcd@eth0.service
@@ -59,9 +61,9 @@ elif [[ $HOSTNAME == desk ]]; then
     echo ""
     sstatus media-HDD_GAMES.mount
     sstatus media-data.mount
+    exclude_df='(/var/lib/docker)'
 fi
 echo ""
-exclude_df='(/var/lib/docker|/srv/sftp)'
 if command -v pydf > /dev/null 2>&1; then
     pydf --mounts <(grep -Ev "$exclude_df" /proc/mounts)
 else
