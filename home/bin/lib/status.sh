@@ -46,10 +46,13 @@ if [[ $HOSTNAME == srv1 ]]; then
     sstatus media-crypto.mount
     exclude_df='(/var/lib/docker|/srv/sftp)'
 elif [[ $HOSTNAME =~ srv(2|3) ]]; then
+    sstatus containerd.service
     sstatus cron.service
     sstatus docker.service
-    sstatus sshd.service
     sstatus qemu-guest-agent.service
+    sstatus rsyslog.service
+    sstatus sshd.service
+    sstatus unattended-upgrades
     exclude_df='(/var/lib/docker|/media/data)'
 elif [[ $HOSTNAME == desk ]]; then
     sstatus cronie.service
