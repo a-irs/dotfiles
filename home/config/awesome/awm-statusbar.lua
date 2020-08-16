@@ -262,7 +262,9 @@ awful.screen.connect_for_each_screen(function(s)
     layout:set_middle(layout2)
     layout:set_right(layout3)
 
-    awful.wibar({ position = "top", screen = s, height = 1, bg = theme.statusbar_top_pixel })
+    if theme.statusbar_top_pixel then
+        awful.wibar({ position = "top", screen = s, height = 1, bg = theme.statusbar_top_pixel })
+    end
     awful.wibar({ position = "top", screen = s, height = theme.statusbar_height }):set_widget(layout)
 
     -- only add bottom statusbar if it has its own (non-border) color

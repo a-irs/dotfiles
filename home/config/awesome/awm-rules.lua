@@ -247,8 +247,10 @@ client.connect_signal("property::minimized", function(c)
     dynamic_tagging()
 end)
 
-client.connect_signal("focus",   function(c) c.border_color = theme.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = theme.border_normal end)
+if theme.border_focus or theme.border_normal then
+    client.connect_signal("focus",   function(c) c.border_color = theme.border_focus end)
+    client.connect_signal("unfocus", function(c) c.border_color = theme.border_normal end)
+end
 
 tag.connect_signal("property::layout", function(t)
     naughty.notify({ text = awful.tag.getproperty(t, "layout").name, timeout = 2, position = "top_middle" })
