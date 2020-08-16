@@ -30,8 +30,11 @@ echo -n "load "
 awk '{print $1 " " $2 " " $3}' /proc/loadavg
 echo ""
 if [[ $HOSTNAME == srv1 ]]; then
+    sstatus containerd.service
     sstatus cronie.service
+    sstatus dhcpcd@eth0.service
     sstatus docker.service
+    sstatus iptables.service
     sstatus qemu-ga.service
     sstatus sshd.service
     echo ""
@@ -41,7 +44,7 @@ if [[ $HOSTNAME == srv1 ]]; then
     sstatus media-data4.mount
     sstatus media-data.mount
     sstatus media-crypto.mount
-elif [[ $HOSTNAME == srv2 ]]; then
+elif [[ $HOSTNAME =~ srv(2|3) ]]; then
     sstatus cron.service
     sstatus docker.service
     sstatus sshd.service
@@ -58,7 +61,12 @@ elif [[ $HOSTNAME == desk ]]; then
     sstatus media-data.mount
 fi
 echo ""
-pydf --mounts <(grep -v '/var/lib/docker' /proc/mounts) || df -h | grep -v /var/lib/docker
+exclude_df='(/var/lib/docker|/srv/sftp)'
+if command -v pydf > /dev/null 2>&1; then
+    pydf --mounts <(grep -Ev "$exclude_df" /proc/mounts)
+else
+    df -h | grep -Ev "$exclude_df"
+fi
 echo ""
 echo -n "$(tput setaf 1)"
 docker ps -f status=exited | tail +2
