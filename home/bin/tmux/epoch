@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+buffer=$(tmux show-buffer)
+epoch=$(echo -n "$buffer" | grep -oE '\b[0-9]{10}\b')
+
+die() {
+    tmux display-message "$1"
+    exit 0
+}
+
+if [[ -z "$epoch" ]]; then
+    die "No timestamp found in: '$buffer'."
+fi
+
+format='+%Y-%m-%d (%A) %H:%M:%S'
+readable=$(date -d @"$epoch" "$format" 2>/dev/null || date -r "$epoch" "$format" 2>/dev/null)
+if [[ -z "$readable" ]]; then
+    die "Timestamp '$epoch' could not be parsed."
+fi
+
+die "DATE: $readable"
+
+exit 0

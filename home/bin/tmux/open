@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+files=()
+for s in $(tmux show-buffer); do
+    [[ -f "$s" ]] && files+=("$s")
+done
+tmux send-keys "vim ${files[*]}"
