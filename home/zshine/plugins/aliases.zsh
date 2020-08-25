@@ -13,9 +13,9 @@ clip() {
         if [[ -n "$1" ]]; then
             pbcopy < "$1"
         elif [[ -t 0 ]]; then
-            pbcopy
-        else
             pbpaste
+        else
+            pbcopy
         fi
     fi
 }
