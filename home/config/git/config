@@ -1,8 +1,13 @@
+[core]
+sshCommand = ssh -o StrictHostKeyChecking=ask
+
 [user]
     email = alexirsi@gmail.com
     name = a-irs
+
 [color]
     ui = 1
+
 [alias]
     subup = submodule update --remote --merge
     r = reset
@@ -23,8 +28,10 @@
 [merge]
     tool = vimdiff
     conflictstyle = diff3
+
 [mergetool]
     prompt = false
+
 [pull]
     # only pull if fast-forward possible
     ff = only
