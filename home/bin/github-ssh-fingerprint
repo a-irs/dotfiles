@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+fingerprints=$(curl -sL https://docs.github.com/en/github/authenticating-to-github/githubs-ssh-key-fingerprints \
+    | grep -P 'SHA256:[\w\+/]+' \
+    | sed -E 's/.*(SHA256:[^<]+?).*(\(.+\)).*/\1 \2/')
+
+echo "$fingerprints"
+echo "$fingerprints" | grep RSA | grep -oP 'SHA256:[\w\+/]+' | xclip -r -selection clipboard
+echo ""
+echo "RSA key fingerprint copied to clipboard."
