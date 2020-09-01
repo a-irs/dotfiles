@@ -1,7 +1,26 @@
 #!/usr/bin/env bash
 
-files=()
-for s in $(tmux show-buffer); do
-    [[ -f "$s" ]] && files+=("$s")
-done
-tmux send-keys "vim ${files[*]}"
+buffer=$(tmux show-buffer)
+url=$(echo -n "$buffer" | grep -Eo "(http|https)://[^ >]+")
+
+die() {
+    tmux display-message "$1"
+    exit 0
+}
+
+open() {
+    if [[ "$OSTYPE" == darwin* ]]; then
+        command open "$1"
+    else
+        xdg-open "$1"
+    fi
+}
+
+if [[ -z "$url" ]]; then
+    die "No URL found in: '$buffer'."
+fi
+
+tmux display-message "Opening $url ..." &
+open "$url" &
+
+exit 0

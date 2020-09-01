@@ -22,7 +22,7 @@ fingerprints() {
 }
 s_client() {
     host=$1 && shift
-    echo | cmd "$ssl" s_client -servername "$host" -showcerts -connect "$host:443" "$@"
+    echo | cmd "$ssl" s_client -servername "$host" -showcerts -connect "$host:443" "$@" | openssl x509 -inform pem -noout -text
 }
 s_client_cert() {
     s_client "$@" 2>/dev/null | $ssl x509 -text

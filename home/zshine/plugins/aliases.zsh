@@ -372,6 +372,7 @@ highlight_files() {
 
 if [[ "$commands[git]" ]]; then
     alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white) %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
+    alias glp="git log -p"
     alias gc="git c"
     alias gca="git ca"
     alias gp="git push"
