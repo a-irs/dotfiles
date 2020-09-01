@@ -9,7 +9,7 @@ if [[ $newline_count -eq 1 || $newline_count -eq 0 ]]; then
 fi
 
 if tmux show-buffer | hexdump | grep -qE '[[:space:]](0[ad]|0d0a)[[:space:]]?'; then
-    tmux confirm-before -p "Includes newlines. Paste? (y/n)" "run-shell 'tmux paste-buffer'"
+    tmux confirm-before -p "Includes newlines, paste? (y/N)  ### $(tmux show-buffer | perl -pe 's/\n/\\n/g') ###" paste-buffer
 else
     tmux paste-buffer
 fi
