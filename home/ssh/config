@@ -22,6 +22,12 @@ Host srv2 srv2.home
     IdentityFile ~/.ssh/id_ed25519
     PubkeyAuthentication yes
 
+Host srv3 srv3.home
+    HostName srv3.home
+    User root
+    IdentityFile ~/.ssh/id_ed25519
+    PubkeyAuthentication yes
+
 Host pi1 pi1.home
     HostName pi1.home
     User root

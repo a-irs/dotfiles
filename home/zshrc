@@ -8,14 +8,7 @@ fi
 
 # autostart tmux if available
 if [[ "$commands[tmux]" && -z "$VIM" && -z "$EMACS" && -z "$INSIDE_EMACS" && -z "$TMUX" ]]; then
-
-    # attach to latest detached session if available
-    detached_session=$(tmux list-session -F '#{session_name}:#{session_attached}' | grep ':0' | tail -1)
-    if [[ -n "$detached_session" ]]; then
-        exec tmux attach-session -t "${detached_session%:*}" \; display "re-attached session"
-    else
-        exec tmux -u new-session
-    fi
+    exec tmux -u new-session
 fi
 
 # switch to 256color if termite is not found
