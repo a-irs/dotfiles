@@ -12,7 +12,7 @@ sshCommand = ssh -o StrictHostKeyChecking=ask
     subup = submodule update --remote --merge
     r = reset
     p = !git add -A && git commit && git push
-    ppp = !git add -A && git commit -m 'none' && git push
+    pp = !git add -A && git commit -m 'Update' && git push 2>/dev/null
     clone1 = clone --depth=1
     i = icdiff
     d = !git add --intent-to-add -A && git diff $@

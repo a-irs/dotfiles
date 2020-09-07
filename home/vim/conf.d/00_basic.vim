@@ -22,6 +22,18 @@ set expandtab
 
 set updatetime=150
 
+" statusbar
+" set laststatus=0  " never show statusbar
+set laststatus=2
+set statusline=
+set statusline+=%F  " show full file path
+set statusline+=\ [%l:%v]  " show line number / position
+set statusline+=\ %m%r%h%w  " show when file is modified
+set statusline+=%=  " right-align from now on
+set statusline+=%{&fileencoding?&fileencoding:&encoding}
+set statusline+=\ %{&ff}
+set statusline+=\ %{&bomb?'BOM':''}
+
 " no delay on entering normal mode
 set ttimeoutlen=0
 
