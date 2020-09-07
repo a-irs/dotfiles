@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 buffer=$(tmux show-buffer)
-url=$(echo -n "$buffer" | grep -Eo "(http|https)://[^ >]+")
+urls=$(echo -n "$buffer" | grep -Eo "(http|https)://[^ >]+")
 
 die() {
     tmux display-message "$1"
@@ -16,11 +16,13 @@ open() {
     fi
 }
 
-if [[ -z "$url" ]]; then
+if [[ -z "$urls" ]]; then
     die "No URL found in: '$buffer'."
 fi
 
-tmux display-message "Opening $url ..." &
-open "$url" &
+tmux display-message "Opening $urls ..." &
+while read -r url; do
+    open "$url" &
+done <<< "$urls"
 
 exit 0
