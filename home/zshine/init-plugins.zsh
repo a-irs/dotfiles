@@ -18,7 +18,6 @@ ZSHINE_PLUGINS=(
   zshmarks # set bookmarks
   explain # explain command switches
   # ssh-agent # autostart ssh-agent
-  homebrew # macos package manager
   python # python dev stuff
   aliases # provides some aliases and functions for daily work
   auto-ls # launch "ls" when entering directory
