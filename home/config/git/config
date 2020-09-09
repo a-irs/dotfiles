@@ -1,5 +1,5 @@
 [core]
-sshCommand = ssh -o StrictHostKeyChecking=ask
+    sshCommand = ssh -o StrictHostKeyChecking=ask
 
 [user]
     email = alexirsi@gmail.com

@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+# adjust brightness with:
+# - xbacklight (arch)
+# - light (nixos)
+
+set -euo pipefail
+
+action=$1
+
+c() {
+    command -v "$1" > /dev/null 2>&1
+}
+
+b_get() {
+    if c xbacklight; then
+        xbacklight -get | cut -d . -f 1
+    elif c light; then
+        light -G | cut -d . -f 1
+    elif c ddcutil; then
+        sudo ddcutil --bus=3 getvcp 10 | perl -pe 's/.*current value =\s*([0-9]+).*/\1/'
+    fi
+}
+b_plus() {
+    if c backlight; then
+        xbacklight -time 100 -inc "$1"
+    elif c light; then
+        light -A "$1";
+    elif c ddcutil; then
+        current=$(b_get)
+        b_set $((current + "$1"))
+    fi
+}
+b_minus() {
+    if c backlight; then
+        xbacklight -time 100 -dec "$1"
+    elif c light; then
+        light -U "$1"
+    elif c ddcutil; then
+        current=$(b_get)
+        b_set $((current - "$1"))
+    fi
+}
+b_set() {
+    if c xbacklight; then
+        xbacklight -time 100 -set "$1"
+    elif c light; then
+        light -S "$1"
+    elif c ddcutil; then
+        sudo ddcutil --bus=3 setvcp 10 "$1"
+    fi
+}
+
+notify() { dunstify -t 1500 -r 123 -i "/usr/share/icons/Faba/48x48/notifications/$1" "$2"; }
+
+case $action in
+    +) STEP=2;;
+    ++) STEP=10;;
+    -) STEP=2;;
+    --) STEP=10;;
+esac
+
+if [[ "$action" == +* ]]; then
+    b_plus "$STEP"
+    notify notification-display-brightness.svg "$(b_get)%"
+elif [[ "$action" == -* ]]; then
+    b_minus "$STEP"
+    notify notification-keyboard-brightness.svg "$(b_get)%"
+else
+    b_set "$action"
+    notify notification-display-brightness.svg "$action%"
+fi
+
+# limit to 1
+if [[ "$(b_get)" -le 0 ]]; then
+    b_set 1
+fi
