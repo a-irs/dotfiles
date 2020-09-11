@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+changed=$1 && shift
+
+TMP="$(mktemp)"
+trap "rm -rf "$TMP"" EXIT
+
+cat << EOF > "$TMP"
+.Xresources.d/dpi
+.config/VirtualBox/*.log*
+.config/parcellite/parcelliterc
+.config/pulse/
+.config/spotify/
+.dot/
+.dropbox/
+.git/
+.lesshst
+.local/share/fasd
+.local/share/gvfs-metadata/*
+.local/share/rofi/*.druncache
+.local/share/xorg/Xorg.*.log*
+.local/share/yay/
+.local/share/applications/
+.local/share/Trash/
+.ssh/known_hosts
+.mozilla/firefox/
+.semantic-highlight-cache
+.vim/undo/
+.viminfo
+.dropbox-dist
+.zsh_history
+.zsh_recent-dirs
+shell.history
+*.zwc
+*.zwc.old
+.zcompcache/
+.local/share/zathura/history
+.config/Thunar/accels.scm
+.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
+.config/dconf/user
+EOF
+
+fd --hidden --no-ignore --type f --changed-within "$changed" --color always --ignore-file "$TMP" "$@" . | sort
