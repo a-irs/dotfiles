@@ -18,9 +18,10 @@
     d = !git add --intent-to-add -A && git diff $@
     wd = diff --word-diff=color
     wdiff = diff --word-diff=color
+    wlog = log --word-diff=color -p
     co = checkout
     cm = commit
-    l = log
+    l = log -p
     s = status -sbu
     c = !git add --intent-to-add -A && git add --patch && git commit
     ca = !git add --intent-to-add -A && git add --patch && git commit --amend
