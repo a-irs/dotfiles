@@ -214,8 +214,17 @@ p() { for f in "$@"; do printf "\n%s\n\n" "=========== $f" && show "$f"; done }
 [[ "$commands[sudo]" ]] && alias sudo='sudo '
 [[ "$commands[pydf]" ]] && alias df='pydf'
 
-[[ "$commands[fd]" ]] && alias fd='fd --hidden --no-ignore'
-[[ "$commands[fdfind]" ]] && alias fd='fdfind --hidden --no-ignore'
+if [[ "$commands[fd]" || "$commands[fdfind]" ]]; then
+    fd=fd
+    [[ "$commands[fdfind]" ]] && fd=fdfind
+
+    fd="$fd --hidden --no-ignore"
+
+    alias fd="$fd"
+    alias fdf="$fd --type f"
+    alias fdd="$fd --type d"
+    alias fda="$fd --hidden --no-ignore --unrestricted --no-ignore-vcs"
+fi
 [[ "$commands[rg]" ]] && alias rg='rg --case-sensitive'
 
 alias cp='cp -i'

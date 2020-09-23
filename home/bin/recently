@@ -2,12 +2,14 @@
 
 set -euo pipefail
 
-changed=$1 && shift
+main() {
+    changed=$1 && shift
 
-TMP="$(mktemp)"
-trap "rm -rf "$TMP"" EXIT
+    TMP="$(mktemp)"
+    trap "rm -rf "$TMP"" EXIT
 
-cat << EOF > "$TMP"
+    cat << EOF > "$TMP"
+.DS_Store
 .Xresources.d/dpi
 .config/VirtualBox/*.log*
 .config/parcellite/parcelliterc
@@ -33,6 +35,7 @@ cat << EOF > "$TMP"
 .zsh_history
 .zsh_recent-dirs
 shell.history
+*.swp
 *.zwc
 *.zwc.old
 .zcompcache/
@@ -42,4 +45,7 @@ shell.history
 .config/dconf/user
 EOF
 
-fd --hidden --no-ignore --type f --changed-within "$changed" --color always --ignore-file "$TMP" "$@" . | sort
+    fd -l --hidden --no-ignore --type f --changed-within "$changed" --color always --ignore-file "$TMP" "$@" .
+}
+
+main "$@"
