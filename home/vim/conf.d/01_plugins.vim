@@ -3,9 +3,11 @@ call plug#begin()
 Plug 'junegunn/fzf' | Plug 'junegunn/fzf.vim'
 let g:fzf_buffers_jump = 1  " jump to existing if possible
 " uses $FZF_DEFAULT_COMMAND
-nnoremap <silent> _ :Files<CR>
+nnoremap <silent> <Leader>f :Files<CR>
+nnoremap <silent> <Leader>F :GFiles?<CR>
+nnoremap <silent> <Leader>b :Buffers<CR>
+nnoremap <silent> <Leader>g :Rg<CR>
 nnoremap <silent> - :History<CR>
-nnoremap <silent> + :Lines<CR>
 nnoremap <silent> <Leader>: :Commands<CR>
 
 Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
@@ -24,7 +26,18 @@ Plug 'arzg/vim-sh'
 Plug 'Konfekt/vim-CtrlXA'
 
 " auto-close brackets
-Plug 'raimondi/delimitmate'
+Plug 'tmsvg/pear-tree'
+let g:pear_tree_smart_openers = 1
+let g:pear_tree_smart_closers = 1
+let g:pear_tree_smart_backspace = 1
+let g:pear_tree_pairs = {
+            \ '(': {'closer': ')'},
+            \ '[': {'closer': ']'},
+            \ '{': {'closer': '}'},
+            \ "'": {'closer': "'"},
+            \ '"': {'closer': '"'},
+            \ '<!--': {'closer': ' -->'}
+            \ }
 
 Plug 'jaxbot/semantic-highlight.vim'
 let g:semanticTermColors = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]

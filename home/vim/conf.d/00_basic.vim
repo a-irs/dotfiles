@@ -7,7 +7,6 @@ set backspace=indent,eol,start  " when at beginning of line, pressing backspace 
 set whichwrap+=<,>,[,]  " moves to next line when pressing right at end of line
 set linebreak  " wrap lines at words
 set smarttab
-set laststatus=0  " never show statusbar
 set autoread  " auto reload file when unchanged in vim and changed outside vim
 set history=2000  " command history
 set scrolloff=1  " scrolling shows one line extra
@@ -23,8 +22,7 @@ set expandtab
 set updatetime=150
 
 " statusbar
-" set laststatus=0  " never show statusbar
-set laststatus=2
+set laststatus=0  " never show statusbar
 set statusline=
 set statusline+=%F  " show full file path
 set statusline+=\ [%l:%v]  " show line number / position
