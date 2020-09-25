@@ -3,12 +3,13 @@ call plug#begin()
 Plug 'junegunn/fzf' | Plug 'junegunn/fzf.vim'
 let g:fzf_buffers_jump = 1  " jump to existing if possible
 " uses $FZF_DEFAULT_COMMAND
-nnoremap <silent> <Leader>f :Files<CR>
-nnoremap <silent> <Leader>F :GFiles?<CR>
-nnoremap <silent> <Leader>b :Buffers<CR>
+nnoremap <silent> <Leader>ff :Files<CR>
+nnoremap <silent> <Leader>fh :History<CR>
+nnoremap <silent> <Leader>fg :GFiles<CR>
+nnoremap <silent> <Leader>fm :GFiles?<CR>
+nnoremap <silent> <Leader>bb :Buffers<CR>
+nnoremap <silent> <Leader>bx :bd<CR>
 nnoremap <silent> <Leader>g :Rg<CR>
-nnoremap <silent> - :History<CR>
-nnoremap <silent> <Leader>: :Commands<CR>
 
 Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
 let g:UltiSnipsSnippetDirectories = ['snip']
