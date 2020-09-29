@@ -20,6 +20,11 @@ clip() {
     fi
 }
 
+ssh() {
+    # disable forwardings: agent, X, GSSAPI
+    command ssh -a -x -k -o StrictHostKeyChecking=accept-new "$@"
+}
+
 if [[ "$commands[nvim]" ]]; then
     alias vim='nvim'
     vim=nvim

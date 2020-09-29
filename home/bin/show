@@ -26,6 +26,7 @@ cleanup_openssl() { perl -pe 's/\S+([0-9a-z][0-9a-z]:){14}$/XXXXXXXXXX/g' | grep
 
 showbin() { zcat "$path" 2> /dev/null || cat "$path" | xxd | trim | wrap; }
 
+preview_sqlite() { sqlite3 "$path" .dump | trim | wrap; }
 preview_tar() { tar tf "$path" | trim | highlight_dirs; }
 preview_zip() { zipinfo -2tz "$path" | trim | highlight_dirs; }
 preview_htm() { elinks -dump 1 -dump-color-mode 1 "$path" | remove_blank | remove_double_blank | trim | wrap; }
@@ -78,6 +79,8 @@ esac
 
 mime_type=$(file --mime-type -Lb -- "$path")
 case "$mime_type" in
+    application/x-sqlite* )
+        preview_sqlite; exit ;;
     application/json )
         preview_json; exit ;;
     application/pdf )
