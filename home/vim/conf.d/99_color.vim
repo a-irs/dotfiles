@@ -36,9 +36,9 @@ catch
 endtry
 
 " git gutter
-highlight SignifySignDelete ctermbg=NONE  ctermfg=1
-highlight SignifySignAdd    ctermbg=NONE  ctermfg=2
-highlight SignifySignChange ctermbg=NONE  ctermfg=3
+highlight GitGutterDelete guibg=NONE
+highlight GitGutterAdd    guibg=NONE
+highlight GitGutterChange guibg=NONE
 
 " clear gutter background
 highlight clear SignColumn

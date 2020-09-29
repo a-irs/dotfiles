@@ -58,11 +58,10 @@ Plug 'tomtom/tcomment_vim'
 nnoremap <silent> <leader># :TComment<CR>
 vnoremap <silent> <leader># :TComment<CR>
 
-Plug 'mhinz/vim-signify'
-let g:signify_vcs_list = ['git']
-let g:signify_sign_show_count = 0
-nmap <leader>< <plug>(signify-next-hunk)
-nmap <leader>> <plug>(signify-prev-hunk)
+Plug 'airblade/vim-gitgutter'
+let g:gitgutter_map_keys = 0
+nmap <leader>< <Plug>(GitGutterNextHunk)
+nmap <leader>> <Plug>(GitGutterPrevHunk)
 
 " ALE async linter
 Plug 'w0rp/ale'
@@ -104,6 +103,11 @@ let g:buftabline_show = 1
 
 " show trailing whitespace, except in current line
 Plug 'ntpeters/vim-better-whitespace'
+let g:better_whitespace_ctermcolor = '1'
+let g:better_whitespace_guicolor = '#ff6e67'
+let g:strip_whitespace_confirm = 0
+let g:strip_whitespace_on_save = 1
+let g:strip_only_modified_lines = 1
 
 Plug 'vim-python/python-syntax', { 'for': 'python' }
 let python_highlight_all = 1
