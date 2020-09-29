@@ -25,6 +25,7 @@
     s = status -sbu
     c = !git add --intent-to-add -A && git add --patch && git commit
     ca = !git add --intent-to-add -A && git add --patch && git commit --amend
+    discard = !git stash push --include-untracked -m "discard-$(date +%F_%T)"
 
 [merge]
     tool = vimdiff
