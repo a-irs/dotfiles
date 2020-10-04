@@ -210,7 +210,7 @@ dl() {
     echo "${RESET}"
 }
 
-p() { for f in "$@"; do printf "\n%s\n\n" "=========== $f" && show "$f"; done }
+p() { for f in "$@"; do printf "\n%s\n\n" "=========== $f" && s "$f"; done }
 
 [[ "$commands[less]" ]] && alias less='less -FXR'
 [[ "$commands[lsblk]" ]] && alias lsblk='lsblk -o NAME,LABEL,TYPE,FSTYPE,SIZE,MOUNTPOINT,UUID -p'
@@ -392,7 +392,7 @@ if [[ "$commands[git]" ]]; then
     alias gp="git push"
     alias gs="git s"
     alias gd="git d"
-    alias ge="git ls-files -mo --exclude-standard -z | fzf --multi --preview='show {}' --exit-0 --read0 --print0 --height=70% --reverse --select-1 | xargs --no-run-if-empty -0 -o $vim -o"
+    alias ge="git ls-files -mo --exclude-standard -z | fzf --multi --preview='s {}' --exit-0 --read0 --print0 --height=70% --reverse --select-1 | xargs --no-run-if-empty -0 -o $vim -o"
 
     clone() {
         git clone --depth 1 "$1" && cd $(basename ${1//.git/})
