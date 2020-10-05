@@ -48,7 +48,13 @@ web() {
     bash -c "chromium --user-data-dir=\"$t\" --app=\"file://\$(readlink -f \"$f\")\" &> /dev/null; rm -rf \"$t\"" &
 }
 
-alias dr="docker run --rm -it"
+if [[ "$commands[docker]" ]]; then
+    alias dor="docker run --rm -it"
+    alias dops="docker ps"
+    alias doi="docker images"
+    dorm() { docker rm "$@" || docker rmi "$@"; }
+fi
+
 kali() { _kali kali "$@"; }
 kali-gpu() { _kali kali-gpu "$@" --device /dev/dri --device /dev/vga_arbiter; }
 kali-rev() { _kali kali-rev "$@" -p 4444:4444 -p 9000:9000 -p 9001:9001 -p 9002:9002 -p 9003:9003; }
