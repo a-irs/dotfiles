@@ -367,6 +367,7 @@ extract() {
             (*.zip|*.war|*.jar|*.sublime-package|*.ipsw|*.xpi|*.apk) unzip "$1" -d $extract_dir ;;
             (*.rar) unrar x -ad "$1" ;;
             (*.7z) 7za x "$1" ;;
+            (*.pkg) pkgutil --expand "$1" "$extract_dir" ;;
             (*.deb)
                 mkdir -p "$extract_dir/control"
                 mkdir -p "$extract_dir/data"
