@@ -56,7 +56,7 @@ theme.tasklist_fg                   = theme.fg_focus
 theme.tasklist_bg                   = theme.bg_normal
 theme.tasklist_disable_icon         = true
 
-theme.statusbar_margin              = dpi(8)
+theme.statusbar_margin              = dpi(6)
 theme.bg_systray                    = theme.bg_normal
 theme.systray_icon_spacing          = dpi(4)
 

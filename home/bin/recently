@@ -26,10 +26,12 @@ main() {
 .local/share/yay/
 .local/share/applications/
 .local/share/Trash/
+.local/share/thumbnails/
 .ssh/known_hosts
 .mozilla/firefox/
 .semantic-highlight-cache
 .vim/undo/
+.vim/plugged/
 .viminfo
 .dropbox-dist
 .zsh_history

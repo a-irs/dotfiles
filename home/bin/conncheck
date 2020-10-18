@@ -84,8 +84,15 @@ get_ip_whois() {
     ip=$1
 
     ext_ip_name=$(dig +short -x "$ip" | rev | cut -d. -f -3 | rev | sed -E 's/^(.*)\.$/\1/')
-    ext_whois=$(whois "$ext_ip_name" | grep 'organization:' | awk '{$1=""; print $0}' | xargs)
-    echo "$ip ($ext_ip_name, $ext_whois)"
+    if [[ "$ext_ip_name" ]]; then
+        ext_whois=$(whois "$ext_ip_name" | grep 'organization:' | awk '{$1=""; print $0}' | xargs)
+    else
+        whois=$(whois "$ip")
+        ext_whois_country=$(echo "$whois" | grep 'country: ' | tail -1 | awk '{$1=""; print $0}' | xargs)
+        ext_whois_desc=$(echo "$whois" | grep 'descr: ' | tail -1 | awk '{$1=""; print $0}' | xargs)
+        ext_whois="$ext_whois_desc, $ext_whois_country"
+    fi
+    echo "$ip (name: $ext_ip_name, whois: $ext_whois)"
 }
 
 command -v nmcli > /dev/null 2>&1 && { echo ""; nmcli -c yes dev status | grep -v 'unmanaged'; }

@@ -215,6 +215,7 @@ client.connect_signal("unmanage", function(c)
         awful.tag.setmwfact(theme.master_width_factor)
         awful.tag.setnmaster(1)
         awful.tag.setncol(1)
+        awful.tag.setgap(theme.useless_gap)
 
         -- return to last non-empty tag
         i = 1
