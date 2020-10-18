@@ -147,8 +147,8 @@ main() {
     log 2 "readable sensitive paths (outside of \$HOME)"
     for x in /etc/shadow /etc/sudoers /etc/sudoers.d/* /home/* /root /var/mail/* $(find /var/mail -type f); do
         case $x in
-            $HOME) continue ;;
-            $HOME/*) continue ;;
+            "$HOME") continue ;;
+            "$HOME"/*) continue ;;
         esac
         test -r "$x" && ls -l "$x"
     done
