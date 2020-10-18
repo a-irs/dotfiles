@@ -2,6 +2,9 @@
 
 VIRTUAL_ENV_DISABLE_PROMPT=1
 
+# default: stored in current directory
+export MYPY_CACHE_DIR=/tmp/mypy
+
 venv() {
     [[ -n "$VIRTUAL_ENV" ]] && { deactivate; return; }
     [[ $# != 1 ]] && { echo "venv <name>"; return 2; }

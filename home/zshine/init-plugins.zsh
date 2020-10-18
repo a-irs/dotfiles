@@ -24,6 +24,7 @@ ZSHINE_PLUGINS=(
   nix # nixos, nix package manager
   fasd # autocomplete paths
   todo # show ~/.todo on start
+  kubernetes
 
   infra # custom
 )

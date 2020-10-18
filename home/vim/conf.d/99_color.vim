@@ -35,13 +35,9 @@ catch
     highlight StatusLine term=bold,reverse ctermfg=11 ctermbg=242 guifg=yellow guibg=DarkGray
 endtry
 
-" git gutter
-highlight GitGutterDelete guibg=NONE
-highlight GitGutterAdd    guibg=NONE
-highlight GitGutterChange guibg=NONE
-
-" clear gutter background
+" clear sidebar backgrounds (git gutter, line numbers)
 highlight clear SignColumn
+highlight clear LineNr
 
 " show invisible chars
 set list
