@@ -84,6 +84,9 @@ if [[ $HOSTNAME == desk ]]; then
     wait-for-host spotify.com
     pidof spotify || exo-open "$HOME/.local/share/applications/spotify.desktop"
     xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --name "^Spotify Premium$")" 5
+
+    # for ddcutil (brightness control)
+    sudo modprobe i2c-dev &
 EOF
 
     cat << 'EOF' | bash &
