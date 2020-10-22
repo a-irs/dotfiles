@@ -45,7 +45,7 @@ web() {
     f=$1
     t=$(mktemp -d)
 
-    bash -c "chromium --user-data-dir=\"$t\" --app=\"file://\$(readlink -f \"$f\")\" &> /dev/null; rm -rf \"$t\"" &
+    bash -c "/usr/bin/chromium --user-data-dir=\"$t\" --app=\"file://\$(readlink -f \"$f\")\" &> /dev/null; rm -rf \"$t\"" &
 }
 
 if [[ "$commands[docker]" ]]; then

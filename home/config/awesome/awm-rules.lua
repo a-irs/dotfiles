@@ -85,7 +85,7 @@ local function dynamic_tagging()
                         name = make_name(name, c, "web[*]")
                     elseif c.name and string.find(c.name, ".mosh. ") then
                         name = make_name(name, c, "mosh")
-                    elseif c.name and string.find(c.name, 'ssh ') then
+                    elseif c.name and c.name:find('^ssh ') then
                         name = make_name(name, c, "ssh")
                     elseif c.class == "firefox" or c.class == "Firefox" or c.class == "Chrome" or c.class == "Chromium" then
                         name = make_name(name, c, "web")
