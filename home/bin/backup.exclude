@@ -84,8 +84,8 @@
 /home/*/videos
 /home/*/iphone-backup
 /home/*/iphone-photos
-/home/*/switch/sd
-/home/*/switch/tmp
+/home/*/nintendo-switch-hacking/sd
+/home/*/nintendo-switch-hacking/tmp
 /home/*/.rustup/toolchains
 
 **/Package Control.cache

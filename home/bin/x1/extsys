@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 
 # TODO:
-# - install arch-chroot
-# - rsync-only mode (without partitioning etc.)
 # - port back to bash?
 
 require 'open3'
@@ -58,31 +56,31 @@ def prepare(conf)
 
   # format file systems
   cmd("mkfs.fat -F32 -n EXTSYS_BOOT #{conf.dest.device}-part1")
-  cmd("mkfs.ext4 -L EXTSYS /dev/vg_extsys/lv_extsys")
+  cmd("mkfs.#{conf.dest.filesystem.name} -L EXTSYS /dev/vg_extsys/lv_extsys")
   cmd("mkexfatfs -n USB_DATA #{conf.dest.device}-part3")
 
   cmd("partprobe #{conf.dest.device}; sleep 2")
 end
 
 def rsync(conf, mount)
-  conf.copy.each do |item|
-    rsync_command = "rsync -aH --one-file-system -v --delete --delete-excluded"
-    item.exclude.each do |exclude|
+    rsync_command = "rsync -aHAX -v --delete --delete-excluded"
+    conf.exclude.each do |exclude|
       rsync_command = rsync_command + " --exclude '#{exclude}'"
     end
-    rsync_command = "#{rsync_command} #{item.path}/ #{mount}/#{item.path}"
+    # implicit excludes
+    rsync_command = "#{rsync_command} --exclude /dev --exclude /proc --exclude /run --exclude /sys --exclude /tmp --exclude /.snapshots --exclude '/lost+found' --exclude '/*/lost+found' --exclude /mnt --exclude /media"
+
+    rsync_command = "#{rsync_command} / #{mount}"
 
     cmd(rsync_command)
-  end
 end
 
 def mount(conf, mount)
   cmd("cryptsetup open #{conf.dest.device}-part2 EXTSYS_CRYPTO", interactive: true)
   cmd("partprobe #{conf.dest.device}; sleep 2")
 
-  cmd("mount /dev/disk/by-label/EXTSYS #{mount}")
+  cmd("mount /dev/disk/by-label/EXTSYS -o #{conf.dest.filesystem.options} #{mount}")
   cmd("mkdir -p #{mount}/boot")
-  cmd("mkdir -p #{mount}/home")
   cmd("mount /dev/disk/by-label/EXTSYS_BOOT #{mount}/boot")
   cmd("sleep 2")  # FIXME
 end
@@ -97,8 +95,8 @@ end
 
 def write_fstab(conf, mount)
   s = %{
-LABEL=EXTSYS / ext4 defaults 0 1
-LABEL=EXTSYS_BOOT /boot vfat defaults 0 2
+LABEL=EXTSYS / #{conf.dest.filesystem.name} defaults,#{conf.dest.filesystem.options} 0 0
+LABEL=EXTSYS_BOOT /boot vfat defaults 0 0
 }
   File.write("#{mount}/etc/fstab", s)
 end
@@ -132,23 +130,23 @@ def write_boot(conf, mount)
     insmod part_gpt
     set root='hd0,gpt1'
     search --no-floppy --label --set=root EXTSYS_BOOT
-    linux /vmlinuz-linux root=/dev/mapper/vg_extsys-lv_extsys rw ipv6.disable=1 rd.luks.name=#{uuid}=EXTSYS_CRYPTO
-    initrd /initramfs-linux-fallback.img
+    linux /#{conf.kernel} root=/dev/mapper/vg_extsys-lv_extsys rw ipv6.disable=1 rd.luks.name=#{uuid}=EXTSYS_CRYPTO
+    initrd /initramfs.img
   }
 }
   File.write("#{mount}/boot/grub/grub.cfg", s)
 
-  cmd("mkinitcpio -g #{mount}/boot/initramfs-linux-fallback.img -S autodetect")
+  cmd("mkinitcpio -g #{mount}/boot/initramfs.img -S autodetect")
 end
 
 def main()
   conf = JSON.parse(YAML::load(File.open(__dir__ + '/extsys.yml')).to_json, object_class: OpenStruct)
   conf.dest.device = Dir.glob(conf.dest.device)[0]
 
-  # TODO
-  # prepare(conf)
-
   Dir.mktmpdir do |mount|
+
+    # prepare(conf)
+
     begin
       mount(conf, mount)
       rsync(conf, mount)
