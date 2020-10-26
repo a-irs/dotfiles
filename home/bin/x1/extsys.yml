@@ -18,25 +18,28 @@ postcommands:
   - rm -f $MOUNT$/etc/systemd/system/multi-user.target.wants/tlp.service
   - rm -f $MOUNT$/etc/systemd/system/timers.target.wants/fstrim.timer
 
-  # no automatic startx
+  # no automatic startx, launch via alias (just 'startx' does not work as we're inside tmux by default)
   - rm -f $MOUNT$/home/*/.zprofile*
+  - echo 'alias startx="echo startx > ~/.zprofile && exit"' | tee -a $MOUNT$/home/*/.zshrc
+  - sed -i -E 's/^theme\.bg_normal.*/theme.bg_normal = "#d9304f"/' $MOUNT$/home/*/.config/awesome/theme.lua
+  - sed -i -E 's/^theme\.fg_normal.*/theme.fg_normal = "#ffffff"/' $MOUNT$/home/*/.config/awesome/theme.lua
 
 exclude:
   - "**/.cache/*"
-  - "/home/**/nintendo-switch-hacking/sd"
-  - "/home/**/nintendo-switch-hacking/tmp"
-  - "/home/*/.cache/*"
-  - "/home/*/.dropbox"
-  - "/home/*/.local/share/Steam"
-  - "/home/*/.local/share/Trash/*"
-  - "/home/*/.local/share/thumbnails/*"
-  - "/home/*/Dropbox/media"
-  - "/home/*/downloads/*"
-  - "/home/*/iphone-photos"
-  - "/home/*/photos"
-  - "/home/*/tmp"
-  - "/home/*/videos"
-  - "/home/*/vm"
+  - /home/**/nintendo-switch-hacking/sd
+  - /home/**/nintendo-switch-hacking/tmp
+  - /home/*/.cache/*
+  - /home/*/.dropbox
+  - /home/*/.local/share/Steam
+  - /home/*/.local/share/Trash/*
+  - /home/*/.local/share/thumbnails/*
+  - /home/*/Dropbox/media
+  - /home/*/downloads/*
+  - /home/*/iphone-photos
+  - /home/*/photos
+  - /home/*/tmp
+  - /home/*/videos
+  - /home/*/vm
   - /srv/kube
   - /srv/splunk
   - /usr/share/doc/*

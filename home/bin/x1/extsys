@@ -124,13 +124,13 @@ def write_boot(conf, mount)
 
   set timeout=1
 
-  menuentry 'EXTSYS_#{timestamp}' {
+  menuentry 'EXTSYS-#{timestamp}' {
     set gfxpayload=keep
     insmod gzio
     insmod part_gpt
     set root='hd0,gpt1'
     search --no-floppy --label --set=root EXTSYS_BOOT
-    linux /#{conf.kernel} root=/dev/mapper/vg_extsys-lv_extsys rw ipv6.disable=1 rd.luks.name=#{uuid}=EXTSYS_CRYPTO
+    linux /#{conf.kernel} root=/dev/disk/by-label/EXTSYS rw ipv6.disable=1 rd.luks.name=#{uuid}=EXTSYS_CRYPTO
     initrd /initramfs.img
   }
 }
@@ -142,6 +142,12 @@ end
 def main()
   conf = JSON.parse(YAML::load(File.open(__dir__ + '/extsys.yml')).to_json, object_class: OpenStruct)
   conf.dest.device = Dir.glob(conf.dest.device)[0]
+
+  if ARGV[0] == "boot" then
+    cmd("qemu-system-x86_64 --bios /usr/share/ovmf/x64/OVMF.fd -m 2G -enable-kvm -cpu host -usb -device usb-tablet -display sdl -vga virtio -hdb '#{conf.dest.device}'", interactive: true)
+    exit
+  end
+
 
   Dir.mktmpdir do |mount|
 
