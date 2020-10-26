@@ -2,7 +2,6 @@
 
 # TODO:
 # - port back to bash?
-# - RO / /boot
 
 require 'open3'
 require 'yaml'
@@ -118,7 +117,7 @@ def write_fstab(conf, mount)
 
   s = %{
 LABEL=EXTSYS / #{conf.dest.filesystem.name} defaults,#{conf.dest.filesystem.options} 0 0
-LABEL=EXTSYS_BOOT /boot vfat defaults 0 0
+LABEL=EXTSYS_BOOT /boot vfat defaults#{',ro' if conf.dest.overlayfs} 0 0
 }
   File.write("#{mount}/etc/fstab", s)
 end
@@ -139,7 +138,7 @@ end
 
 def write_boot(conf, mount)
   #
-  # installs grub bootloader (EFI removable, so it's basically just an EFI executable in /boot/EFI) and writes config
+  # installs grub bootloader (EFI removable, so it's basically just an EFI executable in /boot/EFI/BOOT/BOOTX64.EFI) and writes config
   #
 
   cmd("grub-install --target=x86_64-efi --recheck --removable --efi-directory=#{mount}/boot --boot-directory=#{mount}/boot")
@@ -165,7 +164,7 @@ def write_boot(conf, mount)
     insmod part_gpt
     set root='hd0,gpt1'
     search --no-floppy --label --set=root EXTSYS_BOOT
-    linux /#{conf.kernel.filename} rw cryptdevice=UUID=#{uuid}:EXTSYS_CRYPTO root=/dev/disk/by-label/EXTSYS #{conf.kernel.params}
+    linux /#{conf.kernel.filename} #{conf.dest.overlayfs ? 'ro' : 'rw'} cryptdevice=UUID=#{uuid}:EXTSYS_CRYPTO root=/dev/disk/by-label/EXTSYS #{conf.kernel.params}
     initrd /initramfs.img
   }
 }
@@ -180,7 +179,7 @@ def write_initramfs(conf, mount)
 
   Dir.mktmpdir do |tmp|
 
-    # https://github.com/felixsinger/mkinitcpio-overlayfs
+    # inspired by https://github.com/nils-werner/raspi-overlayroot
     s_install = %{
 #!/bin/bash
 
@@ -197,9 +196,7 @@ run_hook() {
   # Create overlay tree in RAM
   mkdir /overlay
   mount -t tmpfs overlayroot /overlay
-  mkdir /overlay/upper
-  mkdir /overlay/work
-  mkdir /overlay/lower
+  mkdir /overlay/lower /overlay/upper /overlay/work
 
   # Remove /new_root directory and replace it with symlink
   # After run_hook, mount_handler will mount our rootfs into here /new_root
@@ -226,13 +223,17 @@ run_latehook() {
     Dir.mkdir("#{tmp}/hooks")
     File.write("#{tmp}/hooks/overlayfs", s_hook)
 
-    # note: systemd hooks do not work here (they do not run latehooks apparently, so use the default arch linux busybox hooks here)
+    # note: systemd hooks do not work here (they do not run latehooks apparently), so use the default arch linux busybox hooks here
     File.write("#{tmp}/mkinitcpio.conf", %{
-    HOOKS=(base consolefont udev keyboard modconf block keymap encrypt lvm2 filesystems fsck)
+    HOOKS=(base consolefont udev keyboard modconf block keymap encrypt lvm2 filesystems)
     COMPRESSION="zstd"
     })
 
-    cmd("mkinitcpio -g #{mount}/boot/initramfs.img -c #{tmp}/mkinitcpio.conf -D /usr/lib/initcpio -D #{tmp} -A overlayfs")
+    if conf.dest.overlayfs then
+      cmd("mkinitcpio -g #{mount}/boot/initramfs.img -c #{tmp}/mkinitcpio.conf -D /usr/lib/initcpio -D #{tmp} -A overlayfs")
+    else
+      cmd("mkinitcpio -g #{mount}/boot/initramfs.img -c #{tmp}/mkinitcpio.conf -D /usr/lib/initcpio")
+    end
   end
 end
 
@@ -248,7 +249,9 @@ def main()
 
   Dir.mktmpdir do |mount|
 
-    prepare(conf)
+    if ARGV[0] == "prepare" then
+      prepare(conf)
+    end
 
     begin
       mount(conf, mount)

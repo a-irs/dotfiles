@@ -30,7 +30,6 @@ window_manager=awesome
 nitrogen --restore &
 lxpolkit &
 picom &
-[[ $HOSTNAME == x1 ]] && xcalib ~/.config/x1carbon3rd_notebookcheck.com.icc &
 redshift &
 dunst &
 ~/.bin/workstats &
@@ -59,6 +58,9 @@ if [[ $HOSTNAME == x1 || $HOSTNAME == dell ]]; then
 
     # turn off display after 5m
     xset dpms 300 300 300
+
+    nm-applet &
+    xcalib ~/.config/x1carbon3rd_notebookcheck.com.icc &
 fi
 
 if [[ $HOSTNAME == desk ]]; then
