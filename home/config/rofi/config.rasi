@@ -1,0 +1,12 @@
+configuration {
+	show-icons: true;
+	font: "InputMonoCondensed 12";
+	modi: "drun,run";
+	width: -50;
+	lines: 5;
+	terminal: "termite";
+	scroll-method: 1;
+	theme: "android_notification";
+	cache-dir: ".local/share/rofi";
+	display-drun: "run";
+}
