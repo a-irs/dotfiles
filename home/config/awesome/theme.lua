@@ -58,7 +58,7 @@ theme.tasklist_disable_icon         = true
 
 theme.statusbar_margin              = dpi(6)
 theme.bg_systray                    = theme.bg_normal
-theme.systray_icon_spacing          = dpi(4)
+theme.systray_icon_spacing          = dpi(2)
 
 theme.widget_music_fg               = theme.fg_focus
 theme.widget_music_bg               = theme.bg_focus2

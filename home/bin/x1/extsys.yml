@@ -45,9 +45,7 @@ exclude:
   - /home/*/vm
   - /srv/kube
   - /srv/splunk
-  - /usr/share/doc/*
   - /usr/share/gtk-doc/*
-  - /usr/share/icons
   - /usr/share/texmf-dist
   - /var/cache/*
   - /var/lib/docker/*
