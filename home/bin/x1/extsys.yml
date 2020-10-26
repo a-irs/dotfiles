@@ -8,7 +8,9 @@ dest:
     luks: 16GB
     # rest of device is filled with an unencrypted exFAT partition
 
-kernel: vmlinuz-linux-zen
+kernel:
+  filename: vmlinuz-linux-zen
+  params: ipv6.disable=1
 
 postcommands:
   # disable dropbox autostart
