@@ -18,6 +18,7 @@ remove_double_blank() { cat -s; } # remove multiple blank lines
 highlight_dirs() { GREP_COLOR='1;33' grep -E --color=always '(.)*/|$'; } # TODO: not working in ranger
 cleanup_openssl() { perl -pe 's/\S+([0-9a-z][0-9a-z]:){14}$/XXXXXXXXXX/g' | grep -v 'XXXXXXXXXX$'; }
 
+preview_elf() { readelf -sh --wide "$path" | trim | wrap; }
 preview_binary() { zcat "$path" 2> /dev/null || cat "$path" | xxd -autoskip | trim | wrap; }
 
 preview_sqlite() { sqlite3 "$path" .dump | trim | wrap; }
@@ -32,7 +33,7 @@ preview_sshkey() { file -Lb -- "$path"; ssh-keygen -l -f "$path"; echo ""; cat "
 preview_plist() { temp=$(mktemp); plutil -convert xml1 -o "$temp" -- "$path"; cat "$temp" | trim | wrap; rm -f "$temp"; }
 preview_cert() { openssl x509 -noout -text -in "$path" | cleanup_openssl | trim | wrap; }
 preview_csr() { openssl req -in "$path" -noout -text | cleanup_openssl | trim | wrap; }
-preview_csv() { column -xt -s\;, "$path" | trim | wrap; }
+preview_csv() { column -t -s\;, "$path" | trim | wrap; }
 preview_rrd() { rrdinfo "$path" | trim | wrap; }
 
 file_type=$(file -Lb -- "$path")
@@ -53,6 +54,7 @@ case "$file_type" in
     *" public key") preview_sshkey; exit ;;
     *" certificate") preview_cert; exit ;;
     *" certificate request") preview_csr; exit ;;
+    ELF*) preview_elf; exit ;;
 esac
 
 extension="${filename##*.}"
