@@ -51,6 +51,19 @@ CONFIG = {
             '-V geometry=top=3cm,bottom=3cm,left=2.5cm,right=2.5cm',  # tweaked Word 2007 style (2.5cm on any side)
             '-V linestretch=1.2',
             '-V fontsize=11pt',  # default: 10
+
+            # better code blocks (e.g. with line wrapping)
+            '--listings',
+            '-V header-includes="\\lstset{breaklines=true}"',
+            '-V header-includes="\\lstset{keepspaces=true}"',
+            '-V header-includes="\\lstset{extendedchars=true}"',
+            '-V header-includes="\\lstset{postbreak=\\mbox{\\textcolor{Gray}{$\\hookrightarrow$}\\space}}"',
+            '-V header-includes="\\lstset{showstringspaces=false}"',
+            '-V header-includes="\\lstset{basicstyle=\\small\\ttfamily}"',
+            '-V header-includes="\\lstset{keywordstyle=\\color{Maroon}}"',
+            '-V header-includes="\\lstset{stringstyle=\\color{PineGreen}}"',
+            '-V header-includes="\\lstset{commentstyle=\\slshape\\color{Blue}}"',
+            '-V header-includes="\\lstset{numberstyle=\\color{Green}}"',
         ]
     },
 
