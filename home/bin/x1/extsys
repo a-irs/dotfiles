@@ -141,7 +141,7 @@ def write_boot(conf, mount)
   # installs grub bootloader (EFI removable, so it's basically just an EFI executable in /boot/EFI/BOOT/BOOTX64.EFI) and writes config
   #
 
-  cmd("grub-install --target=x86_64-efi --recheck --removable --efi-directory=#{mount}/boot --boot-directory=#{mount}/boot")
+  cmd("grub-install --target=x86_64-efi --recheck --removable --efi-directory=#{mount}/boot --boot-directory=#{mount}/boot --themes='' --locales=''")
 
   cmd("sleep 1")
 
