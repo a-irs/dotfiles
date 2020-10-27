@@ -48,9 +48,14 @@ ORPHAN 31 # symlink to nonexistent file, or non-stat'able file
 SETUID 37;41 # file that is setuid (u+s)
 SETGID 30;43 # file that is setgid (g+s)
 CAPABILITY 30;41 # file with capability
-EXEC 01 # This is for files with execute permission
+EXEC 00 # do not set specific color (only "*" with ls -F)
 
 ###################### archives
+.pcap 32
+.dmg 32
+.pkg 32
+.ova 32
+.ovf 32
 .tar 32
 .sublime-package 32
 .apk 32
@@ -98,20 +103,22 @@ EXEC 01 # This is for files with execute permission
 .iso 32
 .zst 32
 .kdbx 32
-
 .img 3;32
 .vdi 3;32
 .qcow2 3;32
+.whl 32
+.cpgz 32
 
 ###### temp
-*.part 1;30
-*.cache 1;30
-*.pyc 1;30
-*.temp 1;30
-*.tmp 1;30
-*.zwc 1;30
-*.old 1;30
-*.corrupt 1;30
+.DS_Store 1;30
+.part 1;30
+.cache 1;30
+.pyc 1;30
+.temp 1;30
+.tmp 1;30
+.zwc 1;30
+.old 1;30
+.corrupt 1;30
 
 ###################### media
 .jpg 35
@@ -197,18 +204,45 @@ EXEC 01 # This is for files with execute permission
 *CODEOWNERS 34
 .snippets 34
 .taskpaper 34
+.eml 34
+.lst 34
+.list 34
+.mf 34
+.ics 34
+.md5 34
+.sha1 34
+.sha128 34
+.sha256 34
+.sha512 34
+*MD5SUMS 34
+*SHA1SUMS 34
+*SHA128SUMS 34
+*SHA256SUMS 34
+*SHA512SUMS 34
+*hosts 34
+
+# cert
+.crl 3;30;45
+.pem 3;30;45
+.key 3;30;45
+.cert 3;30;45
+.pub 3;30;45
+.gpg 3;30;45
+.asc 3;30;45
+.sig 3;30;45
 
 ###### programming
 .gpx 34
 .ml 34
 *Gemfile 34
-.yml             36
-.xml             34
-*rc              34
-.yaml            36
-.cfg             36
-.conf            36
-.ini             36
+.xml 34
+*rc 34
+.yml 36
+.yaml 36
+.cfg 36
+.conf 36
+.ini 36
+.gitignore 36
 .json 36
 .js 36
 .html 36
@@ -222,6 +256,8 @@ EXEC 01 # This is for files with execute permission
 *Rakefile 36
 *Dockerfile 36
 .py 36
+.pl 36
+.ps1 36
 .icc 36
 .icm 36
 .cat 36
@@ -255,6 +291,11 @@ EXEC 01 # This is for files with execute permission
 .sqlite-wal 33
 .sqlite-shm 33
 .db 33
+.xmind 33
+.potx 33
+.dot 33
+.ppt 33
+.pptx 33
 
 ############### others, binary
 .exe 31

@@ -1,51 +1,55 @@
 dest:
   device: /dev/disk/by-id/usb-SanDisk_Ultra_Fit_*-0:0
+  overlayfs: false
+  filesystem:
+    name: btrfs
+    options: noatime,compress=zstd
   sizes:
     boot: 256MB
     luks: 16GB
+    # rest of device is filled with an unencrypted exFAT partition
+
+kernel:
+  filename: vmlinuz-linux-zen
+  params: ipv6.disable=1
 
 postcommands:
   # disable dropbox autostart
   - sed -i -E '/.*dropbox.*/d' $MOUNT$/home/*/.xinitrc
 
   # avoid hardware dependencies
-  - sed -i -E '/^FONT=.*/d' $MOUNT$/etc/vconsole.conf
   - rm -f $MOUNT$/etc/systemd/system/multi-user.target.wants/tlp.service
   - rm -f $MOUNT$/etc/systemd/system/timers.target.wants/fstrim.timer
 
-copy:
-  - path: /
-    exclude:
-      - "*/.cache/*"
-      - "*/cache/*"
-      - home/*
-      - srv/splunk
-      - usr/share/doc/*
-      - usr/share/gtk-doc/*
-      - usr/share/icons
-      - usr/share/texmf-dist
-      - var/cache/*
-      - var/lib/docker/*
-      - var/lib/pacman/sync/*
-      - var/lib/texmf/*
-      - var/log/*
-      - var/tmp/*
-  - path: /boot
-    exclude:
-      - kernels/
-  - path: /home
-    exclude:
-      - "*/.cache/*"
-      - "*/.dropbox"
-      - "*/.local/share/Steam"
-      - "*/.local/share/Trash/*"
-      - "*/.local/share/thumbnails/*"
-      - "*/Dropbox/media"
-      - "*/downloads/*"
-      - "*/cache/morgue/*"
-      - "*/iphone-photos"
-      - "*/photos"
-      - "*/switch"
-      - "*/tmp"
-      - "*/videos"
-      - "*/vm"
+  # disable auto-startx, add ability to launch via alias (just 'startx' does not work as we're inside tmux by default)
+  - rm -f $MOUNT$/home/*/.zprofile*
+  - echo 'alias startx="echo startx > ~/.zprofile && exit"' | tee -a $MOUNT$/home/*/.zshrc
+  - sed -i -E 's/^theme\.bg_normal.*/theme.bg_normal = "#d9304f"/' $MOUNT$/home/*/.config/awesome/theme.lua
+  - sed -i -E 's/^theme\.fg_normal.*/theme.fg_normal = "#ffffff"/' $MOUNT$/home/*/.config/awesome/theme.lua
+
+exclude:
+  - "**/.cache/*"
+  - /home/**/nintendo-switch-hacking/sd
+  - /home/**/nintendo-switch-hacking/tmp
+  - /home/*/.cache/*
+  - /home/*/.dropbox
+  - /home/*/.local/share/Steam
+  - /home/*/.local/share/Trash/*
+  - /home/*/.local/share/thumbnails/*
+  - /home/*/Dropbox/media
+  - /home/*/downloads/*
+  - /home/*/iphone-photos
+  - /home/*/photos
+  - /home/*/tmp
+  - /home/*/videos
+  - /home/*/vm
+  - /srv/kube
+  - /srv/splunk
+  - /usr/share/gtk-doc/*
+  - /usr/share/texmf-dist
+  - /var/cache/*
+  - /var/lib/docker/*
+  - /var/lib/pacman/sync/*
+  - /var/lib/texmf/*
+  - /var/log/*
+  - /var/tmp/*

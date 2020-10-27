@@ -1,5 +1,19 @@
-local awful      = require 'awful'
+local awful = require 'awful'
+
+local tag_count = 5
+local tag_count_floating = 1
 
 awful.screen.connect_for_each_screen(function(s)
-    awful.tag({" ☐ ", " ☐ ", " ☐ ", " ☐ ", " ☐ ", " ☐ ", " ☐ "}, s, awful.layout.layouts[1])
+    for i = 1, tag_count do
+        awful.tag.add("☐", {
+            layout = awful.layout.layouts[1],
+            screen = s,
+        })
+    end
+    for i = 1, tag_count_floating do
+        x = awful.tag.add("☐", {
+            layout = awful.layout.suit.floating,
+            screen = s,
+        })
+    end
 end)

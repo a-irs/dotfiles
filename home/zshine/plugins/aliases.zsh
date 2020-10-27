@@ -45,8 +45,15 @@ web() {
     f=$1
     t=$(mktemp -d)
 
-    bash -c "chromium --user-data-dir=\"$t\" --app=\"file://\$(readlink -f \"$f\")\" &> /dev/null; rm -rf \"$t\"" &
+    bash -c "/usr/bin/chromium --user-data-dir=\"$t\" --app=\"file://\$(readlink -f \"$f\")\" &> /dev/null; rm -rf \"$t\"" &
 }
+
+if [[ "$commands[docker]" ]]; then
+    alias dor="docker run --rm -it"
+    alias dops="docker ps"
+    alias doi="docker images"
+    dorm() { docker rm "$@" || docker rmi "$@"; }
+fi
 
 kali() { _kali kali "$@"; }
 kali-gpu() { _kali kali-gpu "$@" --device /dev/dri --device /dev/vga_arbiter; }
@@ -210,7 +217,7 @@ dl() {
     echo "${RESET}"
 }
 
-p() { for f in "$@"; do printf "\n%s\n\n" "=========== $f" && show "$f"; done }
+p() { for f in "$@"; do printf "\n%s\n\n" "=========== $f" && s "$f"; done }
 
 [[ "$commands[less]" ]] && alias less='less -FXR'
 [[ "$commands[lsblk]" ]] && alias lsblk='lsblk -o NAME,LABEL,TYPE,FSTYPE,SIZE,MOUNTPOINT,UUID -p'
@@ -360,6 +367,7 @@ extract() {
             (*.zip|*.war|*.jar|*.sublime-package|*.ipsw|*.xpi|*.apk) unzip "$1" -d $extract_dir ;;
             (*.rar) unrar x -ad "$1" ;;
             (*.7z) 7za x "$1" ;;
+            (*.pkg) pkgutil --expand "$1" "$extract_dir" ;;
             (*.deb)
                 mkdir -p "$extract_dir/control"
                 mkdir -p "$extract_dir/data"
@@ -392,7 +400,7 @@ if [[ "$commands[git]" ]]; then
     alias gp="git push"
     alias gs="git s"
     alias gd="git d"
-    alias ge="git ls-files -mo --exclude-standard -z | fzf --multi --preview='show {}' --exit-0 --read0 --print0 --height=70% --reverse --select-1 | xargs --no-run-if-empty -0 -o $vim -o"
+    alias ge="git ls-files -mo --exclude-standard -z | fzf --multi --preview='s {}' --exit-0 --read0 --print0 --height=70% --reverse --select-1 | xargs --no-run-if-empty -0 -o $vim -o"
 
     clone() {
         git clone --depth 1 "$1" && cd $(basename ${1//.git/})
@@ -453,10 +461,10 @@ if [[ "$commands[pacman]" ]]; then
     alias pqo='pacman -Qo'
     function pql() { pacman -Qlq "$1" | xargs ls --color -dlh; }
     psc() {
-        printf "%s\n" "keep 3 installed packages, remove rest"
-        sudo paccache --remove --keep 3 -v
-        printf "%s\n" "keep 1 uninstalled package, remove rest"
-        sudo paccache --remove --keep 1 -v --uninstalled
+        printf "%s\n" "keep 2 installed packages, remove rest"
+        sudo paccache --remove --keep 2 -v
+        printf "%s\n" "remove uninstalled"
+        sudo paccache --remove --keep 0 -v --uninstalled
     }
     alias psl='pkgfile -l'
     alias pu='sudo pacman -U'

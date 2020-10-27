@@ -26,3 +26,6 @@ printf '%s\n' "$out_dns"
 printf '\n'
 printf '%s\n' "$out_iw"
 
+printf '\n'
+printf '\nTraffic:\n'
+ifstat | grep -vE '(\s+0 0\s+0 0\s+0 0\s+0 0\s+|#kernel)'

@@ -16,7 +16,7 @@ awful.rules.rules = {
                      border_color = theme.border_normal,
                      focus = awful.client.focus.filter,
                      screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap + awful.placement.no_offscreen + awful.placement.centered,
+                     placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
                      honor_workarea = true,
                      raise = true,
                      keys = clientkeys,
@@ -85,7 +85,7 @@ local function dynamic_tagging()
                         name = make_name(name, c, "web[*]")
                     elseif c.name and string.find(c.name, ".mosh. ") then
                         name = make_name(name, c, "mosh")
-                    elseif c.name and string.find(c.name, 'ssh ') then
+                    elseif c.name and c.name:find('^ssh ') then
                         name = make_name(name, c, "ssh")
                     elseif c.class == "firefox" or c.class == "Firefox" or c.class == "Chrome" or c.class == "Chromium" then
                         name = make_name(name, c, "web")
@@ -215,6 +215,7 @@ client.connect_signal("unmanage", function(c)
         awful.tag.setmwfact(theme.master_width_factor)
         awful.tag.setnmaster(1)
         awful.tag.setncol(1)
+        awful.tag.setgap(theme.useless_gap)
 
         -- return to last non-empty tag
         i = 1

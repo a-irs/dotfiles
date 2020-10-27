@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+#
+# - installs grub as fallback bootloader and as separate boot entry
+# - installs unified-kernel-image as separate (default) boot entry
+#
+
+KERNEL=linux-zen
+
+set -euo pipefail
+
+### grub (fallback)
+
+grub-install --target=x86_64-efi --efi-directory=/boot --recheck --locales= --themes= --bootloader-id=GRUB
+grub-install --target=x86_64-efi --efi-directory=/boot --recheck --locales= --themes= --removable
+grub-mkconfig -o /boot/grub/grub.cfg && sed -i '/\becho\s.*/d' /boot/grub/grub.cfg
+
+### unified kernel image
+
+TMP="$(mktemp -d)"
+trap "rm -rf "$TMP"" EXIT
+cd "$TMP"
+
+# take the same kernel parameters as grub
+cat /boot/grub/grub.cfg | grep "^\s*linux\s*.*$KERNEL" | sed -E "s/^\s*linux\s*.*$KERNEL\s*//g" | head -1 > kernel.txt
+cat kernel.txt
+echo
+
+# concat ucode (intel, amd) to initramfs
+cat /boot/*-ucode.img "/boot/initramfs-$KERNEL.img" > init.img
+
+mkdir -p /boot/EFI/ARCH
+objcopy \
+    --add-section .osrel=/usr/lib/os-release --change-section-vma .osrel=0x20000 \
+    --add-section .cmdline=kernel.txt --change-section-vma .cmdline=0x30000 \
+    --add-section .linux="/boot/vmlinuz-$KERNEL" --change-section-vma .linux=0x2000000 \
+    --add-section .initrd=init.img --change-section-vma .initrd=0x3000000 \
+    /usr/lib/systemd/boot/efi/linuxx64.efi.stub /boot/EFI/ARCH/unified-kernel-image.efi
+
+efibootmgr -b 0111 --delete-bootnum > /dev/null || true
+efibootmgr -b 0111 -c --disk /dev/sda --part 1 --label "Linux" --loader "EFI\ARCH\unified-kernel-image.efi" -v | tail -1

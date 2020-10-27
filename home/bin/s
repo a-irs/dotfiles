@@ -8,42 +8,41 @@ height="${3:-$(tput lines)}"
 
 filename="${path##*/}"
 
-if [[ -e /usr/local/bin/gfmt ]]; then
-    wrap() { gfmt -s -t -w "$width"; }
-else
-    wrap() { fmt -s -t -w "$width"; }
-fi
+wrap() { cut -c 1-"$width"; }
+trim() { head -n "$((height - 7))"; }
 
 [[ -e /usr/local/bin/gls ]] && ls() { gls "$@"; }
 
-trim() { head -n "$height"; }
 remove_blank() { sed '/./,$!d'; } # remove blank lines at top of file
 remove_double_blank() { cat -s; } # remove multiple blank lines
 highlight_dirs() { GREP_COLOR='1;33' grep -E --color=always '(.)*/|$'; } # TODO: not working in ranger
 cleanup_openssl() { perl -pe 's/\S+([0-9a-z][0-9a-z]:){14}$/XXXXXXXXXX/g' | grep -v 'XXXXXXXXXX$'; }
 
-preview_binary() { zcat "$path" 2> /dev/null || cat "$path" | xxd | trim | wrap; }
+preview_elf() { readelf -sh --wide "$path" | trim | wrap; }
+preview_binary() { zcat "$path" 2> /dev/null || cat "$path" | xxd -autoskip | trim | wrap; }
 
 preview_sqlite() { sqlite3 "$path" .dump | trim | wrap; }
-preview_tar() { tar tf "$path" | trim | highlight_dirs; }
-preview_zip() { zipinfo -2tz "$path" | trim | highlight_dirs; }
+preview_tar() { tar tf "$path" | trim | highlight_dirs | wrap; }
+preview_zip() { zipinfo -2tz "$path" | trim | highlight_dirs | wrap; }
 preview_htm() { elinks -dump 1 -dump-color-mode 1 "$path" | remove_blank | remove_double_blank | trim | wrap; }
 preview_pdf() { pdftotext -l 10 -nopgbrk -q "$path" - | remove_blank | remove_double_blank | trim | wrap; }
 preview_txt() { cat "$path" | remove_blank | remove_double_blank | trim | wrap; }
 preview_media() { mediainfo "$path" | remove_blank | remove_double_blank | trim | sed 's/  \+:/ --/;' | wrap; }
-preview_json() { jsn "$path" | trim; }
+preview_json() { jsn "$path" | trim | wrap; }
 preview_sshkey() { file -Lb -- "$path"; ssh-keygen -l -f "$path"; echo ""; cat "$path" | trim; }
 preview_plist() { temp=$(mktemp); plutil -convert xml1 -o "$temp" -- "$path"; cat "$temp" | trim | wrap; rm -f "$temp"; }
 preview_cert() { openssl x509 -noout -text -in "$path" | cleanup_openssl | trim | wrap; }
 preview_csr() { openssl req -in "$path" -noout -text | cleanup_openssl | trim | wrap; }
-preview_csv() { column -xt -s\;, "$path" | trim | wrap; }
+preview_csv() { column -t -s\;, "$path" | trim | wrap; }
 preview_rrd() { rrdinfo "$path" | trim | wrap; }
 
 file_type=$(file -Lb -- "$path")
 
 tput bold; tput setaf 5
+len=$(printf '%s' "$file_type" | wc -c)
 printf '%s\n' "$file_type" | wrap
-printf '%s\n' "================"
+printf '=%.0s' $(seq 1 $len) | wrap
+printf '\n'
 tput sgr0
 
 if [[ -d "$path" ]]; then
@@ -55,6 +54,7 @@ case "$file_type" in
     *" public key") preview_sshkey; exit ;;
     *" certificate") preview_cert; exit ;;
     *" certificate request") preview_csr; exit ;;
+    ELF*) preview_elf; exit ;;
 esac
 
 extension="${filename##*.}"

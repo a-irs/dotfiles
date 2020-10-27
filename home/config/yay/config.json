@@ -1,0 +1,6 @@
+{
+    "removemake": "yes",
+    "cleanAfter": true,
+    "answerclean": "None",
+    "answerdiff": "All"
+}

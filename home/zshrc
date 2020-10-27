@@ -1,7 +1,7 @@
 [[ -z "$LANG" ]] && export LANG=en_US.UTF-8
 [[ -z "$LC_ALL" ]] && export LC_ALL=en_US.UTF-8
 
-# from /etc/zprofile
+# from /etc/zprofile (macOS)
 if [[ -x /usr/libexec/path_helper ]]; then
     eval $(/usr/libexec/path_helper -s)
 fi

@@ -168,8 +168,8 @@ globalkeys = awful.util.table.join(
 
     -- screenshots
 
-    awful.key({ "Ctrl" },      "Print", function() run("flameshot full -p " .. os.getenv("HOME")) end),
-    awful.key({ "Ctrl", alt }, "Print", function() run("flameshot gui -p "  .. os.getenv("HOME")) end),
+    awful.key({ },        "Print", function() run("flameshot gui -p " .. os.getenv("HOME")) end),
+    awful.key({ "Ctrl" }, "Print", function() run("flameshot screen -p " .. os.getenv("HOME")) end),
 
     -- media keys
 
@@ -177,10 +177,14 @@ globalkeys = awful.util.table.join(
 
     awful.key({},        "XF86MonBrightnessUp", function() run_script("brightness +") end),
     awful.key({"Shift"}, "XF86MonBrightnessUp", function() run_script("brightness ++") end),
+    awful.key({"Ctrl", alt }, "Right",          function() run_script("brightness ++") end),
     awful.key({"Ctrl"},  "XF86MonBrightnessUp", function() run_script("brightness 100") end),
+    awful.key({"Ctrl", "Shift", alt }, "Right", function() run_script("brightness 100") end),
     awful.key({},        "XF86MonBrightnessDown", function() run_script("brightness -") end),
     awful.key({"Shift"}, "XF86MonBrightnessDown", function() run_script("brightness --") end),
+    awful.key({"Ctrl", alt }, "Left",             function() run_script("brightness --") end),
     awful.key({"Ctrl"},  "XF86MonBrightnessDown", function() run_script("brightness 1") end),
+    awful.key({"Ctrl", "Shift", alt }, "Left",    function() run_script("brightness 1") end),
 
     awful.key({},        "XF86AudioRaiseVolume", volume.increase),
     awful.key({"Shift"}, "XF86AudioRaiseVolume", volume.increase_10),

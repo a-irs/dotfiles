@@ -50,7 +50,7 @@ augroup SemanticHL
 augroup END
 
 Plug 'chrisbra/Colorizer'
-let g:colorizer_auto_filetype='css,html,conf,lua,sh'
+let g:colorizer_auto_filetype='css,html,conf,lua,sh,dosini'
 let g:colorizer_colornames = 0  "do not colorize simple 'red', 'yellow', ...
 
 " TComment
@@ -59,20 +59,17 @@ nnoremap <silent> <leader># :TComment<CR>
 vnoremap <silent> <leader># :TComment<CR>
 
 Plug 'airblade/vim-gitgutter'
+" set background to same as SignColumn
+let g:gitgutter_set_sign_backgrounds = 1
 let g:gitgutter_map_keys = 0
 nmap <leader>< <Plug>(GitGutterNextHunk)
 nmap <leader>> <Plug>(GitGutterPrevHunk)
 
 " ALE async linter
 Plug 'w0rp/ale'
-" E501 = 80 characters
-" W391 = blank line at end of file
-" E129 = https://github.com/PyCQA/pycodestyle/issues/474
-" E302 = expected 2 blank lines, found 1
-let g:ale_python_flake8_options = '--ignore=E501,W391,E129,E302'
-let g:ale_python_mypy_options = '--cache-dir /tmp/mypy'
 " https://github.com/koalaman/shellcheck/wiki/SC2119
-let g:ale_sh_shellcheck_exclusions = 'SC2119'
+" https://github.com/koalaman/shellcheck/wiki/SC2029
+let g:ale_sh_shellcheck_exclusions = 'SC2119,SC2029'
 let g:ale_yaml_yamllint_options='-d "{extends: default, rules: {line-length: disable, document-start: disable}}"'
 
 " ALE appearance
