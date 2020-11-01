@@ -55,7 +55,7 @@ set -e
 date=$(date +%Y-%m-%d_%H-%M-%S)
 borg create \
     --show-rc --list --filter=AME --stats --verbose \
-    --exclude-from "$0.exclude" --exclude-caches --one-file-system \
+    --patterns-from="$0.exclude" --one-file-system \
     --compression auto,lz4 \
     "::${date}" \
     /etc /home /srv /sysinfo
