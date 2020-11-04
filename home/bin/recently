@@ -44,7 +44,6 @@ shell.history
 .local/share/zathura/history
 .config/Thunar/accels.scm
 .config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
-.config/dconf/user
 EOF
 
     fd -l --hidden --no-ignore --type f --changed-within "$changed" --color always --ignore-file "$TMP" "$@" .
