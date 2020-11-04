@@ -4,7 +4,7 @@
 # inspired by: https://unix.stackexchange.com/a/217223
 
 ssh-agent-start() {
-    if [[ ! -S ~/.ssh/ssh_auth_sock ]]; then
+    if [[ ! -S ~/.ssh/ssh_auth_sock || ! -d ~/.ssh/ssh_agent_pid ]]; then
         eval $(ssh-agent -t 3600 | grep -v '^echo ')
         ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
         ln -sf /proc/"$SSH_AGENT_PID" ~/.ssh/ssh_agent_pid

@@ -69,3 +69,13 @@ Host mox2 mox2.home
     User root
     IdentityFile ~/.ssh/id_ed25519
     PubkeyAuthentication yes
+
+Host remarkable
+    HostName 10.11.99.1
+    User root
+    IdentityFile ~/.ssh/id_remarkable
+    PubkeyAuthentication yes
+
+
+Host *
+    AddKeysToAgent yes
