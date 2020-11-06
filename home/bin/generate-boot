@@ -37,4 +37,4 @@ objcopy \
     /usr/lib/systemd/boot/efi/linuxx64.efi.stub /boot/EFI/ARCH/unified-kernel-image.efi
 
 efibootmgr -b 0111 --delete-bootnum > /dev/null || true
-efibootmgr -b 0111 -c --disk /dev/sda --part 1 --label "Linux" --loader "EFI\ARCH\unified-kernel-image.efi" -v | tail -1
+efibootmgr -b 0111 -c --disk /dev/sda --part 1 --label "Arch $KERNEL" --loader "EFI\ARCH\unified-kernel-image.efi" -v | tail -1
