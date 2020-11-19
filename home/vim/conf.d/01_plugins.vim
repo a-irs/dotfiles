@@ -1,5 +1,8 @@
 call plug#begin()
 
+Plug 'tolecnal/icinga2-vim'
+autocmd BufNewFile,BufFilePre,BufRead */icinga/*/*.conf set filetype=icinga2
+
 Plug 'junegunn/fzf' | Plug 'junegunn/fzf.vim'
 let g:fzf_buffers_jump = 1  " jump to existing if possible
 " uses $FZF_DEFAULT_COMMAND
