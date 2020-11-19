@@ -5,8 +5,8 @@
 
 set -eo pipefail
 
-MAIN_DIR=/media/crypto/borg
-USER_HOST=root@srv1.home
+MAIN_DIR=/mnt/datastore/backup1/_borg
+USER_HOST=root@backup.home
 export BORG_REPO=$USER_HOST:$MAIN_DIR/$HOSTNAME
 
 if [[ -e /home/alex/.ssh/id_ed25519 ]]; then
@@ -35,7 +35,7 @@ case $1 in
 esac
 
 if ! ssh -i "$SSH_KEY" $USER_HOST test -f "$MAIN_DIR/$HOSTNAME/README"; then
-    borg init --verbose --encryption none
+    borg init --verbose --encryption repokey-blake2
 fi
 
 umask 077
@@ -53,16 +53,34 @@ cryptsetup luksDump "$luks_dev" > /sysinfo/luksDump
 set -e
 
 date=$(date +%Y-%m-%d_%H-%M-%S)
+
+# user data: /home /srv
 borg create \
     --show-rc --list --filter=AME --stats --verbose \
     --patterns-from="$0.exclude" --one-file-system \
     --compression auto,lz4 \
-    "::${date}" \
-    /etc /home /srv /sysinfo
+    "::data_${date}" \
+    /home /srv
 
 borg prune --show-rc --stats --list \
+    --prefix 'data_' \
     --keep-within 12m
 
+# everything else
+borg create \
+    --show-rc --list --filter=AME --stats --verbose \
+    --patterns-from="$0.exclude" --one-file-system \
+    --exclude "/home" \
+    --exclude "/srv" \
+    --compression auto,lz4 \
+    "::root_${date}" \
+    / /boot /sysinfo /var
+
+borg prune --show-rc --stats --list \
+    --prefix 'root_' \
+    --keep-within 3m
+
+# TODO
 if [[ "$HOSTNAME" == x1 ]]; then
     rsync --progress -avz -e "$BORG_RSH" --delete /home/alex/iphone-photos/ srv1.home:/media/data/photos/iphone
 fi

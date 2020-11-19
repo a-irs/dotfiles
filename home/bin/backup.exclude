@@ -98,11 +98,6 @@ R /
 - /etc/ld.so.cache
 - /etc/udev/hwdb.bin
 
-- /boot/initramfs-*.img
-- /boot/*-ucode.img
-- /boot/vmlinuz-*
-- /boot/kernels/*
-
 - /srv/docker/grafana/sessions
 - /srv/docker/nzbget/drop
 - /srv/docker/nzbget/queue
