@@ -153,7 +153,7 @@ class Mover():
         self.release_name = release_name
 
     def move(self) -> None:
-        print(f'{C_BLUE}{self.dest}/{self.title}{C_RESET}')
+        print(f'{C_BLUE}{self.dest}/{C_RESET}')
         self.remove_unneeded([
             "proof", "Proof", "*-proof.*", "*-Proof.*", "proof.???", "*.proof.???"
             "sample", "Sample", "*-sample.*", "*-Sample.*", "sample.???",
@@ -199,8 +199,12 @@ class Mover():
                 dest.touch()
 
     def move_subtitles(self, mask: List[str]) -> None:
-        pass
-        # files = self._get_glob(mask)
+        files = self._get_glob(mask)
+        for f in files:
+            source = pathlib.Path(f)
+            dest = self.dest / str(self.title + source.suffix)
+            self.do_move(source, dest)
+
         # TODO: check that there is only one subtitle of every format
         # 1x srt -> ok
         # 1x idx + 1x sub -> ok
@@ -220,7 +224,7 @@ class Mover():
             sys.exit(1)
 
     def do_move(self, source: pathlib.Path, dest: pathlib.Path) -> None:
-        # print(f'Video: {source.name} --> {C_YELLOW}{dest.name}{C_RESET}')
+        print(f'move: {source.name} --> {C_YELLOW}{dest.name}{C_RESET}')
 
         if dest.exists():
             print(f'ERROR: {C_RED}{dest}{C_RESET} already exists.')
@@ -308,13 +312,13 @@ def main():
         m = Mover(run=args.run, source=source_dir, dest=dest_dir, title=title, release_name=parsed.release_name)
         m.move()
 
-    if not args.run:
-        # print tests
-        for k, v in tests.items():
-            print(f"""        '{k}': {{
-                'preset': {v["preset"]},
-                'expect': {v["expect"]},
-            }},""")
+    # if not args.run:
+    #     # print tests
+    #     for k, v in tests.items():
+    #         print(f"""        '{k}': {{
+    #             'preset': {v["preset"]},
+    #             'expect': {v["expect"]},
+    #         }},""")
 
 
 if __name__ == "__main__":
