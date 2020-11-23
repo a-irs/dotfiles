@@ -58,13 +58,13 @@ date=$(date +%Y-%m-%d_%H-%M-%S)
 borg create \
     --show-rc --list --filter=AME --stats --verbose \
     --patterns-from="$0.exclude" --one-file-system \
-    --compression auto,lz4 \
+    --compression auto,zstd \
     "::data_${date}" \
     /home /srv
 
 borg prune --show-rc --stats --list \
     --prefix 'data_' \
-    --keep-within 12m
+    --keep-within 12m || true
 
 # everything else
 borg create \
@@ -72,13 +72,13 @@ borg create \
     --patterns-from="$0.exclude" --one-file-system \
     --exclude "/home" \
     --exclude "/srv" \
-    --compression auto,lz4 \
+    --compression auto,zstd \
     "::root_${date}" \
     / /boot /sysinfo /var
 
 borg prune --show-rc --stats --list \
     --prefix 'root_' \
-    --keep-within 3m
+    --keep-within 3m || true
 
 # TODO
 if [[ "$HOSTNAME" == x1 ]]; then
