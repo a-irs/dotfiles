@@ -53,13 +53,15 @@ CONFIG = {
             '-V fontsize=11pt',  # default: 10
 
             # better code blocks (e.g. with line wrapping)
+            # http://texdoc.net/texmf-dist/doc/latex/listings/listings.pdf
             '--listings',
             '-V header-includes="\\lstset{breaklines=true}"',
+            '-V header-includes="\\lstset{columns=fullflexible}"',
             '-V header-includes="\\lstset{keepspaces=true}"',
             '-V header-includes="\\lstset{extendedchars=true}"',
             '-V header-includes="\\lstset{postbreak=\\mbox{\\textcolor{Gray}{$\\hookrightarrow$}\\space}}"',
             '-V header-includes="\\lstset{showstringspaces=false}"',
-            '-V header-includes="\\lstset{basicstyle=\\small\\ttfamily}"',
+            '-V header-includes="\\lstset{basicstyle=\\ttfamily}"',
             '-V header-includes="\\lstset{keywordstyle=\\color{Maroon}}"',
             '-V header-includes="\\lstset{stringstyle=\\color{PineGreen}}"',
             '-V header-includes="\\lstset{commentstyle=\\slshape\\color{Blue}}"',
