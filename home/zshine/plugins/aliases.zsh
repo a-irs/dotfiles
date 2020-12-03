@@ -55,28 +55,6 @@ if [[ "$commands[docker]" ]]; then
     dorm() { docker rm "$@" || docker rmi "$@"; }
 fi
 
-kali() { _kali kali "$@"; }
-kali-gpu() { _kali kali-gpu "$@" --device /dev/dri --device /dev/vga_arbiter; }
-kali-rev() { _kali kali-rev "$@" -p 4444:4444 -p 9000:9000 -p 9001:9001 -p 9002:9002 -p 9003:9003; }
-kali-x11() { _kali kali-x11 "$@" -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY; }
-_kali() {
-    local d=~/doc/ctf
-
-    if [[ "$1" == build ]]; then
-        shift
-        (cd "$d" && docker build "$@" -t kali .)
-        return
-    else
-        hostname=$1 && shift
-        touch "$d/shell.history"
-        docker run -h "$hostname" -it --rm -w /root \
-            -v "$d:/work" \
-            -v "$d/shell.history:/root/.bash_history" \
-            -v "$d/shell.conf:/root/.bashrc" \
-            "$@" kali
-    fi
-}
-
 es() {
     local query=$1
     local line=$(command rg -n --color=always "$query" | fzf --reverse)
