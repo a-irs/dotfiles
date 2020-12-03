@@ -448,8 +448,10 @@ if [[ "$commands[pacman]" ]]; then
             LC_ALL=C pacman -Sl testing | cut -d " " -f 2- | grep "\[installed" | awk 'function r(s){return "\033[1;31m" s "\033[0m"}function y(s){return "\033[1;33m" s "\033[0m"}{gsub("]","",$4); printf("%-35s %s -> %s\n", y($1), $4, r($2))}'
         fi
     }
-    alias psyu='sudo pacman -Syu'
-    alias psyyu='sudo pacman -Syyu'
+    psyu() {
+        sudo pacman -Syu "$@" && echo "" && echo "outdated:" && sudo lsof +c 0 -a +L1 / 2> /dev/null
+    }
+    alias psyyu='psyu -y'
     alias pi='sudo pacman -S'
     alias pid='sudo pacman -S --asdeps'
     alias pr='sudo pacman -Rns'
