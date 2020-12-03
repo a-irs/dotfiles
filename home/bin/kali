@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+DIR=~/doc/ctf
+
+set -euo pipefail
+
+NOW=$(date +%Y-%m-%d)
+
+if [[ $# -eq 1 && $1 == build ]]; then
+    shift
+    cd "$DIR"
+    docker build "$@" -t kali .
+    exit
+fi
+
+# make sure all files + directories for mounting exist
+[[ ! -e "$DIR/$NOW" ]] && mkdir -p "$DIR/$NOW"
+[[ ! -f "$DIR/shell.history" ]] && touch "$DIR/shell.history"
+[[ ! -f "$DIR/shell.conf" ]] && touch "$DIR/shell.conf"
+
+args=(
+    # port forwarding (e.g. for http server, reverse shell catching, ...)
+    -p 4444:4444 -p 9000:9000
+
+    # share shell history + config
+    -v "$DIR/shell.history:/root/.bash_history"
+    -v "$DIR/shell.conf:/root/.bashrc"
+
+    # share working directory for today
+    -v "$DIR/$NOW:/work" -w /work
+)
+
+if [[ "$(uname)" == Linux ]]; then
+    args+=(
+        # GPU support (e.g. for hashcat)
+        --device /dev/dri --device /dev/vga_arbiter
+
+        # X11 forwarding via socket
+        # -v /tmp/.x11-unix:/tmp/.x11-unix -e DISPLAY="unix$DISPLAY"
+    )
+fi
+
+docker run -h kali -it --rm "${args[@]}" kali "$@"
+rmdir "$DIR/$NOW" 2>&1 || true
