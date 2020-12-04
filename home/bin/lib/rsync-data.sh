@@ -10,44 +10,27 @@ control_c() {
   sync
   umount -lf "$TARGET"
   sync
-  umount /mnt
-  cryptsetup close crypto-usb
-  losetup -D
   exit $?
 }
 trap control_c SIGINT
 
 BACKUP=(
-	/media/data/switch
 	/media/data/photos
 	/media/data/photos_google
 	/media/data/photos_print
+	/media/data/videos/kids
+	/media/data/crypto.enc
 	/media/data/apps
 	/media/data/books
 	/media/data/games
 	/media/data/music
-	/media/data/videos/kids
+	/media/data/switch
 )
 
 delay=0.3
 
 if mount "$TARGET"; then
 	echo -e '\a' > /dev/console
-
-        ~/.bin/lib/mount-crypto.sh
-        lo=$(losetup --partscan --find --show $TARGET/crypto.img)
-        cryptsetup open "$lo" crypto-usb
-        mount /dev/mapper/crypto-usb /mnt
-
-        date=$(date +%Y-%m-%d)_$(date +%H-%M-%S)
-        rsync $* -av -h --delete --stats \
-                --log-file="/mnt/crypto.log" \
-                --exclude="0-archive/" --exclude="borg/" \
-                --backup --backup-dir="/mnt/0-archive/$date/" \
-                /media/crypto/ /mnt
-        umount /mnt
-        cryptsetup close crypto-usb
-        losetup -d "$lo"
 
 	for d in "${BACKUP[@]}"; do
 		date=$(date +%Y-%m-%d)_$(date +%H-%M-%S)
