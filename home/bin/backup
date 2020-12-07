@@ -5,7 +5,7 @@
 
 set -eo pipefail
 
-MAIN_DIR=/mnt/datastore/backup1/_borg
+MAIN_DIR=/mnt/data/crypt/borg
 USER_HOST=root@backup.home
 export BORG_REPO=$USER_HOST:$MAIN_DIR/$HOSTNAME
 
@@ -35,7 +35,7 @@ case $1 in
 esac
 
 if ! ssh -i "$SSH_KEY" $USER_HOST test -f "$MAIN_DIR/$HOSTNAME/README"; then
-    borg init --verbose --encryption repokey-blake2
+    borg init --verbose --encryption none
 fi
 
 umask 077
@@ -59,6 +59,7 @@ borg create \
     --show-rc --list --filter=AME --stats --verbose \
     --patterns-from="$0.exclude" --one-file-system \
     --compression auto,zstd \
+    --checkpoint-interval 60 \
     "::data_${date}" \
     /home /srv
 
@@ -73,6 +74,7 @@ borg create \
     --exclude "/home" \
     --exclude "/srv" \
     --compression auto,zstd \
+    --checkpoint-interval 60 \
     "::root_${date}" \
     / /boot /sysinfo /var
 

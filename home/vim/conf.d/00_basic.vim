@@ -168,3 +168,14 @@ nnoremap <leader>{         viw<esc>a}<esc>hbi{<esc>lel
 nnoremap <leader>}         viw<esc>a}<esc>hbi{<esc>lel
 nnoremap <leader><leader>{ viW<esc>a}<esc>hBi{<esc>lel
 nnoremap <leader><leader>} viW<esc>a}<esc>hBi{<esc>lel
+
+" https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ''
+endfunction
