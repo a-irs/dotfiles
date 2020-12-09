@@ -1,7 +1,7 @@
 local awful = require 'awful'
 
-local tag_count = 5
-local tag_count_floating = 1
+local tag_count = 7
+local tag_count_floating = 0
 
 awful.screen.connect_for_each_screen(function(s)
     for i = 1, tag_count do

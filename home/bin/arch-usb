@@ -3,7 +3,7 @@
 set -euo pipefail
 
 disk=$1
-version=2020.10.01
+version=2020.11.01
 
 ###
 

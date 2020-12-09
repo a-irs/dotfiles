@@ -14,11 +14,12 @@ nnoremap <silent> <Leader>bb :Buffers<CR>
 nnoremap <silent> <Leader>bx :bd<CR>
 nnoremap <silent> <Leader>g :Rg<CR>
 
-Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
-let g:UltiSnipsSnippetDirectories = ['snip']
-let g:UltiSnipsExpandTrigger = '<tab>'
-let g:UltiSnipsJumpForwardTrigger = '<tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+" TODO reactivate
+" Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
+" let g:UltiSnipsSnippetDirectories = ['snip']
+" let g:UltiSnipsExpandTrigger = '<tab>'
+" let g:UltiSnipsJumpForwardTrigger = '<tab>'
+" let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
 Plug 'eiginn/iptables-vim'
 autocmd BufNewFile,BufFilePre,BufRead *.rules set filetype=iptables
@@ -111,6 +112,34 @@ let g:strip_only_modified_lines = 1
 
 Plug 'vim-python/python-syntax', { 'for': 'python' }
 let python_highlight_all = 1
+
+
+" COC
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_global_extensions = ['coc-json', 'coc-css', 'coc-jedi', 'coc-yaml', 'coc-vimlsp', 'coc-sh', 'coc-markdownlint', 'coc-html']
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . ' ' . expand('<cword>')
+  endif
+endfunction
+
+nmap <leader>cr <Plug>(coc-rename)
+xmap <leader>cf <Plug>(coc-format-selected)
+nmap <leader>cf <Plug>(coc-format-selected)
+
+" confirm completion with ENTER
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+Plug 'ervandew/supertab'
+let g:SuperTabDefaultCompletionType = '<c-n>'
+
 
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 

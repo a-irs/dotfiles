@@ -18,7 +18,7 @@ b_get() {
     elif c light; then
         light -G | cut -d . -f 1
     elif c ddcutil; then
-        sudo ddcutil --bus=3 getvcp 10 | perl -pe 's/.*current value =\s*([0-9]+).*/\1/'
+        sudo ddcutil --bus=6 getvcp 10 | perl -pe 's/.*current value =\s*([0-9]+).*/\1/'
     fi
 }
 b_plus() {
@@ -47,7 +47,7 @@ b_set() {
     elif c light; then
         light -S "$1"
     elif c ddcutil; then
-        sudo ddcutil --bus=3 setvcp 10 "$1"
+        sudo ddcutil --bus=6 setvcp 10 "$1"
     fi
 }
 
