@@ -24,11 +24,6 @@ try
 
     " SPRINGNIGHT
     colorscheme spring-night
-
-    " SONOKAI
-    " let g:sonokai_style = 'atlantis'
-    " let g:sonokai_disable_italic_comment = 1
-    " colorscheme sonokai
 catch
     " fallback color scheme
     colorscheme default

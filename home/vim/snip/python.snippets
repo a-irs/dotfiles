@@ -8,28 +8,54 @@ if __name__ == "__main__":
     main()
 endsnippet
 
+snippet "dc|dataclass" "dataclass" br
+from dataclasses import dataclass
+
+@dataclass
+class ${1:Point}:
+    x: int
+    y: int
+
+endsnippet
+
 snippet "b|br|break" "breakpoint" br
 breakpoint()
 
 endsnippet
 
-snippet "for" "iterate over dict" br
+snippet "fori" "enumerate" br
+for i, item in enumerate(${1:list}):
+    print(f"{i}={item}")
+endsnippet
+
+snippet "fore" "iterate over iterable" br
+for item in ${1:list}:
+    print(f"{item}")
+endsnippet
+
+snippet "ford" "iterate over dict" br
 for key, value in ${1:dict_obj}.items():
-    print(f"{key={value}")
+    print(f"{key}={value}")
 endsnippet
 
 snippet "class" "class" br
 class ${1:ClassName}(object):
     def __init__(self):
         pass
+    def __str__(self):
+        return str("<{}: {}>".format(type(self).__name__, vars(self)))
+endsnippet
+
+snippet "jsonp" "json print" br
+json.dumps(${1:item}, indent=2)
 endsnippet
 
 snippet "jsonr" "json read" br
-with open('${1:file}', 'r') as fd:
+with open('${1:filename}', 'r') as fd:
     data = json.load(fd)
 endsnippet
 
 snippet "jsonw" "json write" br
-with open('${1:file}', 'w') as fd:
+with open('${1:filename}', 'w') as fd:
     json.dump(data, fd)
 endsnippet

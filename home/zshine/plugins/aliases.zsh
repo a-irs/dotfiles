@@ -225,6 +225,7 @@ take() { mkdir -p "$1" && cd "$1"; }
 alias rd='rmdir'
 alias f='noglob find . -name'
 alias ff='noglob find . -type f -name'
+alias chx='chmod u+x -v'
 
 alias mmv='noglob zmv -W'
 
@@ -427,7 +428,7 @@ if [[ "$commands[pacman]" ]]; then
         fi
     }
     psyu() {
-        sudo pacman -Syu "$@" && echo "" && echo "outdated:" && sudo lsof +c 0 -a +L1 / 2> /dev/null
+        sudo pacman -Syu "$@" && echo "" && echo "outdated:" && sudo lsof +c 0 -a +L1 / 2> /dev/null && echo "" && psc
     }
     alias psyyu='psyu -y'
     alias pi='sudo pacman -S'
@@ -443,7 +444,7 @@ if [[ "$commands[pacman]" ]]; then
     psc() {
         printf "%s\n" "keep 2 installed packages, remove rest"
         sudo paccache --remove --keep 2 -v
-        printf "%s\n" "remove uninstalled"
+        printf "\n%s\n" "remove uninstalled"
         sudo paccache --remove --keep 0 -v --uninstalled
     }
     alias psl='pkgfile -l'

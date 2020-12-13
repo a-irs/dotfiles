@@ -1,6 +1,6 @@
 call plug#begin()
 
-Plug 'tolecnal/icinga2-vim'
+Plug 'tolecnal/icinga2-vim', { 'for': 'icinga2' }
 autocmd BufNewFile,BufFilePre,BufRead */icinga/*/*.conf set filetype=icinga2
 
 Plug 'junegunn/fzf' | Plug 'junegunn/fzf.vim'
@@ -14,39 +14,18 @@ nnoremap <silent> <Leader>bb :Buffers<CR>
 nnoremap <silent> <Leader>bx :bd<CR>
 nnoremap <silent> <Leader>g :Rg<CR>
 
-" TODO reactivate
-" Plug 'ervandew/supertab' | Plug 'sirver/ultisnips'
-" let g:UltiSnipsSnippetDirectories = ['snip']
-" let g:UltiSnipsExpandTrigger = '<tab>'
-" let g:UltiSnipsJumpForwardTrigger = '<tab>'
-" let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-
-Plug 'eiginn/iptables-vim'
+Plug 'eiginn/iptables-vim', { 'for': 'iptables' }
 autocmd BufNewFile,BufFilePre,BufRead *.rules set filetype=iptables
 
 " better ft=sh, see https://www.reddit.com/r/vim/comments/c6supj/vimsh_better_syntax_highlighting_for_shell_scripts/
-Plug 'arzg/vim-sh'
+Plug 'arzg/vim-sh', { 'for': 'sh' }
 
 " increase/decrease/toggle everything with ctrl+a/ctrl+x
 Plug 'Konfekt/vim-CtrlXA'
 
-" auto-close brackets
-Plug 'tmsvg/pear-tree'
-let g:pear_tree_smart_openers = 1
-let g:pear_tree_smart_closers = 1
-let g:pear_tree_smart_backspace = 1
-let g:pear_tree_pairs = {
-            \ '(': {'closer': ')'},
-            \ '[': {'closer': ']'},
-            \ '{': {'closer': '}'},
-            \ "'": {'closer': "'"},
-            \ '"': {'closer': '"'},
-            \ '<!--': {'closer': ' -->'}
-            \ }
-
-Plug 'jaxbot/semantic-highlight.vim'
+Plug 'jaxbot/semantic-highlight.vim', { 'for': 'python,lua,css' }
 let g:semanticTermColors = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-let semanticEnableFileTypes = {'python': 'python', 'lua': 'lua', 'css': 'css'}
+let g:semanticEnableFileTypes = {'python': 'python', 'lua': 'lua', 'css': 'css'}
 " re-highlight on save
 augroup SemanticHL
     autocmd FileType python,lua
@@ -117,7 +96,7 @@ let python_highlight_all = 1
 " COC
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-json', 'coc-css', 'coc-jedi', 'coc-yaml', 'coc-vimlsp', 'coc-sh', 'coc-markdownlint', 'coc-html']
+let g:coc_global_extensions = ['coc-json', 'coc-css', 'coc-jedi', 'coc-yaml', 'coc-vimlsp', 'coc-sh', 'coc-html', 'coc-snippets', 'coc-pairs']
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
@@ -135,10 +114,14 @@ xmap <leader>cf <Plug>(coc-format-selected)
 nmap <leader>cf <Plug>(coc-format-selected)
 
 " confirm completion with ENTER
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 Plug 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = '<c-n>'
+
+Plug 'sirver/ultisnips'
+let g:UltiSnipsSnippetDirectories = ['snip']
+let g:UltiSnipsExpandTrigger='<c-s-z>'  " some unused sequence, so tab is not hijacked
 
 
 Plug 'cespare/vim-toml', { 'for': 'toml' }
@@ -155,16 +138,15 @@ Plug 'rhysd/committia.vim'
 let g:committia_use_singlecolumn = 'always'
 
 " highlight word under cursor
-let g:Illuminate_delay = 100  " default: 250
+let g:Illuminate_delay = 200  " default: 250
 let g:Illuminate_ftblacklist = ['gitcommit']
 Plug 'RRethy/vim-illuminate'
 
 " color schemes
-" Plug 'morhetz/gruvbox'
-" Plug 'sjl/badwolf'
+Plug 'morhetz/gruvbox'
+Plug 'sjl/badwolf'
 Plug 'rhysd/vim-color-spring-night'
-" Plug 'sainnhe/sonokai'
-" Plug 'sainnhe/gruvbox-material'
+Plug 'sainnhe/gruvbox-material'
 
 call plug#end()
 
