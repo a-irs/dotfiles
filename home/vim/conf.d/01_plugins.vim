@@ -95,6 +95,8 @@ let python_highlight_all = 1
 
 " COC
 
+if hostname() =~ 'srv.'
+else
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_global_extensions = ['coc-json', 'coc-css', 'coc-jedi', 'coc-yaml', 'coc-vimlsp', 'coc-sh', 'coc-html', 'coc-snippets', 'coc-pairs']
 
@@ -115,6 +117,7 @@ nmap <leader>cf <Plug>(coc-format-selected)
 
 " confirm completion with ENTER
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+endif
 
 Plug 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = '<c-n>'
