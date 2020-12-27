@@ -20,6 +20,8 @@ clip() {
     fi
 }
 
+[[ "$commands[aria2c]" ]] && alias aria2c="aria2c --file-allocation=none --continue true --check-integrity true --max-connection-per-server=8 --disk-cache=512M"
+
 ssh() {
     # disable forwardings: agent, X, GSSAPI
     command ssh -a -x -k -o StrictHostKeyChecking=accept-new "$@"
@@ -428,7 +430,7 @@ if [[ "$commands[pacman]" ]]; then
         fi
     }
     psyu() {
-        sudo pacman -Syu "$@" && echo "" && echo "outdated:" && sudo lsof +c 0 -a +L1 / 2> /dev/null && echo "" && psc
+        sudo pacman -Syu "$@" && echo "" && echo "outdated:" && sudo lsof +c 0 -a +L1 / 2> /dev/null && echo "" && _psc
     }
     alias psyyu='psyu -y'
     alias pi='sudo pacman -S'
@@ -441,7 +443,7 @@ if [[ "$commands[pacman]" ]]; then
     alias pqk='sudo pacman -Qk > /dev/null'
     alias pqo='pacman -Qo'
     function pql() { pacman -Qlq "$1" | xargs ls --color -dlh; }
-    psc() {
+    _psc() {
         printf "%s\n" "keep 2 installed packages, remove rest"
         sudo paccache --remove --keep 2 -v
         printf "\n%s\n" "remove uninstalled"

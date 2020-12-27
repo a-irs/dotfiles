@@ -1,7 +1,7 @@
 ZSHINE_PLUGINS=(
   completion # tweaks for TAB-completion
   keys # bind keys for delete, history-search etc.
-  magic-paste # auto-quote URLs on paste
+  # magic-paste # auto-quote URLs on paste
 
   dircolors # colors for "ls" command
   tty-colors # colors for $TERM=linux
