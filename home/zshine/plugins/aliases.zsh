@@ -430,7 +430,12 @@ if [[ "$commands[pacman]" ]]; then
         fi
     }
     psyu() {
-        sudo pacman -Syu "$@" && echo "" && echo "outdated:" && sudo lsof +c 0 -a +L1 / 2> /dev/null && echo "" && _psc
+        sudo pacman -Syu "$@" \
+            && echo "" \
+            && _psc \
+            && echo "" \
+            && echo "outdated:" \
+            && sudo lsof +c 0 -a +L1 / 2> /dev/null
     }
     alias psyyu='psyu -y'
     alias pi='sudo pacman -S'

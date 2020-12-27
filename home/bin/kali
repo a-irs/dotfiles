@@ -41,4 +41,4 @@ if [[ "$(uname)" == Linux ]]; then
 fi
 
 docker run -h kali -it --rm "${args[@]}" kali "$@"
-rmdir "$DIR/$NOW" 2>&1 || true
+rmdir "$DIR/$NOW" 2>/dev/null || true

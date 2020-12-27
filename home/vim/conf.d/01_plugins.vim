@@ -98,7 +98,7 @@ let python_highlight_all = 1
 if hostname() =~ 'srv.'
 else
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-json', 'coc-css', 'coc-jedi', 'coc-yaml', 'coc-vimlsp', 'coc-sh', 'coc-html', 'coc-snippets', 'coc-pairs']
+let g:coc_global_extensions = ['coc-json', 'coc-css', 'coc-jedi', 'coc-yaml', 'coc-vimlsp', 'coc-sh', 'coc-html', 'coc-pairs']
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
@@ -124,7 +124,6 @@ let g:SuperTabDefaultCompletionType = '<c-n>'
 
 Plug 'sirver/ultisnips'
 let g:UltiSnipsSnippetDirectories = ['snip']
-let g:UltiSnipsExpandTrigger='<c-s-z>'  " some unused sequence, so tab is not hijacked
 
 
 Plug 'cespare/vim-toml', { 'for': 'toml' }
