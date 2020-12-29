@@ -435,7 +435,7 @@ if [[ "$commands[pacman]" ]]; then
             && _psc \
             && echo "" \
             && echo "outdated:" \
-            && sudo lsof +c 0 -a +L1 / 2> /dev/null
+            && sudo lsof +c 0 -a +L1 / 2> /dev/null | awk '{print $1}' | grep -v '^dropbox'
     }
     alias psyyu='psyu -y'
     alias pi='sudo pacman -S'
