@@ -429,15 +429,6 @@ if [[ "$commands[pacman]" ]]; then
             LC_ALL=C pacman -Sl testing | cut -d " " -f 2- | grep "\[installed" | awk 'function r(s){return "\033[1;31m" s "\033[0m"}function y(s){return "\033[1;33m" s "\033[0m"}{gsub("]","",$4); printf("%-35s %s -> %s\n", y($1), $4, r($2))}'
         fi
     }
-    psyu() {
-        sudo pacman -Syu "$@" \
-            && echo "" \
-            && _psc \
-            && echo "" \
-            && echo "outdated:" \
-            && sudo lsof +c 0 -a +L1 / 2> /dev/null | awk '{print $1}' | grep -v '^dropbox'
-    }
-    alias psyyu='psyu -y'
     alias pi='sudo pacman -S'
     alias pid='sudo pacman -S --asdeps'
     alias pr='sudo pacman -Rns'
@@ -448,12 +439,6 @@ if [[ "$commands[pacman]" ]]; then
     alias pqk='sudo pacman -Qk > /dev/null'
     alias pqo='pacman -Qo'
     function pql() { pacman -Qlq "$1" | xargs ls --color -dlh; }
-    _psc() {
-        printf "%s\n" "keep 2 installed packages, remove rest"
-        sudo paccache --remove --keep 2 -v
-        printf "\n%s\n" "remove uninstalled"
-        sudo paccache --remove --keep 0 -v --uninstalled
-    }
     alias psl='pkgfile -l'
     alias pu='sudo pacman -U'
     alias pacorph='sudo pacman -Rns $(pacman -Qttdq)'

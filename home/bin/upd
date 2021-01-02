@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+update() {
+    sudo pacman -Syu "$@"
+    echo ""
+}
+
+show_outdated() {
+    local o
+    o=$(sudo lsof +c 0 -a +L1 / 2> /dev/null \
+        | grep -vE '^dropbox.*temp' \
+        | grep -vE 'logins-backup\.json')
+    lc=$(echo "$o" | wc -l)
+    if (( lc > 1)); then
+        echo "outdated:"
+        echo "$o"
+        echo ""
+    fi
+}
+
+clean_caches() {
+    local o1 o2
+
+    o1=$(sudo paccache -d --keep 2 -v)
+    lc1=$(echo "$o1" | wc -l)
+    if (( lc1 > 1)); then
+        printf "%s\n" "-- paccache: keep 2 versions in cache, remove rest"
+        sudo paccache -r --keep 2 -v
+        echo ""
+    fi
+
+    o2=$(sudo paccache -d --keep 0 -v --uninstalled)
+    lc2=$(echo "$o2" | wc -l)
+    if (( lc2 > 1)); then
+        printf "%s\n" "-- paccache: remove uninstalled packages from cache"
+        sudo paccache -r --keep 0 -v --uninstalled
+        echo ""
+    fi
+}
+
+show_pacdiff() {
+    local o
+    o=$(pacdiff --output)
+    if [[ -n "$o" ]]; then
+        echo "-- pacdiff: changes found, run 'pacdiff'"
+        echo ""
+    fi
+}
+
+update "$@"
+clean_caches
+show_outdated
+show_pacdiff
