@@ -8,5 +8,5 @@ if [[ $1 == close || $1 == umount ]]; then
     rmdir "$mountpoint"
 else
     mkdir -p "$mountpoint"
-    gocryptfs "$crypt" "$mountpoint"
+    gocryptfs -i 1h "$crypt" "$mountpoint"
 fi

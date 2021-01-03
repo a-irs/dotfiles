@@ -30,7 +30,6 @@ echo -n "load "
 awk '{print $1 " " $2 " " $3}' /proc/loadavg
 echo ""
 if [[ $HOSTNAME == srv1 ]]; then
-    sstatus containerd.service
     sstatus cronie.service
     sstatus dhcpcd@eth0.service
     sstatus docker.service

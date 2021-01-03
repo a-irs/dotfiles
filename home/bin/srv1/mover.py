@@ -72,7 +72,7 @@ class Parser():
         return None
 
     def get_video_size(self, s: str) -> Optional[str]:
-        rex = r'\.(240(p|i)|360(p|i)|480(p|i)|720(p|i)|1080(p|i))\.'
+        rex = r'\.(240(p|i)|360(p|i)|480(p|i)|720(p|i)|1080(p|i)|2160(p|i))\.'
         m = re.search(rex, s, flags=re.IGNORECASE)
         if m:
             return m.group(1).lower()
@@ -136,7 +136,7 @@ class TvParser(Parser):
         return None
 
     def get_episode(self, s: str) -> Optional[str]:
-        rex = r'\.S[0-9][0-9](E[0-9][0-9])\.'
+        rex = r'\.S[0-9][0-9]((E[0-9][0-9])+)\.'
         m = re.search(rex, s)
         if m:
             return m.group(1)

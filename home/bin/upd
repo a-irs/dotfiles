@@ -4,19 +4,18 @@ set -euo pipefail
 
 update() {
     sudo pacman -Syu "$@"
-    echo ""
 }
 
 show_outdated() {
     local o
     o=$(sudo lsof +c 0 -a +L1 / 2> /dev/null \
         | grep -vE '^dropbox.*temp' \
-        | grep -vE 'logins-backup\.json')
+        | grep -vE 'logins-backup\.json' || true)
     lc=$(echo "$o" | wc -l)
     if (( lc > 1)); then
+        echo ""
         echo "outdated:"
         echo "$o"
-        echo ""
     fi
 }
 
@@ -26,17 +25,17 @@ clean_caches() {
     o1=$(sudo paccache -d --keep 2 -v)
     lc1=$(echo "$o1" | wc -l)
     if (( lc1 > 1)); then
+        echo ""
         printf "%s\n" "-- paccache: keep 2 versions in cache, remove rest"
         sudo paccache -r --keep 2 -v
-        echo ""
     fi
 
     o2=$(sudo paccache -d --keep 0 -v --uninstalled)
     lc2=$(echo "$o2" | wc -l)
     if (( lc2 > 1)); then
+        echo ""
         printf "%s\n" "-- paccache: remove uninstalled packages from cache"
         sudo paccache -r --keep 0 -v --uninstalled
-        echo ""
     fi
 }
 
@@ -44,8 +43,8 @@ show_pacdiff() {
     local o
     o=$(pacdiff --output)
     if [[ -n "$o" ]]; then
-        echo "-- pacdiff: changes found, run 'pacdiff'"
         echo ""
+        echo "-- pacdiff: changes found, run 'pacdiff'"
     fi
 }
 

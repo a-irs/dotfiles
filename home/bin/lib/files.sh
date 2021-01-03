@@ -4,7 +4,7 @@ set -eu
 # deterministic sort
 export LC_ALL=C
 
-out=~/work/filesgit
+out=~/projects/filesgit
 
 lsfiles() { find "$1" -type f | sort -hf > "$out/$(basename "$1").txt"; }
 for d in /media/data?; do lsfiles "$d"; done
