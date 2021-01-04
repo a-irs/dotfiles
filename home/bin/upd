@@ -10,7 +10,9 @@ show_outdated() {
     local o
     o=$(sudo lsof +c 0 -a +L1 / 2> /dev/null \
         | grep -vE '^dropbox.*temp' \
-        | grep -vE 'logins-backup\.json' || true)
+        | grep -vE 'logins-backup\.json' \
+        | grep -vE '/var/log/journal' \
+        || true)
     lc=$(echo "$o" | wc -l)
     if (( lc > 1)); then
         echo ""
