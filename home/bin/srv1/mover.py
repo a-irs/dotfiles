@@ -43,7 +43,7 @@ class Parser():
             self.langs = self.set(self.get_langs)
 
         # put prefixes to the back of the title
-        title_prefixes = ['Der', 'Die', 'Das', 'Ein', 'Eine', 'The', 'A', 'An']
+        title_prefixes = ['Der', 'Die', 'Das', 'Ein', 'Eine', 'The', 'A', 'An', 'Un', 'Une']
         for p in title_prefixes:
             if self.title.startswith(p + ' '):
                 self.title = self.title[len(p + ' '):] + ', ' + p
@@ -55,7 +55,8 @@ class Parser():
         if value:
             return value
         else:
-            raise Exception(f"Could not extract value with {get_func}")
+            print(f"\nERROR: {C_YELLOW}{self.__class__.__name__}.{get_func.__name__}{C_RESET} could not extract value from {C_YELLOW}{self.release_name}{C_RESET}")
+            sys.exit(1)
 
     def get_year(self, s: str) -> Optional[str]:
         rex = r'\.([0-9][0-9](91|02))\.'
@@ -239,12 +240,12 @@ CONFIG = {
         'tv': {
             'parser_class': TvParser,
             'dest': '/media/data/videos/tv/{title} ({year})/{season} [{langs}] [{video_size} {source}]',
-            'title': '{season}.{episode}'
+            'title': '{season}{episode}'
         },
         'documentary_tv': {
             'parser_class': TvParser,
             'dest': '/media/data/videos/documentaries_tv/{title} ({year})/{season} [{langs}] [{video_size} {source}]',
-            'title': '{season}.{episode}'
+            'title': '{season}{episode}'
         },
         'movie': {
             'parser_class': MovieParser,
