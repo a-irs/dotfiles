@@ -273,12 +273,14 @@ def main():
     parser.add_argument('category', type=str, help=available_categories)
     parser.add_argument('dirs', type=str, nargs=argparse.ONE_OR_MORE)
     parser.add_argument('--year', type=int)
+    parser.add_argument('--title', type=str)
     parser.add_argument('--source', type=str)
     parser.add_argument('--video_size', type=str)
     parser.add_argument('--run', default=False, action='store_true')
 
     args = parser.parse_args()
     preset = {
+        'title': args.title,
         'year': args.year,
         'source': args.source,
         'video_size': args.video_size
