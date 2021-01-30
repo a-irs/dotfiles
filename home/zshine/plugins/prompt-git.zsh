@@ -106,7 +106,8 @@ _git_dirty_advanced() {
     fi
 
     # added
-    if [[ "$INDEX" == *$'\nA  '* ]]; then
+    if [[ "$INDEX" == *$'\n A '* ]] || \
+        [[ "$INDEX" == *$'\nA  '* ]]; then
         [[ -n "$STATUS" ]] && STATUS=" $STATUS"
         STATUS="$ZSHINE_GIT_SYMBOL_ADDED$STATUS"
     fi

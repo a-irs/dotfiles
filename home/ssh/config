@@ -52,12 +52,6 @@ Host dell dell.home
     IdentityFile ~/.ssh/id_ed25519
     PubkeyAuthentication yes
 
-Host tpl tpl.home
-    HostName tpl.home
-    User root
-    IdentityFile ~/.ssh/openwrt
-    PubkeyAuthentication yes
-
 Host mox1 mox1.home
     HostName mox1.home
     User root

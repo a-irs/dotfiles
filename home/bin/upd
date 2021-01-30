@@ -50,7 +50,13 @@ show_pacdiff() {
     fi
 }
 
-update "$@"
+if [[ $# -gt 0 && "$1" == all ]]; then
+    shift
+    update "$@"
+else
+    update --ignore linux,linux-zen,linux-headers,linux-zen-headers,linux-firmware "$@"
+fi
+
 clean_caches
 show_outdated
 show_pacdiff
