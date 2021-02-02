@@ -125,23 +125,25 @@ musicwidget_wrap = bg_wrap(musicwidget, theme.widget_music_bg, 0, 0)
 
 -- VOLUME
 
-pulsewidget = lain.widget.pulse({
+audiowidget = lain.widget.alsa({
     timeout = 3,
+    cmd = 'amixer -D pulse',
     settings = function()
         local limit = 80
         if is_mobile then
             limit = 120
         end
 
-        if tonumber(volume_now.left) == nil or tonumber(volume_now.right) == nil then
+        if tonumber(volume_now.level) == nil then
             widget:set_markup("no audio")
             return
         end
-        local level = math.floor((volume_now.left + volume_now.right) / 2 / 5 + 0.5) * 5
+        local level = math.floor((volume_now.level) / 5 + 0.5) * 5
         local color_fg = theme.widget_pulse_fg
         local color_bg = theme.widget_pulse_bg
 
-        if volume_now.muted =="yes" then
+        widget:set_markup(volume_now.status)
+        if volume_now.status =="off" then
             if level >= limit then
                 color_fg = theme.widget_pulse_fg_mute
                 color_bg = theme.widget_pulse_bg_crit
@@ -155,10 +157,10 @@ pulsewidget = lain.widget.pulse({
         end
 
         widget:set_markup(markup.bold(markup(color_fg, level)))
-        pulsewidget_wrap:set_bg(color_bg)
+        audiowidget_wrap:set_bg(color_bg)
     end
 })
-pulsewidget.widget:buttons(awful.util.table.join(
+audiowidget.widget:buttons(awful.util.table.join(
     awful.button({ }, 4, function() volume.increase() end), -- wheel up
     awful.button({ }, 5, function() volume.decrease() end), -- wheel down
     awful.button({ }, 1, function() volume.toggle()   end), -- left click
@@ -169,7 +171,7 @@ pulsewidget.widget:buttons(awful.util.table.join(
         awful.client.run_or_raise('pavucontrol', matcher)
     end)
 ))
-pulsewidget_wrap = bg_wrap(pulsewidget.widget, theme.widget_pulse_bg, theme.statusbar_margin, theme.statusbar_margin)
+audiowidget_wrap = bg_wrap(audiowidget.widget, theme.widget_pulse_bg, theme.statusbar_margin, theme.statusbar_margin)
 
 -- DATE, TIME
 
@@ -245,7 +247,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     local layout3 = wibox.layout.fixed.horizontal()
     layout3:add(systray_wrap)
-    layout3:add(pulsewidget_wrap)
+    layout3:add(audiowidget_wrap)
     if is_mobile then
         layout3:add(batterywidget_wrap)
         layout3:add(netwidget_wrap)

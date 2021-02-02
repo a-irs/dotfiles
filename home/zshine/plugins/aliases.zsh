@@ -34,7 +34,7 @@ else
     vim=vim
 fi
 
-alias vi="vim -N -u $HOME/.vimrc.minimal"
+alias vi="$vim -N -u $HOME/.vimrc.minimal"
 
 alias et="emacsclient -c --alternate-editor='' -t"
 alias e="emacsclient -c --alternate-editor='' -n"
@@ -468,7 +468,7 @@ fonttest() {
 }
 
 if [[ "$commands[vim]" ]]; then
-    export MANPAGER="vim -M +MYMANPAGER -"
+    export MANPAGER="vim -M +MYMANPAGER --not-a-term -"
 elif [[ "$commands[man]" ]]; then
     man() {
         env LESS_TERMCAP_mb=$'\E[01;31m' \

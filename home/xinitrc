@@ -78,9 +78,9 @@ if [[ $HOSTNAME == desk ]]; then
     # for ddcutil (brightness control)
     sudo modprobe i2c-dev &
 
-    if ! mount | grep -q "root@srv1.home:/media/data"; then
-        bash -c "$HOME/.bin/wait-for-host srv1.home && sshfs root@srv1.home:/media/data /media/data -o reconnect -o BatchMode=yes -o allow_other" &
-    fi
+    # if ! mount | grep -q "root@srv1.home:/media/data"; then
+    #     bash -c "$HOME/.bin/wait-for-host srv1.home && sshfs root@srv1.home:/media/data /media/data -o reconnect -o BatchMode=yes -o allow_other" &
+    # fi
 
     cat << 'EOF' | bash &
     set -e
@@ -88,7 +88,8 @@ if [[ $HOSTNAME == desk ]]; then
 
     wait-for-host spotify.com
     pidof spotify || exo-open "$HOME/.local/share/applications/spotify.desktop"
-    xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --name "^Spotify Premium$")" 5
+    timeout 10 xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --name "^Spotify .*")" 5
+    timeout 60 xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --name "^Spotify .*")" 5
 EOF
 
     cat << 'EOF' | bash &

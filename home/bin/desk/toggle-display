@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -u
+
+ext() {
+    xrandr --output HDMI-A-0 --mode 1920x1080 --auto --primary --rate 60.00
+    xrandr --output DisplayPort-0 --off
+    dpitog 3
+    echo 'awesome.restart()' | awesome-client
+}
+
+int() {
+    xrandr --output DisplayPort-0 --mode 2560x1440 --auto --primary --rate 69.93
+    xrandr --output HDMI-A-0 --off
+    dpitog 2
+    echo 'awesome.restart()' | awesome-client
+}
+
+primary() {
+    xrandr | grep primary | awk '{print $1}'
+}
+
+if [[ "$(primary)" == HDMI-A-0 ]]; then
+    int
+else
+    ext
+fi

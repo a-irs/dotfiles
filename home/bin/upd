@@ -12,6 +12,7 @@ show_outdated() {
         | grep -vE '^dropbox.*temp' \
         | grep -vE 'logins-backup\.json' \
         | grep -vE '/var/log/journal' \
+        | grep -vE '/usr/share/icons/.*\.cache' \
         || true)
     lc=$(echo "$o" | wc -l)
     if (( lc > 1)); then
