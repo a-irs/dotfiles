@@ -19,6 +19,10 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
+" line wrap indicator
+set breakindent
+set showbreak=›\  " trailing space
+
 set updatetime=150
 
 " statusbar

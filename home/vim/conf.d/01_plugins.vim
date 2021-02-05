@@ -67,10 +67,10 @@ Plug 'chrisbra/Colorizer'
 let g:colorizer_auto_filetype='css,html,conf,lua,sh,dosini'
 let g:colorizer_colornames = 0  "do not colorize simple 'red', 'yellow', ...
 
-" TComment
-Plug 'tomtom/tcomment_vim'
-nnoremap <silent> <leader># :TComment<CR>
-vnoremap <silent> <leader># :TComment<CR>
+Plug 'tpope/vim-commentary'
+nmap <leader># :Commentary<CR>
+vmap <leader># :Commentary<CR>
+autocmd FileType markdown,markdown.pandoc setlocal commentstring=<!--\ %s\ -->
 
 Plug 'airblade/vim-gitgutter'
 " set background to same as SignColumn
