@@ -21,7 +21,7 @@ set expandtab
 
 " line wrap indicator
 set breakindent
-set showbreak=›\  " trailing space
+set showbreak=»\  " trailing space
 
 set updatetime=150
 

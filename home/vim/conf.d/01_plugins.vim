@@ -34,11 +34,20 @@ endfunction
 Plug 'tolecnal/icinga2-vim', { 'for': 'icinga2' }
 autocmd BufNewFile,BufFilePre,BufRead */icinga/*/*.conf set filetype=icinga2
 
+
+
 Plug 'junegunn/fzf' | Plug 'junegunn/fzf.vim'
+if exists('$TMUX')
+    let g:fzf_layout = { 'tmux': '-d50%' }
+else
+    let g:fzf_layout = { 'down': '50%' }
+endif
 let g:fzf_buffers_jump = 1  " jump to existing if possible
+
 " uses $FZF_DEFAULT_COMMAND
 nnoremap <silent> <Leader>ff :Files<CR>
 nnoremap <silent> <Leader>fh :History<CR>
+nnoremap <silent> <Leader><Tab> :History<CR>
 nnoremap <silent> <Leader>fg :GFiles<CR>
 nnoremap <silent> <Leader>fm :GFiles?<CR>
 nnoremap <silent> <Leader>bb :Buffers<CR>

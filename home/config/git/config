@@ -15,9 +15,9 @@
     pp = !git add -A && git commit -m 'Update' && git push 2>/dev/null
     clone1 = clone --depth=1
     i = icdiff
-    d = diff
-    wd = diff --word-diff=color
-    wdiff = diff --word-diff=color
+    d = diff HEAD
+    wd = diff --word-diff=color HEAD
+    wdiff = diff --word-diff=color HEAD
     wlog = log --word-diff=color -p
     co = checkout
     cm = commit
