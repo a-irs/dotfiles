@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+URL=$1
+
+TMP="$(mktemp -d)"
+trap "rm -rf "$TMP"" EXIT
+
+cd "$TMP"
+git clone --depth=1 "$URL" && cd ./*
+$EDITOR -m -O -- . README*
