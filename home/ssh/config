@@ -76,6 +76,7 @@ Host remarkable
     IdentityFile ~/.ssh/id_remarkable
     PubkeyAuthentication yes
 
+###
 
 Host *
-    AddKeysToAgent yes
+    UseKeychain yes

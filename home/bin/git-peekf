@@ -5,13 +5,13 @@ set -euo pipefail
 URL=$1
 
 TMP="$(mktemp -d)"
-trp() { rm -rf "$TMP"; echo ""; echo ":: removed '$TMP'."; }
+trp() { rm -rf "$TMP"; echo "Removed '$TMP'."; }
 trap trp EXIT
 
 clear
 echo ":: $URL"
 echo ""
-git clone --depth=1 "$URL" "$TMP"
+git clone "$URL" "$TMP"
 cd "$TMP"
 echo ""
 ls -F
