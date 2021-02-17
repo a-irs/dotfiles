@@ -3,16 +3,18 @@
 set -euo pipefail
 
 URL=$1
+NS=$(echo "$URL" | rev | cut -d '/' -f 2 | rev)
+REPO=$(echo "$URL" | rev | cut -d '/' -f 1 | rev | sed -E 's/\.git$//')
 
-TMP="$(mktemp -d)"
-trp() { rm -rf "$TMP"; echo ""; echo ":: removed '$TMP'."; }
-trap trp EXIT
+dest=$TMPDIR/git-peek/$NS/$REPO
 
 clear
 echo ":: $URL"
-echo ""
-git clone --depth=1 "$URL" "$TMP"
-cd "$TMP"
+if [[ ! -d "$dest/.git" ]]; then
+    echo ""
+    git clone --depth=1 "$URL" "$dest"
+fi
+cd "$dest"
 echo ""
 ls -F
 zsh
