@@ -8,11 +8,17 @@ REPO=$(echo "$URL" | rev | cut -d '/' -f 1 | rev | sed -E 's/\.git$//')
 
 dest=$TMPDIR/git-peek/$NS/$REPO
 
+if [[ "$URL" == clean ]]; then
+    rm -rf "$TMPDIR/git-peek"
+    echo "removed '$TMPDIR/git-peek'."
+    exit
+fi
+
 clear
 echo ":: $URL"
 if [[ ! -d "$dest/.git" ]]; then
     echo ""
-    git clone --depth=1 "$URL" "$dest"
+    git clone "$URL" "$dest"
 fi
 cd "$dest"
 echo ""
