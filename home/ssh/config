@@ -75,8 +75,3 @@ Host remarkable
     User root
     IdentityFile ~/.ssh/id_remarkable
     PubkeyAuthentication yes
-
-###
-
-Host *
-    UseKeychain yes
