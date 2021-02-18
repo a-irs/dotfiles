@@ -5,7 +5,7 @@ green() { echo -en "\e[1;32m$*\e[0m"; }
 red() { echo -en "\e[1;31m$*\e[0m"; }
 
 sstatus() {
-    status=$(systemctl show "$1" | grep ActiveState | cut -d= -f 2)
+    status=$(systemctl is-active "$1")
     if [[ "$status" == "active" ]]; then
         green "$1\n"
     else

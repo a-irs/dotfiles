@@ -108,12 +108,12 @@ def maintain_git(repo_path: str, playlists: List[Playlist]):
         with open(os.path.expanduser(os.path.join(repo_path, f)), 'w') as fd:
             fd.write(value)
 
-    logging.info(f"add and commit git...")
+    logging.info("add and commit git...")
     repo.git.add('.')
     try:
         repo.git.commit(m="update playlists")
     except git.exc.GitCommandError:
-        logging.info(f"no git changes, doing nothing")
+        logging.info("no git changes, doing nothing")
 
 
 def refresh_token(spotify):
