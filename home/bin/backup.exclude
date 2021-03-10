@@ -51,7 +51,6 @@ R /
 - /home/*/.config/VirtualBox/*.iso
 - /home/*/.dropbox*
 - /home/*/.kodi/addons/packages/*
-- /home/*/.kodi/userdata/Database/Textures*.db
 - /home/*/.kodi/userdata/Thumbnails/*
 - /home/*/.local/share/Trash/
 - /home/*/.local/share/yay/**/*.deb

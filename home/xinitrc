@@ -88,17 +88,8 @@ if [[ $HOSTNAME == desk ]]; then
 
     wait-for-host spotify.com
     pidof spotify || exo-open "$HOME/.local/share/applications/spotify.desktop"
-    timeout 10 xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --name "^Spotify .*")" 5
-    timeout 60 xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --name "^Spotify .*")" 5
-EOF
-
-    cat << 'EOF' | bash &
-    set -e
-    PATH=$HOME/.bin:$PATH
-
-    wait-for-host srv1.home
-    pidof kodi-x11 || exo-open "/usr/share/applications/kodi.desktop"
-    xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --class "kodi")" 6
+    timeout 10 xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --name "^Spotify .*")" 6
+    timeout 60 xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --name "^Spotify .*")" 6
 EOF
 
 fi

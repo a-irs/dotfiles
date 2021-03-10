@@ -5,15 +5,17 @@ set -u
 ext() {
     xrandr --output HDMI-A-0 --mode 1920x1080 --auto --primary --rate 60.00
     xrandr --output DisplayPort-0 --off
-    dpitog 3
-    echo 'awesome.restart()' | awesome-client
+    dpitog 2
+
+    pidof kodi-x11 || exo-open "/usr/share/applications/kodi.desktop"
+    xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --class "kodi")" 6
+    xdotool set_desktop 6
 }
 
 int() {
     xrandr --output DisplayPort-0 --mode 2560x1440 --auto --primary --rate 69.93
     xrandr --output HDMI-A-0 --off
-    dpitog 2
-    echo 'awesome.restart()' | awesome-client
+    dpitog 1
 }
 
 primary() {
@@ -25,3 +27,5 @@ if [[ "$(primary)" == HDMI-A-0 ]]; then
 else
     ext
 fi
+nitrogen --restore
+echo 'awesome.restart()' | awesome-client

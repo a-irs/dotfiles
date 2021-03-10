@@ -33,12 +33,12 @@ clean_caches() {
         sudo paccache -r --keep 2 -v
     fi
 
-    o2=$(sudo paccache -d --keep 0 -v --uninstalled)
+    o2=$(sudo paccache -d --keep 1 -v --uninstalled)
     lc2=$(echo "$o2" | wc -l)
     if (( lc2 > 1)); then
         echo ""
         printf "%s\n" "-- paccache: remove uninstalled packages from cache"
-        sudo paccache -r --keep 0 -v --uninstalled
+        sudo paccache -r --keep 1 -v --uninstalled
     fi
 }
 
