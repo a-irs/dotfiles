@@ -49,19 +49,12 @@ git_get_branch() {
 
 git_get_remote() {
     local git_out=$1
-    local ahead behind s
+    local s=()
     pcre_compile -m -- "^# branch.ab (.+) (.+)$"
     pcre_match -- "$git_out"
-    ahead=$match[1]
-    behind=$match[2]
 
-    [[ "$ahead" == "+0" ]] && ahead=""
-    [[ "$behind" == "-0" ]] && behind=""
-    if [[ -n "$ahead" && -n "$behind" ]]; then
-        s="$ahead $behind"
-    else
-        s="$ahead$behind"
-    fi
+    [[ "$match[1]" == "+0" ]] || s+="$match[1]"
+    [[ "$match[2]" == "-0" ]] || s+="$match[2]"
     prompt_segment "$ZSHINE_GIT_DIRTY_BG" "$ZSHINE_GIT_DIRTY_FG" "$s"
 }
 
