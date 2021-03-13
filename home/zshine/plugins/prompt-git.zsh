@@ -1,17 +1,72 @@
 #!/usr/bin/env zsh
 
-is_git() {
-    [[ "$PWD" == /mnt/* ]] && return 1
-    [[ "$PWD" == /media/* ]] && return 1
-    [[ "$PWD" == /run/user/*/gvfs/* ]] && return 1
-    [[ -d .git ]] && return 0
-    git rev-parse --is-inside-work-tree &> /dev/null && return 0
+zmodload zsh/pcre
+
+git_get_dirt() {
+    local git_out=$1
+    local s=()
+
+    pcre_compile -m -- "^\?"
+    pcre_match -- "$git_out" && s+="$ZSHINE_GIT_SYMBOL_UNTRACKED"
+
+    pcre_compile -m -- "^1 (M\.|\.M)"
+    pcre_match -- "$git_out" && s+="$ZSHINE_GIT_SYMBOL_MODIFIED"
+
+    pcre_compile -m -- "^1 (D\.|\.D)"
+    pcre_match -- "$git_out" && s+="$ZSHINE_GIT_SYMBOL_DELETED"
+
+    pcre_compile -m -- "^1 (A\.|\.A)"
+    pcre_match -- "$git_out" && s+="$ZSHINE_GIT_SYMBOL_ADDED"
+
+    pcre_compile -m -- "^1 (R\.|\.R)"
+    pcre_match -- "$git_out" && s+="$ZSHINE_GIT_SYMBOL_RENAMED"
+
+    prompt_segment "$ZSHINE_GIT_DIRTY_BG" "$ZSHINE_GIT_DIRTY_FG" "$s"
 }
 
-git_prompt_info() {
-    is_git || return
+git_get_commit() {
+    local git_out=$1
+    local s
+    pcre_compile -m -- "^# branch.oid (.{7})"
+    pcre_match -- "$git_out"
+    s=$match[1]
 
-    # remote repo
+    tag=$(command git describe --tags 2> /dev/null)
+    [[ "$?" -eq 0 ]] && s="$s ($tag)"
+    prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_COMMIT_FG" "$s"
+}
+
+git_get_branch() {
+    local git_out=$1
+    local s
+    pcre_compile -m -- "^# branch.head (.*)$"
+    pcre_match -- "$git_out"
+    s=$match[1]
+
+    [[ "$s" == master ]] && s=''
+    prompt_segment "$ZSHINE_GIT_BRANCH_BG" "$ZSHINE_GIT_BRANCH_FG" "$s"
+}
+
+git_get_remote() {
+    local git_out=$1
+    local ahead behind s
+    pcre_compile -m -- "^# branch.ab (.+) (.+)$"
+    pcre_match -- "$git_out"
+    ahead=$match[1]
+    behind=$match[2]
+
+    [[ "$ahead" == "+0" ]] && ahead=""
+    [[ "$behind" == "-0" ]] && behind=""
+    if [[ -n "$ahead" && -n "$behind" ]]; then
+        s="$ahead $behind"
+    else
+        s="$ahead$behind"
+    fi
+    prompt_segment "$ZSHINE_GIT_DIRTY_BG" "$ZSHINE_GIT_DIRTY_FG" "$s"
+}
+
+git_get_repo() {
+    local url protocol repo server user
     url=$(command git ls-remote --get-url 2> /dev/null)
     if [[ $ZSHINE_GIT_SHRINK_URL == 1 ]]; then
         if [[ $url == *'://'* ]]; then
@@ -34,96 +89,20 @@ git_prompt_info() {
     fi
     [[ "$url" != '/' ]] && prompt_segment "$ZSHINE_GIT_PROJECT_BG" "$ZSHINE_GIT_PROJECT_FG" "$url"
     [[ "$protocol" != 'ssh' ]] && prompt_segment "$ZSHINE_GIT_PROTOCOL_BG" "$ZSHINE_GIT_PROTOCOL_FG" "$protocol"
-
-    # commit/tag
-    commit=$(command git --no-pager log --pretty=format:'%h' -n 1 2> /dev/null)
-    tag=$(command git describe --tags 2> /dev/null)
-    [[ "$?" -eq 0 ]] && commit="$tag ($commit)"
-    prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_COMMIT_FG" "$commit"
-
-    # branch
-    branch=$(command git symbolic-ref --short HEAD)
-    [[ "$branch" == master ]] && branch=''
-    prompt_segment "$ZSHINE_GIT_BRANCH_BG" "$ZSHINE_GIT_BRANCH_FG" "$branch"
-
-    # remote state
-    remote_state="$(git_remote_state)"
-    prompt_segment "$ZSHINE_GIT_DIRTY_BG" "$ZSHINE_GIT_DIRTY_FG" "$(git_remote_state)"
-
-    # dirty
-    dirty="$(git_dirty)"
-    prompt_segment "$ZSHINE_GIT_DIRTY_BG" "$ZSHINE_GIT_DIRTY_FG" "$(git_dirty)"
-
 }
 
-git_dirty() {
-    if [[ $ZSHINE_GIT_SIMPLE_DIRTY == 1 ]]; then
-        _git_dirty_simple
-    else
-        _git_dirty_advanced
-    fi
-}
+git_prompt_info() {
+    local git_out
+    git_out=$(git status --ignore-submodules --porcelain=v2 --branch)
 
-git_remote_state() {
-    remote_state=$(git status --ignore-submodules --porcelain -b 2> /dev/null | grep -o "\[.*\]")
-    if [[ "$remote_state" != "" ]]; then
-        out=""
-        if [[ "$remote_state" == *ahead* ]] && [[ "$remote_state" == *behind* ]]; then
-            behind_num=$(echo "$remote_state" | grep -o "behind [0-9]*" | grep -o "[0-9]*$")
-            ahead_num=$(echo "$remote_state" | grep -o "ahead [0-9]*" | grep -o "[0-9]*$")
-            out="-$behind_num,+$ahead_num"
-        elif [[ "$remote_state" == *ahead* ]]; then
-            ahead_num=$(echo "$remote_state" | grep -o "ahead [0-9]*" | grep -o "[0-9]*$")
-            out="+$ahead_num"
-        elif [[ "$remote_state" == *behind* ]]; then
-            behind_num=$(echo "$remote_state" | grep -o "behind [0-9]*" | grep -o "[0-9]*$")
-            out="-$behind_num"
-        fi
-        echo -n "%{%B%F{$ZSHINE_GIT_DIRTY_FG}%}$out"
-    fi
-}
+    [[ "$?" -eq 0 ]] || return
+    [[ "$PWD" == /mnt/* ]] && return
+    [[ "$PWD" == /media/* ]] && return
+    [[ "$PWD" == /run/user/*/gvfs/* ]] && return
 
-_git_dirty_simple() {
-    if ! git diff --quiet --ignore-submodules HEAD; then
-        echo -n "%{%B%F{$ZSHINE_GIT_DIRTY_FG}%}$ZSHINE_GIT_SYMBOL_SIMPLE"
-    fi
-}
-
-_git_dirty_advanced() {
-    INDEX=$'\n'$(git status --ignore-submodules --porcelain 2> /dev/null) || return
-    STATUS=""
-
-    # renamed
-    if [[ "$INDEX" == *$'\nR  '* ]]; then
-        [[ -n "$STATUS" ]] && STATUS=" $STATUS"
-        STATUS="$ZSHINE_GIT_SYMBOL_RENAMED$STATUS"
-    fi
-
-    # untracked
-    if [[ "$INDEX" == *$'\n\?\? '* ]]; then
-        [[ -n "$STATUS" ]] && STATUS=" $STATUS"
-        STATUS="$ZSHINE_GIT_SYMBOL_UNTRACKED$STATUS"
-    fi
-
-    # added
-    if [[ "$INDEX" == *$'\n A '* ]] || \
-        [[ "$INDEX" == *$'\nA  '* ]]; then
-        [[ -n "$STATUS" ]] && STATUS=" $STATUS"
-        STATUS="$ZSHINE_GIT_SYMBOL_ADDED$STATUS"
-    fi
-
-    # modified
-    if [[ "$INDEX" == *$'\n M '* ]] || \
-        [[ "$INDEX" == *$'\nM  '* ]]; then
-        [[ -n "$STATUS" ]] && STATUS=" $STATUS"
-        STATUS="$ZSHINE_GIT_SYMBOL_MODIFIED$STATUS"
-    fi
-
-    # deleted
-    if [[ "$INDEX" == *$'\nD  '* || "$INDEX" == *$'\n D '* ]]; then
-        [[ -n "$STATUS" ]] && STATUS=" $STATUS"
-        STATUS="$ZSHINE_GIT_SYMBOL_DELETED$STATUS"
-    fi
-
-    [[ -n $STATUS ]] && echo -n "%{%F{$ZSHINE_GIT_DIRTY_FG}%}$STATUS%{%f%}"
+    git_get_repo "$git_out"
+    git_get_commit "$git_out"
+    git_get_branch "$git_out"
+    git_get_remote "$git_out"
+    git_get_dirt "$git_out"
 }

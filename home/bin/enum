@@ -2,14 +2,12 @@
 # ref: https://github.com/rebootuser/LinEnum/blob/master/LinEnum.sh#L485, https://gtfobins.github.io
 
 # minify (remove comment lines, remove blank lines, remove whitespace at beginning of line), then base64 and print deploy string
-if [ "$1" = base64 ]; then
-    out=$(echo "echo $(tail -n +14 "$0" | sed -E '/^[ ]*#/d' | sed -E '/^$/d' | sed -E 's/^[ ]*//' | bzip2 | base64 -w 0)|base64 -d|bzcat|sh")
-    echo "$out"
-    echo "$out" | xclip -r -selection clipboard
-    echo ""
-    echo "copied to clipboard"
-    exit
-fi
+out=$(echo "echo $(tail -n +12 "$0" | sed -E '/^[ ]*#/d' | sed -E '/^$/d' | sed -E 's/^[ ]*//' | bzip2 | base64 -w 0)|base64 -d|bzcat|sh")
+echo "$out"
+echo "$out" | xclip -r -selection clipboard
+echo ""
+echo "copied to clipboard"
+exit
 ###################################################################
 
 log() {
@@ -165,9 +163,9 @@ main() {
     # interesting
     # /etc/ssh/sshd_config
     # # cron
-    # find /etc /var -name "cron*" -ls 2>/dev/null
-    # find /etc /var -name "anacron*" -ls 2>/dev/null
-    # systemctl list-timers --all
+    find /etc /var -name "cron*" -ls 2>/dev/null
+    find /etc /var -name "anacron*" -ls 2>/dev/null
+    systemctl list-timers --all
 
     log 2 "writeable \$PATHs"
     for x in $(echo "$PATH" | tr ":" " "); do
