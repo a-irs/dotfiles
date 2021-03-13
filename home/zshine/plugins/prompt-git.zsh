@@ -65,23 +65,25 @@ git_get_repo() {
         if [[ $url == *'://'* ]]; then
             # ssh://git@server/user/project.git
             # https://server/user/project.git
-            repo=${url:t}
-            repo=${repo//.git/}
-            protocol=${url%%://*}
-            server=$(printf "%s" "$url" | cut -d '/' -f 3 | cut -d '@' -f 2 | cut -d ':' -f 1)
-            user=$(printf "$url" | rev | cut -d '/' -f 2 | rev)
+            pcre_compile -m -- "^(.+)://.+?/(.+?)/(.+)"
+            pcre_match -- "$url"
+            protocol=$match[1]
+            namespace=$match[2]
+            repo=$match[3]
+            repo=${repo/.git/}
         else
             # git@server:user/project.git
-            repo=${url:t}
-            repo=${repo//.git/}
+            pcre_compile -m -- "^.+:(.+?)/(.+)"
+            pcre_match -- "$url"
+            namespace=$match[1]
+            repo=$match[2]
+            repo=${repo/.git/}
             protocol=ssh
-            server=$(printf "%s" "$url" | cut -d '@' -f 2 | cut -d ':' -f 1)
-            user=$(printf "$url" | cut -d ':' -f 2 | cut -d '/' -f 1)
         fi
-        url="${user}/${repo}"
+        url="${namespace}/${repo}"
     fi
-    [[ "$url" != '/' ]] && prompt_segment "$ZSHINE_GIT_PROJECT_BG" "$ZSHINE_GIT_PROJECT_FG" "$url"
-    [[ "$protocol" != 'ssh' ]] && prompt_segment "$ZSHINE_GIT_PROTOCOL_BG" "$ZSHINE_GIT_PROTOCOL_FG" "$protocol"
+    [[ "$url" == "" ]] || prompt_segment "$ZSHINE_GIT_PROJECT_BG" "$ZSHINE_GIT_PROJECT_FG" "$url"
+    [[ "$protocol" == "ssh" ]] || prompt_segment "$ZSHINE_GIT_PROTOCOL_BG" "$ZSHINE_GIT_PROTOCOL_FG" "$protocol"
 }
 
 git_prompt_info() {
