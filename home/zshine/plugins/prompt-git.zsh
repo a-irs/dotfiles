@@ -5,6 +5,7 @@ zmodload zsh/pcre
 git_get_dirt() {
     local git_out=$1
     local s=()
+    local match
 
     pcre_compile -m -- "^\?"
     pcre_match -- "$git_out" && s+="$ZSHINE_GIT_SYMBOL_UNTRACKED"
@@ -21,45 +22,47 @@ git_get_dirt() {
     pcre_compile -m -- "^1 (R\.|\.R)"
     pcre_match -- "$git_out" && s+="$ZSHINE_GIT_SYMBOL_RENAMED"
 
-    prompt_segment "$ZSHINE_GIT_DIRTY_BG" "$ZSHINE_GIT_DIRTY_FG" "$s"
+    printf "%s" "$s"
 }
 
 git_get_commit() {
     local git_out=$1
-    local s
+    local s match
     pcre_compile -m -- "^# branch.oid (.{7})"
     pcre_match -- "$git_out"
     s=$match[1]
 
     tag=$(command git describe --tags 2> /dev/null)
     [[ "$?" -eq 0 ]] && s="$s ($tag)"
-    prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_COMMIT_FG" "$s"
+
+    printf "%s" "$s"
 }
 
 git_get_branch() {
     local git_out=$1
-    local s
+    local s match
     pcre_compile -m -- "^# branch.head (.*)$"
     pcre_match -- "$git_out"
     s=$match[1]
 
     [[ "$s" == master ]] && s=''
-    prompt_segment "$ZSHINE_GIT_BRANCH_BG" "$ZSHINE_GIT_BRANCH_FG" "$s"
+    printf "%s" "$s"
 }
 
 git_get_remote() {
     local git_out=$1
     local s=()
+    local match
     pcre_compile -m -- "^# branch.ab (.+) (.+)$"
     pcre_match -- "$git_out"
 
     [[ "$match[1]" == "+0" ]] || s+="$match[1]"
     [[ "$match[2]" == "-0" ]] || s+="$match[2]"
-    prompt_segment "$ZSHINE_GIT_DIRTY_BG" "$ZSHINE_GIT_DIRTY_FG" "$s"
+    printf "%s" "$s"
 }
 
 git_get_repo() {
-    local url protocol repo server user
+    local url protocol repo match
     url=$(command git ls-remote --get-url 2> /dev/null)
     if [[ $ZSHINE_GIT_SHRINK_URL == 1 ]]; then
         if [[ $url == *'://'* ]]; then
@@ -96,8 +99,8 @@ git_prompt_info() {
     [[ "$PWD" == /run/user/*/gvfs/* ]] && return
 
     git_get_repo "$git_out"
-    git_get_commit "$git_out"
-    git_get_branch "$git_out"
-    git_get_remote "$git_out"
-    git_get_dirt "$git_out"
+    prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_COMMIT_FG" "$(git_get_commit "$git_out")"
+    prompt_segment "$ZSHINE_GIT_BRANCH_BG" "$ZSHINE_GIT_BRANCH_FG" "$(git_get_branch "$git_out")"
+    prompt_segment "$ZSHINE_GIT_DIRTY_BG" "$ZSHINE_GIT_DIRTY_FG" "$(git_get_remote "$git_out")"
+    prompt_segment "$ZSHINE_GIT_DIRTY_BG" "$ZSHINE_GIT_DIRTY_FG" "$(git_get_dirt "$git_out")"
 }

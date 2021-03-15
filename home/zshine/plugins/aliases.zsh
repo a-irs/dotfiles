@@ -227,7 +227,7 @@ take() { mkdir -p "$1" && cd "$1"; }
 alias rd='rmdir'
 alias f='noglob find . -name'
 alias ff='noglob find . -type f -name'
-alias chx='chmod u+x -v'
+alias chx='chmod u+x'
 
 alias mmv='noglob zmv -W'
 

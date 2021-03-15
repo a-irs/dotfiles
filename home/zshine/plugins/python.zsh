@@ -29,7 +29,6 @@ _venv_generic() {
             return 3
         fi
     else
-        virtualenv --no-download -p "$py" "$e"
-        source "$e/bin/activate"
+        "$py" -m venv "$e" && source "$e/bin/activate"
     fi
 }
