@@ -27,10 +27,14 @@ git_get_dirt() {
 
 git_get_commit() {
     local git_out=$1
-    local s match
-    pcre_compile -m -- "^# branch.oid (.{7})"
+    local s match tag gen
+    pcre_compile -m -- "^# branch.oid (.+)"
     pcre_match -- "$git_out"
     s=$match[1]
+    [[ "$s" == "(initial)" ]] || s=${s[0,7]}
+
+    gen=$(command git rev-list --count HEAD 2> /dev/null)
+    [[ "$?" -eq 0 ]] && s="${gen} « $s"
 
     tag=$(command git describe --tags 2> /dev/null)
     [[ "$?" -eq 0 ]] && s="$s ($tag)"
@@ -58,6 +62,7 @@ git_get_remote() {
 
     [[ "$match[1]" == "+0" ]] || s+="$match[1]"
     [[ "$match[2]" == "-0" ]] || s+="$match[2]"
+    [[ ${#s[@]} ]] && s=""
     printf "%s" "$s"
 }
 
@@ -85,7 +90,7 @@ git_get_repo() {
         fi
         url="${namespace}/${repo}"
     fi
-    [[ "$url" == "" ]] || prompt_segment "$ZSHINE_GIT_PROJECT_BG" "$ZSHINE_GIT_PROJECT_FG" "$url"
+    [[ "$url" == "/" ]] || prompt_segment "$ZSHINE_GIT_PROJECT_BG" "$ZSHINE_GIT_PROJECT_FG" "$url"
     [[ "$protocol" == "ssh" ]] || prompt_segment "$ZSHINE_GIT_PROTOCOL_BG" "$ZSHINE_GIT_PROTOCOL_FG" "$protocol"
 }
 

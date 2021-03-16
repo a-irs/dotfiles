@@ -3,10 +3,9 @@
 # ± ➤ → ⚡ ● » α λ ϟ ✯ ★ ➜ ↪ ▶ ► ↦ ⇆ φ └ > ★ ❯ ❱ ❩
 
 case $HOST in
-    x1  ) ZSHINE_HOST_COLOR='green' ;;
-    desk) ZSHINE_HOST_COLOR='yellow' ;;
     srv1) ZSHINE_HOST_COLOR='magenta' ;;
     srv2) ZSHINE_HOST_COLOR='blue' ;;
+    srv3) ZSHINE_HOST_COLOR='green' ;;
     *)    ZSHINE_HOST_COLOR='cyan' ;;
 esac
 
