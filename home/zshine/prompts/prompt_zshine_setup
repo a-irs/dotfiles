@@ -105,7 +105,7 @@ prompt_segment() {
 _prompt_end() {
     echo -n " %{%k%F{$ZSHINE_CURRENT_BG}%}$ZSHINE_SEGMENT_SYMBOL"
     echo -n "%{%f%}"
-    ZSHINE_CURRENT_BG=''
+    ZSHINE_CURRENT_BG='NONE'
 }
 
 
@@ -154,10 +154,6 @@ _prompt_user_host() {
 #######################################
 # right prompt functions               #
 #######################################
-
-_prompt_error() {
-    echo -n "%{%B%F{$ZSHINE_ERROR_COLOR}%}%(?..%? )"
-}
 
 _rprompt_battery() {
     if [[ $ZSHINE_BATTERY == 1 ]]; then
@@ -212,7 +208,15 @@ _rprompt_date() {
 }
 
 _prompt() {
-    echo -n "%{%F{$ZSHINE_PROMPT_COLOR}%}$ZSHINE_PROMPT_SYMBOL%{%f%} "
+    local s=""
+
+    # show normal prompt or colored error prompt, depending on last return code
+    s+="%(?"
+    s+=".%{%B%F{$ZSHINE_PROMPT_COLOR}%}"
+    s+=".%{%B%F{$ZSHINE_ERROR_COLOR}%}%? "
+    s+=")"
+    s+="$ZSHINE_PROMPT_SYMBOL%{%f%} "
+    echo -n "$s"
 }
 
 
@@ -220,17 +224,15 @@ _prompt() {
 # init functions                      #
 #######################################
 
-_build_left_1() {
+_build_left() {
+    printf '\n'
     _prompt_ssh
     _prompt_user_host
     _prompt_virtualenv
     _prompt_path
     _prompt_git
     _prompt_end
-}
-
-_build_left_2() {
-    _prompt_error
+    printf '\n'
     _prompt_jobs
     _prompt
 }
@@ -241,9 +243,7 @@ _build_right() {
 }
 
 prompt_zshine_setup() {
-    PROMPT=$''
-    PROMPT+=$'\n%{%f%b%k%}$(_build_left_1)%{%f%k%b%} '
-    PROMPT+=$'\n%{%f%b%k%}$(_build_left_2)%{%f%k%b%}'
+    PROMPT='%{%f%b%k%}$(_build_left)%{%f%k%b%}'
     RPROMPT='%{%f%b%k%}$(_build_right)%{%f%k%b%}'
 }
 
