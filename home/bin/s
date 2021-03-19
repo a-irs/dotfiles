@@ -37,6 +37,7 @@ preview_pkcs() { keytool -v -list -keystore "$path" -storepass '' | trim | wrap;
 preview_csr() { openssl req -in "$path" -noout -text | cleanup_openssl | trim | wrap; }
 preview_csv() { column -t -s\;, "$path" | trim | wrap; }
 preview_rrd() { rrdinfo "$path" | trim | wrap; }
+preview_pkg() { pkgutil -v --payload-files "$path" | grep -vE '^\.$' | sort | trim | wrap; }
 
 file_type=$(file -Lb -- "$path")
 
@@ -78,6 +79,8 @@ case "$extension" in
         preview_csv; exit ;;
     p12|pfx)
         preview_pkcs; exit ;;
+    pkg)
+        preview_pkg; exit ;;
 esac
 
 mime_type=$(file --mime-type -Lb -- "$path")

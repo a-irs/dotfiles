@@ -6,6 +6,11 @@ zmodload zsh/terminfo
 
 os="$OSTYPE"
 
+# safe paste https://github.com/zsh-users/zsh/blob/master/Functions/Zle/bracketed-paste-magic
+set zle_bracketed_paste
+autoload -Uz bracketed-paste-magic
+zle -N bracketed-paste bracketed-paste-magic
+
 # no duplicate entries for path arrays
 typeset -gU cdpath fpath mailpath path
 [ -d "$HOME/.bin" ] && path=("$HOME/.bin" $path)

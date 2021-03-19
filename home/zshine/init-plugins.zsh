@@ -1,7 +1,6 @@
 ZSHINE_PLUGINS=(
   completion # tweaks for TAB-completion
   keys # bind keys for delete, history-search etc.
-  # magic-paste # auto-quote URLs on paste
 
   dircolors # colors for "ls" command
   tty-colors # colors for $TERM=linux
@@ -15,17 +14,22 @@ ZSHINE_PLUGINS=(
   cdr # recent dirs command
   zshmarks # set bookmarks
   explain # explain command switches
-  ssh-agent # autostart ssh-agent
   python # python dev stuff
   aliases # provides some aliases and functions for daily work
   auto-ls # launch "ls" when entering directory
   nix # nixos, nix package manager
-  fasd # autocomplete paths
-  todo # show ~/.todo on start
   kubernetes  # aliases, autocompletion for k8s
 
   infra # custom
 )
+
+if [[ "$os" == darwin* ]]; then
+    ZSHINE_PLUGINS+=asdf
+else
+    ZSHINE_PLUGINS+=ssh-agent  # autostart ssh-agent
+    ZSHINE_PLUGINS+=fasd  # autocomplete paths
+    ZSHINE_PLUGINS+=todo  # show ~/.todo on start
+fi
 
 for _loadx in $ZSHINE_PLUGINS; do
     source "$ZSHINE_DIR/plugins/$_loadx.zsh"
