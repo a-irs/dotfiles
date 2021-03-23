@@ -34,7 +34,11 @@ endfunction
 Plug 'tolecnal/icinga2-vim', { 'for': 'icinga2' }
 autocmd BufNewFile,BufFilePre,BufRead */icinga/*/*.conf set filetype=icinga2
 
+" filetypes pcre/pyre
+Plug 'Galicarnax/vim-regex-syntax'
 
+" filetype ps1
+Plug 'PProvost/vim-ps1'
 
 Plug 'junegunn/fzf' | Plug 'junegunn/fzf.vim'
 if exists('$TMUX')
