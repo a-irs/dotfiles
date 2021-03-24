@@ -2,10 +2,25 @@
 
 set -u
 
+red() {
+    local temp=$1
+    local gamma=$2
+
+    sed -E -i "s/^temp-night=.*/temp-night=$temp/" ~/.config/redshift.conf
+    sed -E -i "s/^gamma=.*/gamma=$gamma/" ~/.config/redshift.conf
+    killall redshift
+    redshift -x
+    redshift &
+}
+
 ext() {
     xrandr --output HDMI-A-0 --mode 1920x1080 --auto --primary --rate 60.00
     xrandr --output DisplayPort-0 --off
-    dpitog 2
+
+    red 5000 1.0:1.0:1.0
+
+    ~/.bin/dpitog 2
+    nitrogen --restore
 
     pidof kodi-x11 || exo-open "/usr/share/applications/kodi.desktop"
     xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --class "kodi")" 6
@@ -13,9 +28,14 @@ ext() {
 }
 
 int() {
+    killall -9 kodi-x11 kodi kodi.bin
     xrandr --output DisplayPort-0 --mode 2560x1440 --auto --primary --rate 69.93
     xrandr --output HDMI-A-0 --off
-    dpitog 1
+
+    red 3600 0.97:0.97:0.97
+
+    ~/.bin/dpitog 1
+    nitrogen --restore
 }
 
 primary() {
@@ -27,5 +47,3 @@ if [[ "$(primary)" == HDMI-A-0 ]]; then
 else
     ext
 fi
-nitrogen --restore
-echo 'awesome.restart()' | awesome-client
