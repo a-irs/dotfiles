@@ -129,7 +129,7 @@ audiowidget = lain.widget.alsa({
     timeout = 3,
     cmd = 'amixer -D pulse',
     settings = function()
-        local limit = 80
+        local limit = 100
         if is_mobile then
             limit = 120
         end

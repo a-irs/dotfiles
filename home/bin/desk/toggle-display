@@ -17,7 +17,7 @@ ext() {
     xrandr --output HDMI-A-0 --mode 1920x1080 --auto --primary --rate 60.00
     xrandr --output DisplayPort-0 --off
 
-    red 5000 1.0:1.0:1.0
+    red 4600 1.0:1.0:1.0
 
     ~/.bin/dpitog 2
     nitrogen --restore
