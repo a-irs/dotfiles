@@ -56,7 +56,7 @@ if [[ "$commands[docker]" ]]; then
     alias do-rm="docker run --rm -it"
     alias do-ps="docker ps"
     alias do-i="docker images"
-    dorm() { docker rm "$@" || docker rmi "$@"; }
+    do-rm() { docker rm "$@" || docker rmi "$@"; }
 fi
 
 es() {
@@ -72,13 +72,9 @@ es() {
     fi
 }
 
-for c in find ftp locate rake rsync wcalc scp; do
-    [[ "$commands[$c]" ]] && alias $c="noglob $c"
-done
-
 mac() { curl -q "https://api.macvendors.com/${1:0:8}" && printf "\n"; }
 
-cht() { curl "https://cht.sh/$1"; }
+cht() { curl "https://cht.sh/$1?q&style=rrt"; }
 
 tar-tar() { tar cvaf "$(basename "$PWD")".tar -- "$@"; }
 tar-gz()  { tar cvaf "$(basename "$PWD")".tar.gz -- "$@"; }
