@@ -16,6 +16,7 @@ import shlex
 import os
 import argparse
 import logging
+import random
 
 from typing import List
 
@@ -87,6 +88,13 @@ CONFIG = {
         ],
     },
 
+    'sans-short-toc': {
+        'inherit': ['sans-short'],
+        'all': [
+            '--toc',
+        ],
+    },
+
     'sans-long': {
         'inherit': ['sans'],
         'all': [
@@ -113,7 +121,8 @@ def get_style(name: str, dest_format: str) -> List[str]:
 
 
 def preprocess(file: str) -> str:
-    dest = "processed." + file
+    rand_i = ''.join([str(random.randrange(10)) for i in range(9)])
+    dest = f"processed.{rand_i}.{file}"
 
     cmd = subprocess.run(PREPROCESS + [file], capture_output=True)
 
