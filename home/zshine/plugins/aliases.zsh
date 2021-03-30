@@ -51,9 +51,11 @@ web() {
 }
 
 if [[ "$commands[docker]" ]]; then
-    alias dor="docker run --rm -it"
-    alias dops="docker ps"
-    alias doi="docker images"
+    alias do-r="docker run --rm -it"
+    do-rp() { docker run --rm -it -v "$PWD:/work" -w /work "$@"; }
+    alias do-rm="docker run --rm -it"
+    alias do-ps="docker ps"
+    alias do-i="docker images"
     dorm() { docker rm "$@" || docker rmi "$@"; }
 fi
 
