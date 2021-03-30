@@ -91,6 +91,8 @@ local function dynamic_tagging()
                         name = make_name(name, c, "web")
                     elseif c.class ~= nil and string.find(c.class:lower(), "libreoffice") then
                         name = make_name(name, c, "office")
+                    elseif c.class ~= nil and string.find(c.class:lower(), "org.remmina.remmina") then
+                        name = make_name(name, c, "remmina")
                     elseif c.class == "VirtualBox" and string.find(c.name, 'alpine ') then
                         name = make_name(name, c, "alpine-vm")
                     elseif c.class == "qemu-system-x86_64" then
