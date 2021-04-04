@@ -83,13 +83,20 @@ if [[ $HOSTNAME == desk ]]; then
     # fi
 
     cat << 'EOF' | bash &
-    set -e
+    PATH=$HOME/.bin:$PATH
+
+    pidof portfolio || exo-open /usr/share/applications/portfolio.desktop
+    sleep 3
+    timeout 10 xdotool search --sync --class "Portfolio Performance" | xargs -I {} xdotool set_desktop_for_window {} 5
+EOF
+
+    cat << 'EOF' | bash &
     PATH=$HOME/.bin:$PATH
 
     wait-for-host spotify.com
     pidof spotify || exo-open "$HOME/.local/share/applications/spotify.desktop"
-    timeout 10 xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --name "^Spotify .*")" 6
-    timeout 60 xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --name "^Spotify .*")" 6
+    sleep 3
+    timeout 10 xdotool search --sync --name "^Spotify .*" | xargs -I {} xdotool set_desktop_for_window {} 6
 EOF
 
 fi

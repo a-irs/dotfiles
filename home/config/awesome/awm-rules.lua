@@ -93,8 +93,9 @@ local function dynamic_tagging()
                         name = make_name(name, c, "office")
                     elseif c.class ~= nil and string.find(c.class:lower(), "org.remmina.remmina") then
                         name = make_name(name, c, "remmina")
-                    elseif c.class == "VirtualBox" and string.find(c.name, 'alpine ') then
-                        name = make_name(name, c, "alpine-vm")
+                    elseif c.class == "Virt-manager" and string.find(c.name, ' on QEMU/KVM') then
+                        local rex = string.gsub(c.name, "(.*) on QEMU/KVM", "%1 [vm]")
+                        name = make_name(name, c, rex)
                     elseif c.class == "qemu-system-x86_64" then
                         name = make_name(name, c, "qemu")
                     elseif c.class == "VirtualBox" and string.find(c.name, 'xp ') then
