@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
 DIR=~/doc/ctf/_docker/remnux
-WORK=~/doc/ctf/"$(date +%Y-%m-%d)"
+if [[ "$1" == pwd ]]; then
+    shift
+    WORK="$PWD"
+else
+    WORK=~/doc/ctf/"$(date +%Y-%m-%d)"
+fi
 
 set -euo pipefail
 

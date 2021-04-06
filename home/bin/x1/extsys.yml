@@ -24,6 +24,7 @@ postcommands:
   # disable auto-startx, add ability to launch via alias (just 'startx' does not work as we're inside tmux by default)
   - rm -f $MOUNT$/home/*/.zprofile*
   - echo 'alias startx="echo startx > ~/.zprofile && exit"' | tee -a $MOUNT$/home/*/.zshrc
+
   - sed -i -E 's/^theme\.bg_normal.*/theme.bg_normal = "#d9304f"/' $MOUNT$/home/*/.config/awesome/theme.lua
   - sed -i -E 's/^theme\.fg_normal.*/theme.fg_normal = "#ffffff"/' $MOUNT$/home/*/.config/awesome/theme.lua
 

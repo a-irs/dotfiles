@@ -50,7 +50,7 @@ def prepare(conf)
   cmd("partprobe #{conf.dest.device}; sleep 2")
 
   # setup LUKS
-  cmd("cryptsetup luksFormat -q #{conf.dest.device}-part2", interactive: true)
+  cmd("cryptsetup luksFormat --type luks2 -q #{conf.dest.device}-part2", interactive: true)
   cmd("cryptsetup open #{conf.dest.device}-part2 EXTSYS_CRYPTO", interactive: true)
 
   # setup LVM
