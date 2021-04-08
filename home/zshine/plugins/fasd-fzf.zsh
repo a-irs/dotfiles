@@ -25,7 +25,7 @@ __fasd_fzf_zsh_completion() {
 
     # generate zsh array from the output lines for the given fasd query - see man zshexpn
     matches=(${(f)"$(fasd -lR ${fasd_args[@]} "$query")"})
-    matches=(${matches/$HOME/\~})  # replace the absolute home path with a tilde
+    matches=(${matches/#$HOME/\~})  # replace the absolute home path with a tilde
 
     # open fzf, if needed
     if [[ "${#matches}" -gt 1 ]]; then
