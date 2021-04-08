@@ -21,13 +21,14 @@ ZSHINE_PLUGINS=(
   kubernetes  # aliases, autocompletion for k8s
 
   infra # custom
+  fasd  # autocomplete paths
+  fasd-fzf  # autocomplete paths
 )
 
 if [[ "$os" == darwin* ]]; then
     ZSHINE_PLUGINS+=asdf
 else
     ZSHINE_PLUGINS+=ssh-agent  # autostart ssh-agent
-    ZSHINE_PLUGINS+=fasd  # autocomplete paths
     ZSHINE_PLUGINS+=todo  # show ~/.todo on start
 fi
 

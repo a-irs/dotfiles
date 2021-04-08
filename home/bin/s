@@ -3,6 +3,8 @@
 set -uo pipefail
 
 path=$1
+path=${path/#\~/~}  # expand a literal tilde at the beginning
+
 width="${2:-$(tput cols)}"
 height="${3:-$(tput lines)}"
 
