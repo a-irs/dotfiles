@@ -15,6 +15,7 @@ red() {
 
 ext() {
     xrandr --output HDMI-A-0 --mode 1920x1080 --auto --primary --rate 60.00
+    xrandr --output DP-1 --off
     xrandr --output DisplayPort-0 --off
 
     red 4600 1.0:1.0:1.0
@@ -29,6 +30,7 @@ ext() {
 
 int() {
     killall -9 kodi-x11 kodi kodi.bin
+    xrandr --output DP-1 --mode 2560x1440 --auto --primary --rate 69.93
     xrandr --output DisplayPort-0 --mode 2560x1440 --auto --primary --rate 69.93
     xrandr --output HDMI-A-0 --off
 

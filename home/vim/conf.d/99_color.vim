@@ -23,7 +23,13 @@ try
     " colorscheme badwolf
 
     " SPRINGNIGHT
-    colorscheme spring-night
+    " colorscheme spring-night
+
+    " AYU
+    " let ayucolor='mirage'
+    let ayucolor='dark'
+    colorscheme ayu
+
 catch
     " fallback color scheme
     colorscheme default

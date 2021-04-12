@@ -191,8 +191,9 @@ Plug 'RRethy/vim-illuminate'
 " color schemes
 " Plug 'morhetz/gruvbox'
 " Plug 'sjl/badwolf'
-Plug 'rhysd/vim-color-spring-night'
+" Plug 'rhysd/vim-color-spring-night'
 " Plug 'sainnhe/gruvbox-material'
+Plug 'ayu-theme/ayu-vim'
 
 call plug#end()
 
