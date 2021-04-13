@@ -25,11 +25,11 @@ unset x
 export FZF_DEFAULT_OPTS='--no-mouse --cycle --ansi --color=16 --tiebreak=end,begin,length --inline-info --tiebreak=length'
 
 export FZF_CTRL_R_OPTS='--height 70% --exact'
-export FZF_ALT_C_OPTS='--height 70% --preview="s {}"'
-export FZF_CTRL_T_OPTS='--height 70% --preview="s {}"'
+export FZF_ALT_C_OPTS='--height 70% --preview="s {}" --preview-window "~2"'
+export FZF_CTRL_T_OPTS='--height 70% --preview="s {}" --preview-window "~2"'
 
 export FZF_COMPLETION_TRIGGER='#'
-export FZF_COMPLETION_OPTS='--multi --preview="s {}" --height 70%'
+export FZF_COMPLETION_OPTS='--multi --preview="s {}" --preview-window "~2" --height 70%'
 
 
 c() {
