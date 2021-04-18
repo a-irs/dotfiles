@@ -10,16 +10,17 @@ import os
 import shutil
 import sqlite3
 import tempfile
+import sys
 
 OUTPUT_DIR = "/srv/splunk/input/browser_history"
 
 
 def get_firefox_sqlite() -> tempfile.TemporaryDirectory:
-    firefox_profile = glob.glob(os.path.expanduser(f"~/.mozilla/firefox/*.default"))[0]
+    firefox_profile = glob.glob(os.path.expanduser("~/.mozilla/firefox/*.default*"))[0]
 
     fd = tempfile.TemporaryDirectory(prefix="ffhist_")
     shutil.copy2(f"{firefox_profile}/places.sqlite", f"{fd.name}/places.sqlite")
-    print(f"created temp at {fd.name}/places.sqlite")
+    # print(f"created temp at {fd.name}/places.sqlite")
     return fd
 
 
@@ -50,7 +51,7 @@ def write_jsons(history: Dict[str, List[Dict]], output_dir: str) -> None:
             if existing_hash != tmp_hash:
                 shutil.copy(tmp.name, output_file)
                 os.chmod(output_file, 0o644)
-                print(f"updated JSON: {output_file}")
+                # print(f"updated JSON: {output_file}")
 
 
 def get_history(sqlite_file: str) -> Dict[str, List[Dict]]:
@@ -66,7 +67,7 @@ def get_history(sqlite_file: str) -> Dict[str, List[Dict]]:
     """
     results = db.execute(query).fetchall()
     db.close()
-    print(f"fetched results from places.sqlite")
+    # print("fetched results from places.sqlite")
 
     data: Dict[str, List[Dict]] = collections.defaultdict(list)
     for r in results:
@@ -91,14 +92,17 @@ def get_history(sqlite_file: str) -> Dict[str, List[Dict]]:
             "title": r[3]
         })
 
-    print(f"created data from database results")
+    # print("created data from database results")
     return data
 
 
 def main():
     with get_firefox_sqlite() as temp_fd:
         history = get_history(f"{temp_fd}/places.sqlite")
-    write_jsons(history, OUTPUT_DIR)
+    if "write" in sys.argv:
+        write_jsons(history, OUTPUT_DIR)
+    else:
+        print(json.dumps(history, indent=2))
 
 
 if __name__ == "__main__":

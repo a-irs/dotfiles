@@ -1,7 +1,11 @@
 #!/usr/bin/env zsh
 
 # default: stored in current directory
-export MYPY_CACHE_DIR=/tmp/mypy
+export MYPY_CACHE_DIR=~/.cache/mypy
+
+# requirement: python-ipdb
+[[ "$commands[ipdb]" ]] && export PYTHONBREAKPOINT=ipdb.set_trace
+[[ "$commands[pudb3]" ]] && export PYTHONBREAKPOINT=pudb.set_trace
 
 venv() {
     [[ -n "$VIRTUAL_ENV" ]] && { deactivate; return; }

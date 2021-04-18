@@ -31,7 +31,7 @@ __fasd_fzf_zsh_completion() {
     if [[ "${#matches}" -gt 1 ]]; then
         selection=$(printf '%s\n' "${matches[@]}" \
             | FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS $FZF_COMPLETION_OPTS" \
-              fzf --height=50% --reverse --bind 'shift-tab:up,tab:down'
+              fzf --reverse --bind 'shift-tab:up,tab:down'
         )
     elif [[ "${#matches}" -eq 1 ]]; then
         selection=${matches[1]}

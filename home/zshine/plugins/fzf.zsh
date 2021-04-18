@@ -10,7 +10,7 @@ if [[ $commands[fd] ]]; then
         eval $FZF_DEFAULT_COMMAND --type directory . "$@"
     }
 fi
-# note: 'rg --files --hidden --no-ignore' is equally fast (benchmarked with hyperfine
+# note: 'rg --files --hidden --no-ignore' is equally fast (benchmarked with hyperfine)
 
 for x in \
     /usr/local/opt/fzf/shell/{key-bindings,completion}.zsh \
@@ -22,15 +22,16 @@ for x in \
 done
 unset x
 
-export FZF_DEFAULT_OPTS='--no-mouse --cycle --ansi --color=16 --tiebreak=end,begin,length --inline-info --tiebreak=length'
+export FZF_DEFAULT_OPTS='--no-mouse --cycle --ansi --color=16 --tiebreak=end,begin,length --inline-info'
 
-export FZF_CTRL_R_OPTS='--height 70% --exact'
-export FZF_ALT_C_OPTS='--height 70% --preview="s {}" --preview-window "~2"'
-export FZF_CTRL_T_OPTS='--height 70% --preview="s {}" --preview-window "~2"'
+export FZF_CTRL_R_OPTS='--exact'
+export FZF_ALT_C_OPTS='--preview="s {}" --preview-window "~2"'
+export FZF_CTRL_T_OPTS='--preview="s {}" --preview-window "~2"'
 
 export FZF_COMPLETION_TRIGGER='#'
-export FZF_COMPLETION_OPTS='--multi --preview="s {}" --preview-window "~2" --height 70%'
+export FZF_COMPLETION_OPTS='--multi --preview="s {}" --preview-window "~2"'
 
+fzf() { fzf-tmux -u 66% "$@"; }
 
 c() {
     dir=$(while read -r line; do
