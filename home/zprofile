@@ -2,5 +2,5 @@
 [[ "$commands[redshift]" ]] && redshift -o -m drm
 
 if [[ -n "$commands[startx]" ]]; then
-    [[ -z "$DISPLAY" && "$XDG_VTNR" == 1 && "$USER" != root ]] && startx
+    [[ -z "$DISPLAY" && "$XDG_VTNR" == 1 && "$USER" != root ]] && ssh-agent -- startx
 fi

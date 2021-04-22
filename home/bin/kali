@@ -5,7 +5,7 @@ DIR=~/doc/ctf/_docker/kali
 
 set -euo pipefail
 
-if [[ $# -eq 1 && $1 == build ]]; then
+if [[ $1 == build ]]; then
     shift
     cd "$DIR"
     docker build "$@" -t kali .

@@ -20,7 +20,7 @@ ext() {
 
     red 4600 1.0:1.0:1.0
 
-    ~/.bin/dpitog 2
+    ~/.bin/dpitog 3
     nitrogen --restore
 
     pidof kodi-x11 || exo-open "/usr/share/applications/kodi.desktop"
