@@ -393,6 +393,8 @@ if [[ "$commands[git]" ]]; then
             local path=$(git rev-parse --show-prefix "$@" | tr '\n' '/')
             # TODO: resolve links/.. etc.
             local url="$repo_url/tree/$branch/$path"
+        else
+            local url="$repo_url"
         fi
 
         printf '%s\n' "opening: $url"
