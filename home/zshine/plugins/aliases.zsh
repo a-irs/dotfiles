@@ -270,9 +270,10 @@ if [[ "$commands[tmux]" ]]; then
     # capture tmux pane and edit in vim
     tc() {
         # http://man7.org/linux/man-pages/man1/tmux.1.html
-        tmux capture-pane -pCS - \
-            | sed '$!N; /^\(.*\)\n\1$/!P; D' \
-            | sed 's/❯/$/g;s//>/g' \
+        tmux capture-pane -pCJS - \
+            | sed -E -e 's/[[:space:]]*$//' \
+            | sed -E -e 's/.*\s*$/-------------------------/' \
+            | sed -E 's/^❯/$/' \
             | $vim -
     }
 fi
