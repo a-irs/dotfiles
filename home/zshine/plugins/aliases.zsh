@@ -74,7 +74,7 @@ es() {
 
 mac() { curl -q "https://api.macvendors.com/${1:0:8}" && printf "\n"; }
 
-cht() { curl "https://cht.sh/$1?q&style=rrt"; }
+cht() { curl -s "https://cht.sh/$1?q&style=rrt" | less -FXR; }
 
 tar-tar() { tar cvaf "$(basename "$PWD")".tar -- "$@"; }
 tar-gz()  { tar cvaf "$(basename "$PWD")".tar.gz -- "$@"; }
