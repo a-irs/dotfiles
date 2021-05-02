@@ -36,20 +36,12 @@ if [[ "$(uname)" == Linux ]]; then
     )
 fi
 
-# TODO test
-if [[ $# -eq 1 && $1 == rev* ]]; then
+if [[ $1 == rev* ]]; then
+    shift
     args+=(
         # port forwarding (e.g. for http server, reverse shell catching, ...)
-        -p 4444:4444 -p 9000:9000
+        -p 0.0.0.0:4444:4444 -p 0.0.0.0:9000:9000
     )
-
-    read -r -p "Setup reverse shell on ports 4444 and 9000, this stops the firewall and restarts docker. Are you sure? (y/N) " -n1
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        sudo systemctl stop iptables.service
-        sudo systemctl restart docker
-    else
-        exit 1
-    fi
 fi
 
 docker run -h kali -it --rm "${args[@]}" kali "$@"
