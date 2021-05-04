@@ -7,8 +7,8 @@ body {
 
   line-height: 1.6em;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  max-width: 72ch;
-  font-size: 0.9em;
+  max-width: 95ch;
+  font-size: 1em;
 
   /* wrap long words instead of writing outside container */
   overflow-wrap: break-word;
