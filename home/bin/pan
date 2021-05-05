@@ -25,7 +25,9 @@ from typing import List
 
 # replace "!include:<filename>" with content of file
 # much simpler than lua/python/haskell filter
-PREPROCESS = ["perl", "-ne", "s/^\\!include:(.+).*$/`cat $1`/e;print"]
+PREPROCESS = [
+    ["perl", "-ne", "s/^\\!include:(.+).*$/`cat $1`/e;print"],
+]
 
 CONFIG_DEFAULT = 'sans-short'
 CONFIG_DEFAULT_OUTPUT = '.html'
@@ -119,8 +121,8 @@ def get_style(name: str, dest_format: str) -> List[str]:
     return params
 
 
-def preprocess(file: str) -> str:
-    cmd = subprocess.run(PREPROCESS + [file], capture_output=True)
+def preprocess(command: List[str], file: str) -> str:
+    cmd = subprocess.run(command + [file], capture_output=True)
     suffix = "_{}".format(os.path.basename(file))
 
     with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as temp:
@@ -140,17 +142,22 @@ def pandoc(input_file: str, output_file: str, style: str, args: List[str]) -> in
     output_ext = os.path.splitext(output_file)[1]
     output_style = ' '.join(get_style(style, output_ext))
 
-    preprocessed_input = preprocess(input_file)
+    processed_file = input_file
+    for preprocess_cmd in PREPROCESS:
+        processed_file = preprocess(preprocess_cmd, processed_file)
 
     resource_path = ".:{}".format(os.path.expanduser("~/.local/share/pandoc"))
-    cmd = shlex.split(f"pandoc -i {preprocessed_input} -o {output_file} --resource-path={resource_path} " + output_style) + args
+    cmd = shlex.split(f"pandoc -i {processed_file} -o {output_file} --resource-path={resource_path} " + output_style) + args
 
     logging.info(' '.join(cmd))
     logging.debug("command line: %s", cmd)
     proc = subprocess.Popen(cmd)
     proc.communicate()
 
-    os.unlink(preprocessed_input)
+    # delete temporary files
+    if processed_file != input_file:
+        os.unlink(processed_file)
+
     return proc.returncode
 
 
