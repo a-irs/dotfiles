@@ -6,17 +6,16 @@
 # https://pandoc.org/MANUAL.html
 #
 # TODO:
-# - preprocess in temp file?
 # - multiple preprocess
 # - process multiple files at once
 
+import tempfile
 import sys
 import subprocess
 import shlex
 import os
 import argparse
 import logging
-import random
 
 from typing import List
 
@@ -121,22 +120,20 @@ def get_style(name: str, dest_format: str) -> List[str]:
 
 
 def preprocess(file: str) -> str:
-    rand_i = ''.join([str(random.randrange(10)) for i in range(9)])
-    dest = f"processed.{rand_i}.{file}"
-
     cmd = subprocess.run(PREPROCESS + [file], capture_output=True)
+    suffix = "_{}".format(os.path.basename(file))
 
-    with open(dest, 'wb') as fw:
-        fw.write(cmd.stdout)
+    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as temp:
+        temp.write(cmd.stdout)
         if cmd.stderr:
             print("stderr from preprocessor: {}".format(cmd.stderr.decode()))
             sys.exit(1)
-        fw.write(cmd.stderr)
-        fw.flush()
+        temp.write(cmd.stderr)
+        temp.flush()
 
-    logging.debug("preprocessed %s in %s", file, dest)
+        logging.debug("preprocessed %s in %s", file, temp.name)
 
-    return dest
+        return temp.name
 
 
 def pandoc(input_file: str, output_file: str, style: str, args: List[str]) -> int:

@@ -18,6 +18,14 @@ class ${1:Point}:
 
 endsnippet
 
+snippet "tmp|temp" "temporary" br
+import tempfile
+
+with tempfile.NamedTemporaryFile('w') as temp:
+    temp.write("content")
+    temp.flush()
+endsnippet
+
 snippet "defaultdict" "defaultdict" br
 import collections
 
