@@ -7,6 +7,8 @@ export MYPY_CACHE_DIR=~/.cache/mypy
 [[ "$commands[ipdb]" ]] && export PYTHONBREAKPOINT=ipdb.set_trace
 [[ "$commands[pudb3]" ]] && export PYTHONBREAKPOINT=pudb.set_trace
 
+alias i=ipython3
+
 venv() {
     [[ -n "$VIRTUAL_ENV" ]] && { deactivate; return; }
     [[ $# != 1 ]] && { echo "venv <name>"; return 2; }
