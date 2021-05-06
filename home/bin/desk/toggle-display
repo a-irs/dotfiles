@@ -2,6 +2,7 @@
 
 import subprocess
 import logging
+import sys
 
 CONFIG = {
     "int": {
@@ -18,7 +19,7 @@ CONFIG = {
         ],
         "post": [
             "~/.bin/dpitog 1",
-            "nitrogen --restore",
+            "nitrogen --restore 2>/dev/null",
         ]
     },
     "ext": {
@@ -32,7 +33,7 @@ CONFIG = {
         },
         "post": [
             "~/.bin/dpitog 3",
-            "nitrogen --restore",
+            "nitrogen --restore 2>/dev/null",
             "pidof kodi-x11 || exo-open '/usr/share/applications/kodi.desktop'",
             "xdotool set_desktop_for_window \"$(xdotool search --limit 1 --sync --class kodi)\" 6",
             "xdotool set_desktop 6"
@@ -65,7 +66,7 @@ def xrandr(args: str):
     p = subprocess.Popen(f"xrandr {args}", shell=True)
     p.wait()
 
-def run_scripts(config, stanza):
+def run_hooks(config, stanza):
     for script in config.get(stanza, []):
         logging.warning(f"Running: {script}")
         p = subprocess.Popen(script, shell=True)
@@ -77,25 +78,35 @@ def redshift(temp: str, gamma: str):
     subprocess.Popen(f"sed -E -i 's/^gamma=.*/gamma={gamma}/' ~/.config/redshift.conf", shell=True)
     subprocess.Popen("killall redshift; redshift -x; redshift &", shell=True)
 
-def main():
-    active, inactive = "ext", "int"
-    if any([xrandr_is_primary(display) for display in CONFIG["int"]["displays"].keys()]):
-        active, inactive = inactive, active
-
-    run_scripts(CONFIG[inactive], "pre")
+def run(active: str, inactive: str, config: dict):
+    run_hooks(config[inactive], "pre")
 
     # set all connected displays to primary + enabled
-    for display, config in CONFIG[inactive]["displays"].items():
+    for display, c in config[inactive]["displays"].items():
         if xrandr_is_connected(display):
-            xrandr(f"--output {display} --primary {config}")
+            xrandr(f"--output {display} --primary {c}")
 
     # disable all other displays
-    for display, config in CONFIG[active]["displays"].items():
+    for display, c in config[active]["displays"].items():
         if xrandr_is_connected(display):
             xrandr(f"--output {display} --off")
 
-    redshift(**CONFIG[inactive]["redshift"])
-    run_scripts(CONFIG[inactive], "post")
+    redshift(**config[inactive]["redshift"])
+    run_hooks(config[inactive], "post")
+
+
+def main():
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "ext":
+            active, inactive = "int", "ext"
+        elif sys.argv[1] == "int":
+            active, inactive = "ext", "int"
+    else:
+        active, inactive = "ext", "int"
+        if any([xrandr_is_primary(display) for display in CONFIG["int"]["displays"].keys()]):
+            active, inactive = inactive, active
+
+    run(active=active, inactive=inactive, config=CONFIG)
 
 
 if __name__ == "__main__":
