@@ -1,51 +1,102 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
 
-set -u
+import subprocess
+import logging
 
-red() {
-    local temp=$1
-    local gamma=$2
-
-    sed -E -i "s/^temp-night=.*/temp-night=$temp/" ~/.config/redshift.conf
-    sed -E -i "s/^gamma=.*/gamma=$gamma/" ~/.config/redshift.conf
-    killall redshift
-    redshift -x
-    redshift &
+CONFIG = {
+    "int": {
+        "displays": {
+            "DisplayPort-0": "--mode 2560x1440 --auto --rate 69.93",
+            "DP-1": "--mode 2560x1440 --auto --rate 69.93"
+        },
+        "redshift": {
+            "temp": '3600',
+            "gamma": '0.97:0.97:0.97'
+        },
+        "pre": [
+            "killall -9 kodi-x11 kodi kodi.bin 2>/dev/null"
+        ],
+        "post": [
+            "~/.bin/dpitog 1",
+            "nitrogen --restore",
+        ]
+    },
+    "ext": {
+        "displays": {
+            "HDMI-A-0": "--mode 1920x1080 --auto --rate 60.00",
+            "HDMI-1": "--mode 1920x1080 --auto --rate 60.00"
+        },
+        "redshift": {
+            "temp": '4600',
+            "gamma": '1.0:1.0:1.0'
+        },
+        "post": [
+            "~/.bin/dpitog 3",
+            "nitrogen --restore",
+            "pidof kodi-x11 || exo-open '/usr/share/applications/kodi.desktop'",
+            "xdotool set_desktop_for_window \"$(xdotool search --limit 1 --sync --class kodi)\" 6",
+            "xdotool set_desktop 6"
+        ]
+    }
 }
 
-ext() {
-    xrandr --output HDMI-A-0 --mode 1920x1080 --auto --primary --rate 60.00
-    xrandr --output DP-1 --off
-    xrandr --output DisplayPort-0 --off
+def xrandr_is_connected(display: str) -> bool:
+    p = subprocess.Popen(f"xrandr | grep -q '^{display}'", shell=True)
+    p.wait()
+    if p.returncode == 0:
+        # logging.warning(f"{display} is connected.")
+        return True
+    else:
+        # logging.warning(f"{display} is NOT connected.")
+        return False
 
-    red 4600 1.0:1.0:1.0
+def xrandr_is_primary(display: str) -> bool:
+    p = subprocess.Popen(f"xrandr | grep -q '^{display}.*primary'", shell=True)
+    p.wait()
+    if p.returncode == 0:
+        logging.warning(f"{display} is primary.")
+        return True
+    else:
+        # logging.warning(f"{display} is NOT primary.")
+        return False
 
-    ~/.bin/dpitog 3
-    nitrogen --restore
+def xrandr(args: str):
+    logging.warning(f"running: xrandr {args}")
+    p = subprocess.Popen(f"xrandr {args}", shell=True)
+    p.wait()
 
-    pidof kodi-x11 || exo-open "/usr/share/applications/kodi.desktop"
-    xdotool set_desktop_for_window "$(xdotool search --limit 1 --sync --class "kodi")" 6
-    xdotool set_desktop 6
-}
+def run_scripts(config, stanza):
+    for script in config.get(stanza, []):
+        logging.warning(f"Running: {script}")
+        p = subprocess.Popen(script, shell=True)
+        p.wait()
 
-int() {
-    killall -9 kodi-x11 kodi kodi.bin
-    xrandr --output DP-1 --mode 2560x1440 --auto --primary --rate 69.93
-    xrandr --output DisplayPort-0 --mode 2560x1440 --auto --primary --rate 69.93
-    xrandr --output HDMI-A-0 --off
+def redshift(temp: str, gamma: str):
+    logging.warning(f"running redshift with gamma={gamma} temp={temp}")
+    subprocess.Popen(f"sed -E -i 's/^temp-night=.*/temp-night={temp}/' ~/.config/redshift.conf", shell=True)
+    subprocess.Popen(f"sed -E -i 's/^gamma=.*/gamma={gamma}/' ~/.config/redshift.conf", shell=True)
+    subprocess.Popen("killall redshift; redshift -x; redshift &", shell=True)
 
-    red 3600 0.97:0.97:0.97
+def main():
+    active, inactive = "ext", "int"
+    if any([xrandr_is_primary(display) for display in CONFIG["int"]["displays"].keys()]):
+        active, inactive = inactive, active
 
-    ~/.bin/dpitog 1
-    nitrogen --restore
-}
+    run_scripts(CONFIG[inactive], "pre")
 
-primary() {
-    xrandr | grep primary | awk '{print $1}'
-}
+    # set all connected displays to primary + enabled
+    for display, config in CONFIG[inactive]["displays"].items():
+        if xrandr_is_connected(display):
+            xrandr(f"--output {display} --primary {config}")
 
-if [[ "$(primary)" == HDMI-A-0 ]]; then
-    int
-else
-    ext
-fi
+    # disable all other displays
+    for display, config in CONFIG[active]["displays"].items():
+        if xrandr_is_connected(display):
+            xrandr(f"--output {display} --off")
+
+    redshift(**CONFIG[inactive]["redshift"])
+    run_scripts(CONFIG[inactive], "post")
+
+
+if __name__ == "__main__":
+    main()

@@ -52,7 +52,7 @@ CONFIG = {
             '-V papersize=a4',
             '-V geometry=top=3cm,bottom=3cm,left=2.5cm,right=2.5cm',  # tweaked Word 2007 style (2.5cm on any side)
             '-V linestretch=1.2',
-            '-V fontsize=11pt',  # default: 10
+            '-V fontsize=10pt',  # default: 10
 
             # better code blocks (e.g. with line wrapping)
             # http://texdoc.net/texmf-dist/doc/latex/listings/listings.pdf
@@ -102,10 +102,12 @@ CONFIG = {
             '--number-sections',
             '--toc',
         ],
-        # only for very long
-        # '.pdf': [
-        #     '-V documentclass=report'
-        # ]
+    },
+    'sans-very-long': {
+        'inherit': ['sans-long'],
+        '.pdf': [
+            '-V documentclass=report'
+        ]
     },
 }
 
