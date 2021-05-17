@@ -84,6 +84,7 @@ Plug 'tpope/vim-commentary'
 nmap <leader># :Commentary<CR>
 vmap <leader># :Commentary<CR>
 autocmd FileType markdown,markdown.pandoc setlocal commentstring=<!--\ %s\ -->
+autocmd FileType nasm setlocal commentstring=;\ %s
 
 Plug 'airblade/vim-gitgutter'
 " set background to same as SignColumn
@@ -98,6 +99,7 @@ Plug 'w0rp/ale'
 " https://github.com/koalaman/shellcheck/wiki/SC2029
 let g:ale_sh_shellcheck_exclusions = 'SC2119,SC2029'
 let g:ale_yaml_yamllint_options='-d "{extends: default, rules: {line-length: disable, document-start: disable}}"'
+let g:ale_nasm_nasm_options='-f elf64'
 
 " ALE appearance
 let g:ale_sign_warning = "\u26A0"

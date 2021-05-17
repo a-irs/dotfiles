@@ -1,0 +1,4 @@
+e scr.color = 1
+e asm.emu = true
+e cfg.fortunes = true
+e cfg.fortunes.type = tips

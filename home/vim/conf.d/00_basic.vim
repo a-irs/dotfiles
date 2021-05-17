@@ -109,12 +109,13 @@ autocmd BufNewFile,BufFilePre,BufRead Jenkinsfile set filetype=groovy
 autocmd BufNewFile,BufFilePre,BufRead Dockerfile* set filetype=dockerfile
 autocmd BufNewFile,BufFilePre,BufRead dircolors* set filetype=dircolors
 autocmd BufNewFile,BufFilePre,BufRead */.dot/setup.conf set filetype=dosini
+autocmd BufNewFile,BufFilePre,BufRead *.asm set filetype=nasm
 
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
 
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ini=dosini', 'ocaml', 'rust', 'css', 'erb=eruby', 'ruby', 'c', 'cpp', 'dockerfile', 'js=javascript', 'yaml', 'jinja2', 'sql', 'ps1']
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ini=dosini', 'ocaml', 'rust', 'css', 'erb=eruby', 'ruby', 'c', 'cpp', 'dockerfile', 'js=javascript', 'yaml', 'jinja2', 'sql', 'ps1', 'config', 'asm']
 let g:markdown_syntax_conceal = 0
 let g:markdown_enable_mappings = 0
 let g:markdown_enable_spell_checking = 0
