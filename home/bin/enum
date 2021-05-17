@@ -1,5 +1,5 @@
 #!/bin/sh
-# ref: https://github.com/rebootuser/LinEnum/blob/master/LinEnum.sh#L485, https://gtfobins.github.io
+# ref: https://github.com/rebootuser/LinEnum/blob/master/LinEnum.sh#L485, https://gtfobins.github.io, https://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
 
 # minify (remove comment lines, remove blank lines, remove whitespace at beginning of line), then base64 and print deploy string
 out=$(echo "echo $(tail -n +12 "$0" | sed -E '/^[ ]*#/d' | sed -E '/^$/d' | sed -E 's/^[ ]*//' | bzip2 | base64 -w 0)|base64 -d|bzcat|sh")
@@ -27,23 +27,41 @@ main() {
 
     log 2 "system info"
 
-    logs 3 "user/groups info"
-    w && echo
-    id && echo
+    logs 3 "current user/groups info"
+    w
+    echo
+    id
+
+    logs 3 "non-system users (uid >= 1000)"
+    awk -F: '$3 >= 1000 { print $1 }' /etc/passwd | grep -vE '^nobody$'
+
+    logs 3 "users with interesting group memberships"
     for i in $(cut -d: -f1 /etc/passwd); do
-        id "$i"
-        # TODO interesting groups: adm, wheel, sudo, ...
+        # https://book.hacktricks.xyz/linux-unix/privilege-escalation/interesting-groups-linux-pe
+        id "$i" | grep -E '(adm|wheel|sudo|admin|disk|video|root|docker|lxd|lxc|shadow)'
     done
 
     logs 3 "environment"
-    env | grep -vE '^(LS_COLORS)'
+    env | grep -vE '^(LS_COLORS)' | sort
 
     logs 3 "OS info"
+
+    echo
     uname -a
+    echo
     cat /proc/version
+    echo
     cat /etc/*-release
+    echo
     lastlog | grep -v "Never logged in"
+    echo
     cat /proc/cmdline
+    echo
+    hostnamectl 2>/dev/null
+
+    if test -e /.dockerenv || grep -q docker /proc/1/cgroup 2>/dev/null; then
+        log "probably inside docker container"
+    fi
 
     log 2 "\$HOME"
     find "$HOME" -ls 2>/dev/null
@@ -121,6 +139,7 @@ main() {
         ! -path "/sys/fs/cgroup/unified/user.slice/user-$uid.slice/*" \
         ! -path "/proc/*" \
         ! -path "/sys/fs/cgroup/memory/*" \
+        ! -path "/sys/kernel/security/apparmor/*" \
         ! -path /dev/full \
         ! -path /dev/mqueue \
         ! -path /dev/null \
@@ -132,6 +151,14 @@ main() {
         ! -path /dev/zero \
         -ls 2>/dev/null
 
+    log 2 "bruteforce readable files"
+    for d in /home/*; do
+        [ "$HOME" = "$d" ] && continue
+        for f in id_rsa id_ecdsa id_dsa id_ed25519 identity known_hosts; do
+            cat "$f" 2>/dev/null
+        done
+    done
+
     log 2 "sensitive files outside of \$HOME"
     find / ! -path "$HOME" ! -path "$HOME/*" \( \
         -name "id_dsa*" -o \
@@ -141,9 +168,14 @@ main() {
         -name "authorized_hosts" -o \
         -name "authorized_keys" -o \
         -name "db.php" -o \
+        -name "*_history" -o \
+        -name "known_hosts" -o \
+        -name "*.secret" -o \
+        -name "*.key" -o \
         -name "config.php" -o \
         -name "users.php" -o \
-        -path "/home/*" \
+        -path "/home/*" -o \
+        -path "/usr/local/*bin/*" \
         \) -ls 2>/dev/null
 
     log 2 "readable sensitive paths (outside of \$HOME)"
@@ -152,25 +184,21 @@ main() {
             "$HOME") continue ;;
             "$HOME"/*) continue ;;
         esac
-        test -r "$x" && ls -l "$x"
+        test -r "$x" && ls -ld "$x"
     done
 
-    # files in /usr/local/bin /usr/local/sbin
-    # jump, find creds, ...
-    # -name "known_hosts" -o \
-    #     *_history
-    #
-    # interesting
-    # /etc/ssh/sshd_config
-    # # cron
+    log 2 "cron/timers"
     find /etc /var -name "cron*" -ls 2>/dev/null
     find /etc /var -name "anacron*" -ls 2>/dev/null
-    systemctl list-timers --all
+    systemctl list-timers --no-pager --all
 
     log 2 "writeable \$PATHs"
     for x in $(echo "$PATH" | tr ":" " "); do
         test -w "$x" && echo "$x"
     done
+
+    log 2 "services"
+    SYSTEMD_COLORS=1 systemctl --no-pager | grep --color=never running | grep -vE '(\.socket|\.scope|\.automount)'
 
     log 2 "sudo"
     echo '' | sudo -S -l -k 2>/dev/null

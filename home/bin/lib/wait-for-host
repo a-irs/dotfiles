@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 TRIES_MAX=240
-SLEEP=0.5
+SLEEP=1
 
 REACHABLE_HOST="$1"
 shift

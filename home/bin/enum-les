@@ -1,0 +1,9 @@
+#!/bin/sh
+# minify, base64, then print deploy string for linux-exploit-suggester
+
+les_base64=$(curl -sfL 'https://raw.githubusercontent.com/mzet-/linux-exploit-suggester/master/linux-exploit-suggester.sh' | sed -E '/^[ ]*#/d' | sed -E '/^$/d' | sed -E 's/^[ ]*//' | bzip2 | base64 -w 0)
+out=$(echo "echo $les_base64|base64 -d|bzcat|bash")
+echo "$out"
+echo "$out" | xclip -r -selection clipboard
+echo ""
+echo "copied to clipboard"
