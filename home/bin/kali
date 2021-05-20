@@ -7,7 +7,7 @@ set -euo pipefail
 
 hostname=kali
 
-if [[ $1 == build ]]; then
+if [[ $# -gt 0 && $1 == build ]]; then
     shift
     cd "$DIR"
     docker build "$@" -t kali .
@@ -38,7 +38,7 @@ if [[ "$(uname)" == Linux ]]; then
     )
 fi
 
-if [[ $1 == rev* ]]; then
+if [[ $# -gt 0 && $1 == rev* ]]; then
     shift
     port=$(shuf -i 4444-9000 -n 1)  # random port in range
     args+=(
