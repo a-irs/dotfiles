@@ -5,6 +5,8 @@ DIR=~/doc/ctf/_docker/kali
 
 set -euo pipefail
 
+hostname=kali
+
 if [[ $1 == build ]]; then
     shift
     cd "$DIR"
@@ -38,11 +40,13 @@ fi
 
 if [[ $1 == rev* ]]; then
     shift
+    port=$(shuf -i 4444-9000 -n 1)  # random port in range
     args+=(
         # port forwarding (e.g. for http server, reverse shell catching, ...)
-        -p 0.0.0.0:4444:4444 -p 0.0.0.0:9000:9000
+        -p "0.0.0.0:$port:$port"
     )
+    hostname=kali:$port
 fi
 
-docker run -h kali -it --rm "${args[@]}" kali "$@"
+docker run -h "$hostname" -it --rm "${args[@]}" kali "$@"
 rmdir "$WORK" 2>/dev/null || true
