@@ -43,7 +43,7 @@ case "$action" in
         extract-public "$@" ;;
     certificates|cachain|chain|certs|cert|ca|c)
         extract-certificates "$@" ;;
-    information|info|i)
+    information|info|i|show)
         show-info "$@" | less ;;
     dump|asn1|dumpasn1)
         dump-certificate "$@" ;;

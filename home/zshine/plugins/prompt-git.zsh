@@ -10,16 +10,16 @@ git_get_dirt() {
     pcre_compile -m -- "^\?"
     pcre_match -- "$git_out" && s+="$ZSHINE_GIT_SYMBOL_UNTRACKED"
 
-    pcre_compile -m -- "^1 (M\.|\.M)"
+    pcre_compile -m -- "^\d (M\.|\.M)"
     pcre_match -- "$git_out" && s+="$ZSHINE_GIT_SYMBOL_MODIFIED"
 
-    pcre_compile -m -- "^1 (D\.|\.D)"
+    pcre_compile -m -- "^\d (D\.|\.D)"
     pcre_match -- "$git_out" && s+="$ZSHINE_GIT_SYMBOL_DELETED"
 
-    pcre_compile -m -- "^1 (A\.|\.A)"
+    pcre_compile -m -- "^\d (A\.|\.A)"
     pcre_match -- "$git_out" && s+="$ZSHINE_GIT_SYMBOL_ADDED"
 
-    pcre_compile -m -- "^1 (R\.|\.R)"
+    pcre_compile -m -- "^\d (R\.|\.R)"
     pcre_match -- "$git_out" && s+="$ZSHINE_GIT_SYMBOL_RENAMED"
 
     printf "%s" "$s"

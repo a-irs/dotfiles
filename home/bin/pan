@@ -21,6 +21,7 @@ from typing import List
 
 # FIXME: how to automatically use these extensions when using markdown as input?
 # '-f markdown+autolink_bare_uris',  # autolink URLs
+# lists_without_preceding_blankline
 # '-f markdown+emoji',
 
 # replace "!include:<filename>" with content of file
