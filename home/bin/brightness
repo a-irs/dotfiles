@@ -6,7 +6,7 @@
 
 set -euo pipefail
 
-action=$1
+action=${1:-}
 
 c() {
     command -v "$1" > /dev/null 2>&1
@@ -60,7 +60,11 @@ case $action in
     --) STEP=10;;
 esac
 
-if [[ "$action" == +* ]]; then
+if [[ -z "$action" ]]; then
+    current=$(b_get)
+    b_get
+    notify notification-display-brightness.svg "$(b_get)"
+elif [[ "$action" == +* ]]; then
     b_plus "$STEP"
     notify notification-display-brightness.svg "$(b_get)%"
 elif [[ "$action" == -* ]]; then
@@ -72,6 +76,6 @@ else
 fi
 
 # limit to 1
-if [[ "$(b_get)" -le 0 ]]; then
-    b_set 1
+if [[ "$(b_get)" -lt 0 ]]; then
+    b_set 0
 fi
