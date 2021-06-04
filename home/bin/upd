@@ -2,8 +2,38 @@
 
 set -euo pipefail
 
+color() {
+    local color=$1; shift
+    local msg=$*
+    printf '%s\n' "$(tput setaf "$color"):: $msg$(tput sgr0)"
+}
+
 update() {
     sudo pacman -Syu "$@"
+}
+
+check_kernel() {
+    local version_running package version_installed
+
+    version_running=$(uname -r)
+    case $version_running in
+        *-zen)
+            package=linux-zen
+            version_running=${version_running%-zen}
+            version_running=${version_running/-zen/.zen}
+            ;;
+        *)
+            package=linux
+            ;;
+    esac
+
+    version_installed=$(pacman -Q "$package" | awk '{print $2}')
+    if [[ "$version_installed" != "$version_running" ]]; then
+        echo ""
+        color 4 "Reboot required:"
+        echo "running  $version_running"
+        echo "package  $version_installed"
+    fi
 }
 
 show_outdated() {
@@ -17,7 +47,7 @@ show_outdated() {
     lc=$(echo "$o" | wc -l)
     if (( lc > 1)); then
         echo ""
-        echo "outdated:"
+        color 4 "Outdated:"
         echo "$o"
     fi
 }
@@ -47,7 +77,7 @@ show_pacdiff() {
     o=$(pacdiff --output)
     if [[ -n "$o" ]]; then
         echo ""
-        echo "-- pacdiff: changes found, run 'pacdiff'"
+        color 4 "pacdiff: changes found, run 'pacdiff'"
     fi
 }
 
@@ -60,4 +90,5 @@ fi
 
 clean_caches
 show_outdated
+check_kernel
 show_pacdiff
