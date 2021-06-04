@@ -24,6 +24,7 @@ check_kernel() {
             ;;
         *)
             package=linux
+            version_running=${version_running/-arch/.arch}
             ;;
     esac
 
