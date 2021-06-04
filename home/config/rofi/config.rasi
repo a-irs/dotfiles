@@ -4,7 +4,7 @@ configuration {
 	modi: "drun,run";
 	width: -50;
 	lines: 5;
-	terminal: "termite";
+	terminal: "alacritty";
 	scroll-method: 1;
 	theme: "android_notification";
 	cache-dir: ".local/share/rofi";

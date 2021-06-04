@@ -1,0 +1,71 @@
+font:
+  normal:
+    family: Input Mono Condensed
+  size: 9.0
+
+draw_bold_text_with_bright_colors: true
+
+colors:
+  primary:
+    background: '#1b2c49'
+    foreground: '#ffffff'
+
+  hints:
+    start:
+      foreground: '#000000'
+      background: '#ffff00'
+    end:
+      foreground: '#000000'
+      background: '#ffff00'
+
+  normal:
+    black: '#505050'
+    # red: '#fa7883'
+    red: '#ff5555'
+    # green: '#aae373'
+    green: '#50fa7b'
+    # yellow: '#fff073'
+    yellow: '#f1fa8c'
+    blue: '#b9d7f8'
+    # magenta: '#e2afdd'
+    magenta: '#ff79c6'
+    cyan: '#a8f6fd'
+    white: '#d7d7d7'
+
+  bright:
+    black: '#6d7367'
+    # red: '#fa7883'
+    red: '#ff6e67'
+    # green: '#aae373'
+    green: '#5af78e'
+    # yellow: '#f2e575'
+    yellow: '#f4f99d'
+    blue: '#aed2fa'
+    # magenta: '#e2afdd'
+    magenta: '#ff92d0'
+    cyan: '#a8f6fd'
+    white: '#d7d7d7'
+
+  indexed_colors:
+    - index: 214
+      color: '#fbdc74'
+    - index: 237
+      color: '#314366'
+    - index: 238
+      color: '#3b507a'
+
+bell:
+  duration: 10
+  color: '#000000'
+
+background_opacity: 0.95
+
+hints:
+  alphabet: "jfkdlsahgurieowpq"
+  enabled:
+    - regex: "(mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
+      command: xdg-open
+      post_processing: true
+      binding:
+        key: U
+        mods: Control|Shift

@@ -106,7 +106,7 @@ local function dynamic_tagging()
                         name = make_name(name, c, "gimp")
                     elseif c.name and (string.find(c.name, 'vim ') or string.find(c.name, ' - VIM')) then
                         name = make_name(name, c, "vim")
-                    elseif c.class == "Termite" then
+                    elseif c.class == "Termite" or c.class == "Alacritty" then
                         name = make_name(name, c, "term")
                     elseif c.class == "Gpicview" then
                         name = make_name(name, c, "image")

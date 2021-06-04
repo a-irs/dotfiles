@@ -9,7 +9,7 @@ import os
 
 # TODO: skip on lockscreen
 
-TERMINAL = "termite"
+TERMINAL = "alacritty"
 SHELL_TITLE = f"{os.getlogin()}@{os.uname()[1]}"
 DIR = "/srv/splunk/input/workstats"
 
