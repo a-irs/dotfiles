@@ -1,7 +1,7 @@
 font:
   normal:
     family: Input Mono Condensed
-  size: 8.5
+  size: 9.0
 
 draw_bold_text_with_bright_colors: true
 
