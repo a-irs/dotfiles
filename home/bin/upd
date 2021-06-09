@@ -2,6 +2,12 @@
 
 set -euo pipefail
 
+if command -v pacman > /dev/null 2>&1; then
+    OS=arch
+elif command -v apt-get > /dev/null 2>&1; then
+    OS=debian
+fi
+
 color() {
     local color=$1; shift
     local msg=$*
@@ -9,10 +15,23 @@ color() {
 }
 
 update() {
-    sudo pacman -Syu "$@"
+    case $OS in
+        arch)
+            sudo pacman -Syu "$@"
+            ;;
+        debian)
+            sudo apt-get update
+            sudo apt-get dist-upgrade -V "$@"
+            ;;
+    esac
 }
 
 check_kernel() {
+    case $OS in
+        arch)  ;;
+        *) return ;;
+    esac
+
     local version_running package version_installed
 
     version_running=$(uname -r)
@@ -44,6 +63,7 @@ show_outdated() {
         | grep -vE 'logins-backup\.json' \
         | grep -vE '/var/log/journal' \
         | grep -vE '/share/icons/.*\.cache' \
+        | grep -vE '/var/log/' \
         || true)
     lc=$(echo "$o" | wc -l)
     if (( lc > 1)); then
@@ -54,6 +74,11 @@ show_outdated() {
 }
 
 clean_caches() {
+    case $OS in
+        arch)  ;;
+        *) return ;;
+    esac
+
     local o1 o2
 
     o1=$(sudo paccache -d --keep 2 -v)
@@ -74,6 +99,11 @@ clean_caches() {
 }
 
 show_pacdiff() {
+    case $OS in
+        arch)  ;;
+        *) return ;;
+    esac
+
     local o
     o=$(pacdiff --output)
     if [[ -n "$o" ]]; then
@@ -82,11 +112,20 @@ show_pacdiff() {
     fi
 }
 
+
 if [[ $# -gt 0 && "$1" == all ]]; then
     shift
     update "$@"
 else
-    update --ignore linux,linux-zen,linux-headers,linux-zen-headers,linux-firmware "$@"
+    case $OS in
+        arch)
+            update --ignore linux,linux-zen,linux-headers,linux-zen-headers,linux-firmware "$@"
+            ;;
+        debian)
+            apt-mark hold "linux-image-*" >/dev/null
+            update "$@"
+            apt-mark unhold "linux-image-*" >/dev/null
+    esac
 fi
 
 clean_caches
