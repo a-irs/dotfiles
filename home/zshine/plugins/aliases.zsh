@@ -1,5 +1,30 @@
 #!/usr/bin/env zsh
 
+_url() {
+    local func=$1; shift
+    local args=$@
+    if (( $# >= 1 )); then
+        python3 -c "import urllib.parse, sys; sys.stdout.writelines($func for line in sys.argv[1:])" "$@"
+    else
+        python3 -c "import urllib.parse, sys; sys.stdout.writelines($func for line in sys.stdin)"
+    fi
+}
+
+urle() { _url 'urllib.parse.quote(line)' "$@"; }
+urld() { _url 'urllib.parse.unquote(line)' "$@"; }
+urlep() { _url 'urllib.parse.quote_plus(line)' "$@"; }
+urldp() { _url 'urllib.parse.unquote_plus(line)' "$@"; }
+
+sshfp() {
+    local output=$(ssh-keyscan "$@" 2>&1)
+    local rc=$?
+    if [[ "$rc" == 0 ]]; then
+        echo "$output" | ssh-keygen -l -f /dev/stdin
+    else
+        echo "$output"
+    fi
+}
+
 clip() {
     if [[ "$commands[xclip]" ]]; then
         if [[ -n "$1" ]]; then
