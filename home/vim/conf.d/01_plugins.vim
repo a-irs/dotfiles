@@ -188,6 +188,9 @@ let g:committia_use_singlecolumn = 'always'
 " highlight word under cursor
 let g:Illuminate_delay = 100  " default: 0
 let g:Illuminate_ftblacklist = ['gitcommit']
+let g:Illuminate_ftHighlightGroups = {
+      \ 'markdown.pandoc:blacklist': ['markdownListMarker']
+      \ }
 Plug 'RRethy/vim-illuminate'
 
 " color schemes
