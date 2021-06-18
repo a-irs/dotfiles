@@ -64,6 +64,9 @@ show_outdated() {
         | grep -vE '/var/log/journal' \
         | grep -vE '/share/icons/.*\.cache' \
         | grep -vE '/var/log/' \
+        | awk '{print $1 " " $3 " " $10}' \
+        | column -t \
+        | awk '!a[$0]++' \
         || true)
     lc=$(echo "$o" | wc -l)
     if (( lc > 1)); then

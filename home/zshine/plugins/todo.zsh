@@ -18,7 +18,7 @@ todo() {
 _show_todos() {
     for file in "${todo_files[@]}"; do
         [[ -s "$file" ]] || continue
-        content=$(grep -v '@done' "$file" | sed 's/- /• /' | perl -pe 's/\t/    /g')
+        content=$(grep -v '@done' "$file" | sed 's/- /• /')
         echo "$content" | grep --color -E '@.*|$'
     done
     unset file

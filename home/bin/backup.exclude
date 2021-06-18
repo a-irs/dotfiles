@@ -59,11 +59,10 @@ R /
 - /home/*/.local/share/gvfs-metadata/*
 - /home/*/.local/share/virtualenvs
 - /home/*/.local/share/xorg/*.old
+- /home/*/.mozilla/firefox/Crash Reports
 - /home/*/.mozilla/firefox/*/datareporting
 - /home/*/.mozilla/firefox/*/extension-data/ublock*.sqlite
 - /home/*/.mozilla/firefox/*/saved-telemetry-pings
-- /home/*/.mozilla/firefox/*/sessionstore-backups
-- /home/*/.mozilla/firefox/*/storage
 - /home/*/.mozilla/firefox/*/webappsstore.sqlite
 - /home/*/.thumbnails/*
 - /home/*/thumbnails/*
@@ -106,3 +105,4 @@ R /
 
 - /var/log/journal
 - /var/lib/docker/*
+- /nix
