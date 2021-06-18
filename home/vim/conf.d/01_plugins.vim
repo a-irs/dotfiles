@@ -37,6 +37,9 @@ autocmd BufNewFile,BufFilePre,BufRead */icinga/*/*.conf set filetype=icinga2
 " filetypes pcre/pyre
 Plug 'Galicarnax/vim-regex-syntax'
 
+" filetype nix
+Plug 'LnL7/vim-nix'
+
 " filetype ps1
 Plug 'PProvost/vim-ps1'
 

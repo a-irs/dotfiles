@@ -1,5 +1,8 @@
-[[ -O /srv/infra ]] || return
+load() {
+    for d in /srv/infra ~/git/a-irs/infra; do
+        [[ -O "$d" ]] && PATH="$d/ansible/bin:$d/docker:$d/docker-shot:$PATH"
+    done
+}
 
-PATH=/srv/infra/ansible/bin:$PATH
-PATH=/srv/infra/docker/bin:$PATH
-PATH=/srv/infra/docker-shot/bin:$PATH
+load
+unfunction load
