@@ -1,9 +1,31 @@
 #!/usr/bin/env zsh
 
+gitstatus_init() {
+    source "$ZSHINE_DIR/plugins/gitstatus/gitstatus.plugin.zsh"
+
+    autoload -Uz add-zsh-hook
+    add-zsh-hook precmd gitstatus_prompt_update
+    gitstatus_stop 'MY' && gitstatus_start -s -1 -u -1 -c -1 -d -1 'MY'
+    function gitstatus_prompt_update() {
+      gitstatus_query 'MY' || return 1
+      [[ $VCS_STATUS_RESULT == 'ok-sync' ]] || return 0
+    }
+}
+gitstatus_init
+
 zmodload zsh/pcre
 
 git_get_dirt() {
     local git_out=$1
+    if [[ "$git_out" == gitstatus ]]; then
+        s=""
+        (( VCS_STATUS_NUM_STAGED )) && s+=" $ZSHINE_GIT_SYMBOL_ADDED${VCS_STATUS_NUM_STAGED}"
+        (( VCS_STATUS_NUM_UNSTAGED )) && s+=" $ZSHINE_GIT_SYMBOL_MODIFIED${VCS_STATUS_NUM_UNSTAGED}"
+        (( VCS_STATUS_NUM_UNTRACKED )) && s+=" $ZSHINE_GIT_SYMBOL_UNTRACKED${VCS_STATUS_NUM_UNTRACKED}"
+        printf '%s' "$s"
+        return
+    fi
+
     local s=()
     local match
 
@@ -27,6 +49,13 @@ git_get_dirt() {
 
 git_get_commit() {
     local git_out=$1
+    if [[ "$git_out" == gitstatus ]]; then
+        s=${VCS_STATUS_COMMIT[0,7]}
+        [[ -n "$VCS_STATUS_TAG" ]] && s="$s ($VCS_STATUS_TAG)"
+        printf '%s' "$s"
+        return
+    fi
+
     local s match tag gen
     pcre_compile -m -- "^# branch.oid (.+)"
     pcre_match -- "$git_out"
@@ -44,6 +73,13 @@ git_get_commit() {
 
 git_get_branch() {
     local git_out=$1
+    if [[ "$git_out" == gitstatus ]]; then
+        s=$VCS_STATUS_LOCAL_BRANCH
+        [[ "$s" == master ]] && s=""
+        printf '%s' "$s"
+        return
+    fi
+
     local s match
     pcre_compile -m -- "^# branch.head (.*)$"
     pcre_match -- "$git_out"
@@ -55,6 +91,22 @@ git_get_branch() {
 
 git_get_remote() {
     local git_out=$1
+    if [[ "$git_out" == gitstatus ]]; then
+        s=""
+        # ⇣42 if behind the remote.
+        (( VCS_STATUS_COMMITS_BEHIND )) && s+=" ⇣${VCS_STATUS_COMMITS_BEHIND}"
+        # ⇡42 if ahead of the remote; no leading space if also behind the remote: ⇣42⇡42.
+        (( VCS_STATUS_COMMITS_AHEAD && !VCS_STATUS_COMMITS_BEHIND )) && p+=" "
+        (( VCS_STATUS_COMMITS_AHEAD  )) && s+="⇡${VCS_STATUS_COMMITS_AHEAD}"
+        # ⇠42 if behind the push remote.
+        (( VCS_STATUS_PUSH_COMMITS_BEHIND )) && s+=" ⇠${VCS_STATUS_PUSH_COMMITS_BEHIND}"
+        (( VCS_STATUS_PUSH_COMMITS_AHEAD && !VCS_STATUS_PUSH_COMMITS_BEHIND )) && s+=" "
+        # ⇢42 if ahead of the push remote; no leading space if also behind: ⇠42⇢42.
+        (( VCS_STATUS_PUSH_COMMITS_AHEAD  )) && s+="⇢${VCS_STATUS_PUSH_COMMITS_AHEAD}"
+        printf '%s' "$s"
+        return
+    fi
+
     local s=()
     local match
     pcre_compile -m -- "^# branch.ab (.+) (.+)$"
@@ -68,7 +120,12 @@ git_get_remote() {
 
 git_get_repo() {
     local url protocol repo match
-    url=$(command git ls-remote --get-url 2> /dev/null)
+    if [[ -v VCS_STATUS_REMOTE_URL ]]; then
+        url=$VCS_STATUS_REMOTE_URL
+    else
+        url=$(command git ls-remote --get-url 2> /dev/null)
+    fi
+
     if [[ $ZSHINE_GIT_SHRINK_URL == 1 ]]; then
         if [[ $url == *'://'* ]]; then
             # ssh://git@server/user/project.git
@@ -91,17 +148,21 @@ git_get_repo() {
         url="${namespace}/${repo}"
     fi
     [[ "$url" == "/" ]] || prompt_segment "$ZSHINE_GIT_PROJECT_BG" "$ZSHINE_GIT_PROJECT_FG" "$url"
-    [[ "$protocol" == "ssh" ]] || prompt_segment "$ZSHINE_GIT_PROTOCOL_BG" "$ZSHINE_GIT_PROTOCOL_FG" "$protocol"
 }
 
 git_prompt_info() {
-    local git_out
-    git_out=$(git status --ignore-submodules --porcelain=v2 --branch)
-
-    [[ "$?" -eq 0 ]] || return
     [[ "$PWD" == /mnt/* ]] && return
     [[ "$PWD" == /media/* ]] && return
     [[ "$PWD" == /run/user/*/gvfs/* ]] && return
+
+    local git_out
+    if [[ "$VCS_STATUS_RESULT" == ok-sync ]]; then
+        git_out="gitstatus"
+    elif [[ -v VCS_STATUS_RESULT ]]; then
+        return  # not a git repo
+    fi
+    [[ "$git_out" == gitstatus ]] || git_out=$(git status --ignore-submodules --porcelain=v2 --branch)
+    [[ "$?" -eq 0 ]] || return
 
     git_get_repo "$git_out"
     prompt_segment "$ZSHINE_GIT_COMMIT_BG" "$ZSHINE_GIT_COMMIT_FG" "$(git_get_commit "$git_out")"

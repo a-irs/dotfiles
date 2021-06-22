@@ -48,8 +48,6 @@ ZSHINE_GIT_PROJECT_FG='magenta'
 ZSHINE_GIT_PROJECT_BG='237'
 ZSHINE_GIT_COMMIT_FG='green'
 ZSHINE_GIT_COMMIT_BG='238'
-ZSHINE_GIT_PROTOCOL_FG='cyan'
-ZSHINE_GIT_PROTOCOL_BG='237'
 ZSHINE_GIT_BRANCH_FG='cyan'
 ZSHINE_GIT_BRANCH_BG='237'
 ZSHINE_GIT_DIRTY_FG='red'
@@ -113,7 +111,7 @@ _prompt_end() {
 #######################################
 
 _prompt_git() {
-    [[ $ZSHINE_GIT == 1 ]] && git_prompt_info 2> /dev/null
+    [[ $ZSHINE_GIT == 1 ]] && git_prompt_info
 }
 
 _prompt_ssh() {
