@@ -23,6 +23,8 @@ ZSHINE_PLUGINS=(
   infra # custom
   fasd  # autocomplete paths
   fasd-fzf  # autocomplete paths
+
+  status  # server status on login
 )
 
 if [[ "$os" == darwin* ]]; then
