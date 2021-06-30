@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 gitstatus_init() {
+    GITSTATUS_CACHE_DIR=~/.local/share/gitstatus
     source "$ZSHINE_DIR/plugins/gitstatus/gitstatus.plugin.zsh"
 
     autoload -Uz add-zsh-hook
@@ -161,7 +162,7 @@ git_prompt_info() {
     elif [[ -v VCS_STATUS_RESULT ]]; then
         return  # not a git repo
     fi
-    [[ "$git_out" == gitstatus ]] || git_out=$(git status --ignore-submodules --porcelain=v2 --branch)
+    [[ "$git_out" == gitstatus ]] || git_out=$(git status --ignore-submodules --porcelain=v2 --branch 2>/dev/null)
     [[ "$?" -eq 0 ]] || return
 
     git_get_repo "$git_out"
