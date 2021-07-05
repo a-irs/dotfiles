@@ -57,8 +57,6 @@ nnoremap <silent> <Leader>fh :History<CR>
 nnoremap <silent> <Leader><Tab> :History<CR>
 nnoremap <silent> <Leader>fg :GFiles<CR>
 nnoremap <silent> <Leader>fm :GFiles?<CR>
-nnoremap <silent> <Leader>bb :Buffers<CR>
-nnoremap <silent> <Leader>bx :bd<CR>
 nnoremap <silent> <Leader>g :Rg<CR>
 
 Plug 'eiginn/iptables-vim', { 'for': 'iptables' }

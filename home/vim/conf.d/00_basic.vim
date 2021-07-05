@@ -115,7 +115,7 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
 
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ini=dosini', 'ocaml', 'rust', 'css', 'erb=eruby', 'ruby', 'c', 'cpp', 'dockerfile', 'js=javascript', 'yaml', 'jinja2', 'sql', 'ps1', 'config', 'asm']
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ini=dosini', 'ocaml', 'rust', 'css', 'erb=eruby', 'ruby', 'c', 'cpp', 'dockerfile', 'js=javascript', 'yaml', 'jinja2', 'sql', 'ps1', 'config', 'asm', 'json']
 let g:markdown_syntax_conceal = 0
 let g:markdown_enable_mappings = 0
 let g:markdown_enable_spell_checking = 0
@@ -149,6 +149,9 @@ nnoremap <leader>6 :buffer 6<CR>
 nnoremap <leader>7 :buffer 7<CR>
 nnoremap <leader>8 :buffer 8<CR>
 nnoremap <leader>9 :buffer 9<CR>
+
+noremap <Leader>x :bd<CR>
+noremap <Leader>y "+y
 
 " toggle markdown checkboxes
 nnoremap <silent> <Leader>, :execute 's/^\(\s*[-+*]\?\s*\)\[ \]/\1[x]/'<cr>
