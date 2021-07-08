@@ -73,3 +73,11 @@ snippet "jsonw" "json write" br
 with open('${1:filename}', 'w') as fd:
     json.dump(data, fd)
 endsnippet
+
+snippet "csv2py" "csv to python object" br
+import csv
+with open("file.csv", 'r') as fd:
+    reader = csv.DictReader(fd, delimiter=';')
+    for d in reader:
+        print(d)
+endsnippet

@@ -4,4 +4,5 @@
 # E501 = 80 characters
 # E731 = do not assign a lambda expression
 # W391 = blank line at end of file
-ignore = E129,E302,E501,E731,W391
+# E402 = import not at top of file
+ignore = E129,E302,E501,E731,W391,E402
