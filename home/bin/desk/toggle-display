@@ -18,7 +18,7 @@ CONFIG = {
             "killall -9 kodi-x11 kodi kodi.bin 2>/dev/null"
         ],
         "post": [
-            "~/.bin/dpitog 1",
+            "~/.bin/dpitog 2",
             "nitrogen --restore 2>/dev/null",
         ]
     },
